@@ -46,7 +46,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
         }
 
-        e2eClient = try? SearchClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
+        self.client = try? SearchClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
     }
 
     /// browse with minimal parameters
@@ -56,20 +56,19 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<BrowseResponse<Hit>> = try await e2eClient
-            .browseWithHTTPInfo(indexName: "cts_e2e_browse")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let response: Response<BrowseResponse<Hit>> = try await client.browseWithHTTPInfo(indexName: "cts_e2e_browse")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// getSettings
@@ -79,19 +78,19 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// search for a single hits request with minimal parameters
@@ -101,23 +100,23 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
             ]))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// search for a single facet request with minimal parameters
@@ -127,7 +126,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
                 requests: [SearchQuery.searchForFacets(SearchForFacets(
                     facet: "editor",
@@ -136,18 +135,18 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
                 ))],
                 strategy: SearchStrategy.stopIfEnoughMatches
             ))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"visual studio\",\"value\":\"visual studio\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// search filters end to end
@@ -157,7 +156,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery.searchForHits(SearchForHits(
                     filters: "editor:'visual studio' OR editor:neovim",
@@ -188,18 +187,18 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
                     indexName: "cts_e2e_search_facet"
                 )),
             ]))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"results\":[{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":2,\"nbPages\":1,\"page\":0,\"hits\":[{\"editor\":\"visual studio\",\"_highlightResult\":{\"editor\":{\"value\":\"visual studio\",\"matchLevel\":\"none\"}}},{\"editor\":\"neovim\",\"_highlightResult\":{\"editor\":{\"value\":\"neovim\",\"matchLevel\":\"none\"}}}],\"query\":\"\",\"params\":\"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D\"}]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// get searchDictionaryEntries results with minimal parameters
@@ -209,22 +208,22 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.searchDictionaryEntriesWithHTTPInfo(
+        let response = try await client.searchDictionaryEntriesWithHTTPInfo(
             dictionaryName: DictionaryType.stopwords,
             searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
         )
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// search with special characters in indexName
@@ -234,10 +233,10 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient
+        let response: Response<SearchResponse<Hit>> = try await client
             .searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// single search retrieve snippets
@@ -247,7 +246,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient.searchSingleIndexWithHTTPInfo(
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "cts_e2e_browse",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
                 query: "batman mask of the phantasm",
@@ -255,18 +254,18 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
                 attributesToSnippet: ["*:20"]
             ))
         )
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 
     /// setSettings with minimal parameters
@@ -276,12 +275,12 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.setSettingsWithHTTPInfo(
+        let response = try await client.setSettingsWithHTTPInfo(
             indexName: "cts_e2e_settings",
             indexSettings: IndexSettings(paginationLimitedTo: 10),
             forwardToReplicas: true
         )
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 }

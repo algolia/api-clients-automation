@@ -14,7 +14,6 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
@@ -221,7 +220,7 @@ func TestSearchhelpers2(t *testing.T) {
 	res, err := client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_Go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
-		utils.ToPtr(3))
+		search.WithBatchSize(3))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -275,7 +274,7 @@ func TestSearchhelpers4(t *testing.T) {
 	res, err := client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_Go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-		true)
+		search.WithCreateIfNotExists(true))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -302,7 +301,7 @@ func TestSearchhelpers5(t *testing.T) {
 	res, err := client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_Go",
 		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
-		false)
+		search.WithCreateIfNotExists(false))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -334,6 +333,86 @@ func TestSearchhelpers6(t *testing.T) {
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
 	require.JSONEq(t, `[{"taskID":666,"objectIDs":["1","2"]}]`, string(rawBody))
+}
+
+// wait for api key helper - add
+func TestSearchhelpers7(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.WaitForApiKey(
+		"api-key-add-operation-test-Go", search.ApiKeyOperation("add"),
+	)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"value":"api-key-add-operation-test-Go","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+}
+
+// wait for api key - update
+func TestSearchhelpers8(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.WaitForApiKey(
+		"api-key-update-operation-test-Go", search.ApiKeyOperation("update"),
+		search.WithApiKey(
+			search.NewEmptyApiKey().SetDescription("my updated api key").SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("deleteObject")}).SetIndexes(
+				[]string{"Movies", "Books"}).SetReferers(
+				[]string{"*google.com", "*algolia.com"}).SetValidity(305).SetMaxQueriesPerIPPerHour(95).SetMaxHitsPerQuery(20)))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"value":"api-key-update-operation-test-Go","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+}
+
+// wait for api key - delete
+func TestSearchhelpers9(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.WaitForApiKey(
+		"api-key-delete-operation-test-Go", search.ApiKeyOperation("delete"),
+	)
+	require.NoError(t, err)
+	require.Nil(t, res)
 }
 
 // client throws with invalid parameters

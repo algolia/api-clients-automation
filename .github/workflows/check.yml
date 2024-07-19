@@ -431,7 +431,7 @@ jobs:
           type: minimal
           language: swift
 
-      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v
 
       - name: Set output
         id: setoutput

@@ -12,8 +12,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "pushEvents",
+        "method": "pushEvents",
         "parameters": {
           "events": [
             {
@@ -56,8 +55,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customDelete",
+        "method": "customDelete",
         "parameters": {
           "path": "test"
         },

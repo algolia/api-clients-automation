@@ -25,36 +25,12 @@ package algoliasearch.ingestion
 
 /** SourceShopify
   *
-  * @param collectionIDIndexing
-  *   Whether to index collection IDs. If your store has `has_collection_search_page` set to true, collection IDs will
-  *   be indexed even if `collectionIDIndexing` is false.
-  * @param increaseProductCollectionLimit
-  *   Whether to increase the number of indexed collections per product. If true, Algolia indexes 200 collections per
-  *   product. If false, 100 collections per product are indexed.
-  * @param defaultPriceRatioAsOne
-  *   Whether to set the default price ratio to 1 if no sale price is present. The price ratio is determined by the
-  *   ratio: `sale_price` / `regular_price`. If no sale price is present, the price ratio would be 0. If
-  *   `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
-  * @param excludeOOSVariantsForPriceAtTRS
-  *   Whether to exclude out-of-stock variants when determining the `max_variant_price` and `min_variant_price`
-  *   attributes.
-  * @param includeVariantsInventory
-  *   Whether to include an inventory with every variant for every product record.
-  * @param hasCollectionSearchPage
-  *   Whether to include collection IDs and handles in the product records.
-  * @param productNamedTags
-  *   Whether to convert tags on products to named tags. To learn more, see [Named
-  *   tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
+  * @param featureFlags
+  *   Feature flags for the Shopify source.
   * @param shopURL
   *   URL of the Shopify store.
   */
 case class SourceShopify(
-    collectionIDIndexing: Option[Boolean] = scala.None,
-    increaseProductCollectionLimit: Option[Boolean] = scala.None,
-    defaultPriceRatioAsOne: Option[Boolean] = scala.None,
-    excludeOOSVariantsForPriceAtTRS: Option[Boolean] = scala.None,
-    includeVariantsInventory: Option[Boolean] = scala.None,
-    hasCollectionSearchPage: Option[Boolean] = scala.None,
-    productNamedTags: Option[Boolean] = scala.None,
+    featureFlags: Option[Map[String, Any]] = scala.None,
     shopURL: String
 ) extends SourceInputTrait

@@ -140,7 +140,7 @@ When writing your template, here is a list of variables accessible from `mustach
           "method": "the method to call on the API Client",
           "testName": "the descriptive name test (default to `method`)",
           "testIndex": "the index of the test to avoid duplicate function name",
-          "hasParameters": "true if the method has parameters, useful for `GET` requests",
+          "hasParams": "true if the method has parameters, useful for `GET` requests",
           "assertNullBody": "true if the method does not have a body, useful to assert if `GET` and `DELETE` requests are correctly parsed",
           "parameters": {
             // Object of all parameters with their name, to be used for languages that require the parameter name

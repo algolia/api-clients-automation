@@ -15,11 +15,11 @@ function createClient(): RecommendClient {
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const $client = recommendClient('test-app-id', 'test-api-key', {
+    const client = recommendClient('test-app-id', 'test-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: 'test',
     })) as unknown as EchoResponse;
 
@@ -27,11 +27,11 @@ describe('api', () => {
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const $client = recommendClient('test-app-id', 'test-api-key', {
+    const client = recommendClient('test-app-id', 'test-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: 'test',
     })) as unknown as EchoResponse;
 
@@ -41,9 +41,9 @@ describe('api', () => {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -53,9 +53,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -65,9 +65,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 

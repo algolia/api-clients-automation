@@ -245,8 +245,8 @@ func TestIngestion_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			ingestion.QueryParamOption("query", "parameters with space"), ingestion.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), ingestion.HeaderParamOption("x-header-1", "spaces are left alone"),
+			ingestion.WithQueryParam("query", "parameters with space"), ingestion.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), ingestion.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -306,7 +306,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("query", "myQueryParameter"),
+			ingestion.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -326,7 +326,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("query2", "myQueryParameter"),
+			ingestion.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -346,7 +346,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			ingestion.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -371,7 +371,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			ingestion.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -396,7 +396,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("isItWorking", true),
+			ingestion.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -416,7 +416,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("myParam", 2),
+			ingestion.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -436,7 +436,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("myParam",
+			ingestion.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -457,7 +457,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("myParam",
+			ingestion.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -478,7 +478,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.QueryParamOption("myParam",
+			ingestion.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

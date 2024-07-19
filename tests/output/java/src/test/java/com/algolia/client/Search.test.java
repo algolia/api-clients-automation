@@ -10,6 +10,7 @@ import com.algolia.EchoResponse;
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
 import com.algolia.model.search.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -29,7 +30,10 @@ class SearchClientClientTests {
 
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.builder()
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .serializationInclusion(JsonInclude.Include.NON_NULL)
+      .build();
   }
 
   SearchClient createClient() {
@@ -311,6 +315,77 @@ class SearchClientClientTests {
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
       );
+    });
+  }
+
+  @Test
+  @DisplayName("wait for api key helper - add")
+  void helpersTest7() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      var res = client.waitForApiKey("api-key-add-operation-test-Java", ApiKeyOperation.ADD);
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"value\":\"api-key-add-operation-test-Java\",\"description\":\"my new api" +
+          " key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("wait for api key - update")
+  void helpersTest8() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      var res = client.waitForApiKey(
+        "api-key-update-operation-test-Java",
+        ApiKeyOperation.UPDATE,
+        new ApiKey()
+          .setDescription("my updated api key")
+          .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))
+          .setIndexes(List.of("Movies", "Books"))
+          .setReferers(List.of("*google.com", "*algolia.com"))
+          .setValidity(305)
+          .setMaxQueriesPerIPPerHour(95)
+          .setMaxHitsPerQuery(20)
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"value\":\"api-key-update-operation-test-Java\",\"description\":\"my" +
+          " updated api" +
+          " key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("wait for api key - delete")
+  void helpersTest9() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      var res = client.waitForApiKey("api-key-delete-operation-test-Java", ApiKeyOperation.DELETE);
+
+      assertEquals(null, res);
     });
   }
 

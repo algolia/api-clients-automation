@@ -12,26 +12,39 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
-type Option struct {
-	optionType string
-	name       string
-	value      string
+type config struct {
+	// -- Request options for API calls
+	context      context.Context
+	queryParams  url.Values
+	headerParams map[string]string
 }
 
-func QueryParamOption(name string, val any) Option {
-	return Option{
-		optionType: "query",
-		name:       queryParameterToString(name),
-		value:      queryParameterToString(val),
-	}
+type RequestOption interface {
+	apply(*config)
 }
 
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-		optionType: "header",
-		name:       name,
-		value:      parameterToString(val),
-	}
+type requestOption func(*config)
+
+func (r requestOption) apply(c *config) {
+	r(c)
+}
+
+func WithContext(ctx context.Context) requestOption {
+	return requestOption(func(c *config) {
+		c.context = ctx
+	})
+}
+
+func WithHeaderParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.headerParams[key] = utils.ParameterToString(value)
+	})
+}
+
+func WithQueryParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
 }
 
 func (r *ApiCreateAuthenticationRequest) UnmarshalJSON(b []byte) error {
@@ -81,62 +94,40 @@ CreateAuthentication calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiCreateAuthenticationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param authenticationCreate AuthenticationCreate -
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CreateAuthenticationWithHTTPInfo(ctx context.Context, r ApiCreateAuthenticationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CreateAuthenticationWithHTTPInfo(r ApiCreateAuthenticationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.authenticationCreate == nil {
 		return nil, nil, reportError("Parameter `authenticationCreate` is required when calling `CreateAuthentication`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.authenticationCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CreateAuthentication wraps CreateAuthenticationWithContext using context.Background.
-
-Creates a new authentication resource.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiCreateAuthenticationRequest with parameters below.
-
-	@param authenticationCreate AuthenticationCreate -
-	@return AuthenticationCreateResponse
-*/
-func (c *APIClient) CreateAuthentication(r ApiCreateAuthenticationRequest, opts ...Option) (*AuthenticationCreateResponse, error) {
-	return c.CreateAuthenticationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -154,10 +145,10 @@ Request can be constructed by NewApiCreateAuthenticationRequest with parameters 
 	@param authenticationCreate AuthenticationCreate -
 	@return AuthenticationCreateResponse
 */
-func (c *APIClient) CreateAuthenticationWithContext(ctx context.Context, r ApiCreateAuthenticationRequest, opts ...Option) (*AuthenticationCreateResponse, error) {
+func (c *APIClient) CreateAuthentication(r ApiCreateAuthenticationRequest, opts ...RequestOption) (*AuthenticationCreateResponse, error) {
 	var returnValue *AuthenticationCreateResponse
 
-	res, resBody, err := c.CreateAuthenticationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CreateAuthenticationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -236,62 +227,40 @@ CreateDestination calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiCreateDestinationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param destinationCreate DestinationCreate -
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CreateDestinationWithHTTPInfo(ctx context.Context, r ApiCreateDestinationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CreateDestinationWithHTTPInfo(r ApiCreateDestinationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.destinationCreate == nil {
 		return nil, nil, reportError("Parameter `destinationCreate` is required when calling `CreateDestination`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.destinationCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CreateDestination wraps CreateDestinationWithContext using context.Background.
-
-Creates a new destination.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiCreateDestinationRequest with parameters below.
-
-	@param destinationCreate DestinationCreate -
-	@return DestinationCreateResponse
-*/
-func (c *APIClient) CreateDestination(r ApiCreateDestinationRequest, opts ...Option) (*DestinationCreateResponse, error) {
-	return c.CreateDestinationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -309,10 +278,10 @@ Request can be constructed by NewApiCreateDestinationRequest with parameters bel
 	@param destinationCreate DestinationCreate -
 	@return DestinationCreateResponse
 */
-func (c *APIClient) CreateDestinationWithContext(ctx context.Context, r ApiCreateDestinationRequest, opts ...Option) (*DestinationCreateResponse, error) {
+func (c *APIClient) CreateDestination(r ApiCreateDestinationRequest, opts ...RequestOption) (*DestinationCreateResponse, error) {
 	var returnValue *DestinationCreateResponse
 
-	res, resBody, err := c.CreateDestinationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CreateDestinationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -391,62 +360,40 @@ CreateSource calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiCreateSourceRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceCreate SourceCreate -
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CreateSourceWithHTTPInfo(ctx context.Context, r ApiCreateSourceRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CreateSourceWithHTTPInfo(r ApiCreateSourceRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.sourceCreate == nil {
 		return nil, nil, reportError("Parameter `sourceCreate` is required when calling `CreateSource`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.sourceCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CreateSource wraps CreateSourceWithContext using context.Background.
-
-Creates a new source.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiCreateSourceRequest with parameters below.
-
-	@param sourceCreate SourceCreate -
-	@return SourceCreateResponse
-*/
-func (c *APIClient) CreateSource(r ApiCreateSourceRequest, opts ...Option) (*SourceCreateResponse, error) {
-	return c.CreateSourceWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -464,10 +411,10 @@ Request can be constructed by NewApiCreateSourceRequest with parameters below.
 	@param sourceCreate SourceCreate -
 	@return SourceCreateResponse
 */
-func (c *APIClient) CreateSourceWithContext(ctx context.Context, r ApiCreateSourceRequest, opts ...Option) (*SourceCreateResponse, error) {
+func (c *APIClient) CreateSource(r ApiCreateSourceRequest, opts ...RequestOption) (*SourceCreateResponse, error) {
 	var returnValue *SourceCreateResponse
 
-	res, resBody, err := c.CreateSourceWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CreateSourceWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -542,57 +489,40 @@ CreateTask calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCreateTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskCreate TaskCreate - Request body for creating a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CreateTaskWithHTTPInfo(ctx context.Context, r ApiCreateTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CreateTaskWithHTTPInfo(r ApiCreateTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.taskCreate == nil {
 		return nil, nil, reportError("Parameter `taskCreate` is required when calling `CreateTask`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.taskCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CreateTask wraps CreateTaskWithContext using context.Background.
-
-Creates a new task.
-
-Request can be constructed by NewApiCreateTaskRequest with parameters below.
-
-	@param taskCreate TaskCreate - Request body for creating a task.
-	@return TaskCreateResponse
-*/
-func (c *APIClient) CreateTask(r ApiCreateTaskRequest, opts ...Option) (*TaskCreateResponse, error) {
-	return c.CreateTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -605,10 +535,10 @@ Request can be constructed by NewApiCreateTaskRequest with parameters below.
 	@param taskCreate TaskCreate - Request body for creating a task.
 	@return TaskCreateResponse
 */
-func (c *APIClient) CreateTaskWithContext(ctx context.Context, r ApiCreateTaskRequest, opts ...Option) (*TaskCreateResponse, error) {
+func (c *APIClient) CreateTask(r ApiCreateTaskRequest, opts ...RequestOption) (*TaskCreateResponse, error) {
 	var returnValue *TaskCreateResponse
 
-	res, resBody, err := c.CreateTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CreateTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -683,57 +613,40 @@ CreateTransformation calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCreateTransformationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationCreate TransformationCreate - Request body for creating a transformation.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CreateTransformationWithHTTPInfo(ctx context.Context, r ApiCreateTransformationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CreateTransformationWithHTTPInfo(r ApiCreateTransformationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.transformationCreate == nil {
 		return nil, nil, reportError("Parameter `transformationCreate` is required when calling `CreateTransformation`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.transformationCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CreateTransformation wraps CreateTransformationWithContext using context.Background.
-
-Creates a new transformation.
-
-Request can be constructed by NewApiCreateTransformationRequest with parameters below.
-
-	@param transformationCreate TransformationCreate - Request body for creating a transformation.
-	@return TransformationCreateResponse
-*/
-func (c *APIClient) CreateTransformation(r ApiCreateTransformationRequest, opts ...Option) (*TransformationCreateResponse, error) {
-	return c.CreateTransformationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -746,10 +659,10 @@ Request can be constructed by NewApiCreateTransformationRequest with parameters 
 	@param transformationCreate TransformationCreate - Request body for creating a transformation.
 	@return TransformationCreateResponse
 */
-func (c *APIClient) CreateTransformationWithContext(ctx context.Context, r ApiCreateTransformationRequest, opts ...Option) (*TransformationCreateResponse, error) {
+func (c *APIClient) CreateTransformation(r ApiCreateTransformationRequest, opts ...RequestOption) (*TransformationCreateResponse, error) {
 	var returnValue *TransformationCreateResponse
 
-	res, resBody, err := c.CreateTransformationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CreateTransformationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -835,63 +748,46 @@ CustomDelete calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCustomDeleteRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
 	  @param parameters map[string]any - Query parameters to apply to the current query.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomDeleteWithHTTPInfo(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
 		return nil, nil, reportError("Parameter `path` is required when calling `CustomDelete`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CustomDelete wraps CustomDeleteWithContext using context.Background.
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomDeleteRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomDeleteWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -905,10 +801,10 @@ Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 	@param parameters map[string]any - Query parameters to apply to the current query.
 	@return map[string]any
 */
-func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
+func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption) (*map[string]any, error) {
 	var returnValue *map[string]any
 
-	res, resBody, err := c.CustomDeleteWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CustomDeleteWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -994,63 +890,46 @@ CustomGet calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCustomGetRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
 	  @param parameters map[string]any - Query parameters to apply to the current query.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomGetWithHTTPInfo(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
 		return nil, nil, reportError("Parameter `path` is required when calling `CustomGet`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CustomGet wraps CustomGetWithContext using context.Background.
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomGetRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomGetWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1064,10 +943,10 @@ Request can be constructed by NewApiCustomGetRequest with parameters below.
 	@param parameters map[string]any - Query parameters to apply to the current query.
 	@return map[string]any
 */
-func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
+func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*map[string]any, error) {
 	var returnValue *map[string]any
 
-	res, resBody, err := c.CustomGetWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CustomGetWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1169,42 +1048,40 @@ CustomPost calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCustomPostRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
 	  @param parameters map[string]any - Query parameters to apply to the current query.
 	  @param body map[string]any - Parameters to send with the custom request.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPostWithHTTPInfo(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
 		return nil, nil, reportError("Parameter `path` is required when calling `CustomPost`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -1212,28 +1089,12 @@ func (c *APIClient) CustomPostWithHTTPInfo(ctx context.Context, r ApiCustomPostR
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CustomPost wraps CustomPostWithContext using context.Background.
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPostRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPostWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1248,10 +1109,10 @@ Request can be constructed by NewApiCustomPostRequest with parameters below.
 	@param body map[string]any - Parameters to send with the custom request.
 	@return map[string]any
 */
-func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
+func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*map[string]any, error) {
 	var returnValue *map[string]any
 
-	res, resBody, err := c.CustomPostWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CustomPostWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1353,42 +1214,40 @@ CustomPut calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiCustomPutRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
 	  @param parameters map[string]any - Query parameters to apply to the current query.
 	  @param body map[string]any - Parameters to send with the custom request.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPutWithHTTPInfo(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
 		return nil, nil, reportError("Parameter `path` is required when calling `CustomPut`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -1396,28 +1255,12 @@ func (c *APIClient) CustomPutWithHTTPInfo(ctx context.Context, r ApiCustomPutReq
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-CustomPut wraps CustomPutWithContext using context.Background.
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPutRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPutWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1432,10 +1275,10 @@ Request can be constructed by NewApiCustomPutRequest with parameters below.
 	@param body map[string]any - Parameters to send with the custom request.
 	@return map[string]any
 */
-func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
+func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*map[string]any, error) {
 	var returnValue *map[string]any
 
-	res, resBody, err := c.CustomPutWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.CustomPutWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1509,60 +1352,39 @@ DeleteAuthentication calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiDeleteAuthenticationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param authenticationID string - Unique identifier of an authentication resource.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteAuthenticationWithHTTPInfo(ctx context.Context, r ApiDeleteAuthenticationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DeleteAuthenticationWithHTTPInfo(r ApiDeleteAuthenticationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications/{authenticationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(parameterToString(r.authenticationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(utils.ParameterToString(r.authenticationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.authenticationID == "" {
 		return nil, nil, reportError("Parameter `authenticationID` is required when calling `DeleteAuthentication`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DeleteAuthentication wraps DeleteAuthenticationWithContext using context.Background.
-
-Deletes an authentication resource. You can't delete authentication resources that are used by a source or a destination.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiDeleteAuthenticationRequest with parameters below.
-
-	@param authenticationID string - Unique identifier of an authentication resource.
-	@return DeleteResponse
-*/
-func (c *APIClient) DeleteAuthentication(r ApiDeleteAuthenticationRequest, opts ...Option) (*DeleteResponse, error) {
-	return c.DeleteAuthenticationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1580,10 +1402,10 @@ Request can be constructed by NewApiDeleteAuthenticationRequest with parameters 
 	@param authenticationID string - Unique identifier of an authentication resource.
 	@return DeleteResponse
 */
-func (c *APIClient) DeleteAuthenticationWithContext(ctx context.Context, r ApiDeleteAuthenticationRequest, opts ...Option) (*DeleteResponse, error) {
+func (c *APIClient) DeleteAuthentication(r ApiDeleteAuthenticationRequest, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
 
-	res, resBody, err := c.DeleteAuthenticationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DeleteAuthenticationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1657,60 +1479,39 @@ DeleteDestination calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiDeleteDestinationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param destinationID string - Unique identifier of a destination.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteDestinationWithHTTPInfo(ctx context.Context, r ApiDeleteDestinationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DeleteDestinationWithHTTPInfo(r ApiDeleteDestinationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations/{destinationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(parameterToString(r.destinationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(utils.ParameterToString(r.destinationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.destinationID == "" {
 		return nil, nil, reportError("Parameter `destinationID` is required when calling `DeleteDestination`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DeleteDestination wraps DeleteDestinationWithContext using context.Background.
-
-Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiDeleteDestinationRequest with parameters below.
-
-	@param destinationID string - Unique identifier of a destination.
-	@return DeleteResponse
-*/
-func (c *APIClient) DeleteDestination(r ApiDeleteDestinationRequest, opts ...Option) (*DeleteResponse, error) {
-	return c.DeleteDestinationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1728,10 +1529,10 @@ Request can be constructed by NewApiDeleteDestinationRequest with parameters bel
 	@param destinationID string - Unique identifier of a destination.
 	@return DeleteResponse
 */
-func (c *APIClient) DeleteDestinationWithContext(ctx context.Context, r ApiDeleteDestinationRequest, opts ...Option) (*DeleteResponse, error) {
+func (c *APIClient) DeleteDestination(r ApiDeleteDestinationRequest, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
 
-	res, resBody, err := c.DeleteDestinationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DeleteDestinationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1805,60 +1606,39 @@ DeleteSource calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiDeleteSourceRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceID string - Unique identifier of a source.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteSourceWithHTTPInfo(ctx context.Context, r ApiDeleteSourceRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DeleteSourceWithHTTPInfo(r ApiDeleteSourceRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/{sourceID}"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(utils.ParameterToString(r.sourceID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.sourceID == "" {
 		return nil, nil, reportError("Parameter `sourceID` is required when calling `DeleteSource`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DeleteSource wraps DeleteSourceWithContext using context.Background.
-
-Deletes a source by its ID. You can't delete sources that are referenced in tasks.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiDeleteSourceRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@return DeleteResponse
-*/
-func (c *APIClient) DeleteSource(r ApiDeleteSourceRequest, opts ...Option) (*DeleteResponse, error) {
-	return c.DeleteSourceWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -1876,10 +1656,10 @@ Request can be constructed by NewApiDeleteSourceRequest with parameters below.
 	@param sourceID string - Unique identifier of a source.
 	@return DeleteResponse
 */
-func (c *APIClient) DeleteSourceWithContext(ctx context.Context, r ApiDeleteSourceRequest, opts ...Option) (*DeleteResponse, error) {
+func (c *APIClient) DeleteSource(r ApiDeleteSourceRequest, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
 
-	res, resBody, err := c.DeleteSourceWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DeleteSourceWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1949,55 +1729,39 @@ DeleteTask calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiDeleteTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteTaskWithHTTPInfo(ctx context.Context, r ApiDeleteTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DeleteTaskWithHTTPInfo(r ApiDeleteTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `DeleteTask`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DeleteTask wraps DeleteTaskWithContext using context.Background.
-
-Deletes a task by its ID.
-
-Request can be constructed by NewApiDeleteTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@return DeleteResponse
-*/
-func (c *APIClient) DeleteTask(r ApiDeleteTaskRequest, opts ...Option) (*DeleteResponse, error) {
-	return c.DeleteTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2010,10 +1774,10 @@ Request can be constructed by NewApiDeleteTaskRequest with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@return DeleteResponse
 */
-func (c *APIClient) DeleteTaskWithContext(ctx context.Context, r ApiDeleteTaskRequest, opts ...Option) (*DeleteResponse, error) {
+func (c *APIClient) DeleteTask(r ApiDeleteTaskRequest, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
 
-	res, resBody, err := c.DeleteTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DeleteTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2083,55 +1847,39 @@ DeleteTransformation calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiDeleteTransformationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationID string - Unique identifier of a transformation.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteTransformationWithHTTPInfo(ctx context.Context, r ApiDeleteTransformationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DeleteTransformationWithHTTPInfo(r ApiDeleteTransformationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/{transformationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(utils.ParameterToString(r.transformationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.transformationID == "" {
 		return nil, nil, reportError("Parameter `transformationID` is required when calling `DeleteTransformation`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DeleteTransformation wraps DeleteTransformationWithContext using context.Background.
-
-Deletes a transformation by its ID.
-
-Request can be constructed by NewApiDeleteTransformationRequest with parameters below.
-
-	@param transformationID string - Unique identifier of a transformation.
-	@return DeleteResponse
-*/
-func (c *APIClient) DeleteTransformation(r ApiDeleteTransformationRequest, opts ...Option) (*DeleteResponse, error) {
-	return c.DeleteTransformationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2144,10 +1892,10 @@ Request can be constructed by NewApiDeleteTransformationRequest with parameters 
 	@param transformationID string - Unique identifier of a transformation.
 	@return DeleteResponse
 */
-func (c *APIClient) DeleteTransformationWithContext(ctx context.Context, r ApiDeleteTransformationRequest, opts ...Option) (*DeleteResponse, error) {
+func (c *APIClient) DeleteTransformation(r ApiDeleteTransformationRequest, opts ...RequestOption) (*DeleteResponse, error) {
 	var returnValue *DeleteResponse
 
-	res, resBody, err := c.DeleteTransformationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DeleteTransformationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2221,60 +1969,39 @@ DisableTask calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiDisableTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) DisableTaskWithHTTPInfo(ctx context.Context, r ApiDisableTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) DisableTaskWithHTTPInfo(r ApiDisableTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}/disable"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `DisableTask`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-DisableTask wraps DisableTaskWithContext using context.Background.
-
-Disables a task.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiDisableTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@return TaskUpdateResponse
-*/
-func (c *APIClient) DisableTask(r ApiDisableTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
-	return c.DisableTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2292,10 +2019,10 @@ Request can be constructed by NewApiDisableTaskRequest with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@return TaskUpdateResponse
 */
-func (c *APIClient) DisableTaskWithContext(ctx context.Context, r ApiDisableTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
+func (c *APIClient) DisableTask(r ApiDisableTaskRequest, opts ...RequestOption) (*TaskUpdateResponse, error) {
 	var returnValue *TaskUpdateResponse
 
-	res, resBody, err := c.DisableTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.DisableTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2369,60 +2096,39 @@ EnableTask calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiEnableTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) EnableTaskWithHTTPInfo(ctx context.Context, r ApiEnableTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) EnableTaskWithHTTPInfo(r ApiEnableTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}/enable"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `EnableTask`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-EnableTask wraps EnableTaskWithContext using context.Background.
-
-Enables a task.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiEnableTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@return TaskUpdateResponse
-*/
-func (c *APIClient) EnableTask(r ApiEnableTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
-	return c.EnableTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2440,10 +2146,10 @@ Request can be constructed by NewApiEnableTaskRequest with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@return TaskUpdateResponse
 */
-func (c *APIClient) EnableTaskWithContext(ctx context.Context, r ApiEnableTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
+func (c *APIClient) EnableTask(r ApiEnableTaskRequest, opts ...RequestOption) (*TaskUpdateResponse, error) {
 	var returnValue *TaskUpdateResponse
 
-	res, resBody, err := c.EnableTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.EnableTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2517,60 +2223,39 @@ GetAuthentication calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetAuthenticationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param authenticationID string - Unique identifier of an authentication resource.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetAuthenticationWithHTTPInfo(ctx context.Context, r ApiGetAuthenticationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetAuthenticationWithHTTPInfo(r ApiGetAuthenticationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications/{authenticationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(parameterToString(r.authenticationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(utils.ParameterToString(r.authenticationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.authenticationID == "" {
 		return nil, nil, reportError("Parameter `authenticationID` is required when calling `GetAuthentication`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetAuthentication wraps GetAuthenticationWithContext using context.Background.
-
-Retrieves an authentication resource by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetAuthenticationRequest with parameters below.
-
-	@param authenticationID string - Unique identifier of an authentication resource.
-	@return Authentication
-*/
-func (c *APIClient) GetAuthentication(r ApiGetAuthenticationRequest, opts ...Option) (*Authentication, error) {
-	return c.GetAuthenticationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2588,10 +2273,10 @@ Request can be constructed by NewApiGetAuthenticationRequest with parameters bel
 	@param authenticationID string - Unique identifier of an authentication resource.
 	@return Authentication
 */
-func (c *APIClient) GetAuthenticationWithContext(ctx context.Context, r ApiGetAuthenticationRequest, opts ...Option) (*Authentication, error) {
+func (c *APIClient) GetAuthentication(r ApiGetAuthenticationRequest, opts ...RequestOption) (*Authentication, error) {
 	var returnValue *Authentication
 
-	res, resBody, err := c.GetAuthenticationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetAuthenticationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2749,85 +2434,58 @@ GetAuthentications calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetAuthenticationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []AuthenticationType - Type of authentication resource to retrieve.
 	  @param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentication resources.
 	  @param sort AuthenticationSortKeys - Property by which to sort the list of authentication resources.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetAuthenticationsWithHTTPInfo(ctx context.Context, r ApiGetAuthenticationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetAuthenticationsWithHTTPInfo(r ApiGetAuthenticationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.type_) {
-		queryParams.Set("type", queryParameterToString(r.type_))
+		conf.queryParams.Set("type", utils.QueryParameterToString(r.type_))
 	}
 	if !utils.IsNilOrEmpty(r.platform) {
-		queryParams.Set("platform", queryParameterToString(r.platform))
+		conf.queryParams.Set("platform", utils.QueryParameterToString(r.platform))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetAuthentications wraps GetAuthenticationsWithContext using context.Background.
-
-Retrieves a list of all authentication resources.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetAuthenticationsRequest with parameters below.
-
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param type_ []AuthenticationType - Type of authentication resource to retrieve.
-	@param platform []PlatformWithNone - Ecommerce platform for which to retrieve authentication resources.
-	@param sort AuthenticationSortKeys - Property by which to sort the list of authentication resources.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@return ListAuthenticationsResponse
-*/
-func (c *APIClient) GetAuthentications(r ApiGetAuthenticationsRequest, opts ...Option) (*ListAuthenticationsResponse, error) {
-	return c.GetAuthenticationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2850,10 +2508,10 @@ Request can be constructed by NewApiGetAuthenticationsRequest with parameters be
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListAuthenticationsResponse
 */
-func (c *APIClient) GetAuthenticationsWithContext(ctx context.Context, r ApiGetAuthenticationsRequest, opts ...Option) (*ListAuthenticationsResponse, error) {
+func (c *APIClient) GetAuthentications(r ApiGetAuthenticationsRequest, opts ...RequestOption) (*ListAuthenticationsResponse, error) {
 	var returnValue *ListAuthenticationsResponse
 
-	res, resBody, err := c.GetAuthenticationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetAuthenticationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2927,60 +2585,39 @@ GetDestination calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetDestinationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param destinationID string - Unique identifier of a destination.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetDestinationWithHTTPInfo(ctx context.Context, r ApiGetDestinationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetDestinationWithHTTPInfo(r ApiGetDestinationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations/{destinationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(parameterToString(r.destinationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(utils.ParameterToString(r.destinationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.destinationID == "" {
 		return nil, nil, reportError("Parameter `destinationID` is required when calling `GetDestination`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetDestination wraps GetDestinationWithContext using context.Background.
-
-Retrieves a destination by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetDestinationRequest with parameters below.
-
-	@param destinationID string - Unique identifier of a destination.
-	@return Destination
-*/
-func (c *APIClient) GetDestination(r ApiGetDestinationRequest, opts ...Option) (*Destination, error) {
-	return c.GetDestinationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -2998,10 +2635,10 @@ Request can be constructed by NewApiGetDestinationRequest with parameters below.
 	@param destinationID string - Unique identifier of a destination.
 	@return Destination
 */
-func (c *APIClient) GetDestinationWithContext(ctx context.Context, r ApiGetDestinationRequest, opts ...Option) (*Destination, error) {
+func (c *APIClient) GetDestination(r ApiGetDestinationRequest, opts ...RequestOption) (*Destination, error) {
 	var returnValue *Destination
 
-	res, resBody, err := c.GetDestinationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetDestinationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3159,85 +2796,58 @@ GetDestinations calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetDestinationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []DestinationType - Destination type.
 	  @param authenticationID []string - Authentication ID used by destinations.
 	  @param sort DestinationSortKeys - Property by which to sort the destinations.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetDestinationsWithHTTPInfo(ctx context.Context, r ApiGetDestinationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetDestinationsWithHTTPInfo(r ApiGetDestinationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.type_) {
-		queryParams.Set("type", queryParameterToString(r.type_))
+		conf.queryParams.Set("type", utils.QueryParameterToString(r.type_))
 	}
 	if !utils.IsNilOrEmpty(r.authenticationID) {
-		queryParams.Set("authenticationID", queryParameterToString(r.authenticationID))
+		conf.queryParams.Set("authenticationID", utils.QueryParameterToString(r.authenticationID))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetDestinations wraps GetDestinationsWithContext using context.Background.
-
-Retrieves a list of destinations.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetDestinationsRequest with parameters below.
-
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param type_ []DestinationType - Destination type.
-	@param authenticationID []string - Authentication ID used by destinations.
-	@param sort DestinationSortKeys - Property by which to sort the destinations.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@return ListDestinationsResponse
-*/
-func (c *APIClient) GetDestinations(r ApiGetDestinationsRequest, opts ...Option) (*ListDestinationsResponse, error) {
-	return c.GetDestinationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -3260,10 +2870,10 @@ Request can be constructed by NewApiGetDestinationsRequest with parameters below
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListDestinationsResponse
 */
-func (c *APIClient) GetDestinationsWithContext(ctx context.Context, r ApiGetDestinationsRequest, opts ...Option) (*ListDestinationsResponse, error) {
+func (c *APIClient) GetDestinations(r ApiGetDestinationsRequest, opts ...RequestOption) (*ListDestinationsResponse, error) {
 	var returnValue *ListDestinationsResponse
 
-	res, resBody, err := c.GetDestinationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetDestinationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3348,23 +2958,18 @@ GetEvent calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetEventRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param runID string - Unique identifier of a task run.
 	  @param eventID string - Unique identifier of an event.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetEventWithHTTPInfo(ctx context.Context, r ApiGetEventRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetEventWithHTTPInfo(r ApiGetEventRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/runs/{runID}/events/{eventID}"
-	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(parameterToString(r.runID)))
-	requestPath = strings.ReplaceAll(requestPath, "{eventID}", url.PathEscape(parameterToString(r.eventID)))
+	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(utils.ParameterToString(r.runID)))
+	requestPath = strings.ReplaceAll(requestPath, "{eventID}", url.PathEscape(utils.ParameterToString(r.eventID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.runID == "" {
 		return nil, nil, reportError("Parameter `runID` is required when calling `GetEvent`.")
 	}
@@ -3372,42 +2977,25 @@ func (c *APIClient) GetEventWithHTTPInfo(ctx context.Context, r ApiGetEventReque
 		return nil, nil, reportError("Parameter `eventID` is required when calling `GetEvent`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetEvent wraps GetEventWithContext using context.Background.
-
-Retrieves a single task run event by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetEventRequest with parameters below.
-
-	@param runID string - Unique identifier of a task run.
-	@param eventID string - Unique identifier of an event.
-	@return Event
-*/
-func (c *APIClient) GetEvent(r ApiGetEventRequest, opts ...Option) (*Event, error) {
-	return c.GetEventWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -3426,10 +3014,10 @@ Request can be constructed by NewApiGetEventRequest with parameters below.
 	@param eventID string - Unique identifier of an event.
 	@return Event
 */
-func (c *APIClient) GetEventWithContext(ctx context.Context, r ApiGetEventRequest, opts ...Option) (*Event, error) {
+func (c *APIClient) GetEvent(r ApiGetEventRequest, opts ...RequestOption) (*Event, error) {
 	var returnValue *Event
 
-	res, resBody, err := c.GetEventWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetEventWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3631,7 +3219,6 @@ GetEvents calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetEventsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param runID string - Unique identifier of a task run.
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
@@ -3641,91 +3228,63 @@ GetEvents calls the API and returns the raw response from it.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	  @param startDate string - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
 	  @param endDate string - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetEventsWithHTTPInfo(ctx context.Context, r ApiGetEventsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetEventsWithHTTPInfo(r ApiGetEventsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/runs/{runID}/events"
-	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(parameterToString(r.runID)))
+	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(utils.ParameterToString(r.runID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.runID == "" {
 		return nil, nil, reportError("Parameter `runID` is required when calling `GetEvents`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.status) {
-		queryParams.Set("status", queryParameterToString(r.status))
+		conf.queryParams.Set("status", utils.QueryParameterToString(r.status))
 	}
 	if !utils.IsNilOrEmpty(r.type_) {
-		queryParams.Set("type", queryParameterToString(r.type_))
+		conf.queryParams.Set("type", utils.QueryParameterToString(r.type_))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetEvents wraps GetEventsWithContext using context.Background.
-
-Retrieves a list of events for a task run, identified by it's ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetEventsRequest with parameters below.
-
-	@param runID string - Unique identifier of a task run.
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param status []EventStatus - Event status for filtering the list of task runs.
-	@param type_ []EventType - Event type for filtering the list of task runs.
-	@param sort EventSortKeys - Property by which to sort the list of task run events.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-	@param endDate string - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
-	@return ListEventsResponse
-*/
-func (c *APIClient) GetEvents(r ApiGetEventsRequest, opts ...Option) (*ListEventsResponse, error) {
-	return c.GetEventsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -3751,10 +3310,10 @@ Request can be constructed by NewApiGetEventsRequest with parameters below.
 	@param endDate string - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
 	@return ListEventsResponse
 */
-func (c *APIClient) GetEventsWithContext(ctx context.Context, r ApiGetEventsRequest, opts ...Option) (*ListEventsResponse, error) {
+func (c *APIClient) GetEvents(r ApiGetEventsRequest, opts ...RequestOption) (*ListEventsResponse, error) {
 	var returnValue *ListEventsResponse
 
-	res, resBody, err := c.GetEventsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetEventsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3828,60 +3387,39 @@ GetRun calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetRunRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param runID string - Unique identifier of a task run.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetRunWithHTTPInfo(ctx context.Context, r ApiGetRunRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetRunWithHTTPInfo(r ApiGetRunRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/runs/{runID}"
-	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(parameterToString(r.runID)))
+	requestPath = strings.ReplaceAll(requestPath, "{runID}", url.PathEscape(utils.ParameterToString(r.runID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.runID == "" {
 		return nil, nil, reportError("Parameter `runID` is required when calling `GetRun`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetRun wraps GetRunWithContext using context.Background.
-
-Retrieve a single task run by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetRunRequest with parameters below.
-
-	@param runID string - Unique identifier of a task run.
-	@return Run
-*/
-func (c *APIClient) GetRun(r ApiGetRunRequest, opts ...Option) (*Run, error) {
-	return c.GetRunWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -3899,10 +3437,10 @@ Request can be constructed by NewApiGetRunRequest with parameters below.
 	@param runID string - Unique identifier of a task run.
 	@return Run
 */
-func (c *APIClient) GetRunWithContext(ctx context.Context, r ApiGetRunRequest, opts ...Option) (*Run, error) {
+func (c *APIClient) GetRun(r ApiGetRunRequest, opts ...RequestOption) (*Run, error) {
 	var returnValue *Run
 
-	res, resBody, err := c.GetRunWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetRunWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4092,7 +3630,6 @@ GetRuns calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetRunsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param status []RunStatus - Run status for filtering the list of task runs.
@@ -4101,86 +3638,58 @@ GetRuns calls the API and returns the raw response from it.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
 	  @param startDate string - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
 	  @param endDate string - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetRunsWithHTTPInfo(ctx context.Context, r ApiGetRunsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetRunsWithHTTPInfo(r ApiGetRunsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/runs"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.status) {
-		queryParams.Set("status", queryParameterToString(r.status))
+		conf.queryParams.Set("status", utils.QueryParameterToString(r.status))
 	}
 	if !utils.IsNilOrEmpty(r.taskID) {
-		queryParams.Set("taskID", queryParameterToString(*r.taskID))
+		conf.queryParams.Set("taskID", utils.QueryParameterToString(*r.taskID))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetRuns wraps GetRunsWithContext using context.Background.
-
-Retrieve a list of task runs.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetRunsRequest with parameters below.
-
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param status []RunStatus - Run status for filtering the list of task runs.
-	@param taskID string - Task ID for filtering the list of task runs.
-	@param sort RunSortKeys - Property by which to sort the list of task runs.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-	@param endDate string - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
-	@return RunListResponse
-*/
-func (c *APIClient) GetRuns(r ApiGetRunsRequest, opts ...Option) (*RunListResponse, error) {
-	return c.GetRunsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -4205,10 +3714,10 @@ Request can be constructed by NewApiGetRunsRequest with parameters below.
 	@param endDate string - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
 	@return RunListResponse
 */
-func (c *APIClient) GetRunsWithContext(ctx context.Context, r ApiGetRunsRequest, opts ...Option) (*RunListResponse, error) {
+func (c *APIClient) GetRuns(r ApiGetRunsRequest, opts ...RequestOption) (*RunListResponse, error) {
 	var returnValue *RunListResponse
 
-	res, resBody, err := c.GetRunsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetRunsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4282,60 +3791,39 @@ GetSource calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetSourceRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceID string - Unique identifier of a source.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetSourceWithHTTPInfo(ctx context.Context, r ApiGetSourceRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetSourceWithHTTPInfo(r ApiGetSourceRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/{sourceID}"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(utils.ParameterToString(r.sourceID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.sourceID == "" {
 		return nil, nil, reportError("Parameter `sourceID` is required when calling `GetSource`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetSource wraps GetSourceWithContext using context.Background.
-
-Retrieve a source by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetSourceRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@return Source
-*/
-func (c *APIClient) GetSource(r ApiGetSourceRequest, opts ...Option) (*Source, error) {
-	return c.GetSourceWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -4353,10 +3841,10 @@ Request can be constructed by NewApiGetSourceRequest with parameters below.
 	@param sourceID string - Unique identifier of a source.
 	@return Source
 */
-func (c *APIClient) GetSourceWithContext(ctx context.Context, r ApiGetSourceRequest, opts ...Option) (*Source, error) {
+func (c *APIClient) GetSource(r ApiGetSourceRequest, opts ...RequestOption) (*Source, error) {
 	var returnValue *Source
 
-	res, resBody, err := c.GetSourceWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetSourceWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4514,85 +4002,58 @@ GetSources calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetSourcesRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param type_ []SourceType - Source type. Some sources require authentication.
 	  @param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
 	  @param sort SourceSortKeys - Property by which to sort the list of sources.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetSourcesWithHTTPInfo(ctx context.Context, r ApiGetSourcesRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetSourcesWithHTTPInfo(r ApiGetSourcesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.type_) {
-		queryParams.Set("type", queryParameterToString(r.type_))
+		conf.queryParams.Set("type", utils.QueryParameterToString(r.type_))
 	}
 	if !utils.IsNilOrEmpty(r.authenticationID) {
-		queryParams.Set("authenticationID", queryParameterToString(r.authenticationID))
+		conf.queryParams.Set("authenticationID", utils.QueryParameterToString(r.authenticationID))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetSources wraps GetSourcesWithContext using context.Background.
-
-Retrieves a list of sources.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetSourcesRequest with parameters below.
-
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param type_ []SourceType - Source type. Some sources require authentication.
-	@param authenticationID []string - Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
-	@param sort SourceSortKeys - Property by which to sort the list of sources.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@return ListSourcesResponse
-*/
-func (c *APIClient) GetSources(r ApiGetSourcesRequest, opts ...Option) (*ListSourcesResponse, error) {
-	return c.GetSourcesWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -4615,10 +4076,10 @@ Request can be constructed by NewApiGetSourcesRequest with parameters below.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListSourcesResponse
 */
-func (c *APIClient) GetSourcesWithContext(ctx context.Context, r ApiGetSourcesRequest, opts ...Option) (*ListSourcesResponse, error) {
+func (c *APIClient) GetSources(r ApiGetSourcesRequest, opts ...RequestOption) (*ListSourcesResponse, error) {
 	var returnValue *ListSourcesResponse
 
-	res, resBody, err := c.GetSourcesWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetSourcesWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4692,60 +4153,39 @@ GetTask calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTaskWithHTTPInfo(ctx context.Context, r ApiGetTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetTaskWithHTTPInfo(r ApiGetTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `GetTask`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetTask wraps GetTaskWithContext using context.Background.
-
-Retrieves a task by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@return Task
-*/
-func (c *APIClient) GetTask(r ApiGetTaskRequest, opts ...Option) (*Task, error) {
-	return c.GetTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -4763,10 +4203,10 @@ Request can be constructed by NewApiGetTaskRequest with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@return Task
 */
-func (c *APIClient) GetTaskWithContext(ctx context.Context, r ApiGetTaskRequest, opts ...Option) (*Task, error) {
+func (c *APIClient) GetTask(r ApiGetTaskRequest, opts ...RequestOption) (*Task, error) {
 	var returnValue *Task
 
-	res, resBody, err := c.GetTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4972,7 +4412,6 @@ GetTasks calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetTasksRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param itemsPerPage int32 - Number of items per page.
 	  @param page int32 - Page number of the paginated API response.
 	  @param action []ActionType - Actions for filtering the list of tasks.
@@ -4982,90 +4421,61 @@ GetTasks calls the API and returns the raw response from it.
 	  @param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
 	  @param sort TaskSortKeys - Property by which to sort the list of tasks.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTasksWithHTTPInfo(ctx context.Context, r ApiGetTasksRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetTasksWithHTTPInfo(r ApiGetTasksRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.itemsPerPage) {
-		queryParams.Set("itemsPerPage", queryParameterToString(*r.itemsPerPage))
+		conf.queryParams.Set("itemsPerPage", utils.QueryParameterToString(*r.itemsPerPage))
 	}
 	if !utils.IsNilOrEmpty(r.page) {
-		queryParams.Set("page", queryParameterToString(*r.page))
+		conf.queryParams.Set("page", utils.QueryParameterToString(*r.page))
 	}
 	if !utils.IsNilOrEmpty(r.action) {
-		queryParams.Set("action", queryParameterToString(r.action))
+		conf.queryParams.Set("action", utils.QueryParameterToString(r.action))
 	}
 	if !utils.IsNilOrEmpty(r.enabled) {
-		queryParams.Set("enabled", queryParameterToString(*r.enabled))
+		conf.queryParams.Set("enabled", utils.QueryParameterToString(*r.enabled))
 	}
 	if !utils.IsNilOrEmpty(r.sourceID) {
-		queryParams.Set("sourceID", queryParameterToString(r.sourceID))
+		conf.queryParams.Set("sourceID", utils.QueryParameterToString(r.sourceID))
 	}
 	if !utils.IsNilOrEmpty(r.destinationID) {
-		queryParams.Set("destinationID", queryParameterToString(r.destinationID))
+		conf.queryParams.Set("destinationID", utils.QueryParameterToString(r.destinationID))
 	}
 	if !utils.IsNilOrEmpty(r.triggerType) {
-		queryParams.Set("triggerType", queryParameterToString(r.triggerType))
+		conf.queryParams.Set("triggerType", utils.QueryParameterToString(r.triggerType))
 	}
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetTasks wraps GetTasksWithContext using context.Background.
-
-Retrieves a list of tasks.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetTasksRequest with parameters below.
-
-	@param itemsPerPage int32 - Number of items per page.
-	@param page int32 - Page number of the paginated API response.
-	@param action []ActionType - Actions for filtering the list of tasks.
-	@param enabled bool - Whether to filter the list of tasks by the `enabled` status.
-	@param sourceID []string - Source IDs for filtering the list of tasks.
-	@param destinationID []string - Destination IDs for filtering the list of tasks.
-	@param triggerType []TriggerType - Type of task trigger for filtering the list of tasks.
-	@param sort TaskSortKeys - Property by which to sort the list of tasks.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@return ListTasksResponse
-*/
-func (c *APIClient) GetTasks(r ApiGetTasksRequest, opts ...Option) (*ListTasksResponse, error) {
-	return c.GetTasksWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5091,10 +4501,10 @@ Request can be constructed by NewApiGetTasksRequest with parameters below.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTasksResponse
 */
-func (c *APIClient) GetTasksWithContext(ctx context.Context, r ApiGetTasksRequest, opts ...Option) (*ListTasksResponse, error) {
+func (c *APIClient) GetTasks(r ApiGetTasksRequest, opts ...RequestOption) (*ListTasksResponse, error) {
 	var returnValue *ListTasksResponse
 
-	res, resBody, err := c.GetTasksWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetTasksWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5168,60 +4578,39 @@ GetTransformation calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetTransformationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationID string - Unique identifier of a transformation.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTransformationWithHTTPInfo(ctx context.Context, r ApiGetTransformationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetTransformationWithHTTPInfo(r ApiGetTransformationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/{transformationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(utils.ParameterToString(r.transformationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.transformationID == "" {
 		return nil, nil, reportError("Parameter `transformationID` is required when calling `GetTransformation`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetTransformation wraps GetTransformationWithContext using context.Background.
-
-Retrieves a transformation by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetTransformationRequest with parameters below.
-
-	@param transformationID string - Unique identifier of a transformation.
-	@return Transformation
-*/
-func (c *APIClient) GetTransformation(r ApiGetTransformationRequest, opts ...Option) (*Transformation, error) {
-	return c.GetTransformationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5239,10 +4628,10 @@ Request can be constructed by NewApiGetTransformationRequest with parameters bel
 	@param transformationID string - Unique identifier of a transformation.
 	@return Transformation
 */
-func (c *APIClient) GetTransformationWithContext(ctx context.Context, r ApiGetTransformationRequest, opts ...Option) (*Transformation, error) {
+func (c *APIClient) GetTransformation(r ApiGetTransformationRequest, opts ...RequestOption) (*Transformation, error) {
 	var returnValue *Transformation
 
-	res, resBody, err := c.GetTransformationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetTransformationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5336,65 +4725,42 @@ GetTransformations calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiGetTransformationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sort SortKeys - Property by which to sort the list.
 	  @param order OrderKeys - Sort order of the response, ascending or descending.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTransformationsWithHTTPInfo(ctx context.Context, r ApiGetTransformationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) GetTransformationsWithHTTPInfo(r ApiGetTransformationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.sort) {
-		queryParams.Set("sort", queryParameterToString(r.sort))
+		conf.queryParams.Set("sort", utils.QueryParameterToString(r.sort))
 	}
 	if !utils.IsNilOrEmpty(r.order) {
-		queryParams.Set("order", queryParameterToString(r.order))
+		conf.queryParams.Set("order", utils.QueryParameterToString(r.order))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-GetTransformations wraps GetTransformationsWithContext using context.Background.
-
-Retrieves a list of transformations.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetTransformationsRequest with parameters below.
-
-	@param sort SortKeys - Property by which to sort the list.
-	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@return ListTransformationsResponse
-*/
-func (c *APIClient) GetTransformations(r ApiGetTransformationsRequest, opts ...Option) (*ListTransformationsResponse, error) {
-	return c.GetTransformationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5413,10 +4779,10 @@ Request can be constructed by NewApiGetTransformationsRequest with parameters be
 	@param order OrderKeys - Sort order of the response, ascending or descending.
 	@return ListTransformationsResponse
 */
-func (c *APIClient) GetTransformationsWithContext(ctx context.Context, r ApiGetTransformationsRequest, opts ...Option) (*ListTransformationsResponse, error) {
+func (c *APIClient) GetTransformations(r ApiGetTransformationsRequest, opts ...RequestOption) (*ListTransformationsResponse, error) {
 	var returnValue *ListTransformationsResponse
 
-	res, resBody, err := c.GetTransformationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.GetTransformationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5490,60 +4856,39 @@ RunTask calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiRunTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) RunTaskWithHTTPInfo(ctx context.Context, r ApiRunTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) RunTaskWithHTTPInfo(r ApiRunTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}/run"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `RunTask`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-RunTask wraps RunTaskWithContext using context.Background.
-
-Runs a task. You can check the status of task runs with the observability endpoints.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiRunTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@return RunResponse
-*/
-func (c *APIClient) RunTask(r ApiRunTaskRequest, opts ...Option) (*RunResponse, error) {
-	return c.RunTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5561,10 +4906,10 @@ Request can be constructed by NewApiRunTaskRequest with parameters below.
 	@param taskID string - Unique identifier of a task.
 	@return RunResponse
 */
-func (c *APIClient) RunTaskWithContext(ctx context.Context, r ApiRunTaskRequest, opts ...Option) (*RunResponse, error) {
+func (c *APIClient) RunTask(r ApiRunTaskRequest, opts ...RequestOption) (*RunResponse, error) {
 	var returnValue *RunResponse
 
-	res, resBody, err := c.RunTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.RunTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5643,62 +4988,40 @@ SearchAuthentications calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiSearchAuthenticationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param authenticationSearch AuthenticationSearch
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) SearchAuthenticationsWithHTTPInfo(ctx context.Context, r ApiSearchAuthenticationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) SearchAuthenticationsWithHTTPInfo(r ApiSearchAuthenticationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications/search"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.authenticationSearch == nil {
 		return nil, nil, reportError("Parameter `authenticationSearch` is required when calling `SearchAuthentications`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.authenticationSearch
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-SearchAuthentications wraps SearchAuthenticationsWithContext using context.Background.
-
-Searches for authentication resources.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiSearchAuthenticationsRequest with parameters below.
-
-	@param authenticationSearch AuthenticationSearch
-	@return []Authentication
-*/
-func (c *APIClient) SearchAuthentications(r ApiSearchAuthenticationsRequest, opts ...Option) ([]Authentication, error) {
-	return c.SearchAuthenticationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5716,10 +5039,10 @@ Request can be constructed by NewApiSearchAuthenticationsRequest with parameters
 	@param authenticationSearch AuthenticationSearch
 	@return []Authentication
 */
-func (c *APIClient) SearchAuthenticationsWithContext(ctx context.Context, r ApiSearchAuthenticationsRequest, opts ...Option) ([]Authentication, error) {
+func (c *APIClient) SearchAuthentications(r ApiSearchAuthenticationsRequest, opts ...RequestOption) ([]Authentication, error) {
 	var returnValue []Authentication
 
-	res, resBody, err := c.SearchAuthenticationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.SearchAuthenticationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5798,62 +5121,40 @@ SearchDestinations calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiSearchDestinationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param destinationSearch DestinationSearch
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) SearchDestinationsWithHTTPInfo(ctx context.Context, r ApiSearchDestinationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) SearchDestinationsWithHTTPInfo(r ApiSearchDestinationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations/search"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.destinationSearch == nil {
 		return nil, nil, reportError("Parameter `destinationSearch` is required when calling `SearchDestinations`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.destinationSearch
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-SearchDestinations wraps SearchDestinationsWithContext using context.Background.
-
-Searches for destinations.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiSearchDestinationsRequest with parameters below.
-
-	@param destinationSearch DestinationSearch
-	@return []Destination
-*/
-func (c *APIClient) SearchDestinations(r ApiSearchDestinationsRequest, opts ...Option) ([]Destination, error) {
-	return c.SearchDestinationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -5871,10 +5172,10 @@ Request can be constructed by NewApiSearchDestinationsRequest with parameters be
 	@param destinationSearch DestinationSearch
 	@return []Destination
 */
-func (c *APIClient) SearchDestinationsWithContext(ctx context.Context, r ApiSearchDestinationsRequest, opts ...Option) ([]Destination, error) {
+func (c *APIClient) SearchDestinations(r ApiSearchDestinationsRequest, opts ...RequestOption) ([]Destination, error) {
 	var returnValue []Destination
 
-	res, resBody, err := c.SearchDestinationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.SearchDestinationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -5953,62 +5254,40 @@ SearchSources calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiSearchSourcesRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceSearch SourceSearch
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) SearchSourcesWithHTTPInfo(ctx context.Context, r ApiSearchSourcesRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) SearchSourcesWithHTTPInfo(r ApiSearchSourcesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/search"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.sourceSearch == nil {
 		return nil, nil, reportError("Parameter `sourceSearch` is required when calling `SearchSources`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.sourceSearch
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-SearchSources wraps SearchSourcesWithContext using context.Background.
-
-Searches for sources.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiSearchSourcesRequest with parameters below.
-
-	@param sourceSearch SourceSearch
-	@return []Source
-*/
-func (c *APIClient) SearchSources(r ApiSearchSourcesRequest, opts ...Option) ([]Source, error) {
-	return c.SearchSourcesWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6026,10 +5305,10 @@ Request can be constructed by NewApiSearchSourcesRequest with parameters below.
 	@param sourceSearch SourceSearch
 	@return []Source
 */
-func (c *APIClient) SearchSourcesWithContext(ctx context.Context, r ApiSearchSourcesRequest, opts ...Option) ([]Source, error) {
+func (c *APIClient) SearchSources(r ApiSearchSourcesRequest, opts ...RequestOption) ([]Source, error) {
 	var returnValue []Source
 
-	res, resBody, err := c.SearchSourcesWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.SearchSourcesWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6108,62 +5387,40 @@ SearchTasks calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiSearchTasksRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskSearch TaskSearch
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) SearchTasksWithHTTPInfo(ctx context.Context, r ApiSearchTasksRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) SearchTasksWithHTTPInfo(r ApiSearchTasksRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/search"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.taskSearch == nil {
 		return nil, nil, reportError("Parameter `taskSearch` is required when calling `SearchTasks`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.taskSearch
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-SearchTasks wraps SearchTasksWithContext using context.Background.
-
-Searches for tasks.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiSearchTasksRequest with parameters below.
-
-	@param taskSearch TaskSearch
-	@return []Task
-*/
-func (c *APIClient) SearchTasks(r ApiSearchTasksRequest, opts ...Option) ([]Task, error) {
-	return c.SearchTasksWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6181,10 +5438,10 @@ Request can be constructed by NewApiSearchTasksRequest with parameters below.
 	@param taskSearch TaskSearch
 	@return []Task
 */
-func (c *APIClient) SearchTasksWithContext(ctx context.Context, r ApiSearchTasksRequest, opts ...Option) ([]Task, error) {
+func (c *APIClient) SearchTasks(r ApiSearchTasksRequest, opts ...RequestOption) ([]Task, error) {
 	var returnValue []Task
 
-	res, resBody, err := c.SearchTasksWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.SearchTasksWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6263,62 +5520,40 @@ SearchTransformations calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiSearchTransformationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationSearch TransformationSearch
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) SearchTransformationsWithHTTPInfo(ctx context.Context, r ApiSearchTransformationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) SearchTransformationsWithHTTPInfo(r ApiSearchTransformationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/search"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.transformationSearch == nil {
 		return nil, nil, reportError("Parameter `transformationSearch` is required when calling `SearchTransformations`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.transformationSearch
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-SearchTransformations wraps SearchTransformationsWithContext using context.Background.
-
-Searches for transformations.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiSearchTransformationsRequest with parameters below.
-
-	@param transformationSearch TransformationSearch
-	@return []Transformation
-*/
-func (c *APIClient) SearchTransformations(r ApiSearchTransformationsRequest, opts ...Option) ([]Transformation, error) {
-	return c.SearchTransformationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6336,10 +5571,10 @@ Request can be constructed by NewApiSearchTransformationsRequest with parameters
 	@param transformationSearch TransformationSearch
 	@return []Transformation
 */
-func (c *APIClient) SearchTransformationsWithContext(ctx context.Context, r ApiSearchTransformationsRequest, opts ...Option) ([]Transformation, error) {
+func (c *APIClient) SearchTransformations(r ApiSearchTransformationsRequest, opts ...RequestOption) ([]Transformation, error) {
 	var returnValue []Transformation
 
-	res, resBody, err := c.SearchTransformationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.SearchTransformationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6415,61 +5650,39 @@ Triggering stream-listing requests only works with sources with `type: docker` a
 	    - editSettings
 
 	Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceID string - Unique identifier of a source.
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) TriggerDockerSourceDiscoverWithHTTPInfo(ctx context.Context, r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) TriggerDockerSourceDiscoverWithHTTPInfo(r ApiTriggerDockerSourceDiscoverRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/{sourceID}/discover"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(utils.ParameterToString(r.sourceID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.sourceID == "" {
 		return nil, nil, reportError("Parameter `sourceID` is required when calling `TriggerDockerSourceDiscover`.")
 	}
 
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-TriggerDockerSourceDiscover wraps TriggerDockerSourceDiscoverWithContext using context.Background.
-
-Triggers a stream-listing request for a source.
-Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@return SourceWatchResponse
-*/
-func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*SourceWatchResponse, error) {
-	return c.TriggerDockerSourceDiscoverWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6488,10 +5701,10 @@ Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with para
 	@param sourceID string - Unique identifier of a source.
 	@return SourceWatchResponse
 */
-func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*SourceWatchResponse, error) {
+func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscoverRequest, opts ...RequestOption) (*SourceWatchResponse, error) {
 	var returnValue *SourceWatchResponse
 
-	res, resBody, err := c.TriggerDockerSourceDiscoverWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.TriggerDockerSourceDiscoverWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6570,62 +5783,40 @@ TryTransformations calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiTryTransformationsRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationTry TransformationTry
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) TryTransformationsWithHTTPInfo(ctx context.Context, r ApiTryTransformationsRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) TryTransformationsWithHTTPInfo(r ApiTryTransformationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/try"
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 
 	if r.transformationTry == nil {
 		return nil, nil, reportError("Parameter `transformationTry` is required when calling `TryTransformations`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.transformationTry
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-TryTransformations wraps TryTransformationsWithContext using context.Background.
-
-Try a transformation.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiTryTransformationsRequest with parameters below.
-
-	@param transformationTry TransformationTry
-	@return TransformationTryResponse
-*/
-func (c *APIClient) TryTransformations(r ApiTryTransformationsRequest, opts ...Option) (*TransformationTryResponse, error) {
-	return c.TryTransformationsWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6643,10 +5834,10 @@ Request can be constructed by NewApiTryTransformationsRequest with parameters be
 	@param transformationTry TransformationTry
 	@return TransformationTryResponse
 */
-func (c *APIClient) TryTransformationsWithContext(ctx context.Context, r ApiTryTransformationsRequest, opts ...Option) (*TransformationTryResponse, error) {
+func (c *APIClient) TryTransformations(r ApiTryTransformationsRequest, opts ...RequestOption) (*TransformationTryResponse, error) {
 	var returnValue *TransformationTryResponse
 
-	res, resBody, err := c.TryTransformationsWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.TryTransformationsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6736,22 +5927,17 @@ UpdateAuthentication calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiUpdateAuthenticationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param authenticationID string - Unique identifier of an authentication resource.
 	  @param authenticationUpdate AuthenticationUpdate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) UpdateAuthenticationWithHTTPInfo(ctx context.Context, r ApiUpdateAuthenticationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) UpdateAuthenticationWithHTTPInfo(r ApiUpdateAuthenticationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/authentications/{authenticationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(parameterToString(r.authenticationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{authenticationID}", url.PathEscape(utils.ParameterToString(r.authenticationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.authenticationID == "" {
 		return nil, nil, reportError("Parameter `authenticationID` is required when calling `UpdateAuthentication`.")
 	}
@@ -6760,44 +5946,27 @@ func (c *APIClient) UpdateAuthenticationWithHTTPInfo(ctx context.Context, r ApiU
 		return nil, nil, reportError("Parameter `authenticationUpdate` is required when calling `UpdateAuthentication`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.authenticationUpdate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPatch, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPatch, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-UpdateAuthentication wraps UpdateAuthenticationWithContext using context.Background.
-
-Updates an authentication resource.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiUpdateAuthenticationRequest with parameters below.
-
-	@param authenticationID string - Unique identifier of an authentication resource.
-	@param authenticationUpdate AuthenticationUpdate
-	@return AuthenticationUpdateResponse
-*/
-func (c *APIClient) UpdateAuthentication(r ApiUpdateAuthenticationRequest, opts ...Option) (*AuthenticationUpdateResponse, error) {
-	return c.UpdateAuthenticationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6816,10 +5985,10 @@ Request can be constructed by NewApiUpdateAuthenticationRequest with parameters 
 	@param authenticationUpdate AuthenticationUpdate
 	@return AuthenticationUpdateResponse
 */
-func (c *APIClient) UpdateAuthenticationWithContext(ctx context.Context, r ApiUpdateAuthenticationRequest, opts ...Option) (*AuthenticationUpdateResponse, error) {
+func (c *APIClient) UpdateAuthentication(r ApiUpdateAuthenticationRequest, opts ...RequestOption) (*AuthenticationUpdateResponse, error) {
 	var returnValue *AuthenticationUpdateResponse
 
-	res, resBody, err := c.UpdateAuthenticationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.UpdateAuthenticationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -6909,22 +6078,17 @@ UpdateDestination calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiUpdateDestinationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param destinationID string - Unique identifier of a destination.
 	  @param destinationUpdate DestinationUpdate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) UpdateDestinationWithHTTPInfo(ctx context.Context, r ApiUpdateDestinationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) UpdateDestinationWithHTTPInfo(r ApiUpdateDestinationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/destinations/{destinationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(parameterToString(r.destinationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{destinationID}", url.PathEscape(utils.ParameterToString(r.destinationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.destinationID == "" {
 		return nil, nil, reportError("Parameter `destinationID` is required when calling `UpdateDestination`.")
 	}
@@ -6933,44 +6097,27 @@ func (c *APIClient) UpdateDestinationWithHTTPInfo(ctx context.Context, r ApiUpda
 		return nil, nil, reportError("Parameter `destinationUpdate` is required when calling `UpdateDestination`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.destinationUpdate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPatch, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPatch, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-UpdateDestination wraps UpdateDestinationWithContext using context.Background.
-
-Updates the destination by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiUpdateDestinationRequest with parameters below.
-
-	@param destinationID string - Unique identifier of a destination.
-	@param destinationUpdate DestinationUpdate
-	@return DestinationUpdateResponse
-*/
-func (c *APIClient) UpdateDestination(r ApiUpdateDestinationRequest, opts ...Option) (*DestinationUpdateResponse, error) {
-	return c.UpdateDestinationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -6989,10 +6136,10 @@ Request can be constructed by NewApiUpdateDestinationRequest with parameters bel
 	@param destinationUpdate DestinationUpdate
 	@return DestinationUpdateResponse
 */
-func (c *APIClient) UpdateDestinationWithContext(ctx context.Context, r ApiUpdateDestinationRequest, opts ...Option) (*DestinationUpdateResponse, error) {
+func (c *APIClient) UpdateDestination(r ApiUpdateDestinationRequest, opts ...RequestOption) (*DestinationUpdateResponse, error) {
 	var returnValue *DestinationUpdateResponse
 
-	res, resBody, err := c.UpdateDestinationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.UpdateDestinationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -7082,22 +6229,17 @@ UpdateSource calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiUpdateSourceRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceID string - Unique identifier of a source.
 	  @param sourceUpdate SourceUpdate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) UpdateSourceWithHTTPInfo(ctx context.Context, r ApiUpdateSourceRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) UpdateSourceWithHTTPInfo(r ApiUpdateSourceRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/{sourceID}"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(utils.ParameterToString(r.sourceID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.sourceID == "" {
 		return nil, nil, reportError("Parameter `sourceID` is required when calling `UpdateSource`.")
 	}
@@ -7106,44 +6248,27 @@ func (c *APIClient) UpdateSourceWithHTTPInfo(ctx context.Context, r ApiUpdateSou
 		return nil, nil, reportError("Parameter `sourceUpdate` is required when calling `UpdateSource`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.sourceUpdate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPatch, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPatch, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-UpdateSource wraps UpdateSourceWithContext using context.Background.
-
-Updates a source by its ID.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiUpdateSourceRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@param sourceUpdate SourceUpdate
-	@return SourceUpdateResponse
-*/
-func (c *APIClient) UpdateSource(r ApiUpdateSourceRequest, opts ...Option) (*SourceUpdateResponse, error) {
-	return c.UpdateSourceWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -7162,10 +6287,10 @@ Request can be constructed by NewApiUpdateSourceRequest with parameters below.
 	@param sourceUpdate SourceUpdate
 	@return SourceUpdateResponse
 */
-func (c *APIClient) UpdateSourceWithContext(ctx context.Context, r ApiUpdateSourceRequest, opts ...Option) (*SourceUpdateResponse, error) {
+func (c *APIClient) UpdateSource(r ApiUpdateSourceRequest, opts ...RequestOption) (*SourceUpdateResponse, error) {
 	var returnValue *SourceUpdateResponse
 
-	res, resBody, err := c.UpdateSourceWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.UpdateSourceWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -7251,22 +6376,17 @@ UpdateTask calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiUpdateTaskRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param taskID string - Unique identifier of a task.
 	  @param taskUpdate TaskUpdate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) UpdateTaskWithHTTPInfo(ctx context.Context, r ApiUpdateTaskRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) UpdateTaskWithHTTPInfo(r ApiUpdateTaskRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/tasks/{taskID}"
-	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(parameterToString(r.taskID)))
+	requestPath = strings.ReplaceAll(requestPath, "{taskID}", url.PathEscape(utils.ParameterToString(r.taskID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.taskID == "" {
 		return nil, nil, reportError("Parameter `taskID` is required when calling `UpdateTask`.")
 	}
@@ -7275,39 +6395,27 @@ func (c *APIClient) UpdateTaskWithHTTPInfo(ctx context.Context, r ApiUpdateTaskR
 		return nil, nil, reportError("Parameter `taskUpdate` is required when calling `UpdateTask`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.taskUpdate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPatch, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPatch, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-UpdateTask wraps UpdateTaskWithContext using context.Background.
-
-Updates a task by its ID.
-
-Request can be constructed by NewApiUpdateTaskRequest with parameters below.
-
-	@param taskID string - Unique identifier of a task.
-	@param taskUpdate TaskUpdate
-	@return TaskUpdateResponse
-*/
-func (c *APIClient) UpdateTask(r ApiUpdateTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
-	return c.UpdateTaskWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -7321,10 +6429,10 @@ Request can be constructed by NewApiUpdateTaskRequest with parameters below.
 	@param taskUpdate TaskUpdate
 	@return TaskUpdateResponse
 */
-func (c *APIClient) UpdateTaskWithContext(ctx context.Context, r ApiUpdateTaskRequest, opts ...Option) (*TaskUpdateResponse, error) {
+func (c *APIClient) UpdateTask(r ApiUpdateTaskRequest, opts ...RequestOption) (*TaskUpdateResponse, error) {
 	var returnValue *TaskUpdateResponse
 
-	res, resBody, err := c.UpdateTaskWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.UpdateTaskWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -7410,22 +6518,17 @@ UpdateTransformation calls the API and returns the raw response from it.
 
 
 	Request can be constructed by NewApiUpdateTransformationRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param transformationID string - Unique identifier of a transformation.
 	  @param transformationCreate TransformationCreate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) UpdateTransformationWithHTTPInfo(ctx context.Context, r ApiUpdateTransformationRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) UpdateTransformationWithHTTPInfo(r ApiUpdateTransformationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/{transformationID}"
-	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(utils.ParameterToString(r.transformationID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.transformationID == "" {
 		return nil, nil, reportError("Parameter `transformationID` is required when calling `UpdateTransformation`.")
 	}
@@ -7434,39 +6537,27 @@ func (c *APIClient) UpdateTransformationWithHTTPInfo(ctx context.Context, r ApiU
 		return nil, nil, reportError("Parameter `transformationCreate` is required when calling `UpdateTransformation`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.transformationCreate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-UpdateTransformation wraps UpdateTransformationWithContext using context.Background.
-
-Updates a transformation by its ID.
-
-Request can be constructed by NewApiUpdateTransformationRequest with parameters below.
-
-	@param transformationID string - Unique identifier of a transformation.
-	@param transformationCreate TransformationCreate
-	@return TransformationUpdateResponse
-*/
-func (c *APIClient) UpdateTransformation(r ApiUpdateTransformationRequest, opts ...Option) (*TransformationUpdateResponse, error) {
-	return c.UpdateTransformationWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -7480,10 +6571,10 @@ Request can be constructed by NewApiUpdateTransformationRequest with parameters 
 	@param transformationCreate TransformationCreate
 	@return TransformationUpdateResponse
 */
-func (c *APIClient) UpdateTransformationWithContext(ctx context.Context, r ApiUpdateTransformationRequest, opts ...Option) (*TransformationUpdateResponse, error) {
+func (c *APIClient) UpdateTransformation(r ApiUpdateTransformationRequest, opts ...RequestOption) (*TransformationUpdateResponse, error) {
 	var returnValue *TransformationUpdateResponse
 
-	res, resBody, err := c.UpdateTransformationWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.UpdateTransformationWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -7562,30 +6653,27 @@ ValidateSource calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiValidateSourceRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceCreate SourceCreate -
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) ValidateSourceWithHTTPInfo(ctx context.Context, r ApiValidateSourceRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) ValidateSourceWithHTTPInfo(r ApiValidateSourceRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/validate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.sourceCreate) {
@@ -7593,31 +6681,12 @@ func (c *APIClient) ValidateSourceWithHTTPInfo(ctx context.Context, r ApiValidat
 	} else {
 		postBody = r.sourceCreate
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-ValidateSource wraps ValidateSourceWithContext using context.Background.
-
-Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiValidateSourceRequest with parameters below.
-
-	@param sourceCreate SourceCreate -
-	@return SourceWatchResponse
-*/
-func (c *APIClient) ValidateSource(r ApiValidateSourceRequest, opts ...Option) (*SourceWatchResponse, error) {
-	return c.ValidateSourceWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -7635,10 +6704,10 @@ Request can be constructed by NewApiValidateSourceRequest with parameters below.
 	@param sourceCreate SourceCreate -
 	@return SourceWatchResponse
 */
-func (c *APIClient) ValidateSourceWithContext(ctx context.Context, r ApiValidateSourceRequest, opts ...Option) (*SourceWatchResponse, error) {
+func (c *APIClient) ValidateSource(r ApiValidateSourceRequest, opts ...RequestOption) (*SourceWatchResponse, error) {
 	var returnValue *SourceWatchResponse
 
-	res, resBody, err := c.ValidateSourceWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.ValidateSourceWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -7729,22 +6798,17 @@ ValidateSourceBeforeUpdate calls the API and returns the raw response from it.
 	    - editSettings
 
 	Request can be constructed by NewApiValidateSourceBeforeUpdateRequest with parameters below.
-	@param ctx context.Context - Context of the request
 	  @param sourceID string - Unique identifier of a source.
 	  @param sourceUpdate SourceUpdate
-	@param opts ...Option - Optional parameters for the API call
+	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) ValidateSourceBeforeUpdateWithHTTPInfo(ctx context.Context, r ApiValidateSourceBeforeUpdateRequest, opts ...Option) (*http.Response, []byte, error) {
-	var postBody any
-
+func (c *APIClient) ValidateSourceBeforeUpdateWithHTTPInfo(r ApiValidateSourceBeforeUpdateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/sources/{sourceID}/validate"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(utils.ParameterToString(r.sourceID)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.sourceID == "" {
 		return nil, nil, reportError("Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`.")
 	}
@@ -7753,44 +6817,27 @@ func (c *APIClient) ValidateSourceBeforeUpdateWithHTTPInfo(ctx context.Context, 
 		return nil, nil, reportError("Parameter `sourceUpdate` is required when calling `ValidateSourceBeforeUpdate`.")
 	}
 
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.sourceUpdate
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return c.callAPI(req, false)
-}
-
-/*
-ValidateSourceBeforeUpdate wraps ValidateSourceBeforeUpdateWithContext using context.Background.
-
-Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiValidateSourceBeforeUpdateRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@param sourceUpdate SourceUpdate
-	@return SourceWatchResponse
-*/
-func (c *APIClient) ValidateSourceBeforeUpdate(r ApiValidateSourceBeforeUpdateRequest, opts ...Option) (*SourceWatchResponse, error) {
-	return c.ValidateSourceBeforeUpdateWithContext(context.Background(), r, opts...)
 }
 
 /*
@@ -7809,10 +6856,10 @@ Request can be constructed by NewApiValidateSourceBeforeUpdateRequest with param
 	@param sourceUpdate SourceUpdate
 	@return SourceWatchResponse
 */
-func (c *APIClient) ValidateSourceBeforeUpdateWithContext(ctx context.Context, r ApiValidateSourceBeforeUpdateRequest, opts ...Option) (*SourceWatchResponse, error) {
+func (c *APIClient) ValidateSourceBeforeUpdate(r ApiValidateSourceBeforeUpdateRequest, opts ...RequestOption) (*SourceWatchResponse, error) {
 	var returnValue *SourceWatchResponse
 
-	res, resBody, err := c.ValidateSourceBeforeUpdateWithHTTPInfo(ctx, r, opts...)
+	res, resBody, err := c.ValidateSourceBeforeUpdateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}

@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class {{client}}RequestTestsE2E
 {
-private readonly {{client}} _client;
+private readonly {{client}} client;
 
   public {{client}}RequestTestsE2E()
   {
@@ -32,7 +32,7 @@ private readonly {{client}} _client;
       throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
     }
 
-    _client = new {{client}}(new {{clientPrefix}}Config(appId, apiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
+    client = new {{client}}(new {{clientPrefix}}Config(appId, apiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
   }
 
   [Fact]
@@ -47,14 +47,7 @@ private readonly {{client}} _client;
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
       try {
-        var resp = await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-          {{#requestOptions.queryParameters}}
-            QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
-          {{/requestOptions.queryParameters}}
-          {{#requestOptions.headers}}
-            Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
-          {{/requestOptions.headers}}
-        }{{/hasRequestOptions}});
+        var resp = {{> tests/method}};
       {{#response}}
       {{#statusCode}}
           // Check status code {{statusCode}}

@@ -101,8 +101,8 @@ func TestRecommend_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			recommend.QueryParamOption("query", "parameters with space"), recommend.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), recommend.HeaderParamOption("x-header-1", "spaces are left alone"),
+			recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -162,7 +162,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("query", "myQueryParameter"),
+			recommend.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -182,7 +182,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("query2", "myQueryParameter"),
+			recommend.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -202,7 +202,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			recommend.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -227,7 +227,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			recommend.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -252,7 +252,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("isItWorking", true),
+			recommend.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -272,7 +272,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("myParam", 2),
+			recommend.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -292,7 +292,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("myParam",
+			recommend.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -313,7 +313,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("myParam",
+			recommend.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -334,7 +334,7 @@ func TestRecommend_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			recommend.QueryParamOption("myParam",
+			recommend.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

@@ -481,8 +481,8 @@ func TestSearch_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			search.QueryParamOption("query", "parameters with space"), search.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), search.HeaderParamOption("x-header-1", "spaces are left alone"),
+			search.WithQueryParam("query", "parameters with space"), search.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), search.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -542,7 +542,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("query", "myQueryParameter"),
+			search.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -562,7 +562,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("query2", "myQueryParameter"),
+			search.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -582,7 +582,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			search.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -607,7 +607,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			search.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -632,7 +632,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("isItWorking", true),
+			search.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -652,7 +652,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("myParam", 2),
+			search.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -672,7 +672,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("myParam",
+			search.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -693,7 +693,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("myParam",
+			search.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -714,7 +714,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			search.QueryParamOption("myParam",
+			search.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

@@ -39,21 +39,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   
   test("{{{testName}}}{{testIndex}}") {
     val (client, echo) = testClient()
-    val future = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
-    {{#parametersWithDataType}}
-    {{> tests/request_param}}{{^-last}},{{/-last}}
-    {{/parametersWithDataType}}    
-    {{#hasRequestOptions}}
-    , requestOptions = Some(RequestOptions.builder()
-    {{#requestOptions.queryParameters.parametersWithDataType}}
-      .withQueryParameter("{{{key}}}", {{> tests/requests/requestOptionsParams}})
-    {{/requestOptions.queryParameters.parametersWithDataType}}
-    {{#requestOptions.headers.parametersWithDataType}}
-      .withHeader("{{{key}}}", "{{{value}}}")
-    {{/requestOptions.headers.parametersWithDataType}}
-      .build())
-    {{/hasRequestOptions}}
-    )
+    val future = {{> tests/method}}
 
     {{#request}}
     Await.ready(future, Duration.Inf)

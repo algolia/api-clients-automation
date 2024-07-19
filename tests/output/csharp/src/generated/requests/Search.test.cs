@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class SearchClientRequestTests
 {
-  private readonly SearchClient _client;
+  private readonly SearchClient client;
   private readonly EchoHttpRequester _echo;
 
   public SearchClientRequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "addApiKey")]
   public async Task AddApiKeyTest()
   {
-    await _client.AddApiKeyAsync(
+    await client.AddApiKeyAsync(
       new ApiKey
       {
         Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
@@ -53,7 +53,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "addOrUpdateObject")]
   public async Task AddOrUpdateObjectTest()
   {
-    await _client.AddOrUpdateObjectAsync(
+    await client.AddOrUpdateObjectAsync(
       "indexName",
       "uniqueID",
       new Dictionary<string, string> { { "key", "value" } }
@@ -68,7 +68,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "appendSource")]
   public async Task AppendSourceTest()
   {
-    await _client.AppendSourceAsync(
+    await client.AppendSourceAsync(
       new Source { VarSource = "theSource", Description = "theDescription", }
     );
 
@@ -85,7 +85,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "assignUserId")]
   public async Task AssignUserIdTest()
   {
-    await _client.AssignUserIdAsync("userID", new AssignUserIdParams { Cluster = "theCluster", });
+    await client.AssignUserIdAsync("userID", new AssignUserIdParams { Cluster = "theCluster", });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping", req.Path);
@@ -110,7 +110,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "it should not encode the userID")]
   public async Task AssignUserIdTest1()
   {
-    await _client.AssignUserIdAsync(
+    await client.AssignUserIdAsync(
       "user id with spaces",
       new AssignUserIdParams { Cluster = "cluster with spaces", }
     );
@@ -138,7 +138,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "addObject")]
   public async Task BatchTest()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -171,7 +171,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "clear")]
   public async Task BatchTest1()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -199,7 +199,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "delete")]
   public async Task BatchTest2()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -227,7 +227,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteObject")]
   public async Task BatchTest3()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -255,7 +255,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "partialUpdateObject")]
   public async Task BatchTest4()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -283,7 +283,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "partialUpdateObjectNoCreate")]
   public async Task BatchTest5()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -311,7 +311,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "updateObject")]
   public async Task BatchTest6()
   {
-    await _client.BatchAsync(
+    await client.BatchAsync(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
@@ -339,7 +339,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "batchAssignUserIds")]
   public async Task BatchAssignUserIdsTest()
   {
-    await _client.BatchAssignUserIdsAsync(
+    await client.BatchAssignUserIdsAsync(
       "userID",
       new BatchAssignUserIdsParams
       {
@@ -371,7 +371,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "replace")]
   public async Task BatchDictionaryEntriesTest()
   {
-    await _client.BatchDictionaryEntriesAsync(
+    await client.BatchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Plurals"),
       new BatchDictionaryEntriesParams
       {
@@ -408,7 +408,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "delete")]
   public async Task BatchDictionaryEntriesTest1()
   {
-    await _client.BatchDictionaryEntriesAsync(
+    await client.BatchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Plurals"),
       new BatchDictionaryEntriesParams
       {
@@ -445,7 +445,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "append")]
   public async Task BatchDictionaryEntriesTest2()
   {
-    await _client.BatchDictionaryEntriesAsync(
+    await client.BatchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Stopwords"),
       new BatchDictionaryEntriesParams
       {
@@ -478,7 +478,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse with minimal parameters")]
   public async Task BrowseTest()
   {
-    await _client.BrowseAsync<Hit>("cts_e2e_browse");
+    await client.BrowseAsync<Hit>("cts_e2e_browse");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_browse/browse", req.Path);
@@ -489,7 +489,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse with search parameters")]
   public async Task BrowseTest1()
   {
-    await _client.BrowseAsync<Hit>(
+    await client.BrowseAsync<Hit>(
       "indexName",
       new BrowseParams(
         new BrowseParamsObject
@@ -515,7 +515,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "browse allow a cursor in parameters")]
   public async Task BrowseTest2()
   {
-    await _client.BrowseAsync<Hit>(
+    await client.BrowseAsync<Hit>(
       "indexName",
       new BrowseParams(new BrowseParamsObject { Cursor = "test", })
     );
@@ -529,7 +529,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "clearObjects")]
   public async Task ClearObjectsTest()
   {
-    await _client.ClearObjectsAsync("theIndexName");
+    await client.ClearObjectsAsync("theIndexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/clear", req.Path);
@@ -540,7 +540,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "clearRules")]
   public async Task ClearRulesTest()
   {
-    await _client.ClearRulesAsync("indexName");
+    await client.ClearRulesAsync("indexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/clear", req.Path);
@@ -551,7 +551,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "clearSynonyms")]
   public async Task ClearSynonymsTest()
   {
-    await _client.ClearSynonymsAsync("indexName");
+    await client.ClearSynonymsAsync("indexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/clear", req.Path);
@@ -562,7 +562,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
-    await _client.CustomDeleteAsync("test/minimal");
+    await client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -573,7 +573,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    await _client.CustomDeleteAsync(
+    await client.CustomDeleteAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
@@ -600,7 +600,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest()
   {
-    await _client.CustomGetAsync("test/minimal");
+    await client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -611,7 +611,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
@@ -638,7 +638,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions should be escaped too")]
   public async Task CustomGetTest2()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
@@ -680,7 +680,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest()
   {
-    await _client.CustomPostAsync("test/minimal");
+    await client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -691,7 +691,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -723,7 +723,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -752,7 +752,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -781,7 +781,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -820,7 +820,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -859,7 +859,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -888,7 +888,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -917,7 +917,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -948,7 +948,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -979,7 +979,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -1010,7 +1010,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest()
   {
-    await _client.CustomPutAsync("test/minimal");
+    await client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -1021,7 +1021,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    await _client.CustomPutAsync(
+    await client.CustomPutAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -1053,7 +1053,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteApiKey")]
   public async Task DeleteApiKeyTest()
   {
-    await _client.DeleteApiKeyAsync("myTestApiKey");
+    await client.DeleteApiKeyAsync("myTestApiKey");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/keys/myTestApiKey", req.Path);
@@ -1064,10 +1064,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteBy")]
   public async Task DeleteByTest()
   {
-    await _client.DeleteByAsync(
-      "theIndexName",
-      new DeleteByParams { Filters = "brand:brandName", }
-    );
+    await client.DeleteByAsync("theIndexName", new DeleteByParams { Filters = "brand:brandName", });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/deleteByQuery", req.Path);
@@ -1082,7 +1079,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteIndex")]
   public async Task DeleteIndexTest()
   {
-    await _client.DeleteIndexAsync("theIndexName");
+    await client.DeleteIndexAsync("theIndexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName", req.Path);
@@ -1093,7 +1090,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteObject")]
   public async Task DeleteObjectTest()
   {
-    await _client.DeleteObjectAsync("<YOUR_INDEX_NAME>", "uniqueID");
+    await client.DeleteObjectAsync("<YOUR_INDEX_NAME>", "uniqueID");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID", req.Path);
@@ -1104,7 +1101,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "delete rule simple case")]
   public async Task DeleteRuleTest()
   {
-    await _client.DeleteRuleAsync("indexName", "id1");
+    await client.DeleteRuleAsync("indexName", "id1");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/id1", req.Path);
@@ -1115,7 +1112,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "delete rule with simple characters to encode in objectID")]
   public async Task DeleteRuleTest1()
   {
-    await _client.DeleteRuleAsync("indexName", "test/with/slash");
+    await client.DeleteRuleAsync("indexName", "test/with/slash");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/test%2Fwith%2Fslash", req.Path);
@@ -1126,7 +1123,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteSource")]
   public async Task DeleteSourceTest()
   {
-    await _client.DeleteSourceAsync("theSource");
+    await client.DeleteSourceAsync("theSource");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/security/sources/theSource", req.Path);
@@ -1137,7 +1134,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "deleteSynonym")]
   public async Task DeleteSynonymTest()
   {
-    await _client.DeleteSynonymAsync("indexName", "id1");
+    await client.DeleteSynonymAsync("indexName", "id1");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/id1", req.Path);
@@ -1148,7 +1145,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getApiKey")]
   public async Task GetApiKeyTest()
   {
-    await _client.GetApiKeyAsync("myTestApiKey");
+    await client.GetApiKeyAsync("myTestApiKey");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/keys/myTestApiKey", req.Path);
@@ -1159,7 +1156,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getAppTask")]
   public async Task GetAppTaskTest()
   {
-    await _client.GetAppTaskAsync(123L);
+    await client.GetAppTaskAsync(123L);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/task/123", req.Path);
@@ -1170,7 +1167,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get getDictionaryLanguages")]
   public async Task GetDictionaryLanguagesTest()
   {
-    await _client.GetDictionaryLanguagesAsync();
+    await client.GetDictionaryLanguagesAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/dictionaries/*/languages", req.Path);
@@ -1181,7 +1178,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get getDictionarySettings results")]
   public async Task GetDictionarySettingsTest()
   {
-    await _client.GetDictionarySettingsAsync();
+    await client.GetDictionarySettingsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/dictionaries/*/settings", req.Path);
@@ -1192,7 +1189,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getLogs with minimal parameters")]
   public async Task GetLogsTest()
   {
-    await _client.GetLogsAsync();
+    await client.GetLogsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/logs", req.Path);
@@ -1203,7 +1200,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getLogs with parameters")]
   public async Task GetLogsTest1()
   {
-    await _client.GetLogsAsync(5, 10, "theIndexName", Enum.Parse<LogType>("All"));
+    await client.GetLogsAsync(5, 10, "theIndexName", Enum.Parse<LogType>("All"));
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/logs", req.Path);
@@ -1227,7 +1224,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getObject")]
   public async Task GetObjectTest()
   {
-    await _client.GetObjectAsync("theIndexName", "uniqueID", new List<string> { "attr1", "attr2" });
+    await client.GetObjectAsync("theIndexName", "uniqueID", new List<string> { "attr1", "attr2" });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/uniqueID", req.Path);
@@ -1251,7 +1248,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getObjects")]
   public async Task GetObjectsTest()
   {
-    await _client.GetObjectsAsync<Hit>(
+    await client.GetObjectsAsync<Hit>(
       new GetObjectsParams
       {
         Requests = new List<GetObjectsRequest>
@@ -1279,7 +1276,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getRule")]
   public async Task GetRuleTest()
   {
-    await _client.GetRuleAsync("indexName", "id1");
+    await client.GetRuleAsync("indexName", "id1");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/id1", req.Path);
@@ -1290,7 +1287,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getSettings")]
   public async Task GetSettingsTest()
   {
-    await _client.GetSettingsAsync("cts_e2e_settings");
+    await client.GetSettingsAsync("cts_e2e_settings");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_settings/settings", req.Path);
@@ -1301,7 +1298,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getSources")]
   public async Task GetSourcesTest()
   {
-    await _client.GetSourcesAsync();
+    await client.GetSourcesAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/security/sources", req.Path);
@@ -1312,7 +1309,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getSynonym")]
   public async Task GetSynonymTest()
   {
-    await _client.GetSynonymAsync("indexName", "id1");
+    await client.GetSynonymAsync("indexName", "id1");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/id1", req.Path);
@@ -1323,7 +1320,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getTask")]
   public async Task GetTaskTest()
   {
-    await _client.GetTaskAsync("theIndexName", 123L);
+    await client.GetTaskAsync("theIndexName", 123L);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/task/123", req.Path);
@@ -1334,7 +1331,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getTopUserIds")]
   public async Task GetTopUserIdsTest()
   {
-    await _client.GetTopUserIdsAsync();
+    await client.GetTopUserIdsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping/top", req.Path);
@@ -1345,7 +1342,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getUserId")]
   public async Task GetUserIdTest()
   {
-    await _client.GetUserIdAsync("uniqueID");
+    await client.GetUserIdAsync("uniqueID");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping/uniqueID", req.Path);
@@ -1356,7 +1353,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "hasPendingMappings with minimal parameters")]
   public async Task HasPendingMappingsTest()
   {
-    await _client.HasPendingMappingsAsync();
+    await client.HasPendingMappingsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping/pending", req.Path);
@@ -1367,7 +1364,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "hasPendingMappings with parameters")]
   public async Task HasPendingMappingsTest1()
   {
-    await _client.HasPendingMappingsAsync(true);
+    await client.HasPendingMappingsAsync(true);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping/pending", req.Path);
@@ -1391,7 +1388,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listApiKeys")]
   public async Task ListApiKeysTest()
   {
-    await _client.ListApiKeysAsync();
+    await client.ListApiKeysAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/keys", req.Path);
@@ -1402,7 +1399,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listClusters")]
   public async Task ListClustersTest()
   {
-    await _client.ListClustersAsync();
+    await client.ListClustersAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters", req.Path);
@@ -1413,7 +1410,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listIndices with minimal parameters")]
   public async Task ListIndicesTest()
   {
-    await _client.ListIndicesAsync();
+    await client.ListIndicesAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes", req.Path);
@@ -1424,7 +1421,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listIndices with parameters")]
   public async Task ListIndicesTest1()
   {
-    await _client.ListIndicesAsync(8, 3);
+    await client.ListIndicesAsync(8, 3);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes", req.Path);
@@ -1448,7 +1445,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listUserIds with minimal parameters")]
   public async Task ListUserIdsTest()
   {
-    await _client.ListUserIdsAsync();
+    await client.ListUserIdsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping", req.Path);
@@ -1459,7 +1456,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "listUserIds with parameters")]
   public async Task ListUserIdsTest1()
   {
-    await _client.ListUserIdsAsync(8, 100);
+    await client.ListUserIdsAsync(8, 100);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping", req.Path);
@@ -1483,7 +1480,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "multipleBatch")]
   public async Task MultipleBatchTest()
   {
-    await _client.MultipleBatchAsync(
+    await client.MultipleBatchAsync(
       new BatchParams
       {
         Requests = new List<MultipleBatchRequest>
@@ -1511,7 +1508,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "scopes")]
   public async Task OperationIndexTest()
   {
-    await _client.OperationIndexAsync(
+    await client.OperationIndexAsync(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams
       {
@@ -1538,7 +1535,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "copy")]
   public async Task OperationIndexTest1()
   {
-    await _client.OperationIndexAsync(
+    await client.OperationIndexAsync(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams
       {
@@ -1560,7 +1557,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "move")]
   public async Task OperationIndexTest2()
   {
-    await _client.OperationIndexAsync(
+    await client.OperationIndexAsync(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams
       {
@@ -1582,7 +1579,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "partialUpdateObject")]
   public async Task PartialUpdateObjectTest()
   {
-    await _client.PartialUpdateObjectAsync(
+    await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
       new Dictionary<string, AttributeToUpdate>
@@ -1628,7 +1625,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "removeUserId")]
   public async Task RemoveUserIdTest()
   {
-    await _client.RemoveUserIdAsync("uniqueID");
+    await client.RemoveUserIdAsync("uniqueID");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/clusters/mapping/uniqueID", req.Path);
@@ -1639,7 +1636,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "replaceSources")]
   public async Task ReplaceSourcesTest()
   {
-    await _client.ReplaceSourcesAsync(
+    await client.ReplaceSourcesAsync(
       new List<Source>
       {
         new Source { VarSource = "theSource", Description = "theDescription", }
@@ -1659,7 +1656,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "restoreApiKey")]
   public async Task RestoreApiKeyTest()
   {
-    await _client.RestoreApiKeyAsync("myApiKey");
+    await client.RestoreApiKeyAsync("myApiKey");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/keys/myApiKey/restore", req.Path);
@@ -1670,7 +1667,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveObject")]
   public async Task SaveObjectTest()
   {
-    await _client.SaveObjectAsync(
+    await client.SaveObjectAsync(
       "<YOUR_INDEX_NAME>",
       new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
     );
@@ -1688,7 +1685,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveRule with minimal parameters")]
   public async Task SaveRuleTest()
   {
-    await _client.SaveRuleAsync(
+    await client.SaveRuleAsync(
       "indexName",
       "id1",
       new Rule
@@ -1714,7 +1711,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveRule with all parameters")]
   public async Task SaveRuleTest1()
   {
-    await _client.SaveRuleAsync(
+    await client.SaveRuleAsync(
       "indexName",
       "id1",
       new Rule
@@ -1808,7 +1805,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveRules with minimal parameters")]
   public async Task SaveRulesTest()
   {
-    await _client.SaveRulesAsync(
+    await client.SaveRulesAsync(
       "<YOUR_INDEX_NAME>",
       new List<Rule>
       {
@@ -1859,7 +1856,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveRules with all parameters")]
   public async Task SaveRulesTest1()
   {
-    await _client.SaveRulesAsync(
+    await client.SaveRulesAsync(
       "<YOUR_INDEX_NAME>",
       new List<Rule>
       {
@@ -1956,7 +1953,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveSynonym")]
   public async Task SaveSynonymTest()
   {
-    await _client.SaveSynonymAsync(
+    await client.SaveSynonymAsync(
       "indexName",
       "id1",
       new SynonymHit
@@ -1994,7 +1991,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "saveSynonyms")]
   public async Task SaveSynonymsTest()
   {
-    await _client.SaveSynonymsAsync(
+    await client.SaveSynonymsAsync(
       "<YOUR_INDEX_NAME>",
       new List<SynonymHit>
       {
@@ -2042,7 +2039,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "withHitsPerPage")]
   public async Task SearchTest()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2072,7 +2069,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "filterOnly")]
   public async Task SearchTest1()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2102,7 +2099,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "filterOr")]
   public async Task SearchTest2()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2132,7 +2129,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "filterNot")]
   public async Task SearchTest3()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2162,7 +2159,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single hits request with minimal parameters")]
   public async Task SearchTest4()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2185,7 +2182,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "retrieveFacets")]
   public async Task SearchTest5()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2215,7 +2212,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "retrieveFacetsWildcard")]
   public async Task SearchTest6()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2245,7 +2242,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
   public async Task SearchTest7()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2276,7 +2273,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single hits request with all parameters")]
   public async Task SearchTest8()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2307,7 +2304,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for a single facet request with all parameters")]
   public async Task SearchTest9()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2343,7 +2340,7 @@ public class SearchClientRequestTests
   )]
   public async Task SearchTest10()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2382,7 +2379,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search for multiple mixed requests in multiple indices with all parameters")]
   public async Task SearchTest11()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2425,7 +2422,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search filters accept all of the possible shapes")]
   public async Task SearchTest12()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2513,7 +2510,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search filters end to end")]
   public async Task SearchTest13()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2587,7 +2584,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with all search parameters")]
   public async Task SearchTest14()
   {
-    await _client.SearchAsync<Hit>(
+    await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -2732,7 +2729,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get searchDictionaryEntries results with minimal parameters")]
   public async Task SearchDictionaryEntriesTest()
   {
-    await _client.SearchDictionaryEntriesAsync(
+    await client.SearchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Stopwords"),
       new SearchDictionaryEntriesParams { Query = "about", }
     );
@@ -2746,7 +2743,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get searchDictionaryEntries results with all parameters")]
   public async Task SearchDictionaryEntriesTest1()
   {
-    await _client.SearchDictionaryEntriesAsync(
+    await client.SearchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Compounds"),
       new SearchDictionaryEntriesParams
       {
@@ -2770,7 +2767,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get searchForFacetValues results with minimal parameters")]
   public async Task SearchForFacetValuesTest()
   {
-    await _client.SearchForFacetValuesAsync("indexName", "facetName");
+    await client.SearchForFacetValuesAsync("indexName", "facetName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/facets/facetName/query", req.Path);
@@ -2781,7 +2778,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get searchForFacetValues results with all parameters")]
   public async Task SearchForFacetValuesTest1()
   {
-    await _client.SearchForFacetValuesAsync(
+    await client.SearchForFacetValuesAsync(
       "indexName",
       "facetName",
       new SearchForFacetValuesRequest
@@ -2805,7 +2802,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchRules")]
   public async Task SearchRulesTest()
   {
-    await _client.SearchRulesAsync("indexName", new SearchRulesParams { Query = "something", });
+    await client.SearchRulesAsync("indexName", new SearchRulesParams { Query = "something", });
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/search", req.Path);
@@ -2820,7 +2817,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with minimal parameters")]
   public async Task SearchSingleIndexTest()
   {
-    await _client.SearchSingleIndexAsync<Hit>("indexName");
+    await client.SearchSingleIndexAsync<Hit>("indexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/query", req.Path);
@@ -2831,7 +2828,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with special characters in indexName")]
   public async Task SearchSingleIndexTest1()
   {
-    await _client.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
+    await client.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_space%20in%20index/query", req.Path);
@@ -2842,7 +2839,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "search with searchParams")]
   public async Task SearchSingleIndexTest2()
   {
-    await _client.SearchSingleIndexAsync<Hit>(
+    await client.SearchSingleIndexAsync<Hit>(
       "indexName",
       new SearchParams(
         new SearchParamsObject
@@ -2868,7 +2865,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "single search retrieve snippets")]
   public async Task SearchSingleIndexTest3()
   {
-    await _client.SearchSingleIndexAsync<Hit>(
+    await client.SearchSingleIndexAsync<Hit>(
       "cts_e2e_browse",
       new SearchParams(
         new SearchParamsObject
@@ -2893,7 +2890,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
   public async Task SearchSynonymsTest()
   {
-    await _client.SearchSynonymsAsync("indexName");
+    await client.SearchSynonymsAsync("indexName");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/search", req.Path);
@@ -2904,7 +2901,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchSynonyms with all parameters")]
   public async Task SearchSynonymsTest1()
   {
-    await _client.SearchSynonymsAsync(
+    await client.SearchSynonymsAsync(
       "indexName",
       new SearchSynonymsParams
       {
@@ -2928,7 +2925,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchUserIds")]
   public async Task SearchUserIdsTest()
   {
-    await _client.SearchUserIdsAsync(
+    await client.SearchUserIdsAsync(
       new SearchUserIdsParams
       {
         Query = "test",
@@ -2951,7 +2948,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get setDictionarySettings results with minimal parameters")]
   public async Task SetDictionarySettingsTest()
   {
-    await _client.SetDictionarySettingsAsync(
+    await client.SetDictionarySettingsAsync(
       new DictionarySettingsParams
       {
         DisableStandardEntries = new StandardEntries
@@ -2979,7 +2976,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "get setDictionarySettings results with all parameters")]
   public async Task SetDictionarySettingsTest1()
   {
-    await _client.SetDictionarySettingsAsync(
+    await client.SetDictionarySettingsAsync(
       new DictionarySettingsParams
       {
         DisableStandardEntries = new StandardEntries
@@ -3009,7 +3006,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettingsAttributesForFaceting")]
   public async Task SetSettingsTest()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
       new IndexSettings
       {
@@ -3035,7 +3032,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings with minimal parameters")]
   public async Task SetSettingsTest1()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "cts_e2e_settings",
       new IndexSettings { PaginationLimitedTo = 10, },
       true
@@ -3067,7 +3064,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow boolean `typoTolerance`")]
   public async Task SetSettingsTest2()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings { TypoTolerance = new TypoTolerance(true), },
       true
@@ -3099,7 +3096,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow enum `typoTolerance`")]
   public async Task SetSettingsTest3()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings
       {
@@ -3134,7 +3131,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow boolean `ignorePlurals`")]
   public async Task SetSettingsTest4()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings { IgnorePlurals = new IgnorePlurals(true), },
       true
@@ -3166,7 +3163,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow list of string `ignorePlurals`")]
   public async Task SetSettingsTest5()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings
       {
@@ -3203,7 +3200,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow boolean `removeStopWords`")]
   public async Task SetSettingsTest6()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings { RemoveStopWords = new RemoveStopWords(true), },
       true
@@ -3235,7 +3232,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow list of string `removeStopWords`")]
   public async Task SetSettingsTest7()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings
       {
@@ -3272,7 +3269,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow boolean `distinct`")]
   public async Task SetSettingsTest8()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings { Distinct = new Distinct(true), },
       true
@@ -3300,7 +3297,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow integers for `distinct`")]
   public async Task SetSettingsTest9()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings { Distinct = new Distinct(1), },
       true
@@ -3328,7 +3325,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "setSettings allow all `indexSettings`")]
   public async Task SetSettingsTest10()
   {
-    await _client.SetSettingsAsync(
+    await client.SetSettingsAsync(
       "theIndexName",
       new IndexSettings
       {
@@ -3441,7 +3438,7 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "updateApiKey")]
   public async Task UpdateApiKeyTest()
   {
-    await _client.UpdateApiKeyAsync(
+    await client.UpdateApiKeyAsync(
       "myApiKey",
       new ApiKey
       {

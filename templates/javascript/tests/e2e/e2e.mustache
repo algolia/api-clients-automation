@@ -23,7 +23,7 @@ describe('{{operationId}}', () => {
   {{#tests}}
   test('{{{testName}}}', async () => {
     {{#response}}
-    {{#body}}const resp = {{/body}}await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+    {{#body}}const resp = {{/body}}{{> tests/method}};
   
     {{#body}}
     const expectedBody = {{{.}}};

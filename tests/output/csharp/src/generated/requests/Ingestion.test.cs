@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class IngestionClientRequestTests
 {
-  private readonly IngestionClient _client;
+  private readonly IngestionClient client;
   private readonly EchoHttpRequester _echo;
 
   public IngestionClientRequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
+    client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createAuthenticationOAuth")]
   public async Task CreateAuthenticationTest()
   {
-    await _client.CreateAuthenticationAsync(
+    await client.CreateAuthenticationAsync(
       new AuthenticationCreate
       {
         Type = Enum.Parse<AuthenticationType>("Oauth"),
@@ -58,7 +58,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createAuthenticationAlgolia")]
   public async Task CreateAuthenticationTest1()
   {
-    await _client.CreateAuthenticationAsync(
+    await client.CreateAuthenticationAsync(
       new AuthenticationCreate
       {
         Type = Enum.Parse<AuthenticationType>("Algolia"),
@@ -80,7 +80,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createDestination")]
   public async Task CreateDestinationTest()
   {
-    await _client.CreateDestinationAsync(
+    await client.CreateDestinationAsync(
       new DestinationCreate
       {
         Type = Enum.Parse<DestinationType>("Search"),
@@ -103,7 +103,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createSource")]
   public async Task CreateSourceTest()
   {
-    await _client.CreateSourceAsync(
+    await client.CreateSourceAsync(
       new SourceCreate
       {
         Type = Enum.Parse<SourceType>("Commercetools"),
@@ -134,7 +134,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createTaskOnDemand")]
   public async Task CreateTaskTest()
   {
-    await _client.CreateTaskAsync(
+    await client.CreateTaskAsync(
       new TaskCreate
       {
         SourceID = "search",
@@ -159,7 +159,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createTaskSchedule")]
   public async Task CreateTaskTest1()
   {
-    await _client.CreateTaskAsync(
+    await client.CreateTaskAsync(
       new TaskCreate
       {
         SourceID = "search",
@@ -188,7 +188,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createTaskSubscription")]
   public async Task CreateTaskTest2()
   {
-    await _client.CreateTaskAsync(
+    await client.CreateTaskAsync(
       new TaskCreate
       {
         SourceID = "search",
@@ -213,7 +213,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "createTransformation")]
   public async Task CreateTransformationTest()
   {
-    await _client.CreateTransformationAsync(
+    await client.CreateTransformationAsync(
       new TransformationCreate
       {
         Code = "foo",
@@ -235,7 +235,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
-    await _client.CustomDeleteAsync("test/minimal");
+    await client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -246,7 +246,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    await _client.CustomDeleteAsync(
+    await client.CustomDeleteAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
@@ -273,7 +273,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest()
   {
-    await _client.CustomGetAsync("test/minimal");
+    await client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -284,7 +284,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
@@ -311,7 +311,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions should be escaped too")]
   public async Task CustomGetTest2()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
@@ -353,7 +353,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest()
   {
-    await _client.CustomPostAsync("test/minimal");
+    await client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -364,7 +364,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -396,7 +396,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -425,7 +425,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -454,7 +454,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -493,7 +493,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -532,7 +532,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -561,7 +561,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -590,7 +590,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -621,7 +621,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -652,7 +652,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -683,7 +683,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest()
   {
-    await _client.CustomPutAsync("test/minimal");
+    await client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -694,7 +694,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    await _client.CustomPutAsync(
+    await client.CustomPutAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -726,7 +726,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "deleteAuthentication")]
   public async Task DeleteAuthenticationTest()
   {
-    await _client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -737,7 +737,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "deleteDestination")]
   public async Task DeleteDestinationTest()
   {
-    await _client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -748,7 +748,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "deleteSource")]
   public async Task DeleteSourceTest()
   {
-    await _client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -759,7 +759,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "deleteTask")]
   public async Task DeleteTaskTest()
   {
-    await _client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -770,7 +770,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "deleteTransformation")]
   public async Task DeleteTransformationTest()
   {
-    await _client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -781,7 +781,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "disableTask")]
   public async Task DisableTaskTest()
   {
-    await _client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.Path);
@@ -792,7 +792,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "enable task e2e")]
   public async Task EnableTaskTest()
   {
-    await _client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
@@ -803,7 +803,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getAuthentication")]
   public async Task GetAuthenticationTest()
   {
-    await _client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -814,7 +814,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getAuthentications")]
   public async Task GetAuthenticationsTest()
   {
-    await _client.GetAuthenticationsAsync();
+    await client.GetAuthenticationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/authentications", req.Path);
@@ -825,7 +825,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getAuthentications with query params")]
   public async Task GetAuthenticationsTest1()
   {
-    await _client.GetAuthenticationsAsync(
+    await client.GetAuthenticationsAsync(
       2,
       1,
       new List<AuthenticationType>
@@ -860,7 +860,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getDestination")]
   public async Task GetDestinationTest()
   {
-    await _client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -871,7 +871,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getDestinations")]
   public async Task GetDestinationsTest()
   {
-    await _client.GetDestinationsAsync();
+    await client.GetDestinationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/destinations", req.Path);
@@ -882,7 +882,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getEvent")]
   public async Task GetEventTest()
   {
-    await _client.GetEventAsync(
+    await client.GetEventAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
     );
@@ -899,7 +899,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getEvents")]
   public async Task GetEventsTest()
   {
-    await _client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.Path);
@@ -910,7 +910,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getRun")]
   public async Task GetRunTest()
   {
-    await _client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -921,7 +921,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getRuns")]
   public async Task GetRunsTest()
   {
-    await _client.GetRunsAsync();
+    await client.GetRunsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/runs", req.Path);
@@ -932,7 +932,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getSource")]
   public async Task GetSourceTest()
   {
-    await _client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.Path);
@@ -943,7 +943,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getSources")]
   public async Task GetSourcesTest()
   {
-    await _client.GetSourcesAsync();
+    await client.GetSourcesAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources", req.Path);
@@ -954,7 +954,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getTask")]
   public async Task GetTaskTest()
   {
-    await _client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -965,7 +965,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getTasks")]
   public async Task GetTasksTest()
   {
-    await _client.GetTasksAsync();
+    await client.GetTasksAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks", req.Path);
@@ -976,7 +976,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getTransformation")]
   public async Task GetTransformationTest()
   {
-    await _client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
@@ -987,7 +987,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "getTransformations")]
   public async Task GetTransformationsTest()
   {
-    await _client.GetTransformationsAsync();
+    await client.GetTransformationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/transformations", req.Path);
@@ -998,7 +998,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "runTask")]
   public async Task RunTaskTest()
   {
-    await _client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
@@ -1009,7 +1009,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "searchAuthentications")]
   public async Task SearchAuthenticationsTest()
   {
-    await _client.SearchAuthenticationsAsync(
+    await client.SearchAuthenticationsAsync(
       new AuthenticationSearch
       {
         AuthenticationIDs = new List<string>
@@ -1033,7 +1033,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "searchDestinations")]
   public async Task SearchDestinationsTest()
   {
-    await _client.SearchDestinationsAsync(
+    await client.SearchDestinationsAsync(
       new DestinationSearch
       {
         DestinationIDs = new List<string>
@@ -1057,7 +1057,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "searchSources")]
   public async Task SearchSourcesTest()
   {
-    await _client.SearchSourcesAsync(
+    await client.SearchSourcesAsync(
       new SourceSearch
       {
         SourceIDs = new List<string>
@@ -1081,7 +1081,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "searchTasks")]
   public async Task SearchTasksTest()
   {
-    await _client.SearchTasksAsync(
+    await client.SearchTasksAsync(
       new TaskSearch
       {
         TaskIDs = new List<string>
@@ -1106,7 +1106,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "searchTransformations")]
   public async Task SearchTransformationsTest()
   {
-    await _client.SearchTransformationsAsync(
+    await client.SearchTransformationsAsync(
       new TransformationSearch
       {
         TransformationsIDs = new List<string>
@@ -1131,7 +1131,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "triggerDockerSourceDiscover")]
   public async Task TriggerDockerSourceDiscoverTest()
   {
-    await _client.TriggerDockerSourceDiscoverAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.TriggerDockerSourceDiscoverAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.Path);
@@ -1142,7 +1142,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "tryTransformations")]
   public async Task TryTransformationsTest()
   {
-    await _client.TryTransformationsAsync(
+    await client.TryTransformationsAsync(
       new TransformationTry
       {
         Code = "foo",
@@ -1163,7 +1163,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "updateAuthentication")]
   public async Task UpdateAuthenticationTest()
   {
-    await _client.UpdateAuthenticationAsync(
+    await client.UpdateAuthenticationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new AuthenticationUpdate { Name = "newName", }
     );
@@ -1177,7 +1177,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "updateDestination")]
   public async Task UpdateDestinationTest()
   {
-    await _client.UpdateDestinationAsync(
+    await client.UpdateDestinationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new DestinationUpdate { Name = "newName", }
     );
@@ -1191,7 +1191,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "updateSource")]
   public async Task UpdateSourceTest()
   {
-    await _client.UpdateSourceAsync(
+    await client.UpdateSourceAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName", }
     );
@@ -1205,7 +1205,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "updateTask")]
   public async Task UpdateTaskTest()
   {
-    await _client.UpdateTaskAsync(
+    await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdate { Enabled = false, }
     );
@@ -1219,7 +1219,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "updateTransformation")]
   public async Task UpdateTransformationTest()
   {
-    await _client.UpdateTransformationAsync(
+    await client.UpdateTransformationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate
       {
@@ -1242,7 +1242,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "validateSource")]
   public async Task ValidateSourceTest()
   {
-    await _client.ValidateSourceAsync(
+    await client.ValidateSourceAsync(
       new SourceCreate
       {
         Type = Enum.Parse<SourceType>("Commercetools"),
@@ -1273,7 +1273,7 @@ public class IngestionClientRequestTests
   [Fact(DisplayName = "validateSourceBeforeUpdate")]
   public async Task ValidateSourceBeforeUpdateTest()
   {
-    await _client.ValidateSourceBeforeUpdateAsync(
+    await client.ValidateSourceBeforeUpdateAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName", }
     );

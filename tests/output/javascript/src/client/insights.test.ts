@@ -15,9 +15,9 @@ function createClient(): InsightsClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -27,9 +27,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -39,9 +39,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -53,11 +53,11 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('fallbacks to the alias when region is not given', async () => {
-    const $client = insightsClient('my-app-id', 'my-api-key', '', {
+    const client = insightsClient('my-app-id', 'my-api-key', '', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.pushEvents({
+    const result = (await client.pushEvents({
       events: [
         {
           eventType: 'click',
@@ -77,11 +77,11 @@ describe('parameters', () => {
   }, 15000);
 
   test('uses the correct region', async () => {
-    const $client = insightsClient('my-app-id', 'my-api-key', 'us', {
+    const client = insightsClient('my-app-id', 'my-api-key', 'us', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customDelete({
+    const result = (await client.customDelete({
       path: 'test',
     })) as unknown as EchoResponse;
 
@@ -90,12 +90,9 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const $client = insightsClient(
-        'my-app-id',
-        'my-api-key',
-        'not_a_region',
-        { requester: echoRequester() }
-      );
+      const client = insightsClient('my-app-id', 'my-api-key', 'not_a_region', {
+        requester: echoRequester(),
+      });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(

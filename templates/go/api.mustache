@@ -3,49 +3,277 @@ package {{packageName}}
 
 {{#operations}}
 import (
-	"bytes"
 	"context"
-  "encoding/json"
-	"io"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
-  "strings"
+	"strings"
   {{#isSearchClient}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+  "cmp"
   "crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
+  "errors"
   "slices"
   "sort"
   "time"
   {{/isSearchClient}}
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
-type Option struct {
-	optionType  string
-	name  string
-	value string
+type config struct {
+	// -- Request options for API calls
+	context      context.Context
+	queryParams  url.Values
+	headerParams map[string]string
+
+  {{#isSearchClient}}
+  // -- ChunkedBatch options
+	waitForTasks bool
+	batchSize    int
+
+  // -- Partial update options
+  createIfNotExists bool
+
+	// -- Iterable options
+	maxRetries    int
+	timeout       func(int) time.Duration
+	aggregator    func(any, error)
+	iterableError *IterableError
+
+  // -- WaitForApiKey options
+  apiKey *ApiKey
+  {{/isSearchClient}}
 }
 
-func QueryParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "query",
-		name:  queryParameterToString(name),
-		value: queryParameterToString(val),
-	}
+type RequestOption interface {
+	apply(*config)
 }
 
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "header",
-		name:  name,
-		value: parameterToString(val),
-	}
+type requestOption func(*config)
+
+func (r requestOption) apply(c *config) {
+	r(c)
 }
+
+func WithContext(ctx context.Context) requestOption {
+	return requestOption(func(c *config) {
+		c.context = ctx
+	})
+}
+
+func WithHeaderParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.headerParams[key] = utils.ParameterToString(value)
+	})
+}
+
+func WithQueryParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
+}
+
+{{#isSearchClient}}
+
+// --------- ChunkedBatch options ---------
+
+type ChunkedBatchOption interface {
+	RequestOption
+	chunkedBatch()
+}
+
+type chunkedBatchOption func(*config)
+
+var (
+	_ ChunkedBatchOption = (*chunkedBatchOption)(nil)
+	_ ChunkedBatchOption = (*requestOption)(nil)
+)
+
+func (c chunkedBatchOption) apply(conf *config) {
+	c(conf)
+}
+
+func (c chunkedBatchOption) chunkedBatch() {}
+
+func (r requestOption) chunkedBatch() {}
+
+func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
+	return chunkedBatchOption(func(c *config) {
+		c.waitForTasks = waitForTasks
+	})
+}
+
+func WithBatchSize(batchSize int) chunkedBatchOption {
+	return chunkedBatchOption(func(c *config) {
+		c.batchSize = batchSize
+	})
+}
+
+// --------- ChunkedBatch options ---------
+
+type PartialUpdateObjectsOption interface {
+	ChunkedBatchOption
+	partialUpdateObjects()
+}
+
+type partialUpdateObjectsOption func(*config)
+
+var (
+	_ PartialUpdateObjectsOption = (*partialUpdateObjectsOption)(nil)
+  _ PartialUpdateObjectsOption = (*chunkedBatchOption)(nil)
+	_ PartialUpdateObjectsOption = (*requestOption)(nil)
+)
+
+func (p partialUpdateObjectsOption) apply(c *config) {
+	p(c)
+}
+
+func (p partialUpdateObjectsOption) partialUpdateObjects() {}
+
+func (p partialUpdateObjectsOption) chunkedBatch() {}
+
+func (c chunkedBatchOption) partialUpdateObjects() {}
+
+func (r requestOption) partialUpdateObjects() {}
+
+func WithCreateIfNotExists(createIfNotExists bool) partialUpdateObjectsOption {
+	return partialUpdateObjectsOption(func(c *config) {
+		c.createIfNotExists = createIfNotExists
+	})
+}
+
+// --------- Iterable options ---------.
+
+type IterableOption interface {
+	RequestOption
+	iterable()
+}
+
+type iterableOption func(*config)
+
+var (
+	_ IterableOption = (*iterableOption)(nil)
+	_ IterableOption = (*requestOption)(nil)
+)
+
+func (i iterableOption) apply(c *config) {
+	i(c)
+}
+
+func (r requestOption) iterable() {}
+
+func (i iterableOption) iterable() {}
+
+func WithMaxRetries(maxRetries int) iterableOption {
+	return iterableOption(func(c *config) {
+		c.maxRetries = maxRetries
+	})
+}
+
+func WithTimeout(timeout func(int) time.Duration) iterableOption {
+	return iterableOption(func(c *config) {
+		c.timeout = timeout
+	})
+}
+
+func WithAggregator(aggregator func(any, error)) iterableOption {
+	return iterableOption(func(c *config) {
+		c.aggregator = aggregator
+	})
+}
+
+func WithIterableError(iterableError *IterableError) iterableOption {
+	return iterableOption(func(c *config) {
+		c.iterableError = iterableError
+	})
+}
+
+// --------- WaitForKey options ---------.
+
+type WaitForApiKeyOption interface {
+	IterableOption
+	waitForApiKey()
+}
+
+type waitForApiKeyOption func(*config)
+
+var (
+  _ WaitForApiKeyOption = (*waitForApiKeyOption)(nil)
+	_ WaitForApiKeyOption = (*iterableOption)(nil)
+	_ WaitForApiKeyOption = (*requestOption)(nil)
+)
+
+func (w waitForApiKeyOption) apply(c *config) {
+	w(c)
+}
+
+func (w waitForApiKeyOption) waitForApiKey() {}
+
+func (w waitForApiKeyOption) iterable() {}
+
+func (r requestOption) waitForApiKey() {}
+
+func (i iterableOption) waitForApiKey() {}
+
+func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
+	return waitForApiKeyOption(func(c *config) {
+		c.apiKey = apiKey
+	})
+}
+
+// --------- Helper to convert options ---------
+
+func toRequestOptions[T RequestOption](opts []T) []RequestOption {
+	requestOpts := make([]RequestOption, 0, len(opts))
+
+	for _, opt := range opts {
+		requestOpts = append(requestOpts, opt)
+	}
+
+	return requestOpts
+}
+
+func toIterableOptions(opts []ChunkedBatchOption) []IterableOption {
+	iterableOpts := make([]IterableOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(IterableOption); ok {
+			iterableOpts = append(iterableOpts, opt)
+		}
+	}
+
+	return iterableOpts
+}
+
+func toIterableOptionsWaitFor(opts []WaitForApiKeyOption) []IterableOption {
+	iterableOpts := make([]IterableOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(IterableOption); ok {
+			iterableOpts = append(iterableOpts, opt)
+		}
+	}
+
+	return iterableOpts
+}
+
+func toChunkedBatchOptions(opts []PartialUpdateObjectsOption) []ChunkedBatchOption {
+	chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(ChunkedBatchOption); ok {
+			chunkedBatchOpts = append(chunkedBatchOpts, opt)
+		}
+	}
+
+	return chunkedBatchOpts
+}
+{{/isSearchClient}}
 
 {{#operation}}
   {{#hasParams}}
@@ -124,11 +352,10 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
   {{/vendorExtensions}}
 
   Request can be constructed by NewApi{{operationId}}Request with parameters below.
-  @param ctx context.Context - Context of the request
   {{#allParams}}
     @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
   {{/allParams}}
-  @param opts ...Option - Optional parameters for the API call
+  @param opts ...RequestOption - Optional parameters for the API call
   @return *http.Response - The raw response from the API
   @return []byte - The raw response body from the API
   @return error - An error if the API call fails
@@ -137,18 +364,12 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
     Deprecated
   {{/isDeprecated}}
   */
-func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
-	var (
-    postBody     any
-	)
-
+func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
   {{/vendorExtensions}}
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	{{#allParams}}
 	{{#required}}
   {{#isString}}
@@ -201,11 +422,17 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
 	{{/required}}
 	{{/allParams}}
 
+  conf := config{
+    context:      context.Background(),
+    queryParams:  url.Values{},
+    headerParams: map[string]string{},
+  }
+
   {{#vendorExtensions.x-is-custom-request}}
     {{#queryParams}}
       {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
-           queryParams.Set(k, queryParameterToString(v))
+           conf.queryParams.Set(k, utils.QueryParameterToString(v))
           }
       {{^required}} } {{/required}}
     {{/queryParams}}
@@ -213,35 +440,32 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
   {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}
   {{/vendorExtensions.x-is-custom-request}}
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+	conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
 {{/headerParams}}
 
   // optional params if any
   for _, opt := range opts {
-    switch opt.optionType {
-      case "query":
-        queryParams.Set(opt.name, opt.value)
-      case "header":
-        headers[opt.name] = opt.value
-    }
+    opt.apply(&conf)
   }
+
+  var postBody any
 
 {{#bodyParams}}
   // body params{{^required}}
@@ -251,7 +475,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
     postBody = r.{{paramName}}{{^required}}
    } {{/required}}
 {{/bodyParams}}
-	req, err := c.prepareRequest(ctx, requestPath, http.Method{{httpMethod}}, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -260,21 +484,14 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
 }
 
 /*
-{{operationId}} wraps {{nickname}}WithContext using context.Background.
-{{> operation_description}}
-func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
-  return c.{{nickname}}WithContext(context.Background(), {{#hasParams}}r,{{/hasParams}} opts...)
-}
-
-/*
 {{operationId}} casts the HTTP response body to a defined struct.
 {{> operation_description}}
-func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
     var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
 
-  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  res, resBody, err := c.{{nickname}}WithHTTPInfo({{#hasParams}}r, {{/hasParams}}opts...)
   if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}

@@ -101,8 +101,8 @@ func TestUsage_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			usage.QueryParamOption("query", "parameters with space"), usage.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), usage.HeaderParamOption("x-header-1", "spaces are left alone"),
+			usage.WithQueryParam("query", "parameters with space"), usage.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), usage.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -162,7 +162,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("query", "myQueryParameter"),
+			usage.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -182,7 +182,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("query2", "myQueryParameter"),
+			usage.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -202,7 +202,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			usage.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -227,7 +227,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			usage.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -252,7 +252,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("isItWorking", true),
+			usage.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -272,7 +272,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("myParam", 2),
+			usage.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -292,7 +292,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("myParam",
+			usage.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -313,7 +313,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("myParam",
+			usage.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -334,7 +334,7 @@ func TestUsage_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			usage.QueryParamOption("myParam",
+			usage.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

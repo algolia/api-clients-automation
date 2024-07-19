@@ -128,8 +128,8 @@ func TestSuggestions_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			suggestions.QueryParamOption("query", "parameters with space"), suggestions.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), suggestions.HeaderParamOption("x-header-1", "spaces are left alone"),
+			suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -189,7 +189,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("query", "myQueryParameter"),
+			suggestions.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -209,7 +209,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("query2", "myQueryParameter"),
+			suggestions.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -229,7 +229,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -254,7 +254,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -279,7 +279,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("isItWorking", true),
+			suggestions.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -299,7 +299,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam", 2),
+			suggestions.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -319,7 +319,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -340,7 +340,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -361,7 +361,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

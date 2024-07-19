@@ -101,8 +101,8 @@ func TestMonitoring_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			monitoring.QueryParamOption("query", "parameters with space"), monitoring.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), monitoring.HeaderParamOption("x-header-1", "spaces are left alone"),
+			monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), monitoring.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -162,7 +162,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("query", "myQueryParameter"),
+			monitoring.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -182,7 +182,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("query2", "myQueryParameter"),
+			monitoring.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -202,7 +202,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			monitoring.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -227,7 +227,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			monitoring.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -252,7 +252,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("isItWorking", true),
+			monitoring.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -272,7 +272,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("myParam", 2),
+			monitoring.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -292,7 +292,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("myParam",
+			monitoring.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -313,7 +313,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("myParam",
+			monitoring.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -334,7 +334,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			monitoring.QueryParamOption("myParam",
+			monitoring.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

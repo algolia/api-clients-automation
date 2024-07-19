@@ -5801,8 +5801,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public GetApiKeyResponse waitForApiKey(
-    ApiKeyOperation operation,
     String key,
+    ApiKeyOperation operation,
     ApiKey apiKey,
     int maxRetries,
     IntUnaryOperator timeout,
@@ -5835,28 +5835,26 @@ public class SearchClient extends ApiClient {
       );
     }
 
-    // bypass lambda restriction to modify final object
-    final GetApiKeyResponse[] addedKey = new GetApiKeyResponse[] { null };
-
-    // check the status of the getApiKey method
-    TaskUtils.retryUntil(
+    return TaskUtils.retryUntil(
       () -> {
         try {
-          addedKey[0] = this.getApiKey(key, requestOptions);
-          // magic number to signify we found the key
-          return -2;
+          return this.getApiKey(key, requestOptions);
         } catch (AlgoliaApiException e) {
-          return e.getStatusCode();
+          if (e.getStatusCode() == 404) {
+            return null;
+          }
+
+          throw e;
         }
       },
-      (Integer status) -> {
+      (GetApiKeyResponse response) -> {
         switch (operation) {
           case ADD:
-            // stop either when the key is created or when we don't receive 404
-            return status == -2 || status != 404;
+            // stop when we don't receive 404 meaning the key is created
+            return response != null;
           case DELETE:
             // stop when the key is not found
-            return status == 404;
+            return response == null;
           default:
             // continue
             return false;
@@ -5865,15 +5863,13 @@ public class SearchClient extends ApiClient {
       maxRetries,
       timeout
     );
-
-    return addedKey[0];
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5881,89 +5877,89 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public GetApiKeyResponse waitForApiKey(
-    ApiKeyOperation operation,
     String key,
+    ApiKeyOperation operation,
     int maxRetries,
     IntUnaryOperator timeout,
     RequestOptions requestOptions
   ) {
-    return this.waitForApiKey(operation, key, null, maxRetries, timeout, requestOptions);
+    return this.waitForApiKey(key, operation, null, maxRetries, timeout, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, RequestOptions requestOptions) {
-    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, RequestOptions requestOptions) {
+    return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, RequestOptions requestOptions) {
-    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, RequestOptions requestOptions) {
+    return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
-    return this.waitForApiKey(operation, key, apiKey, maxRetries, timeout, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(key, operation, apiKey, maxRetries, timeout, null);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout) {
-    return this.waitForApiKey(operation, key, null, maxRetries, timeout, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(key, operation, null, maxRetries, timeout, null);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey) {
-    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey) {
+    return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key) {
-    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation) {
+    return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**

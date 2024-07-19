@@ -54,6 +54,7 @@ class SearchTest {
           path = "1/test/retry/Kotlin",
         )
       },
+
       response = {
         val response = Json.encodeToString(it)
         assertEquals("{\"message\":\"ok test server response\"}", response)
@@ -77,6 +78,7 @@ class SearchTest {
           },
         )
       },
+
       response = {
         val response = Json.encodeToString(it)
         assertEquals("{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}", response)
@@ -146,9 +148,11 @@ class SearchTest {
           ),
         )
       },
+
       response = {
-        assertEquals("NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", it)
+        assertEquals("""NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw""", it)
       },
+
     )
   }
 
@@ -176,9 +180,11 @@ class SearchTest {
           ),
         )
       },
+
       response = {
-        assertEquals("MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", it)
+        assertEquals("""MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw""", it)
       },
+
     )
   }
 
@@ -294,10 +300,14 @@ class SearchTest {
           batchSize = 3,
         )
       },
+
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}", response)
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
       },
+
     )
   }
 
@@ -332,10 +342,14 @@ class SearchTest {
           ),
         )
       },
+
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]", response)
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":333,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
       },
+
     )
   }
 
@@ -371,10 +385,14 @@ class SearchTest {
           createIfNotExists = true,
         )
       },
+
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]", response)
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":444,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
       },
+
     )
   }
 
@@ -410,10 +428,14 @@ class SearchTest {
           createIfNotExists = false,
         )
       },
+
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]", response)
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":555,"objectIDs":["3","4"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
       },
+
     )
   }
 
@@ -427,10 +449,83 @@ class SearchTest {
           objectIDs = listOf("1", "2"),
         )
       },
+
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", response)
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":666,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
       },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key helper - add`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-add-operation-test-Kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "add" },
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-Kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key - update`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-update-operation-test-Kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "update" },
+          apiKey = ApiKey(
+            description = "my updated api key",
+            acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }, Acl.entries.first { it.value == "deleteObject" }),
+            indexes = listOf("Movies", "Books"),
+            referers = listOf("*google.com", "*algolia.com"),
+            validity = 305,
+            maxQueriesPerIPPerHour = 95,
+            maxHitsPerQuery = 20,
+          ),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-Kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key - delete`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-delete-operation-test-Kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "delete" },
+        )
+      },
+
+      response = {
+        assertNull(it)
+      },
+
     )
   }
 

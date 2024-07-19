@@ -102,8 +102,8 @@ func TestPersonalization_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			personalization.QueryParamOption("query", "parameters with space"), personalization.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), personalization.HeaderParamOption("x-header-1", "spaces are left alone"),
+			personalization.WithQueryParam("query", "parameters with space"), personalization.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), personalization.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -163,7 +163,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("query", "myQueryParameter"),
+			personalization.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -183,7 +183,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("query2", "myQueryParameter"),
+			personalization.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -203,7 +203,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			personalization.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -228,7 +228,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			personalization.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -253,7 +253,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("isItWorking", true),
+			personalization.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -273,7 +273,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("myParam", 2),
+			personalization.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -293,7 +293,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("myParam",
+			personalization.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -314,7 +314,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("myParam",
+			personalization.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -335,7 +335,7 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			personalization.QueryParamOption("myParam",
+			personalization.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

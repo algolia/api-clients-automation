@@ -1,0 +1,5 @@
+client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasParams}}{{^isHelper}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request({{/isHelper}}
+  {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
+{{^isHelper}}){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/isHelper}}{{#isHelper}}{{#parametersWithDataType}}{{^required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}{{/isHelper}}{{/hasParams}}{{#requestOptions}}{{#hasParams}},{{/hasParams}}
+{{#queryParameters.parametersWithDataType}}{{clientPrefix}}.WithQueryParam("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.WithHeaderParam("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
+{{/requestOptions}})

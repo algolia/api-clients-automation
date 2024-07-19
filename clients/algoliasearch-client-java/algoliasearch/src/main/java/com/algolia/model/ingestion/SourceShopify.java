@@ -5,127 +5,37 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /** SourceShopify */
 @JsonDeserialize(as = SourceShopify.class)
 public class SourceShopify implements SourceInput {
 
-  @JsonProperty("collectionIDIndexing")
-  private Boolean collectionIDIndexing;
-
-  @JsonProperty("increaseProductCollectionLimit")
-  private Boolean increaseProductCollectionLimit;
-
-  @JsonProperty("defaultPriceRatioAsOne")
-  private Boolean defaultPriceRatioAsOne;
-
-  @JsonProperty("excludeOOSVariantsForPriceAtTRS")
-  private Boolean excludeOOSVariantsForPriceAtTRS;
-
-  @JsonProperty("includeVariantsInventory")
-  private Boolean includeVariantsInventory;
-
-  @JsonProperty("hasCollectionSearchPage")
-  private Boolean hasCollectionSearchPage;
-
-  @JsonProperty("productNamedTags")
-  private Boolean productNamedTags;
+  @JsonProperty("featureFlags")
+  private Map<String, Object> featureFlags;
 
   @JsonProperty("shopURL")
   private String shopURL;
 
-  public SourceShopify setCollectionIDIndexing(Boolean collectionIDIndexing) {
-    this.collectionIDIndexing = collectionIDIndexing;
+  public SourceShopify setFeatureFlags(Map<String, Object> featureFlags) {
+    this.featureFlags = featureFlags;
     return this;
   }
 
-  /**
-   * Whether to index collection IDs. If your store has `has_collection_search_page` set to true,
-   * collection IDs will be indexed even if `collectionIDIndexing` is false.
-   */
-  @javax.annotation.Nullable
-  public Boolean getCollectionIDIndexing() {
-    return collectionIDIndexing;
-  }
-
-  public SourceShopify setIncreaseProductCollectionLimit(Boolean increaseProductCollectionLimit) {
-    this.increaseProductCollectionLimit = increaseProductCollectionLimit;
+  public SourceShopify putFeatureFlags(String key, Object featureFlagsItem) {
+    if (this.featureFlags == null) {
+      this.featureFlags = new HashMap<>();
+    }
+    this.featureFlags.put(key, featureFlagsItem);
     return this;
   }
 
-  /**
-   * Whether to increase the number of indexed collections per product. If true, Algolia indexes 200
-   * collections per product. If false, 100 collections per product are indexed.
-   */
+  /** Feature flags for the Shopify source. */
   @javax.annotation.Nullable
-  public Boolean getIncreaseProductCollectionLimit() {
-    return increaseProductCollectionLimit;
-  }
-
-  public SourceShopify setDefaultPriceRatioAsOne(Boolean defaultPriceRatioAsOne) {
-    this.defaultPriceRatioAsOne = defaultPriceRatioAsOne;
-    return this;
-  }
-
-  /**
-   * Whether to set the default price ratio to 1 if no sale price is present. The price ratio is
-   * determined by the ratio: `sale_price` / `regular_price`. If no sale price is present, the price
-   * ratio would be 0. If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
-   */
-  @javax.annotation.Nullable
-  public Boolean getDefaultPriceRatioAsOne() {
-    return defaultPriceRatioAsOne;
-  }
-
-  public SourceShopify setExcludeOOSVariantsForPriceAtTRS(Boolean excludeOOSVariantsForPriceAtTRS) {
-    this.excludeOOSVariantsForPriceAtTRS = excludeOOSVariantsForPriceAtTRS;
-    return this;
-  }
-
-  /**
-   * Whether to exclude out-of-stock variants when determining the `max_variant_price` and
-   * `min_variant_price` attributes.
-   */
-  @javax.annotation.Nullable
-  public Boolean getExcludeOOSVariantsForPriceAtTRS() {
-    return excludeOOSVariantsForPriceAtTRS;
-  }
-
-  public SourceShopify setIncludeVariantsInventory(Boolean includeVariantsInventory) {
-    this.includeVariantsInventory = includeVariantsInventory;
-    return this;
-  }
-
-  /** Whether to include an inventory with every variant for every product record. */
-  @javax.annotation.Nullable
-  public Boolean getIncludeVariantsInventory() {
-    return includeVariantsInventory;
-  }
-
-  public SourceShopify setHasCollectionSearchPage(Boolean hasCollectionSearchPage) {
-    this.hasCollectionSearchPage = hasCollectionSearchPage;
-    return this;
-  }
-
-  /** Whether to include collection IDs and handles in the product records. */
-  @javax.annotation.Nullable
-  public Boolean getHasCollectionSearchPage() {
-    return hasCollectionSearchPage;
-  }
-
-  public SourceShopify setProductNamedTags(Boolean productNamedTags) {
-    this.productNamedTags = productNamedTags;
-    return this;
-  }
-
-  /**
-   * Whether to convert tags on products to named tags. To learn more, see [Named
-   * tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
-   */
-  @javax.annotation.Nullable
-  public Boolean getProductNamedTags() {
-    return productNamedTags;
+  public Map<String, Object> getFeatureFlags() {
+    return featureFlags;
   }
 
   public SourceShopify setShopURL(String shopURL) {
@@ -148,43 +58,19 @@ public class SourceShopify implements SourceInput {
       return false;
     }
     SourceShopify sourceShopify = (SourceShopify) o;
-    return (
-      Objects.equals(this.collectionIDIndexing, sourceShopify.collectionIDIndexing) &&
-      Objects.equals(this.increaseProductCollectionLimit, sourceShopify.increaseProductCollectionLimit) &&
-      Objects.equals(this.defaultPriceRatioAsOne, sourceShopify.defaultPriceRatioAsOne) &&
-      Objects.equals(this.excludeOOSVariantsForPriceAtTRS, sourceShopify.excludeOOSVariantsForPriceAtTRS) &&
-      Objects.equals(this.includeVariantsInventory, sourceShopify.includeVariantsInventory) &&
-      Objects.equals(this.hasCollectionSearchPage, sourceShopify.hasCollectionSearchPage) &&
-      Objects.equals(this.productNamedTags, sourceShopify.productNamedTags) &&
-      Objects.equals(this.shopURL, sourceShopify.shopURL)
-    );
+    return Objects.equals(this.featureFlags, sourceShopify.featureFlags) && Objects.equals(this.shopURL, sourceShopify.shopURL);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-      collectionIDIndexing,
-      increaseProductCollectionLimit,
-      defaultPriceRatioAsOne,
-      excludeOOSVariantsForPriceAtTRS,
-      includeVariantsInventory,
-      hasCollectionSearchPage,
-      productNamedTags,
-      shopURL
-    );
+    return Objects.hash(featureFlags, shopURL);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SourceShopify {\n");
-    sb.append("    collectionIDIndexing: ").append(toIndentedString(collectionIDIndexing)).append("\n");
-    sb.append("    increaseProductCollectionLimit: ").append(toIndentedString(increaseProductCollectionLimit)).append("\n");
-    sb.append("    defaultPriceRatioAsOne: ").append(toIndentedString(defaultPriceRatioAsOne)).append("\n");
-    sb.append("    excludeOOSVariantsForPriceAtTRS: ").append(toIndentedString(excludeOOSVariantsForPriceAtTRS)).append("\n");
-    sb.append("    includeVariantsInventory: ").append(toIndentedString(includeVariantsInventory)).append("\n");
-    sb.append("    hasCollectionSearchPage: ").append(toIndentedString(hasCollectionSearchPage)).append("\n");
-    sb.append("    productNamedTags: ").append(toIndentedString(productNamedTags)).append("\n");
+    sb.append("    featureFlags: ").append(toIndentedString(featureFlags)).append("\n");
     sb.append("    shopURL: ").append(toIndentedString(shopURL)).append("\n");
     sb.append("}");
     return sb.toString();

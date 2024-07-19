@@ -13,10 +13,8 @@ public class ClientTestData {
 class Step {
 
   public String type;
-  public String object;
-  public String path;
+  public String method;
   public Map<String, Object> parameters;
-  public Map<String, Object> requestOptions;
   public Expected expected;
 }
 

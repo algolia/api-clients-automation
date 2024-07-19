@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class MonitoringClientRequestTests
 {
-  private readonly MonitoringClient _client;
+  private readonly MonitoringClient client;
   private readonly EchoHttpRequester _echo;
 
   public MonitoringClientRequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
+    client = new MonitoringClient(new MonitoringConfig("appId", "apiKey"), _echo);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
-    await _client.CustomDeleteAsync("test/minimal");
+    await client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -40,7 +40,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    await _client.CustomDeleteAsync(
+    await client.CustomDeleteAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
@@ -67,7 +67,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest()
   {
-    await _client.CustomGetAsync("test/minimal");
+    await client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -78,7 +78,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
@@ -105,7 +105,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions should be escaped too")]
   public async Task CustomGetTest2()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
@@ -147,7 +147,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest()
   {
-    await _client.CustomPostAsync("test/minimal");
+    await client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -158,7 +158,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -190,7 +190,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -219,7 +219,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -248,7 +248,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -287,7 +287,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -326,7 +326,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -355,7 +355,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -384,7 +384,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -415,7 +415,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -446,7 +446,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -477,7 +477,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest()
   {
-    await _client.CustomPutAsync("test/minimal");
+    await client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -488,7 +488,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    await _client.CustomPutAsync(
+    await client.CustomPutAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -520,7 +520,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getClusterIncidents")]
   public async Task GetClusterIncidentsTest()
   {
-    await _client.GetClusterIncidentsAsync("c1-de");
+    await client.GetClusterIncidentsAsync("c1-de");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/incidents/c1-de", req.Path);
@@ -531,7 +531,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getClusterStatus")]
   public async Task GetClusterStatusTest()
   {
-    await _client.GetClusterStatusAsync("c1-de");
+    await client.GetClusterStatusAsync("c1-de");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/status/c1-de", req.Path);
@@ -542,7 +542,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getIncidents")]
   public async Task GetIncidentsTest()
   {
-    await _client.GetIncidentsAsync();
+    await client.GetIncidentsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/incidents", req.Path);
@@ -553,7 +553,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getIndexingTime")]
   public async Task GetIndexingTimeTest()
   {
-    await _client.GetIndexingTimeAsync("c1-de");
+    await client.GetIndexingTimeAsync("c1-de");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexing/c1-de", req.Path);
@@ -564,7 +564,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getLatency")]
   public async Task GetLatencyTest()
   {
-    await _client.GetLatencyAsync("c1-de");
+    await client.GetLatencyAsync("c1-de");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/latency/c1-de", req.Path);
@@ -575,7 +575,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getMetrics")]
   public async Task GetMetricsTest()
   {
-    await _client.GetMetricsAsync(Enum.Parse<Metric>("AvgBuildTime"), Enum.Parse<Period>("Minute"));
+    await client.GetMetricsAsync(Enum.Parse<Metric>("AvgBuildTime"), Enum.Parse<Period>("Minute"));
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/infrastructure/avg_build_time/period/minute", req.Path);
@@ -586,7 +586,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getReachability")]
   public async Task GetReachabilityTest()
   {
-    await _client.GetReachabilityAsync("c1-de");
+    await client.GetReachabilityAsync("c1-de");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/reachability/c1-de/probes", req.Path);
@@ -597,7 +597,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getInventory")]
   public async Task GetServersTest()
   {
-    await _client.GetServersAsync();
+    await client.GetServersAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/inventory/servers", req.Path);
@@ -608,7 +608,7 @@ public class MonitoringClientRequestTests
   [Fact(DisplayName = "getStatus")]
   public async Task GetStatusTest()
   {
-    await _client.GetStatusAsync();
+    await client.GetStatusAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/status", req.Path);

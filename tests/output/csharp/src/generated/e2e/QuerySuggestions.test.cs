@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class QuerySuggestionsClientRequestTestsE2E
 {
-  private readonly QuerySuggestionsClient _client;
+  private readonly QuerySuggestionsClient client;
 
   public QuerySuggestionsClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class QuerySuggestionsClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new QuerySuggestionsClient(new QuerySuggestionsConfig(appId, apiKey, "us"));
+    client = new QuerySuggestionsClient(new QuerySuggestionsConfig(appId, apiKey, "us"));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class QuerySuggestionsClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+      var resp = await client.GetConfigAsync("cts_e2e_browse_query_suggestions");
       // Check status code 200
       Assert.NotNull(resp);
 

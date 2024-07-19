@@ -40,11 +40,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
-      {{#hasResponsePayload}}_, {{/hasResponsePayload}}err := client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
-        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
-      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
-      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
-      {{/requestOptions}})
+      {{#hasResponsePayload}}_, {{/hasResponsePayload}}err := {{> tests/method}}
       require.NoError(t, err)
 
       {{#request}}

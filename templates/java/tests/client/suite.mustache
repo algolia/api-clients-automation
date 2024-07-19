@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,11 @@ class {{client}}ClientTests {
     
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.
+      builder().
+      configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).
+      serializationInclusion(JsonInclude.Include.NON_NULL).
+      build();
   }
 
   {{client}} createClient() {
@@ -82,7 +87,12 @@ class {{client}}ClientTests {
             assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.STRICT));
             {{/matchIsJSON}}
             {{^matchIsJSON}}
-            assertEquals("{{{match}}}", res);
+              {{#matchIsNull}}
+                assertEquals(null, res);
+              {{/matchIsNull}}
+              {{^matchIsNull}}
+                assertEquals("{{{match}}}", res);
+              {{/matchIsNull}}
             {{/matchIsJSON}}
           {{/testResponse}}
         {{/match}}

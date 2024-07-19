@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class InsightsClientRequestTestsE2E
 {
-  private readonly InsightsClient _client;
+  private readonly InsightsClient client;
 
   public InsightsClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class InsightsClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new InsightsClient(new InsightsConfig(appId, apiKey, "us"));
+    client = new InsightsClient(new InsightsConfig(appId, apiKey, "us"));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class InsightsClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.PushEventsAsync(
+      var resp = await client.PushEventsAsync(
         new InsightsEvents
         {
           Events = new List<EventsItems>
@@ -63,7 +63,7 @@ public class InsightsClientRequestTestsE2E
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1720828800000L,
+                Timestamp = 1721347200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
                 QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               }
@@ -76,7 +76,7 @@ public class InsightsClientRequestTestsE2E
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1720828800000L,
+                Timestamp = 1721347200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               }
             )

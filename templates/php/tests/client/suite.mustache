@@ -102,10 +102,15 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                         );
                       {{/matchIsJSON}}
                       {{^matchIsJSON}}
-                        $this->assertEquals(
-                            '{{{match}}}',
-                            $res
-                        );
+                        {{#matchIsNull}}
+                          $this->assertNull($res);
+                        {{/matchIsNull}}
+                        {{^matchIsNull}}
+                          $this->assertEquals(
+                              '{{{match}}}',
+                              $res
+                          );
+                        {{/matchIsNull}}
                       {{/matchIsJSON}}
                     {{/testResponse}}
                 {{/match}}

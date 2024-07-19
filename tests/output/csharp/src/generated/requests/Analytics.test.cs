@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class AnalyticsClientRequestTests
 {
-  private readonly AnalyticsClient _client;
+  private readonly AnalyticsClient client;
   private readonly EchoHttpRequester _echo;
 
   public AnalyticsClientRequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
+    client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
-    await _client.CustomDeleteAsync("test/minimal");
+    await client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -40,7 +40,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    await _client.CustomDeleteAsync(
+    await client.CustomDeleteAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
@@ -67,7 +67,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest()
   {
-    await _client.CustomGetAsync("test/minimal");
+    await client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -78,7 +78,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
@@ -105,7 +105,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions should be escaped too")]
   public async Task CustomGetTest2()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
@@ -147,7 +147,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest()
   {
-    await _client.CustomPostAsync("test/minimal");
+    await client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -158,7 +158,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -190,7 +190,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -219,7 +219,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -248,7 +248,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -287,7 +287,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -326,7 +326,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -355,7 +355,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -384,7 +384,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -415,7 +415,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -446,7 +446,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -477,7 +477,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest()
   {
-    await _client.CustomPutAsync("test/minimal");
+    await client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -488,7 +488,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    await _client.CustomPutAsync(
+    await client.CustomPutAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -520,7 +520,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getAddToCartRate with minimal parameters")]
   public async Task GetAddToCartRateTest()
   {
-    await _client.GetAddToCartRateAsync("index");
+    await client.GetAddToCartRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/addToCartRate", req.Path);
@@ -544,7 +544,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getAddToCartRate with all parameters")]
   public async Task GetAddToCartRateTest1()
   {
-    await _client.GetAddToCartRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetAddToCartRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/addToCartRate", req.Path);
@@ -568,7 +568,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getAverageClickPosition with minimal parameters")]
   public async Task GetAverageClickPositionTest()
   {
-    await _client.GetAverageClickPositionAsync("index");
+    await client.GetAverageClickPositionAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/averageClickPosition", req.Path);
@@ -592,7 +592,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getAverageClickPosition with all parameters")]
   public async Task GetAverageClickPositionTest1()
   {
-    await _client.GetAverageClickPositionAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetAverageClickPositionAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/averageClickPosition", req.Path);
@@ -616,7 +616,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getClickPositions with minimal parameters")]
   public async Task GetClickPositionsTest()
   {
-    await _client.GetClickPositionsAsync("index");
+    await client.GetClickPositionsAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/positions", req.Path);
@@ -640,7 +640,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getClickPositions with all parameters")]
   public async Task GetClickPositionsTest1()
   {
-    await _client.GetClickPositionsAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetClickPositionsAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/positions", req.Path);
@@ -664,7 +664,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getClickThroughRate with minimal parameters")]
   public async Task GetClickThroughRateTest()
   {
-    await _client.GetClickThroughRateAsync("index");
+    await client.GetClickThroughRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/clickThroughRate", req.Path);
@@ -688,7 +688,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getClickThroughRate with all parameters")]
   public async Task GetClickThroughRateTest1()
   {
-    await _client.GetClickThroughRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetClickThroughRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/clicks/clickThroughRate", req.Path);
@@ -712,7 +712,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getConversationRate with minimal parameters")]
   public async Task GetConversionRateTest()
   {
-    await _client.GetConversionRateAsync("index");
+    await client.GetConversionRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/conversionRate", req.Path);
@@ -736,7 +736,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getConversationRate with all parameters")]
   public async Task GetConversionRateTest1()
   {
-    await _client.GetConversionRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetConversionRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/conversionRate", req.Path);
@@ -760,7 +760,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getNoClickRate with minimal parameters")]
   public async Task GetNoClickRateTest()
   {
-    await _client.GetNoClickRateAsync("index");
+    await client.GetNoClickRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noClickRate", req.Path);
@@ -784,7 +784,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getNoClickRate with all parameters")]
   public async Task GetNoClickRateTest1()
   {
-    await _client.GetNoClickRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetNoClickRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noClickRate", req.Path);
@@ -808,7 +808,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getNoResultsRate with minimal parameters")]
   public async Task GetNoResultsRateTest()
   {
-    await _client.GetNoResultsRateAsync("index");
+    await client.GetNoResultsRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noResultRate", req.Path);
@@ -832,7 +832,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getNoResultsRate with all parameters")]
   public async Task GetNoResultsRateTest1()
   {
-    await _client.GetNoResultsRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetNoResultsRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noResultRate", req.Path);
@@ -856,7 +856,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getPurchaseRate with minimal parameters")]
   public async Task GetPurchaseRateTest()
   {
-    await _client.GetPurchaseRateAsync("index");
+    await client.GetPurchaseRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/purchaseRate", req.Path);
@@ -880,7 +880,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getPurchaseRate with all parameters")]
   public async Task GetPurchaseRateTest1()
   {
-    await _client.GetPurchaseRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetPurchaseRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/purchaseRate", req.Path);
@@ -904,7 +904,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getRevenue with minimal parameters")]
   public async Task GetRevenueTest()
   {
-    await _client.GetRevenueAsync("index");
+    await client.GetRevenueAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/revenue", req.Path);
@@ -928,7 +928,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getRevenue with all parameters")]
   public async Task GetRevenueTest1()
   {
-    await _client.GetRevenueAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetRevenueAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/revenue", req.Path);
@@ -952,7 +952,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesCount with minimal parameters")]
   public async Task GetSearchesCountTest()
   {
-    await _client.GetSearchesCountAsync("index");
+    await client.GetSearchesCountAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/count", req.Path);
@@ -976,7 +976,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesCount with all parameters")]
   public async Task GetSearchesCountTest1()
   {
-    await _client.GetSearchesCountAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetSearchesCountAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/count", req.Path);
@@ -1000,7 +1000,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesNoClicks with minimal parameters")]
   public async Task GetSearchesNoClicksTest()
   {
-    await _client.GetSearchesNoClicksAsync("index");
+    await client.GetSearchesNoClicksAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noClicks", req.Path);
@@ -1024,7 +1024,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesNoClicks with all parameters")]
   public async Task GetSearchesNoClicksTest1()
   {
-    await _client.GetSearchesNoClicksAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    await client.GetSearchesNoClicksAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noClicks", req.Path);
@@ -1048,7 +1048,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesNoResults with minimal parameters")]
   public async Task GetSearchesNoResultsTest()
   {
-    await _client.GetSearchesNoResultsAsync("index");
+    await client.GetSearchesNoResultsAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noResults", req.Path);
@@ -1072,7 +1072,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getSearchesNoResults with all parameters")]
   public async Task GetSearchesNoResultsTest1()
   {
-    await _client.GetSearchesNoResultsAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    await client.GetSearchesNoResultsAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noResults", req.Path);
@@ -1096,7 +1096,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getStatus with minimal parameters")]
   public async Task GetStatusTest()
   {
-    await _client.GetStatusAsync("index");
+    await client.GetStatusAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/status", req.Path);
@@ -1120,7 +1120,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopCountries with minimal parameters")]
   public async Task GetTopCountriesTest()
   {
-    await _client.GetTopCountriesAsync("index");
+    await client.GetTopCountriesAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/countries", req.Path);
@@ -1144,7 +1144,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopCountries with all parameters")]
   public async Task GetTopCountriesTest1()
   {
-    await _client.GetTopCountriesAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    await client.GetTopCountriesAsync("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/countries", req.Path);
@@ -1168,7 +1168,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFilterAttributes with minimal parameters")]
   public async Task GetTopFilterAttributesTest()
   {
-    await _client.GetTopFilterAttributesAsync("index");
+    await client.GetTopFilterAttributesAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/filters", req.Path);
@@ -1192,7 +1192,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFilterAttributes with all parameters")]
   public async Task GetTopFilterAttributesTest1()
   {
-    await _client.GetTopFilterAttributesAsync(
+    await client.GetTopFilterAttributesAsync(
       "index",
       "mySearch",
       "1999-09-19",
@@ -1224,7 +1224,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFilterForAttribute with minimal parameters")]
   public async Task GetTopFilterForAttributeTest()
   {
-    await _client.GetTopFilterForAttributeAsync("myAttribute", "index");
+    await client.GetTopFilterForAttributeAsync("myAttribute", "index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/filters/myAttribute", req.Path);
@@ -1250,7 +1250,7 @@ public class AnalyticsClientRequestTests
   )]
   public async Task GetTopFilterForAttributeTest1()
   {
-    await _client.GetTopFilterForAttributeAsync("myAttribute1,myAttribute2", "index");
+    await client.GetTopFilterForAttributeAsync("myAttribute1,myAttribute2", "index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/filters/myAttribute1%2CmyAttribute2", req.Path);
@@ -1274,7 +1274,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFilterForAttribute with all parameters")]
   public async Task GetTopFilterForAttributeTest2()
   {
-    await _client.GetTopFilterForAttributeAsync(
+    await client.GetTopFilterForAttributeAsync(
       "myAttribute",
       "index",
       "mySearch",
@@ -1307,7 +1307,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFilterForAttribute with all parameters and multiple attributes")]
   public async Task GetTopFilterForAttributeTest3()
   {
-    await _client.GetTopFilterForAttributeAsync(
+    await client.GetTopFilterForAttributeAsync(
       "myAttribute1,myAttribute2",
       "index",
       "mySearch",
@@ -1340,7 +1340,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFiltersNoResults with minimal parameters")]
   public async Task GetTopFiltersNoResultsTest()
   {
-    await _client.GetTopFiltersNoResultsAsync("index");
+    await client.GetTopFiltersNoResultsAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/filters/noResults", req.Path);
@@ -1364,7 +1364,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopFiltersNoResults with all parameters")]
   public async Task GetTopFiltersNoResultsTest1()
   {
-    await _client.GetTopFiltersNoResultsAsync(
+    await client.GetTopFiltersNoResultsAsync(
       "index",
       "mySearch",
       "1999-09-19",
@@ -1396,7 +1396,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopHits with minimal parameters")]
   public async Task GetTopHitsTest()
   {
-    await _client.GetTopHitsAsync("index");
+    await client.GetTopHitsAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/hits", req.Path);
@@ -1420,7 +1420,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopHits with all parameters")]
   public async Task GetTopHitsTest1()
   {
-    await _client.GetTopHitsAsync(
+    await client.GetTopHitsAsync(
       "index",
       "mySearch",
       true,
@@ -1454,7 +1454,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopSearches with minimal parameters")]
   public async Task GetTopSearchesTest()
   {
-    await _client.GetTopSearchesAsync("index");
+    await client.GetTopSearchesAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches", req.Path);
@@ -1478,7 +1478,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getTopSearches with all parameters")]
   public async Task GetTopSearchesTest1()
   {
-    await _client.GetTopSearchesAsync(
+    await client.GetTopSearchesAsync(
       "index",
       true,
       true,
@@ -1513,7 +1513,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "e2e with complex query params")]
   public async Task GetTopSearchesTest2()
   {
-    await _client.GetTopSearchesAsync("cts_e2e_space in index");
+    await client.GetTopSearchesAsync("cts_e2e_space in index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches", req.Path);
@@ -1537,7 +1537,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getUsersCount with minimal parameters")]
   public async Task GetUsersCountTest()
   {
-    await _client.GetUsersCountAsync("index");
+    await client.GetUsersCountAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/users/count", req.Path);
@@ -1561,7 +1561,7 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "get getUsersCount with all parameters")]
   public async Task GetUsersCountTest1()
   {
-    await _client.GetUsersCountAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await client.GetUsersCountAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/users/count", req.Path);

@@ -124,8 +124,8 @@ func TestAbtesting_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			abtesting.QueryParamOption("query", "parameters with space"), abtesting.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), abtesting.HeaderParamOption("x-header-1", "spaces are left alone"),
+			abtesting.WithQueryParam("query", "parameters with space"), abtesting.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), abtesting.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -185,7 +185,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("query", "myQueryParameter"),
+			abtesting.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -205,7 +205,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("query2", "myQueryParameter"),
+			abtesting.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -225,7 +225,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			abtesting.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -250,7 +250,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			abtesting.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -275,7 +275,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("isItWorking", true),
+			abtesting.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -295,7 +295,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("myParam", 2),
+			abtesting.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -315,7 +315,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("myParam",
+			abtesting.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -336,7 +336,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("myParam",
+			abtesting.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -357,7 +357,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			abtesting.QueryParamOption("myParam",
+			abtesting.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

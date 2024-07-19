@@ -15,9 +15,9 @@ function createClient(): MonitoringClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -27,9 +27,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -39,9 +39,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -53,11 +53,11 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('use the correct host', async () => {
-    const $client = monitoringClient('my-app-id', 'my-api-key', {
+    const client = monitoringClient('my-app-id', 'my-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customDelete({
+    const result = (await client.customDelete({
       path: 'test',
     })) as unknown as EchoResponse;
 
