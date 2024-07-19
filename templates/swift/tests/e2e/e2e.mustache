@@ -46,7 +46,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
           XCTFail("Please provide an `{{e2eApiKey}}` env var for e2e tests")
       }
 
-      e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+      client = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
     }
 
   {{#blocksE2E}}
@@ -61,18 +61,18 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
         }
 
         {{#response}}
-          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await e2eClient.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+          let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
           {{#body}}
-            let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-            let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+            let responseBody = try XCTUnwrap(response.body)
+            let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-            let e2eExpectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+            let expectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
 
-            XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+            XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
           {{/body}}
 
           {{#statusCode}}
-            XCTAssertEqual(e2eResponse.statusCode, {{statusCode}})
+            XCTAssertEqual(response.statusCode, {{statusCode}})
           {{/statusCode}}
         {{/response}}
       }

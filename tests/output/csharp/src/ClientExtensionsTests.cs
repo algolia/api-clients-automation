@@ -80,57 +80,6 @@ public class ClientExtensionsTests
   }
 
   [Fact]
-  public async Task ShouldWaitForApiKey()
-  {
-    var httpMock = new Mock<IHttpRequester>();
-    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), httpMock.Object);
-
-    httpMock
-      .SetupSequence(c =>
-        c.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/keys/my-key")),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<CancellationToken>()
-        )
-      )
-      // First call throw an exception
-      .Throws(new AlgoliaApiException("Oupss", 0))
-      // Next call return a 404
-      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 404 }))
-      // Third call return a Http 200
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            HttpStatusCode = 200,
-            Body = new MemoryStream(
-              Encoding.UTF8.GetBytes(
-                serializer.Serialize(
-                  new GetApiKeyResponse() { CreatedAt = 12, Acl = new List<Acl>() }
-                )
-              )
-            )
-          }
-        )
-      );
-
-    await client.WaitForApiKeyAsync(ApiKeyOperation.Add, "my-key");
-
-    // Verify that the request has been called three times
-    httpMock.Verify(
-      m =>
-        m.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/keys/my-key")),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<CancellationToken>()
-        ),
-      Times.Exactly(3)
-    );
-  }
-
-  [Fact]
   public async Task ShouldBrowseObjects()
   {
     var httpMock = new Mock<IHttpRequester>();

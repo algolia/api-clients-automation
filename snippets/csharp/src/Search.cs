@@ -443,7 +443,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.BrowseAsync<Object>("cts_e2e_browse");
+    var response = await client.BrowseAsync<Hit>("cts_e2e_browse");
     // SEPARATOR<
   }
 
@@ -786,7 +786,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetObjectsAsync<Object>(
+    var response = await client.GetObjectsAsync<Hit>(
       new GetObjectsParams
       {
         Requests = new List<GetObjectsRequest>
@@ -1344,7 +1344,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1375,7 +1375,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1406,7 +1406,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1437,7 +1437,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1468,7 +1468,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1499,7 +1499,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchAsync<Object>(
+    var response = await client.SearchAsync<Hit>(
       new SearchMethodParams
       {
         Requests = new List<SearchQuery>
@@ -1584,7 +1584,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchSingleIndexAsync<Object>("indexName");
+    var response = await client.SearchSingleIndexAsync<Hit>("indexName");
     // SEPARATOR<
   }
 

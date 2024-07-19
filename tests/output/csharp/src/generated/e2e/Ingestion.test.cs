@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class IngestionClientRequestTestsE2E
 {
-  private readonly IngestionClient _client;
+  private readonly IngestionClient client;
 
   public IngestionClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class IngestionClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new IngestionClient(new IngestionConfig(appId, apiKey, "us"));
+    client = new IngestionClient(new IngestionConfig(appId, apiKey, "us"));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class IngestionClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+      var resp = await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
       // Check status code 200
       Assert.NotNull(resp);
 
@@ -71,7 +71,7 @@ public class IngestionClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.GetAuthenticationsAsync(
+      var resp = await client.GetAuthenticationsAsync(
         2,
         1,
         new List<AuthenticationType>
@@ -103,7 +103,7 @@ public class IngestionClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+      var resp = await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
       // Check status code 200
       Assert.NotNull(resp);
 
@@ -124,7 +124,7 @@ public class IngestionClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchTasksAsync(
+      var resp = await client.SearchTasksAsync(
         new TaskSearch
         {
           TaskIDs = new List<string>

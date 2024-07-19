@@ -1,8 +1,4 @@
 {{^useEchoRequester}}var res = Await.result{{/useEchoRequester}}{{#useEchoRequester}}Await.ready{{/useEchoRequester}}(
-    client.{{path}}{{#isCustom}}[Any]{{/isCustom}}(
-    {{#parametersWithDataType}}
-    {{> tests/request_param}}{{^-last}},{{/-last}}
-    {{/parametersWithDataType}}
-    ),
+    {{> tests/method}},
     Duration.Inf
 )

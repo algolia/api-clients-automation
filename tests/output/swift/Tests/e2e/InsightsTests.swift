@@ -46,7 +46,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
             XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
         }
 
-        e2eClient = try? InsightsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
+        self.client = try? InsightsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
     }
 
     /// Many events type
@@ -56,7 +56,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
+        let response = try await client.pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
             EventsItems.convertedObjectIDsAfterSearch(ConvertedObjectIDsAfterSearch(
                 eventName: "Product Purchased",
                 eventType: ConversionEvent.conversion,
@@ -65,7 +65,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_721_088_000_000)
+                timestamp: Int64(1_721_347_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -74,16 +74,16 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_721_088_000_000)
+                timestamp: Int64(1_721_347_200_000)
             )),
         ]))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData = try XCTUnwrap("{\"message\":\"OK\",\"status\":200}".data(using: .utf8))
+        let expectedBodyData = try XCTUnwrap("{\"message\":\"OK\",\"status\":200}".data(using: .utf8))
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 }

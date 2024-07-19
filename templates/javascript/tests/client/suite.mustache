@@ -17,7 +17,7 @@ describe('{{testType}}', () => {
   {{#tests}}
   test('{{{testName}}}', async () => {
     {{#autoCreateClient}}
-      const $client = createClient();
+      const client = createClient();
     {{/autoCreateClient}}
 
     {{#steps}}
@@ -46,7 +46,12 @@ describe('{{testType}}', () => {
             expect(result).toEqual({{{match.parameters}}});
           {{/matchIsJSON}}
           {{^matchIsJSON}}
-            expect(result).toEqual("{{{match}}}");
+            {{#matchIsNull}}
+              expect(result).toBeUndefined();
+            {{/matchIsNull}}
+            {{^matchIsNull}}
+              expect(result).toEqual("{{{match}}}");
+            {{/matchIsNull}}
           {{/matchIsJSON}}
         {{/testResponse}}
       {{/isError}}

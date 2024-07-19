@@ -152,21 +152,20 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomGet2()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'query' => 'parameters with space',
-                'and an array' => ['array', 'with spaces',
-                ],
-            ],
-            'headers' => [
-                'x-header-1' => 'spaces are left alone',
-            ],
-        ];
         $client->customGet(
             'test/all',
             ['query' => 'to be overriden',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -223,20 +222,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost2()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'query' => 'myQueryParameter',
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -253,20 +249,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost3()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'query2' => 'myQueryParameter',
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -283,20 +276,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost4()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-            ],
-            'headers' => [
-                'x-algolia-api-key' => 'myApiKey',
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'myApiKey',
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -314,20 +304,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost5()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-            ],
-            'headers' => [
-                'x-algolia-api-key' => 'myApiKey',
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'myApiKey',
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -345,20 +332,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost6()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'isItWorking' => true,
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -375,20 +359,17 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost7()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'myParam' => 2,
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -405,21 +386,18 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost8()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'myParam' => ['b and c', 'd',
-                ],
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -436,21 +414,18 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost9()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'myParam' => [true, true, false,
-                ],
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ],
+            ]
         );
 
         $this->assertRequests([
@@ -467,21 +442,18 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     public function testCustomPost10()
     {
         $client = $this->getClient();
-        $requestOptions = [
-            'queryParameters' => [
-                'myParam' => [1, 2,
-                ],
-            ],
-            'headers' => [
-            ],
-        ];
         $client->customPost(
             'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
             ],
-            $requestOptions
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ],
+            ]
         );
 
         $this->assertRequests([

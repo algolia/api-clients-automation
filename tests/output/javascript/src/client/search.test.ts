@@ -15,11 +15,11 @@ function createClient(): SearchClient {
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: 'test',
     })) as unknown as EchoResponse;
 
@@ -27,11 +27,11 @@ describe('api', () => {
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: 'test',
     })) as unknown as EchoResponse;
 
@@ -39,7 +39,7 @@ describe('api', () => {
   }, 15000);
 
   test('tests the retry strategy', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
         { url: 'localhost', port: 6677, accept: 'readWrite', protocol: 'http' },
@@ -47,7 +47,7 @@ describe('api', () => {
       ],
     });
 
-    const result = await $client.customGet({ path: '1/test/retry/JavaScript' });
+    const result = await client.customGet({ path: '1/test/retry/JavaScript' });
 
     expect(result).toEqual({ message: 'ok test server response' });
   }, 15000);
@@ -55,9 +55,9 @@ describe('api', () => {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -67,9 +67,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -79,9 +79,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -93,9 +93,9 @@ describe('commonApi', () => {
 
 describe('helpers', () => {
   test('generate secured api key basic', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = $client.generateSecuredApiKey({
+    const result = client.generateSecuredApiKey({
       parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
       restrictions: { validUntil: 2524604400, restrictIndices: ['Movies'] },
     });
@@ -106,9 +106,9 @@ describe('helpers', () => {
   }, 15000);
 
   test('generate secured api key with searchParams', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = $client.generateSecuredApiKey({
+    const result = client.generateSecuredApiKey({
       parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
       restrictions: {
         validUntil: 2524604400,
@@ -133,13 +133,13 @@ describe('helpers', () => {
   }, 15000);
 
   test('call replaceAllObjects without error', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.replaceAllObjects({
+    const result = await client.replaceAllObjects({
       indexName: 'cts_e2e_replace_all_objects_JavaScript',
       objects: [
         { objectID: '1', name: 'Adam' },
@@ -175,13 +175,13 @@ describe('helpers', () => {
   }, 15000);
 
   test('call saveObjects without error', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.saveObjects({
+    const result = await client.saveObjects({
       indexName: 'cts_e2e_saveObjects_JavaScript',
       objects: [
         { objectID: '1', name: 'Adam' },
@@ -193,13 +193,13 @@ describe('helpers', () => {
   }, 15000);
 
   test('call partialUpdateObjects with createIfNotExists=true', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.partialUpdateObjects({
+    const result = await client.partialUpdateObjects({
       indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
       objects: [
         { objectID: '1', name: 'Adam' },
@@ -212,13 +212,13 @@ describe('helpers', () => {
   }, 15000);
 
   test('call partialUpdateObjects with createIfNotExists=false', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.partialUpdateObjects({
+    const result = await client.partialUpdateObjects({
       indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
       objects: [
         { objectID: '3', name: 'Cyril' },
@@ -231,31 +231,103 @@ describe('helpers', () => {
   }, 15000);
 
   test('call deleteObjects without error', async () => {
-    const $client = searchClient('test-app-id', 'test-api-key', {
+    const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
         { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.deleteObjects({
+    const result = await client.deleteObjects({
       indexName: 'cts_e2e_deleteObjects_JavaScript',
       objectIDs: ['1', '2'],
     });
 
     expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
   }, 15000);
+
+  test('wait for api key helper - add', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await client.waitForApiKey({
+      key: 'api-key-add-operation-test-JavaScript',
+      operation: 'add',
+    });
+
+    expect(result).toEqual({
+      value: 'api-key-add-operation-test-JavaScript',
+      description: 'my new api key',
+      acl: ['search', 'addObject'],
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - update', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await client.waitForApiKey({
+      key: 'api-key-update-operation-test-JavaScript',
+      operation: 'update',
+      apiKey: {
+        description: 'my updated api key',
+        acl: ['search', 'addObject', 'deleteObject'],
+        indexes: ['Movies', 'Books'],
+        referers: ['*google.com', '*algolia.com'],
+        validity: 305,
+        maxQueriesPerIPPerHour: 95,
+        maxHitsPerQuery: 20,
+      },
+    });
+
+    expect(result).toEqual({
+      value: 'api-key-update-operation-test-JavaScript',
+      description: 'my updated api key',
+      acl: ['search', 'addObject', 'deleteObject'],
+      indexes: ['Movies', 'Books'],
+      referers: ['*google.com', '*algolia.com'],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - delete', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await client.waitForApiKey({
+      key: 'api-key-delete-operation-test-JavaScript',
+      operation: 'delete',
+    });
+
+    expect(result).toBeUndefined();
+  }, 15000);
 });
 
 describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {
-      const $client = searchClient('', '', { requester: echoRequester() });
+      const client = searchClient('', '', { requester: echoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const $client = searchClient('', 'my-api-key', {
+      const client = searchClient('', 'my-api-key', {
         requester: echoRequester(),
       });
       throw new Error('test is expected to throw error');
@@ -263,7 +335,7 @@ describe('parameters', () => {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const $client = searchClient('my-app-id', '', {
+      const client = searchClient('my-app-id', '', {
         requester: echoRequester(),
       });
       throw new Error('test is expected to throw error');
@@ -273,10 +345,10 @@ describe('parameters', () => {
   }, 15000);
 
   test('`addApiKey` throws with invalid parameters', async () => {
-    const $client = createClient();
+    const client = createClient();
 
     try {
-      const result = (await $client.addApiKey(null)) as unknown as EchoResponse;
+      const result = (await client.addApiKey(null)) as unknown as EchoResponse;
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
@@ -286,10 +358,10 @@ describe('parameters', () => {
   }, 15000);
 
   test('`addOrUpdateObject` throws with invalid parameters', async () => {
-    const $client = createClient();
+    const client = createClient();
 
     try {
-      const result = (await $client.addOrUpdateObject({
+      const result = (await client.addOrUpdateObject({
         objectID: 'my-object-id',
         body: {},
       })) as unknown as EchoResponse;
@@ -300,7 +372,7 @@ describe('parameters', () => {
       );
     }
     try {
-      const result = (await $client.addOrUpdateObject({
+      const result = (await client.addOrUpdateObject({
         indexName: 'my-index-name',
         body: {},
       })) as unknown as EchoResponse;
@@ -311,7 +383,7 @@ describe('parameters', () => {
       );
     }
     try {
-      const result = (await $client.addOrUpdateObject({
+      const result = (await client.addOrUpdateObject({
         indexName: 'my-index-name',
         objectID: 'my-object-id',
       })) as unknown as EchoResponse;

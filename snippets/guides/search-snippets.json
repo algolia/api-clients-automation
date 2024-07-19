@@ -33,7 +33,7 @@
       "append": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new BatchDictionaryEntriesParams\n  {\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"AddEntry\"),\n        Body = new DictionaryEntry\n        {\n          ObjectID = \"1\",\n          Language = Enum.Parse<SupportedLanguage>(\"En\"),\n          AdditionalProperties = new Dictionary<string, object> { { \"additional\", \"try me\" } }\n        },\n      }\n    },\n  }\n);"
     },
     "browse": {
-      "default": "var response = await client.BrowseAsync<Object>(\"cts_e2e_browse\");"
+      "default": "var response = await client.BrowseAsync<Hit>(\"cts_e2e_browse\");"
     },
     "clearObjects": {
       "default": "var response = await client.ClearObjectsAsync(\"theIndexName\");"
@@ -96,7 +96,7 @@
       "default": "var response = await client.GetObjectAsync(\n  \"theIndexName\",\n  \"uniqueID\",\n  new List<string> { \"attr1\", \"attr2\" }\n);"
     },
     "getObjects": {
-      "default": "var response = await client.GetObjectsAsync<Object>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"theIndexName\",\n      }\n    },\n  }\n);"
+      "default": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"theIndexName\",\n      }\n    },\n  }\n);"
     },
     "getRule": {
       "default": "var response = await client.GetRuleAsync(\"indexName\", \"id1\");"
@@ -170,12 +170,12 @@
       "default": "var response = await client.SaveSynonymsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<SynonymHit>\n  {\n    new SynonymHit\n    {\n      ObjectID = \"id1\",\n      Type = Enum.Parse<SynonymType>(\"Synonym\"),\n      Synonyms = new List<string> { \"car\", \"vehicule\", \"auto\" },\n    },\n    new SynonymHit\n    {\n      ObjectID = \"id2\",\n      Type = Enum.Parse<SynonymType>(\"Onewaysynonym\"),\n      Input = \"iphone\",\n      Synonyms = new List<string> { \"ephone\", \"aphone\", \"yphone\" },\n    }\n  },\n  true,\n  true\n);"
     },
     "search": {
-      "withHitsPerPage": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          HitsPerPage = 50,\n        }\n      )\n    },\n  }\n);",
-      "filterOnly": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
-      "filterOr": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
-      "filterNot": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"NOT actor:Nicolas Cage\",\n        }\n      )\n    },\n  }\n);",
-      "retrieveFacets": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"author\", \"genre\" },\n        }\n      )\n    },\n  }\n);",
-      "retrieveFacetsWildcard": "var response = await client.SearchAsync<Object>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"*\" },\n        }\n      )\n    },\n  }\n);"
+      "withHitsPerPage": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          HitsPerPage = 50,\n        }\n      )\n    },\n  }\n);",
+      "filterOnly": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
+      "filterOr": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
+      "filterNot": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"NOT actor:Nicolas Cage\",\n        }\n      )\n    },\n  }\n);",
+      "retrieveFacets": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"author\", \"genre\" },\n        }\n      )\n    },\n  }\n);",
+      "retrieveFacetsWildcard": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"*\" },\n        }\n      )\n    },\n  }\n);"
     },
     "searchDictionaryEntries": {
       "default": "var response = await client.SearchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new SearchDictionaryEntriesParams { Query = \"about\", }\n);"
@@ -187,7 +187,7 @@
       "default": "var response = await client.SearchRulesAsync(\n  \"indexName\",\n  new SearchRulesParams { Query = \"something\", }\n);"
     },
     "searchSingleIndex": {
-      "default": "var response = await client.SearchSingleIndexAsync<Object>(\"indexName\");"
+      "default": "var response = await client.SearchSingleIndexAsync<Hit>(\"indexName\");"
     },
     "searchSynonyms": {
       "default": "var response = await client.SearchSynonymsAsync(\"indexName\");"

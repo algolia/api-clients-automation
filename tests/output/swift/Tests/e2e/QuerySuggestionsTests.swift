@@ -46,7 +46,7 @@ final class QuerySuggestionsClientRequestsTestsE2E: XCTestCase {
             XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
         }
 
-        e2eClient = try? QuerySuggestionsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
+        self.client = try? QuerySuggestionsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
     }
 
     /// Retrieve QS config e2e
@@ -56,18 +56,18 @@ final class QuerySuggestionsClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let response = try await client.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData =
+        let expectedBodyData =
             try XCTUnwrap(
                 "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
                     .data(using: .utf8)
             )
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 }

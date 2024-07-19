@@ -410,16 +410,14 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-header-1": "spaces are left alone"],
-
-            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
-        )
-
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-header-1": "spaces are left alone"],
+
+                queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -526,15 +524,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -569,15 +565,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query2": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query2": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -615,15 +609,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -666,15 +658,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -717,15 +707,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["isItWorking": true]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["isItWorking": true]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -763,15 +751,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": 2]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": 2]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -809,15 +795,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": ["b and c", "d"]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": ["b and c", "d"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -855,15 +839,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [true, true, false]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [true, true, false]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -901,15 +883,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [1, 2]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [1, 2]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

@@ -1,3 +1,1 @@
-{{^useEchoRequester}}$res = {{/useEchoRequester}}$client->{{{path}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}
-{{> tests/generateParams}}
-{{/parametersWithDataType}});
+{{^useEchoRequester}}$res = {{/useEchoRequester}}{{> tests/method}};

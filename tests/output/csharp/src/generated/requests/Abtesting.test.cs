@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class AbtestingClientRequestTests
 {
-  private readonly AbtestingClient _client;
+  private readonly AbtestingClient client;
   private readonly EchoHttpRequester _echo;
 
   public AbtestingClientRequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new AbtestingClient(new AbtestingConfig("appId", "apiKey", "us"), _echo);
+    client = new AbtestingClient(new AbtestingConfig("appId", "apiKey", "us"), _echo);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "addABTests with minimal parameters")]
   public async Task AddABTestsTest()
   {
-    await _client.AddABTestsAsync(
+    await client.AddABTestsAsync(
       new AddABTestsRequest
       {
         EndAt = "2022-12-31T00:00:00.000Z",
@@ -57,7 +57,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
-    await _client.CustomDeleteAsync("test/minimal");
+    await client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -68,7 +68,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with all parameters")]
   public async Task CustomDeleteTest1()
   {
-    await _client.CustomDeleteAsync(
+    await client.CustomDeleteAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
@@ -95,7 +95,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest()
   {
-    await _client.CustomGetAsync("test/minimal");
+    await client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -106,7 +106,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with all parameters")]
   public async Task CustomGetTest1()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
@@ -133,7 +133,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions should be escaped too")]
   public async Task CustomGetTest2()
   {
-    await _client.CustomGetAsync(
+    await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
@@ -175,7 +175,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest()
   {
-    await _client.CustomPostAsync("test/minimal");
+    await client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -186,7 +186,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with all parameters")]
   public async Task CustomPostTest1()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -218,7 +218,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions can override default query parameters")]
   public async Task CustomPostTest2()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -247,7 +247,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions merges query parameters with default ones")]
   public async Task CustomPostTest3()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -276,7 +276,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions can override default headers")]
   public async Task CustomPostTest4()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -315,7 +315,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions merges headers with default ones")]
   public async Task CustomPostTest5()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -354,7 +354,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts booleans")]
   public async Task CustomPostTest6()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -383,7 +383,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts integers")]
   public async Task CustomPostTest7()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -412,7 +412,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of string")]
   public async Task CustomPostTest8()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -443,7 +443,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of booleans")]
   public async Task CustomPostTest9()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -474,7 +474,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "requestOptions queryParameters accepts list of integers")]
   public async Task CustomPostTest10()
   {
-    await _client.CustomPostAsync(
+    await client.CustomPostAsync(
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
@@ -505,7 +505,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest()
   {
-    await _client.CustomPutAsync("test/minimal");
+    await client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
     Assert.Equal("/test/minimal", req.Path);
@@ -516,7 +516,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with all parameters")]
   public async Task CustomPutTest1()
   {
-    await _client.CustomPutAsync(
+    await client.CustomPutAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
@@ -548,7 +548,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "deleteABTest")]
   public async Task DeleteABTestTest()
   {
-    await _client.DeleteABTestAsync(42);
+    await client.DeleteABTestAsync(42);
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests/42", req.Path);
@@ -559,7 +559,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "getABTest")]
   public async Task GetABTestTest()
   {
-    await _client.GetABTestAsync(42);
+    await client.GetABTestAsync(42);
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests/42", req.Path);
@@ -570,7 +570,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "listABTests with minimal parameters")]
   public async Task ListABTestsTest()
   {
-    await _client.ListABTestsAsync();
+    await client.ListABTestsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests", req.Path);
@@ -581,7 +581,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "listABTests with parameters")]
   public async Task ListABTestsTest1()
   {
-    await _client.ListABTestsAsync(0, 21, "cts_e2e ab", "t");
+    await client.ListABTestsAsync(0, 21, "cts_e2e ab", "t");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests", req.Path);
@@ -605,7 +605,7 @@ public class AbtestingClientRequestTests
   [Fact(DisplayName = "stopABTest")]
   public async Task StopABTestTest()
   {
-    await _client.StopABTestAsync(42);
+    await client.StopABTestAsync(42);
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests/42/stop", req.Path);

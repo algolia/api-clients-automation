@@ -21,15 +21,7 @@ final class {{client}}RequestsTests: XCTestCase {
         let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
 
-        {{#hasRequestOptions}}
-          let requestOptions = RequestOptions({{#requestOptions.headers}}
-            headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.headers}}
-            {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
-            queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.queryParameters}}
-          )
-        {{/hasRequestOptions}}
-
-        let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+        let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

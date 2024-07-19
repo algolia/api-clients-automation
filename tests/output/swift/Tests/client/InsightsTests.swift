@@ -17,9 +17,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -44,9 +42,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -59,9 +55,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -73,21 +67,21 @@ final class InsightsClientClientTests: XCTestCase {
         let configuration = try InsightsClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
-        let response = try await client.pushEventsWithHTTPInfo(
-            insightsEvents: InsightsEvents(
-                events: [EventsItems.clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
-                    eventName: "Product Clicked",
-                    eventType: ClickEvent.click,
-                    index: "products",
-                    objectIDs: ["9780545139700", "9780439784542"],
-                    positions: [7, 6],
-                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
-                    userToken: "user-123456",
-                    authenticatedUserToken: "user-123456",
-                    timestamp: Int64(1_641_290_601_962)
-                ))]
-            )
-        )
+        let response = try await client
+            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
+                EventsItems
+                    .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
+                        eventName: "Product Clicked",
+                        eventType: ClickEvent.click,
+                        index: "products",
+                        objectIDs: ["9780545139700", "9780439784542"],
+                        positions: [7, 6],
+                        queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                        userToken: "user-123456",
+                        authenticatedUserToken: "user-123456",
+                        timestamp: Int64(1_641_290_601_962)
+                    )),
+            ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -103,9 +97,7 @@ final class InsightsClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customDeleteWithHTTPInfo(
-            path: "test"
-        )
+        let response = try await client.customDeleteWithHTTPInfo(path: "test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
