@@ -23,23 +23,8 @@ class Snippet{{client}}
         // Initialize the client
         $client = {{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
-        {{#hasRequestOptions}}
-          $requestOptions = [
-            'queryParameters' => [
-              {{#requestOptions.queryParameters.parametersWithDataType}}
-                '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
-              {{/requestOptions.queryParameters.parametersWithDataType}}
-            ],
-            'headers' => [
-              {{#requestOptions.headers.parametersWithDataType}}
-                '{{{key}}}' => '{{{value}}}',
-              {{/requestOptions.headers.parametersWithDataType}}
-            ]
-          ];
-        {{/hasRequestOptions}}
-
         // Call the API
-        $response = $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}});{{/hasParameters}}
+        $response = {{> tests/method}};
 
         // play with the response
         var_dump($response);

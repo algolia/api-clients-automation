@@ -4,8 +4,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "generateSecuredApiKey",
+        "method": "generateSecuredApiKey",
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
@@ -27,8 +26,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "generateSecuredApiKey",
+        "method": "generateSecuredApiKey",
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
@@ -79,8 +77,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "replaceAllObjects",
+        "method": "replaceAllObjects",
         "parameters": {
           "indexName": "cts_e2e_replace_all_objects_${{languageCased}}",
           "objects": [
@@ -194,8 +191,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "saveObjects",
+        "method": "saveObjects",
         "parameters": {
           "indexName": "cts_e2e_saveObjects_${{languageCased}}",
           "objects": [
@@ -243,8 +239,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "partialUpdateObjects",
+        "method": "partialUpdateObjects",
         "parameters": {
           "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
           "objects": [
@@ -293,8 +288,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "partialUpdateObjects",
+        "method": "partialUpdateObjects",
         "parameters": {
           "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
           "objects": [
@@ -343,8 +337,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "deleteObjects",
+        "method": "deleteObjects",
         "parameters": {
           "indexName": "cts_e2e_deleteObjects_${{languageCased}}",
           "objectIDs": [
@@ -386,8 +379,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "waitForApiKey",
+        "method": "waitForApiKey",
         "parameters": {
           "key": "api-key-add-operation-test-${{languageCased}}",
           "operation": "add"
@@ -429,8 +421,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "waitForApiKey",
+        "method": "waitForApiKey",
         "parameters": {
           "key": "api-key-update-operation-test-${{languageCased}}",
           "operation": "update",
@@ -500,8 +491,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "waitForApiKey",
+        "method": "waitForApiKey",
         "parameters": {
           "key": "api-key-delete-operation-test-${{languageCased}}",
           "operation": "delete"

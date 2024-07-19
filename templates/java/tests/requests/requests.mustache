@@ -47,14 +47,7 @@ class {{client}}RequestsTests {
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-              {{#requestOptions.queryParameters.parametersWithDataType}}
-                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-              {{/requestOptions.queryParameters.parametersWithDataType}}
-              {{#requestOptions.headers.parametersWithDataType}}
-                .addExtraHeader("{{{key}}}", "{{{value}}}")
-              {{/requestOptions.headers.parametersWithDataType}}
-            {{/hasRequestOptions}});
+            {{> tests/method}};
         });
         {{#request}}
         EchoResponse req = echo.getLastResponse();

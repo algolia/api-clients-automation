@@ -1,0 +1,13 @@
+$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}[
+  {{#requestOptions.queryParameters.parameters}}
+    'queryParameters' => [
+      {{#requestOptions.queryParameters.parametersWithDataType}}
+        '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+    ],{{/requestOptions.queryParameters.parameters}}{{#requestOptions.headers.parameters}}
+    'headers' => [
+      {{#requestOptions.headers.parametersWithDataType}}
+        '{{{key}}}' => '{{{value}}}',
+      {{/requestOptions.headers.parametersWithDataType}}
+    ]{{/requestOptions.headers.parameters}}
+  ]{{/hasRequestOptions}}){{/hasParams}}

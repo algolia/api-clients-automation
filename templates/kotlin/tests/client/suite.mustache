@@ -35,7 +35,7 @@ class {{clientPrefix}}Test {
         {{#isMethod}}
         client.runTest(
              call = {
-                {{path}}(
+                {{method}}(
                     {{#parametersWithDataType}}
                     {{> tests/request_param}}
                     {{/parametersWithDataType}}

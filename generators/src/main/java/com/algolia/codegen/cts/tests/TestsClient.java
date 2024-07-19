@@ -68,7 +68,7 @@ public class TestsClient extends TestsGenerator {
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
-              stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
+              stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
 
@@ -88,30 +88,23 @@ public class TestsClient extends TestsGenerator {
               }
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
-              ope = operations.get(step.path);
+              ope = operations.get(step.method);
               if (ope == null) {
-                throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
+                throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
-              stepOut.put("hasOperationParams", ope.hasParams);
+              stepOut.put("hasParams", ope.hasParams);
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
               testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
             }
 
-            stepOut.put("object", step.object);
-            stepOut.put("path", step.path);
+            stepOut.put("method", step.method);
 
-            if (step.requestOptions != null) {
-              Map<String, Object> requestOptions = new HashMap<>();
-              paramsType.enhanceParameters(step.requestOptions, requestOptions);
-              stepOut.put("requestOptions", requestOptions);
-            }
-
-            if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
-              stepOut.put("isCustom", true);
+            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
+              stepOut.put("isCustomRequest", true);
             }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
@@ -152,9 +145,9 @@ public class TestsClient extends TestsGenerator {
               if (step.expected.error != null) {
                 stepOut.put("isError", true);
                 stepOut.put("expectedError", step.expected.error);
-                if (language.equals("go") && step.path != null) {
+                if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
-                  stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
+                  stepOut.put("expectedError", step.expected.error.replace(step.method, Helpers.toPascalCase(step.method)));
                 }
               } else if (step.expected.match != null) {
                 Map<String, Object> matchMap = new HashMap<>();

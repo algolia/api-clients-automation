@@ -12,8 +12,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customGet",
+        "method": "customGet",
         "parameters": {
           "path": "test"
         },
@@ -37,8 +36,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customPost",
+        "method": "customPost",
         "parameters": {
           "path": "test"
         },

@@ -182,8 +182,8 @@ public class TestsRequest extends TestsGenerator {
           }
 
           test.put("request", req.request);
-          test.put("hasParameters", req.parameters.size() != 0);
-          test.put("hasOperationParams", ope.hasParams);
+          test.put("isAsync", true);
+          test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
           if (req.requestOptions != null) {

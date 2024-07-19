@@ -4,8 +4,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "customPost",
+        "method": "customPost",
         "parameters": {
           "path": "1/test"
         },
@@ -21,8 +20,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "customGet",
+        "method": "customGet",
         "parameters": {
           "path": "1/test"
         },
@@ -41,8 +39,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "customPost",
+        "method": "customPost",
         "parameters": {
           "path": "1/test"
         },
