@@ -1,3 +1,10 @@
+## [4.0.0-beta.41](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.40...4.0.0-beta.41)
+
+- [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)
+- [a68907d1c](https://github.com/algolia/api-clients-automation/commit/a68907d1c) feat(clients): add api key helper test ([#3338](https://github.com/algolia/api-clients-automation/pull/3338)) by [@Fluf22](https://github.com/Fluf22/)
+- [31ba7f6d0](https://github.com/algolia/api-clients-automation/commit/31ba7f6d0) fix(specs): recommend non required parameters ([#3355](https://github.com/algolia/api-clients-automation/pull/3355)) by [@shortcuts](https://github.com/shortcuts/)
+- [337eea93e](https://github.com/algolia/api-clients-automation/commit/337eea93e) fix(specs): results is required in GetRecommendationsResponse ([#3357](https://github.com/algolia/api-clients-automation/pull/3357)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-beta.40](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.39...4.0.0-beta.40)
 
 - [f1b186646](https://github.com/algolia/api-clients-automation/commit/f1b186646) fix(java): add overload for browseObjects ([#3351](https://github.com/algolia/api-clients-automation/pull/3351)) by [@millotp](https://github.com/millotp/)
