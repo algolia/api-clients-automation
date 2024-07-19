@@ -17,9 +17,9 @@ function createClient(): QuerySuggestionsClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -29,9 +29,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -41,9 +41,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -56,7 +56,7 @@ describe('commonApi', () => {
 describe('parameters', () => {
   test('throws when region is not given', async () => {
     try {
-      const $client = querySuggestionsClient('my-app-id', 'my-api-key', '', {
+      const client = querySuggestionsClient('my-app-id', 'my-api-key', '', {
         requester: echoRequester(),
       });
       throw new Error('test is expected to throw error');
@@ -69,7 +69,7 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const $client = querySuggestionsClient(
+      const client = querySuggestionsClient(
         'my-app-id',
         'my-api-key',
         'not_a_region',
@@ -84,7 +84,7 @@ describe('parameters', () => {
   }, 15000);
 
   test('does not throw when region is given', async () => {
-    const $client = querySuggestionsClient('my-app-id', 'my-api-key', 'us', {
+    const client = querySuggestionsClient('my-app-id', 'my-api-key', 'us', {
       requester: echoRequester(),
     });
   }, 15000);

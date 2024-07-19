@@ -16,9 +16,7 @@ final class UsageClientClientTests: XCTestCase {
         let configuration = try UsageClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = UsageClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customGetWithHTTPInfo(
-            path: "test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -30,9 +28,7 @@ final class UsageClientClientTests: XCTestCase {
         let configuration = try UsageClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = UsageClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customPostWithHTTPInfo(
-            path: "test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -45,9 +41,7 @@ final class UsageClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = UsageClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -72,9 +66,7 @@ final class UsageClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = UsageClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -87,9 +79,7 @@ final class UsageClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = UsageClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

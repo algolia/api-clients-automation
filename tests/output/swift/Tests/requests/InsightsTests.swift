@@ -127,16 +127,14 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-header-1": "spaces are left alone"],
-
-            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
-        )
-
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-header-1": "spaces are left alone"],
+
+                queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -243,15 +241,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -286,15 +282,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query2": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query2": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -332,15 +326,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -383,15 +375,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -434,15 +424,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["isItWorking": true]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["isItWorking": true]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -480,15 +468,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": 2]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": 2]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -526,15 +512,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": ["b and c", "d"]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": ["b and c", "d"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -572,15 +556,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [true, true, false]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [true, true, false]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -618,15 +600,13 @@ final class InsightsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [1, 2]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [1, 2]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -805,7 +785,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_721_088_000_000)
+                timestamp: Int64(1_721_347_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -814,7 +794,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_721_088_000_000)
+                timestamp: Int64(1_721_347_200_000)
             )),
         ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -824,7 +804,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721088000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721088000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721347200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721347200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

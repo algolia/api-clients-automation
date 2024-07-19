@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class AbtestingClientRequestTestsE2E
 {
-  private readonly AbtestingClient _client;
+  private readonly AbtestingClient client;
 
   public AbtestingClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class AbtestingClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new AbtestingClient(new AbtestingConfig(appId, apiKey, "us"));
+    client = new AbtestingClient(new AbtestingConfig(appId, apiKey, "us"));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class AbtestingClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.ListABTestsAsync(0, 21, "cts_e2e ab", "t");
+      var resp = await client.ListABTestsAsync(0, 21, "cts_e2e ab", "t");
       // Check status code 200
       Assert.NotNull(resp);
 

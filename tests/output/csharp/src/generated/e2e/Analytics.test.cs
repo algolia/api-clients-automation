@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class AnalyticsClientRequestTestsE2E
 {
-  private readonly AnalyticsClient _client;
+  private readonly AnalyticsClient client;
 
   public AnalyticsClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class AnalyticsClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new AnalyticsClient(new AnalyticsConfig(appId, apiKey, "us"));
+    client = new AnalyticsClient(new AnalyticsConfig(appId, apiKey, "us"));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class AnalyticsClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.GetTopSearchesAsync("cts_e2e_space in index");
+      var resp = await client.GetTopSearchesAsync("cts_e2e_space in index");
       // Check status code 200
       Assert.NotNull(resp);
 

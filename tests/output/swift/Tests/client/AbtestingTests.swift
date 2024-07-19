@@ -17,9 +17,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -44,9 +42,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -59,9 +55,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -73,9 +67,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let configuration = try AbtestingClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
-        let response = try await client.getABTestWithHTTPInfo(
-            id: 123
-        )
+        let response = try await client.getABTestWithHTTPInfo(id: 123)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -91,9 +83,7 @@ final class AbtestingClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
-        let response = try await client.getABTestWithHTTPInfo(
-            id: 123
-        )
+        let response = try await client.getABTestWithHTTPInfo(id: 123)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

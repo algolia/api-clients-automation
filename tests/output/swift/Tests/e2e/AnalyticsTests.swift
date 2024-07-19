@@ -46,7 +46,7 @@ final class AnalyticsClientRequestsTestsE2E: XCTestCase {
             XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
         }
 
-        e2eClient = try? AnalyticsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
+        self.client = try? AnalyticsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
     }
 
     /// e2e with complex query params
@@ -56,17 +56,14 @@ final class AnalyticsClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.getTopSearchesWithHTTPInfo(index: "cts_e2e_space in index")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+        let response = try await client.getTopSearchesWithHTTPInfo(index: "cts_e2e_space in index")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let e2eExpectedBodyData = try XCTUnwrap(
-            "{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}"
-                .data(using: .utf8)
-        )
+        let expectedBodyData = try XCTUnwrap("{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}".data(using: .utf8))
 
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
-        XCTAssertEqual(e2eResponse.statusCode, 200)
+        XCTAssertEqual(response.statusCode, 200)
     }
 }

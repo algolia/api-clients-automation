@@ -43,7 +43,7 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -58,7 +58,7 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customGet[Any](
+      client.customGet[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -71,7 +71,7 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf

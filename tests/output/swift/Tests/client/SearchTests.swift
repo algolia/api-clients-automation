@@ -16,9 +16,7 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customGetWithHTTPInfo(
-            path: "test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -30,9 +28,7 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customPostWithHTTPInfo(
-            path: "test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -52,9 +48,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test/retry/Swift"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test/retry/Swift")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -94,9 +88,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -121,9 +113,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -136,9 +126,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -313,10 +301,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.deleteObjects(
-            indexName: "cts_e2e_deleteObjects_Swift",
-            objectIDs: ["1", "2"]
-        )
+        let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_Swift", objectIDs: ["1", "2"])
 
         let comparableData = try XCTUnwrap(
             "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]"

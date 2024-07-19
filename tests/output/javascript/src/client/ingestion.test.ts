@@ -15,9 +15,9 @@ function createClient(): IngestionClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -27,9 +27,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -39,9 +39,9 @@ describe('commonApi', () => {
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
@@ -53,11 +53,11 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('uses the correct region', async () => {
-    const $client = ingestionClient('my-app-id', 'my-api-key', 'us', {
+    const client = ingestionClient('my-app-id', 'my-api-key', 'us', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.getSource({
+    const result = (await client.getSource({
       sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -66,7 +66,7 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const $client = ingestionClient(
+      const client = ingestionClient(
         'my-app-id',
         'my-api-key',
         'not_a_region',

@@ -14,7 +14,7 @@ namespace Algolia.Search.e2e;
 
 public class SearchClientRequestTestsE2E
 {
-  private readonly SearchClient _client;
+  private readonly SearchClient client;
 
   public SearchClientRequestTestsE2E()
   {
@@ -39,7 +39,7 @@ public class SearchClientRequestTestsE2E
       throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
     }
 
-    _client = new SearchClient(new SearchConfig(appId, apiKey));
+    client = new SearchClient(new SearchConfig(appId, apiKey));
   }
 
   [Fact]
@@ -50,7 +50,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.BrowseAsync<Hit>("cts_e2e_browse");
+      var resp = await client.BrowseAsync<Hit>("cts_e2e_browse");
       // Check status code 200
       Assert.NotNull(resp);
 
@@ -71,7 +71,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.GetSettingsAsync("cts_e2e_settings");
+      var resp = await client.GetSettingsAsync("cts_e2e_settings");
       // Check status code 200
       Assert.NotNull(resp);
 
@@ -92,7 +92,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchAsync<Hit>(
+      var resp = await client.SearchAsync<Hit>(
         new SearchMethodParams
         {
           Requests = new List<SearchQuery>
@@ -121,7 +121,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchAsync<Hit>(
+      var resp = await client.SearchAsync<Hit>(
         new SearchMethodParams
         {
           Requests = new List<SearchQuery>
@@ -158,7 +158,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchAsync<Hit>(
+      var resp = await client.SearchAsync<Hit>(
         new SearchMethodParams
         {
           Requests = new List<SearchQuery>
@@ -240,7 +240,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchDictionaryEntriesAsync(
+      var resp = await client.SearchDictionaryEntriesAsync(
         Enum.Parse<DictionaryType>("Stopwords"),
         new SearchDictionaryEntriesParams { Query = "about", }
       );
@@ -264,7 +264,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
+      var resp = await client.SearchSingleIndexAsync<Hit>("cts_e2e_space in index");
       // Check status code 200
       Assert.NotNull(resp);
     }
@@ -279,7 +279,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SearchSingleIndexAsync<Hit>(
+      var resp = await client.SearchSingleIndexAsync<Hit>(
         "cts_e2e_browse",
         new SearchParams(
           new SearchParamsObject
@@ -310,7 +310,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await _client.SetSettingsAsync(
+      var resp = await client.SetSettingsAsync(
         "cts_e2e_settings",
         new IndexSettings { PaginationLimitedTo = 10, },
         true
