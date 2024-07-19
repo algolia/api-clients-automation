@@ -1,3 +1,7 @@
+## [4.0.0](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b25...4.0.0)
+
+
+
 ## [4.0.0b25](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b24...4.0.0b25)
 
 - [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)
