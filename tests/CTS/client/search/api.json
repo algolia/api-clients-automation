@@ -76,7 +76,7 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "1/test/retry/${{languageCased}}"
+          "path": "1/test/retry/${{language}}"
         },
         "expected": {
           "type": "response",

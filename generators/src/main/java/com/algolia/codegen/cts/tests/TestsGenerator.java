@@ -71,6 +71,7 @@ public abstract class TestsGenerator {
   private String injectVariables(String json) {
     long threeDays = 3 * 24 * 60 * 60 * 1000;
     json = json
+      .replace("${{language}}", language)
       .replace("${{languageCased}}", languageCased())
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));

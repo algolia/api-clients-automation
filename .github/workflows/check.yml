@@ -254,6 +254,9 @@ jobs:
         if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
+      - name: Run benchmarks
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --benchmark --no-client --no-requests --no-e2e
+
       - name: Generate code snippets for documentation
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
@@ -347,6 +350,9 @@ jobs:
       - name: Retry e2e CTS
         if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
+
+      - name: Run benchmarks
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --benchmark --no-client --no-requests --no-e2e
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
@@ -474,6 +480,23 @@ jobs:
       - name: Generate documentation specs with code snippets
         run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} --docs
 
+      - name: Read benchmark results
+        id: benchmark
+        run: |
+          # merge all benchmark results into a single json, and remove the files
+          results=$(jq -s 'add' -c tests/output/**/benchmarkResult.json)
+          {
+            echo 'BENCHMARK_SECTION<<EOF'
+            echo "<details>"
+            echo "<summary>📊 Benchmark results</summary>"
+            echo "<pre>"
+            echo "$results"
+            echo "</pre>"
+            echo "</details>"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+          rm -rf tests/output/**/benchmarkResult.json
+
       - name: Push generated code
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
@@ -491,6 +514,8 @@ jobs:
 
             _If you believe code should've been generated, please, [report the issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+)._
 
+            ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
+
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
@@ -504,6 +529,8 @@ jobs:
             | 🪓 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
             | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
+
+            ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: Build website
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
