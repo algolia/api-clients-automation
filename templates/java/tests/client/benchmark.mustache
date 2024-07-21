@@ -1,4 +1,4 @@
-package com.algolia.client;
+package com.algolia.benchmark;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class {{client}}ClientTests {
-  private EchoInterceptor echo = new EchoInterceptor();
+class {{client}}Benchmark {
   private ObjectMapper json;
     
   @BeforeAll
@@ -37,19 +36,11 @@ class {{client}}ClientTests {
       build();
   }
 
-  {{client}} createClient() {
-      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}withEchoRequester());
-  }
-
-  private ClientOptions withEchoRequester() {
-    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
-  }
-
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
     return ClientOptions.builder().setHosts(hosts).setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE).build();
   }
 
-  {{#blocksClient}}
+  {{#blocksBenchmark}}
   {{> tests/client/tests}}
-  {{/blocksClient}}
+  {{/blocksBenchmark}}
 }

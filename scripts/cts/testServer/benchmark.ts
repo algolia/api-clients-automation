@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { Server } from 'http';
 
 import { expect } from 'chai';
@@ -14,13 +15,18 @@ const benchmarkStatus: Record<
 > = {};
 
 export function printBenchmarkReport(): void {
+  const times: Array<{ lang: string; rate: number }> = [];
   for (const lang of Object.keys(benchmarkStatus)) {
     const status = benchmarkStatus[lang];
     expect(status.requestTimes).to.have.length(1000);
-    // eslint-disable-next-line no-console
-    console.log(
-      `Request/s for ${lang}: ${1000000 / (status.requestTimes.at(-1)! - status.requestTimes[0])}`,
-    );
+    const rate = 1000000 / (status.requestTimes.at(-1)! - status.requestTimes[0]);
+    times.push({ lang, rate });
+  }
+
+  times.sort((a, b) => b.rate - a.rate);
+  console.log('Benchmark report:');
+  for (const { lang, rate } of times) {
+    console.log(`${lang}: ${rate.toFixed(2)} req/s`);
   }
 }
 
