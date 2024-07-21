@@ -1,18 +1,4 @@
-// {{generationBanner}}
-/* eslint-disable @typescript-eslint/no-unused-vars, require-await */
-// @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { {{client}}, {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} } from '{{{import}}}';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
 
-const appId = 'test-app-id';
-const apiKey = 'test-api-key';
-
-function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
-  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
-}
-
-{{#blocksClient}}
 describe('{{testType}}', () => {
   {{#tests}}
   test('{{{testName}}}', async () => {
@@ -21,6 +7,9 @@ describe('{{testType}}', () => {
     {{/autoCreateClient}}
 
     {{#steps}}
+      {{#times}}
+      for (let i = 0; i < {{.}}; i++) {
+      {{/times}}
       {{#isError}}
         try {
           {{#dynamicTemplate}}{{/dynamicTemplate}}
@@ -55,41 +44,11 @@ describe('{{testType}}', () => {
           {{/matchIsJSON}}
         {{/testResponse}}
       {{/isError}}
+      {{#times}}
+      }
+      {{/times}}
     {{/steps}}
   }, 15000);
 
   {{/tests}}
-})
-
-{{/blocksClient}}
-
-describe('init', () => {
-  test('sets authMode', async () => {
-    const qpClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
-    });
-    const headerClient = {{client}}('foo', 'bar', {{#hasRegionalHost}}'us',{{/hasRegionalHost}}{
-      authMode: 'WithinHeaders',
-      requester: echoRequester(),
-    });
-
-    const qpResult = (await qpClient.customGet({
-      path: '1/foo',
-    })) as unknown as EchoResponse;
-    expect(qpResult.searchParams).toEqual({
-      'x-algolia-api-key': 'bar',
-      'x-algolia-application-id': 'foo',
-    });
-
-    const headerResult = (await headerClient.customGet({
-      path: '1/bar',
-    })) as unknown as EchoResponse;
-    expect(headerResult.headers).toEqual({
-      accept: 'application/json',
-      'content-type': 'text/plain',
-      'x-algolia-api-key': 'bar',
-      'x-algolia-application-id': 'foo',
-    });
-  });
 });
