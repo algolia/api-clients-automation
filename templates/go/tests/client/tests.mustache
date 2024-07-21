@@ -41,7 +41,12 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
         require.JSONEq(t, `{{{match.parameters}}}`, string(rawBody))
       {{/matchIsJSON}}
       {{^matchIsJSON}}
+        {{#matchIsNull}}
+          require.Nil(t, res)
+        {{/matchIsNull}}
+        {{^matchIsNull}}
         require.Equal(t, `{{{match}}}`, res)
+        {{/matchIsNull}}
       {{/matchIsJSON}}
     {{/testResponse}}
   {{/match}}

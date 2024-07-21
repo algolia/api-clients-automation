@@ -33,7 +33,12 @@
               JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
             {{/matchIsJSON}}
             {{^matchIsJSON}}
-              Assert.Equal("{{{match}}}", res);
+              {{#matchIsNull}}
+                Assert.Null(res);
+              {{/matchIsNull}}
+              {{^matchIsNull}}
+                Assert.Equal("{{{match}}}", res);
+              {{/matchIsNull}}
             {{/matchIsJSON}}
           {{/testResponse}}
         {{/match}}

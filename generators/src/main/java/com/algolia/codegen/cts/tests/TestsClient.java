@@ -75,6 +75,7 @@ public class TestsClient extends TestsGenerator {
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
           testOut.put("useEchoRequester", true);
+          testOut.put("isBenchmark", withBenchmark);
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
             if (step.times > 1) stepOut.put("times", step.times);
