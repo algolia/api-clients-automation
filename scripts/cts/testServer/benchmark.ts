@@ -30,7 +30,7 @@ export function printBenchmarkReport(): void {
     const color =
       // eslint-disable-next-line no-nested-ternary
       rate > 2000 ? 'bgGreenBright' : rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
-    console.log(chalk.black[color](`${lang}: ${rate.toFixed(2)} req/s`));
+    console.log(chalk.black[color](`${lang}: ${Math.floor(rate)} req/s`));
   }
 }
 
