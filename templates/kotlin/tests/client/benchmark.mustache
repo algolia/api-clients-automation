@@ -1,5 +1,5 @@
 // {{generationBanner}}
-package com.algolia.client;
+package com.algolia.benchmark;
 
 import com.algolia.client.api.{{client}}
 import com.algolia.client.model.{{import}}.*
@@ -15,7 +15,7 @@ import kotlin.test.*
 
 class {{clientPrefix}}Test {
 
-    {{#blocksClient}}
+    {{#blocksBenchmark}}
     {{> tests/client/tests}}
-    {{/blocksClient}}
+    {{/blocksBenchmark}}
 }
