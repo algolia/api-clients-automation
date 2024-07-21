@@ -144,10 +144,17 @@ public class TestsClient extends TestsGenerator {
               }
               if (step.expected.error != null) {
                 stepOut.put("isError", true);
-                stepOut.put("expectedError", step.expected.error);
+                if (step.expected.error instanceof Map errorMap) {
+                  stepOut.put("expectedError", errorMap.getOrDefault(language, "<missing error for " + language + ">"));
+                } else {
+                  stepOut.put("expectedError", step.expected.error);
+                }
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
-                  stepOut.put("expectedError", step.expected.error.replace(step.method, Helpers.toPascalCase(step.method)));
+                  stepOut.put(
+                    "expectedError",
+                    ((String) stepOut.get("expectedError")).replace(step.method, Helpers.toPascalCase(step.method))
+                  );
                 }
               } else if (step.expected.match != null) {
                 Map<String, Object> matchMap = new HashMap<>();

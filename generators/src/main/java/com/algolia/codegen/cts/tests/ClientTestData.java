@@ -21,6 +21,6 @@ class Step {
 class Expected {
 
   public String type;
-  public String error;
+  public Object error;
   public Object match;
 }

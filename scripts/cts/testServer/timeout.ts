@@ -70,6 +70,10 @@ export function retryHandler(after: number, message: string): express.RequestHan
 function addRoutes(app: express.Express): void {
   // this endpoint is also defined in the gzip server but without the timeout
   app.get('/1/test/retry/:lang', retryHandler(20000, 'timeout test server response'));
+
+  app.get('/1/test/error/:lang', () => {
+    // no response, just hang
+  });
 }
 
 export function timeoutServer(): Promise<Server> {

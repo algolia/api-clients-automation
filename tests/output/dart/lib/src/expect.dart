@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_test/algolia_test.dart';
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
@@ -59,12 +60,19 @@ void expectParams(Map<String, dynamic> actual, String expected) {
   );
 }
 
-void expectError(String message, Function block) async {
+Future<void> expectError(String message, Function block) async {
   try {
     await block();
   } on SkipException catch (_) {
     TestHandle.current.markSkipped('Skip non-nullable params test');
+    return;
   } on AssertionError catch (e) {
     expect(e.message, message);
+    return;
+  } on UnreachableHostsException catch (e) {
+    expect(e.toString(), message);
+    return;
   }
+
+  assert(false);
 }
