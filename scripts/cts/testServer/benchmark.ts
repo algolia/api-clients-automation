@@ -27,8 +27,9 @@ export function printBenchmarkReport(): void {
   times.sort((a, b) => b.rate - a.rate);
   console.log(chalk.black.bgCyan('Benchmark report:'));
   for (const { lang, rate } of times) {
-    // eslint-disable-next-line no-nested-ternary
-    const color = rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
+    const color =
+      // eslint-disable-next-line no-nested-ternary
+      rate > 2000 ? 'bgGreenBright' : rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
     console.log(chalk.black[color](`${lang}: ${rate.toFixed(2)} req/s`));
   }
 }

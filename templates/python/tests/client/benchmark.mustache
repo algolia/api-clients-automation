@@ -1,0 +1,14 @@
+# {{generationBanner}}
+from os import environ
+from re import compile
+from json import loads
+
+from algoliasearch.http.hosts import Host, HostsCollection
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
+
+
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+    {{#blocksBenchmark}}
+{{> tests/client/tests}}
+    {{/blocksBenchmark}}
