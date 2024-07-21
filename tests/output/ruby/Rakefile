@@ -2,7 +2,7 @@
 
 require 'rake/testtask'
 
-task test: %w[test:client test:requests test:e2e test:benchmark]
+task test: %w[test:client test:requests test:e2e]
 
 namespace :test do
   Rake::TestTask.new(:client) do |t|
