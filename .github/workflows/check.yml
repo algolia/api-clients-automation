@@ -489,9 +489,10 @@ jobs:
             echo 'BENCHMARK_SECTION<<EOF'
             echo "<details>"
             echo "<summary>📊 Benchmark results</summary>"
-            echo "<pre>"
-            echo "$results"
-            echo "</pre>"
+            # format the json to a markdown table with column "Language" and "rate"
+            echo "| Language | Rate |"
+            echo "|----------|------|"
+            echo "$results" | jq -r 'to_entries | map([.key, .value.rate]) | sort_by(.[1]) | reverse | .[] | @tsv' | awk -F'\t' '{printf "| %-10s | %10d |\n", $1, $2}'
             echo "</details>"
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
