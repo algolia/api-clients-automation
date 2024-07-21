@@ -85,7 +85,10 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'kotlin':
-      await run('./gradle/gradlew -p tests/output/kotlin allTests', { language });
+      await run(
+        `./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
+        { language },
+      );
       break;
     case 'php':
       await runComposerInstall();
