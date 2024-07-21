@@ -2,6 +2,7 @@
 import type { Server } from 'http';
 
 import { expect } from 'chai';
+import chalk from 'chalk';
 import express from 'express';
 import type { Express } from 'express';
 
@@ -24,9 +25,11 @@ export function printBenchmarkReport(): void {
   }
 
   times.sort((a, b) => b.rate - a.rate);
-  console.log('Benchmark report:');
+  console.log(chalk.black.bgCyan('Benchmark report:'));
   for (const { lang, rate } of times) {
-    console.log(`${lang}: ${rate.toFixed(2)} req/s`);
+    // eslint-disable-next-line no-nested-ternary
+    const color = rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
+    console.log(chalk.black[color](`${lang}: ${rate.toFixed(2)} req/s`));
   }
 }
 
