@@ -54,7 +54,6 @@ public class RetryStrategyTests
     Assert.Equal(eligibleHosts, actualHosts);
   }
 
-
   [Fact]
   public async Task CanOverrideHost()
   {
