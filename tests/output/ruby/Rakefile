@@ -2,7 +2,7 @@
 
 require 'rake/testtask'
 
-task test: %w[test:client test:requests test:e2e]
+task test: %w[test:client test:requests test:e2e test:benchmark]
 
 namespace :test do
   Rake::TestTask.new(:client) do |t|
@@ -22,6 +22,13 @@ namespace :test do
   Rake::TestTask.new(:e2e) do |t|
     t.libs << 'test'
     t.test_files = FileList['test/e2e/*_test.rb']
+    t.verbose    = true
+    t.warning    = false
+  end
+
+  Rake::TestTask.new(:benchmark) do |t|
+    t.libs << 'test'
+    t.test_files = FileList['test/benchmark/*_test.rb']
     t.verbose    = true
     t.warning    = false
   end
