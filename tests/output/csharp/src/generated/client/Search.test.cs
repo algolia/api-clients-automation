@@ -84,7 +84,7 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.CustomGetAsync("1/test/retry/Csharp");
+    var res = await client.CustomGetAsync("1/test/retry/csharp");
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",
@@ -234,7 +234,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.ReplaceAllObjectsAsync(
-      "cts_e2e_replace_all_objects_Csharp",
+      "cts_e2e_replace_all_objects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
@@ -279,7 +279,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.SaveObjectsAsync(
-      "cts_e2e_saveObjects_Csharp",
+      "cts_e2e_saveObjects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
@@ -315,7 +315,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_Csharp",
+      "cts_e2e_partialUpdateObjects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
@@ -352,7 +352,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_Csharp",
+      "cts_e2e_partialUpdateObjects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
@@ -389,7 +389,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.DeleteObjectsAsync(
-      "cts_e2e_deleteObjects_Csharp",
+      "cts_e2e_deleteObjects_csharp",
       new List<string> { "1", "2" }
     );
 
@@ -421,12 +421,12 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.WaitForApiKeyAsync(
-      "api-key-add-operation-test-Csharp",
+      "api-key-add-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Add")
     );
 
     JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-add-operation-test-Csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      "{\"value\":\"api-key-add-operation-test-csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
@@ -453,7 +453,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.WaitForApiKeyAsync(
-      "api-key-update-operation-test-Csharp",
+      "api-key-update-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Update"),
       new ApiKey
       {
@@ -473,7 +473,7 @@ public class SearchClientTests
     );
 
     JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-update-operation-test-Csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      "{\"value\":\"api-key-update-operation-test-csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
@@ -500,7 +500,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.WaitForApiKeyAsync(
-      "api-key-delete-operation-test-Csharp",
+      "api-key-delete-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Delete")
     );
 

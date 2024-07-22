@@ -97,7 +97,7 @@ func TestSearchapi2(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test/retry/Go",
+		"1/test/retry/go",
 	))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
@@ -218,7 +218,7 @@ func TestSearchhelpers2(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.ReplaceAllObjects(
-		"cts_e2e_replace_all_objects_Go",
+		"cts_e2e_replace_all_objects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
 		search.WithBatchSize(3))
 	require.NoError(t, err)
@@ -245,7 +245,7 @@ func TestSearchhelpers3(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.SaveObjects(
-		"cts_e2e_saveObjects_Go",
+		"cts_e2e_saveObjects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
 	)
 	require.NoError(t, err)
@@ -272,7 +272,7 @@ func TestSearchhelpers4(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.PartialUpdateObjects(
-		"cts_e2e_partialUpdateObjects_Go",
+		"cts_e2e_partialUpdateObjects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
 		search.WithCreateIfNotExists(true))
 	require.NoError(t, err)
@@ -299,7 +299,7 @@ func TestSearchhelpers5(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.PartialUpdateObjects(
-		"cts_e2e_partialUpdateObjects_Go",
+		"cts_e2e_partialUpdateObjects_go",
 		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
 		search.WithCreateIfNotExists(false))
 	require.NoError(t, err)
@@ -326,7 +326,7 @@ func TestSearchhelpers6(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.DeleteObjects(
-		"cts_e2e_deleteObjects_Go",
+		"cts_e2e_deleteObjects_go",
 		[]string{"1", "2"},
 	)
 	require.NoError(t, err)
@@ -353,12 +353,12 @@ func TestSearchhelpers7(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.WaitForApiKey(
-		"api-key-add-operation-test-Go", search.ApiKeyOperation("add"),
+		"api-key-add-operation-test-go", search.ApiKeyOperation("add"),
 	)
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
-	require.JSONEq(t, `{"value":"api-key-add-operation-test-Go","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+	require.JSONEq(t, `{"value":"api-key-add-operation-test-go","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
 }
 
 // wait for api key - update
@@ -379,7 +379,7 @@ func TestSearchhelpers8(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.WaitForApiKey(
-		"api-key-update-operation-test-Go", search.ApiKeyOperation("update"),
+		"api-key-update-operation-test-go", search.ApiKeyOperation("update"),
 		search.WithApiKey(
 			search.NewEmptyApiKey().SetDescription("my updated api key").SetAcl(
 				[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("deleteObject")}).SetIndexes(
@@ -388,7 +388,7 @@ func TestSearchhelpers8(t *testing.T) {
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
-	require.JSONEq(t, `{"value":"api-key-update-operation-test-Go","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+	require.JSONEq(t, `{"value":"api-key-update-operation-test-go","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
 }
 
 // wait for api key - delete
@@ -409,7 +409,7 @@ func TestSearchhelpers9(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.WaitForApiKey(
-		"api-key-delete-operation-test-Go", search.ApiKeyOperation("delete"),
+		"api-key-delete-operation-test-go", search.ApiKeyOperation("delete"),
 	)
 	require.NoError(t, err)
 	require.Nil(t, res)

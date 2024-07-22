@@ -24,7 +24,7 @@ final class SearchClientClientBenchmark: XCTestCase {
                         .searchForHits(SearchForHits(
                             query: "iphone 15 pro max 512gb",
                             hitsPerPage: 50,
-                            indexName: "cts_e2e_benchmark_search_Swift"
+                            indexName: "cts_e2e_benchmark_search_swift"
                         )),
                 ]))
         }

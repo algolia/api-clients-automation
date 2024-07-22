@@ -23,7 +23,7 @@ describe('benchmark', () => {
       const result = await client.search({
         requests: [
           {
-            indexName: 'cts_e2e_benchmark_search_JavaScript',
+            indexName: 'cts_e2e_benchmark_search_javascript',
             query: 'iphone 15 pro max 512gb',
             hitsPerPage: 50,
           },

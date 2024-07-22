@@ -24,7 +24,7 @@ class SearchTest {
             searchMethodParams = SearchMethodParams(
               requests = listOf(
                 SearchForHits(
-                  indexName = "cts_e2e_benchmark_search_Kotlin",
+                  indexName = "cts_e2e_benchmark_search_kotlin",
                   query = "iphone 15 pro max 512gb",
                   hitsPerPage = 50,
                 ),

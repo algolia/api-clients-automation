@@ -26,7 +26,7 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         SearchMethodParams.new(
           requests: [
             SearchForHits.new(
-              index_name: "cts_e2e_benchmark_search_Ruby",
+              index_name: "cts_e2e_benchmark_search_ruby",
               query: "iphone 15 pro max 512gb",
               hits_per_page: 50
             )

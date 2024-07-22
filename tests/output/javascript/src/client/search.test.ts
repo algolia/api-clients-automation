@@ -47,7 +47,7 @@ describe('api', () => {
       ],
     });
 
-    const result = await client.customGet({ path: '1/test/retry/JavaScript' });
+    const result = await client.customGet({ path: '1/test/retry/javascript' });
 
     expect(result).toEqual({ message: 'ok test server response' });
   }, 15000);
@@ -140,7 +140,7 @@ describe('helpers', () => {
     });
 
     const result = await client.replaceAllObjects({
-      indexName: 'cts_e2e_replace_all_objects_JavaScript',
+      indexName: 'cts_e2e_replace_all_objects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -182,7 +182,7 @@ describe('helpers', () => {
     });
 
     const result = await client.saveObjects({
-      indexName: 'cts_e2e_saveObjects_JavaScript',
+      indexName: 'cts_e2e_saveObjects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -200,7 +200,7 @@ describe('helpers', () => {
     });
 
     const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -219,7 +219,7 @@ describe('helpers', () => {
     });
 
     const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
       objects: [
         { objectID: '3', name: 'Cyril' },
         { objectID: '4', name: 'David' },
@@ -238,7 +238,7 @@ describe('helpers', () => {
     });
 
     const result = await client.deleteObjects({
-      indexName: 'cts_e2e_deleteObjects_JavaScript',
+      indexName: 'cts_e2e_deleteObjects_javascript',
       objectIDs: ['1', '2'],
     });
 
@@ -253,12 +253,12 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-add-operation-test-JavaScript',
+      key: 'api-key-add-operation-test-javascript',
       operation: 'add',
     });
 
     expect(result).toEqual({
-      value: 'api-key-add-operation-test-JavaScript',
+      value: 'api-key-add-operation-test-javascript',
       description: 'my new api key',
       acl: ['search', 'addObject'],
       validity: 300,
@@ -276,7 +276,7 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-update-operation-test-JavaScript',
+      key: 'api-key-update-operation-test-javascript',
       operation: 'update',
       apiKey: {
         description: 'my updated api key',
@@ -290,7 +290,7 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual({
-      value: 'api-key-update-operation-test-JavaScript',
+      value: 'api-key-update-operation-test-javascript',
       description: 'my updated api key',
       acl: ['search', 'addObject', 'deleteObject'],
       indexes: ['Movies', 'Books'],
@@ -310,7 +310,7 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-delete-operation-test-JavaScript',
+      key: 'api-key-delete-operation-test-javascript',
       operation: 'delete',
     });
 

@@ -83,7 +83,7 @@ class SearchClientClientTests {
         false
       )
     );
-    var res = client.customGet("1/test/retry/Java");
+    var res = client.customGet("1/test/retry/java");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -213,7 +213,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
       );
       var res = client.replaceAllObjects(
-        "cts_e2e_replace_all_objects_Java",
+        "cts_e2e_replace_all_objects_java",
         List.of(
           Map.of("objectID", "1", "name", "Adam"),
           Map.of("objectID", "2", "name", "Benoit"),
@@ -249,7 +249,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.saveObjects(
-        "cts_e2e_saveObjects_Java",
+        "cts_e2e_saveObjects_java",
         List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
       );
 
@@ -269,7 +269,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.partialUpdateObjects(
-        "cts_e2e_partialUpdateObjects_Java",
+        "cts_e2e_partialUpdateObjects_java",
         List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit")),
         true
       );
@@ -290,7 +290,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.partialUpdateObjects(
-        "cts_e2e_partialUpdateObjects_Java",
+        "cts_e2e_partialUpdateObjects_java",
         List.of(Map.of("objectID", "3", "name", "Cyril"), Map.of("objectID", "4", "name", "David")),
         false
       );
@@ -310,7 +310,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.deleteObjects("cts_e2e_deleteObjects_Java", List.of("1", "2"));
+      var res = client.deleteObjects("cts_e2e_deleteObjects_java", List.of("1", "2"));
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -327,11 +327,11 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-add-operation-test-Java", ApiKeyOperation.ADD);
+      var res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"value\":\"api-key-add-operation-test-Java\",\"description\":\"my new api" +
+          "{\"value\":\"api-key-add-operation-test-java\",\"description\":\"my new api" +
           " key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
@@ -350,7 +350,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
       var res = client.waitForApiKey(
-        "api-key-update-operation-test-Java",
+        "api-key-update-operation-test-java",
         ApiKeyOperation.UPDATE,
         new ApiKey()
           .setDescription("my updated api key")
@@ -364,7 +364,7 @@ class SearchClientClientTests {
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"value\":\"api-key-update-operation-test-Java\",\"description\":\"my" +
+          "{\"value\":\"api-key-update-operation-test-java\",\"description\":\"my" +
           " updated api" +
           " key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
@@ -383,7 +383,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-delete-operation-test-Java", ApiKeyOperation.DELETE);
+      var res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
 
       assertEquals(null, res);
     });

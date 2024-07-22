@@ -54,7 +54,7 @@ void main() {
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
-        path: "1/test/retry/Dart",
+        path: "1/test/retry/dart",
       );
       expectBody(res, """{"message":"ok test server response"}""");
     } on InterceptionException catch (_) {

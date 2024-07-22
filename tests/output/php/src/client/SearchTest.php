@@ -80,7 +80,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
 
         $res = $client->customGet(
-            '1/test/retry/PHP',
+            '1/test/retry/php',
         );
         $this->assertEquals(
             '{"message":"ok test server response"}',
@@ -197,7 +197,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
 
         $res = $client->replaceAllObjects(
-            'cts_e2e_replace_all_objects_PHP',
+            'cts_e2e_replace_all_objects_php',
             [
                 ['objectID' => '1',
                     'name' => 'Adam',
@@ -253,7 +253,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
         $res = $client->saveObjects(
-            'cts_e2e_saveObjects_PHP',
+            'cts_e2e_saveObjects_php',
             [
                 ['objectID' => '1',
                     'name' => 'Adam',
@@ -276,7 +276,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
         $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_PHP',
+            'cts_e2e_partialUpdateObjects_php',
             [
                 ['objectID' => '1',
                     'name' => 'Adam',
@@ -300,7 +300,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
         $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_PHP',
+            'cts_e2e_partialUpdateObjects_php',
             [
                 ['objectID' => '3',
                     'name' => 'Cyril',
@@ -324,7 +324,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
         $res = $client->deleteObjects(
-            'cts_e2e_deleteObjects_PHP',
+            'cts_e2e_deleteObjects_php',
             [
                 '1',
 
@@ -343,11 +343,11 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
         $res = $client->waitForApiKey(
-            'api-key-add-operation-test-PHP',
+            'api-key-add-operation-test-php',
             'add',
         );
         $this->assertEquals(
-            '{"value":"api-key-add-operation-test-PHP","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            '{"value":"api-key-add-operation-test-php","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
             json_encode($res)
         );
     }
@@ -358,7 +358,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
         $res = $client->waitForApiKey(
-            'api-key-update-operation-test-PHP',
+            'api-key-update-operation-test-php',
             'update',
             ['description' => 'my updated api key',
                 'acl' => [
@@ -384,7 +384,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
         );
         $this->assertEquals(
-            '{"value":"api-key-update-operation-test-PHP","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            '{"value":"api-key-update-operation-test-php","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
             json_encode($res)
         );
     }
@@ -395,7 +395,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
         $res = $client->waitForApiKey(
-            'api-key-delete-operation-test-PHP',
+            'api-key-delete-operation-test-php',
             'delete',
         );
         $this->assertNull($res);

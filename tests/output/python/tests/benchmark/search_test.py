@@ -21,7 +21,7 @@ class TestSearchClient:
                 search_method_params={
                     "requests": [
                         {
-                            "indexName": "cts_e2e_benchmark_search_Python",
+                            "indexName": "cts_e2e_benchmark_search_python",
                             "query": "iphone 15 pro max 512gb",
                             "hitsPerPage": 50,
                         },

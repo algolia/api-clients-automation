@@ -52,7 +52,7 @@ public class SearchClientBenchmark
             new SearchQuery(
               new SearchForHits
               {
-                IndexName = "cts_e2e_benchmark_search_Csharp",
+                IndexName = "cts_e2e_benchmark_search_csharp",
                 Query = "iphone 15 pro max 512gb",
                 HitsPerPage = 50,
               }

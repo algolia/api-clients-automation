@@ -79,7 +79,7 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customGet[JObject](
-        path = "1/test/retry/Scala"
+        path = "1/test/retry/scala"
       ),
       Duration.Inf
     )

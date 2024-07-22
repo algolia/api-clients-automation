@@ -60,7 +60,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.custom_get(
-            path="1/test/retry/Python",
+            path="1/test/retry/python",
         )
         assert (
             _req
@@ -174,7 +174,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.replace_all_objects(
-            index_name="cts_e2e_replace_all_objects_Python",
+            index_name="cts_e2e_replace_all_objects_python",
             objects=[
                 {
                     "objectID": "1",
@@ -240,7 +240,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.save_objects(
-            index_name="cts_e2e_saveObjects_Python",
+            index_name="cts_e2e_saveObjects_python",
             objects=[
                 {
                     "objectID": "1",
@@ -271,7 +271,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.partial_update_objects(
-            index_name="cts_e2e_partialUpdateObjects_Python",
+            index_name="cts_e2e_partialUpdateObjects_python",
             objects=[
                 {
                     "objectID": "1",
@@ -303,7 +303,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.partial_update_objects(
-            index_name="cts_e2e_partialUpdateObjects_Python",
+            index_name="cts_e2e_partialUpdateObjects_python",
             objects=[
                 {
                     "objectID": "3",
@@ -335,7 +335,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.delete_objects(
-            index_name="cts_e2e_deleteObjects_Python",
+            index_name="cts_e2e_deleteObjects_python",
             object_ids=[
                 "1",
                 "2",
@@ -360,7 +360,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.wait_for_api_key(
-            key="api-key-add-operation-test-Python",
+            key="api-key-add-operation-test-python",
             operation="add",
         )
         assert (
@@ -370,7 +370,7 @@ class TestSearchClient:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"value":"api-key-add-operation-test-Python","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+            """{"value":"api-key-add-operation-test-python","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}"""
         )
 
     async def test_helpers_8(self):
@@ -384,7 +384,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.wait_for_api_key(
-            key="api-key-update-operation-test-Python",
+            key="api-key-update-operation-test-python",
             operation="update",
             api_key={
                 "description": "my updated api key",
@@ -413,7 +413,7 @@ class TestSearchClient:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"value":"api-key-update-operation-test-Python","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+            """{"value":"api-key-update-operation-test-python","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}"""
         )
 
     async def test_helpers_9(self):
@@ -427,7 +427,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.wait_for_api_key(
-            key="api-key-delete-operation-test-Python",
+            key="api-key-delete-operation-test-python",
             operation="delete",
         )
         assert _req is None

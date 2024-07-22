@@ -26,7 +26,7 @@ class SearchTest extends TestCase
         for ($i = 1; $i <= 1000; ++$i) {
             $res = $client->search(
                 ['requests' => [
-                    ['indexName' => 'cts_e2e_benchmark_search_PHP',
+                    ['indexName' => 'cts_e2e_benchmark_search_php',
                         'query' => 'iphone 15 pro max 512gb',
                         'hitsPerPage' => 50,
                     ],
