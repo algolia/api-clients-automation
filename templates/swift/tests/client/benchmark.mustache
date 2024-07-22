@@ -1,0 +1,13 @@
+// {{generationBanner}}
+import XCTest
+
+import Utils
+
+@testable import Core
+@testable import {{import}}
+
+final class {{client}}ClientBenchmark: XCTestCase {
+  {{#blocksBenchmark}}
+  {{> tests/client/tests}}
+  {{/blocksBenchmark}}
+}

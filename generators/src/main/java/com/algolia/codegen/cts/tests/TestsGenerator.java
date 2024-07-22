@@ -41,12 +41,11 @@ public abstract class TestsGenerator {
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
-    if (!commonTestDir.exists()) {
-      throw new CTSException("CTS not found at " + commonTestDir.getAbsolutePath(), true);
-    }
     List<File> allTests = new ArrayList<>();
     Collections.addAll(allTests, dir.listFiles());
-    Collections.addAll(allTests, commonTestDir.listFiles());
+    if (commonTestDir.exists()) {
+      Collections.addAll(allTests, commonTestDir.listFiles());
+    }
 
     Map<String, T> cts = new TreeMap<>();
 

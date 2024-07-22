@@ -23,6 +23,7 @@ export function getPatterns() {
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/client/**`);
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests/**`);
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/e2e/**`);
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/benchmark/**`);
   }
   return entries;
 }

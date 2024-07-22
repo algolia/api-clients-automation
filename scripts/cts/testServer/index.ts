@@ -5,6 +5,7 @@ import type { Express } from 'express';
 
 import { createSpinner } from '../../spinners';
 
+import { benchmarkServer } from './benchmark';
 import { chunkWrapperServer } from './chunkWrapper';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
@@ -34,6 +35,16 @@ export async function startTestServer(): Promise<() => Promise<void>> {
   };
 }
 
+export async function startBenchmarkServer(): Promise<() => Promise<void>> {
+  const server = await benchmarkServer();
+
+  return async () => {
+    await new Promise<void>((resolve) => {
+      server.close(() => resolve());
+    });
+  };
+}
+
 export async function setupServer(
   name: string,
   port: number,
@@ -43,6 +54,20 @@ export async function setupServer(
   const app = express();
 
   addRoutes(app);
+
+  // 404 handler
+  app.use((req, res) => {
+    // eslint-disable-next-line no-console
+    console.error('endpoint not implemented for', req.method, req.url);
+    res.status(404).json({ message: 'not found' });
+  });
+
+  // catch all error handler
+  app.use((err, req, res, _) => {
+    // eslint-disable-next-line no-console
+    console.error(err.message);
+    res.status(500).send({ message: err.message });
+  });
 
   const server = await new Promise<Server>((resolve) => {
     const s = app.listen(port, () => {

@@ -1,10 +1,3 @@
-# {{generationBanner}}
-require 'algolia'
-require 'test/unit'
-
-class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
-  include Algolia::{{{modelModule}}}
-  {{#blocksClient}}
   {{#tests}}
   # {{{testName}}}
   def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}{{testIndex}}
@@ -17,6 +10,9 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     )
     {{/autoCreateClient}}
     {{#steps}}
+    {{#times}}
+    for i in 1..{{.}} do
+    {{/times}}
     {{#isError}}
     begin
       {{#dynamicTemplate}}{{/dynamicTemplate}}
@@ -53,9 +49,10 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     {{/testResponse}}
     {{/match}}
     {{/isError}}
+    {{#times}}
+    end
+    {{/times}}
     {{/steps}}
   end
 
   {{/tests}}
-  {{/blocksClient}}
-end

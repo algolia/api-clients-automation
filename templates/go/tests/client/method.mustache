@@ -1,1 +1,1 @@
-{{^useEchoRequester}}res, err := {{/useEchoRequester}}{{#useEchoRequester}}_, err = {{/useEchoRequester}}{{> tests/method}}
+{{^useEchoRequester}}{{^isBenchmark}}res, err := {{/isBenchmark}}{{#isBenchmark}}_, err = {{/isBenchmark}}{{/useEchoRequester}}{{#useEchoRequester}}_, err = {{/useEchoRequester}}{{> tests/method}}
