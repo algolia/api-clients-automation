@@ -17,13 +17,11 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsClient extends TestsGenerator {
 
   private final boolean withBenchmark;
-  private final String testTemplate;
   private final String testType;
 
   public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
     this.withBenchmark = withBenchmark;
-    this.testTemplate = withBenchmark ? "benchmark" : "suite";
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
@@ -34,7 +32,7 @@ public class TestsClient extends TestsGenerator {
       return false;
     }
 
-    File templates = new File("templates/" + language + "/tests/client/" + testTemplate + ".mustache");
+    File templates = new File("templates/" + language + "/tests/client/" + testType + ".mustache");
     if (!templates.exists()) {
       return false;
     }
@@ -54,7 +52,7 @@ public class TestsClient extends TestsGenerator {
     }
     supportingFiles.add(
       new SupportingFile(
-        "tests/client/" + testTemplate + ".mustache",
+        "tests/client/" + testType + ".mustache",
         "tests/output/" + language + "/" + outputFolder + "/" + testType,
         Helpers.createClientName(client, language) + extension
       )
