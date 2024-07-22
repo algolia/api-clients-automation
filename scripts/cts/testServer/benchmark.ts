@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
+import fs from 'fs';
 import type { Server } from 'http';
 
 import { expect } from 'chai';
 import chalk from 'chalk';
 import express from 'express';
 import type { Express } from 'express';
+
+import { CI, toAbsolutePath } from '../../common';
 
 import { setupServer } from '.';
 
@@ -31,6 +34,15 @@ export function printBenchmarkReport(): void {
       // eslint-disable-next-line no-nested-ternary
       rate > 2000 ? 'bgGreenBright' : rate > 1000 ? 'bgGreen' : rate > 500 ? 'bgYellow' : 'bgRed';
     console.log(chalk.black[color](`${lang}: ${Math.floor(rate)} req/s`));
+
+    if (CI) {
+      // save the result to a file, to be reported in the CI.
+      // we can't use setOutput here, because it doesn't work with matrix strategies
+      fs.writeFileSync(
+        toAbsolutePath(`tests/output/${lang}/benchmarkResult.json`),
+        JSON.stringify({ [lang]: { rate } }),
+      );
+    }
   }
 }
 

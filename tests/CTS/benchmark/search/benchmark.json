@@ -23,7 +23,7 @@
         "parameters": {
           "requests": [
             {
-              "indexName": "cts_e2e_benchmark_search_${{languageCased}}",
+              "indexName": "cts_e2e_benchmark_search_${{language}}",
               "query": "iphone 15 pro max 512gb",
               "hitsPerPage": 50
             }

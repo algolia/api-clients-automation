@@ -77,7 +77,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
       })
       .join(' ');
 

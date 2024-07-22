@@ -22,13 +22,13 @@ export function assertValidTimeouts(expectedCount: number): void {
 
     // languages are not consistent yet for the delay between requests
     switch (lang) {
-      case 'JavaScript':
+      case 'javascript':
         expect(state.duration[0] * 4).to.be.closeTo(state.duration[1], 200);
         break;
-      case 'PHP':
+      case 'php':
         expect(state.duration[0] * 2).to.be.closeTo(state.duration[1], 200);
         break;
-      case 'Swift':
+      case 'swift':
         expect(state.duration[0]).to.be.closeTo(state.duration[1], 800);
         break;
       default:

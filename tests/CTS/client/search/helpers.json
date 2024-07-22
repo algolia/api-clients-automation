@@ -79,7 +79,7 @@
         "type": "method",
         "method": "replaceAllObjects",
         "parameters": {
-          "indexName": "cts_e2e_replace_all_objects_${{languageCased}}",
+          "indexName": "cts_e2e_replace_all_objects_${{language}}",
           "objects": [
             {
               "objectID": "1",
@@ -193,7 +193,7 @@
         "type": "method",
         "method": "saveObjects",
         "parameters": {
-          "indexName": "cts_e2e_saveObjects_${{languageCased}}",
+          "indexName": "cts_e2e_saveObjects_${{language}}",
           "objects": [
             {
               "objectID": "1",
@@ -241,7 +241,7 @@
         "type": "method",
         "method": "partialUpdateObjects",
         "parameters": {
-          "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
           "objects": [
             {
               "objectID": "1",
@@ -290,7 +290,7 @@
         "type": "method",
         "method": "partialUpdateObjects",
         "parameters": {
-          "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
           "objects": [
             {
               "objectID": "3",
@@ -339,7 +339,7 @@
         "type": "method",
         "method": "deleteObjects",
         "parameters": {
-          "indexName": "cts_e2e_deleteObjects_${{languageCased}}",
+          "indexName": "cts_e2e_deleteObjects_${{language}}",
           "objectIDs": [
             "1",
             "2"
@@ -381,13 +381,13 @@
         "type": "method",
         "method": "waitForApiKey",
         "parameters": {
-          "key": "api-key-add-operation-test-${{languageCased}}",
+          "key": "api-key-add-operation-test-${{language}}",
           "operation": "add"
         },
         "expected": {
           "type": "response",
           "match": {
-            "value": "api-key-add-operation-test-${{languageCased}}",
+            "value": "api-key-add-operation-test-${{language}}",
             "description": "my new api key",
             "acl": [
               "search",
@@ -423,7 +423,7 @@
         "type": "method",
         "method": "waitForApiKey",
         "parameters": {
-          "key": "api-key-update-operation-test-${{languageCased}}",
+          "key": "api-key-update-operation-test-${{language}}",
           "operation": "update",
           "apiKey": {
             "description": "my updated api key",
@@ -448,7 +448,7 @@
         "expected": {
           "type": "response",
           "match": {
-            "value": "api-key-update-operation-test-${{languageCased}}",
+            "value": "api-key-update-operation-test-${{language}}",
             "description": "my updated api key",
             "acl": [
               "search",
@@ -493,7 +493,7 @@
         "type": "method",
         "method": "waitForApiKey",
         "parameters": {
-          "key": "api-key-delete-operation-test-${{languageCased}}",
+          "key": "api-key-delete-operation-test-${{language}}",
           "operation": "delete"
         },
         "expected": {
