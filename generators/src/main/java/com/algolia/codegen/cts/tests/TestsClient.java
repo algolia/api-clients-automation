@@ -16,8 +16,13 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
 
-  public TestsClient(String language, String client) {
+  private final boolean withBenchmark;
+  private final String testType;
+
+  public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
+    this.withBenchmark = withBenchmark;
+    this.testType = withBenchmark ? "benchmark" : "client";
   }
 
   @Override
@@ -27,8 +32,17 @@ public class TestsClient extends TestsGenerator {
       return false;
     }
 
-    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
-    return templates.exists();
+    File templates = new File("templates/" + language + "/tests/client/" + testType + ".mustache");
+    if (!templates.exists()) {
+      return false;
+    }
+
+    if (withBenchmark) {
+      File benchmarkTest = new File("tests/CTS/benchmark/" + client + "/benchmark.json");
+      return benchmarkTest.exists();
+    }
+
+    return true;
   }
 
   @Override
@@ -38,15 +52,15 @@ public class TestsClient extends TestsGenerator {
     }
     supportingFiles.add(
       new SupportingFile(
-        "tests/client/suite.mustache",
-        "tests/output/" + language + "/" + outputFolder + "/client",
+        "tests/client/" + testType + ".mustache",
+        "tests/output/" + language + "/" + outputFolder + "/" + testType,
         Helpers.createClientName(client, language) + extension
       )
     );
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, ClientTestData[]> cts = loadCTS("client", client, ClientTestData[].class);
+    Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
 
     List<Object> blocks = new ArrayList<>();
@@ -62,17 +76,18 @@ public class TestsClient extends TestsGenerator {
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
+          testOut.put("useEchoRequester", true);
+          testOut.put("isBenchmark", withBenchmark);
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
-            stepOut.put("useEchoRequester", true);
+            if (step.times > 1) stepOut.put("times", step.times);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
               stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
-
-              stepOut.put("useEchoRequester", !hasCustomHosts);
+              if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
@@ -95,6 +110,10 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasParams", ope.hasParams);
+              stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+              if (ope.returnType != null && ope.returnType.length() > 0) {
+                stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
+              }
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
@@ -188,6 +207,6 @@ public class TestsClient extends TestsGenerator {
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    bundle.put("blocksClient", blocks);
+    bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
   }
 }

@@ -93,19 +93,6 @@ function addRoutes(app: Express): void {
         throw new Error('unknown helper');
     }
   });
-
-  // fallback route
-  app.use((req, res) => {
-    // eslint-disable-next-line no-console
-    console.log('fallback route', req.method, req.url);
-    res.status(404).json({ message: 'not found' });
-  });
-
-  app.use((err, req, res, _) => {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    res.status(500).send({ message: err.message });
-  });
 }
 
 export function chunkWrapperServer(): Promise<Server> {

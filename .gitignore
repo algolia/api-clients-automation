@@ -25,6 +25,8 @@ pom.xml
 dist
 .cache
 
+benchmarkResult.json
+
 **.openapi-generator
 /openapitools.json
 **/.openapi-generator-ignore

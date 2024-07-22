@@ -5,36 +5,40 @@ import { getTestOutputFolder } from '../config.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import { startTestServer } from './testServer';
+import { startBenchmarkServer, startTestServer } from './testServer';
+import { printBenchmarkReport } from './testServer/benchmark.js';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
 import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
 
-async function runCtsOne(
-  language: Language,
-  excludeE2E: boolean,
-  excludeUnit: boolean,
-): Promise<void> {
-  const cwd = `tests/output/${language}`;
+export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 
-  const folders: string[] = [];
-  if (!excludeE2E) {
-    // check if the folder has files
-    const e2eFolder = toAbsolutePath(
-      `tests/output/${language}/${getTestOutputFolder(language)}/e2e`,
+async function buildFilter(
+  language: Language,
+  suites: Record<CTSType, boolean>,
+): Promise<CTSType[]> {
+  const folders: CTSType[] = [];
+  for (const [suite, include] of Object.entries(suites)) {
+    // check if the folder has files in it
+    const folder = toAbsolutePath(
+      `tests/output/${language}/${getTestOutputFolder(language)}/${suite}`,
     );
     if (
-      (await exists(e2eFolder)) &&
-      (await fsp.readdir(e2eFolder)).filter((f) => f !== '__init__.py' && f !== '__pycache__')
-        .length > 0
+      include &&
+      (await exists(folder)) &&
+      (await fsp.readdir(folder)).filter((f) => f !== '__init__.py' && f !== '__pycache__').length >
+        0
     )
-      folders.push('e2e');
-  }
-  if (!excludeUnit) {
-    folders.push('client', 'requests');
+      folders.push(suite as CTSType);
   }
 
+  return folders;
+}
+
+async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): Promise<void> {
+  const cwd = `tests/output/${language}`;
+  const folders = await buildFilter(language, suites);
   const spinner = createSpinner(`running cts for '${language}' in folder(s) ${folders.join(', ')}`);
 
   if (folders.length === 0) {
@@ -81,7 +85,10 @@ async function runCtsOne(
       );
       break;
     case 'kotlin':
-      await run('./gradle/gradlew -p tests/output/kotlin allTests', { language });
+      await run(
+        `./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
+        { language },
+      );
       break;
     case 'php':
       await runComposerInstall();
@@ -133,20 +140,28 @@ async function runCtsOne(
 export async function runCts(
   languages: Language[],
   clients: string[],
-  excludeE2E: boolean,
-  excludeUnit: boolean,
+  suites: Record<CTSType, boolean>,
 ): Promise<void> {
-  const useTestServer = !excludeUnit && (clients.includes('search') || clients.includes('all'));
-  let close: () => Promise<void> = async () => {};
+  const useTestServer = suites.client && (clients.includes('search') || clients.includes('all'));
+  const useBenchmarkServer =
+    suites.benchmark && (clients.includes('search') || clients.includes('all'));
+
+  let closeTestServer: () => Promise<void> = async () => {};
   if (useTestServer) {
-    close = await startTestServer();
+    closeTestServer = await startTestServer();
   }
+
+  let closeBenchmarkServer: () => Promise<void> = async () => {};
+  if (useBenchmarkServer) {
+    closeBenchmarkServer = await startBenchmarkServer();
+  }
+
   for (const lang of languages) {
-    await runCtsOne(lang, excludeE2E, excludeUnit);
+    await runCtsOne(lang, suites);
   }
 
   if (useTestServer) {
-    await close();
+    await closeTestServer();
 
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
@@ -154,5 +169,11 @@ export async function runCts(
     assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
     assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
     assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
+  }
+
+  if (useBenchmarkServer) {
+    await closeBenchmarkServer();
+
+    printBenchmarkReport();
   }
 }

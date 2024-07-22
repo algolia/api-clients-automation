@@ -51,7 +51,7 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "1/test/retry/Kotlin",
+          path = "1/test/retry/kotlin",
         )
       },
 
@@ -194,7 +194,7 @@ class SearchTest {
     client.runTest(
       call = {
         replaceAllObjects(
-          indexName = "cts_e2e_replace_all_objects_Kotlin",
+          indexName = "cts_e2e_replace_all_objects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -317,7 +317,7 @@ class SearchTest {
     client.runTest(
       call = {
         saveObjects(
-          indexName = "cts_e2e_saveObjects_Kotlin",
+          indexName = "cts_e2e_saveObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -359,7 +359,7 @@ class SearchTest {
     client.runTest(
       call = {
         partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_Kotlin",
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -402,7 +402,7 @@ class SearchTest {
     client.runTest(
       call = {
         partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_Kotlin",
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -445,7 +445,7 @@ class SearchTest {
     client.runTest(
       call = {
         deleteObjects(
-          indexName = "cts_e2e_deleteObjects_Kotlin",
+          indexName = "cts_e2e_deleteObjects_kotlin",
           objectIDs = listOf("1", "2"),
         )
       },
@@ -466,14 +466,14 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-add-operation-test-Kotlin",
+          key = "api-key-add-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "add" },
         )
       },
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-Kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
         val actual = Json.encodeToJsonElement(it)
         areJsonElementsEqual(expected, actual)
       },
@@ -487,7 +487,7 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-update-operation-test-Kotlin",
+          key = "api-key-update-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "update" },
           apiKey = ApiKey(
             description = "my updated api key",
@@ -503,7 +503,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-Kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
         val actual = Json.encodeToJsonElement(it)
         areJsonElementsEqual(expected, actual)
       },
@@ -517,7 +517,7 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-delete-operation-test-Kotlin",
+          key = "api-key-delete-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "delete" },
         )
       },

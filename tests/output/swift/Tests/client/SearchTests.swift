@@ -48,7 +48,7 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customGetWithHTTPInfo(path: "1/test/retry/Swift")
+        let response = try await client.customGetWithHTTPInfo(path: "1/test/retry/swift")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -191,7 +191,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.replaceAllObjects(
-            indexName: "cts_e2e_replace_all_objects_Swift",
+            indexName: "cts_e2e_replace_all_objects_swift",
             objects: [
                 ["objectID": "1", "name": "Adam"],
                 ["objectID": "2", "name": "Benoit"],
@@ -228,14 +228,11 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.saveObjects(
-            indexName: "cts_e2e_saveObjects_Swift",
+            indexName: "cts_e2e_saveObjects_swift",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -252,15 +249,12 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.partialUpdateObjects(
-            indexName: "cts_e2e_partialUpdateObjects_Swift",
+            indexName: "cts_e2e_partialUpdateObjects_swift",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
             createIfNotExists: true
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -277,15 +271,12 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.partialUpdateObjects(
-            indexName: "cts_e2e_partialUpdateObjects_Swift",
+            indexName: "cts_e2e_partialUpdateObjects_swift",
             objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
             createIfNotExists: false
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -301,12 +292,9 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_Swift", objectIDs: ["1", "2"])
+        let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_swift", objectIDs: ["1", "2"])
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -323,13 +311,13 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.waitForApiKey(
-            key: "api-key-add-operation-test-Swift",
+            key: "api-key-add-operation-test-swift",
             operation: ApiKeyOperation.add
         )
 
         let comparableData =
             try XCTUnwrap(
-                "{\"value\":\"api-key-add-operation-test-Swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                "{\"value\":\"api-key-add-operation-test-swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
                     .data(using: .utf8)
             )
         try XCTLenientAssertEqual(
@@ -348,7 +336,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.waitForApiKey(
-            key: "api-key-update-operation-test-Swift",
+            key: "api-key-update-operation-test-swift",
             operation: ApiKeyOperation.update,
             apiKey: ApiKey(
                 acl: [Acl.search, Acl.addObject, Acl.deleteObject],
@@ -363,7 +351,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let comparableData =
             try XCTUnwrap(
-                "{\"value\":\"api-key-update-operation-test-Swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                "{\"value\":\"api-key-update-operation-test-swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
                     .data(using: .utf8)
             )
         try XCTLenientAssertEqual(
@@ -382,7 +370,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.waitForApiKey(
-            key: "api-key-delete-operation-test-Swift",
+            key: "api-key-delete-operation-test-swift",
             operation: ApiKeyOperation.delete
         )
 

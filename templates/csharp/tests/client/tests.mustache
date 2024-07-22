@@ -1,36 +1,4 @@
-// {{generationBanner}}
-using Algolia.Search.Clients;
-using Algolia.Search.Models.{{clientPrefix}};
-using Algolia.Search.Models.Common;
-using Algolia.Search.Http;
-using Algolia.Search.Transport;
-using Algolia.Search.Tests.Utils;
-using Algolia.Search.Serializer;
-using System.Text.RegularExpressions;
-using System.Text.Json;
-using Xunit;
-using Quibble.Xunit;
-
-namespace Algolia.Search.client;
-
-public class {{client}}Tests
-{
-private readonly EchoHttpRequester _echo;
-private Exception _ex;
-
-public {{client}}Tests()
-{
-_echo = new EchoHttpRequester();
-}
-
-[Fact]
-public void Dispose()
-{
-
-}
-
-{{#blocksClient}}
-  {{#tests}}
+{{#tests}} 
     [Fact(DisplayName = "{{{testName}}}")]
     public async Task {{#lambda.pascalcase}}{{testType}}Test{{testIndex}}{{/lambda.pascalcase}}()
     {
@@ -38,6 +6,9 @@ public void Dispose()
     var client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
     {{/autoCreateClient}}
     {{#steps}}
+    {{#times}}
+    for (int i = 0; i < {{.}}; i++) {
+    {{/times}}
       {{#isError}}
         _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{#dynamicTemplate}}{{/dynamicTemplate}} });
         Assert.Equal("{{{expectedError}}}".ToLowerInvariant(), _ex.Message.ToLowerInvariant());
@@ -72,8 +43,9 @@ public void Dispose()
           {{/testResponse}}
         {{/match}}
       {{/isError}}
+    {{#times}}
+    }
+    {{/times}}
     {{/steps}}
     }
-  {{/tests}}
-{{/blocksClient}}
-  }
+{{/tests}}

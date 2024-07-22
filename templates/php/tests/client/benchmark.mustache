@@ -1,0 +1,27 @@
+<?php
+
+// {{generationBanner}}
+
+namespace Algolia\AlgoliaSearch\Test\Benchmark;
+
+use Algolia\AlgoliaSearch\Api\{{client}};
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
+use Algolia\AlgoliaSearch\Http\HttpClientInterface;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+/**
+ * Benchmark for {{client}}
+ */
+#[CoversClass({{client}}::class)]
+class {{clientPrefix}}Test extends TestCase
+{
+    {{#blocksBenchmark}}
+    {{> tests/client/tests}}
+    {{/blocksBenchmark}}
+}

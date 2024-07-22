@@ -1,0 +1,10 @@
+# {{generationBanner}}
+require 'algolia'
+require 'test/unit'
+
+class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit::TestCase
+  include Algolia::{{{modelModule}}}
+  {{#blocksClient}}
+  {{> tests/client/tests}}
+  {{/blocksClient}}
+end

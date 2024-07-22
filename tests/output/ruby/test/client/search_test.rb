@@ -59,7 +59,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.custom_get("1/test/retry/Ruby")
+    req = client.custom_get("1/test/retry/ruby")
     assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
@@ -198,7 +198,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.replace_all_objects(
-      "cts_e2e_replace_all_objects_Ruby",
+      "cts_e2e_replace_all_objects_ruby",
       [
         {objectID: "1", name: "Adam"},
         {objectID: "2", name: "Benoit"},
@@ -246,7 +246,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.save_objects(
-      "cts_e2e_saveObjects_Ruby",
+      "cts_e2e_saveObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
     )
     assert_equal([{:"taskID" => 333, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
@@ -270,7 +270,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.partial_update_objects(
-      "cts_e2e_partialUpdateObjects_Ruby",
+      "cts_e2e_partialUpdateObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
       true
     )
@@ -295,7 +295,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.partial_update_objects(
-      "cts_e2e_partialUpdateObjects_Ruby",
+      "cts_e2e_partialUpdateObjects_ruby",
       [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
       false
     )
@@ -319,7 +319,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.delete_objects("cts_e2e_deleteObjects_Ruby", ["1", "2"])
+    req = client.delete_objects("cts_e2e_deleteObjects_ruby", ["1", "2"])
     assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
@@ -340,10 +340,10 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.wait_for_api_key("api-key-add-operation-test-Ruby", "add")
+    req = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
     assert_equal(
       {
-        :"value" => "api-key-add-operation-test-Ruby",
+        :"value" => "api-key-add-operation-test-ruby",
         :"description" => "my new api key",
         :"acl" => ["search", "addObject"],
         :"validity" => 300,
@@ -373,7 +373,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.wait_for_api_key(
-      "api-key-update-operation-test-Ruby",
+      "api-key-update-operation-test-ruby",
       "update",
       ApiKey.new(
         description: "my updated api key",
@@ -387,7 +387,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"value" => "api-key-update-operation-test-Ruby",
+        :"value" => "api-key-update-operation-test-ruby",
         :"description" => "my updated api key",
         :"acl" => ["search", "addObject", "deleteObject"],
         :"indexes" => ["Movies", "Books"],
@@ -418,7 +418,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.wait_for_api_key("api-key-delete-operation-test-Ruby", "delete")
+    req = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
     assert_nil(req)
   end
 
