@@ -490,6 +490,7 @@ jobs:
             echo "<details>"
             echo "<summary>📊 Benchmark results</summary>"
             echo "" # empty line is required to make the table work
+            echo "Benchmarks performed on the `search` method using a mock server, the results might not reflect the real-world performance."
             # format the json to a markdown table with column "Language" and "rate"
             echo "| Language | Rate |"
             echo "| :------- | ---: |"
