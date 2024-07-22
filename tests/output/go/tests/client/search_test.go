@@ -254,7 +254,7 @@ func TestSearchhelpers3(t *testing.T) {
 	require.JSONEq(t, `[{"taskID":333,"objectIDs":["1","2"]}]`, string(rawBody))
 }
 
-// call partialUpdateObjects with createIfNotExists&#x3D;true
+// call partialUpdateObjects with createIfNotExists=true
 func TestSearchhelpers4(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
@@ -281,7 +281,7 @@ func TestSearchhelpers4(t *testing.T) {
 	require.JSONEq(t, `[{"taskID":444,"objectIDs":["1","2"]}]`, string(rawBody))
 }
 
-// call partialUpdateObjects with createIfNotExists&#x3D;false
+// call partialUpdateObjects with createIfNotExists=false
 func TestSearchhelpers5(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
@@ -452,7 +452,7 @@ func TestSearchparameters0(t *testing.T) {
 	require.EqualError(t, err, "`apiKey` is missing.")
 }
 
-// &#x60;addApiKey&#x60; throws with invalid parameters
+// `addApiKey` throws with invalid parameters
 func TestSearchparameters1(t *testing.T) {
 	var err error
 	client, echo := createSearchClient(t)
@@ -463,7 +463,7 @@ func TestSearchparameters1(t *testing.T) {
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
 }
 
-// &#x60;addOrUpdateObject&#x60; throws with invalid parameters
+// `addOrUpdateObject` throws with invalid parameters
 func TestSearchparameters2(t *testing.T) {
 	var err error
 	client, echo := createSearchClient(t)

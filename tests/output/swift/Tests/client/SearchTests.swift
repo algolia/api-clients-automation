@@ -232,10 +232,7 @@ final class SearchClientClientTests: XCTestCase {
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -257,10 +254,7 @@ final class SearchClientClientTests: XCTestCase {
             createIfNotExists: true
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -282,10 +276,7 @@ final class SearchClientClientTests: XCTestCase {
             createIfNotExists: false
         )
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
@@ -303,10 +294,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_Swift", objectIDs: ["1", "2"])
 
-        let comparableData = try XCTUnwrap(
-            "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]"
-                .data(using: .utf8)
-        )
+        let comparableData = try XCTUnwrap("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
         try XCTLenientAssertEqual(
             received: CodableHelper.jsonEncoder.encode(response),
             expected: comparableData
