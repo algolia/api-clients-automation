@@ -17,10 +17,12 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsClient extends TestsGenerator {
 
   private final boolean withBenchmark;
+  private final String testType;
 
   public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
     this.withBenchmark = withBenchmark;
+    this.testType = withBenchmark ? "benchmark" : "client";
   }
 
   @Override
@@ -30,7 +32,7 @@ public class TestsClient extends TestsGenerator {
       return false;
     }
 
-    File templates = new File("templates/" + language + "/tests/client/" + (withBenchmark ? "benchmark" : "suite") + ".mustache");
+    File templates = new File("templates/" + language + "/tests/client/" + testType + ".mustache");
     if (!templates.exists()) {
       return false;
     }
@@ -51,14 +53,14 @@ public class TestsClient extends TestsGenerator {
     supportingFiles.add(
       new SupportingFile(
         "tests/client/" + (withBenchmark ? "benchmark" : "suite") + ".mustache",
-        "tests/output/" + language + "/" + outputFolder + "/" + (withBenchmark ? "benchmark" : "client"),
+        "tests/output/" + language + "/" + outputFolder + "/" + testType,
         Helpers.createClientName(client, language) + extension
       )
     );
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, ClientTestData[]> cts = loadCTS(withBenchmark ? "benchmark" : "client", client, ClientTestData[].class);
+    Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
 
     List<Object> blocks = new ArrayList<>();
