@@ -23,7 +23,7 @@ public class TestsClient extends TestsGenerator {
   public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
     this.withBenchmark = withBenchmark;
-    this.testTemplate = withBenchmark ? "benchmark" : "client";
+    this.testTemplate = withBenchmark ? "benchmark" : "suite";
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
