@@ -122,7 +122,7 @@
             "python": "Unreachable hosts",
             "ruby": "Unreachable hosts",
             "scala": "Error(s) while processing the retry strategy",
-            "swift": "this never timeouts"
+            "swift": "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
           }
         }
       }
