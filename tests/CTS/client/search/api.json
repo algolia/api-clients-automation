@@ -120,7 +120,7 @@
             "kotlin": "Error(s) while processing the retry strategy",
             "php": "Impossible to connect, please check your Algolia Application Id.",
             "python": "Unreachable hosts",
-            "ruby": "Unreachable hosts. Last error for host.docker.internal: Net::ReadTimeout with #<TCPSocket:(closed)>",
+            "ruby": "Unreachable hosts. Last error for ${{localhost}}: Net::ReadTimeout with #<TCPSocket:(closed)>",
             "scala": "Error(s) while processing the retry strategy",
             "swift": "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
           }
