@@ -11,7 +11,7 @@ module Algolia
         begin
           file = File.new("debug.log", "a+")
         rescue Errno::EACCES, Errno::ENOENT => e
-          puts "Failed to open debug.log: #{e.message}. Falling back to $stderr."
+          puts("Failed to open debug.log: #{e.message}. Falling back to $stderr.")
         end
       end
 

@@ -9,15 +9,15 @@ get:
     - deleteIndex
     - editSettings
   parameters:
-    - $ref: '../../common/parameters.yml#/itemsPerPage'
-    - $ref: '../../common/parameters.yml#/page'
-    - $ref: '../../common/taskParameters.yml#/action'
-    - $ref: '../../common/taskParameters.yml#/enabled'
-    - $ref: '../../common/taskParameters.yml#/sourceID'
-    - $ref: '../../common/taskParameters.yml#/destinationID'
-    - $ref: '../../common/taskParameters.yml#/triggerType'
-    - $ref: '../../common/taskParameters.yml#/sort'
-    - $ref: '../../common/parameters.yml#/order'
+    - $ref: '../../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../../common/parameters.yml#/page'
+    - $ref: '../../../common/taskParameters.yml#/action'
+    - $ref: '../../../common/taskParameters.yml#/enabled'
+    - $ref: '../../../common/taskParameters.yml#/sourceID'
+    - $ref: '../../../common/taskParameters.yml#/destinationID'
+    - $ref: '../../../common/taskParameters.yml#/triggerType'
+    - $ref: '../../../common/taskParameters.yml#/sort'
+    - $ref: '../../../common/parameters.yml#/order'
   responses:
     '200':
       description: OK
@@ -32,14 +32,14 @@ get:
               tasks:
                 type: array
                 items:
-                  $ref: '../../common/schemas/task.yml#/Task'
+                  $ref: '../../../common/schemas/task.yml#/Task'
               pagination:
-                $ref: '../../common/schemas/pagination.yml#/Pagination'
+                $ref: '../../../common/schemas/pagination.yml#/Pagination'
             required:
               - tasks
               - pagination
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'
 
 post:
   tags:
@@ -52,7 +52,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/task.yml#/TaskCreate'
+          $ref: '../../../common/schemas/task.yml#/TaskCreate'
     required: true
   responses:
     '200':
@@ -60,6 +60,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/task.yml#/TaskCreateResponse'
+            $ref: '../../../common/schemas/task.yml#/TaskCreateResponse'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'

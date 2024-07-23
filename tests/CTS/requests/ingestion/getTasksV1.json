@@ -3,7 +3,7 @@
     "testName": "getTasks",
     "parameters": {},
     "request": {
-      "path": "/2/tasks",
+      "path": "/1/tasks",
       "method": "GET"
     }
   }

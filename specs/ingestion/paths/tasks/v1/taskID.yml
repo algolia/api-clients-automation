@@ -1,0 +1,63 @@
+get:
+  tags:
+    - tasks
+  summary: Retrieve a task
+  description: Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+  operationId: getTaskV1
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/task.yml#/TaskV1'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'
+
+patch:
+  tags:
+    - tasks
+  summary: Update a task
+  description: Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+  operationId: updateTaskV1
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../../common/schemas/task.yml#/TaskUpdateV1'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/task.yml#/TaskUpdateResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'
+
+delete:
+  tags:
+    - tasks
+  summary: Delete a task
+  description: Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+  operationId: deleteTaskV1
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/common.yml#/DeleteResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'

@@ -16,6 +16,7 @@ module Algolia
       errors.last&.tap do |last_error|
         message += " Last error for #{last_error[:host]}: #{last_error[:error]}"
       end
+
       super(message)
       @errors = errors
     end
