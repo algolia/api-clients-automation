@@ -80,7 +80,7 @@ module Algolia
           end
         end
 
-        raise Algolia::AlgoliaUnreachableHostError.new("Unreachable hosts. Last error for #{retry_errors.last[:host]}: #{retry_errors.last[:error]}", retry_errors)
+        raise Algolia::AlgoliaUnreachableHostError.new("Unreachable hosts.", retry_errors)
       end
 
       private
