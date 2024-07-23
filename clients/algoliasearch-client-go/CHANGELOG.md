@@ -1,3 +1,7 @@
+## [4.0.0-beta.25](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.24...4.0.0-beta.25)
+
+- [82562cc5a](https://github.com/algolia/api-clients-automation/commit/82562cc5a) feat(go): expose ExposeIntermediateNetworkErrors to the config ([#3404](https://github.com/algolia/api-clients-automation/pull/3404)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-beta.24](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.23...4.0.0-beta.24)
 
 - [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)
