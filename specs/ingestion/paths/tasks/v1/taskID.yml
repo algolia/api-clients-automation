@@ -28,6 +28,7 @@ patch:
   operationId: updateTaskV1
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
+  x-codegen-request-body-name: taskUpdate
   requestBody:
     content:
       application/json:

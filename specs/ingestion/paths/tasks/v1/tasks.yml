@@ -47,6 +47,7 @@ post:
   summary: Create a task
   description: Creates a new task using the v1 endpoint, please use `createTask` instead.
   operationId: createTaskV1
+  x-codegen-request-body-name: taskCreate
   requestBody:
     description: Request body for creating a task.
     content:
