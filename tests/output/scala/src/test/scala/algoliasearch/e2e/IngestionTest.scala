@@ -38,7 +38,7 @@ class IngestionTestE2E extends AnyFunSuite {
     }
   }
 
-  test("enable task e2e") {
+  test("enableTask") {
     val client = testClient()
     val future = client.enableTask(
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -48,23 +48,14 @@ class IngestionTestE2E extends AnyFunSuite {
     compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
   }
 
-  test("getAuthentications with query params1") {
+  test("enableTaskV1") {
     val client = testClient()
-    val future = client.getAuthentications(
-      itemsPerPage = Some(2),
-      page = Some(1),
-      `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
-      platform = Some(Seq(PlatformNone.withName("none"))),
-      sort = Some(AuthenticationSortKeys.withName("createdAt")),
-      order = Some(OrderKeys.withName("asc"))
+    val future = client.enableTaskV1(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
+    compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
   }
 
   test("getSource") {
@@ -81,9 +72,48 @@ class IngestionTestE2E extends AnyFunSuite {
     )
   }
 
+  test("getAuthentications with query params1") {
+    val client = testClient()
+    val future = client.listAuthentications(
+      itemsPerPage = Some(2),
+      page = Some(1),
+      `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
+      platform = Some(Seq(PlatformNone.withName("none"))),
+      sort = Some(AuthenticationSortKeys.withName("createdAt")),
+      order = Some(OrderKeys.withName("asc"))
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
   test("searchTasks") {
     val client = testClient()
     val future = client.searchTasks(
+      taskSearch = TaskSearch(
+        taskIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
+  test("searchTasksV1") {
+    val client = testClient()
+    val future = client.searchTasksV1(
       taskSearch = TaskSearch(
         taskIDs = Seq(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",

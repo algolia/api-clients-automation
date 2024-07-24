@@ -1,0 +1,17 @@
+[
+  {
+    "parameters": {
+      "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+    },
+    "request": {
+      "path": "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable",
+      "method": "PUT"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+      }
+    }
+  }
+]

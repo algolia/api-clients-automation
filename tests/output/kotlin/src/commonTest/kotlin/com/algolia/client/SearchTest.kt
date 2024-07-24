@@ -63,6 +63,16 @@ class SearchTest {
   }
 
   @Test
+  fun `tests the retry strategy error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676))))
+    assertFails {
+      client.customGet(
+        path = "1/test/hang/kotlin",
+      )
+    }.let { error -> assertError(error, "Error(s) while processing the retry strategy") }
+  }
+
+  @Test
   fun `test the compression strategy`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6678)), compressionType = CompressionType.GZIP))
     client.runTest(

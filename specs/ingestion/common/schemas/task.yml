@@ -8,6 +8,48 @@ Task:
       $ref: './common.yml#/sourceID'
     destinationID:
       $ref: './common.yml#/destinationID'
+    cron:
+      $ref: '#/Cron'
+    lastRun:
+      $ref: '#/LastRun'
+    nextRun:
+      $ref: '#/NextRun'
+    input:
+      $ref: '#/TaskInput'
+    enabled:
+      type: boolean
+      default: true
+      description: Whether the task is enabled.
+    failureThreshold:
+      $ref: '#/failureThreshold'
+    action:
+      $ref: '#/ActionType'
+    cursor:
+      $ref: './common.yml#/cursor'
+    createdAt:
+      $ref: './common.yml#/createdAt'
+    updatedAt:
+      $ref: './common.yml#/updatedAt'
+  required:
+    - taskID
+    - sourceID
+    - destinationID
+    - enabled
+    - action
+    - createdAt
+
+TaskV1:
+  type: object
+  additionalProperties: false
+  deprecated: true
+  description: The V1 task object, please use methods and types that don't contain the V1 suffix.
+  properties:
+    taskID:
+      $ref: './common.yml#/taskID'
+    sourceID:
+      $ref: './common.yml#/sourceID'
+    destinationID:
+      $ref: './common.yml#/destinationID'
     trigger:
       $ref: '#/Trigger'
     input:
@@ -47,6 +89,34 @@ TaskCreate:
   type: object
   additionalProperties: false
   description: API request body for creating a task.
+  properties:
+    sourceID:
+      $ref: './common.yml#/sourceID'
+    destinationID:
+      $ref: './common.yml#/destinationID'
+    action:
+      $ref: '#/ActionType'
+    cron:
+      $ref: '#/Cron'
+    enabled:
+      type: boolean
+      description: Whether the task is enabled.
+    failureThreshold:
+      $ref: '#/failureThreshold'
+    input:
+      $ref: '#/TaskInput'
+    cursor:
+      $ref: './common.yml#/cursor'
+  required:
+    - sourceID
+    - destinationID
+    - action
+
+TaskCreateV1:
+  type: object
+  additionalProperties: false
+  deprecated: true
+  description: API request body for creating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
   properties:
     sourceID:
       $ref: './common.yml#/sourceID'
@@ -95,6 +165,24 @@ TaskUpdate:
   type: object
   additionalProperties: false
   description: API request body for updating a task.
+  properties:
+    destinationID:
+      $ref: './common.yml#/destinationID'
+    cron:
+      $ref: '#/Cron'
+    input:
+      $ref: '#/TaskInput'
+    enabled:
+      type: boolean
+      description: Whether the task is enabled.
+    failureThreshold:
+      $ref: '#/failureThreshold'
+
+TaskUpdateV1:
+  type: object
+  additionalProperties: false
+  deprecated: true
+  description: API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'
@@ -188,6 +276,10 @@ LastRun:
   description: The last time the scheduled task ran in RFC 3339 format.
   type: string
 
+NextRun:
+  description: The next scheduled run of the task in RFC 3339 format.
+  type: string
+
 Cron:
   type: string
   description: Cron expression for the task's schedule.
@@ -224,8 +316,7 @@ ScheduleTrigger:
     lastRun:
       $ref: '#/LastRun'
     nextRun:
-      description: The next scheduled run of the task in RFC 3339 format.
-      type: string
+      $ref: '#/NextRun'
   required:
     - type
     - cron

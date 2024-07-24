@@ -3,7 +3,7 @@ get:
     - authentications
   summary: List authentication resources
   description: Retrieves a list of all authentication resources.
-  operationId: getAuthentications
+  operationId: listAuthentications
   x-acl:
     - addObject
     - deleteIndex

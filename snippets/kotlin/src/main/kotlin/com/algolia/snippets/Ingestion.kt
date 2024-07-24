@@ -96,6 +96,27 @@ class SnippetIngestionClient {
       taskCreate = TaskCreate(
         sourceID = "search",
         destinationID = "destinationName",
+        action = ActionType.entries.first { it.value == "replace" },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateTaskV1() {
+    // >SEPARATOR createTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.createTaskV1(
+      taskCreate = TaskCreateV1(
+        sourceID = "search",
+        destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
           type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
         ),
@@ -267,6 +288,23 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForDeleteTaskV1() {
+    // >SEPARATOR deleteTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.deleteTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForDeleteTransformation() {
     // >SEPARATOR deleteTransformation default
     // Initialize the client
@@ -301,6 +339,23 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForDisableTaskV1() {
+    // >SEPARATOR disableTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.disableTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForEnableTask() {
     // >SEPARATOR enableTask default
     // Initialize the client
@@ -308,6 +363,23 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.enableTask(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForEnableTaskV1() {
+    // >SEPARATOR enableTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.enableTaskV1(
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
@@ -335,21 +407,6 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetAuthentications() {
-    // >SEPARATOR getAuthentications default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getAuthentications()
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForGetDestination() {
     // >SEPARATOR getDestination default
     // Initialize the client
@@ -359,21 +416,6 @@ class SnippetIngestionClient {
     var response = client.getDestination(
       destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
-  suspend fun snippetForGetDestinations() {
-    // >SEPARATOR getDestinations default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getDestinations()
 
     // Use the response
     println(response)
@@ -400,23 +442,6 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetEvents() {
-    // >SEPARATOR getEvents default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getEvents(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForGetRun() {
     // >SEPARATOR getRun default
     // Initialize the client
@@ -426,21 +451,6 @@ class SnippetIngestionClient {
     var response = client.getRun(
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
-  suspend fun snippetForGetRuns() {
-    // >SEPARATOR getRuns default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getRuns()
 
     // Use the response
     println(response)
@@ -466,21 +476,6 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetSources() {
-    // >SEPARATOR getSources default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getSources()
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForGetTask() {
     // >SEPARATOR getTask default
     // Initialize the client
@@ -498,13 +493,15 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetTasks() {
-    // >SEPARATOR getTasks default
+  suspend fun snippetForGetTaskV1() {
+    // >SEPARATOR getTaskV1 default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.getTasks()
+    var response = client.getTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
 
     // Use the response
     println(response)
@@ -530,13 +527,120 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetTransformations() {
-    // >SEPARATOR getTransformations default
+  suspend fun snippetForListAuthentications() {
+    // >SEPARATOR listAuthentications default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.getTransformations()
+    var response = client.listAuthentications()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListDestinations() {
+    // >SEPARATOR listDestinations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listDestinations()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListEvents() {
+    // >SEPARATOR listEvents default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listEvents(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListRuns() {
+    // >SEPARATOR listRuns default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listRuns()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListSources() {
+    // >SEPARATOR listSources default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listSources()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListTasks() {
+    // >SEPARATOR listTasks default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listTasks()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListTasksV1() {
+    // >SEPARATOR listTasksV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listTasksV1()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListTransformations() {
+    // >SEPARATOR listTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listTransformations()
 
     // Use the response
     println(response)
@@ -552,6 +656,23 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.runTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForRunTaskV1() {
+    // >SEPARATOR runTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.runTaskV1(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
@@ -626,6 +747,25 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.searchTasks(
+      taskSearch = TaskSearch(
+        taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchTasksV1() {
+    // >SEPARATOR searchTasksV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.searchTasksV1(
       taskSearch = TaskSearch(
         taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
       ),
@@ -768,6 +908,27 @@ class SnippetIngestionClient {
     var response = client.updateTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
+        enabled = false,
+        cron = "* * * * *",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForUpdateTaskV1() {
+    // >SEPARATOR updateTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.updateTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskUpdate = TaskUpdateV1(
         enabled = false,
       ),
     )

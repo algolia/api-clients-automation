@@ -13,9 +13,14 @@ type Task struct {
 	// Universally uniqud identifier (UUID) of a source.
 	SourceID string `json:"sourceID"`
 	// Universally unique identifier (UUID) of a destination resource.
-	DestinationID string     `json:"destinationID"`
-	Trigger       Trigger    `json:"trigger"`
-	Input         *TaskInput `json:"input,omitempty"`
+	DestinationID string `json:"destinationID"`
+	// Cron expression for the task's schedule.
+	Cron *string `json:"cron,omitempty"`
+	// The last time the scheduled task ran in RFC 3339 format.
+	LastRun *string `json:"lastRun,omitempty"`
+	// The next scheduled run of the task in RFC 3339 format.
+	NextRun *string    `json:"nextRun,omitempty"`
+	Input   *TaskInput `json:"input,omitempty"`
 	// Whether the task is enabled.
 	Enabled bool `json:"enabled"`
 	// Maximum accepted percentage of failures for a task run to finish successfully.
@@ -30,6 +35,24 @@ type Task struct {
 }
 
 type TaskOption func(f *Task)
+
+func WithTaskCron(val string) TaskOption {
+	return func(f *Task) {
+		f.Cron = &val
+	}
+}
+
+func WithTaskLastRun(val string) TaskOption {
+	return func(f *Task) {
+		f.LastRun = &val
+	}
+}
+
+func WithTaskNextRun(val string) TaskOption {
+	return func(f *Task) {
+		f.NextRun = &val
+	}
+}
 
 func WithTaskInput(val TaskInput) TaskOption {
 	return func(f *Task) {
@@ -59,12 +82,11 @@ func WithTaskUpdatedAt(val string) TaskOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewTask(taskID string, sourceID string, destinationID string, trigger Trigger, enabled bool, action ActionType, createdAt string, opts ...TaskOption) *Task {
+func NewTask(taskID string, sourceID string, destinationID string, enabled bool, action ActionType, createdAt string, opts ...TaskOption) *Task {
 	this := &Task{}
 	this.TaskID = taskID
 	this.SourceID = sourceID
 	this.DestinationID = destinationID
-	this.Trigger = trigger
 	this.Enabled = enabled
 	this.Action = action
 	this.CreatedAt = createdAt
@@ -154,28 +176,102 @@ func (o *Task) SetDestinationID(v string) *Task {
 	return o
 }
 
-// GetTrigger returns the Trigger field value.
-func (o *Task) GetTrigger() Trigger {
-	if o == nil {
-		var ret Trigger
+// GetCron returns the Cron field value if set, zero value otherwise.
+func (o *Task) GetCron() string {
+	if o == nil || o.Cron == nil {
+		var ret string
 		return ret
 	}
-
-	return o.Trigger
+	return *o.Cron
 }
 
-// GetTriggerOk returns a tuple with the Trigger field value
+// GetCronOk returns a tuple with the Cron field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Task) GetTriggerOk() (*Trigger, bool) {
-	if o == nil {
+func (o *Task) GetCronOk() (*string, bool) {
+	if o == nil || o.Cron == nil {
 		return nil, false
 	}
-	return &o.Trigger, true
+	return o.Cron, true
 }
 
-// SetTrigger sets field value.
-func (o *Task) SetTrigger(v *Trigger) *Task {
-	o.Trigger = *v
+// HasCron returns a boolean if a field has been set.
+func (o *Task) HasCron() bool {
+	if o != nil && o.Cron != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCron gets a reference to the given string and assigns it to the Cron field.
+func (o *Task) SetCron(v string) *Task {
+	o.Cron = &v
+	return o
+}
+
+// GetLastRun returns the LastRun field value if set, zero value otherwise.
+func (o *Task) GetLastRun() string {
+	if o == nil || o.LastRun == nil {
+		var ret string
+		return ret
+	}
+	return *o.LastRun
+}
+
+// GetLastRunOk returns a tuple with the LastRun field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Task) GetLastRunOk() (*string, bool) {
+	if o == nil || o.LastRun == nil {
+		return nil, false
+	}
+	return o.LastRun, true
+}
+
+// HasLastRun returns a boolean if a field has been set.
+func (o *Task) HasLastRun() bool {
+	if o != nil && o.LastRun != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLastRun gets a reference to the given string and assigns it to the LastRun field.
+func (o *Task) SetLastRun(v string) *Task {
+	o.LastRun = &v
+	return o
+}
+
+// GetNextRun returns the NextRun field value if set, zero value otherwise.
+func (o *Task) GetNextRun() string {
+	if o == nil || o.NextRun == nil {
+		var ret string
+		return ret
+	}
+	return *o.NextRun
+}
+
+// GetNextRunOk returns a tuple with the NextRun field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Task) GetNextRunOk() (*string, bool) {
+	if o == nil || o.NextRun == nil {
+		return nil, false
+	}
+	return o.NextRun, true
+}
+
+// HasNextRun returns a boolean if a field has been set.
+func (o *Task) HasNextRun() bool {
+	if o != nil && o.NextRun != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNextRun gets a reference to the given string and assigns it to the NextRun field.
+func (o *Task) SetNextRun(v string) *Task {
+	o.NextRun = &v
 	return o
 }
 
@@ -397,8 +493,14 @@ func (o Task) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["destinationID"] = o.DestinationID
 	}
-	if true {
-		toSerialize["trigger"] = o.Trigger
+	if o.Cron != nil {
+		toSerialize["cron"] = o.Cron
+	}
+	if o.LastRun != nil {
+		toSerialize["lastRun"] = o.LastRun
+	}
+	if o.NextRun != nil {
+		toSerialize["nextRun"] = o.NextRun
 	}
 	if o.Input != nil {
 		toSerialize["input"] = o.Input
@@ -434,7 +536,9 @@ func (o Task) String() string {
 	out += fmt.Sprintf("  taskID=%v\n", o.TaskID)
 	out += fmt.Sprintf("  sourceID=%v\n", o.SourceID)
 	out += fmt.Sprintf("  destinationID=%v\n", o.DestinationID)
-	out += fmt.Sprintf("  trigger=%v\n", o.Trigger)
+	out += fmt.Sprintf("  cron=%v\n", o.Cron)
+	out += fmt.Sprintf("  lastRun=%v\n", o.LastRun)
+	out += fmt.Sprintf("  nextRun=%v\n", o.NextRun)
 	out += fmt.Sprintf("  input=%v\n", o.Input)
 	out += fmt.Sprintf("  enabled=%v\n", o.Enabled)
 	out += fmt.Sprintf("  failureThreshold=%v\n", o.FailureThreshold)

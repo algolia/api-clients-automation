@@ -45,7 +45,7 @@ public class IngestionClientRequestTestsE2E
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "enable task e2e")]
+  [Fact(DisplayName = "enableTask")]
   public async Task EnableTaskTest()
   {
     try
@@ -66,28 +66,17 @@ public class IngestionClientRequestTestsE2E
     }
   }
 
-  [Fact(DisplayName = "getAuthentications with query params")]
-  public async Task GetAuthenticationsTest1()
+  [Fact(DisplayName = "enableTaskV1")]
+  public async Task EnableTaskV1Test()
   {
     try
     {
-      var resp = await client.GetAuthenticationsAsync(
-        2,
-        1,
-        new List<AuthenticationType>
-        {
-          Enum.Parse<AuthenticationType>("Basic"),
-          Enum.Parse<AuthenticationType>("Algolia")
-        },
-        new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
-        Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
-        Enum.Parse<OrderKeys>("Asc")
-      );
+      var resp = await client.EnableTaskV1Async("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
       // Check status code 200
       Assert.NotNull(resp);
 
       JsonAssert.EqualOverrideDefault(
-        "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
+        "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
         JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
@@ -119,12 +108,75 @@ public class IngestionClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "getAuthentications with query params")]
+  public async Task ListAuthenticationsTest1()
+  {
+    try
+    {
+      var resp = await client.ListAuthenticationsAsync(
+        2,
+        1,
+        new List<AuthenticationType>
+        {
+          Enum.Parse<AuthenticationType>("Basic"),
+          Enum.Parse<AuthenticationType>("Algolia")
+        },
+        new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
+        Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
+        Enum.Parse<OrderKeys>("Asc")
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "searchTasks")]
   public async Task SearchTasksTest()
   {
     try
     {
       var resp = await client.SearchTasksAsync(
+        new TaskSearch
+        {
+          TaskIDs = new List<string>
+          {
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          },
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
+  [Fact(DisplayName = "searchTasksV1")]
+  public async Task SearchTasksV1Test()
+  {
+    try
+    {
+      var resp = await client.SearchTasksV1Async(
         new TaskSearch
         {
           TaskIDs = new List<string>

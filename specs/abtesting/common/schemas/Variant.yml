@@ -95,7 +95,7 @@ variant:
           example: 86269
         - type: 'null'
     trackedSearchCount:
-      $ref: '../../../analytics/common/parameters.yml#/trackedSearchCount'
+      $ref: '../../../common/parameters.yml#/trackedSearchCount'
     trafficPercentage:
       $ref: '../parameters.yml#/trafficPercentage'
     userCount:

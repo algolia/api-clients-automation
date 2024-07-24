@@ -141,11 +141,49 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("createTaskOnDemand")
+  @DisplayName("task without cron")
   void createTaskTest() {
     assertDoesNotThrow(() -> {
+      client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("task with cron")
+  void createTaskTest1() {
+    assertDoesNotThrow(() -> {
       client.createTask(
-        new TaskCreate()
+        new TaskCreate().setSourceID("search").setDestinationID("destinationName").setCron("* * * * *").setAction(ActionType.REPLACE)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" + " *\",\"action\":\"replace\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("createTaskOnDemand")
+  void createTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.createTaskV1(
+        new TaskCreateV1()
           .setSourceID("search")
           .setDestinationID("destinationName")
           .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
@@ -166,10 +204,10 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createTaskSchedule")
-  void createTaskTest1() {
+  void createTaskV1Test1() {
     assertDoesNotThrow(() -> {
-      client.createTask(
-        new TaskCreate()
+      client.createTaskV1(
+        new TaskCreateV1()
           .setSourceID("search")
           .setDestinationID("destinationName")
           .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron("* * * * *"))
@@ -191,10 +229,10 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createTaskSubscription")
-  void createTaskTest2() {
+  void createTaskV1Test2() {
     assertDoesNotThrow(() -> {
-      client.createTask(
-        new TaskCreate()
+      client.createTaskV1(
+        new TaskCreateV1()
           .setSourceID("search")
           .setDestinationID("destinationName")
           .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
@@ -775,6 +813,18 @@ class IngestionClientRequestsTests {
       client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("DELETE", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("deleteTaskV1")
+  void deleteTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
     assertEquals("DELETE", req.method);
     assertNull(req.body);
@@ -799,16 +849,40 @@ class IngestionClientRequestsTests {
       client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path);
+    assertEquals("PUT", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("disableTaskV1")
+  void disableTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path);
     assertEquals("PUT", req.method);
     assertEquals("{}", req.body);
   }
 
   @Test
-  @DisplayName("enable task e2e")
+  @DisplayName("enableTask")
   void enableTaskTest() {
     assertDoesNotThrow(() -> {
       client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path);
+    assertEquals("PUT", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("enableTaskV1")
+  void enableTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path);
@@ -829,10 +903,94 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getAuthentications")
-  void getAuthenticationsTest() {
+  @DisplayName("getDestination")
+  void getDestinationTest() {
     assertDoesNotThrow(() -> {
-      client.getAuthentications();
+      client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getEvent")
+  void getEventTest() {
+    assertDoesNotThrow(() -> {
+      client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getRun")
+  void getRunTest() {
+    assertDoesNotThrow(() -> {
+      client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getSource")
+  void getSourceTest() {
+    assertDoesNotThrow(() -> {
+      client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getTask")
+  void getTaskTest() {
+    assertDoesNotThrow(() -> {
+      client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getTaskV1")
+  void getTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getTransformation")
+  void getTransformationTest() {
+    assertDoesNotThrow(() -> {
+      client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getAuthentications")
+  void listAuthenticationsTest() {
+    assertDoesNotThrow(() -> {
+      client.listAuthentications();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/authentications", req.path);
@@ -842,9 +1000,9 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getAuthentications with query params")
-  void getAuthenticationsTest1() {
+  void listAuthenticationsTest1() {
     assertDoesNotThrow(() -> {
-      client.getAuthentications(
+      client.listAuthentications(
         2,
         1,
         List.of(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
@@ -875,22 +1033,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getDestination")
-  void getDestinationTest() {
-    assertDoesNotThrow(() -> {
-      client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getDestinations")
-  void getDestinationsTest() {
+  void listDestinationsTest() {
     assertDoesNotThrow(() -> {
-      client.getDestinations();
+      client.listDestinations();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/destinations", req.path);
@@ -899,22 +1045,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getEvent")
-  void getEventTest() {
-    assertDoesNotThrow(() -> {
-      client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getEvents")
-  void getEventsTest() {
+  void listEventsTest() {
     assertDoesNotThrow(() -> {
-      client.getEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+      client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.path);
@@ -923,22 +1057,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRun")
-  void getRunTest() {
-    assertDoesNotThrow(() -> {
-      client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getRuns")
-  void getRunsTest() {
+  void listRunsTest() {
     assertDoesNotThrow(() -> {
-      client.getRuns();
+      client.listRuns();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/runs", req.path);
@@ -947,22 +1069,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSource")
-  void getSourceTest() {
-    assertDoesNotThrow(() -> {
-      client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getSources")
-  void getSourcesTest() {
+  void listSourcesTest() {
     assertDoesNotThrow(() -> {
-      client.getSources();
+      client.listSources();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources", req.path);
@@ -971,22 +1081,22 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTask")
-  void getTaskTest() {
+  @DisplayName("listTasks")
+  void listTasksTest() {
     assertDoesNotThrow(() -> {
-      client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+      client.listTasks();
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("/2/tasks", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
 
   @Test
-  @DisplayName("getTasks")
-  void getTasksTest() {
+  @DisplayName("listTasksV1")
+  void listTasksV1Test() {
     assertDoesNotThrow(() -> {
-      client.getTasks();
+      client.listTasksV1();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks", req.path);
@@ -995,22 +1105,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTransformation")
-  void getTransformationTest() {
-    assertDoesNotThrow(() -> {
-      client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getTransformations")
-  void getTransformationsTest() {
+  void listTransformationsTest() {
     assertDoesNotThrow(() -> {
-      client.getTransformations();
+      client.listTransformations();
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations", req.path);
@@ -1023,6 +1121,18 @@ class IngestionClientRequestsTests {
   void runTaskTest() {
     assertDoesNotThrow(() -> {
       client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("runTaskV1")
+  void runTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
@@ -1096,6 +1206,29 @@ class IngestionClientRequestsTests {
   void searchTasksTest() {
     assertDoesNotThrow(() -> {
       client.searchTasks(
+        new TaskSearch()
+          .setTaskIDs(
+            List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/search", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("searchTasksV1")
+  void searchTasksV1Test() {
+    assertDoesNotThrow(() -> {
+      client.searchTasksV1(
         new TaskSearch()
           .setTaskIDs(
             List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -1203,7 +1336,19 @@ class IngestionClientRequestsTests {
   @DisplayName("updateTask")
   void updateTaskTest() {
     assertDoesNotThrow(() -> {
-      client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
+      client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false).setCron("* * * * *"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("PATCH", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"enabled\":false,\"cron\":\"* * * * *\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("updateTaskV1")
+  void updateTaskV1Test() {
+    assertDoesNotThrow(() -> {
+      client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdateV1().setEnabled(false));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);

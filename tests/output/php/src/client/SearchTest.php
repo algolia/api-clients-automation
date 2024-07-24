@@ -88,6 +88,21 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('tests the retry strategy error')]
+    public function test3api()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/hang/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id.');
+        }
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi()
     {

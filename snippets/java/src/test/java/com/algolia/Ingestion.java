@@ -72,15 +72,28 @@ class SnippetIngestionClient {
 
   // Snippet for the createTask method.
   //
-  // createTaskOnDemand
+  // task without cron
   void snippetForCreateTask() {
     // >SEPARATOR createTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.createTask(
-      new TaskCreate()
+    client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+    // SEPARATOR<
+  }
+
+  // Snippet for the createTaskV1 method.
+  //
+  // createTaskOnDemand
+  void snippetForCreateTaskV1() {
+    // >SEPARATOR createTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.createTaskV1(
+      new TaskCreateV1()
         .setSourceID("search")
         .setDestinationID("destinationName")
         .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
@@ -206,6 +219,19 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the deleteTaskV1 method.
+  //
+  // deleteTaskV1
+  void snippetForDeleteTaskV1() {
+    // >SEPARATOR deleteTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
   // Snippet for the deleteTransformation method.
   //
   // deleteTransformation
@@ -232,9 +258,22 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the disableTaskV1 method.
+  //
+  // disableTaskV1
+  void snippetForDisableTaskV1() {
+    // >SEPARATOR disableTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
   // Snippet for the enableTask method.
   //
-  // enable task e2e
+  // enableTask
   void snippetForEnableTask() {
     // >SEPARATOR enableTask default
     // Initialize the client
@@ -242,6 +281,19 @@ class SnippetIngestionClient {
 
     // Call the API
     client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // SEPARATOR<
+  }
+
+  // Snippet for the enableTaskV1 method.
+  //
+  // enableTaskV1
+  void snippetForEnableTaskV1() {
+    // >SEPARATOR enableTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     // SEPARATOR<
   }
 
@@ -258,19 +310,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getAuthentications method.
-  //
-  // getAuthentications
-  void snippetForGetAuthentications() {
-    // >SEPARATOR getAuthentications default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getAuthentications();
-    // SEPARATOR<
-  }
-
   // Snippet for the getDestination method.
   //
   // getDestination
@@ -281,19 +320,6 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  // Snippet for the getDestinations method.
-  //
-  // getDestinations
-  void snippetForGetDestinations() {
-    // >SEPARATOR getDestinations default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getDestinations();
     // SEPARATOR<
   }
 
@@ -310,19 +336,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getEvents method.
-  //
-  // getEvents
-  void snippetForGetEvents() {
-    // >SEPARATOR getEvents default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
   // Snippet for the getRun method.
   //
   // getRun
@@ -333,19 +346,6 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  // Snippet for the getRuns method.
-  //
-  // getRuns
-  void snippetForGetRuns() {
-    // >SEPARATOR getRuns default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getRuns();
     // SEPARATOR<
   }
 
@@ -362,19 +362,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getSources method.
-  //
-  // getSources
-  void snippetForGetSources() {
-    // >SEPARATOR getSources default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getSources();
-    // SEPARATOR<
-  }
-
   // Snippet for the getTask method.
   //
   // getTask
@@ -388,16 +375,16 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getTasks method.
+  // Snippet for the getTaskV1 method.
   //
-  // getTasks
-  void snippetForGetTasks() {
-    // >SEPARATOR getTasks default
+  // getTaskV1
+  void snippetForGetTaskV1() {
+    // >SEPARATOR getTaskV1 default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getTasks();
+    client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -414,16 +401,107 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getTransformations method.
+  // Snippet for the listAuthentications method.
   //
-  // getTransformations
-  void snippetForGetTransformations() {
-    // >SEPARATOR getTransformations default
+  // getAuthentications
+  void snippetForListAuthentications() {
+    // >SEPARATOR listAuthentications default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getTransformations();
+    client.listAuthentications();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listDestinations method.
+  //
+  // getDestinations
+  void snippetForListDestinations() {
+    // >SEPARATOR listDestinations default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listDestinations();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listEvents method.
+  //
+  // getEvents
+  void snippetForListEvents() {
+    // >SEPARATOR listEvents default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  // Snippet for the listRuns method.
+  //
+  // getRuns
+  void snippetForListRuns() {
+    // >SEPARATOR listRuns default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listRuns();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listSources method.
+  //
+  // getSources
+  void snippetForListSources() {
+    // >SEPARATOR listSources default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listSources();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listTasks method.
+  //
+  // listTasks
+  void snippetForListTasks() {
+    // >SEPARATOR listTasks default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listTasks();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listTasksV1 method.
+  //
+  // listTasksV1
+  void snippetForListTasksV1() {
+    // >SEPARATOR listTasksV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listTasksV1();
+    // SEPARATOR<
+  }
+
+  // Snippet for the listTransformations method.
+  //
+  // getTransformations
+  void snippetForListTransformations() {
+    // >SEPARATOR listTransformations default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listTransformations();
     // SEPARATOR<
   }
 
@@ -437,6 +515,19 @@ class SnippetIngestionClient {
 
     // Call the API
     client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  // Snippet for the runTaskV1 method.
+  //
+  // runTaskV1
+  void snippetForRunTaskV1() {
+    // >SEPARATOR runTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -496,6 +587,24 @@ class SnippetIngestionClient {
 
     // Call the API
     client.searchTasks(
+      new TaskSearch()
+        .setTaskIDs(
+          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        )
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchTasksV1 method.
+  //
+  // searchTasksV1
+  void snippetForSearchTasksV1() {
+    // >SEPARATOR searchTasksV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.searchTasksV1(
       new TaskSearch()
         .setTaskIDs(
           List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -596,7 +705,20 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
+    client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false).setCron("* * * * *"));
+    // SEPARATOR<
+  }
+
+  // Snippet for the updateTaskV1 method.
+  //
+  // updateTaskV1
+  void snippetForUpdateTaskV1() {
+    // >SEPARATOR updateTaskV1 default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdateV1().setEnabled(false));
     // SEPARATOR<
   }
 

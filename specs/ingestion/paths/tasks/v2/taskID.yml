@@ -9,16 +9,16 @@ get:
     - deleteIndex
     - editSettings
   parameters:
-    - $ref: '../../common/parameters.yml#/pathTaskID'
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/task.yml#/Task'
+            $ref: '../../../common/schemas/task.yml#/Task'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'
 
 patch:
   tags:
@@ -27,12 +27,12 @@ patch:
   description: Updates a task by its ID.
   operationId: updateTask
   parameters:
-    - $ref: '../../common/parameters.yml#/pathTaskID'
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/task.yml#/TaskUpdate'
+          $ref: '../../../common/schemas/task.yml#/TaskUpdate'
     required: true
   responses:
     '200':
@@ -40,9 +40,9 @@ patch:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/task.yml#/TaskUpdateResponse'
+            $ref: '../../../common/schemas/task.yml#/TaskUpdateResponse'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'
 
 delete:
   tags:
@@ -51,13 +51,13 @@ delete:
   description: Deletes a task by its ID.
   operationId: deleteTask
   parameters:
-    - $ref: '../../common/parameters.yml#/pathTaskID'
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/common.yml#/DeleteResponse'
+            $ref: '../../../common/schemas/common.yml#/DeleteResponse'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'

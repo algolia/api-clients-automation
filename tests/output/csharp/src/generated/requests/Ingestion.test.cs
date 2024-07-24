@@ -131,11 +131,56 @@ public class IngestionClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "createTaskOnDemand")]
+  [Fact(DisplayName = "task without cron")]
   public async Task CreateTaskTest()
   {
     await client.CreateTaskAsync(
       new TaskCreate
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Action = Enum.Parse<ActionType>("Replace"),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "task with cron")]
+  public async Task CreateTaskTest1()
+  {
+    await client.CreateTaskAsync(
+      new TaskCreate
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "createTaskOnDemand")]
+  public async Task CreateTaskV1Test()
+  {
+    await client.CreateTaskV1Async(
+      new TaskCreateV1
       {
         SourceID = "search",
         DestinationID = "destinationName",
@@ -157,10 +202,10 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "createTaskSchedule")]
-  public async Task CreateTaskTest1()
+  public async Task CreateTaskV1Test1()
   {
-    await client.CreateTaskAsync(
-      new TaskCreate
+    await client.CreateTaskV1Async(
+      new TaskCreateV1
       {
         SourceID = "search",
         DestinationID = "destinationName",
@@ -186,10 +231,10 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "createTaskSubscription")]
-  public async Task CreateTaskTest2()
+  public async Task CreateTaskV1Test2()
   {
-    await client.CreateTaskAsync(
-      new TaskCreate
+    await client.CreateTaskV1Async(
+      new TaskCreateV1
       {
         SourceID = "search",
         DestinationID = "destinationName",
@@ -762,6 +807,17 @@ public class IngestionClientRequestTests
     await client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("DELETE", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "deleteTaskV1")]
+  public async Task DeleteTaskV1Test()
+  {
+    await client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
@@ -784,15 +840,37 @@ public class IngestionClientRequestTests
     await client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "disableTaskV1")]
+  public async Task DisableTaskV1Test()
+  {
+    await client.DisableTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "enable task e2e")]
+  [Fact(DisplayName = "enableTask")]
   public async Task EnableTaskTest()
   {
     await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "enableTaskV1")]
+  public async Task EnableTaskV1Test()
+  {
+    await client.EnableTaskV1Async("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
@@ -811,10 +889,93 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getAuthentications")]
-  public async Task GetAuthenticationsTest()
+  [Fact(DisplayName = "getDestination")]
+  public async Task GetDestinationTest()
   {
-    await client.GetAuthenticationsAsync();
+    await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getEvent")]
+  public async Task GetEventTest()
+  {
+    await client.GetEventAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal(
+      "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+      req.Path
+    );
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getRun")]
+  public async Task GetRunTest()
+  {
+    await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getSource")]
+  public async Task GetSourceTest()
+  {
+    await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getTask")]
+  public async Task GetTaskTest()
+  {
+    await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getTaskV1")]
+  public async Task GetTaskV1Test()
+  {
+    await client.GetTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getTransformation")]
+  public async Task GetTransformationTest()
+  {
+    await client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getAuthentications")]
+  public async Task ListAuthenticationsTest()
+  {
+    await client.ListAuthenticationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/authentications", req.Path);
@@ -823,9 +984,9 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getAuthentications with query params")]
-  public async Task GetAuthenticationsTest1()
+  public async Task ListAuthenticationsTest1()
   {
-    await client.GetAuthenticationsAsync(
+    await client.ListAuthenticationsAsync(
       2,
       1,
       new List<AuthenticationType>
@@ -857,21 +1018,10 @@ public class IngestionClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "getDestination")]
-  public async Task GetDestinationTest()
-  {
-    await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getDestinations")]
-  public async Task GetDestinationsTest()
+  public async Task ListDestinationsTest()
   {
-    await client.GetDestinationsAsync();
+    await client.ListDestinationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/destinations", req.Path);
@@ -879,27 +1029,10 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getEvent")]
-  public async Task GetEventTest()
-  {
-    await client.GetEventAsync(
-      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal(
-      "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-      req.Path
-    );
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getEvents")]
-  public async Task GetEventsTest()
+  public async Task ListEventsTest()
   {
-    await client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.ListEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.Path);
@@ -907,21 +1040,10 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getRun")]
-  public async Task GetRunTest()
-  {
-    await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getRuns")]
-  public async Task GetRunsTest()
+  public async Task ListRunsTest()
   {
-    await client.GetRunsAsync();
+    await client.ListRunsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/runs", req.Path);
@@ -929,21 +1051,10 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getSource")]
-  public async Task GetSourceTest()
-  {
-    await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getSources")]
-  public async Task GetSourcesTest()
+  public async Task ListSourcesTest()
   {
-    await client.GetSourcesAsync();
+    await client.ListSourcesAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources", req.Path);
@@ -951,21 +1062,21 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getTask")]
-  public async Task GetTaskTest()
+  [Fact(DisplayName = "listTasks")]
+  public async Task ListTasksTest()
   {
-    await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    await client.ListTasksAsync();
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("/2/tasks", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getTasks")]
-  public async Task GetTasksTest()
+  [Fact(DisplayName = "listTasksV1")]
+  public async Task ListTasksV1Test()
   {
-    await client.GetTasksAsync();
+    await client.ListTasksV1Async();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks", req.Path);
@@ -973,21 +1084,10 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getTransformation")]
-  public async Task GetTransformationTest()
-  {
-    await client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getTransformations")]
-  public async Task GetTransformationsTest()
+  public async Task ListTransformationsTest()
   {
-    await client.GetTransformationsAsync();
+    await client.ListTransformationsAsync();
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/transformations", req.Path);
@@ -999,6 +1099,17 @@ public class IngestionClientRequestTests
   public async Task RunTaskTest()
   {
     await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "runTaskV1")]
+  public async Task RunTaskV1Test()
+  {
+    await client.RunTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
@@ -1082,6 +1193,31 @@ public class IngestionClientRequestTests
   public async Task SearchTasksTest()
   {
     await client.SearchTasksAsync(
+      new TaskSearch
+      {
+        TaskIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/search", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "searchTasksV1")]
+  public async Task SearchTasksV1Test()
+  {
+    await client.SearchTasksV1Async(
       new TaskSearch
       {
         TaskIDs = new List<string>
@@ -1207,7 +1343,25 @@ public class IngestionClientRequestTests
   {
     await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TaskUpdate { Enabled = false, }
+      new TaskUpdate { Enabled = false, Cron = "* * * * *", }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("PATCH", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"enabled\":false,\"cron\":\"* * * * *\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "updateTaskV1")]
+  public async Task UpdateTaskV1Test()
+  {
+    await client.UpdateTaskV1Async(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskUpdateV1 { Enabled = false, }
     );
 
     var req = _echo.LastResponse;

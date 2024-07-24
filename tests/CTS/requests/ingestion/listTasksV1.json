@@ -1,6 +1,5 @@
 [
   {
-    "testName": "getTasks",
     "parameters": {},
     "request": {
       "path": "/1/tasks",

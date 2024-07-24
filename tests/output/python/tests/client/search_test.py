@@ -70,6 +70,24 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"message":"ok test server response"}""")
 
+    async def test_api_3(self):
+        """
+        tests the retry strategy error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6676)]
+        )
+        self._client = SearchClient.create_with_config(config=_config)
+        try:
+            await self._client.custom_get(
+                path="1/test/hang/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Unreachable hosts"
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent

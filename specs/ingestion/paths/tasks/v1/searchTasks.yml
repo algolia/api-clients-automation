@@ -2,8 +2,8 @@ post:
   tags:
     - tasks
   summary: Search for tasks
-  description: Searches for tasks.
-  operationId: searchTasks
+  description: Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+  operationId: searchTasksV1
   x-acl:
     - addObject
     - deleteIndex
@@ -12,7 +12,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/task.yml#/TaskSearch'
+          $ref: '../../../common/schemas/task.yml#/TaskSearch'
     required: true
   responses:
     '200':
@@ -20,9 +20,9 @@ post:
       content:
         application/json:
           schema:
-            title: searchTasksResponse
+            title: searchTasksResponseV1
             type: array
             items:
-              $ref: '../../common/schemas/task.yml#/Task'
+              $ref: '../../../common/schemas/task.yml#/TaskV1'
     '400':
-      $ref: '../../../common/responses/BadRequest.yml'
+      $ref: '../../../../common/responses/BadRequest.yml'
