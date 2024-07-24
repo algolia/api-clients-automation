@@ -47,7 +47,7 @@ root:
   inside:
     type: string
     enum: [bla, blabla]
-  `,
+`,
       errors: [{ messageId: 'enumNotOutOfLine' }],
     },
     {
@@ -60,7 +60,7 @@ root:
 
 useIt:
   $ref: '#/root/inside/deeper'
-  `,
+`,
       errors: [{ messageId: 'enumNotOutOfLine' }],
     },
   ],

@@ -19,7 +19,8 @@ const allSpecs = [
 export const refCommon: Rule.RuleModule = {
   meta: {
     docs: {
-      description: 'the $ref must target the current spec, or the common spec',
+      description:
+        'the $ref must target the current spec, or the common spec. If you intended to use a model from an other spec, move it to the common folder',
     },
     messages: {
       refCommon: '$ref to another spec',
