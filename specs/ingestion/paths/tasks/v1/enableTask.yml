@@ -1,0 +1,21 @@
+put:
+  tags:
+    - tasks
+  summary: Enable a task
+  description: Enables a task using the v1 endpoint, please use `enableTask` instead.
+  operationId: enableTaskV1
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/task.yml#/TaskUpdateResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'

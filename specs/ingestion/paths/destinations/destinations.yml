@@ -3,7 +3,7 @@ get:
     - destinations
   summary: List destinations
   description: Retrieves a list of destinations.
-  operationId: getDestinations
+  operationId: listDestinations
   x-acl:
     - addObject
     - deleteIndex
