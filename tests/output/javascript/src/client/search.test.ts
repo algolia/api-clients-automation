@@ -51,6 +51,23 @@ describe('api', () => {
 
     expect(result).toEqual({ message: 'ok test server response' });
   }, 15000);
+
+  test('tests the retry strategy error', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    try {
+      const result = await client.customGet({ path: '1/test/hang/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch(
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.'
+      );
+    }
+  }, 15000);
 });
 
 describe('commonApi', () => {

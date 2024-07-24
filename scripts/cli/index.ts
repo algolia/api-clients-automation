@@ -160,7 +160,12 @@ ctsCommand
   .description('Start the test servers in standalone mode')
   .action(async () => {
     setVerbose(true);
-    await startTestServer();
+    await startTestServer({
+      benchmark: true,
+      client: true,
+      requests: true,
+      e2e: true,
+    });
   });
 
 program

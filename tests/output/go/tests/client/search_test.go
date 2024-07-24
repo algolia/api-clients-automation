@@ -34,6 +34,8 @@ func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) 
 // calls api with correct read host
 func TestSearchapi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -48,7 +50,7 @@ func TestSearchapi0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -58,6 +60,8 @@ func TestSearchapi0(t *testing.T) {
 // calls api with correct write host
 func TestSearchapi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -72,7 +76,7 @@ func TestSearchapi1(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -82,6 +86,8 @@ func TestSearchapi1(t *testing.T) {
 // tests the retry strategy
 func TestSearchapi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -96,7 +102,7 @@ func TestSearchapi2(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/retry/go",
 	))
 	require.NoError(t, err)
@@ -105,9 +111,36 @@ func TestSearchapi2(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok test server response"}`, string(rawBody))
 }
 
-// test the compression strategy
+// tests the retry strategy error
 func TestSearchapi3(t *testing.T) {
 	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6676", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/hang/go",
+	))
+	require.EqualError(t, err, "failed to do request: all hosts have been contacted unsuccessfully, it can either be a server or a network error or wrong appID/key credentials were used. You can use 'ExposeIntermediateNetworkErrors: true' in the config to investigate.")
+}
+
+// test the compression strategy
+func TestSearchapi4(t *testing.T) {
+	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -123,7 +156,7 @@ func TestSearchapi3(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/gzip",
 	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}))
 	require.NoError(t, err)
@@ -135,9 +168,11 @@ func TestSearchapi3(t *testing.T) {
 // calls api with correct user agent
 func TestSearchcommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -147,9 +182,11 @@ func TestSearchcommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestSearchcommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -160,9 +197,11 @@ func TestSearchcommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestSearchcommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -173,9 +212,11 @@ func TestSearchcommonApi2(t *testing.T) {
 // generate secured api key basic
 func TestSearchhelpers0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	res, err := client.GenerateSecuredApiKey(
+	res, err = client.GenerateSecuredApiKey(
 		"2640659426d5107b6e47d75db9cbaef8",
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 			[]string{"Movies"}),
@@ -187,9 +228,11 @@ func TestSearchhelpers0(t *testing.T) {
 // generate secured api key with searchParams
 func TestSearchhelpers1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	res, err := client.GenerateSecuredApiKey(
+	res, err = client.GenerateSecuredApiKey(
 		"2640659426d5107b6e47d75db9cbaef8",
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
@@ -203,6 +246,8 @@ func TestSearchhelpers1(t *testing.T) {
 // call replaceAllObjects without error
 func TestSearchhelpers2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -217,7 +262,7 @@ func TestSearchhelpers2(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.ReplaceAllObjects(
+	res, err = client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
 		search.WithBatchSize(3))
@@ -230,6 +275,8 @@ func TestSearchhelpers2(t *testing.T) {
 // call saveObjects without error
 func TestSearchhelpers3(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -244,7 +291,7 @@ func TestSearchhelpers3(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.SaveObjects(
+	res, err = client.SaveObjects(
 		"cts_e2e_saveObjects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
 	)
@@ -257,6 +304,8 @@ func TestSearchhelpers3(t *testing.T) {
 // call partialUpdateObjects with createIfNotExists=true
 func TestSearchhelpers4(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -271,7 +320,7 @@ func TestSearchhelpers4(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.PartialUpdateObjects(
+	res, err = client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
 		search.WithCreateIfNotExists(true))
@@ -284,6 +333,8 @@ func TestSearchhelpers4(t *testing.T) {
 // call partialUpdateObjects with createIfNotExists=false
 func TestSearchhelpers5(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -298,7 +349,7 @@ func TestSearchhelpers5(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.PartialUpdateObjects(
+	res, err = client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_go",
 		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
 		search.WithCreateIfNotExists(false))
@@ -311,6 +362,8 @@ func TestSearchhelpers5(t *testing.T) {
 // call deleteObjects without error
 func TestSearchhelpers6(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -325,7 +378,7 @@ func TestSearchhelpers6(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.DeleteObjects(
+	res, err = client.DeleteObjects(
 		"cts_e2e_deleteObjects_go",
 		[]string{"1", "2"},
 	)
@@ -338,6 +391,8 @@ func TestSearchhelpers6(t *testing.T) {
 // wait for api key helper - add
 func TestSearchhelpers7(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -352,7 +407,7 @@ func TestSearchhelpers7(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.WaitForApiKey(
+	res, err = client.WaitForApiKey(
 		"api-key-add-operation-test-go", search.ApiKeyOperation("add"),
 	)
 	require.NoError(t, err)
@@ -364,6 +419,8 @@ func TestSearchhelpers7(t *testing.T) {
 // wait for api key - update
 func TestSearchhelpers8(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -378,7 +435,7 @@ func TestSearchhelpers8(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.WaitForApiKey(
+	res, err = client.WaitForApiKey(
 		"api-key-update-operation-test-go", search.ApiKeyOperation("update"),
 		search.WithApiKey(
 			search.NewEmptyApiKey().SetDescription("my updated api key").SetAcl(
@@ -394,6 +451,8 @@ func TestSearchhelpers8(t *testing.T) {
 // wait for api key - delete
 func TestSearchhelpers9(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -408,7 +467,7 @@ func TestSearchhelpers9(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err := client.WaitForApiKey(
+	res, err = client.WaitForApiKey(
 		"api-key-delete-operation-test-go", search.ApiKeyOperation("delete"),
 	)
 	require.NoError(t, err)
@@ -418,6 +477,8 @@ func TestSearchhelpers9(t *testing.T) {
 // client throws with invalid parameters
 func TestSearchparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -455,9 +516,11 @@ func TestSearchparameters0(t *testing.T) {
 // `addApiKey` throws with invalid parameters
 func TestSearchparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	_, err = client.AddApiKey(client.NewApiAddApiKeyRequest(
+	res, err = client.AddApiKey(client.NewApiAddApiKeyRequest(
 		tests.ZeroValue[*search.ApiKey](),
 	))
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
@@ -466,17 +529,19 @@ func TestSearchparameters1(t *testing.T) {
 // `addOrUpdateObject` throws with invalid parameters
 func TestSearchparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
-	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
+	res, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		tests.ZeroValue[string](), "my-object-id", map[string]any{},
 	))
 	require.EqualError(t, err, "Parameter `indexName` is required when calling `AddOrUpdateObject`.")
-	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
+	res, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", tests.ZeroValue[string](), map[string]any{},
 	))
 	require.EqualError(t, err, "Parameter `objectID` is required when calling `AddOrUpdateObject`.")
-	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
+	res, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", "my-object-id", tests.ZeroValue[map[string]any](),
 	))
 	require.EqualError(t, err, "Parameter `body` is required when calling `AddOrUpdateObject`.")
