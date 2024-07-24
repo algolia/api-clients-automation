@@ -165,3 +165,10 @@ count:
   description: Number of occurrences.
   example: 2
   type: integer
+
+# analytics
+trackedSearchCount:
+  type: integer
+  example: 2
+  default: 0
+  description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.

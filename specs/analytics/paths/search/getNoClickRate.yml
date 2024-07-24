@@ -19,11 +19,11 @@ get:
       description: OK
       headers:
         x-ratelimit-limit:
-          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -39,7 +39,7 @@ get:
               rate:
                 $ref: '../../common/parameters.yml#/noClickRate'
               count:
-                $ref: '../../common/parameters.yml#/trackedSearchCount'
+                $ref: '../../../common/parameters.yml#/trackedSearchCount'
               noClickCount:
                 $ref: '../../common/parameters.yml#/noClickCount'
               dates:
@@ -58,7 +58,7 @@ get:
                     rate:
                       $ref: '../../common/parameters.yml#/noClickRate'
                     count:
-                      $ref: '../../common/parameters.yml#/trackedSearchCount'
+                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
                     noClickCount:
                       $ref: '../../common/parameters.yml#/noClickCount'
                     date:
