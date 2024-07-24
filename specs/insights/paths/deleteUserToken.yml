@@ -18,18 +18,11 @@ delete:
       description: No content.
       headers:
         x-ratelimit-limit:
-          description: Maximum number of requests you can make to this endpoint.
-          schema:
-            type: integer
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          description: Number of remaining API requests you can make to this endpoint before reaching the rate limit.
-          schema:
-            type: integer
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          description: Timestamp in Unix epoch time when the rate limit will reset.
-          schema:
-            type: integer
-
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
     '422':
       description: Unprocessable Entity.
       content:
