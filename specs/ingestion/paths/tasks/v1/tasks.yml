@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            title: listTasksResponse
+            title: listTasksResponseV1
             type: object
             description: Configured tasks and pagination information.
             additionalProperties: false

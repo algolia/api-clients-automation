@@ -20,7 +20,7 @@ post:
       content:
         application/json:
           schema:
-            title: searchTasksResponse
+            title: searchTasksResponseV1
             type: array
             items:
               $ref: '../../../common/schemas/task.yml#/TaskV1'
