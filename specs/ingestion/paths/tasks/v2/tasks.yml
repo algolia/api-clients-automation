@@ -3,7 +3,7 @@ get:
     - tasks
   summary: List tasks
   description: Retrieves a list of tasks.
-  operationId: getTasks
+  operationId: listTasks
   x-acl:
     - addObject
     - deleteIndex

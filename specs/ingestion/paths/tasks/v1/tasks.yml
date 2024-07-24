@@ -3,7 +3,7 @@ get:
     - tasks
   summary: List tasks
   description: Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
-  operationId: getTasksV1
+  operationId: listTasksV1
   x-acl:
     - addObject
     - deleteIndex
