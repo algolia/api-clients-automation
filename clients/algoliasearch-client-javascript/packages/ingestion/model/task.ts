@@ -2,7 +2,6 @@
 
 import type { ActionType } from './actionType';
 import type { TaskInput } from './taskInput';
-import type { Trigger } from './trigger';
 
 export type Task = {
   /**
@@ -20,7 +19,20 @@ export type Task = {
    */
   destinationID: string;
 
-  trigger: Trigger;
+  /**
+   * Cron expression for the task\'s schedule.
+   */
+  cron?: string;
+
+  /**
+   * The last time the scheduled task ran in RFC 3339 format.
+   */
+  lastRun?: string;
+
+  /**
+   * The next scheduled run of the task in RFC 3339 format.
+   */
+  nextRun?: string;
 
   input?: TaskInput;
 

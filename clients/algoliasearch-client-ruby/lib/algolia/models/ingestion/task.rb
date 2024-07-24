@@ -15,7 +15,14 @@ module Algolia
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      attr_accessor :trigger
+      # Cron expression for the task's schedule.
+      attr_accessor :cron
+
+      # The last time the scheduled task ran in RFC 3339 format.
+      attr_accessor :last_run
+
+      # The next scheduled run of the task in RFC 3339 format.
+      attr_accessor :next_run
 
       attr_accessor :input
 
@@ -64,7 +71,9 @@ module Algolia
           :task_id => :taskID,
           :source_id => :sourceID,
           :destination_id => :destinationID,
-          :trigger => :trigger,
+          :cron => :cron,
+          :last_run => :lastRun,
+          :next_run => :nextRun,
           :input => :input,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
@@ -86,7 +95,9 @@ module Algolia
           :task_id => :"String",
           :source_id => :"String",
           :destination_id => :"String",
-          :trigger => :"Trigger",
+          :cron => :"String",
+          :last_run => :"String",
+          :next_run => :"String",
           :input => :"TaskInput",
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
@@ -142,10 +153,16 @@ module Algolia
           self.destination_id = nil
         end
 
-        if attributes.key?(:trigger)
-          self.trigger = attributes[:trigger]
-        else
-          self.trigger = nil
+        if attributes.key?(:cron)
+          self.cron = attributes[:cron]
+        end
+
+        if attributes.key?(:last_run)
+          self.last_run = attributes[:last_run]
+        end
+
+        if attributes.key?(:next_run)
+          self.next_run = attributes[:next_run]
         end
 
         if attributes.key?(:input)
@@ -209,7 +226,9 @@ module Algolia
           task_id == other.task_id &&
           source_id == other.source_id &&
           destination_id == other.destination_id &&
-          trigger == other.trigger &&
+          cron == other.cron &&
+          last_run == other.last_run &&
+          next_run == other.next_run &&
           input == other.input &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
@@ -232,7 +251,9 @@ module Algolia
           task_id,
           source_id,
           destination_id,
-          trigger,
+          cron,
+          last_run,
+          next_run,
           input,
           enabled,
           failure_threshold,

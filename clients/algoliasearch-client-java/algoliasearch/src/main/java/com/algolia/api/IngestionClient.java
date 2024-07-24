@@ -243,7 +243,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskCreate, "Parameter `taskCreate` is required when calling `createTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks").setMethod("POST").setBody(taskCreate).build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks").setMethod("POST").setBody(taskCreate).build();
 
     return executeAsync(request, requestOptions, new TypeReference<TaskCreateResponse>() {});
   }
@@ -256,6 +256,55 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<TaskCreateResponse> createTaskAsync(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
     return this.createTaskAsync(taskCreate, null);
+  }
+
+  /**
+   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskCreateResponse createTaskV1(@Nonnull TaskCreateV1 taskCreate, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createTaskV1Async(taskCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskCreateResponse createTaskV1(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskV1(taskCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskCreateResponse> createTaskV1Async(@Nonnull TaskCreateV1 taskCreate, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskCreate, "Parameter `taskCreate` is required when calling `createTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks").setMethod("POST").setBody(taskCreate).build();
+
+    return executeAsync(request, requestOptions, new TypeReference<TaskCreateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskCreateResponse> createTaskV1Async(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskV1Async(taskCreate, null);
   }
 
   /**
@@ -919,7 +968,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
 
     return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
   }
@@ -932,6 +981,57 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<DeleteResponse> deleteTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.deleteTaskAsync(taskID, null);
+  }
+
+  /**
+   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public DeleteResponse deleteTaskV1(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteTaskV1Async(taskID, requestOptions));
+  }
+
+  /**
+   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public DeleteResponse deleteTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskV1(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<DeleteResponse> deleteTaskV1Async(@Nonnull String taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<DeleteResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<DeleteResponse> deleteTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskV1Async(taskID, null);
   }
 
   /**
@@ -1020,7 +1120,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
 
     return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
   }
@@ -1033,6 +1133,63 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<TaskUpdateResponse> disableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.disableTaskAsync(taskID, null);
+  }
+
+  /**
+   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public TaskUpdateResponse disableTaskV1(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(disableTaskV1Async(taskID, requestOptions));
+  }
+
+  /**
+   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public TaskUpdateResponse disableTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskV1(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<TaskUpdateResponse> disableTaskV1Async(@Nonnull String taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<TaskUpdateResponse> disableTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskV1Async(taskID, null);
   }
 
   /**
@@ -1069,7 +1226,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
 
     return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
   }
@@ -1082,6 +1239,55 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<TaskUpdateResponse> enableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.enableTaskAsync(taskID, null);
+  }
+
+  /**
+   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse enableTaskV1(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(enableTaskV1Async(taskID, requestOptions));
+  }
+
+  /**
+   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse enableTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskV1(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> enableTaskV1Async(@Nonnull String taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> enableTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskV1Async(taskID, null);
   }
 
   /**
@@ -1133,155 +1339,6 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of all authentication resources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListAuthenticationsResponse getAuthentications(
-    Integer itemsPerPage,
-    Integer page,
-    List<AuthenticationType> type,
-    List<PlatformWithNone> platform,
-    AuthenticationSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getAuthenticationsAsync(itemsPerPage, page, type, platform, sort, order, requestOptions));
-  }
-
-  /**
-   * Retrieves a list of all authentication resources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListAuthenticationsResponse getAuthentications(
-    Integer itemsPerPage,
-    Integer page,
-    List<AuthenticationType> type,
-    List<PlatformWithNone> platform,
-    AuthenticationSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getAuthentications(itemsPerPage, page, type, platform, sort, order, null);
-  }
-
-  /**
-   * Retrieves a list of all authentication resources.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListAuthenticationsResponse getAuthentications(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getAuthentications(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * Retrieves a list of all authentication resources.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListAuthenticationsResponse getAuthentications() throws AlgoliaRuntimeException {
-    return this.getAuthentications(null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of all authentication resources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListAuthenticationsResponse> getAuthenticationsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<AuthenticationType> type,
-    List<PlatformWithNone> platform,
-    AuthenticationSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/authentications")
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("type", type)
-      .addQueryParameter("platform", platform)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<ListAuthenticationsResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of all authentication resources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Type of authentication resource to retrieve. (optional)
-   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
-   * @param sort Property by which to sort the list of authentication resources. (optional, default
-   *     to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListAuthenticationsResponse> getAuthenticationsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<AuthenticationType> type,
-    List<PlatformWithNone> platform,
-    AuthenticationSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getAuthenticationsAsync(itemsPerPage, page, type, platform, sort, order, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of all authentication resources.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListAuthenticationsResponse> getAuthenticationsAsync(RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.getAuthenticationsAsync(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of all authentication resources.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListAuthenticationsResponse> getAuthenticationsAsync() throws AlgoliaRuntimeException {
-    return this.getAuthenticationsAsync(null, null, null, null, null, null, null);
-  }
-
-  /**
    * Retrieves a destination by its ID.
    *
    * @param destinationID Unique identifier of a destination. (required)
@@ -1327,150 +1384,6 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<Destination> getDestinationAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
     return this.getDestinationAsync(destinationID, null);
-  }
-
-  /**
-   * Retrieves a list of destinations.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Destination type. (optional)
-   * @param authenticationID Authentication ID used by destinations. (optional)
-   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListDestinationsResponse getDestinations(
-    Integer itemsPerPage,
-    Integer page,
-    List<DestinationType> type,
-    List<String> authenticationID,
-    DestinationSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
-  }
-
-  /**
-   * Retrieves a list of destinations.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Destination type. (optional)
-   * @param authenticationID Authentication ID used by destinations. (optional)
-   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListDestinationsResponse getDestinations(
-    Integer itemsPerPage,
-    Integer page,
-    List<DestinationType> type,
-    List<String> authenticationID,
-    DestinationSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getDestinations(itemsPerPage, page, type, authenticationID, sort, order, null);
-  }
-
-  /**
-   * Retrieves a list of destinations.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListDestinationsResponse getDestinations(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getDestinations(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * Retrieves a list of destinations.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListDestinationsResponse getDestinations() throws AlgoliaRuntimeException {
-    return this.getDestinations(null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of destinations.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Destination type. (optional)
-   * @param authenticationID Authentication ID used by destinations. (optional)
-   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListDestinationsResponse> getDestinationsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<DestinationType> type,
-    List<String> authenticationID,
-    DestinationSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/destinations")
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("type", type)
-      .addQueryParameter("authenticationID", authenticationID)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<ListDestinationsResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of destinations.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Destination type. (optional)
-   * @param authenticationID Authentication ID used by destinations. (optional)
-   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListDestinationsResponse> getDestinationsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<DestinationType> type,
-    List<String> authenticationID,
-    DestinationSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of destinations.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListDestinationsResponse> getDestinationsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getDestinationsAsync(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of destinations.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListDestinationsResponse> getDestinationsAsync() throws AlgoliaRuntimeException {
-    return this.getDestinationsAsync(null, null, null, null, null, null, null);
   }
 
   /**
@@ -1528,191 +1441,6 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Event status for filtering the list of task runs. (optional)
-   * @param type Event type for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task run events. (optional)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
-   *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
-   *     the current time is used. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListEventsResponse getEvents(
-    @Nonnull String runID,
-    Integer itemsPerPage,
-    Integer page,
-    List<EventStatus> status,
-    List<EventType> type,
-    EventSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getEventsAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, requestOptions));
-  }
-
-  /**
-   * Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Event status for filtering the list of task runs. (optional)
-   * @param type Event type for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task run events. (optional)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
-   *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
-   *     the current time is used. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListEventsResponse getEvents(
-    @Nonnull String runID,
-    Integer itemsPerPage,
-    Integer page,
-    List<EventStatus> status,
-    List<EventType> type,
-    EventSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate
-  ) throws AlgoliaRuntimeException {
-    return this.getEvents(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
-  }
-
-  /**
-   * Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListEventsResponse getEvents(@Nonnull String runID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getEvents(runID, null, null, null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListEventsResponse getEvents(@Nonnull String runID) throws AlgoliaRuntimeException {
-    return this.getEvents(runID, null, null, null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Event status for filtering the list of task runs. (optional)
-   * @param type Event type for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task run events. (optional)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
-   *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
-   *     the current time is used. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListEventsResponse> getEventsAsync(
-    @Nonnull String runID,
-    Integer itemsPerPage,
-    Integer page,
-    List<EventStatus> status,
-    List<EventType> type,
-    EventSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvents`.");
-
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/runs/{runID}/events", runID)
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("status", status)
-      .addQueryParameter("type", type)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .addQueryParameter("startDate", startDate)
-      .addQueryParameter("endDate", endDate)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<ListEventsResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Event status for filtering the list of task runs. (optional)
-   * @param type Event type for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task run events. (optional)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
-   *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
-   *     the current time is used. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListEventsResponse> getEventsAsync(
-    @Nonnull String runID,
-    Integer itemsPerPage,
-    Integer page,
-    List<EventStatus> status,
-    List<EventType> type,
-    EventSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate
-  ) throws AlgoliaRuntimeException {
-    return this.getEventsAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListEventsResponse> getEventsAsync(@Nonnull String runID, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.getEventsAsync(runID, null, null, null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
-   *
-   * @param runID Unique identifier of a task run. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListEventsResponse> getEventsAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
-    return this.getEventsAsync(runID, null, null, null, null, null, null, null, null, null);
-  }
-
-  /**
    * Retrieve a single task run by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
@@ -1758,176 +1486,6 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<Run> getRunAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
     return this.getRunAsync(runID, null);
-  }
-
-  /**
-   * Retrieve a list of task runs.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Run status for filtering the list of task runs. (optional)
-   * @param taskID Task ID for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public RunListResponse getRuns(
-    Integer itemsPerPage,
-    Integer page,
-    List<RunStatus> status,
-    String taskID,
-    RunSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, requestOptions));
-  }
-
-  /**
-   * Retrieve a list of task runs.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Run status for filtering the list of task runs. (optional)
-   * @param taskID Task ID for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public RunListResponse getRuns(
-    Integer itemsPerPage,
-    Integer page,
-    List<RunStatus> status,
-    String taskID,
-    RunSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate
-  ) throws AlgoliaRuntimeException {
-    return this.getRuns(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
-  }
-
-  /**
-   * Retrieve a list of task runs.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public RunListResponse getRuns(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getRuns(null, null, null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * Retrieve a list of task runs.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public RunListResponse getRuns() throws AlgoliaRuntimeException {
-    return this.getRuns(null, null, null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieve a list of task runs.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Run status for filtering the list of task runs. (optional)
-   * @param taskID Task ID for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<RunListResponse> getRunsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<RunStatus> status,
-    String taskID,
-    RunSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/runs")
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("status", status)
-      .addQueryParameter("taskID", taskID)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .addQueryParameter("startDate", startDate)
-      .addQueryParameter("endDate", endDate)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<RunListResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieve a list of task runs.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param status Run status for filtering the list of task runs. (optional)
-   * @param taskID Task ID for filtering the list of task runs. (optional)
-   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<RunListResponse> getRunsAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<RunStatus> status,
-    String taskID,
-    RunSortKeys sort,
-    OrderKeys order,
-    String startDate,
-    String endDate
-  ) throws AlgoliaRuntimeException {
-    return this.getRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
-  }
-
-  /**
-   * (asynchronously) Retrieve a list of task runs.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<RunListResponse> getRunsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getRunsAsync(null, null, null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieve a list of task runs.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<RunListResponse> getRunsAsync() throws AlgoliaRuntimeException {
-    return this.getRunsAsync(null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1979,154 +1537,6 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of sources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Source type. Some sources require authentication. (optional)
-   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
-   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListSourcesResponse getSources(
-    Integer itemsPerPage,
-    Integer page,
-    List<SourceType> type,
-    List<String> authenticationID,
-    SourceSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getSourcesAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
-  }
-
-  /**
-   * Retrieves a list of sources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Source type. Some sources require authentication. (optional)
-   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
-   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListSourcesResponse getSources(
-    Integer itemsPerPage,
-    Integer page,
-    List<SourceType> type,
-    List<String> authenticationID,
-    SourceSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getSources(itemsPerPage, page, type, authenticationID, sort, order, null);
-  }
-
-  /**
-   * Retrieves a list of sources.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListSourcesResponse getSources(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getSources(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * Retrieves a list of sources.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ListSourcesResponse getSources() throws AlgoliaRuntimeException {
-    return this.getSources(null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of sources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Source type. Some sources require authentication. (optional)
-   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
-   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListSourcesResponse> getSourcesAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<SourceType> type,
-    List<String> authenticationID,
-    SourceSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/sources")
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("type", type)
-      .addQueryParameter("authenticationID", authenticationID)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<ListSourcesResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of sources.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param type Source type. Some sources require authentication. (optional)
-   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
-   *     that doesn't have an authentication resource. (optional)
-   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListSourcesResponse> getSourcesAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<SourceType> type,
-    List<String> authenticationID,
-    SourceSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getSourcesAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of sources.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListSourcesResponse> getSourcesAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getSourcesAsync(null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of sources.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListSourcesResponse> getSourcesAsync() throws AlgoliaRuntimeException {
-    return this.getSourcesAsync(null, null, null, null, null, null, null);
-  }
-
-  /**
    * Retrieves a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
@@ -2159,7 +1569,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<Task> getTaskAsync(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
 
     return executeAsync(request, requestOptions, new TypeReference<Task>() {});
   }
@@ -2175,176 +1585,53 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks.
+   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
    *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param action Actions for filtering the list of tasks. (optional)
-   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
-   * @param sourceID Source IDs for filtering the list of tasks. (optional)
-   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
-   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
-   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTasksResponse getTasks(
-    Integer itemsPerPage,
-    Integer page,
-    List<ActionType> action,
-    Boolean enabled,
-    List<String> sourceID,
-    List<String> destinationID,
-    List<TriggerType> triggerType,
-    TaskSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(
-      getTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, requestOptions)
-    );
+  public TaskV1 getTaskV1(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTaskV1Async(taskID, requestOptions));
   }
 
   /**
-   * Retrieves a list of tasks.
+   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
    *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param action Actions for filtering the list of tasks. (optional)
-   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
-   * @param sourceID Source IDs for filtering the list of tasks. (optional)
-   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
-   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
-   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTasksResponse getTasks(
-    Integer itemsPerPage,
-    Integer page,
-    List<ActionType> action,
-    Boolean enabled,
-    List<String> sourceID,
-    List<String> destinationID,
-    List<TriggerType> triggerType,
-    TaskSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getTasks(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  public TaskV1 getTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskV1(taskID, null);
   }
 
   /**
-   * Retrieves a list of tasks.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
+   * instead.
    *
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTasksResponse getTasks(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTasks(null, null, null, null, null, null, null, null, null, requestOptions);
+  public CompletableFuture<TaskV1> getTaskV1Async(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<TaskV1>() {});
   }
 
   /**
-   * Retrieves a list of tasks.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
+   * instead.
    *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTasksResponse getTasks() throws AlgoliaRuntimeException {
-    return this.getTasks(null, null, null, null, null, null, null, null, null, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of tasks.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param action Actions for filtering the list of tasks. (optional)
-   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
-   * @param sourceID Source IDs for filtering the list of tasks. (optional)
-   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
-   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
-   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListTasksResponse> getTasksAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<ActionType> action,
-    Boolean enabled,
-    List<String> sourceID,
-    List<String> destinationID,
-    List<TriggerType> triggerType,
-    TaskSortKeys sort,
-    OrderKeys order,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder()
-      .setPath("/1/tasks")
-      .setMethod("GET")
-      .addQueryParameter("itemsPerPage", itemsPerPage)
-      .addQueryParameter("page", page)
-      .addQueryParameter("action", action)
-      .addQueryParameter("enabled", enabled)
-      .addQueryParameter("sourceID", sourceID)
-      .addQueryParameter("destinationID", destinationID)
-      .addQueryParameter("triggerType", triggerType)
-      .addQueryParameter("sort", sort)
-      .addQueryParameter("order", order)
-      .build();
-    return executeAsync(request, requestOptions, new TypeReference<ListTasksResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of tasks.
-   *
-   * @param itemsPerPage Number of items per page. (optional, default to 10)
-   * @param page Page number of the paginated API response. (optional)
-   * @param action Actions for filtering the list of tasks. (optional)
-   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
-   * @param sourceID Source IDs for filtering the list of tasks. (optional)
-   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
-   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
-   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
-   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListTasksResponse> getTasksAsync(
-    Integer itemsPerPage,
-    Integer page,
-    List<ActionType> action,
-    Boolean enabled,
-    List<String> sourceID,
-    List<String> destinationID,
-    List<TriggerType> triggerType,
-    TaskSortKeys sort,
-    OrderKeys order
-  ) throws AlgoliaRuntimeException {
-    return this.getTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of tasks.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListTasksResponse> getTasksAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTasksAsync(null, null, null, null, null, null, null, null, null, requestOptions);
-  }
-
-  /**
-   * (asynchronously) Retrieves a list of tasks.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ListTasksResponse> getTasksAsync() throws AlgoliaRuntimeException {
-    return this.getTasksAsync(null, null, null, null, null, null, null, null, null, null);
+  public CompletableFuture<TaskV1> getTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskV1Async(taskID, null);
   }
 
   /**
@@ -2396,17 +1683,1165 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of transformations.
+   * Retrieves a list of all authentication resources.
    *
-   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse getTransformations(SortKeys sort, OrderKeys order, RequestOptions requestOptions)
+  public ListAuthenticationsResponse listAuthentications(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listAuthenticationsAsync(itemsPerPage, page, type, platform, sort, order, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListAuthenticationsResponse listAuthentications(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listAuthentications(itemsPerPage, page, type, platform, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListAuthenticationsResponse listAuthentications(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listAuthentications(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListAuthenticationsResponse listAuthentications() throws AlgoliaRuntimeException {
+    return this.listAuthentications(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/authentications")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("platform", platform)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListAuthenticationsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listAuthenticationsAsync(itemsPerPage, page, type, platform, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync(RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getTransformationsAsync(sort, order, requestOptions));
+    return this.listAuthenticationsAsync(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync() throws AlgoliaRuntimeException {
+    return this.listAuthenticationsAsync(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListDestinationsResponse listDestinations(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    DestinationSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListDestinationsResponse listDestinations(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    DestinationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listDestinations(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListDestinationsResponse listDestinations(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listDestinations(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListDestinationsResponse listDestinations() throws AlgoliaRuntimeException {
+    return this.listDestinations(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListDestinationsResponse> listDestinationsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    DestinationSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/destinations")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("authenticationID", authenticationID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListDestinationsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListDestinationsResponse> listDestinationsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    DestinationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listDestinationsAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListDestinationsResponse> listDestinationsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listDestinationsAsync(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListDestinationsResponse> listDestinationsAsync() throws AlgoliaRuntimeException {
+    return this.listDestinationsAsync(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListEventsResponse listEvents(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listEventsAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListEventsResponse listEvents(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listEvents(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListEventsResponse listEvents(@Nonnull String runID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listEvents(runID, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListEventsResponse listEvents(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.listEvents(runID, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListEventsResponse> listEventsAsync(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/runs/{runID}/events", runID)
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("status", status)
+      .addQueryParameter("type", type)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListEventsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListEventsResponse> listEventsAsync(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listEventsAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListEventsResponse> listEventsAsync(@Nonnull String runID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listEventsAsync(runID, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListEventsResponse> listEventsAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.listEventsAsync(runID, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunListResponse listRuns(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, requestOptions));
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunListResponse listRuns(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listRuns(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunListResponse listRuns(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listRuns(null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunListResponse listRuns() throws AlgoliaRuntimeException {
+    return this.listRuns(null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunListResponse> listRunsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/runs")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("status", status)
+      .addQueryParameter("taskID", taskID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RunListResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunListResponse> listRunsAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunListResponse> listRunsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listRunsAsync(null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunListResponse> listRunsAsync() throws AlgoliaRuntimeException {
+    return this.listRunsAsync(null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListSourcesResponse listSources(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listSourcesAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListSourcesResponse listSources(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listSources(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListSourcesResponse listSources(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listSources(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListSourcesResponse listSources() throws AlgoliaRuntimeException {
+    return this.listSources(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListSourcesResponse> listSourcesAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("authenticationID", authenticationID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListSourcesResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListSourcesResponse> listSourcesAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listSourcesAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListSourcesResponse> listSourcesAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listSourcesAsync(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListSourcesResponse> listSourcesAsync() throws AlgoliaRuntimeException {
+    return this.listSourcesAsync(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponse listTasks(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponse listTasks(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasks(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponse listTasks(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasks(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponse listTasks() throws AlgoliaRuntimeException {
+    return this.listTasks(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponse> listTasksAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("action", action)
+      .addQueryParameter("enabled", enabled)
+      .addQueryParameter("sourceID", sourceID)
+      .addQueryParameter("destinationID", destinationID)
+      .addQueryParameter("triggerType", triggerType)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListTasksResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponse> listTasksAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponse> listTasksAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponse> listTasksAsync() throws AlgoliaRuntimeException {
+    return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponseV1 listTasksV1(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listTasksV1Async(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponseV1 listTasksV1(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksV1(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponseV1 listTasksV1(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksV1(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTasksResponseV1 listTasksV1() throws AlgoliaRuntimeException {
+    return this.listTasksV1(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponseV1> listTasksV1Async(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/tasks")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("action", action)
+      .addQueryParameter("enabled", enabled)
+      .addQueryParameter("sourceID", sourceID)
+      .addQueryParameter("destinationID", destinationID)
+      .addQueryParameter("triggerType", triggerType)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListTasksResponseV1>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponseV1> listTasksV1Async(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksV1Async(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponseV1> listTasksV1Async(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksV1Async(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListTasksResponseV1> listTasksV1Async() throws AlgoliaRuntimeException {
+    return this.listTasksV1Async(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
+   * @param sort Property by which to sort the list. (optional, default to desc)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListTransformationsResponse listTransformations(SortKeys sort, OrderKeys order, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listTransformationsAsync(sort, order, requestOptions));
   }
 
   /**
@@ -2416,8 +2851,8 @@ public class IngestionClient extends ApiClient {
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse getTransformations(SortKeys sort, OrderKeys order) throws AlgoliaRuntimeException {
-    return this.getTransformations(sort, order, null);
+  public ListTransformationsResponse listTransformations(SortKeys sort, OrderKeys order) throws AlgoliaRuntimeException {
+    return this.listTransformations(sort, order, null);
   }
 
   /**
@@ -2427,8 +2862,8 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse getTransformations(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTransformations(null, null, requestOptions);
+  public ListTransformationsResponse listTransformations(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTransformations(null, null, requestOptions);
   }
 
   /**
@@ -2436,8 +2871,8 @@ public class IngestionClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse getTransformations() throws AlgoliaRuntimeException {
-    return this.getTransformations(null, null, null);
+  public ListTransformationsResponse listTransformations() throws AlgoliaRuntimeException {
+    return this.listTransformations(null, null, null);
   }
 
   /**
@@ -2449,7 +2884,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ListTransformationsResponse> getTransformationsAsync(
+  public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(
     SortKeys sort,
     OrderKeys order,
     RequestOptions requestOptions
@@ -2470,9 +2905,9 @@ public class IngestionClient extends ApiClient {
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ListTransformationsResponse> getTransformationsAsync(SortKeys sort, OrderKeys order)
+  public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(SortKeys sort, OrderKeys order)
     throws AlgoliaRuntimeException {
-    return this.getTransformationsAsync(sort, order, null);
+    return this.listTransformationsAsync(sort, order, null);
   }
 
   /**
@@ -2482,9 +2917,9 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ListTransformationsResponse> getTransformationsAsync(RequestOptions requestOptions)
+  public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getTransformationsAsync(null, null, requestOptions);
+    return this.listTransformationsAsync(null, null, requestOptions);
   }
 
   /**
@@ -2492,8 +2927,8 @@ public class IngestionClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ListTransformationsResponse> getTransformationsAsync() throws AlgoliaRuntimeException {
-    return this.getTransformationsAsync(null, null, null);
+  public CompletableFuture<ListTransformationsResponse> listTransformationsAsync() throws AlgoliaRuntimeException {
+    return this.listTransformationsAsync(null, null, null);
   }
 
   /**
@@ -2530,7 +2965,7 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").build();
 
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
@@ -2544,6 +2979,59 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.runTaskAsync(taskID, null);
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse runTaskV1(@Nonnull String taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runTaskV1Async(taskID, requestOptions));
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse runTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskV1(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskV1Async(taskID, null);
   }
 
   /**
@@ -2736,7 +3224,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasks`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/search").setMethod("POST").setBody(taskSearch).build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/search").setMethod("POST").setBody(taskSearch).build();
     return executeAsync(request, requestOptions, new TypeReference<List<Task>>() {});
   }
 
@@ -2748,6 +3236,54 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<List<Task>> searchTasksAsync(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
     return this.searchTasksAsync(taskSearch, null);
+  }
+
+  /**
+   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public List<TaskV1> searchTasksV1(@Nonnull TaskSearch taskSearch, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchTasksV1Async(taskSearch, requestOptions));
+  }
+
+  /**
+   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public List<TaskV1> searchTasksV1(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksV1(taskSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<List<TaskV1>> searchTasksV1Async(@Nonnull TaskSearch taskSearch, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasksV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/search").setMethod("POST").setBody(taskSearch).build();
+    return executeAsync(request, requestOptions, new TypeReference<List<TaskV1>>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<List<TaskV1>> searchTasksV1Async(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksV1Async(taskSearch, null);
   }
 
   /**
@@ -3153,7 +3689,7 @@ public class IngestionClient extends ApiClient {
 
     Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("PATCH").setBody(taskUpdate).build();
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("PATCH").setBody(taskUpdate).build();
     return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
   }
 
@@ -3167,6 +3703,67 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> updateTaskAsync(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate)
     throws AlgoliaRuntimeException {
     return this.updateTaskAsync(taskID, taskUpdate, null);
+  }
+
+  /**
+   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse updateTaskV1(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateTaskV1Async(taskID, taskUpdate, requestOptions));
+  }
+
+  /**
+   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse updateTaskV1(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate) throws AlgoliaRuntimeException {
+    return this.updateTaskV1(taskID, taskUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> updateTaskV1Async(
+    @Nonnull String taskID,
+    @Nonnull TaskUpdateV1 taskUpdate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+
+    Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("PATCH").setBody(taskUpdate).build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> updateTaskV1Async(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateTaskV1Async(taskID, taskUpdate, null);
   }
 
   /**

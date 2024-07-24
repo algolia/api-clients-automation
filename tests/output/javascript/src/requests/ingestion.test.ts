@@ -107,8 +107,46 @@ describe('createSource', () => {
 });
 
 describe('createTask', () => {
-  test('createTaskOnDemand', async () => {
+  test('task without cron', async () => {
     const req = (await client.createTask({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      action: 'replace',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      action: 'replace',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('task with cron', async () => {
+    const req = (await client.createTask({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('createTaskV1', () => {
+  test('createTaskOnDemand', async () => {
+    const req = (await client.createTaskV1({
       sourceID: 'search',
       destinationID: 'destinationName',
       trigger: { type: 'onDemand' },
@@ -127,7 +165,7 @@ describe('createTask', () => {
   });
 
   test('createTaskSchedule', async () => {
-    const req = (await client.createTask({
+    const req = (await client.createTaskV1({
       sourceID: 'search',
       destinationID: 'destinationName',
       trigger: { type: 'schedule', cron: '* * * * *' },
@@ -146,7 +184,7 @@ describe('createTask', () => {
   });
 
   test('createTaskSubscription', async () => {
-    const req = (await client.createTask({
+    const req = (await client.createTaskV1({
       sourceID: 'search',
       destinationID: 'destinationName',
       trigger: { type: 'onDemand' },
@@ -543,6 +581,19 @@ describe('deleteTask', () => {
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('deleteTaskV1', () => {
+  test('deleteTaskV1', async () => {
+    const req = (await client.deleteTaskV1({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
     expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
@@ -572,6 +623,21 @@ describe('disableTask', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual(
+      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable'
+    );
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('disableTaskV1', () => {
+  test('disableTaskV1', async () => {
+    const req = (await client.disableTaskV1({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
       '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable'
     );
     expect(req.method).toEqual('PUT');
@@ -581,8 +647,23 @@ describe('disableTask', () => {
 });
 
 describe('enableTask', () => {
-  test('enable task e2e', async () => {
+  test('enableTask', async () => {
     const req = (await client.enableTask({
+      taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable'
+    );
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('enableTaskV1', () => {
+  test('enableTaskV1', async () => {
+    const req = (await client.enableTaskV1({
       taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
     })) as unknown as EchoResponse;
 
@@ -610,40 +691,6 @@ describe('getAuthentication', () => {
   });
 });
 
-describe('getAuthentications', () => {
-  test('getAuthentications', async () => {
-    const req = (await client.getAuthentications()) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/authentications');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('getAuthentications with query params', async () => {
-    const req = (await client.getAuthentications({
-      itemsPerPage: 2,
-      page: 1,
-      type: ['basic', 'algolia'],
-      platform: ['none'],
-      sort: 'createdAt',
-      order: 'asc',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/authentications');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      itemsPerPage: '2',
-      page: '1',
-      type: 'basic%2Calgolia',
-      platform: 'none',
-      sort: 'createdAt',
-      order: 'asc',
-    });
-  });
-});
-
 describe('getDestination', () => {
   test('getDestination', async () => {
     const req = (await client.getDestination({
@@ -653,17 +700,6 @@ describe('getDestination', () => {
     expect(req.path).toEqual(
       '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
     );
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
-describe('getDestinations', () => {
-  test('getDestinations', async () => {
-    const req = (await client.getDestinations()) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/destinations');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -686,21 +722,6 @@ describe('getEvent', () => {
   });
 });
 
-describe('getEvents', () => {
-  test('getEvents', async () => {
-    const req = (await client.getEvents({
-      runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual(
-      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events'
-    );
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('getRun', () => {
   test('getRun', async () => {
     const req = (await client.getRun({
@@ -708,17 +729,6 @@ describe('getRun', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
-describe('getRuns', () => {
-  test('getRuns', async () => {
-    const req = (await client.getRuns()) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/runs');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -738,35 +748,26 @@ describe('getSource', () => {
   });
 });
 
-describe('getSources', () => {
-  test('getSources', async () => {
-    const req = (await client.getSources()) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/sources');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('getTask', () => {
   test('getTask', async () => {
     const req = (await client.getTask({
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
-describe('getTasks', () => {
-  test('getTasks', async () => {
-    const req = (await client.getTasks()) as unknown as EchoResponse;
+describe('getTaskV1', () => {
+  test('getTaskV1', async () => {
+    const req = (await client.getTaskV1({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/tasks');
+    expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -788,9 +789,113 @@ describe('getTransformation', () => {
   });
 });
 
-describe('getTransformations', () => {
+describe('listAuthentications', () => {
+  test('getAuthentications', async () => {
+    const req = (await client.listAuthentications()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/authentications');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('getAuthentications with query params', async () => {
+    const req = (await client.listAuthentications({
+      itemsPerPage: 2,
+      page: 1,
+      type: ['basic', 'algolia'],
+      platform: ['none'],
+      sort: 'createdAt',
+      order: 'asc',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/authentications');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      itemsPerPage: '2',
+      page: '1',
+      type: 'basic%2Calgolia',
+      platform: 'none',
+      sort: 'createdAt',
+      order: 'asc',
+    });
+  });
+});
+
+describe('listDestinations', () => {
+  test('getDestinations', async () => {
+    const req = (await client.listDestinations()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/destinations');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listEvents', () => {
+  test('getEvents', async () => {
+    const req = (await client.listEvents({
+      runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events'
+    );
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listRuns', () => {
+  test('getRuns', async () => {
+    const req = (await client.listRuns()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/runs');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listSources', () => {
+  test('getSources', async () => {
+    const req = (await client.listSources()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/sources');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listTasks', () => {
+  test('listTasks', async () => {
+    const req = (await client.listTasks()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listTasksV1', () => {
+  test('listTasksV1', async () => {
+    const req = (await client.listTasksV1()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/tasks');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('listTransformations', () => {
   test('getTransformations', async () => {
-    const req = (await client.getTransformations()) as unknown as EchoResponse;
+    const req = (await client.listTransformations()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations');
     expect(req.method).toEqual('GET');
@@ -802,6 +907,21 @@ describe('getTransformations', () => {
 describe('runTask', () => {
   test('runTask', async () => {
     const req = (await client.runTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('runTaskV1', () => {
+  test('runTaskV1', async () => {
+    const req = (await client.runTaskV1({
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -880,6 +1000,29 @@ describe('searchSources', () => {
 describe('searchTasks', () => {
   test('searchTasks', async () => {
     const req = (await client.searchTasks({
+      taskIDs: [
+        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/search');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      taskIDs: [
+        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('searchTasksV1', () => {
+  test('searchTasksV1', async () => {
+    const req = (await client.searchTasksV1({
       taskIDs: [
         '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -1001,6 +1144,20 @@ describe('updateSource', () => {
 describe('updateTask', () => {
   test('updateTask', async () => {
     const req = (await client.updateTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      taskUpdate: { enabled: false, cron: '* * * * *' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.method).toEqual('PATCH');
+    expect(req.data).toEqual({ enabled: false, cron: '* * * * *' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('updateTaskV1', () => {
+  test('updateTaskV1', async () => {
+    const req = (await client.updateTaskV1({
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       taskUpdate: { enabled: false },
     })) as unknown as EchoResponse;

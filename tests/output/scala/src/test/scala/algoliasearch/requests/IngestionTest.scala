@@ -135,10 +135,52 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("createTaskOnDemand") {
+  test("task without cron") {
     val (client, echo) = testClient()
     val future = client.createTask(
       taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        action = ActionType.withName("replace")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"sourceID":"search","destinationID":"destinationName","action":"replace"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("task with cron1") {
+    val (client, echo) = testClient()
+    val future = client.createTask(
+      taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        cron = Some("* * * * *"),
+        action = ActionType.withName("replace")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("createTaskOnDemand") {
+    val (client, echo) = testClient()
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
@@ -162,8 +204,8 @@ class IngestionTest extends AnyFunSuite {
 
   test("createTaskSchedule1") {
     val (client, echo) = testClient()
-    val future = client.createTask(
-      taskCreate = TaskCreate(
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = ScheduleTriggerInput(
@@ -188,8 +230,8 @@ class IngestionTest extends AnyFunSuite {
 
   test("createTaskSubscription2") {
     val (client, echo) = testClient()
-    val future = client.createTask(
-      taskCreate = TaskCreate(
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
@@ -767,6 +809,20 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("deleteTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.deleteTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
@@ -795,14 +851,42 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
+    assert(res.method == "PUT")
+    assert(res.body.contains("{}"))
+  }
+
+  test("disableTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.disableTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
     assert(res.method == "PUT")
     assert(res.body.contains("{}"))
   }
 
-  test("enable task e2e") {
+  test("enableTask") {
     val (client, echo) = testClient()
     val future = client.enableTask(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
+    assert(res.method == "PUT")
+    assert(res.body.contains("{}"))
+  }
+
+  test("enableTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.enableTaskV1(
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     )
 
@@ -828,9 +912,108 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getDestination") {
+    val (client, echo) = testClient()
+    val future = client.getDestination(
+      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getEvent") {
+    val (client, echo) = testClient()
+    val future = client.getEvent(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getRun") {
+    val (client, echo) = testClient()
+    val future = client.getRun(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getSource") {
+    val (client, echo) = testClient()
+    val future = client.getSource(
+      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTask") {
+    val (client, echo) = testClient()
+    val future = client.getTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.getTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTransformation") {
+    val (client, echo) = testClient()
+    val future = client.getTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getAuthentications") {
     val (client, echo) = testClient()
-    val future = client.getAuthentications(
+    val future = client.listAuthentications(
     )
 
     Await.ready(future, Duration.Inf)
@@ -843,7 +1026,7 @@ class IngestionTest extends AnyFunSuite {
 
   test("getAuthentications with query params1") {
     val (client, echo) = testClient()
-    val future = client.getAuthentications(
+    val future = client.listAuthentications(
       itemsPerPage = Some(2),
       page = Some(1),
       `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
@@ -869,23 +1052,9 @@ class IngestionTest extends AnyFunSuite {
     }
   }
 
-  test("getDestination") {
-    val (client, echo) = testClient()
-    val future = client.getDestination(
-      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getDestinations") {
     val (client, echo) = testClient()
-    val future = client.getDestinations(
+    val future = client.listDestinations(
     )
 
     Await.ready(future, Duration.Inf)
@@ -896,24 +1065,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getEvent") {
-    val (client, echo) = testClient()
-    val future = client.getEvent(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getEvents") {
     val (client, echo) = testClient()
-    val future = client.getEvents(
+    val future = client.listEvents(
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
@@ -925,23 +1079,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRun") {
-    val (client, echo) = testClient()
-    val future = client.getRun(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getRuns") {
     val (client, echo) = testClient()
-    val future = client.getRuns(
+    val future = client.listRuns(
     )
 
     Await.ready(future, Duration.Inf)
@@ -952,23 +1092,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSource") {
-    val (client, echo) = testClient()
-    val future = client.getSource(
-      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getSources") {
     val (client, echo) = testClient()
-    val future = client.getSources(
+    val future = client.listSources(
     )
 
     Await.ready(future, Duration.Inf)
@@ -979,23 +1105,22 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTask") {
+  test("listTasks") {
     val (client, echo) = testClient()
-    val future = client.getTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    val future = client.listTasks(
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.path == "/2/tasks")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
 
-  test("getTasks") {
+  test("listTasksV1") {
     val (client, echo) = testClient()
-    val future = client.getTasks(
+    val future = client.listTasksV1(
     )
 
     Await.ready(future, Duration.Inf)
@@ -1006,23 +1131,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTransformation") {
-    val (client, echo) = testClient()
-    val future = client.getTransformation(
-      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getTransformations") {
     val (client, echo) = testClient()
-    val future = client.getTransformations(
+    val future = client.listTransformations(
     )
 
     Await.ready(future, Duration.Inf)
@@ -1036,6 +1147,20 @@ class IngestionTest extends AnyFunSuite {
   test("runTask") {
     val (client, echo) = testClient()
     val future = client.runTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
+  test("runTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.runTaskV1(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
@@ -1107,6 +1232,30 @@ class IngestionTest extends AnyFunSuite {
   test("searchTasks") {
     val (client, echo) = testClient()
     val future = client.searchTasks(
+      taskSearch = TaskSearch(
+        taskIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/search")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("searchTasksV1") {
+    val (client, echo) = testClient()
+    val future = client.searchTasksV1(
       taskSearch = TaskSearch(
         taskIDs = Seq(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1247,6 +1396,26 @@ class IngestionTest extends AnyFunSuite {
     val future = client.updateTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
+        enabled = Some(false),
+        cron = Some("* * * * *")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PATCH")
+    val expectedBody = parse("""{"enabled":false,"cron":"* * * * *"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.updateTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskUpdate = TaskUpdateV1(
         enabled = Some(false)
       )
     )

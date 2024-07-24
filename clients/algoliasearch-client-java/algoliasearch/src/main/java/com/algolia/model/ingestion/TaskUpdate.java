@@ -13,8 +13,8 @@ public class TaskUpdate {
   @JsonProperty("destinationID")
   private String destinationID;
 
-  @JsonProperty("trigger")
-  private TriggerUpdateInput trigger;
+  @JsonProperty("cron")
+  private String cron;
 
   @JsonProperty("input")
   private TaskInput input;
@@ -36,15 +36,15 @@ public class TaskUpdate {
     return destinationID;
   }
 
-  public TaskUpdate setTrigger(TriggerUpdateInput trigger) {
-    this.trigger = trigger;
+  public TaskUpdate setCron(String cron) {
+    this.cron = cron;
     return this;
   }
 
-  /** Get trigger */
+  /** Cron expression for the task's schedule. */
   @javax.annotation.Nullable
-  public TriggerUpdateInput getTrigger() {
-    return trigger;
+  public String getCron() {
+    return cron;
   }
 
   public TaskUpdate setInput(TaskInput input) {
@@ -94,7 +94,7 @@ public class TaskUpdate {
     TaskUpdate taskUpdate = (TaskUpdate) o;
     return (
       Objects.equals(this.destinationID, taskUpdate.destinationID) &&
-      Objects.equals(this.trigger, taskUpdate.trigger) &&
+      Objects.equals(this.cron, taskUpdate.cron) &&
       Objects.equals(this.input, taskUpdate.input) &&
       Objects.equals(this.enabled, taskUpdate.enabled) &&
       Objects.equals(this.failureThreshold, taskUpdate.failureThreshold)
@@ -103,7 +103,7 @@ public class TaskUpdate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationID, trigger, input, enabled, failureThreshold);
+    return Objects.hash(destinationID, cron, input, enabled, failureThreshold);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class TaskUpdate {
     StringBuilder sb = new StringBuilder();
     sb.append("class TaskUpdate {\n");
     sb.append("    destinationID: ").append(toIndentedString(destinationID)).append("\n");
-    sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
+    sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");

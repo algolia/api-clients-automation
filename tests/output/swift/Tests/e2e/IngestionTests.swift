@@ -49,7 +49,7 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         self.client = try? IngestionClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
     }
 
-    /// enable task e2e
+    /// enableTask
     func testEnableTaskTest() async throws {
         guard let client = IngestionClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
@@ -70,29 +70,21 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
-    /// getAuthentications with query params
-    func testGetAuthenticationsTest1() async throws {
+    /// enableTaskV1
+    func testEnableTaskV1Test() async throws {
         guard let client = IngestionClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return
         }
 
-        let response = try await client.getAuthenticationsWithHTTPInfo(
-            itemsPerPage: 2,
-            page: 1,
-            type: [AuthenticationType.basic, AuthenticationType.algolia],
-            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
-            sort: AuthenticationSortKeys.createdAt,
-            order: OrderKeys.asc
-        )
+        let response = try await client.enableTaskV1WithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         let responseBody = try XCTUnwrap(response.body)
         let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let expectedBodyData =
-            try XCTUnwrap(
-                "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}"
-                    .data(using: .utf8)
-            )
+        let expectedBodyData = try XCTUnwrap(
+            "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}"
+                .data(using: .utf8)
+        )
 
         XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
@@ -121,6 +113,35 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// getAuthentications with query params
+    func testListAuthenticationsTest1() async throws {
+        guard let client = IngestionClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.listAuthenticationsWithHTTPInfo(
+            itemsPerPage: 2,
+            page: 1,
+            type: [AuthenticationType.basic, AuthenticationType.algolia],
+            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
+            sort: AuthenticationSortKeys.createdAt,
+            order: OrderKeys.asc
+        )
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// searchTasks
     func testSearchTasksTest() async throws {
         guard let client = IngestionClientRequestsTestsE2E.client else {
@@ -129,6 +150,32 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.searchTasksWithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        ]))
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
+    /// searchTasksV1
+    func testSearchTasksV1Test() async throws {
+        guard let client = IngestionClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.searchTasksV1WithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",

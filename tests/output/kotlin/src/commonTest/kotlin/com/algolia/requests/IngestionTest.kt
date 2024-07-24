@@ -124,11 +124,54 @@ class IngestionTest {
   // createTask
 
   @Test
-  fun `createTaskOnDemand`() = runTest {
+  fun `task without cron`() = runTest {
     client.runTest(
       call = {
         createTask(
           taskCreate = TaskCreate(
+            sourceID = "search",
+            destinationID = "destinationName",
+            action = ActionType.entries.first { it.value == "replace" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","action":"replace"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `task with cron1`() = runTest {
+    client.runTest(
+      call = {
+        createTask(
+          taskCreate = TaskCreate(
+            sourceID = "search",
+            destinationID = "destinationName",
+            cron = "* * * * *",
+            action = ActionType.entries.first { it.value == "replace" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}""", it.body)
+      },
+    )
+  }
+
+  // createTaskV1
+
+  @Test
+  fun `createTaskOnDemand`() = runTest {
+    client.runTest(
+      call = {
+        createTaskV1(
+          taskCreate = TaskCreateV1(
             sourceID = "search",
             destinationID = "destinationName",
             trigger = OnDemandTriggerInput(
@@ -150,8 +193,8 @@ class IngestionTest {
   fun `createTaskSchedule1`() = runTest {
     client.runTest(
       call = {
-        createTask(
-          taskCreate = TaskCreate(
+        createTaskV1(
+          taskCreate = TaskCreateV1(
             sourceID = "search",
             destinationID = "destinationName",
             trigger = ScheduleTriggerInput(
@@ -174,8 +217,8 @@ class IngestionTest {
   fun `createTaskSubscription2`() = runTest {
     client.runTest(
       call = {
-        createTask(
-          taskCreate = TaskCreate(
+        createTaskV1(
+          taskCreate = TaskCreateV1(
             sourceID = "search",
             destinationID = "destinationName",
             trigger = OnDemandTriggerInput(
@@ -727,6 +770,24 @@ class IngestionTest {
         )
       },
       intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // deleteTaskV1
+
+  @Test
+  fun `deleteTaskV1`() = runTest {
+    client.runTest(
+      call = {
+        deleteTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
         assertNoBody(it.body)
@@ -763,6 +824,24 @@ class IngestionTest {
         )
       },
       intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  // disableTaskV1
+
+  @Test
+  fun `disableTaskV1`() = runTest {
+    client.runTest(
+      call = {
+        disableTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertEmptyBody(it.body)
@@ -773,10 +852,28 @@ class IngestionTest {
   // enableTask
 
   @Test
-  fun `enable task e2e`() = runTest {
+  fun `enableTask`() = runTest {
     client.runTest(
       call = {
         enableTask(
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  // enableTaskV1
+
+  @Test
+  fun `enableTaskV1`() = runTest {
+    client.runTest(
+      call = {
+        enableTaskV1(
           taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
       },
@@ -806,44 +903,6 @@ class IngestionTest {
     )
   }
 
-  // getAuthentications
-
-  @Test
-  fun `getAuthentications`() = runTest {
-    client.runTest(
-      call = {
-        getAuthentications()
-      },
-      intercept = {
-        assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `getAuthentications with query params1`() = runTest {
-    client.runTest(
-      call = {
-        getAuthentications(
-          itemsPerPage = 2,
-          page = 1,
-          type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
-          platform = listOf(PlatformNone.entries.first { it.value == "none" }),
-          sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
-          order = OrderKeys.entries.first { it.value == "asc" },
-        )
-      },
-      intercept = {
-        assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}""", it.url.encodedParameters)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getDestination
 
   @Test
@@ -856,22 +915,6 @@ class IngestionTest {
       },
       intercept = {
         assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
-  // getDestinations
-
-  @Test
-  fun `getDestinations`() = runTest {
-    client.runTest(
-      call = {
-        getDestinations()
-      },
-      intercept = {
-        assertEquals("/1/destinations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -897,24 +940,6 @@ class IngestionTest {
     )
   }
 
-  // getEvents
-
-  @Test
-  fun `getEvents`() = runTest {
-    client.runTest(
-      call = {
-        getEvents(
-          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-      },
-      intercept = {
-        assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getRun
 
   @Test
@@ -927,22 +952,6 @@ class IngestionTest {
       },
       intercept = {
         assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
-  // getRuns
-
-  @Test
-  fun `getRuns`() = runTest {
-    client.runTest(
-      call = {
-        getRuns()
-      },
-      intercept = {
-        assertEquals("/1/runs".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -967,22 +976,6 @@ class IngestionTest {
     )
   }
 
-  // getSources
-
-  @Test
-  fun `getSources`() = runTest {
-    client.runTest(
-      call = {
-        getSources()
-      },
-      intercept = {
-        assertEquals("/1/sources".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getTask
 
   @Test
@@ -994,23 +987,25 @@ class IngestionTest {
         )
       },
       intercept = {
-        assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
     )
   }
 
-  // getTasks
+  // getTaskV1
 
   @Test
-  fun `getTasks`() = runTest {
+  fun `getTaskV1`() = runTest {
     client.runTest(
       call = {
-        getTasks()
+        getTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
-        assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -1035,13 +1030,149 @@ class IngestionTest {
     )
   }
 
-  // getTransformations
+  // listAuthentications
+
+  @Test
+  fun `getAuthentications`() = runTest {
+    client.runTest(
+      call = {
+        listAuthentications()
+      },
+      intercept = {
+        assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `getAuthentications with query params1`() = runTest {
+    client.runTest(
+      call = {
+        listAuthentications(
+          itemsPerPage = 2,
+          page = 1,
+          type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
+          platform = listOf(PlatformNone.entries.first { it.value == "none" }),
+          sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
+          order = OrderKeys.entries.first { it.value == "asc" },
+        )
+      },
+      intercept = {
+        assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listDestinations
+
+  @Test
+  fun `getDestinations`() = runTest {
+    client.runTest(
+      call = {
+        listDestinations()
+      },
+      intercept = {
+        assertEquals("/1/destinations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listEvents
+
+  @Test
+  fun `getEvents`() = runTest {
+    client.runTest(
+      call = {
+        listEvents(
+          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
+        assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listRuns
+
+  @Test
+  fun `getRuns`() = runTest {
+    client.runTest(
+      call = {
+        listRuns()
+      },
+      intercept = {
+        assertEquals("/1/runs".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listSources
+
+  @Test
+  fun `getSources`() = runTest {
+    client.runTest(
+      call = {
+        listSources()
+      },
+      intercept = {
+        assertEquals("/1/sources".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listTasks
+
+  @Test
+  fun `listTasks`() = runTest {
+    client.runTest(
+      call = {
+        listTasks()
+      },
+      intercept = {
+        assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listTasksV1
+
+  @Test
+  fun `listTasksV1`() = runTest {
+    client.runTest(
+      call = {
+        listTasksV1()
+      },
+      intercept = {
+        assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listTransformations
 
   @Test
   fun `getTransformations`() = runTest {
     client.runTest(
       call = {
-        getTransformations()
+        listTransformations()
       },
       intercept = {
         assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
@@ -1058,6 +1189,24 @@ class IngestionTest {
     client.runTest(
       call = {
         runTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  // runTaskV1
+
+  @Test
+  fun `runTaskV1`() = runTest {
+    client.runTest(
+      call = {
+        runTaskV1(
           taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         )
       },
@@ -1136,6 +1285,26 @@ class IngestionTest {
     client.runTest(
       call = {
         searchTasks(
+          taskSearch = TaskSearch(
+            taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/search".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}""", it.body)
+      },
+    )
+  }
+
+  // searchTasksV1
+
+  @Test
+  fun `searchTasksV1`() = runTest {
+    client.runTest(
+      call = {
+        searchTasksV1(
           taskSearch = TaskSearch(
             taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
           ),
@@ -1285,6 +1454,28 @@ class IngestionTest {
         updateTask(
           taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           taskUpdate = TaskUpdate(
+            enabled = false,
+            cron = "* * * * *",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PATCH"), it.method)
+        assertJsonBody("""{"enabled":false,"cron":"* * * * *"}""", it.body)
+      },
+    )
+  }
+
+  // updateTaskV1
+
+  @Test
+  fun `updateTaskV1`() = runTest {
+    client.runTest(
+      call = {
+        updateTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          taskUpdate = TaskUpdateV1(
             enabled = false,
           ),
         )

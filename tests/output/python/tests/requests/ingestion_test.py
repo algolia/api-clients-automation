@@ -113,9 +113,50 @@ class TestIngestionClient:
 
     async def test_create_task_(self):
         """
-        createTaskOnDemand
+        task without cron
         """
         _req = await self._client.create_task_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "action": "replace",
+            },
+        )
+
+        assert _req.path == "/2/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","action":"replace"}"""
+        )
+
+    async def test_create_task_1(self):
+        """
+        task with cron
+        """
+        _req = await self._client.create_task_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "cron": "* * * * *",
+                "action": "replace",
+            },
+        )
+
+        assert _req.path == "/2/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}"""
+        )
+
+    async def test_create_task_v1_(self):
+        """
+        createTaskOnDemand
+        """
+        _req = await self._client.create_task_v1_with_http_info(
             task_create={
                 "sourceID": "search",
                 "destinationID": "destinationName",
@@ -134,11 +175,11 @@ class TestIngestionClient:
             """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}"""
         )
 
-    async def test_create_task_1(self):
+    async def test_create_task_v1_1(self):
         """
         createTaskSchedule
         """
-        _req = await self._client.create_task_with_http_info(
+        _req = await self._client.create_task_v1_with_http_info(
             task_create={
                 "sourceID": "search",
                 "destinationID": "destinationName",
@@ -158,11 +199,11 @@ class TestIngestionClient:
             """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}"""
         )
 
-    async def test_create_task_2(self):
+    async def test_create_task_v1_2(self):
         """
         createTaskSubscription
         """
-        _req = await self._client.create_task_with_http_info(
+        _req = await self._client.create_task_v1_with_http_info(
             task_create={
                 "sourceID": "search",
                 "destinationID": "destinationName",
@@ -638,6 +679,20 @@ class TestIngestionClient:
             task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         )
 
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_delete_task_v1_(self):
+        """
+        deleteTaskV1
+        """
+        _req = await self._client.delete_task_v1_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
         assert _req.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {}.items()
@@ -666,6 +721,19 @@ class TestIngestionClient:
             task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         )
 
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+
+    async def test_disable_task_v1_(self):
+        """
+        disableTaskV1
+        """
+        _req = await self._client.disable_task_v1_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
         assert _req.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
@@ -673,9 +741,22 @@ class TestIngestionClient:
 
     async def test_enable_task_(self):
         """
-        enable task e2e
+        enableTask
         """
         _req = await self._client.enable_task_with_http_info(
+            task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
+
+        assert _req.path == "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+
+    async def test_enable_task_v1_(self):
+        """
+        enableTaskV1
+        """
+        _req = await self._client.enable_task_v1_with_http_info(
             task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
 
@@ -698,11 +779,113 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_authentications_(self):
+    async def test_get_destination_(self):
+        """
+        getDestination
+        """
+        _req = await self._client.get_destination_with_http_info(
+            destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_event_(self):
+        """
+        getEvent
+        """
+        _req = await self._client.get_event_with_http_info(
+            run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+        )
+
+        assert (
+            _req.path
+            == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+        )
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_run_(self):
+        """
+        getRun
+        """
+        _req = await self._client.get_run_with_http_info(
+            run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_source_(self):
+        """
+        getSource
+        """
+        _req = await self._client.get_source_with_http_info(
+            source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        )
+
+        assert _req.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_task_(self):
+        """
+        getTask
+        """
+        _req = await self._client.get_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_task_v1_(self):
+        """
+        getTaskV1
+        """
+        _req = await self._client.get_task_v1_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_transformation_(self):
+        """
+        getTransformation
+        """
+        _req = await self._client.get_transformation_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_list_authentications_(self):
         """
         getAuthentications
         """
-        _req = await self._client.get_authentications_with_http_info()
+        _req = await self._client.list_authentications_with_http_info()
 
         assert _req.path == "/1/authentications"
         assert _req.verb == "GET"
@@ -710,11 +893,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_authentications_1(self):
+    async def test_list_authentications_1(self):
         """
         getAuthentications with query params
         """
-        _req = await self._client.get_authentications_with_http_info(
+        _req = await self._client.list_authentications_with_http_info(
             items_per_page=2,
             page=1,
             type=[
@@ -744,25 +927,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_destination_(self):
-        """
-        getDestination
-        """
-        _req = await self._client.get_destination_with_http_info(
-            destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-
-        assert _req.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_get_destinations_(self):
+    async def test_list_destinations_(self):
         """
         getDestinations
         """
-        _req = await self._client.get_destinations_with_http_info()
+        _req = await self._client.list_destinations_with_http_info()
 
         assert _req.path == "/1/destinations"
         assert _req.verb == "GET"
@@ -770,29 +939,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_event_(self):
-        """
-        getEvent
-        """
-        _req = await self._client.get_event_with_http_info(
-            run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-        )
-
-        assert (
-            _req.path
-            == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c"
-        )
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_get_events_(self):
+    async def test_list_events_(self):
         """
         getEvents
         """
-        _req = await self._client.get_events_with_http_info(
+        _req = await self._client.list_events_with_http_info(
             run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         )
 
@@ -802,25 +953,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_run_(self):
-        """
-        getRun
-        """
-        _req = await self._client.get_run_with_http_info(
-            run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-
-        assert _req.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_get_runs_(self):
+    async def test_list_runs_(self):
         """
         getRuns
         """
-        _req = await self._client.get_runs_with_http_info()
+        _req = await self._client.list_runs_with_http_info()
 
         assert _req.path == "/1/runs"
         assert _req.verb == "GET"
@@ -828,25 +965,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_source_(self):
-        """
-        getSource
-        """
-        _req = await self._client.get_source_with_http_info(
-            source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-        )
-
-        assert _req.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_get_sources_(self):
+    async def test_list_sources_(self):
         """
         getSources
         """
-        _req = await self._client.get_sources_with_http_info()
+        _req = await self._client.list_sources_with_http_info()
 
         assert _req.path == "/1/sources"
         assert _req.verb == "GET"
@@ -854,25 +977,23 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_task_(self):
+    async def test_list_tasks_(self):
         """
-        getTask
+        listTasks
         """
-        _req = await self._client.get_task_with_http_info(
-            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        _req = await self._client.list_tasks_with_http_info()
 
-        assert _req.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.path == "/2/tasks"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_tasks_(self):
+    async def test_list_tasks_v1_(self):
         """
-        getTasks
+        listTasksV1
         """
-        _req = await self._client.get_tasks_with_http_info()
+        _req = await self._client.list_tasks_v1_with_http_info()
 
         assert _req.path == "/1/tasks"
         assert _req.verb == "GET"
@@ -880,25 +1001,11 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_transformation_(self):
-        """
-        getTransformation
-        """
-        _req = await self._client.get_transformation_with_http_info(
-            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-
-        assert _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_get_transformations_(self):
+    async def test_list_transformations_(self):
         """
         getTransformations
         """
-        _req = await self._client.get_transformations_with_http_info()
+        _req = await self._client.list_transformations_with_http_info()
 
         assert _req.path == "/1/transformations"
         assert _req.verb == "GET"
@@ -911,6 +1018,19 @@ class TestIngestionClient:
         runTask
         """
         _req = await self._client.run_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+
+    async def test_run_task_v1_(self):
+        """
+        runTaskV1
+        """
+        _req = await self._client.run_task_v1_with_http_info(
             task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         )
 
@@ -987,6 +1107,28 @@ class TestIngestionClient:
         searchTasks
         """
         _req = await self._client.search_tasks_with_http_info(
+            task_search={
+                "taskIDs": [
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+            },
+        )
+
+        assert _req.path == "/2/tasks/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+        )
+
+    async def test_search_tasks_v1_(self):
+        """
+        searchTasksV1
+        """
+        _req = await self._client.search_tasks_v1_with_http_info(
             task_search={
                 "taskIDs": [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1116,6 +1258,24 @@ class TestIngestionClient:
         updateTask
         """
         _req = await self._client.update_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_update={
+                "enabled": False,
+                "cron": "* * * * *",
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PATCH"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"enabled":false,"cron":"* * * * *"}""")
+
+    async def test_update_task_v1_(self):
+        """
+        updateTaskV1
+        """
+        _req = await self._client.update_task_v1_with_http_info(
             task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             task_update={
                 "enabled": False,

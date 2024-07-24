@@ -13,7 +13,6 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 
 from algoliasearch.ingestion.models.action_type import ActionType
 from algoliasearch.ingestion.models.task_input import TaskInput
-from algoliasearch.ingestion.models.trigger import Trigger
 
 
 class Task(BaseModel):
@@ -32,7 +31,19 @@ class Task(BaseModel):
         description="Universally unique identifier (UUID) of a destination resource.",
         alias="destinationID",
     )
-    trigger: Trigger
+    cron: Optional[StrictStr] = Field(
+        default=None, description="Cron expression for the task's schedule."
+    )
+    last_run: Optional[StrictStr] = Field(
+        default=None,
+        description="The last time the scheduled task ran in RFC 3339 format.",
+        alias="lastRun",
+    )
+    next_run: Optional[StrictStr] = Field(
+        default=None,
+        description="The next scheduled run of the task in RFC 3339 format.",
+        alias="nextRun",
+    )
     input: Optional[TaskInput] = None
     enabled: StrictBool = Field(description="Whether the task is enabled.")
     failure_threshold: Optional[Annotated[int, Field(le=100, strict=True, ge=0)]] = (
@@ -82,8 +93,6 @@ class Task(BaseModel):
             exclude={},
             exclude_none=True,
         )
-        if self.trigger:
-            _dict["trigger"] = self.trigger.to_dict()
         if self.input:
             _dict["input"] = self.input.to_dict()
         return _dict
@@ -102,11 +111,9 @@ class Task(BaseModel):
                 "taskID": obj.get("taskID"),
                 "sourceID": obj.get("sourceID"),
                 "destinationID": obj.get("destinationID"),
-                "trigger": (
-                    Trigger.from_dict(obj.get("trigger"))
-                    if obj.get("trigger") is not None
-                    else None
-                ),
+                "cron": obj.get("cron"),
+                "lastRun": obj.get("lastRun"),
+                "nextRun": obj.get("nextRun"),
                 "input": (
                     TaskInput.from_dict(obj.get("input"))
                     if obj.get("input") is not None

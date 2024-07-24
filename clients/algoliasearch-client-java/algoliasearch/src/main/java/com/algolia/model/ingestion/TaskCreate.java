@@ -16,11 +16,11 @@ public class TaskCreate {
   @JsonProperty("destinationID")
   private String destinationID;
 
-  @JsonProperty("trigger")
-  private TaskCreateTrigger trigger;
-
   @JsonProperty("action")
   private ActionType action;
+
+  @JsonProperty("cron")
+  private String cron;
 
   @JsonProperty("enabled")
   private Boolean enabled;
@@ -56,17 +56,6 @@ public class TaskCreate {
     return destinationID;
   }
 
-  public TaskCreate setTrigger(TaskCreateTrigger trigger) {
-    this.trigger = trigger;
-    return this;
-  }
-
-  /** Get trigger */
-  @javax.annotation.Nonnull
-  public TaskCreateTrigger getTrigger() {
-    return trigger;
-  }
-
   public TaskCreate setAction(ActionType action) {
     this.action = action;
     return this;
@@ -76,6 +65,17 @@ public class TaskCreate {
   @javax.annotation.Nonnull
   public ActionType getAction() {
     return action;
+  }
+
+  public TaskCreate setCron(String cron) {
+    this.cron = cron;
+    return this;
+  }
+
+  /** Cron expression for the task's schedule. */
+  @javax.annotation.Nullable
+  public String getCron() {
+    return cron;
   }
 
   public TaskCreate setEnabled(Boolean enabled) {
@@ -137,8 +137,8 @@ public class TaskCreate {
     return (
       Objects.equals(this.sourceID, taskCreate.sourceID) &&
       Objects.equals(this.destinationID, taskCreate.destinationID) &&
-      Objects.equals(this.trigger, taskCreate.trigger) &&
       Objects.equals(this.action, taskCreate.action) &&
+      Objects.equals(this.cron, taskCreate.cron) &&
       Objects.equals(this.enabled, taskCreate.enabled) &&
       Objects.equals(this.failureThreshold, taskCreate.failureThreshold) &&
       Objects.equals(this.input, taskCreate.input) &&
@@ -148,7 +148,7 @@ public class TaskCreate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceID, destinationID, trigger, action, enabled, failureThreshold, input, cursor);
+    return Objects.hash(sourceID, destinationID, action, cron, enabled, failureThreshold, input, cursor);
   }
 
   @Override
@@ -157,8 +157,8 @@ public class TaskCreate {
     sb.append("class TaskCreate {\n");
     sb.append("    sourceID: ").append(toIndentedString(sourceID)).append("\n");
     sb.append("    destinationID: ").append(toIndentedString(destinationID)).append("\n");
-    sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");

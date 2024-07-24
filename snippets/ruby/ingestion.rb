@@ -88,7 +88,7 @@ end
 
 # Snippet for the createTask method.
 #
-# createTaskOnDemand
+# task without cron
 def snippet_for_create_task
   # >SEPARATOR createTask default
   # Initialize the client
@@ -96,7 +96,28 @@ def snippet_for_create_task
 
   # Call the API
   response = client.create_task(
-    TaskCreate.new(
+    TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the createTaskV1 method.
+#
+# createTaskOnDemand
+def snippet_for_create_task_v1
+  # >SEPARATOR createTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.create_task_v1(
+    TaskCreateV1.new(
       source_id: "search",
       destination_id: "destinationName",
       trigger: OnDemandTriggerInput.new(type: "onDemand"),
@@ -283,6 +304,25 @@ def snippet_for_delete_task
   # SEPARATOR<
 end
 
+# Snippet for the deleteTaskV1 method.
+#
+# deleteTaskV1
+def snippet_for_delete_task_v1
+  # >SEPARATOR deleteTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the deleteTransformation method.
 #
 # deleteTransformation
@@ -321,9 +361,28 @@ def snippet_for_disable_task
   # SEPARATOR<
 end
 
+# Snippet for the disableTaskV1 method.
+#
+# disableTaskV1
+def snippet_for_disable_task_v1
+  # >SEPARATOR disableTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.disable_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the enableTask method.
 #
-# enable task e2e
+# enableTask
 def snippet_for_enable_task
   # >SEPARATOR enableTask default
   # Initialize the client
@@ -331,6 +390,25 @@ def snippet_for_enable_task
 
   # Call the API
   response = client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the enableTaskV1 method.
+#
+# enableTaskV1
+def snippet_for_enable_task_v1
+  # >SEPARATOR enableTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.enable_task_v1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
   # use the class directly
   puts(response)
@@ -359,25 +437,6 @@ def snippet_for_get_authentication
   # SEPARATOR<
 end
 
-# Snippet for the getAuthentications method.
-#
-# getAuthentications
-def snippet_for_get_authentications
-  # >SEPARATOR getAuthentications default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.get_authentications
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
 # Snippet for the getDestination method.
 #
 # getDestination
@@ -388,25 +447,6 @@ def snippet_for_get_destination
 
   # Call the API
   response = client.get_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
-# Snippet for the getDestinations method.
-#
-# getDestinations
-def snippet_for_get_destinations
-  # >SEPARATOR getDestinations default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.get_destinations
 
   # use the class directly
   puts(response)
@@ -435,25 +475,6 @@ def snippet_for_get_event
   # SEPARATOR<
 end
 
-# Snippet for the getEvents method.
-#
-# getEvents
-def snippet_for_get_events
-  # >SEPARATOR getEvents default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.get_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
 # Snippet for the getRun method.
 #
 # getRun
@@ -464,25 +485,6 @@ def snippet_for_get_run
 
   # Call the API
   response = client.get_run("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
-# Snippet for the getRuns method.
-#
-# getRuns
-def snippet_for_get_runs
-  # >SEPARATOR getRuns default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.get_runs
 
   # use the class directly
   puts(response)
@@ -511,25 +513,6 @@ def snippet_for_get_source
   # SEPARATOR<
 end
 
-# Snippet for the getSources method.
-#
-# getSources
-def snippet_for_get_sources
-  # >SEPARATOR getSources default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.get_sources
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
 # Snippet for the getTask method.
 #
 # getTask
@@ -549,16 +532,16 @@ def snippet_for_get_task
   # SEPARATOR<
 end
 
-# Snippet for the getTasks method.
+# Snippet for the getTaskV1 method.
 #
-# getTasks
-def snippet_for_get_tasks
-  # >SEPARATOR getTasks default
+# getTaskV1
+def snippet_for_get_task_v1
+  # >SEPARATOR getTaskV1 default
   # Initialize the client
   client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_tasks
+  response = client.get_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # use the class directly
   puts(response)
@@ -587,16 +570,149 @@ def snippet_for_get_transformation
   # SEPARATOR<
 end
 
-# Snippet for the getTransformations method.
+# Snippet for the listAuthentications method.
 #
-# getTransformations
-def snippet_for_get_transformations
-  # >SEPARATOR getTransformations default
+# getAuthentications
+def snippet_for_list_authentications
+  # >SEPARATOR listAuthentications default
   # Initialize the client
   client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_transformations
+  response = client.list_authentications
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listDestinations method.
+#
+# getDestinations
+def snippet_for_list_destinations
+  # >SEPARATOR listDestinations default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_destinations
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listEvents method.
+#
+# getEvents
+def snippet_for_list_events
+  # >SEPARATOR listEvents default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listRuns method.
+#
+# getRuns
+def snippet_for_list_runs
+  # >SEPARATOR listRuns default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_runs
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listSources method.
+#
+# getSources
+def snippet_for_list_sources
+  # >SEPARATOR listSources default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_sources
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listTasks method.
+#
+# listTasks
+def snippet_for_list_tasks
+  # >SEPARATOR listTasks default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_tasks
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listTasksV1 method.
+#
+# listTasksV1
+def snippet_for_list_tasks_v1
+  # >SEPARATOR listTasksV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_tasks_v1
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listTransformations method.
+#
+# getTransformations
+def snippet_for_list_transformations
+  # >SEPARATOR listTransformations default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_transformations
 
   # use the class directly
   puts(response)
@@ -616,6 +732,25 @@ def snippet_for_run_task
 
   # Call the API
   response = client.run_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the runTaskV1 method.
+#
+# runTaskV1
+def snippet_for_run_task_v1
+  # >SEPARATOR runTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.run_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # use the class directly
   puts(response)
@@ -702,6 +837,33 @@ def snippet_for_search_tasks
 
   # Call the API
   response = client.search_tasks(
+    TaskSearch.new(
+      task_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+        "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+      ]
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchTasksV1 method.
+#
+# searchTasksV1
+def snippet_for_search_tasks_v1
+  # >SEPARATOR searchTasksV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.search_tasks_v1(
     TaskSearch.new(
       task_ids: [
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -853,7 +1015,29 @@ def snippet_for_update_task
   client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.update_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdate.new(enabled: false))
+  response = client.update_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    TaskUpdate.new(enabled: false, cron: "* * * * *")
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the updateTaskV1 method.
+#
+# updateTaskV1
+def snippet_for_update_task_v1
+  # >SEPARATOR updateTaskV1 default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.update_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdateV1.new(enabled: false))
 
   # use the class directly
   puts(response)
