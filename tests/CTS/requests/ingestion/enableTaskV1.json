@@ -1,6 +1,5 @@
 [
   {
-    "testName": "enable task e2e",
     "parameters": {
       "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     },
