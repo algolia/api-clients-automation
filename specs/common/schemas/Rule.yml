@@ -1,0 +1,8 @@
+context:
+  type: string
+  pattern: '[A-Za-z0-9_-]+'
+  description: |
+    An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter.
+    For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.
+    A rule context must only contain alphanumeric characters.
+  example: mobile
