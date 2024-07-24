@@ -5880,7 +5880,7 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    _distinctSeqID:
+    distinctSeqID:
       type: integer
     hit:
       type: object
@@ -5904,7 +5904,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
     searchHits:
       type: object
       additionalProperties: true
