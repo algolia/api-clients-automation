@@ -31,6 +31,8 @@ import algoliasearch.ingestion.ActionType._
   *   Universally uniqud identifier (UUID) of a source.
   * @param destinationID
   *   Universally unique identifier (UUID) of a destination resource.
+  * @param cron
+  *   Cron expression for the task's schedule.
   * @param enabled
   *   Whether the task is enabled.
   * @param failureThreshold
@@ -41,8 +43,8 @@ import algoliasearch.ingestion.ActionType._
 case class TaskCreate(
     sourceID: String,
     destinationID: String,
-    trigger: TaskCreateTrigger,
     action: ActionType,
+    cron: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,
     failureThreshold: Option[Int] = scala.None,
     input: Option[TaskInput] = scala.None,

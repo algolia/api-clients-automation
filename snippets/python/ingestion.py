@@ -106,7 +106,7 @@ async def snippet_for_create_task():
     """
     Snippet for the createTask method.
 
-    createTaskOnDemand
+    task without cron
     """
     # >SEPARATOR createTask default
     # Initialize the client
@@ -114,6 +114,33 @@ async def snippet_for_create_task():
 
     # Call the API
     response = await _client.create_task(
+        task_create={
+            "sourceID": "search",
+            "destinationID": "destinationName",
+            "action": "replace",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_create_task_v1():
+    """
+    Snippet for the createTaskV1 method.
+
+    createTaskOnDemand
+    """
+    # >SEPARATOR createTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.create_task_v1(
         task_create={
             "sourceID": "search",
             "destinationID": "destinationName",
@@ -343,6 +370,29 @@ async def snippet_for_delete_task():
     # SEPARATOR<
 
 
+async def snippet_for_delete_task_v1():
+    """
+    Snippet for the deleteTaskV1 method.
+
+    deleteTaskV1
+    """
+    # >SEPARATOR deleteTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.delete_task_v1(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_delete_transformation():
     """
     Snippet for the deleteTransformation method.
@@ -389,11 +439,34 @@ async def snippet_for_disable_task():
     # SEPARATOR<
 
 
+async def snippet_for_disable_task_v1():
+    """
+    Snippet for the disableTaskV1 method.
+
+    disableTaskV1
+    """
+    # >SEPARATOR disableTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.disable_task_v1(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_enable_task():
     """
     Snippet for the enableTask method.
 
-    enable task e2e
+    enableTask
     """
     # >SEPARATOR enableTask default
     # Initialize the client
@@ -401,6 +474,29 @@ async def snippet_for_enable_task():
 
     # Call the API
     response = await _client.enable_task(
+        task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_enable_task_v1():
+    """
+    Snippet for the enableTaskV1 method.
+
+    enableTaskV1
+    """
+    # >SEPARATOR enableTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.enable_task_v1(
         task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
@@ -435,27 +531,6 @@ async def snippet_for_get_authentication():
     # SEPARATOR<
 
 
-async def snippet_for_get_authentications():
-    """
-    Snippet for the getAuthentications method.
-
-    getAuthentications
-    """
-    # >SEPARATOR getAuthentications default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_authentications()
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
 async def snippet_for_get_destination():
     """
     Snippet for the getDestination method.
@@ -470,27 +545,6 @@ async def snippet_for_get_destination():
     response = await _client.get_destination(
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
-async def snippet_for_get_destinations():
-    """
-    Snippet for the getDestinations method.
-
-    getDestinations
-    """
-    # >SEPARATOR getDestinations default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_destinations()
 
     # use the class directly
     print(response)
@@ -524,29 +578,6 @@ async def snippet_for_get_event():
     # SEPARATOR<
 
 
-async def snippet_for_get_events():
-    """
-    Snippet for the getEvents method.
-
-    getEvents
-    """
-    # >SEPARATOR getEvents default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_events(
-        run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
 async def snippet_for_get_run():
     """
     Snippet for the getRun method.
@@ -561,27 +592,6 @@ async def snippet_for_get_run():
     response = await _client.get_run(
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
-async def snippet_for_get_runs():
-    """
-    Snippet for the getRuns method.
-
-    getRuns
-    """
-    # >SEPARATOR getRuns default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_runs()
 
     # use the class directly
     print(response)
@@ -614,27 +624,6 @@ async def snippet_for_get_source():
     # SEPARATOR<
 
 
-async def snippet_for_get_sources():
-    """
-    Snippet for the getSources method.
-
-    getSources
-    """
-    # >SEPARATOR getSources default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_sources()
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
 async def snippet_for_get_task():
     """
     Snippet for the getTask method.
@@ -658,18 +647,20 @@ async def snippet_for_get_task():
     # SEPARATOR<
 
 
-async def snippet_for_get_tasks():
+async def snippet_for_get_task_v1():
     """
-    Snippet for the getTasks method.
+    Snippet for the getTaskV1 method.
 
-    getTasks
+    getTaskV1
     """
-    # >SEPARATOR getTasks default
+    # >SEPARATOR getTaskV1 default
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
     # Call the API
-    response = await _client.get_tasks()
+    response = await _client.get_task_v1(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
 
     # use the class directly
     print(response)
@@ -702,18 +693,167 @@ async def snippet_for_get_transformation():
     # SEPARATOR<
 
 
-async def snippet_for_get_transformations():
+async def snippet_for_list_authentications():
     """
-    Snippet for the getTransformations method.
+    Snippet for the listAuthentications method.
 
-    getTransformations
+    getAuthentications
     """
-    # >SEPARATOR getTransformations default
+    # >SEPARATOR listAuthentications default
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
     # Call the API
-    response = await _client.get_transformations()
+    response = await _client.list_authentications()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_destinations():
+    """
+    Snippet for the listDestinations method.
+
+    getDestinations
+    """
+    # >SEPARATOR listDestinations default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_destinations()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_events():
+    """
+    Snippet for the listEvents method.
+
+    getEvents
+    """
+    # >SEPARATOR listEvents default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_events(
+        run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_runs():
+    """
+    Snippet for the listRuns method.
+
+    getRuns
+    """
+    # >SEPARATOR listRuns default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_runs()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_sources():
+    """
+    Snippet for the listSources method.
+
+    getSources
+    """
+    # >SEPARATOR listSources default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_sources()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_tasks():
+    """
+    Snippet for the listTasks method.
+
+    listTasks
+    """
+    # >SEPARATOR listTasks default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_tasks()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_tasks_v1():
+    """
+    Snippet for the listTasksV1 method.
+
+    listTasksV1
+    """
+    # >SEPARATOR listTasksV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_tasks_v1()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_list_transformations():
+    """
+    Snippet for the listTransformations method.
+
+    getTransformations
+    """
+    # >SEPARATOR listTransformations default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_transformations()
 
     # use the class directly
     print(response)
@@ -735,6 +875,29 @@ async def snippet_for_run_task():
 
     # Call the API
     response = await _client.run_task(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_run_task_v1():
+    """
+    Snippet for the runTaskV1 method.
+
+    runTaskV1
+    """
+    # >SEPARATOR runTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.run_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
@@ -842,6 +1005,35 @@ async def snippet_for_search_tasks():
 
     # Call the API
     response = await _client.search_tasks(
+        task_search={
+            "taskIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ],
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_search_tasks_v1():
+    """
+    Snippet for the searchTasksV1 method.
+
+    searchTasksV1
+    """
+    # >SEPARATOR searchTasksV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.search_tasks_v1(
         task_search={
             "taskIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1029,6 +1221,33 @@ async def snippet_for_update_task():
 
     # Call the API
     response = await _client.update_task(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_update={
+            "enabled": False,
+            "cron": "* * * * *",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_update_task_v1():
+    """
+    Snippet for the updateTaskV1 method.
+
+    updateTaskV1
+    """
+    # >SEPARATOR updateTaskV1 default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.update_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         task_update={
             "enabled": False,

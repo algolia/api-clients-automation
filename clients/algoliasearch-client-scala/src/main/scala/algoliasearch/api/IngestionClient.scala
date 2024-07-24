@@ -31,6 +31,7 @@ import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
 import algoliasearch.ingestion.ListSourcesResponse
 import algoliasearch.ingestion.ListTasksResponse
+import algoliasearch.ingestion.ListTasksResponseV1
 import algoliasearch.ingestion.ListTransformationsResponse
 import algoliasearch.ingestion.OrderKeys._
 import algoliasearch.ingestion.PlatformWithNone
@@ -52,10 +53,13 @@ import algoliasearch.ingestion.SourceWatchResponse
 import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
+import algoliasearch.ingestion.TaskCreateV1
 import algoliasearch.ingestion.TaskSearch
 import algoliasearch.ingestion.TaskSortKeys._
 import algoliasearch.ingestion.TaskUpdate
 import algoliasearch.ingestion.TaskUpdateResponse
+import algoliasearch.ingestion.TaskUpdateV1
+import algoliasearch.ingestion.TaskV1
 import algoliasearch.ingestion.Transformation
 import algoliasearch.ingestion.TransformationCreate
 import algoliasearch.ingestion.TransformationCreateResponse
@@ -205,6 +209,25 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskCreateResponse] = Future {
     requireNotNull(taskCreate, "Parameter `taskCreate` is required when calling `createTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/2/tasks")
+      .withBody(taskCreate)
+      .build()
+    execute[TaskCreateResponse](request, requestOptions)
+  }
+
+  /** Creates a new task using the v1 endpoint, please use `createTask` instead.
+    *
+    * @param taskCreate
+    *   Request body for creating a task.
+    */
+  def createTaskV1(taskCreate: TaskCreateV1, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskCreateResponse] = Future {
+    requireNotNull(taskCreate, "Parameter `taskCreate` is required when calling `createTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -420,6 +443,24 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
+      .withPath(s"/2/tasks/${escape(taskID)}")
+      .build()
+    execute[DeleteResponse](request, requestOptions)
+  }
+
+  /** Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def deleteTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[DeleteResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("DELETE")
       .withPath(s"/1/tasks/${escape(taskID)}")
       .build()
     execute[DeleteResponse](request, requestOptions)
@@ -461,6 +502,29 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
+      .withPath(s"/2/tasks/${escape(taskID)}/disable")
+      .build()
+    execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Disables a task using the v1 endpoint, please use `disableTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def disableTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskUpdateResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
       .withPath(s"/1/tasks/${escape(taskID)}/disable")
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
@@ -480,6 +544,29 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
+      .withPath(s"/2/tasks/${escape(taskID)}/enable")
+      .build()
+    execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Enables a task using the v1 endpoint, please use `enableTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def enableTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskUpdateResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -512,50 +599,6 @@ class IngestionClient(
     execute[Authentication](request, requestOptions)
   }
 
-  /** Retrieves a list of all authentication resources.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param itemsPerPage
-    *   Number of items per page.
-    * @param page
-    *   Page number of the paginated API response.
-    * @param `type`
-    *   Type of authentication resource to retrieve.
-    * @param platform
-    *   Ecommerce platform for which to retrieve authentication resources.
-    * @param sort
-    *   Property by which to sort the list of authentication resources.
-    * @param order
-    *   Sort order of the response, ascending or descending.
-    */
-  def getAuthentications(
-      itemsPerPage: Option[Int] = None,
-      page: Option[Int] = None,
-      `type`: Option[Seq[AuthenticationType]] = None,
-      platform: Option[Seq[PlatformWithNone]] = None,
-      sort: Option[AuthenticationSortKeys] = None,
-      order: Option[OrderKeys] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[ListAuthenticationsResponse] = Future {
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/authentications")
-      .withQueryParameter("itemsPerPage", itemsPerPage)
-      .withQueryParameter("page", page)
-      .withQueryParameter("type", `type`)
-      .withQueryParameter("platform", platform)
-      .withQueryParameter("sort", sort)
-      .withQueryParameter("order", order)
-      .build()
-    execute[ListAuthenticationsResponse](request, requestOptions)
-  }
-
   /** Retrieves a destination by its ID.
     *
     * Required API Key ACLs:
@@ -577,50 +620,6 @@ class IngestionClient(
       .withPath(s"/1/destinations/${escape(destinationID)}")
       .build()
     execute[Destination](request, requestOptions)
-  }
-
-  /** Retrieves a list of destinations.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param itemsPerPage
-    *   Number of items per page.
-    * @param page
-    *   Page number of the paginated API response.
-    * @param `type`
-    *   Destination type.
-    * @param authenticationID
-    *   Authentication ID used by destinations.
-    * @param sort
-    *   Property by which to sort the destinations.
-    * @param order
-    *   Sort order of the response, ascending or descending.
-    */
-  def getDestinations(
-      itemsPerPage: Option[Int] = None,
-      page: Option[Int] = None,
-      `type`: Option[Seq[DestinationType]] = None,
-      authenticationID: Option[Seq[String]] = None,
-      sort: Option[DestinationSortKeys] = None,
-      order: Option[OrderKeys] = None,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[ListDestinationsResponse] = Future {
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/destinations")
-      .withQueryParameter("itemsPerPage", itemsPerPage)
-      .withQueryParameter("page", page)
-      .withQueryParameter("type", `type`)
-      .withQueryParameter("authenticationID", authenticationID)
-      .withQueryParameter("sort", sort)
-      .withQueryParameter("order", order)
-      .build()
-    execute[ListDestinationsResponse](request, requestOptions)
   }
 
   /** Retrieves a single task run event by its ID.
@@ -647,6 +646,208 @@ class IngestionClient(
       .withPath(s"/1/runs/${escape(runID)}/events/${escape(eventID)}")
       .build()
     execute[Event](request, requestOptions)
+  }
+
+  /** Retrieve a single task run by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param runID
+    *   Unique identifier of a task run.
+    */
+  def getRun(runID: String, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Run] =
+    Future {
+      requireNotNull(runID, "Parameter `runID` is required when calling `getRun`.")
+
+      val request = HttpRequest
+        .builder()
+        .withMethod("GET")
+        .withPath(s"/1/runs/${escape(runID)}")
+        .build()
+      execute[Run](request, requestOptions)
+    }
+
+  /** Retrieve a source by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def getSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Source] = Future {
+    requireNotNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/sources/${escape(sourceID)}")
+      .build()
+    execute[Source](request, requestOptions)
+  }
+
+  /** Retrieves a task by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def getTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Task] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/2/tasks/${escape(taskID)}")
+      .build()
+    execute[Task](request, requestOptions)
+  }
+
+  /** Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def getTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskV1] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/tasks/${escape(taskID)}")
+      .build()
+    execute[TaskV1](request, requestOptions)
+  }
+
+  /** Retrieves a transformation by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def getTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Transformation] = Future {
+    requireNotNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/transformations/${escape(transformationID)}")
+      .build()
+    execute[Transformation](request, requestOptions)
+  }
+
+  /** Retrieves a list of all authentication resources.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param `type`
+    *   Type of authentication resource to retrieve.
+    * @param platform
+    *   Ecommerce platform for which to retrieve authentication resources.
+    * @param sort
+    *   Property by which to sort the list of authentication resources.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listAuthentications(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[AuthenticationType]] = None,
+      platform: Option[Seq[PlatformWithNone]] = None,
+      sort: Option[AuthenticationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[ListAuthenticationsResponse] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/authentications")
+      .withQueryParameter("itemsPerPage", itemsPerPage)
+      .withQueryParameter("page", page)
+      .withQueryParameter("type", `type`)
+      .withQueryParameter("platform", platform)
+      .withQueryParameter("sort", sort)
+      .withQueryParameter("order", order)
+      .build()
+    execute[ListAuthenticationsResponse](request, requestOptions)
+  }
+
+  /** Retrieves a list of destinations.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param `type`
+    *   Destination type.
+    * @param authenticationID
+    *   Authentication ID used by destinations.
+    * @param sort
+    *   Property by which to sort the destinations.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def listDestinations(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      `type`: Option[Seq[DestinationType]] = None,
+      authenticationID: Option[Seq[String]] = None,
+      sort: Option[DestinationSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[ListDestinationsResponse] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/destinations")
+      .withQueryParameter("itemsPerPage", itemsPerPage)
+      .withQueryParameter("page", page)
+      .withQueryParameter("type", `type`)
+      .withQueryParameter("authenticationID", authenticationID)
+      .withQueryParameter("sort", sort)
+      .withQueryParameter("order", order)
+      .build()
+    execute[ListDestinationsResponse](request, requestOptions)
   }
 
   /** Retrieves a list of events for a task run, identified by it's ID.
@@ -676,7 +877,7 @@ class IngestionClient(
     * @param endDate
     *   Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     */
-  def getEvents(
+  def listEvents(
       runID: String,
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
@@ -688,7 +889,7 @@ class IngestionClient(
       endDate: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListEventsResponse] = Future {
-    requireNotNull(runID, "Parameter `runID` is required when calling `getEvents`.")
+    requireNotNull(runID, "Parameter `runID` is required when calling `listEvents`.")
 
     val request = HttpRequest
       .builder()
@@ -705,28 +906,6 @@ class IngestionClient(
       .build()
     execute[ListEventsResponse](request, requestOptions)
   }
-
-  /** Retrieve a single task run by its ID.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param runID
-    *   Unique identifier of a task run.
-    */
-  def getRun(runID: String, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Run] =
-    Future {
-      requireNotNull(runID, "Parameter `runID` is required when calling `getRun`.")
-
-      val request = HttpRequest
-        .builder()
-        .withMethod("GET")
-        .withPath(s"/1/runs/${escape(runID)}")
-        .build()
-      execute[Run](request, requestOptions)
-    }
 
   /** Retrieve a list of task runs.
     *
@@ -752,7 +931,7 @@ class IngestionClient(
     * @param endDate
     *   Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     */
-  def getRuns(
+  def listRuns(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       status: Option[Seq[RunStatus]] = None,
@@ -780,29 +959,6 @@ class IngestionClient(
     execute[RunListResponse](request, requestOptions)
   }
 
-  /** Retrieve a source by its ID.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param sourceID
-    *   Unique identifier of a source.
-    */
-  def getSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[Source] = Future {
-    requireNotNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/sources/${escape(sourceID)}")
-      .build()
-    execute[Source](request, requestOptions)
-  }
-
   /** Retrieves a list of sources.
     *
     * Required API Key ACLs:
@@ -824,7 +980,7 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     */
-  def getSources(
+  def listSources(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       `type`: Option[Seq[SourceType]] = None,
@@ -846,29 +1002,6 @@ class IngestionClient(
       .withQueryParameter("order", order)
       .build()
     execute[ListSourcesResponse](request, requestOptions)
-  }
-
-  /** Retrieves a task by its ID.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param taskID
-    *   Unique identifier of a task.
-    */
-  def getTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[Task] = Future {
-    requireNotNull(taskID, "Parameter `taskID` is required when calling `getTask`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/tasks/${escape(taskID)}")
-      .build()
-    execute[Task](request, requestOptions)
   }
 
   /** Retrieves a list of tasks.
@@ -897,7 +1030,7 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     */
-  def getTasks(
+  def listTasks(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       action: Option[Seq[ActionType]] = None,
@@ -913,7 +1046,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1/tasks")
+      .withPath(s"/2/tasks")
       .withQueryParameter("itemsPerPage", itemsPerPage)
       .withQueryParameter("page", page)
       .withQueryParameter("action", action)
@@ -927,27 +1060,60 @@ class IngestionClient(
     execute[ListTasksResponse](request, requestOptions)
   }
 
-  /** Retrieves a transformation by its ID.
+  /** Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
     *
     * Required API Key ACLs:
     *   - addObject
     *   - deleteIndex
     *   - editSettings
     *
-    * @param transformationID
-    *   Unique identifier of a transformation.
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
+    * @param action
+    *   Actions for filtering the list of tasks.
+    * @param enabled
+    *   Whether to filter the list of tasks by the `enabled` status.
+    * @param sourceID
+    *   Source IDs for filtering the list of tasks.
+    * @param destinationID
+    *   Destination IDs for filtering the list of tasks.
+    * @param triggerType
+    *   Type of task trigger for filtering the list of tasks.
+    * @param sort
+    *   Property by which to sort the list of tasks.
+    * @param order
+    *   Sort order of the response, ascending or descending.
     */
-  def getTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[Transformation] = Future {
-    requireNotNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
+  def listTasksV1(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
+      action: Option[Seq[ActionType]] = None,
+      enabled: Option[Boolean] = None,
+      sourceID: Option[Seq[String]] = None,
+      destinationID: Option[Seq[String]] = None,
+      triggerType: Option[Seq[TriggerType]] = None,
+      sort: Option[TaskSortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[ListTasksResponseV1] = Future {
 
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1/transformations/${escape(transformationID)}")
+      .withPath(s"/1/tasks")
+      .withQueryParameter("itemsPerPage", itemsPerPage)
+      .withQueryParameter("page", page)
+      .withQueryParameter("action", action)
+      .withQueryParameter("enabled", enabled)
+      .withQueryParameter("sourceID", sourceID)
+      .withQueryParameter("destinationID", destinationID)
+      .withQueryParameter("triggerType", triggerType)
+      .withQueryParameter("sort", sort)
+      .withQueryParameter("order", order)
       .build()
-    execute[Transformation](request, requestOptions)
+    execute[ListTasksResponseV1](request, requestOptions)
   }
 
   /** Retrieves a list of transformations.
@@ -962,7 +1128,7 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     */
-  def getTransformations(
+  def listTransformations(
       sort: Option[SortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -992,6 +1158,30 @@ class IngestionClient(
       ec: ExecutionContext
   ): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/2/tasks/${escape(taskID)}/run")
+      .build()
+    execute[RunResponse](request, requestOptions)
+  }
+
+  /** Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the
+    * observability endpoints.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def runTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[RunResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
 
     val request = HttpRequest
       .builder()
@@ -1082,10 +1272,31 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("POST")
-      .withPath(s"/1/tasks/search")
+      .withPath(s"/2/tasks/search")
       .withBody(taskSearch)
       .build()
     execute[Seq[Task]](request, requestOptions)
+  }
+
+  /** Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchTasksV1(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Seq[TaskV1]] = Future {
+    requireNotNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasksV1`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/tasks/search")
+      .withBody(taskSearch)
+      .build()
+    execute[Seq[TaskV1]](request, requestOptions)
   }
 
   /** Searches for transformations.
@@ -1249,6 +1460,26 @@ class IngestionClient(
   ): Future[TaskUpdateResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTask`.")
     requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PATCH")
+      .withPath(s"/2/tasks/${escape(taskID)}")
+      .withBody(taskUpdate)
+      .build()
+    execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def updateTaskV1(taskID: String, taskUpdate: TaskUpdateV1, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskUpdateResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.")
+    requireNotNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.")
 
     val request = HttpRequest
       .builder()

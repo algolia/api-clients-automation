@@ -103,7 +103,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the CreateTask method.
   ///
-  /// createTaskOnDemand
+  /// task without cron
   /// </summary>
   public async Task SnippetForIngestionClientCreateTask()
   {
@@ -116,6 +116,31 @@ public class SnippetIngestionClient
     // Call the API
     var response = await client.CreateTaskAsync(
       new TaskCreate
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Action = Enum.Parse<ActionType>("Replace"),
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CreateTaskV1 method.
+  ///
+  /// createTaskOnDemand
+  /// </summary>
+  public async Task SnippetForIngestionClientCreateTaskV1()
+  {
+    // >SEPARATOR createTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.CreateTaskV1Async(
+      new TaskCreateV1
       {
         SourceID = "search",
         DestinationID = "destinationName",
@@ -298,6 +323,24 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the DeleteTaskV1 method.
+  ///
+  /// deleteTaskV1
+  /// </summary>
+  public async Task SnippetForIngestionClientDeleteTaskV1()
+  {
+    // >SEPARATOR deleteTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the DeleteTransformation method.
   ///
   /// deleteTransformation
@@ -334,9 +377,27 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the DisableTaskV1 method.
+  ///
+  /// disableTaskV1
+  /// </summary>
+  public async Task SnippetForIngestionClientDisableTaskV1()
+  {
+    // >SEPARATOR disableTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.DisableTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the EnableTask method.
   ///
-  /// enable task e2e
+  /// enableTask
   /// </summary>
   public async Task SnippetForIngestionClientEnableTask()
   {
@@ -348,6 +409,24 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the EnableTaskV1 method.
+  ///
+  /// enableTaskV1
+  /// </summary>
+  public async Task SnippetForIngestionClientEnableTaskV1()
+  {
+    // >SEPARATOR enableTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.EnableTaskV1Async("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     // SEPARATOR<
   }
 
@@ -370,24 +449,6 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetAuthentications method.
-  ///
-  /// getAuthentications
-  /// </summary>
-  public async Task SnippetForIngestionClientGetAuthentications()
-  {
-    // >SEPARATOR getAuthentications default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetAuthenticationsAsync();
-    // SEPARATOR<
-  }
-
-  /// <summary>
   /// Snippet for the GetDestination method.
   ///
   /// getDestination
@@ -402,24 +463,6 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the GetDestinations method.
-  ///
-  /// getDestinations
-  /// </summary>
-  public async Task SnippetForIngestionClientGetDestinations()
-  {
-    // >SEPARATOR getDestinations default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetDestinationsAsync();
     // SEPARATOR<
   }
 
@@ -445,24 +488,6 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetEvents method.
-  ///
-  /// getEvents
-  /// </summary>
-  public async Task SnippetForIngestionClientGetEvents()
-  {
-    // >SEPARATOR getEvents default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  /// <summary>
   /// Snippet for the GetRun method.
   ///
   /// getRun
@@ -477,24 +502,6 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the GetRuns method.
-  ///
-  /// getRuns
-  /// </summary>
-  public async Task SnippetForIngestionClientGetRuns()
-  {
-    // >SEPARATOR getRuns default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetRunsAsync();
     // SEPARATOR<
   }
 
@@ -517,24 +524,6 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetSources method.
-  ///
-  /// getSources
-  /// </summary>
-  public async Task SnippetForIngestionClientGetSources()
-  {
-    // >SEPARATOR getSources default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetSourcesAsync();
-    // SEPARATOR<
-  }
-
-  /// <summary>
   /// Snippet for the GetTask method.
   ///
   /// getTask
@@ -553,20 +542,20 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetTasks method.
+  /// Snippet for the GetTaskV1 method.
   ///
-  /// getTasks
+  /// getTaskV1
   /// </summary>
-  public async Task SnippetForIngestionClientGetTasks()
+  public async Task SnippetForIngestionClientGetTaskV1()
   {
-    // >SEPARATOR getTasks default
+    // >SEPARATOR getTaskV1 default
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
     );
 
     // Call the API
-    var response = await client.GetTasksAsync();
+    var response = await client.GetTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -589,20 +578,146 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetTransformations method.
+  /// Snippet for the ListAuthentications method.
   ///
-  /// getTransformations
+  /// getAuthentications
   /// </summary>
-  public async Task SnippetForIngestionClientGetTransformations()
+  public async Task SnippetForIngestionClientListAuthentications()
   {
-    // >SEPARATOR getTransformations default
+    // >SEPARATOR listAuthentications default
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
     );
 
     // Call the API
-    var response = await client.GetTransformationsAsync();
+    var response = await client.ListAuthenticationsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListDestinations method.
+  ///
+  /// getDestinations
+  /// </summary>
+  public async Task SnippetForIngestionClientListDestinations()
+  {
+    // >SEPARATOR listDestinations default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListDestinationsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListEvents method.
+  ///
+  /// getEvents
+  /// </summary>
+  public async Task SnippetForIngestionClientListEvents()
+  {
+    // >SEPARATOR listEvents default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListRuns method.
+  ///
+  /// getRuns
+  /// </summary>
+  public async Task SnippetForIngestionClientListRuns()
+  {
+    // >SEPARATOR listRuns default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListRunsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListSources method.
+  ///
+  /// getSources
+  /// </summary>
+  public async Task SnippetForIngestionClientListSources()
+  {
+    // >SEPARATOR listSources default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListSourcesAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListTasks method.
+  ///
+  /// listTasks
+  /// </summary>
+  public async Task SnippetForIngestionClientListTasks()
+  {
+    // >SEPARATOR listTasks default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListTasksAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListTasksV1 method.
+  ///
+  /// listTasksV1
+  /// </summary>
+  public async Task SnippetForIngestionClientListTasksV1()
+  {
+    // >SEPARATOR listTasksV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListTasksV1Async();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListTransformations method.
+  ///
+  /// getTransformations
+  /// </summary>
+  public async Task SnippetForIngestionClientListTransformations()
+  {
+    // >SEPARATOR listTransformations default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListTransformationsAsync();
     // SEPARATOR<
   }
 
@@ -621,6 +736,24 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the RunTaskV1 method.
+  ///
+  /// runTaskV1
+  /// </summary>
+  public async Task SnippetForIngestionClientRunTaskV1()
+  {
+    // >SEPARATOR runTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.RunTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -720,6 +853,34 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.SearchTasksAsync(
+      new TaskSearch
+      {
+        TaskIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchTasksV1 method.
+  ///
+  /// searchTasksV1
+  /// </summary>
+  public async Task SnippetForIngestionClientSearchTasksV1()
+  {
+    // >SEPARATOR searchTasksV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.SearchTasksV1Async(
       new TaskSearch
       {
         TaskIDs = new List<string>
@@ -884,7 +1045,28 @@ public class SnippetIngestionClient
     // Call the API
     var response = await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TaskUpdate { Enabled = false, }
+      new TaskUpdate { Enabled = false, Cron = "* * * * *", }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the UpdateTaskV1 method.
+  ///
+  /// updateTaskV1
+  /// </summary>
+  public async Task SnippetForIngestionClientUpdateTaskV1()
+  {
+    // >SEPARATOR updateTaskV1 default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.UpdateTaskV1Async(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskUpdateV1 { Enabled = false, }
     );
     // SEPARATOR<
   }

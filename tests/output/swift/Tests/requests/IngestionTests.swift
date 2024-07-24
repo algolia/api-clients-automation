@@ -154,7 +154,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// createTaskOnDemand
+    /// task without cron
     func testCreateTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
@@ -165,6 +165,75 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            action: ActionType.replace
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// task with cron
+    func testCreateTaskTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            action: ActionType.replace,
+            cron: "* * * * *"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// createTaskOnDemand
+    func testCreateTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1(
             sourceID: "search",
             destinationID: "destinationName",
             trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
@@ -190,7 +259,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createTaskSchedule
-    func testCreateTaskTest1() async throws {
+    func testCreateTaskV1Test1() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -199,7 +268,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+        let response = try await client.createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1(
             sourceID: "search",
             destinationID: "destinationName",
             trigger: TaskCreateTrigger.scheduleTriggerInput(ScheduleTriggerInput(
@@ -228,7 +297,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createTaskSubscription
-    func testCreateTaskTest2() async throws {
+    func testCreateTaskV1Test2() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -237,7 +306,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+        let response = try await client.createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1(
             sourceID: "search",
             destinationID: "destinationName",
             trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
@@ -1067,6 +1136,28 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// deleteTaskV1
+    func testDeleteTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.deleteTaskV1WithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
         XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
@@ -1114,13 +1205,37 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
 
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disableTaskV1
+    func testDisableTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.disableTaskV1WithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+
         XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// enable task e2e
+    /// enableTask
     func testEnableTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
@@ -1131,6 +1246,30 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.enableTaskWithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enableTaskV1
+    func testEnableTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.enableTaskV1WithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1167,67 +1306,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getAuthentications
-    func testGetAuthenticationsTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getAuthenticationsWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/authentications")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// getAuthentications with query params
-    func testGetAuthenticationsTest1() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getAuthenticationsWithHTTPInfo(
-            itemsPerPage: 2,
-            page: 1,
-            type: [AuthenticationType.basic, AuthenticationType.algolia],
-            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
-            sort: AuthenticationSortKeys.createdAt,
-            order: OrderKeys.asc
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/authentications")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}"
-                    .data(using: .utf8)
-            )
-        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
-            [String: String?].self,
-            from: expectedQueryParameters
-        )
-
-        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
-    }
-
     /// getDestination
     func testGetDestinationTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -1246,28 +1324,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// getDestinations
-    func testGetDestinationsTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getDestinationsWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/destinations")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1301,28 +1357,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getEvents
-    func testGetEventsTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getEventsWithHTTPInfo(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// getRun
     func testGetRunTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -1340,28 +1374,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// getRuns
-    func testGetRunsTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getRunsWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/runs")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1389,28 +1401,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getSources
-    func testGetSourcesTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getSourcesWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/sources")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// getTask
     func testGetTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -1427,14 +1417,14 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getTasks
-    func testGetTasksTest() async throws {
+    /// getTaskV1
+    func testGetTaskV1Test() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1443,13 +1433,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTasksWithHTTPInfo()
+        let response = try await client.getTaskV1WithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/tasks")
+        XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1478,8 +1468,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getTransformations
-    func testGetTransformationsTest() async throws {
+    /// getAuthentications
+    func testListAuthenticationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1488,7 +1478,200 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTransformationsWithHTTPInfo()
+        let response = try await client.listAuthenticationsWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/authentications")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getAuthentications with query params
+    func testListAuthenticationsTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listAuthenticationsWithHTTPInfo(
+            itemsPerPage: 2,
+            page: 1,
+            type: [AuthenticationType.basic, AuthenticationType.algolia],
+            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
+            sort: AuthenticationSortKeys.createdAt,
+            order: OrderKeys.asc
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/authentications")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters =
+            try XCTUnwrap(
+                "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}"
+                    .data(using: .utf8)
+            )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// getDestinations
+    func testListDestinationsTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listDestinationsWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/destinations")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getEvents
+    func testListEventsTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listEventsWithHTTPInfo(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getRuns
+    func testListRunsTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listRunsWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/runs")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getSources
+    func testListSourcesTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listSourcesWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/sources")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// listTasks
+    func testListTasksTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listTasksWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// listTasksV1
+    func testListTasksV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listTasksV1WithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getTransformations
+    func testListTransformationsTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listTransformationsWithHTTPInfo()
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1511,6 +1694,30 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.runTaskWithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// runTaskV1
+    func testRunTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.runTaskV1WithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1636,6 +1843,40 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.searchTasksWithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/search")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchTasksV1
+    func testSearchTasksV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchTasksV1WithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -1855,7 +2096,38 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateTaskWithHTTPInfo(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            taskUpdate: TaskUpdate(enabled: false)
+            taskUpdate: TaskUpdate(cron: "* * * * *", enabled: false)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"enabled\":false,\"cron\":\"* * * * *\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.patch)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// updateTaskV1
+    func testUpdateTaskV1Test() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.updateTaskV1WithHTTPInfo(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskUpdate: TaskUpdateV1(enabled: false)
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
