@@ -40,7 +40,7 @@ class AlgoliaRetryStrategy: RetryStrategy {
             if !self.hosts.contains(where: { $0.supports(callType) && $0.isUp }) {
                 self.hosts.resetAll(for: callType)
             }
-            
+
             var hostIterator = self.hosts
                 .sorted { $0.lastUpdated.compare($1.lastUpdated) == .orderedAscending }
                 .filter { $0.supports(callType) && $0.isUp }

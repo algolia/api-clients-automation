@@ -31,6 +31,8 @@ func createUsageClient(t *testing.T) (*usage.APIClient, *tests.EchoRequester) {
 // calls api with correct read host
 func TestUsageapi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
 	var cfg usage.UsageConfiguration
@@ -45,7 +47,7 @@ func TestUsageapi0(t *testing.T) {
 	}
 	client, err = usage.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -55,6 +57,8 @@ func TestUsageapi0(t *testing.T) {
 // calls api with correct write host
 func TestUsageapi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
 	var cfg usage.UsageConfiguration
@@ -69,7 +73,7 @@ func TestUsageapi1(t *testing.T) {
 	}
 	client, err = usage.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -79,9 +83,11 @@ func TestUsageapi1(t *testing.T) {
 // calls api with correct user agent
 func TestUsagecommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createUsageClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -91,9 +97,11 @@ func TestUsagecommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestUsagecommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createUsageClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -104,9 +112,11 @@ func TestUsagecommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestUsagecommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createUsageClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -117,6 +127,8 @@ func TestUsagecommonApi2(t *testing.T) {
 // client throws with invalid parameters
 func TestUsageparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
 	var cfg usage.UsageConfiguration

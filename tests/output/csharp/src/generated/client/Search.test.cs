@@ -93,8 +93,38 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "test the compression strategy")]
+  [Fact(DisplayName = "tests the retry strategy error")]
   public async Task ApiTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6676,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/test/hang/csharp");
+    });
+    Assert.Equal(
+      "RetryStrategy failed to connect to Algolia. Reason: The operation has timed out.".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
+  [Fact(DisplayName = "test the compression strategy")]
+  public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {

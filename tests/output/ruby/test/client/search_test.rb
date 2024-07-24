@@ -63,8 +63,36 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # test the compression strategy
+  # tests the retry strategy error
   def test_api3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6676,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.custom_get("1/test/hang/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "Unreachable hosts. Last error for localhost: Net::ReadTimeout with #<TCPSocket:(closed)>",
+        e.message
+      )
+    end
+  end
+
+  # test the compression strategy
+  def test_api4
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",

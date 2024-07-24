@@ -91,8 +91,27 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("test the compression strategy")
+  @DisplayName("tests the retry strategy error")
   void apiTest3() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6676)), false)
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        var res = client.customGet("1/test/hang/java");
+      });
+      assertEquals(
+        "Error(s) while processing the retry strategy\n" + "Caused by: java.net.SocketTimeoutException: timeout",
+        exception.getMessage()
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("test the compression strategy")
+  void apiTest4() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",

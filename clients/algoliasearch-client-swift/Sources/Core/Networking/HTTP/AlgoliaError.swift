@@ -25,7 +25,12 @@ public enum AlgoliaError: Error, LocalizedError {
         case let .httpError(error):
             "HTTP error: \(error)"
         case let .noReachableHosts(errors, exposeIntermediateErrors):
-            "All hosts are unreachable. " + (exposeIntermediateErrors ? "Intermediate errors:\n- \(errors.map(\.localizedDescription).joined(separator: "\n- "))" : "You can use 'exposeIntermediateErrors: true' in the config to investigate.")
+            "All hosts are unreachable. " +
+                (
+                    exposeIntermediateErrors ?
+                        "Intermediate errors:\n- \(errors.map(\.localizedDescription).joined(separator: "\n- "))" :
+                        "You can use 'exposeIntermediateErrors: true' in the config to investigate."
+                )
         case .missingData:
             "Missing response data"
         case .decodingFailure:

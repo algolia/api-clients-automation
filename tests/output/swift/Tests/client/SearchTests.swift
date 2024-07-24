@@ -57,8 +57,31 @@ final class SearchClientClientTests: XCTestCase {
         XCTAssertEqual(comparableJSON, responseBodyJSON)
     }
 
-    /// test the compression strategy
+    /// tests the retry strategy error
     func testApiTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6676")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "1/test/hang/swift")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(
+                error.localizedDescription,
+                "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
+            )
+        }
+    }
+
+    /// test the compression strategy
+    func testApiTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",

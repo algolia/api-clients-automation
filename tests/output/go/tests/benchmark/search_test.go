@@ -31,6 +31,8 @@ func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) 
 // benchmark the search method
 func TestSearchbenchmark0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
 	var cfg search.SearchConfiguration
@@ -46,7 +48,7 @@ func TestSearchbenchmark0(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	for i := 0; i < 1000; i++ {
-		_, err = client.Search(client.NewApiSearchRequest(
+		res, err = client.Search(client.NewApiSearchRequest(
 
 			search.NewEmptySearchMethodParams().SetRequests(
 				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(

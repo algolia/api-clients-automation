@@ -32,9 +32,11 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 // calls api with correct user agent
 func TestAnalyticscommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestAnalyticscommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestAnalyticscommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestAnalyticscommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestAnalyticscommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,6 +76,8 @@ func TestAnalyticscommonApi2(t *testing.T) {
 // fallbacks to the alias when region is not given
 func TestAnalyticsparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.AnalyticsConfiguration
@@ -84,7 +92,7 @@ func TestAnalyticsparameters0(t *testing.T) {
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
+	res, err = client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
 		"my-index",
 	))
 	require.NoError(t, err)
@@ -94,6 +102,8 @@ func TestAnalyticsparameters0(t *testing.T) {
 // uses the correct region
 func TestAnalyticsparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.AnalyticsConfiguration
@@ -109,7 +119,7 @@ func TestAnalyticsparameters1(t *testing.T) {
 	}
 	client, err = analytics.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -119,6 +129,8 @@ func TestAnalyticsparameters1(t *testing.T) {
 // throws when incorrect region is given
 func TestAnalyticsparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
 	var cfg analytics.AnalyticsConfiguration
@@ -139,9 +151,11 @@ func TestAnalyticsparameters2(t *testing.T) {
 // getAverageClickPosition throws without index
 func TestAnalyticsparameters3(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
-	_, err = client.GetClickPositions(client.NewApiGetClickPositionsRequest(
+	res, err = client.GetClickPositions(client.NewApiGetClickPositionsRequest(
 		tests.ZeroValue[string](),
 	))
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")

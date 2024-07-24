@@ -142,6 +142,9 @@ open class Transporter {
             }
         }
 
-        throw AlgoliaError.noReachableHosts(intermediateErrors: intermediateErrors, exposeIntermediateErrors: self.exposeIntermediateErrors)
+        throw AlgoliaError.noReachableHosts(
+            intermediateErrors: intermediateErrors,
+            exposeIntermediateErrors: self.exposeIntermediateErrors
+        )
     }
 }

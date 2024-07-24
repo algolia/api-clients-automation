@@ -72,7 +72,6 @@ let package = Package(
         .testTarget(
             name: "requests",
             dependencies: [
-                .product(name: "DotEnv", package: "DotEnv"),
                 .target(name: "Utils"),
             ] + libraries
         ),
@@ -86,7 +85,6 @@ let package = Package(
         .testTarget(
             name: "benchmark",
             dependencies: [
-                .product(name: "DotEnv", package: "DotEnv"),
                 .target(name: "Utils"),
             ] + libraries
         ),
