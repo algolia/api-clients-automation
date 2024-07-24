@@ -5,7 +5,7 @@ import { getTestOutputFolder } from '../config.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import { startBenchmarkServer, startTestServer } from './testServer';
+import { startTestServer } from './testServer';
 import { printBenchmarkReport } from './testServer/benchmark.js';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
@@ -142,27 +142,22 @@ export async function runCts(
   clients: string[],
   suites: Record<CTSType, boolean>,
 ): Promise<void> {
-  const useTestServer = suites.client && (clients.includes('search') || clients.includes('all'));
-  const useBenchmarkServer =
+  const withBenchmarkServer =
     suites.benchmark && (clients.includes('search') || clients.includes('all'));
-
-  let closeTestServer: () => Promise<void> = async () => {};
-  if (useTestServer) {
-    closeTestServer = await startTestServer();
-  }
-
-  let closeBenchmarkServer: () => Promise<void> = async () => {};
-  if (useBenchmarkServer) {
-    closeBenchmarkServer = await startBenchmarkServer();
-  }
+  const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
+  const closeTestServer = await startTestServer({
+    ...suites,
+    benchmark: withBenchmarkServer,
+    client: withClientServer,
+  });
 
   for (const lang of languages) {
     await runCtsOne(lang, suites);
   }
 
-  if (useTestServer) {
-    await closeTestServer();
+  await closeTestServer();
 
+  if (withClientServer) {
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
     assertValidTimeouts(languages.length);
@@ -170,10 +165,7 @@ export async function runCts(
     assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
     assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
   }
-
-  if (useBenchmarkServer) {
-    await closeBenchmarkServer();
-
+  if (withBenchmarkServer) {
     printBenchmarkReport();
   }
 }

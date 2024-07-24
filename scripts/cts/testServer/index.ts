@@ -4,6 +4,7 @@ import express from 'express';
 import type { Express } from 'express';
 
 import { createSpinner } from '../../spinners';
+import type { CTSType } from '../runCts';
 
 import { benchmarkServer } from './benchmark';
 import { chunkWrapperServer } from './chunkWrapper';
@@ -13,15 +14,28 @@ import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
 import { waitForApiKeyServer } from './waitForApiKey';
 
-export async function startTestServer(): Promise<() => Promise<void>> {
-  const servers = await Promise.all([
-    timeoutServer(),
-    gzipServer(),
-    timeoutServerBis(),
-    replaceAllObjectsServer(),
-    chunkWrapperServer(),
-    waitForApiKeyServer(),
-  ]);
+export async function startTestServer(
+  suites: Record<CTSType, boolean>,
+): Promise<() => Promise<void>> {
+  const toStart: Array<Promise<Server>> = [];
+  if (suites.client) {
+    toStart.push(
+      timeoutServer(),
+      gzipServer(),
+      timeoutServerBis(),
+      replaceAllObjectsServer(),
+      chunkWrapperServer(),
+      waitForApiKeyServer(),
+    );
+  }
+  if (suites.benchmark) {
+    toStart.push(benchmarkServer());
+  }
+  if (toStart.length === 0) {
+    return async () => {};
+  }
+
+  const servers = await Promise.all(toStart);
 
   return async () => {
     await Promise.all(
@@ -32,16 +46,6 @@ export async function startTestServer(): Promise<() => Promise<void>> {
           }),
       ),
     );
-  };
-}
-
-export async function startBenchmarkServer(): Promise<() => Promise<void>> {
-  const server = await benchmarkServer();
-
-  return async () => {
-    await new Promise<void>((resolve) => {
-      server.close(() => resolve());
-    });
   };
 }
 

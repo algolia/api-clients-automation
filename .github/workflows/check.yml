@@ -271,7 +271,7 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    timeout-minutes: 20
+    timeout-minutes: 10
     runs-on: ubuntu-22.04
     needs:
       - setup

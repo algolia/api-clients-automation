@@ -2,6 +2,8 @@
 // {{{testName}}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
   var err error
+  var res any
+  _ = res
   {{#autoCreateClient}}
   client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
   {{/autoCreateClient}}
