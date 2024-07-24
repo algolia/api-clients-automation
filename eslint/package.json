@@ -2,12 +2,14 @@
   "name": "eslint-plugin-automation-custom",
   "version": "1.0.0",
   "description": "Custom rules for eslint",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "files": [
     "src/**.ts"
   ],
   "scripts": {
     "build": "rm -rf dist/ && tsc",
+    "lint": "eslint --ext=ts .",
+    "lint:fix": "eslint --ext=ts --fix .",
     "test": "jest"
   },
   "devDependencies": {
