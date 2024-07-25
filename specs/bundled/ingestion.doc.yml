@@ -9684,6 +9684,347 @@ paths:
 
             let response = try await client.runTask(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  /2/tasks/{taskID}/push:
+    post:
+      tags:
+        - tasks
+      summary: Push a `batch` request payload through the Pipeline
+      description: >-
+        Push a `batch` request payload through the Pipeline. You can check the
+        status of task pushes with the observability endpoints.
+      operationId: pushTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: >-
+          Request body of a Search API `batch` request that will be pushed in
+          the Connectors pipeline.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/batchWriteParams'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.PushTaskAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new BatchWriteParams
+              {
+                Requests = new List<BatchRequest>
+                {
+                  new BatchRequest
+                  {
+                    Action = Enum.Parse<Action>("AddObject"),
+                    Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+                  },
+                  new BatchRequest
+                  {
+                    Action = Enum.Parse<Action>("AddObject"),
+                    Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+                  }
+                },
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.PushTask(client.NewApiPushTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyBatchWriteParams().SetRequests(
+                []ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.pushTask(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new BatchWriteParams()
+                .setRequests(
+                  List.of(
+                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+                  )
+                )
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.pushTask({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              batchWriteParams: {
+                requests: [
+                  { action: 'addObject', body: { key: 'bar', foo: '1' } },
+                  { action: 'addObject', body: { key: 'baz', foo: '2' } },
+                ],
+              },
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.pushTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              batchWriteParams = BatchWriteParams(
+                requests = listOf(
+                  BatchRequest(
+                    action = Action.entries.first { it.value == "addObject" },
+                    body = buildJsonObject {
+                      put(
+                        "key",
+                        JsonPrimitive("bar"),
+                      )
+                      put(
+                        "foo",
+                        JsonPrimitive("1"),
+                      )
+                    },
+                  ),
+                  BatchRequest(
+                    action = Action.entries.first { it.value == "addObject" },
+                    body = buildJsonObject {
+                      put(
+                        "key",
+                        JsonPrimitive("baz"),
+                      )
+                      put(
+                        "foo",
+                        JsonPrimitive("2"),
+                      )
+                    },
+                  ),
+                ),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->pushTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['requests' => [
+                    ['action' => 'addObject',
+                        'body' => ['key' => 'bar',
+                            'foo' => '1',
+                        ],
+                    ],
+
+                    ['action' => 'addObject',
+                        'body' => ['key' => 'baz',
+                            'foo' => '2',
+                        ],
+                    ],
+                ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.push_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                batch_write_params={
+                    "requests": [
+                        {
+                            "action": "addObject",
+                            "body": {
+                                "key": "bar",
+                                "foo": "1",
+                            },
+                        },
+                        {
+                            "action": "addObject",
+                            "body": {
+                                "key": "baz",
+                                "foo": "2",
+                            },
+                        },
+                    ],
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.push_task(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              BatchWriteParams.new(
+                requests: [
+                  BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+                  BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+                ]
+              )
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.pushTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              batchWriteParams = BatchWriteParams(
+                requests = Seq(
+                  BatchRequest(
+                    action = Action.withName("addObject"),
+                    body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                  ),
+                  BatchRequest(
+                    action = Action.withName("addObject"),
+                    body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                  )
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.pushTask(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                batchWriteParams: IngestionBatchWriteParams(requests: [
+                    IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
+                    IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
+                ])
+            )
   /2/tasks/{taskID}/enable:
     put:
       tags:
@@ -14673,6 +15014,59 @@ components:
           description: Whether the task is enabled.
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
+    action:
+      type: string
+      enum:
+        - addObject
+        - updateObject
+        - partialUpdateObject
+        - partialUpdateObjectNoCreate
+        - deleteObject
+        - delete
+        - clear
+      description: Type of indexing operation.
+    batchWriteParams:
+      title: batchWriteParams
+      description: Batch parameters.
+      type: object
+      additionalProperties: false
+      properties:
+        requests:
+          type: array
+          items:
+            title: batchRequest
+            type: object
+            additionalProperties: false
+            properties:
+              action:
+                $ref: '#/components/schemas/action'
+              body:
+                type: object
+                description: Operation arguments (varies with specified `action`).
+                example:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+            required:
+              - action
+              - body
+      required:
+        - requests
+      example:
+        batch:
+          summary: Batch indexing request
+          value:
+            requests:
+              - action: addObject
+                body:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+              - action: addObject
+                body:
+                  name: Gayla geimer
+                  company: Ortman McCain Co.
+                  email: gayla@geimer.com
     sortKeys:
       type: string
       description: Property by which to sort the list.

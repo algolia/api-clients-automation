@@ -649,6 +649,53 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForPushTask() {
+    // >SEPARATOR pushTask default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      batchWriteParams = BatchWriteParams(
+        requests = listOf(
+          BatchRequest(
+            action = Action.entries.first { it.value == "addObject" },
+            body = buildJsonObject {
+              put(
+                "key",
+                JsonPrimitive("bar"),
+              )
+              put(
+                "foo",
+                JsonPrimitive("1"),
+              )
+            },
+          ),
+          BatchRequest(
+            action = Action.entries.first { it.value == "addObject" },
+            body = buildJsonObject {
+              put(
+                "key",
+                JsonPrimitive("baz"),
+              )
+              put(
+                "foo",
+                JsonPrimitive("2"),
+              )
+            },
+          ),
+        ),
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForRunTask() {
     // >SEPARATOR runTask default
     // Initialize the client

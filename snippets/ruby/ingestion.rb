@@ -722,6 +722,33 @@ def snippet_for_list_transformations
   # SEPARATOR<
 end
 
+# Snippet for the pushTask method.
+#
+# pushTask
+def snippet_for_push_task
+  # >SEPARATOR pushTask default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.push_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    BatchWriteParams.new(
+      requests: [
+        BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+        BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+      ]
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the runTask method.
 #
 # runTask

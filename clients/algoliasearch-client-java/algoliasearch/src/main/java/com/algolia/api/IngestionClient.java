@@ -2932,6 +2932,77 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushTaskAsync(taskID, batchWriteParams, requestOptions));
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
+   * with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams) throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, batchWriteParams, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(
+    @Nonnull String taskID,
+    @Nonnull BatchWriteParams batchWriteParams,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+
+    Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `pushTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/push", taskID)
+      .setMethod("POST")
+      .setBody(batchWriteParams)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of task pushes with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskAsync(taskID, batchWriteParams, null);
+  }
+
+  /**
    * Runs a task. You can check the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)

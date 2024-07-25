@@ -1144,6 +1144,37 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('pushTask')]
+    public function testPushTask()
+    {
+        $client = $this->getClient();
+        $client->pushTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['requests' => [
+                ['action' => 'addObject',
+                    'body' => ['key' => 'bar',
+                        'foo' => '1',
+                    ],
+                ],
+
+                ['action' => 'addObject',
+                    'body' => ['key' => 'baz',
+                        'foo' => '2',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('runTask')]
     public function testRunTask()
     {

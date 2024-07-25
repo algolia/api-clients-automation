@@ -505,6 +505,28 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the pushTask method.
+  //
+  // pushTask
+  void snippetForPushTask() {
+    // >SEPARATOR pushTask default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.pushTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new BatchWriteParams()
+        .setRequests(
+          List.of(
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+          )
+        )
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the runTask method.
   //
   // runTask

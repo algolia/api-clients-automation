@@ -159,6 +159,8 @@ paths:
     $ref: 'paths/tasks/v2/taskID.yml'
   /2/tasks/{taskID}/run:
     $ref: 'paths/tasks/v2/runTask.yml'
+  /2/tasks/{taskID}/push:
+    $ref: 'paths/tasks/v2/pushTask.yml'
   /2/tasks/{taskID}/enable:
     $ref: 'paths/tasks/v2/enableTask.yml'
   /2/tasks/{taskID}/disable:

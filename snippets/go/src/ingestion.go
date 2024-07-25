@@ -1012,6 +1012,36 @@ func SnippetForListTransformationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForPushTaskOfIngestion() {
+	/*
+	   Snippet for the pushTask method.
+
+	   pushTask
+	*/
+
+	// >SEPARATOR pushTask default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PushTask(client.NewApiPushTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyBatchWriteParams().SetRequests(
+			[]ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForRunTaskOfIngestion() {
 	/*
 	   Snippet for the runTask method.

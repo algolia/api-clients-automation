@@ -1117,6 +1117,33 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("pushTask")
+  void pushTaskTest() {
+    assertDoesNotThrow(() -> {
+      client.pushTask(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new BatchWriteParams()
+          .setRequests(
+            List.of(
+              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("runTask")
   void runTaskTest() {
     assertDoesNotThrow(() -> {

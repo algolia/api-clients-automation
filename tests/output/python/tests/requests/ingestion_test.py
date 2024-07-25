@@ -1013,6 +1013,40 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_push_task_(self):
+        """
+        pushTask
+        """
+        _req = await self._client.push_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            batch_write_params={
+                "requests": [
+                    {
+                        "action": "addObject",
+                        "body": {
+                            "key": "bar",
+                            "foo": "1",
+                        },
+                    },
+                    {
+                        "action": "addObject",
+                        "body": {
+                            "key": "baz",
+                            "foo": "2",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
+        )
+
     async def test_run_task_(self):
         """
         runTask

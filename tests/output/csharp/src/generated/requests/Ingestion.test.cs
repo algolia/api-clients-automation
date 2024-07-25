@@ -8,7 +8,7 @@ using Algolia.Search.Tests.Utils;
 using dotenv.net;
 using Quibble.Xunit;
 using Xunit;
-using Action = Algolia.Search.Models.Search.Action;
+using Action = Algolia.Search.Models.Ingestion.Action;
 
 namespace Algolia.Search.requests;
 
@@ -1093,6 +1093,39 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "pushTask")]
+  public async Task PushTaskTest()
+  {
+    await client.PushTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new BatchWriteParams
+      {
+        Requests = new List<BatchRequest>
+        {
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+          },
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "runTask")]
