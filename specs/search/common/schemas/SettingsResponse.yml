@@ -1,0 +1,13 @@
+settingsResponse:
+  allOf:
+    - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
+    - $ref: '#/WithPrimary'
+
+WithPrimary:
+  type: object
+  additionalProperties: false
+  properties:
+    primary:
+      type: string
+      description: |
+        Replica indices only: the name of the primary index for this replica.

@@ -128,6 +128,7 @@ import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
 import 'package:algolia_client_search/src/model/secured_api_key_restrictions.dart';
 import 'package:algolia_client_search/src/model/semantic_search.dart';
+import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/snippet_result_option.dart';
 import 'package:algolia_client_search/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_search/src/model/source.dart';
@@ -146,6 +147,7 @@ import 'package:algolia_client_search/src/model/user_highlight_result.dart';
 import 'package:algolia_client_search/src/model/user_hit.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
 import 'package:algolia_client_search/src/model/value.dart';
+import 'package:algolia_client_search/src/model/with_primary.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -510,6 +512,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SettingsResponse':
+      return SettingsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SnippetResultOption':
       return SnippetResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -553,6 +558,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return UserId.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'WithPrimary':
+      return WithPrimary.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 

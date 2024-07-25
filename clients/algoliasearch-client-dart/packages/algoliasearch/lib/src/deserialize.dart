@@ -79,6 +79,7 @@ import 'package:algoliasearch/src/model/search_strategy.dart';
 import 'package:algoliasearch/src/model/search_type_default.dart';
 import 'package:algoliasearch/src/model/search_type_facet.dart';
 import 'package:algoliasearch/src/model/semantic_search.dart';
+import 'package:algoliasearch/src/model/settings_response.dart';
 import 'package:algoliasearch/src/model/snippet_result_option.dart';
 import 'package:algoliasearch/src/model/sort_remaining_by.dart';
 import 'package:algoliasearch/src/model/supported_language.dart';
@@ -91,6 +92,7 @@ import 'package:algoliasearch/src/model/trending_items_model.dart';
 import 'package:algoliasearch/src/model/trending_items_query.dart';
 import 'package:algoliasearch/src/model/typo_tolerance_enum.dart';
 import 'package:algoliasearch/src/model/value.dart';
+import 'package:algoliasearch/src/model/with_primary.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -320,6 +322,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SettingsResponse':
+      return SettingsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SnippetResultOption':
       return SnippetResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -350,6 +355,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return TypoToleranceEnum.fromJson(value) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'WithPrimary':
+      return WithPrimary.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 
