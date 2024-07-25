@@ -221,6 +221,56 @@
     ]
   },
   {
+    "testName": "saveObjects should report errors",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "wrong-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_e2e_saveObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ]
+        },
+        "expected": {
+          "error": {
+            "csharp": "{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "go": "API error [403] {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "javascript": "Invalid Application-ID or API key",
+            "kotlin": "Client request(POST http://${{localhost}}:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}\\\"",
+            "php": "Invalid Application-ID or API key",
+            "python": "Invalid Application-ID or API key",
+            "ruby": "Invalid Application-ID or API key",
+            "scala": "Invalid Application-ID or API key",
+            "swift": "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "call partialUpdateObjects with createIfNotExists=true",
     "autoCreateClient": false,
     "steps": [

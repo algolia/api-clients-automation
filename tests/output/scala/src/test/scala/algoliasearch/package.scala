@@ -16,8 +16,12 @@ package object algoliasearch {
   @targetName("assertErrorFuture")
   def assertError(message: String)(call: => Future[_])(implicit ec: ExecutionContextExecutor): Unit = {
     Await.ready(call, Duration.Inf).value.get match {
-      case Failure(exception) => assert(exception.getMessage == message, s"Error message does not match, expected: $message, got: ${exception.getMessage}")
-      case Success(_)         => assert(false, "Future should have failed")
+      case Failure(exception) =>
+        assert(
+          exception.getMessage == message,
+          s"Error message does not match, expected: $message, got: ${exception.getMessage}"
+        )
+      case Success(_) => assert(false, "Future should have failed")
     }
   }
 }
