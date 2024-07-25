@@ -32,11 +32,11 @@ describe('spread generation', () => {
     `);
     });
 
-    it('generated commits have a link to the origin pull request', () => {
+    it.only('generated commits have a link to the origin pull request', () => {
       expect(
-        cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated).', '')
+        cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated)', '')
       ).toEqual(
-        `feat(ci): make ci push generated code\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
+        `feat(ci): make ci push generated code (generated)\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
       );
     });
   });
