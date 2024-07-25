@@ -9,7 +9,7 @@
     import Core
 #endif
 import Foundation
-import Search.Action
+import enum Search.Action
 
 public extension SearchClient {
     /// Wait for a task to complete
