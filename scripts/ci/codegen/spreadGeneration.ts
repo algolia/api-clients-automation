@@ -18,29 +18,14 @@ import { getNewReleasedTag } from '../../release/common.js';
 import type { Language } from '../../types.js';
 import { cloneRepository, getNbGitDiff } from '../utils.js';
 
-import text, { commitStartRelease } from './text.js';
+import { commitStartRelease } from './text.js';
 
 export function cleanUpCommitMessage(commitMessage: string, version: string): string {
   if (commitMessage.startsWith(commitStartRelease)) {
     return `chore: release ${version}`;
   }
 
-  const isCodeGenCommit = commitMessage.startsWith(text.commitStartMessage);
-
-  if (isCodeGenCommit) {
-    const hash = commitMessage.split(text.commitStartMessage)[1].replace('. [skip ci]', '').trim();
-
-    if (!hash) {
-      return commitMessage;
-    }
-
-    return [
-      `${text.commitStartMessage} ${hash.substring(0, 8)}. [skip ci]`,
-      `${REPO_URL}/commit/${hash}`,
-    ].join('\n\n');
-  }
-
-  const prCommit = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
+  const prCommit = commitMessage.match(/(.+)\s\(#(\d+)\)/);
 
   if (!prCommit) {
     return commitMessage;

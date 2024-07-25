@@ -32,13 +32,12 @@ describe('spread generation', () => {
     `);
     });
 
-    it('provides a link to the automation repo for commit with hash', () => {
-      const commitMessage = `${text.commitStartMessage} ed33e02f3e45fd72b4f420a56e4be7c6929fca9f. [skip ci]`;
-      expect(cleanUpCommitMessage(commitMessage, '')).toMatchInlineSnapshot(`
-      "chore: generated code for commit ed33e02f. [skip ci]
-
-      https://github.com/algolia/api-clients-automation/commit/ed33e02f3e45fd72b4f420a56e4be7c6929fca9f"
-    `);
+    it('generated commits have a link to the origin pull request', () => {
+      expect(
+        cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated).', '')
+      ).toEqual(
+        `feat(ci): make ci push generated code\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
+      );
     });
   });
 });
