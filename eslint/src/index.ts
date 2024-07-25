@@ -2,6 +2,7 @@ import { endWithDot } from './rules/endWithDot';
 import { noFinalDot } from './rules/noFinalDot';
 import { noNewLine } from './rules/noNewLine';
 import { createOutOfLineRule } from './rules/outOfLineRule';
+import { refCommon } from './rules/refCommon';
 import { singleQuoteRef } from './rules/singleQuoteRef';
 import { validACL } from './rules/validACL';
 
@@ -15,6 +16,7 @@ const rules = {
   'single-quote-ref': singleQuoteRef,
   'valid-acl': validACL,
   'no-new-line': noNewLine,
+  'ref-common': refCommon,
 };
 
 // Custom parser for ESLint, to read plain text file like mustache.
