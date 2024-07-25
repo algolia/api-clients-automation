@@ -12,12 +12,13 @@ post:
     - Actions are equivalent to the individual API requests of the same name.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
+  x-codegen-request-body-name: batchWriteParams
   requestBody:
-    required: true
     content:
       application/json:
         schema:
           $ref: '../../../common/schemas/Batch.yml#/batchWriteParams'
+    required: true
   responses:
     '200':
       description: OK
