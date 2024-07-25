@@ -11,7 +11,7 @@ post:
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
   requestBody:
-    description: Request body for creating a task.
+    description: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
     content:
       application/json:
         schema:
