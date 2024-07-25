@@ -280,6 +280,34 @@ class TestSearchClient:
 
     async def test_helpers_4(self):
         """
+        saveObjects should report errors
+        """
+
+        _config = SearchConfig("test-app-id", "wrong-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        self._client = SearchClient.create_with_config(config=_config)
+        try:
+            await self._client.save_objects(
+                index_name="cts_e2e_saveObjects_python",
+                objects=[
+                    {
+                        "objectID": "1",
+                        "name": "Adam",
+                    },
+                    {
+                        "objectID": "2",
+                        "name": "Benoit",
+                    },
+                ],
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Invalid Application-ID or API key"
+
+    async def test_helpers_5(self):
+        """
         call partialUpdateObjects with createIfNotExists=true
         """
 
@@ -310,7 +338,7 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""[{"taskID":444,"objectIDs":["1","2"]}]""")
 
-    async def test_helpers_5(self):
+    async def test_helpers_6(self):
         """
         call partialUpdateObjects with createIfNotExists=false
         """
@@ -342,7 +370,7 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""[{"taskID":555,"objectIDs":["3","4"]}]""")
 
-    async def test_helpers_6(self):
+    async def test_helpers_7(self):
         """
         call deleteObjects without error
         """
@@ -367,7 +395,7 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""[{"taskID":666,"objectIDs":["1","2"]}]""")
 
-    async def test_helpers_7(self):
+    async def test_helpers_8(self):
         """
         wait for api key helper - add
         """
@@ -391,7 +419,7 @@ class TestSearchClient:
             """{"value":"api-key-add-operation-test-python","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}"""
         )
 
-    async def test_helpers_8(self):
+    async def test_helpers_9(self):
         """
         wait for api key - update
         """
@@ -434,7 +462,7 @@ class TestSearchClient:
             """{"value":"api-key-update-operation-test-python","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}"""
         )
 
-    async def test_helpers_9(self):
+    async def test_helpers_10(self):
         """
         wait for api key - delete
         """

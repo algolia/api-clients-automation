@@ -285,8 +285,32 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
+    #[TestDox('saveObjects should report errors')]
     public function test4helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://localhost:6680']));
+
+        try {
+            $res = $client->saveObjects(
+                'cts_e2e_saveObjects_php',
+                [
+                    ['objectID' => '1',
+                        'name' => 'Adam',
+                    ],
+
+                    ['objectID' => '2',
+                        'name' => 'Benoit',
+                    ],
+                ],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
+        }
+    }
+
+    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
+    public function test5helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
@@ -310,7 +334,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
-    public function test5helpers()
+    public function test6helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
@@ -334,7 +358,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('call deleteObjects without error')]
-    public function test6helpers()
+    public function test7helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
@@ -353,7 +377,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('wait for api key helper - add')]
-    public function test7helpers()
+    public function test8helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
@@ -368,7 +392,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('wait for api key - update')]
-    public function test8helpers()
+    public function test9helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
@@ -405,7 +429,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('wait for api key - delete')]
-    public function test9helpers()
+    public function test10helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 

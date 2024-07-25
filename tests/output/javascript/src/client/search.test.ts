@@ -209,6 +209,27 @@ describe('helpers', () => {
     expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
   }, 15000);
 
+  test('saveObjects should report errors', async () => {
+    const client = searchClient('test-app-id', 'wrong-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    try {
+      const result = await client.saveObjects({
+        indexName: 'cts_e2e_saveObjects_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Invalid Application-ID or API key');
+    }
+  }, 15000);
+
   test('call partialUpdateObjects with createIfNotExists=true', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
       hosts: [

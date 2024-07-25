@@ -279,8 +279,29 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("call partialUpdateObjects with createIfNotExists=true")
+  @DisplayName("saveObjects should report errors")
   void helpersTest4() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "wrong-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      {
+        Exception exception = assertThrows(Exception.class, () -> {
+          var res = client.saveObjects(
+            "cts_e2e_saveObjects_java",
+            List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
+          );
+        });
+        assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API" + " key\",\"status\":403}", exception.getMessage());
+      }
+    });
+  }
+
+  @Test
+  @DisplayName("call partialUpdateObjects with createIfNotExists=true")
+  void helpersTest5() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -301,7 +322,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("call partialUpdateObjects with createIfNotExists=false")
-  void helpersTest5() {
+  void helpersTest6() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -322,7 +343,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("call deleteObjects without error")
-  void helpersTest6() {
+  void helpersTest7() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -339,7 +360,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key helper - add")
-  void helpersTest7() {
+  void helpersTest8() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -361,7 +382,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key - update")
-  void helpersTest8() {
+  void helpersTest9() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -395,7 +416,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key - delete")
-  void helpersTest9() {
+  void helpersTest10() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",

@@ -262,8 +262,32 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
-    /// call partialUpdateObjects with createIfNotExists=true
+    /// saveObjects should report errors
     func testHelpersTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "wrong-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.saveObjects(
+                indexName: "cts_e2e_saveObjects_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
+            )
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(
+                error.localizedDescription,
+                "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
+            )
+        }
+    }
+
+    /// call partialUpdateObjects with createIfNotExists=true
+    func testHelpersTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -285,7 +309,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// call partialUpdateObjects with createIfNotExists=false
-    func testHelpersTest5() async throws {
+    func testHelpersTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -307,7 +331,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// call deleteObjects without error
-    func testHelpersTest6() async throws {
+    func testHelpersTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -325,7 +349,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// wait for api key helper - add
-    func testHelpersTest7() async throws {
+    func testHelpersTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -350,7 +374,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// wait for api key - update
-    func testHelpersTest8() async throws {
+    func testHelpersTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -384,7 +408,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// wait for api key - delete
-    func testHelpersTest9() async throws {
+    func testHelpersTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",

@@ -324,8 +324,45 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=true")]
+  [Fact(DisplayName = "saveObjects should report errors")]
   public async Task HelpersTest4()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "wrong-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.SaveObjectsAsync(
+        "cts_e2e_saveObjects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        }
+      );
+    });
+    Assert.Equal(
+      "{\"message\":\"Invalid Application-ID or API key\",\"status\":403}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
+  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=true")]
+  public async Task HelpersTest5()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -362,7 +399,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=false")]
-  public async Task HelpersTest5()
+  public async Task HelpersTest6()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -399,7 +436,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "call deleteObjects without error")]
-  public async Task HelpersTest6()
+  public async Task HelpersTest7()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -431,7 +468,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "wait for api key helper - add")]
-  public async Task HelpersTest7()
+  public async Task HelpersTest8()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -463,7 +500,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "wait for api key - update")]
-  public async Task HelpersTest8()
+  public async Task HelpersTest9()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -510,7 +547,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "wait for api key - delete")]
-  public async Task HelpersTest9()
+  public async Task HelpersTest10()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
