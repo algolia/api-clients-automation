@@ -40,7 +40,8 @@ async function buildLanguage(
       await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
       break;
     case 'swift':
-      await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      // make this work in the playground
+      if (!playground) await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
       break;
     default:
   }

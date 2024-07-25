@@ -184,7 +184,7 @@ public class SearchPlayground : IPlayground
       Indexes = [DefaultIndex]
     });
     var createdApiKey = await PlaygroundHelper.Start($"Saving new API Key", async () =>
-      await _client.WaitForApiKeyAsync(ApiKeyOperation.Add, addApiKeyResponse.Key), "New key has been created !");
+      await _client.WaitForApiKeyAsync(addApiKeyResponse.Key, ApiKeyOperation.Add), "New key has been created !");
 
     Console.WriteLine("--- Update api key `UpdateApiKeyAsync` ---");
     var modifiedApiKey = createdApiKey.ToApiKey();
@@ -192,12 +192,12 @@ public class SearchPlayground : IPlayground
 
     var updateApiKey = await _client.UpdateApiKeyAsync(addApiKeyResponse.Key, modifiedApiKey);
     await PlaygroundHelper.Start("Updating API Key`", async () =>
-      await _client.WaitForApiKeyAsync(ApiKeyOperation.Update, updateApiKey.Key, modifiedApiKey), "Key updated !");
+      await _client.WaitForApiKeyAsync(updateApiKey.Key, ApiKeyOperation.Update, modifiedApiKey), "Key updated !");
 
     Console.WriteLine("--- Delete api key `UpdateApiKeyAsync` ---");
     await _client.DeleteApiKeyAsync(addApiKeyResponse.Key);
     await PlaygroundHelper.Start("Deleting API Key", async () =>
-      await _client.WaitForApiKeyAsync(ApiKeyOperation.Delete, updateApiKey.Key), "Key deleted !");
+      await _client.WaitForApiKeyAsync(updateApiKey.Key, ApiKeyOperation.Delete), "Key deleted !");
 
     Console.WriteLine("--- Generate Secured API Keys `GenerateSecuredApiKeys` ---");
     var generateSecuredApiKeys = _client.GenerateSecuredApiKey(_configuration.SearchApiKey,

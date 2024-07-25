@@ -14,7 +14,7 @@ const client = ingestionClient(appId, apiKey, 'us', {authMode: 'WithinHeaders', 
 
 async function testIngestion() {
   try {
-    const res = await client.getAuthentications();
+    const res = await client.listAuthentications();
 
     console.log(`[OK]`, res);
   } catch (e) {
