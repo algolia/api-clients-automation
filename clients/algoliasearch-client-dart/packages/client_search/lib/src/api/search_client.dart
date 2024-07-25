@@ -55,6 +55,7 @@ import 'package:algolia_client_search/src/model/search_synonyms_params.dart';
 import 'package:algolia_client_search/src/model/search_synonyms_response.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
+import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/source.dart';
 import 'package:algolia_client_search/src/model/synonym_hit.dart';
 import 'package:algolia_client_search/src/model/update_api_key_response.dart';
@@ -1165,7 +1166,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
   /// * [requestOptions] additional request configuration.
-  Future<IndexSettings> getSettings({
+  Future<SettingsResponse> getSettings({
     required String indexName,
     RequestOptions? requestOptions,
   }) async {
@@ -1182,9 +1183,9 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<IndexSettings, IndexSettings>(
+    return deserialize<SettingsResponse, SettingsResponse>(
       response,
-      'IndexSettings',
+      'SettingsResponse',
       growable: true,
     );
   }

@@ -2658,7 +2658,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public IndexSettings getSettings(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public SettingsResponse getSettings(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getSettingsAsync(indexName, requestOptions));
   }
 
@@ -2668,7 +2668,7 @@ public class SearchClient extends ApiClient {
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public IndexSettings getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public SettingsResponse getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getSettings(indexName, null);
   }
 
@@ -2680,12 +2680,12 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<IndexSettings> getSettingsAsync(@Nonnull String indexName, RequestOptions requestOptions)
+  public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}/settings", indexName).setMethod("GET").build();
-    return executeAsync(request, requestOptions, new TypeReference<IndexSettings>() {});
+    return executeAsync(request, requestOptions, new TypeReference<SettingsResponse>() {});
   }
 
   /**
@@ -2694,7 +2694,7 @@ public class SearchClient extends ApiClient {
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<IndexSettings> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getSettingsAsync(indexName, null);
   }
 
