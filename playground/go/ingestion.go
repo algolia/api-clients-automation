@@ -33,8 +33,8 @@ func testIngestion(appID, apiKey string) int {
 
 	printResponse(createAuthenticationResponse)
 
-	listAuthenticationsResponse, err := ingestionClient.GetAuthentications(
-		ingestionClient.NewApiGetAuthenticationsRequest().WithItemsPerPage(2),
+	listAuthenticationsResponse, err := ingestionClient.ListAuthentications(
+		ingestionClient.NewApiListAuthenticationsRequest().WithItemsPerPage(2),
 	)
 	if err != nil {
 		fmt.Printf("request error with GetAuthentications: %v\n", err)

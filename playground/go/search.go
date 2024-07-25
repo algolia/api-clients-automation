@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
@@ -13,9 +13,15 @@ func testSearch(appID, apiKey string) int {
 		panic(err)
 	}
 
-	res, err := searchClient.WaitForApiKey("test", search.API_KEY_OPERATION_ADD, search.WithContext(context.Background()), search.WithMaxRetries(4))
-	print(res)
-	print(err.Error())
+	err = searchClient.BrowseObjects("test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(len(res.(*search.BrowseResponse).Hits))
+	}))
+	if err != nil {
+		panic(err)
+	}
 
 	/*
 		response, err := searchClient.AddOrUpdateObject(
