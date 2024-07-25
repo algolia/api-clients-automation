@@ -14,7 +14,7 @@ describe('spread generation', () => {
       expect(
         cleanUpCommitMessage('feat(ci): make ci push generated code (#244)', '')
       ).toEqual(
-        `feat(ci): make ci push generated code\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
+        `feat(ci): make ci push generated code (generated)\n\nhttps://github.com/algolia/api-clients-automation/pull/244`
       );
     });
 
@@ -26,13 +26,13 @@ describe('spread generation', () => {
     it('cleans up correctly even if the title contains a url', () => {
       const commitMessage = `fix(java): solve oneOf using a custom generator https://algolia.atlassian.net/browse/APIC-123 (#200)`;
       expect(cleanUpCommitMessage(commitMessage, '')).toMatchInlineSnapshot(`
-      "fix(java): solve oneOf using a custom generator https://algolia.atlassian.net/browse/APIC-123
+      "fix(java): solve oneOf using a custom generator https://algolia.atlassian.net/browse/APIC-123 (generated)
 
       https://github.com/algolia/api-clients-automation/pull/200"
     `);
     });
 
-    it.only('generated commits have a link to the origin pull request', () => {
+    it('generated commits have a link to the origin pull request', () => {
       expect(
         cleanUpCommitMessage('feat(ci): make ci push generated code (#244) (generated)', '')
       ).toEqual(
