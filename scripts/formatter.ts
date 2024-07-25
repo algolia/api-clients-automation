@@ -27,9 +27,6 @@ export async function formatter(language: string, cwd: string): Promise<void> {
     case 'go':
       await run('goimports -w . && golangci-lint run --fix', { cwd, language });
       break;
-    case 'javascript':
-      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
-      break;
     case 'java':
       await run(
         `find . -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
@@ -41,6 +38,9 @@ export async function formatter(language: string, cwd: string): Promise<void> {
         && yarn prettier --no-error-on-unmatched-pattern --write **/*.java`,
         { cwd, language },
       );
+      break;
+    case 'javascript':
+      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
