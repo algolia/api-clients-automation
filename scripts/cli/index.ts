@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients } from '../buildClients.js';
+import { buildClients, buildPlaygrounds } from '../buildClients.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -78,6 +78,17 @@ buildCommand
     setVerbose(Boolean(verbose));
 
     await buildClients(generatorList({ language, client, clientList }));
+  });
+
+buildCommand
+  .command('playground')
+  .description('Build a specified playground')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildPlaygrounds(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
   });
 
 buildCommand
