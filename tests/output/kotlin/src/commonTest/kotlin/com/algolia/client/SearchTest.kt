@@ -364,6 +364,38 @@ class SearchTest {
   }
 
   @Test
+  fun `saveObjects should report errors`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "wrong-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    assertFails {
+      client.saveObjects(
+        indexName = "cts_e2e_saveObjects_kotlin",
+        objects = listOf(
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("1"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Adam"),
+            )
+          },
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("2"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Benoit"),
+            )
+          },
+        ),
+      )
+    }.let { error -> assertError(error, "Client request(POST http://localhost:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"") }
+  }
+
+  @Test
   fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
     client.runTest(

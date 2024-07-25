@@ -301,8 +301,34 @@ func TestSearchhelpers3(t *testing.T) {
 	require.JSONEq(t, `[{"taskID":333,"objectIDs":["1","2"]}]`, string(rawBody))
 }
 
-// call partialUpdateObjects with createIfNotExists=true
+// saveObjects should report errors
 func TestSearchhelpers4(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "wrong-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.SaveObjects(
+		"cts_e2e_saveObjects_go",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+	)
+	require.EqualError(t, err, "API error [403] {\"message\":\"Invalid Application-ID or API key\",\"status\":403}")
+}
+
+// call partialUpdateObjects with createIfNotExists=true
+func TestSearchhelpers5(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -331,7 +357,7 @@ func TestSearchhelpers4(t *testing.T) {
 }
 
 // call partialUpdateObjects with createIfNotExists=false
-func TestSearchhelpers5(t *testing.T) {
+func TestSearchhelpers6(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -360,7 +386,7 @@ func TestSearchhelpers5(t *testing.T) {
 }
 
 // call deleteObjects without error
-func TestSearchhelpers6(t *testing.T) {
+func TestSearchhelpers7(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -389,7 +415,7 @@ func TestSearchhelpers6(t *testing.T) {
 }
 
 // wait for api key helper - add
-func TestSearchhelpers7(t *testing.T) {
+func TestSearchhelpers8(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -417,7 +443,7 @@ func TestSearchhelpers7(t *testing.T) {
 }
 
 // wait for api key - update
-func TestSearchhelpers8(t *testing.T) {
+func TestSearchhelpers9(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -449,7 +475,7 @@ func TestSearchhelpers8(t *testing.T) {
 }
 
 // wait for api key - delete
-func TestSearchhelpers9(t *testing.T) {
+func TestSearchhelpers10(t *testing.T) {
 	var err error
 	var res any
 	_ = res

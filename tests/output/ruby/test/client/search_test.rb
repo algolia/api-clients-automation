@@ -280,8 +280,36 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal([{:"taskID" => 333, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # call partialUpdateObjects with createIfNotExists=true
+  # saveObjects should report errors
   def test_helpers4
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "wrong-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6680,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.save_objects(
+        "cts_e2e_saveObjects_ruby",
+        [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
+      )
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal("Invalid Application-ID or API key", e.message)
+    end
+  end
+
+  # call partialUpdateObjects with createIfNotExists=true
+  def test_helpers5
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -306,7 +334,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # call partialUpdateObjects with createIfNotExists=false
-  def test_helpers5
+  def test_helpers6
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -331,7 +359,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # call deleteObjects without error
-  def test_helpers6
+  def test_helpers7
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -352,7 +380,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # wait for api key helper - add
-  def test_helpers7
+  def test_helpers8
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -384,7 +412,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # wait for api key - update
-  def test_helpers8
+  def test_helpers9
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -430,7 +458,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # wait for api key - delete
-  def test_helpers9
+  def test_helpers10
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
