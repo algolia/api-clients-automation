@@ -1,15 +1,3 @@
-action:
-  type: string
-  enum:
-    - addObject
-    - updateObject
-    - partialUpdateObject
-    - partialUpdateObjectNoCreate
-    - deleteObject
-    - delete
-    - clear
-  description: Type of indexing operation.
-
 builtInOperationType:
   type: string
   enum:

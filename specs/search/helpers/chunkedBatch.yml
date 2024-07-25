@@ -27,7 +27,7 @@ method:
         description: The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
         required: false
         schema:
-          $ref: '../paths/objects/common/schemas.yml#/action'
+          $ref: '../../common/schemas/Batch.yml#/action'
       - in: query
         name: waitForTasks
         description: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.

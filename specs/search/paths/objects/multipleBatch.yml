@@ -26,7 +26,7 @@ post:
                 additionalProperties: false
                 properties:
                   action:
-                    $ref: 'common/schemas.yml#/action'
+                    $ref: '../../../common/schemas/Batch.yml#/action'
                   body:
                     type: object
                     description: Operation arguments (varies with specified `action`).
