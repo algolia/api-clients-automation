@@ -1,4 +1,4 @@
-settingsResponse:
+indexSettings:
   allOf:
     - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
     - $ref: '#/WithPrimary'

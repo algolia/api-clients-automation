@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/SettingsResponse.yml#/settingsResponse'
+            $ref: '../../common/schemas/SettingsResponse.yml#/indexSettings'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
