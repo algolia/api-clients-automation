@@ -12,6 +12,7 @@ import algoliasearch.ingestion.AuthenticationSortKeys._
 import algoliasearch.ingestion.AuthenticationType._
 import algoliasearch.ingestion.AuthenticationUpdate
 import algoliasearch.ingestion.AuthenticationUpdateResponse
+import algoliasearch.ingestion.BatchWriteParams
 import algoliasearch.ingestion.DeleteResponse
 import algoliasearch.ingestion.Destination
 import algoliasearch.ingestion.DestinationCreate
@@ -1142,6 +1143,34 @@ class IngestionClient(
       .withQueryParameter("order", order)
       .build()
     execute[ListTransformationsResponse](request, requestOptions)
+  }
+
+  /** Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the
+    * observability endpoints.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    * @param batchWriteParams
+    *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    */
+  def pushTask(taskID: String, batchWriteParams: BatchWriteParams, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[RunResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
+    requireNotNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `pushTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/2/tasks/${escape(taskID)}/push")
+      .withBody(batchWriteParams)
+      .build()
+    execute[RunResponse](request, requestOptions)
   }
 
   /** Runs a task. You can check the status of task runs with the observability endpoints.

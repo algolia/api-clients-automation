@@ -1182,6 +1182,54 @@ class IngestionTest {
     )
   }
 
+  // pushTask
+
+  @Test
+  fun `pushTask`() = runTest {
+    client.runTest(
+      call = {
+        pushTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          batchWriteParams = BatchWriteParams(
+            requests = listOf(
+              BatchRequest(
+                action = Action.entries.first { it.value == "addObject" },
+                body = buildJsonObject {
+                  put(
+                    "key",
+                    JsonPrimitive("bar"),
+                  )
+                  put(
+                    "foo",
+                    JsonPrimitive("1"),
+                  )
+                },
+              ),
+              BatchRequest(
+                action = Action.entries.first { it.value == "addObject" },
+                body = buildJsonObject {
+                  put(
+                    "key",
+                    JsonPrimitive("baz"),
+                  )
+                  put(
+                    "foo",
+                    JsonPrimitive("2"),
+                  )
+                },
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}""", it.body)
+      },
+    )
+  }
+
   // runTask
 
   @Test

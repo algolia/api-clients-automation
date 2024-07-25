@@ -1010,6 +1010,26 @@ func TestIngestion_ListTransformations(t *testing.T) {
 	})
 }
 
+func TestIngestion_PushTask(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("pushTask", func(t *testing.T) {
+		_, err := client.PushTask(client.NewApiPushTaskRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyBatchWriteParams().SetRequests(
+				[]ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}`)
+	})
+}
+
 func TestIngestion_RunTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo

@@ -904,6 +904,32 @@ describe('listTransformations', () => {
   });
 });
 
+describe('pushTask', () => {
+  test('pushTask', async () => {
+    const req = (await client.pushTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      batchWriteParams: {
+        requests: [
+          { action: 'addObject', body: { key: 'bar', foo: '1' } },
+          { action: 'addObject', body: { key: 'baz', foo: '2' } },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        { action: 'addObject', body: { key: 'bar', foo: '1' } },
+        { action: 'addObject', body: { key: 'baz', foo: '2' } },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('runTask', () => {
   test('runTask', async () => {
     const req = (await client.runTask({

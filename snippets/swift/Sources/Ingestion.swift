@@ -510,6 +510,25 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the pushTask method.
+    ///
+    /// pushTask
+    func snippetForPushTask() async throws {
+        // >SEPARATOR pushTask default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.pushTask(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            batchWriteParams: IngestionBatchWriteParams(requests: [
+                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
+                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
+            ])
+        )
+        // SEPARATOR<
+    }
+
     /// Snippet for the runTask method.
     ///
     /// runTask

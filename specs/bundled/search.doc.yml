@@ -4043,52 +4043,13 @@ paths:
         name.
       parameters:
         - $ref: '#/components/parameters/IndexName'
+      x-codegen-request-body-name: batchWriteParams
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              title: batchWriteParams
-              description: Batch parameters.
-              type: object
-              additionalProperties: false
-              properties:
-                requests:
-                  type: array
-                  items:
-                    title: batchRequest
-                    type: object
-                    additionalProperties: false
-                    properties:
-                      action:
-                        $ref: '#/components/schemas/action'
-                      body:
-                        type: object
-                        description: Operation arguments (varies with specified `action`).
-                        example:
-                          name: Betty Jane McCamey
-                          company: Vita Foods Inc.
-                          email: betty@mccamey.com
-                    required:
-                      - action
-                      - body
-              required:
-                - requests
-            examples:
-              batch:
-                summary: Batch indexing request
-                value:
-                  requests:
-                    - action: addObject
-                      body:
-                        name: Betty Jane McCamey
-                        company: Vita Foods Inc.
-                        email: betty@mccamey.com
-                    - action: addObject
-                      body:
-                        name: Gayla geimer
-                        company: Ortman McCain Co.
-                        email: gayla@geimer.com
+              $ref: '#/components/schemas/batchWriteParams'
+        required: true
       responses:
         '200':
           description: OK
@@ -4406,9 +4367,9 @@ paths:
 
             let response = try await client.batch(
                 indexName: "<YOUR_INDEX_NAME>",
-                batchWriteParams: BatchWriteParams(requests: [
-                    BatchRequest(action: Action.addObject, body: ["key": "bar", "foo": "1"]),
-                    BatchRequest(action: Action.addObject, body: ["key": "baz", "foo": "2"]),
+                batchWriteParams: SearchBatchWriteParams(requests: [
+                    SearchBatchRequest(action: SearchAction.addObject, body: ["key": "bar", "foo": "1"]),
+                    SearchBatchRequest(action: SearchAction.addObject, body: ["key": "baz", "foo": "2"]),
                 ])
             )
   /1/indexes/*/batch:
@@ -4754,7 +4715,7 @@ paths:
 
             let response = try await client.multipleBatch(batchParams:
             BatchParams(requests: [MultipleBatchRequest(
-                action: Action.addObject,
+                action: SearchAction.addObject,
                 body: ["key": "value"],
                 indexName: "theIndexName"
             )]))
@@ -18249,6 +18210,48 @@ components:
         - delete
         - clear
       description: Type of indexing operation.
+    batchWriteParams:
+      title: batchWriteParams
+      description: Batch parameters.
+      type: object
+      additionalProperties: false
+      properties:
+        requests:
+          type: array
+          items:
+            title: batchRequest
+            type: object
+            additionalProperties: false
+            properties:
+              action:
+                $ref: '#/components/schemas/action'
+              body:
+                type: object
+                description: Operation arguments (varies with specified `action`).
+                example:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+            required:
+              - action
+              - body
+      required:
+        - requests
+      example:
+        batch:
+          summary: Batch indexing request
+          value:
+            requests:
+              - action: addObject
+                body:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+              - action: addObject
+                body:
+                  name: Gayla geimer
+                  company: Ortman McCain Co.
+                  email: gayla@geimer.com
     objectIDs:
       type: array
       items:

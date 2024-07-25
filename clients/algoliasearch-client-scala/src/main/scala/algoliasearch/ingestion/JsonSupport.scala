@@ -27,6 +27,7 @@ import org.json4s._
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+    new ActionSerializer() :+
     new ActionTypeSerializer() :+
     new AuthenticationSortKeysSerializer() :+
     new AuthenticationTypeSerializer() :+

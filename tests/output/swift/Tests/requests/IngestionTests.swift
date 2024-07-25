@@ -1683,6 +1683,42 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// pushTask
+    func testPushTaskTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.pushTaskWithHTTPInfo(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            batchWriteParams: IngestionBatchWriteParams(requests: [
+                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
+                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// runTask
     func testRunTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(

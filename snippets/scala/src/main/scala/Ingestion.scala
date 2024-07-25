@@ -734,6 +734,37 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the pushTask method.
+    *
+    * pushTask
+    */
+  def snippetForIngestionClientPushTask(): Unit = {
+    // >SEPARATOR pushTask default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      batchWriteParams = BatchWriteParams(
+        requests = Seq(
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the runTask method.
     *
     * runTask

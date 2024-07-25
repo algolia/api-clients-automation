@@ -4,7 +4,7 @@ using Algolia.Search.Clients;
 using Algolia.Search.Http;
 // IMPORT<
 using Algolia.Search.Models.Ingestion;
-using Action = Algolia.Search.Models.Search.Action;
+using Action = Algolia.Search.Models.Ingestion.Action;
 
 public class SnippetIngestionClient
 {
@@ -718,6 +718,42 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTransformationsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PushTask method.
+  ///
+  /// pushTask
+  /// </summary>
+  public async Task SnippetForIngestionClientPushTask()
+  {
+    // >SEPARATOR pushTask default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.PushTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new BatchWriteParams
+      {
+        Requests = new List<BatchRequest>
+        {
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+          },
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+          }
+        },
+      }
+    );
     // SEPARATOR<
   }
 

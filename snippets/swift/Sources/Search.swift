@@ -86,9 +86,9 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [
-                BatchRequest(action: Action.addObject, body: ["key": "bar", "foo": "1"]),
-                BatchRequest(action: Action.addObject, body: ["key": "baz", "foo": "2"]),
+            batchWriteParams: SearchBatchWriteParams(requests: [
+                SearchBatchRequest(action: SearchAction.addObject, body: ["key": "bar", "foo": "1"]),
+                SearchBatchRequest(action: SearchAction.addObject, body: ["key": "baz", "foo": "2"]),
             ])
         )
         // SEPARATOR<
@@ -105,7 +105,10 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear, body: ["key": "value"])])
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.clear,
+                body: ["key": "value"]
+            )])
         )
         // SEPARATOR<
     }
@@ -121,7 +124,10 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete, body: ["key": "value"])])
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.delete,
+                body: ["key": "value"]
+            )])
         )
         // SEPARATOR<
     }
@@ -137,8 +143,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.deleteObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.deleteObject,
                 body: ["key": "value"]
             )])
         )
@@ -156,8 +162,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.partialUpdateObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.partialUpdateObject,
                 body: ["key": "value"]
             )])
         )
@@ -175,8 +181,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.partialUpdateObjectNoCreate,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.partialUpdateObjectNoCreate,
                 body: ["key": "value"]
             )])
         )
@@ -194,8 +200,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.batch(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.updateObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.updateObject,
                 body: ["key": "value"]
             )])
         )
@@ -763,7 +769,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(
-            action: Action.addObject,
+            action: SearchAction.addObject,
             body: ["key": "value"],
             indexName: "theIndexName"
         )]))
