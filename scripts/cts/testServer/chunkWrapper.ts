@@ -33,6 +33,11 @@ function addRoutes(app: Express): void {
     if (!chunkWrapperState[lang]) {
       chunkWrapperState[lang] = {};
     }
+
+    if (req.headers['x-algolia-api-key'] === 'wrong-api-key') {
+      res.status(403).json({ message: 'Invalid Application-ID or API key', status: 403 });
+      return;
+    }
     chunkWrapperState[lang][helper] = (chunkWrapperState[lang][helper] ?? 0) + 1;
     switch (helper) {
       case 'saveObjects':
