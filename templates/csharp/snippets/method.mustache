@@ -4,7 +4,12 @@ using Algolia.Search.Http;
 using Algolia.Search.Clients;
 // IMPORT<
 using Algolia.Search.Models.{{clientPrefix}};
+{{#isSearchClient}}
 using Action = Algolia.Search.Models.Search.Action;
+{{/isSearchClient}}
+{{^isSearchClient}}
+using Action = Algolia.Search.Models.Ingestion.Action;
+{{/isSearchClient}}
 
 public class Snippet{{client}}
 {
