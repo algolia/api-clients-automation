@@ -62,6 +62,7 @@ import algoliasearch.search.SearchSynonymsResponse
 import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
 import algoliasearch.search.SecuredApiKeyRestrictions
+import algoliasearch.search.SettingsResponse
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse
@@ -897,7 +898,7 @@ class SearchClient(
     */
   def getSettings(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[IndexSettings] = Future {
+  ): Future[SettingsResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSettings`.")
 
     val request = HttpRequest
@@ -905,7 +906,7 @@ class SearchClient(
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/settings")
       .build()
-    execute[IndexSettings](request, requestOptions)
+    execute[SettingsResponse](request, requestOptions)
   }
 
   /** Retrieves all allowed IP addresses with access to your application.

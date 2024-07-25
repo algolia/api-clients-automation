@@ -3272,6 +3272,19 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseIndexSettings'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
+    WithPrimary:
+      type: object
+      additionalProperties: false
+      properties:
+        primary:
+          type: string
+          description: >
+            Replica indices only: the name of the primary index for this
+            replica.
+    settingsResponse:
+      allOf:
+        - $ref: '#/components/schemas/indexSettings'
+        - $ref: '#/components/schemas/WithPrimary'
     keyString:
       type: string
       description: API key.
