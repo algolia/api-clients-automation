@@ -18,7 +18,7 @@ import { getNewReleasedTag } from '../../release/common.js';
 import type { Language } from '../../types.js';
 import { cloneRepository, getNbGitDiff } from '../utils.js';
 
-import { commitStartRelease } from './text.js';
+import text, { commitStartRelease } from './text.js';
 
 export function cleanUpCommitMessage(commitMessage: string, version: string): string {
   if (commitMessage.startsWith(commitStartRelease)) {
@@ -31,7 +31,9 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
     return commitMessage;
   }
 
-  return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
+  return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join(
+    '\n\n',
+  );
 }
 
 async function spreadGeneration(): Promise<void> {
