@@ -58,7 +58,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
   let message = await run(
-    `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`,
+    `git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`,
   );
   const authors = await run(
     `git show -s ${baseBranch} --format="
