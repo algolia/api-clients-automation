@@ -56,7 +56,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
   { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
 );
 
-export function getVersionFileForLanguage(lang: Language): string {
+function getVersionFileForLanguage(lang: Language): string {
   // js rely on the nvmrc of the repo
   if (lang === 'javascript') {
     return '.nvmrc';
