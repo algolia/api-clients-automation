@@ -29,8 +29,9 @@ async function buildFilter(
       (await exists(folder)) &&
       (await fsp.readdir(folder)).filter((f) => f !== '__init__.py' && f !== '__pycache__').length >
         0
-    )
+    ) {
       folders.push(suite as CTSType);
+    }
   }
 
   return folders;
