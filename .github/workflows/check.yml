@@ -213,6 +213,9 @@ jobs:
       - name: Build clients
         run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
 
+      - name: Build the playground
+        run: yarn cli build playground javascript
+
       - name: Run common and requester tests
         run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
 
@@ -322,6 +325,9 @@ jobs:
 
       - name: Build clients
         run: ${{ matrix.client.buildCommand }}
+
+      - name: Build the playground
+        run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
         if: ${{ matrix.client.language == 'java' }}

@@ -69,13 +69,15 @@ _apic_build_specs_complete() {
 
 _apic_build_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
-    COMPREPLY=($(compgen -W "clients specs" -- "$cur"))
+    COMPREPLY=($(compgen -W "clients specs playground" -- "$cur"))
   else
     second="${COMP_WORDS[2]}"
     if [[ $second == "clients" ]]; then
       _apic_lang_client_complete 3
     elif [[ $second == "specs" ]]; then
       _apic_build_specs_complete
+    elif [[ $second == "playground" ]]; then
+      COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
     fi
   fi
 }

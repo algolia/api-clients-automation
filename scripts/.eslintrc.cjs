@@ -44,5 +44,6 @@ module.exports = {
     complexity: 0,
     'no-param-reassign': 0,
     '@typescript-eslint/consistent-type-assertions': 0,
+    curly: ['error', 'all'],
   },
 };
