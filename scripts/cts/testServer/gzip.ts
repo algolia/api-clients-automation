@@ -1,5 +1,5 @@
 import type { Server } from 'http';
-import zlib from 'zlib';
+import zlib from 'node:zlib';
 
 import crc32 from 'crc/crc32';
 import type { Express } from 'express';
