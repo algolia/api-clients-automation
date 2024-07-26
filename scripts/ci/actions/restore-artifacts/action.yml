@@ -11,4 +11,4 @@ inputs:
       List of languages to restore (use the pipe character to put each language on its own line)
 runs:
   using: 'node20'
-  main: './builddir/index.js'
+  main: './builddir/index.cjs'

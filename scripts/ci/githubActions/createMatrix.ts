@@ -4,9 +4,8 @@ import { setOutput } from '@actions/core';
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
 import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
-import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
-import { isBaseChanged } from './utils.js';
+import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
