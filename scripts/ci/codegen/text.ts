@@ -12,5 +12,5 @@ export default {
 };
 
 export function isGeneratedCommit(text: string): boolean {
-  return text.endsWith(commitEndMessage);
+  return text.includes(commitEndMessage);
 }
