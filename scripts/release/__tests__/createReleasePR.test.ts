@@ -133,7 +133,7 @@ describe('createReleasePR', () => {
         await parseCommit(
           buildTestCommit({
             type: 'feat(specs)',
-            message: 'foo bar baz (generated).',
+            message: 'foo bar baz (generated)',
           })
         )
       ).toEqual({
