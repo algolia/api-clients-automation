@@ -41,7 +41,9 @@ async function buildLanguage(
       break;
     case 'swift':
       // make this work in the playground
-      if (!playground) await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      if (!playground) {
+        await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      }
       break;
     default:
   }
