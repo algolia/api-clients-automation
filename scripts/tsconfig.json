@@ -8,15 +8,6 @@
     "lib": ["esnext", "dom"],
     "outDir": "dist"
   },
-  "tsc-alias": {
-    "resolveFullPaths": true,
-    "replacers": {
-      "configReplacer": {
-        "enabled": true,
-        "file": "configReplacer.cjs"
-      }
-    }
-  },
   "include": ["**/*.ts", "./**.cjs", "**/*.mjs"],
   "exclude": ["dist", "*.json", "node_modules", "**/*.test.ts"]
 }

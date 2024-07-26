@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/destination.yml#/Destination'
+            $ref: '../common/schemas/destination.yml#/Destination'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
 

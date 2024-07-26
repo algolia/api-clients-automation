@@ -4,19 +4,19 @@
   "type": "module",
   "scripts": {
     "build": "yarn build:cli & yarn build:actions",
-    "build:actions": "cd ci/actions/restore-artifacts && ncc build src/index.ts --source-map --transpile-only --minify -o builddir",
-    "build:cli": "tsc && tsc-alias",
-    "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
+    "build:actions": "cd ci/actions/restore-artifacts && esbuild --bundle --format=esm --sourcemap --minify --platform=node --outdir=builddir --log-level=error src/index.ts",
+    "build:cli": "esbuild --bundle --format=esm --minify --sourcemap --platform=node --packages=external --outdir=dist --log-level=error cli/index.ts ci/codegen/*.ts ci/githubActions/*.ts",
+    "createMatrix": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/githubActions/createMatrix.js",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
-    "pushGeneratedCode": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushGeneratedCode.js",
-    "pushToAlgoliaDoc": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/pushToAlgoliaDoc.js",
-    "setRunVariables": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/setRunVariables.js",
-    "spreadGeneration": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
-    "start": "NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",
+    "pushGeneratedCode": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/codegen/pushGeneratedCode.js",
+    "pushToAlgoliaDoc": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/codegen/pushToAlgoliaDoc.js",
+    "setRunVariables": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/githubActions/setRunVariables.js",
+    "spreadGeneration": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/codegen/spreadGeneration.js",
+    "start": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/cli/index.js",
     "test": "vitest",
-    "waitForAllReleases": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/waitForAllReleases.js"
+    "waitForAllReleases": "NODE_NO_WARNINGS=1 node --enable-source-maps dist/ci/codegen/waitForAllReleases.js"
   },
   "devDependencies": {
     "@actions/artifact": "2.1.8",
@@ -39,6 +39,7 @@
     "commander": "12.1.0",
     "crc": "4.3.2",
     "dotenv": "16.4.5",
+    "esbuild": "0.23.0",
     "eslint": "8.57.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "2.29.1",
@@ -51,7 +52,6 @@
     "micromatch": "4.0.7",
     "semver": "7.6.3",
     "spinnies": "0.5.1",
-    "tsc-alias": "1.8.10",
     "typescript": "5.5.3",
     "vitest": "2.0.3"
   }
