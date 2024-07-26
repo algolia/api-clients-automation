@@ -68,7 +68,7 @@ jobs:
       - name: Compute specs matrix
         id: spec-matrix
         shell: bash
-        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }} && sleep 1
+        run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
       - name: Compute the client codegen matrix
         id: gen-matrix

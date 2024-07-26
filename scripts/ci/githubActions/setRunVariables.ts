@@ -1,23 +1,7 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import type { Language } from '../../types.js';
-
 import { DEPENDENCIES, isBaseChanged } from './utils.js';
-
-export function getVersionFileForLanguage(lang: Language): string {
-  // js rely on the nvmrc of the repo
-  if (lang === 'javascript') {
-    return '.nvmrc';
-  }
-
-  // jvm lang rely on the same java version
-  if (lang === 'kotlin' || lang === 'java' || lang === 'scala') {
-    return 'config/.java-version';
-  }
-
-  return `config/.${lang}-version`;
-}
 
 /**
  * Outputs variables used in the CI to determine if a job should run.

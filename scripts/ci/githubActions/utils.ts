@@ -3,9 +3,8 @@ import * as core from '@actions/core';
 
 import { LANGUAGES } from '../../common.js';
 import { getLanguageFolder } from '../../config.js';
+import type { Language } from '../../types.js';
 import { getNbGitDiff } from '../utils.js';
-
-import { getVersionFileForLanguage } from './setRunVariables.js';
 
 export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows'],
@@ -56,6 +55,20 @@ export const DEPENDENCIES = LANGUAGES.reduce(
   },
   { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
 );
+
+export function getVersionFileForLanguage(lang: Language): string {
+  // js rely on the nvmrc of the repo
+  if (lang === 'javascript') {
+    return '.nvmrc';
+  }
+
+  // jvm lang rely on the same java version
+  if (lang === 'kotlin' || lang === 'java' || lang === 'scala') {
+    return 'config/.java-version';
+  }
+
+  return `config/.${lang}-version`;
+}
 
 /**
  * Determines if changes have been found in the `dependencies`, compared to the `baseBranch`.
