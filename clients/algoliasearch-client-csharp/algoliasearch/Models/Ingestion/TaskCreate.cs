@@ -32,13 +32,11 @@ public partial class TaskCreate
   /// </summary>
   /// <param name="sourceID">Universally uniqud identifier (UUID) of a source. (required).</param>
   /// <param name="destinationID">Universally unique identifier (UUID) of a destination resource. (required).</param>
-  /// <param name="trigger">trigger (required).</param>
   /// <param name="action">action (required).</param>
-  public TaskCreate(string sourceID, string destinationID, TaskCreateTrigger trigger, ActionType? action)
+  public TaskCreate(string sourceID, string destinationID, ActionType? action)
   {
     SourceID = sourceID ?? throw new ArgumentNullException(nameof(sourceID));
     DestinationID = destinationID ?? throw new ArgumentNullException(nameof(destinationID));
-    Trigger = trigger ?? throw new ArgumentNullException(nameof(trigger));
     Action = action;
   }
 
@@ -57,10 +55,11 @@ public partial class TaskCreate
   public string DestinationID { get; set; }
 
   /// <summary>
-  /// Gets or Sets Trigger
+  /// Cron expression for the task's schedule.
   /// </summary>
-  [JsonPropertyName("trigger")]
-  public TaskCreateTrigger Trigger { get; set; }
+  /// <value>Cron expression for the task's schedule.</value>
+  [JsonPropertyName("cron")]
+  public string Cron { get; set; }
 
   /// <summary>
   /// Whether the task is enabled.
@@ -99,8 +98,8 @@ public partial class TaskCreate
     sb.Append("class TaskCreate {\n");
     sb.Append("  SourceID: ").Append(SourceID).Append("\n");
     sb.Append("  DestinationID: ").Append(DestinationID).Append("\n");
-    sb.Append("  Trigger: ").Append(Trigger).Append("\n");
     sb.Append("  Action: ").Append(Action).Append("\n");
+    sb.Append("  Cron: ").Append(Cron).Append("\n");
     sb.Append("  Enabled: ").Append(Enabled).Append("\n");
     sb.Append("  FailureThreshold: ").Append(FailureThreshold).Append("\n");
     sb.Append("  Input: ").Append(Input).Append("\n");
@@ -133,8 +132,8 @@ public partial class TaskCreate
     return
         (SourceID == input.SourceID || (SourceID != null && SourceID.Equals(input.SourceID))) &&
         (DestinationID == input.DestinationID || (DestinationID != null && DestinationID.Equals(input.DestinationID))) &&
-        (Trigger == input.Trigger || (Trigger != null && Trigger.Equals(input.Trigger))) &&
         (Action == input.Action || Action.Equals(input.Action)) &&
+        (Cron == input.Cron || (Cron != null && Cron.Equals(input.Cron))) &&
         (Enabled == input.Enabled || Enabled.Equals(input.Enabled)) &&
         (FailureThreshold == input.FailureThreshold || FailureThreshold.Equals(input.FailureThreshold)) &&
         (Input == input.Input || (Input != null && Input.Equals(input.Input))) &&
@@ -158,11 +157,11 @@ public partial class TaskCreate
       {
         hashCode = (hashCode * 59) + DestinationID.GetHashCode();
       }
-      if (Trigger != null)
-      {
-        hashCode = (hashCode * 59) + Trigger.GetHashCode();
-      }
       hashCode = (hashCode * 59) + Action.GetHashCode();
+      if (Cron != null)
+      {
+        hashCode = (hashCode * 59) + Cron.GetHashCode();
+      }
       hashCode = (hashCode * 59) + Enabled.GetHashCode();
       hashCode = (hashCode * 59) + FailureThreshold.GetHashCode();
       if (Input != null)

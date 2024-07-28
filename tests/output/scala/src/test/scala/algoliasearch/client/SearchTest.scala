@@ -79,11 +79,32 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customGet[JObject](
-        path = "1/test/retry/Scala"
+        path = "1/test/retry/scala"
       ),
       Duration.Inf
     )
     assert(write(res) == "{\"message\":\"ok test server response\"}")
+  }
+
+  test("tests the retry strategy error") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676))))
+        .build()
+    )
+
+    assertError("Error(s) while processing the retry strategy") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/hang/scala"
+        ),
+        Duration.Inf
+      )
+    }
   }
 
   test("test the compression strategy") {

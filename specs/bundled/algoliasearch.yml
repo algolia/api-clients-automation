@@ -2655,7 +2655,7 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    _distinctSeqID:
+    distinctSeqID:
       type: integer
     hit:
       type: object
@@ -2679,7 +2679,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
     searchHits:
       type: object
       additionalProperties: true
@@ -3272,6 +3272,19 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseIndexSettings'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
+    WithPrimary:
+      type: object
+      additionalProperties: false
+      properties:
+        primary:
+          type: string
+          description: >
+            Replica indices only: the name of the primary index for this
+            replica.
+    settingsResponse:
+      allOf:
+        - $ref: '#/components/schemas/indexSettings'
+        - $ref: '#/components/schemas/WithPrimary'
     keyString:
       type: string
       description: API key.
@@ -3803,7 +3816,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
         _score:
           $ref: '#/components/schemas/recommendScore'
     trendingFacetHit:

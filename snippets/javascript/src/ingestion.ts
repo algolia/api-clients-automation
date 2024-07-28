@@ -90,7 +90,7 @@ export async function snippetForCreateSource(): Promise<void> {
 
 // Snippet for the createTask method.
 //
-// createTaskOnDemand
+// task without cron
 export async function snippetForCreateTask(): Promise<void> {
   // >SEPARATOR createTask default
   // Initialize the client
@@ -102,6 +102,30 @@ export async function snippetForCreateTask(): Promise<void> {
 
   // Call the API
   const response = await client.createTask({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    action: 'replace',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createTaskV1 method.
+//
+// createTaskOnDemand
+export async function snippetForCreateTaskV1(): Promise<void> {
+  // >SEPARATOR createTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.createTaskV1({
     sourceID: 'search',
     destinationID: 'destinationName',
     trigger: { type: 'onDemand' },
@@ -305,6 +329,28 @@ export async function snippetForDeleteTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the deleteTaskV1 method.
+//
+// deleteTaskV1
+export async function snippetForDeleteTaskV1(): Promise<void> {
+  // >SEPARATOR deleteTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.deleteTaskV1({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the deleteTransformation method.
 //
 // deleteTransformation
@@ -349,9 +395,31 @@ export async function snippetForDisableTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the disableTaskV1 method.
+//
+// disableTaskV1
+export async function snippetForDisableTaskV1(): Promise<void> {
+  // >SEPARATOR disableTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.disableTaskV1({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the enableTask method.
 //
-// enable task e2e
+// enableTask
 export async function snippetForEnableTask(): Promise<void> {
   // >SEPARATOR enableTask default
   // Initialize the client
@@ -363,6 +431,28 @@ export async function snippetForEnableTask(): Promise<void> {
 
   // Call the API
   const response = await client.enableTask({
+    taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the enableTaskV1 method.
+//
+// enableTaskV1
+export async function snippetForEnableTaskV1(): Promise<void> {
+  // >SEPARATOR enableTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.enableTaskV1({
     taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
   });
 
@@ -393,26 +483,6 @@ export async function snippetForGetAuthentication(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getAuthentications method.
-//
-// getAuthentications
-export async function snippetForGetAuthentications(): Promise<void> {
-  // >SEPARATOR getAuthentications default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getAuthentications();
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getDestination method.
 //
 // getDestination
@@ -429,26 +499,6 @@ export async function snippetForGetDestination(): Promise<void> {
   const response = await client.getDestination({
     destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the getDestinations method.
-//
-// getDestinations
-export async function snippetForGetDestinations(): Promise<void> {
-  // >SEPARATOR getDestinations default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getDestinations();
 
   // use typed response
   console.log(response);
@@ -478,28 +528,6 @@ export async function snippetForGetEvent(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getEvents method.
-//
-// getEvents
-export async function snippetForGetEvents(): Promise<void> {
-  // >SEPARATOR getEvents default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getEvents({
-    runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-  });
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getRun method.
 //
 // getRun
@@ -516,26 +544,6 @@ export async function snippetForGetRun(): Promise<void> {
   const response = await client.getRun({
     runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the getRuns method.
-//
-// getRuns
-export async function snippetForGetRuns(): Promise<void> {
-  // >SEPARATOR getRuns default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getRuns();
 
   // use typed response
   console.log(response);
@@ -564,26 +572,6 @@ export async function snippetForGetSource(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getSources method.
-//
-// getSources
-export async function snippetForGetSources(): Promise<void> {
-  // >SEPARATOR getSources default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getSources();
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getTask method.
 //
 // getTask
@@ -606,11 +594,11 @@ export async function snippetForGetTask(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getTasks method.
+// Snippet for the getTaskV1 method.
 //
-// getTasks
-export async function snippetForGetTasks(): Promise<void> {
-  // >SEPARATOR getTasks default
+// getTaskV1
+export async function snippetForGetTaskV1(): Promise<void> {
+  // >SEPARATOR getTaskV1 default
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -619,7 +607,9 @@ export async function snippetForGetTasks(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.getTasks();
+  const response = await client.getTaskV1({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
 
   // use typed response
   console.log(response);
@@ -648,11 +638,11 @@ export async function snippetForGetTransformation(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getTransformations method.
+// Snippet for the listAuthentications method.
 //
-// getTransformations
-export async function snippetForGetTransformations(): Promise<void> {
-  // >SEPARATOR getTransformations default
+// getAuthentications
+export async function snippetForListAuthentications(): Promise<void> {
+  // >SEPARATOR listAuthentications default
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -661,7 +651,177 @@ export async function snippetForGetTransformations(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.getTransformations();
+  const response = await client.listAuthentications();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listDestinations method.
+//
+// getDestinations
+export async function snippetForListDestinations(): Promise<void> {
+  // >SEPARATOR listDestinations default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listDestinations();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listEvents method.
+//
+// getEvents
+export async function snippetForListEvents(): Promise<void> {
+  // >SEPARATOR listEvents default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listEvents({
+    runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listRuns method.
+//
+// getRuns
+export async function snippetForListRuns(): Promise<void> {
+  // >SEPARATOR listRuns default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listRuns();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listSources method.
+//
+// getSources
+export async function snippetForListSources(): Promise<void> {
+  // >SEPARATOR listSources default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listSources();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listTasks method.
+//
+// listTasks
+export async function snippetForListTasks(): Promise<void> {
+  // >SEPARATOR listTasks default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listTasks();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listTasksV1 method.
+//
+// listTasksV1
+export async function snippetForListTasksV1(): Promise<void> {
+  // >SEPARATOR listTasksV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listTasksV1();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listTransformations method.
+//
+// getTransformations
+export async function snippetForListTransformations(): Promise<void> {
+  // >SEPARATOR listTransformations default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listTransformations();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the pushTask method.
+//
+// pushTask
+export async function snippetForPushTask(): Promise<void> {
+  // >SEPARATOR pushTask default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.pushTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    batchWriteParams: {
+      requests: [
+        { action: 'addObject', body: { key: 'bar', foo: '1' } },
+        { action: 'addObject', body: { key: 'baz', foo: '2' } },
+      ],
+    },
+  });
 
   // use typed response
   console.log(response);
@@ -682,6 +842,28 @@ export async function snippetForRunTask(): Promise<void> {
 
   // Call the API
   const response = await client.runTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the runTaskV1 method.
+//
+// runTaskV1
+export async function snippetForRunTaskV1(): Promise<void> {
+  // >SEPARATOR runTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.runTaskV1({
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
@@ -779,6 +961,32 @@ export async function snippetForSearchTasks(): Promise<void> {
 
   // Call the API
   const response = await client.searchTasks({
+    taskIDs: [
+      '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+      '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+    ],
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchTasksV1 method.
+//
+// searchTasksV1
+export async function snippetForSearchTasksV1(): Promise<void> {
+  // >SEPARATOR searchTasksV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.searchTasksV1({
     taskIDs: [
       '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -945,6 +1153,29 @@ export async function snippetForUpdateTask(): Promise<void> {
 
   // Call the API
   const response = await client.updateTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    taskUpdate: { enabled: false, cron: '* * * * *' },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateTaskV1 method.
+//
+// updateTaskV1
+export async function snippetForUpdateTaskV1(): Promise<void> {
+  // >SEPARATOR updateTaskV1 default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.updateTaskV1({
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     taskUpdate: { enabled: false },
   });

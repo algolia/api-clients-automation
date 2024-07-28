@@ -107,7 +107,7 @@ class {{classname}}:
         :return: Returns the raw algoliasearch 'APIResponse' object.
         """
 
-        {{#isDeprecated}}warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning){{/isDeprecated}}
+        {{#isDeprecated}}warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning){{/isDeprecated}}
 
         {{#allParams}}
         {{#required}}

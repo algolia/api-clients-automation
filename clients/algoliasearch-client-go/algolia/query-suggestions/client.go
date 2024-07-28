@@ -46,8 +46,6 @@ func NewClient(appID, apiKey string, region Region) (*APIClient, error) {
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
 func NewClientWithConfig(cfg QuerySuggestionsConfiguration) (*APIClient, error) {
-	var hosts []transport.StatefulHost
-
 	if cfg.AppID == "" {
 		return nil, errors.New("`appId` is missing.")
 	}
@@ -58,12 +56,7 @@ func NewClientWithConfig(cfg QuerySuggestionsConfiguration) (*APIClient, error) 
 		if cfg.Region == "" || (cfg.Region != "" && !slices.Contains(allowedRegions[:], string(cfg.Region))) {
 			return nil, fmt.Errorf("`region` is required and must be one of the following: %s", strings.Join(allowedRegions[:], ", "))
 		}
-		hosts = getDefaultHosts(cfg.Region)
-	} else {
-		hosts = cfg.Hosts
-	}
-	if cfg.Requester == nil {
-		cfg.Requester = transport.NewDefaultRequester(&cfg.ConnectTimeout)
+		cfg.Hosts = getDefaultHosts(cfg.Region)
 	}
 	if cfg.UserAgent == "" {
 		cfg.UserAgent = getUserAgent()
@@ -73,12 +66,7 @@ func NewClientWithConfig(cfg QuerySuggestionsConfiguration) (*APIClient, error) 
 		appID: cfg.AppID,
 		cfg:   &cfg,
 		transport: transport.New(
-			hosts,
-			cfg.Requester,
-			cfg.ReadTimeout,
-			cfg.WriteTimeout,
-			cfg.ConnectTimeout,
-			cfg.Compression,
+			cfg.Configuration,
 		),
 	}, nil
 }
@@ -88,7 +76,7 @@ func getDefaultHosts(r Region) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.0.0-beta.24); Go (%s); QuerySuggestions (4.0.0-beta.24)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.0.0-beta.25); Go (%s); QuerySuggestions (4.0.0-beta.25)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

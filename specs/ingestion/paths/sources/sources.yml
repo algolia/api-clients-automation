@@ -3,7 +3,7 @@ get:
     - sources
   summary: List sources
   description: Retrieves a list of sources.
-  operationId: getSources
+  operationId: listSources
   x-acl:
     - addObject
     - deleteIndex

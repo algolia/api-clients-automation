@@ -83,7 +83,7 @@ class SearchClientClientTests {
         false
       )
     );
-    var res = client.customGet("1/test/retry/Java");
+    var res = client.customGet("1/test/retry/java");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -91,8 +91,27 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("test the compression strategy")
+  @DisplayName("tests the retry strategy error")
   void apiTest3() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6676)), false)
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        var res = client.customGet("1/test/hang/java");
+      });
+      assertEquals(
+        "Error(s) while processing the retry strategy\n" + "Caused by: java.net.SocketTimeoutException: timeout",
+        exception.getMessage()
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("test the compression strategy")
+  void apiTest4() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -213,7 +232,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
       );
       var res = client.replaceAllObjects(
-        "cts_e2e_replace_all_objects_Java",
+        "cts_e2e_replace_all_objects_java",
         List.of(
           Map.of("objectID", "1", "name", "Adam"),
           Map.of("objectID", "2", "name", "Benoit"),
@@ -249,7 +268,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.saveObjects(
-        "cts_e2e_saveObjects_Java",
+        "cts_e2e_saveObjects_java",
         List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
       );
 
@@ -260,8 +279,29 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("call partialUpdateObjects with createIfNotExists=true")
+  @DisplayName("saveObjects should report errors")
   void helpersTest4() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "wrong-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      {
+        Exception exception = assertThrows(Exception.class, () -> {
+          var res = client.saveObjects(
+            "cts_e2e_saveObjects_java",
+            List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
+          );
+        });
+        assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API" + " key\",\"status\":403}", exception.getMessage());
+      }
+    });
+  }
+
+  @Test
+  @DisplayName("call partialUpdateObjects with createIfNotExists=true")
+  void helpersTest5() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -269,7 +309,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.partialUpdateObjects(
-        "cts_e2e_partialUpdateObjects_Java",
+        "cts_e2e_partialUpdateObjects_java",
         List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit")),
         true
       );
@@ -282,7 +322,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("call partialUpdateObjects with createIfNotExists=false")
-  void helpersTest5() {
+  void helpersTest6() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -290,7 +330,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
       var res = client.partialUpdateObjects(
-        "cts_e2e_partialUpdateObjects_Java",
+        "cts_e2e_partialUpdateObjects_java",
         List.of(Map.of("objectID", "3", "name", "Cyril"), Map.of("objectID", "4", "name", "David")),
         false
       );
@@ -303,14 +343,14 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("call deleteObjects without error")
-  void helpersTest6() {
+  void helpersTest7() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.deleteObjects("cts_e2e_deleteObjects_Java", List.of("1", "2"));
+      var res = client.deleteObjects("cts_e2e_deleteObjects_java", List.of("1", "2"));
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -320,18 +360,18 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key helper - add")
-  void helpersTest7() {
+  void helpersTest8() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-add-operation-test-Java", ApiKeyOperation.ADD);
+      var res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"value\":\"api-key-add-operation-test-Java\",\"description\":\"my new api" +
+          "{\"value\":\"api-key-add-operation-test-java\",\"description\":\"my new api" +
           " key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
@@ -342,7 +382,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key - update")
-  void helpersTest8() {
+  void helpersTest9() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
@@ -350,7 +390,7 @@ class SearchClientClientTests {
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
       var res = client.waitForApiKey(
-        "api-key-update-operation-test-Java",
+        "api-key-update-operation-test-java",
         ApiKeyOperation.UPDATE,
         new ApiKey()
           .setDescription("my updated api key")
@@ -364,7 +404,7 @@ class SearchClientClientTests {
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"value\":\"api-key-update-operation-test-Java\",\"description\":\"my" +
+          "{\"value\":\"api-key-update-operation-test-java\",\"description\":\"my" +
           " updated api" +
           " key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
@@ -376,14 +416,14 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("wait for api key - delete")
-  void helpersTest9() {
+  void helpersTest10() {
     assertDoesNotThrow(() -> {
       SearchClient client = new SearchClient(
         "test-app-id",
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-delete-operation-test-Java", ApiKeyOperation.DELETE);
+      var res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
 
       assertEquals(null, res);
     });

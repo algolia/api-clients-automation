@@ -33,6 +33,12 @@ import algoliasearch.ingestion.ActionType._
   *   Universally uniqud identifier (UUID) of a source.
   * @param destinationID
   *   Universally unique identifier (UUID) of a destination resource.
+  * @param cron
+  *   Cron expression for the task's schedule.
+  * @param lastRun
+  *   The last time the scheduled task ran in RFC 3339 format.
+  * @param nextRun
+  *   The next scheduled run of the task in RFC 3339 format.
   * @param enabled
   *   Whether the task is enabled.
   * @param failureThreshold
@@ -48,7 +54,9 @@ case class Task(
     taskID: String,
     sourceID: String,
     destinationID: String,
-    trigger: Trigger,
+    cron: Option[String] = scala.None,
+    lastRun: Option[String] = scala.None,
+    nextRun: Option[String] = scala.None,
     input: Option[TaskInput] = scala.None,
     enabled: Boolean,
     failureThreshold: Option[Int] = scala.None,

@@ -3,7 +3,7 @@ get:
     - transformations
   summary: List transformations
   description: Retrieves a list of transformations.
-  operationId: getTransformations
+  operationId: listTransformations
   x-acl:
     - addObject
     - deleteIndex

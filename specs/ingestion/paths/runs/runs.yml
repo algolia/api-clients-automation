@@ -3,7 +3,7 @@ get:
     - observability
   summary: List task runs
   description: Retrieve a list of task runs.
-  operationId: getRuns
+  operationId: listRuns
   x-acl:
     - addObject
     - deleteIndex

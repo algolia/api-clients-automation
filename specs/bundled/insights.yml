@@ -695,19 +695,11 @@ paths:
           description: No content.
           headers:
             x-ratelimit-limit:
-              description: Maximum number of requests you can make to this endpoint.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-limit'
             x-ratelimit-remaining:
-              description: >-
-                Number of remaining API requests you can make to this endpoint
-                before reaching the rate limit.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-remaining'
             x-ratelimit-reset:
-              description: Timestamp in Unix epoch time when the rate limit will reset.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-reset'
         '422':
           description: Unprocessable Entity.
           content:
@@ -1513,6 +1505,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
 x-tagGroups:
   - name: General
     tags:

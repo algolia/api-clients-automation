@@ -22,7 +22,7 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     protected static $modelTypes = [
         'destinationID' => 'string',
-        'trigger' => '\Algolia\AlgoliaSearch\Model\Ingestion\TriggerUpdateInput',
+        'cron' => 'string',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput',
         'enabled' => 'bool',
         'failureThreshold' => 'int',
@@ -35,7 +35,7 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     protected static $modelFormats = [
         'destinationID' => null,
-        'trigger' => null,
+        'cron' => null,
         'input' => null,
         'enabled' => null,
         'failureThreshold' => null,
@@ -49,7 +49,7 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     protected static $attributeMap = [
         'destinationID' => 'destinationID',
-        'trigger' => 'trigger',
+        'cron' => 'cron',
         'input' => 'input',
         'enabled' => 'enabled',
         'failureThreshold' => 'failureThreshold',
@@ -62,7 +62,7 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     protected static $setters = [
         'destinationID' => 'setDestinationID',
-        'trigger' => 'setTrigger',
+        'cron' => 'setCron',
         'input' => 'setInput',
         'enabled' => 'setEnabled',
         'failureThreshold' => 'setFailureThreshold',
@@ -75,7 +75,7 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     protected static $getters = [
         'destinationID' => 'getDestinationID',
-        'trigger' => 'getTrigger',
+        'cron' => 'getCron',
         'input' => 'getInput',
         'enabled' => 'getEnabled',
         'failureThreshold' => 'getFailureThreshold',
@@ -98,8 +98,8 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
         if (isset($data['destinationID'])) {
             $this->container['destinationID'] = $data['destinationID'];
         }
-        if (isset($data['trigger'])) {
-            $this->container['trigger'] = $data['trigger'];
+        if (isset($data['cron'])) {
+            $this->container['cron'] = $data['cron'];
         }
         if (isset($data['input'])) {
             $this->container['input'] = $data['input'];
@@ -219,25 +219,25 @@ class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, 
     }
 
     /**
-     * Gets trigger.
+     * Gets cron.
      *
-     * @return null|TriggerUpdateInput
+     * @return null|string
      */
-    public function getTrigger()
+    public function getCron()
     {
-        return $this->container['trigger'] ?? null;
+        return $this->container['cron'] ?? null;
     }
 
     /**
-     * Sets trigger.
+     * Sets cron.
      *
-     * @param null|TriggerUpdateInput $trigger trigger
+     * @param null|string $cron cron expression for the task's schedule
      *
      * @return self
      */
-    public function setTrigger($trigger)
+    public function setCron($cron)
     {
-        $this->container['trigger'] = $trigger;
+        $this->container['cron'] = $cron;
 
         return $this;
     }

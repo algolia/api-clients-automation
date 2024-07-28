@@ -67,12 +67,6 @@ count:
   type: integer
   example: 504
 
-trackedSearchCount:
-  type: integer
-  example: 2
-  default: 0
-  description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
-
 noResultCount:
   description: Number of searches without any results.
   type: integer
@@ -302,21 +296,3 @@ withFilterCount:
   example: 5
   minimum: 0
   default: 0
-
-x-ratelimit-limit:
-  description: Number of allowed requests per one minute.
-  example: 100
-  schema:
-    type: integer
-
-x-ratelimit-remaining:
-  description: Number of remaining requests in the current period.
-  example: 99
-  schema:
-    type: integer
-
-x-ratelimit-reset:
-  description: Timstamp when the rate limit will reset, measured in seconds since the Unix epoch.
-  example: 1710682486
-  schema:
-    type: integer

@@ -51,7 +51,7 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "1/test/retry/Kotlin",
+          path = "1/test/retry/kotlin",
         )
       },
 
@@ -60,6 +60,16 @@ class SearchTest {
         assertEquals("{\"message\":\"ok test server response\"}", response)
       },
     )
+  }
+
+  @Test
+  fun `tests the retry strategy error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676))))
+    assertFails {
+      client.customGet(
+        path = "1/test/hang/kotlin",
+      )
+    }.let { error -> assertError(error, "Error(s) while processing the retry strategy") }
   }
 
   @Test
@@ -194,7 +204,7 @@ class SearchTest {
     client.runTest(
       call = {
         replaceAllObjects(
-          indexName = "cts_e2e_replace_all_objects_Kotlin",
+          indexName = "cts_e2e_replace_all_objects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -317,7 +327,7 @@ class SearchTest {
     client.runTest(
       call = {
         saveObjects(
-          indexName = "cts_e2e_saveObjects_Kotlin",
+          indexName = "cts_e2e_saveObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -354,12 +364,44 @@ class SearchTest {
   }
 
   @Test
+  fun `saveObjects should report errors`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "wrong-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    assertFails {
+      client.saveObjects(
+        indexName = "cts_e2e_saveObjects_kotlin",
+        objects = listOf(
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("1"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Adam"),
+            )
+          },
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("2"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Benoit"),
+            )
+          },
+        ),
+      )
+    }.let { error -> assertError(error, "Client request(POST http://localhost:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"") }
+  }
+
+  @Test
   fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
     client.runTest(
       call = {
         partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_Kotlin",
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -402,7 +444,7 @@ class SearchTest {
     client.runTest(
       call = {
         partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_Kotlin",
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
               put(
@@ -445,7 +487,7 @@ class SearchTest {
     client.runTest(
       call = {
         deleteObjects(
-          indexName = "cts_e2e_deleteObjects_Kotlin",
+          indexName = "cts_e2e_deleteObjects_kotlin",
           objectIDs = listOf("1", "2"),
         )
       },
@@ -466,14 +508,14 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-add-operation-test-Kotlin",
+          key = "api-key-add-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "add" },
         )
       },
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-Kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
         val actual = Json.encodeToJsonElement(it)
         areJsonElementsEqual(expected, actual)
       },
@@ -487,7 +529,7 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-update-operation-test-Kotlin",
+          key = "api-key-update-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "update" },
           apiKey = ApiKey(
             description = "my updated api key",
@@ -503,7 +545,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-Kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
         val actual = Json.encodeToJsonElement(it)
         areJsonElementsEqual(expected, actual)
       },
@@ -517,7 +559,7 @@ class SearchTest {
     client.runTest(
       call = {
         waitForApiKey(
-          key = "api-key-delete-operation-test-Kotlin",
+          key = "api-key-delete-operation-test-kotlin",
           operation = ApiKeyOperation.entries.first { it.value == "delete" },
         )
       },

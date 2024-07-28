@@ -4,7 +4,7 @@ using Algolia.Search.Clients;
 using Algolia.Search.Http;
 // IMPORT<
 using Algolia.Search.Models.QuerySuggestions;
-using Action = Algolia.Search.Models.Search.Action;
+using Action = Algolia.Search.Models.Ingestion.Action;
 
 public class SnippetQuerySuggestionsClient
 {

@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import generationCommitText from '../ci/codegen/text.js';
+import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
 import { getNbGitDiff } from '../ci/utils.js';
 import {
   LANGUAGES,
@@ -133,7 +133,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
   }
 
   // We skip generation commits as they do not appear in changelogs
-  if (message.toLocaleLowerCase().startsWith(generationCommitText.commitStartMessage)) {
+  if (isGeneratedCommit(message)) {
     return {
       error: 'generation-commit',
     };

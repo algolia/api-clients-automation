@@ -22,7 +22,9 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         'taskID' => 'string',
         'sourceID' => 'string',
         'destinationID' => 'string',
-        'trigger' => '\Algolia\AlgoliaSearch\Model\Ingestion\Trigger',
+        'cron' => 'string',
+        'lastRun' => 'string',
+        'nextRun' => 'string',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput',
         'enabled' => 'bool',
         'failureThreshold' => 'int',
@@ -41,7 +43,9 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         'taskID' => null,
         'sourceID' => null,
         'destinationID' => null,
-        'trigger' => null,
+        'cron' => null,
+        'lastRun' => null,
+        'nextRun' => null,
         'input' => null,
         'enabled' => null,
         'failureThreshold' => null,
@@ -61,7 +65,9 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         'taskID' => 'taskID',
         'sourceID' => 'sourceID',
         'destinationID' => 'destinationID',
-        'trigger' => 'trigger',
+        'cron' => 'cron',
+        'lastRun' => 'lastRun',
+        'nextRun' => 'nextRun',
         'input' => 'input',
         'enabled' => 'enabled',
         'failureThreshold' => 'failureThreshold',
@@ -80,7 +86,9 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         'taskID' => 'setTaskID',
         'sourceID' => 'setSourceID',
         'destinationID' => 'setDestinationID',
-        'trigger' => 'setTrigger',
+        'cron' => 'setCron',
+        'lastRun' => 'setLastRun',
+        'nextRun' => 'setNextRun',
         'input' => 'setInput',
         'enabled' => 'setEnabled',
         'failureThreshold' => 'setFailureThreshold',
@@ -99,7 +107,9 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         'taskID' => 'getTaskID',
         'sourceID' => 'getSourceID',
         'destinationID' => 'getDestinationID',
-        'trigger' => 'getTrigger',
+        'cron' => 'getCron',
+        'lastRun' => 'getLastRun',
+        'nextRun' => 'getNextRun',
         'input' => 'getInput',
         'enabled' => 'getEnabled',
         'failureThreshold' => 'getFailureThreshold',
@@ -132,8 +142,14 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         if (isset($data['destinationID'])) {
             $this->container['destinationID'] = $data['destinationID'];
         }
-        if (isset($data['trigger'])) {
-            $this->container['trigger'] = $data['trigger'];
+        if (isset($data['cron'])) {
+            $this->container['cron'] = $data['cron'];
+        }
+        if (isset($data['lastRun'])) {
+            $this->container['lastRun'] = $data['lastRun'];
+        }
+        if (isset($data['nextRun'])) {
+            $this->container['nextRun'] = $data['nextRun'];
         }
         if (isset($data['input'])) {
             $this->container['input'] = $data['input'];
@@ -226,9 +242,6 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
         }
         if (!isset($this->container['destinationID']) || null === $this->container['destinationID']) {
             $invalidProperties[] = "'destinationID' can't be null";
-        }
-        if (!isset($this->container['trigger']) || null === $this->container['trigger']) {
-            $invalidProperties[] = "'trigger' can't be null";
         }
         if (!isset($this->container['enabled']) || null === $this->container['enabled']) {
             $invalidProperties[] = "'enabled' can't be null";
@@ -335,25 +348,73 @@ class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonS
     }
 
     /**
-     * Gets trigger.
+     * Gets cron.
      *
-     * @return Trigger
+     * @return null|string
      */
-    public function getTrigger()
+    public function getCron()
     {
-        return $this->container['trigger'] ?? null;
+        return $this->container['cron'] ?? null;
     }
 
     /**
-     * Sets trigger.
+     * Sets cron.
      *
-     * @param Trigger $trigger trigger
+     * @param null|string $cron cron expression for the task's schedule
      *
      * @return self
      */
-    public function setTrigger($trigger)
+    public function setCron($cron)
     {
-        $this->container['trigger'] = $trigger;
+        $this->container['cron'] = $cron;
+
+        return $this;
+    }
+
+    /**
+     * Gets lastRun.
+     *
+     * @return null|string
+     */
+    public function getLastRun()
+    {
+        return $this->container['lastRun'] ?? null;
+    }
+
+    /**
+     * Sets lastRun.
+     *
+     * @param null|string $lastRun the last time the scheduled task ran in RFC 3339 format
+     *
+     * @return self
+     */
+    public function setLastRun($lastRun)
+    {
+        $this->container['lastRun'] = $lastRun;
+
+        return $this;
+    }
+
+    /**
+     * Gets nextRun.
+     *
+     * @return null|string
+     */
+    public function getNextRun()
+    {
+        return $this->container['nextRun'] ?? null;
+    }
+
+    /**
+     * Sets nextRun.
+     *
+     * @param null|string $nextRun the next scheduled run of the task in RFC 3339 format
+     *
+     * @return self
+     */
+    public function setNextRun($nextRun)
+    {
+        $this->container['nextRun'] = $nextRun;
 
         return $this;
     }

@@ -2236,13 +2236,13 @@
       "default": "let response = try await client.assignUserId(\n    xAlgoliaUserID: \"userID\",\n    assignUserIdParams: AssignUserIdParams(cluster: \"theCluster\")\n)"
     },
     "batch": {
-      "addObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [\n        BatchRequest(action: Action.addObject, body: [\"key\": \"bar\", \"foo\": \"1\"]),\n        BatchRequest(action: Action.addObject, body: [\"key\": \"baz\", \"foo\": \"2\"]),\n    ])\n)",
-      "clear": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear, body: [\"key\": \"value\"])])\n)",
-      "delete": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete, body: [\"key\": \"value\"])])\n)",
-      "deleteObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(\n        action: Action.deleteObject,\n        body: [\"key\": \"value\"]\n    )])\n)",
-      "partialUpdateObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(\n        action: Action.partialUpdateObject,\n        body: [\"key\": \"value\"]\n    )])\n)",
-      "partialUpdateObjectNoCreate": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(\n        action: Action.partialUpdateObjectNoCreate,\n        body: [\"key\": \"value\"]\n    )])\n)",
-      "updateObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: BatchWriteParams(requests: [BatchRequest(\n        action: Action.updateObject,\n        body: [\"key\": \"value\"]\n    )])\n)"
+      "addObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [\n        SearchBatchRequest(action: SearchAction.addObject, body: [\"key\": \"bar\", \"foo\": \"1\"]),\n        SearchBatchRequest(action: SearchAction.addObject, body: [\"key\": \"baz\", \"foo\": \"2\"]),\n    ])\n)",
+      "clear": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.clear,\n        body: [\"key\": \"value\"]\n    )])\n)",
+      "delete": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.delete,\n        body: [\"key\": \"value\"]\n    )])\n)",
+      "deleteObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.deleteObject,\n        body: [\"key\": \"value\"]\n    )])\n)",
+      "partialUpdateObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.partialUpdateObject,\n        body: [\"key\": \"value\"]\n    )])\n)",
+      "partialUpdateObjectNoCreate": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.partialUpdateObjectNoCreate,\n        body: [\"key\": \"value\"]\n    )])\n)",
+      "updateObject": "let response = try await client.batch(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(\n        action: SearchAction.updateObject,\n        body: [\"key\": \"value\"]\n    )])\n)"
     },
     "batchAssignUserIds": {
       "default": "let response = try await client.batchAssignUserIds(\n    xAlgoliaUserID: \"userID\",\n    batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: \"theCluster\", users: [\"user1\", \"user2\"])\n)"
@@ -2355,7 +2355,7 @@
       "default": "let response = try await client.listUserIds()"
     },
     "multipleBatch": {
-      "default": "let response = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(\n    action: Action.addObject,\n    body: [\"key\": \"value\"],\n    indexName: \"theIndexName\"\n)]))"
+      "default": "let response = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(\n    action: SearchAction.addObject,\n    body: [\"key\": \"value\"],\n    indexName: \"theIndexName\"\n)]))"
     },
     "operationIndex": {
       "scopes": "let response = try await client.operationIndex(\n    indexName: \"<SOURCE_INDEX_NAME>\",\n    operationIndexParams: OperationIndexParams(\n        operation: OperationType.move,\n        destination: \"<DESTINATION_INDEX_NAME>\",\n        scope: [ScopeType.rules, ScopeType.settings]\n    )\n)",

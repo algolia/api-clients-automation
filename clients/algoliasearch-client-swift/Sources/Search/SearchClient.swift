@@ -267,7 +267,7 @@ open class SearchClient {
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func batch(
         indexName: String,
-        batchWriteParams: BatchWriteParams,
+        batchWriteParams: SearchBatchWriteParams,
         requestOptions: RequestOptions? = nil
     ) async throws -> BatchResponse {
         let response: Response<BatchResponse> = try await batchWithHTTPInfo(
@@ -295,7 +295,7 @@ open class SearchClient {
 
     open func batchWithHTTPInfo(
         indexName: String,
-        batchWriteParams: BatchWriteParams,
+        batchWriteParams: SearchBatchWriteParams,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<BatchResponse> {
         guard !indexName.isEmpty else {
@@ -1938,10 +1938,10 @@ open class SearchClient {
     }
 
     /// - parameter indexName: (path) Name of the index on which to perform the operation.
-    /// - returns: IndexSettings
+    /// - returns: SettingsResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func getSettings(indexName: String, requestOptions: RequestOptions? = nil) async throws -> IndexSettings {
-        let response: Response<IndexSettings> = try await getSettingsWithHTTPInfo(
+    open func getSettings(indexName: String, requestOptions: RequestOptions? = nil) async throws -> SettingsResponse {
+        let response: Response<SettingsResponse> = try await getSettingsWithHTTPInfo(
             indexName: indexName,
             requestOptions: requestOptions
         )
@@ -1958,12 +1958,12 @@ open class SearchClient {
     //  - search
     //
     // - parameter indexName: (path) Name of the index on which to perform the operation.
-    // - returns: RequestBuilder<IndexSettings>
+    // - returns: RequestBuilder<SettingsResponse>
 
     open func getSettingsWithHTTPInfo(
         indexName: String,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<IndexSettings> {
+    ) async throws -> Response<SettingsResponse> {
         guard !indexName.isEmpty else {
             throw AlgoliaError.invalidArgument("indexName", "getSettings")
         }

@@ -35,6 +35,6 @@ multiple lines`,
       `,
       errors: [{ messageId: 'noNewLine' }],
       output: `multiple new lines`,
-    }
+    },
   ],
 });

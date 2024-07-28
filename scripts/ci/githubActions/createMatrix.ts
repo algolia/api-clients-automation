@@ -4,9 +4,8 @@ import { setOutput } from '@actions/core';
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
 import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
-import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
-import { isBaseChanged } from './utils.js';
+import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -69,7 +68,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`;
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
@@ -77,7 +76,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
       })
       .join(' ');
 

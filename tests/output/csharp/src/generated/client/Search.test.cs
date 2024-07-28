@@ -84,7 +84,7 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.CustomGetAsync("1/test/retry/Csharp");
+    var res = await client.CustomGetAsync("1/test/retry/csharp");
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",
@@ -93,8 +93,38 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "test the compression strategy")]
+  [Fact(DisplayName = "tests the retry strategy error")]
   public async Task ApiTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6676,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/test/hang/csharp");
+    });
+    Assert.Equal(
+      "RetryStrategy failed to connect to Algolia. Reason: The operation has timed out.".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
+  [Fact(DisplayName = "test the compression strategy")]
+  public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -234,7 +264,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.ReplaceAllObjectsAsync(
-      "cts_e2e_replace_all_objects_Csharp",
+      "cts_e2e_replace_all_objects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
@@ -279,7 +309,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.SaveObjectsAsync(
-      "cts_e2e_saveObjects_Csharp",
+      "cts_e2e_saveObjects_csharp",
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
@@ -294,10 +324,10 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=true")]
+  [Fact(DisplayName = "saveObjects should report errors")]
   public async Task HelpersTest4()
   {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    SearchConfig _config = new SearchConfig("test-app-id", "wrong-api-key")
     {
       CustomHosts = new List<StatefulHost>
       {
@@ -314,24 +344,24 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_Csharp",
-      new List<Object>
-      {
-        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
-      },
-      true
-    );
-
-    JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.SaveObjectsAsync(
+        "cts_e2e_saveObjects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        }
+      );
+    });
+    Assert.Equal(
+      "{\"message\":\"Invalid Application-ID or API key\",\"status\":403}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
     );
   }
 
-  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=false")]
+  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=true")]
   public async Task HelpersTest5()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
@@ -352,23 +382,23 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_Csharp",
+      "cts_e2e_partialUpdateObjects_csharp",
       new List<Object>
       {
-        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
       },
-      false
+      true
     );
 
     JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]",
+      "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "call deleteObjects without error")]
+  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=false")]
   public async Task HelpersTest6()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
@@ -388,8 +418,45 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
+    var res = await client.PartialUpdateObjectsAsync(
+      "cts_e2e_partialUpdateObjects_csharp",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+      },
+      false
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "call deleteObjects without error")]
+  public async Task HelpersTest7()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
     var res = await client.DeleteObjectsAsync(
-      "cts_e2e_deleteObjects_Csharp",
+      "cts_e2e_deleteObjects_csharp",
       new List<string> { "1", "2" }
     );
 
@@ -401,38 +468,6 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "wait for api key helper - add")]
-  public async Task HelpersTest7()
-  {
-    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
-    {
-      CustomHosts = new List<StatefulHost>
-      {
-        new()
-        {
-          Scheme = HttpScheme.Http,
-          Url = "localhost",
-          Port = 6681,
-          Up = true,
-          LastUse = DateTime.UtcNow,
-          Accept = CallType.Read | CallType.Write,
-        }
-      }
-    };
-    var client = new SearchClient(_config);
-
-    var res = await client.WaitForApiKeyAsync(
-      "api-key-add-operation-test-Csharp",
-      Enum.Parse<ApiKeyOperation>("Add")
-    );
-
-    JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-add-operation-test-Csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "wait for api key - update")]
   public async Task HelpersTest8()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
@@ -453,33 +488,18 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.WaitForApiKeyAsync(
-      "api-key-update-operation-test-Csharp",
-      Enum.Parse<ApiKeyOperation>("Update"),
-      new ApiKey
-      {
-        Description = "my updated api key",
-        Acl = new List<Acl>
-        {
-          Enum.Parse<Acl>("Search"),
-          Enum.Parse<Acl>("AddObject"),
-          Enum.Parse<Acl>("DeleteObject")
-        },
-        Indexes = new List<string> { "Movies", "Books" },
-        Referers = new List<string> { "*google.com", "*algolia.com" },
-        Validity = 305,
-        MaxQueriesPerIPPerHour = 95,
-        MaxHitsPerQuery = 20,
-      }
+      "api-key-add-operation-test-csharp",
+      Enum.Parse<ApiKeyOperation>("Add")
     );
 
     JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-update-operation-test-Csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      "{\"value\":\"api-key-add-operation-test-csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
       JsonSerializer.Serialize(res, JsonConfig.Options),
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "wait for api key - delete")]
+  [Fact(DisplayName = "wait for api key - update")]
   public async Task HelpersTest9()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
@@ -500,7 +520,54 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.WaitForApiKeyAsync(
-      "api-key-delete-operation-test-Csharp",
+      "api-key-update-operation-test-csharp",
+      Enum.Parse<ApiKeyOperation>("Update"),
+      new ApiKey
+      {
+        Description = "my updated api key",
+        Acl = new List<Acl>
+        {
+          Enum.Parse<Acl>("Search"),
+          Enum.Parse<Acl>("AddObject"),
+          Enum.Parse<Acl>("DeleteObject")
+        },
+        Indexes = new List<string> { "Movies", "Books" },
+        Referers = new List<string> { "*google.com", "*algolia.com" },
+        Validity = 305,
+        MaxQueriesPerIPPerHour = 95,
+        MaxHitsPerQuery = 20,
+      }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"value\":\"api-key-update-operation-test-csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "wait for api key - delete")]
+  public async Task HelpersTest10()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.WaitForApiKeyAsync(
+      "api-key-delete-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Delete")
     );
 

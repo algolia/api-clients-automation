@@ -31,6 +31,8 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 // calls api with correct read host
 func TestRecommendapi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *recommend.APIClient
 	var cfg recommend.RecommendConfiguration
@@ -45,7 +47,7 @@ func TestRecommendapi0(t *testing.T) {
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -55,6 +57,8 @@ func TestRecommendapi0(t *testing.T) {
 // calls api with correct write host
 func TestRecommendapi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *recommend.APIClient
 	var cfg recommend.RecommendConfiguration
@@ -69,7 +73,7 @@ func TestRecommendapi1(t *testing.T) {
 	}
 	client, err = recommend.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -79,9 +83,11 @@ func TestRecommendapi1(t *testing.T) {
 // calls api with correct user agent
 func TestRecommendcommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createRecommendClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -91,9 +97,11 @@ func TestRecommendcommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestRecommendcommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createRecommendClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -104,9 +112,11 @@ func TestRecommendcommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestRecommendcommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createRecommendClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)

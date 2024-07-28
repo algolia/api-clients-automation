@@ -12,7 +12,8 @@
     "start:query-suggestions": "tsc && node dist/query-suggestions.js",
     "start:recommend": "tsc && node dist/recommend.js",
     "start:search": "tsc && node dist/search.js",
-    "start:sources": "tsc && node dist/sources.js"
+    "start:sources": "tsc && node dist/sources.js",
+    "build": "tsc"
   },
   "dependencies": {
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",

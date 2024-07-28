@@ -47,9 +47,26 @@ describe('api', () => {
       ],
     });
 
-    const result = await client.customGet({ path: '1/test/retry/JavaScript' });
+    const result = await client.customGet({ path: '1/test/retry/javascript' });
 
     expect(result).toEqual({ message: 'ok test server response' });
+  }, 15000);
+
+  test('tests the retry strategy error', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    try {
+      const result = await client.customGet({ path: '1/test/hang/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch(
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.'
+      );
+    }
   }, 15000);
 });
 
@@ -140,7 +157,7 @@ describe('helpers', () => {
     });
 
     const result = await client.replaceAllObjects({
-      indexName: 'cts_e2e_replace_all_objects_JavaScript',
+      indexName: 'cts_e2e_replace_all_objects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -182,7 +199,7 @@ describe('helpers', () => {
     });
 
     const result = await client.saveObjects({
-      indexName: 'cts_e2e_saveObjects_JavaScript',
+      indexName: 'cts_e2e_saveObjects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -190,6 +207,27 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
+  }, 15000);
+
+  test('saveObjects should report errors', async () => {
+    const client = searchClient('test-app-id', 'wrong-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    try {
+      const result = await client.saveObjects({
+        indexName: 'cts_e2e_saveObjects_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Invalid Application-ID or API key');
+    }
   }, 15000);
 
   test('call partialUpdateObjects with createIfNotExists=true', async () => {
@@ -200,7 +238,7 @@ describe('helpers', () => {
     });
 
     const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
       objects: [
         { objectID: '1', name: 'Adam' },
         { objectID: '2', name: 'Benoit' },
@@ -219,7 +257,7 @@ describe('helpers', () => {
     });
 
     const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
       objects: [
         { objectID: '3', name: 'Cyril' },
         { objectID: '4', name: 'David' },
@@ -238,7 +276,7 @@ describe('helpers', () => {
     });
 
     const result = await client.deleteObjects({
-      indexName: 'cts_e2e_deleteObjects_JavaScript',
+      indexName: 'cts_e2e_deleteObjects_javascript',
       objectIDs: ['1', '2'],
     });
 
@@ -253,12 +291,12 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-add-operation-test-JavaScript',
+      key: 'api-key-add-operation-test-javascript',
       operation: 'add',
     });
 
     expect(result).toEqual({
-      value: 'api-key-add-operation-test-JavaScript',
+      value: 'api-key-add-operation-test-javascript',
       description: 'my new api key',
       acl: ['search', 'addObject'],
       validity: 300,
@@ -276,7 +314,7 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-update-operation-test-JavaScript',
+      key: 'api-key-update-operation-test-javascript',
       operation: 'update',
       apiKey: {
         description: 'my updated api key',
@@ -290,7 +328,7 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual({
-      value: 'api-key-update-operation-test-JavaScript',
+      value: 'api-key-update-operation-test-javascript',
       description: 'my updated api key',
       acl: ['search', 'addObject', 'deleteObject'],
       indexes: ['Movies', 'Books'],
@@ -310,7 +348,7 @@ describe('helpers', () => {
     });
 
     const result = await client.waitForApiKey({
-      key: 'api-key-delete-operation-test-JavaScript',
+      key: 'api-key-delete-operation-test-javascript',
       operation: 'delete',
     });
 

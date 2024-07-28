@@ -1,0 +1,50 @@
+    {{#tests}}
+    async def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        """
+        {{{testName}}}
+        """
+        {{#autoCreateClient}}
+        self.create_client()
+        {{/autoCreateClient}}
+
+        {{#steps}}
+        {{#isError}}
+        try:
+            {{#dynamicTemplate}}{{/dynamicTemplate}}
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}}
+        {{/isError}}
+        {{^isError}}
+        {{#times}}for _ in range(0, {{.}}):
+          {{/times}}{{#dynamicTemplate}}{{/dynamicTemplate}}
+        {{#match}}
+        {{#testUserAgent}}
+        regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}")
+        assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+        {{/testUserAgent}}
+        {{#testTimeouts}}
+        assert _req.timeouts.get("connect") == {{{match.parametersWithDataTypeMap.connectTimeout.value}}}
+        assert _req.timeouts.get("response") == {{{match.parametersWithDataTypeMap.responseTimeout.value}}}
+        {{/testTimeouts}}
+        {{#testHost}}
+        assert _req.host == "{{{match}}}"
+        {{/testHost}}
+        {{#testResponse}}
+        {{#matchIsJSON}}
+        assert (_req if isinstance(_req, dict) else [elem.to_dict() for elem in _req] if isinstance(_req, list) else  _req.to_dict()) == loads("""{{{match.parameters}}}""")
+        {{/matchIsJSON}}
+        {{^matchIsJSON}}
+        {{#matchIsNull}}
+        assert _req is None
+        {{/matchIsNull}}
+        {{^matchIsNull}}
+        assert _req == """{{{match}}}"""
+        {{/matchIsNull}}
+        {{/matchIsJSON}}
+        {{/testResponse}}
+        {{/match}}
+        {{/isError}}
+        {{/steps}}
+
+    {{/tests}}

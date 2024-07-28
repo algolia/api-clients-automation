@@ -14,6 +14,7 @@ class Step {
 
   public String type;
   public String method;
+  public int times;
   public Map<String, Object> parameters;
   public Expected expected;
 }
@@ -21,6 +22,6 @@ class Step {
 class Expected {
 
   public String type;
-  public String error;
+  public Object error;
   public Object match;
 }

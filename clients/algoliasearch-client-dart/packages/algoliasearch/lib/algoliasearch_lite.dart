@@ -86,6 +86,7 @@ export 'src/model/search_strategy.dart';
 export 'src/model/search_type_default.dart';
 export 'src/model/search_type_facet.dart';
 export 'src/model/semantic_search.dart';
+export 'src/model/settings_response.dart';
 export 'src/model/snippet_result_option.dart';
 export 'src/model/sort_remaining_by.dart';
 export 'src/model/supported_language.dart';
@@ -98,5 +99,6 @@ export 'src/model/trending_items_model.dart';
 export 'src/model/trending_items_query.dart';
 export 'src/model/typo_tolerance_enum.dart';
 export 'src/model/value.dart';
+export 'src/model/with_primary.dart';
 
 export 'src/extension.dart';

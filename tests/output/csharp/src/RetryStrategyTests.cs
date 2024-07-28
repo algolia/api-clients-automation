@@ -55,65 +55,6 @@ public class RetryStrategyTests
   }
 
   [Fact]
-  public async Task ShouldThrowsWhenAllRetriesFailed()
-  {
-    var httpMock = new Mock<IHttpRequester>();
-    var searchConfig = new SearchConfig("test-app-id", "test-api-key");
-    var client = new SearchClient(searchConfig, httpMock.Object);
-
-    httpMock
-      .SetupSequence(c =>
-        c.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/test-index/query")),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<CancellationToken>()
-        )
-      )
-      // First call return a 500 from Algolia server
-      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 500, Body = null }))
-      // Second call return a 300 from Algolia server
-      .Returns(Task.FromResult(new AlgoliaHttpResponse { HttpStatusCode = 300, Body = null }))
-      .Returns(Task.FromResult(new AlgoliaHttpResponse { IsTimedOut = true, Body = null }))
-      .Returns(
-        Task.FromResult(
-          new AlgoliaHttpResponse
-          {
-            IsNetworkError = true,
-            Error = "DNS server not responding",
-            Body = null
-          }
-        )
-      );
-
-    // Do a simple search and expect a AlgoliaUnreachableHostException after 4 retries
-    var exception = await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(
-      async () =>
-        await client.SearchSingleIndexAsync<object>(
-          "test-index",
-          new SearchParams(new SearchParamsObject { Query = "" })
-        )
-    );
-
-    Assert.Equal(
-      "RetryStrategy failed to connect to Algolia. Reason: DNS server not responding",
-      exception.Message
-    );
-
-    // Verify that the request has been called 4 times
-    httpMock.Verify(
-      m =>
-        m.SendRequestAsync(
-          It.Is<Request>(r => r.Uri.AbsolutePath.EndsWith("/1/indexes/test-index/query")),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<TimeSpan>(),
-          It.IsAny<CancellationToken>()
-        ),
-      Times.Exactly(4)
-    );
-  }
-
-  [Fact]
   public async Task CanOverrideHost()
   {
     var httpMock = new Mock<IHttpRequester>();

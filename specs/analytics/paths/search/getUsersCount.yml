@@ -26,11 +26,11 @@ get:
       description: OK
       headers:
         x-ratelimit-limit:
-          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:

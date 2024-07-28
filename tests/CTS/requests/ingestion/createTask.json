@@ -1,71 +1,36 @@
 [
   {
-    "testName": "createTaskOnDemand",
+    "testName": "task without cron",
     "parameters": {
       "sourceID": "search",
       "destinationID": "destinationName",
-      "trigger": {
-        "type": "onDemand"
-      },
       "action": "replace"
     },
     "request": {
-      "path": "/1/tasks",
+      "path": "/2/tasks",
       "method": "POST",
       "body": {
         "sourceID": "search",
         "destinationID": "destinationName",
-        "trigger": {
-          "type": "onDemand"
-        },
         "action": "replace"
       }
     }
   },
   {
-    "testName": "createTaskSchedule",
+    "testName": "task with cron",
     "parameters": {
       "sourceID": "search",
       "destinationID": "destinationName",
-      "trigger": {
-        "type": "schedule",
-        "cron": "* * * * *"
-      },
+      "cron": "* * * * *",
       "action": "replace"
     },
     "request": {
-      "path": "/1/tasks",
+      "path": "/2/tasks",
       "method": "POST",
       "body": {
         "sourceID": "search",
         "destinationID": "destinationName",
-        "trigger": {
-          "type": "schedule",
-          "cron": "* * * * *"
-        },
-        "action": "replace"
-      }
-    }
-  },
-  {
-    "testName": "createTaskSubscription",
-    "parameters": {
-      "sourceID": "search",
-      "destinationID": "destinationName",
-      "trigger": {
-        "type": "onDemand"
-      },
-      "action": "replace"
-    },
-    "request": {
-      "path": "/1/tasks",
-      "method": "POST",
-      "body": {
-        "sourceID": "search",
-        "destinationID": "destinationName",
-        "trigger": {
-          "type": "onDemand"
-        },
+        "cron": "* * * * *",
         "action": "replace"
       }
     }

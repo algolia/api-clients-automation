@@ -132,21 +132,8 @@ describe('createReleasePR', () => {
       expect(
         await parseCommit(
           buildTestCommit({
-            type: 'chore',
-            message: 'generated code for commit',
-          })
-        )
-      ).toEqual({
-        error: 'generation-commit',
-      });
-    });
-
-    it('returns error when it is a generated commit, even with other casing', async () => {
-      expect(
-        await parseCommit(
-          buildTestCommit({
-            type: 'chore',
-            message: 'GENERATED CODE FOR COMMIT',
+            type: 'feat(specs)',
+            message: 'foo bar baz (generated)',
           })
         )
       ).toEqual({

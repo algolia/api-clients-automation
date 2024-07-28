@@ -54,12 +54,34 @@ void main() {
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
-        path: "1/test/retry/Dart",
+        path: "1/test/retry/dart",
       );
       expectBody(res, """{"message":"ok test server response"}""");
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
     }
+  });
+
+  test('tests the retry strategy error', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(url: 'localhost:6676', scheme: 'http'),
+        ]));
+    await expectError(
+      'UnreachableHostsException{errors: [AlgoliaTimeoutException{error: DioException [receive timeout]: The request took longer than 0:00:05.000000 to receive data. It was aborted. To get rid of this exception, try raising the RequestOptions.receiveTimeout above the duration of 0:00:05.000000 or improve the response time of the server.}]}',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/hang/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
   });
 
   test('calls api with correct user agent', () async {
@@ -121,7 +143,7 @@ void main() {
 
   test('client throws with invalid parameters', () async {
     final requester = RequestInterceptor();
-    expectError(
+    await expectError(
       '`appId` is missing.',
       () async {
         final client = SearchClient(
@@ -130,7 +152,7 @@ void main() {
             options: ClientOptions(requester: requester));
       },
     );
-    expectError(
+    await expectError(
       '`appId` is missing.',
       () async {
         final client = SearchClient(
@@ -139,7 +161,7 @@ void main() {
             options: ClientOptions(requester: requester));
       },
     );
-    expectError(
+    await expectError(
       '`apiKey` is missing.',
       () async {
         final client = SearchClient(
@@ -157,7 +179,7 @@ void main() {
       apiKey: 'apiKey',
       options: ClientOptions(requester: requester),
     );
-    expectError(
+    await expectError(
       'Parameter `apiKey` is required when calling `addApiKey`.',
       () async {
         try {
@@ -178,7 +200,7 @@ void main() {
       apiKey: 'apiKey',
       options: ClientOptions(requester: requester),
     );
-    expectError(
+    await expectError(
       'Parameter `indexName` is required when calling `addOrUpdateObject`.',
       () async {
         try {
@@ -192,7 +214,7 @@ void main() {
         }
       },
     );
-    expectError(
+    await expectError(
       'Parameter `objectID` is required when calling `addOrUpdateObject`.',
       () async {
         try {
@@ -206,7 +228,7 @@ void main() {
         }
       },
     );
-    expectError(
+    await expectError(
       'Parameter `body` is required when calling `addOrUpdateObject`.',
       () async {
         try {

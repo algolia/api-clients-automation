@@ -43,7 +43,6 @@ type config struct {
 	maxRetries    int
 	timeout       func(int) time.Duration
 	aggregator    func(any, error)
-	iterableError *IterableError
 
   // -- WaitForApiKey options
   apiKey *ApiKey
@@ -184,12 +183,6 @@ func WithTimeout(timeout func(int) time.Duration) iterableOption {
 func WithAggregator(aggregator func(any, error)) iterableOption {
 	return iterableOption(func(c *config) {
 		c.aggregator = aggregator
-	})
-}
-
-func WithIterableError(iterableError *IterableError) iterableOption {
-	return iterableOption(func(c *config) {
-		c.iterableError = iterableError
 	})
 }
 

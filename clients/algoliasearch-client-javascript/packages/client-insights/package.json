@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-insights",
-  "version": "5.0.0-beta.11",
+  "version": "5.0.0-beta.12",
   "description": "JavaScript client for client-insights",
   "repository": {
     "type": "git",
@@ -42,12 +42,12 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.12",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.12",
-    "@algolia/requester-node-http": "5.0.0-beta.12"
+    "@algolia/client-common": "5.0.0-beta.13",
+    "@algolia/requester-browser-xhr": "5.0.0-beta.13",
+    "@algolia/requester-node-http": "5.0.0-beta.13"
   },
   "devDependencies": {
-    "@types/node": "20.14.10",
+    "@types/node": "20.14.11",
     "rollup": "4.18.1",
     "typescript": "5.5.3"
   },

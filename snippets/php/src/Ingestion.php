@@ -100,7 +100,7 @@ class SnippetIngestionClient
     /**
      * Snippet for the CreateTask method.
      *
-     * createTaskOnDemand
+     * task without cron
      */
     public function snippetForCreateTask()
     {
@@ -110,6 +110,30 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'action' => 'replace',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateTaskV1 method.
+     *
+     * createTaskOnDemand
+     */
+    public function snippetForCreateTaskV1()
+    {
+        // >SEPARATOR createTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->createTaskV1(
             ['sourceID' => 'search',
                 'destinationID' => 'destinationName',
                 'trigger' => ['type' => 'onDemand',
@@ -316,6 +340,27 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the DeleteTaskV1 method.
+     *
+     * deleteTaskV1
+     */
+    public function snippetForDeleteTaskV1()
+    {
+        // >SEPARATOR deleteTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->deleteTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the DeleteTransformation method.
      *
      * deleteTransformation
@@ -358,9 +403,30 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the DisableTaskV1 method.
+     *
+     * disableTaskV1
+     */
+    public function snippetForDisableTaskV1()
+    {
+        // >SEPARATOR disableTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->disableTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the EnableTask method.
      *
-     * enable task e2e
+     * enableTask
      */
     public function snippetForEnableTask()
     {
@@ -370,6 +436,27 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->enableTask(
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the EnableTaskV1 method.
+     *
+     * enableTaskV1
+     */
+    public function snippetForEnableTaskV1()
+    {
+        // >SEPARATOR enableTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->enableTaskV1(
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
@@ -400,25 +487,6 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetAuthentications method.
-     *
-     * getAuthentications
-     */
-    public function snippetForGetAuthentications()
-    {
-        // >SEPARATOR getAuthentications default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getAuthentications();
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the GetDestination method.
      *
      * getDestination
@@ -433,25 +501,6 @@ class SnippetIngestionClient
         $response = $client->getDestination(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the GetDestinations method.
-     *
-     * getDestinations
-     */
-    public function snippetForGetDestinations()
-    {
-        // >SEPARATOR getDestinations default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getDestinations();
 
         // play with the response
         var_dump($response);
@@ -481,27 +530,6 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetEvents method.
-     *
-     * getEvents
-     */
-    public function snippetForGetEvents()
-    {
-        // >SEPARATOR getEvents default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getEvents(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the GetRun method.
      *
      * getRun
@@ -516,25 +544,6 @@ class SnippetIngestionClient
         $response = $client->getRun(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the GetRuns method.
-     *
-     * getRuns
-     */
-    public function snippetForGetRuns()
-    {
-        // >SEPARATOR getRuns default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getRuns();
 
         // play with the response
         var_dump($response);
@@ -563,25 +572,6 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetSources method.
-     *
-     * getSources
-     */
-    public function snippetForGetSources()
-    {
-        // >SEPARATOR getSources default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getSources();
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the GetTask method.
      *
      * getTask
@@ -603,18 +593,20 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetTasks method.
+     * Snippet for the GetTaskV1 method.
      *
-     * getTasks
+     * getTaskV1
      */
-    public function snippetForGetTasks()
+    public function snippetForGetTaskV1()
     {
-        // >SEPARATOR getTasks default
+        // >SEPARATOR getTaskV1 default
         // Initialize the client
         $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
-        $response = $client->getTasks();
+        $response = $client->getTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
 
         // play with the response
         var_dump($response);
@@ -643,18 +635,188 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetTransformations method.
+     * Snippet for the ListAuthentications method.
      *
-     * getTransformations
+     * getAuthentications
      */
-    public function snippetForGetTransformations()
+    public function snippetForListAuthentications()
     {
-        // >SEPARATOR getTransformations default
+        // >SEPARATOR listAuthentications default
         // Initialize the client
         $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
-        $response = $client->getTransformations();
+        $response = $client->listAuthentications();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListDestinations method.
+     *
+     * getDestinations
+     */
+    public function snippetForListDestinations()
+    {
+        // >SEPARATOR listDestinations default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listDestinations();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListEvents method.
+     *
+     * getEvents
+     */
+    public function snippetForListEvents()
+    {
+        // >SEPARATOR listEvents default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listEvents(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListRuns method.
+     *
+     * getRuns
+     */
+    public function snippetForListRuns()
+    {
+        // >SEPARATOR listRuns default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listRuns();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListSources method.
+     *
+     * getSources
+     */
+    public function snippetForListSources()
+    {
+        // >SEPARATOR listSources default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listSources();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListTasks method.
+     *
+     * listTasks
+     */
+    public function snippetForListTasks()
+    {
+        // >SEPARATOR listTasks default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listTasks();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListTasksV1 method.
+     *
+     * listTasksV1
+     */
+    public function snippetForListTasksV1()
+    {
+        // >SEPARATOR listTasksV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listTasksV1();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListTransformations method.
+     *
+     * getTransformations
+     */
+    public function snippetForListTransformations()
+    {
+        // >SEPARATOR listTransformations default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listTransformations();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PushTask method.
+     *
+     * pushTask
+     */
+    public function snippetForPushTask()
+    {
+        // >SEPARATOR pushTask default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->pushTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['requests' => [
+                ['action' => 'addObject',
+                    'body' => ['key' => 'bar',
+                        'foo' => '1',
+                    ],
+                ],
+
+                ['action' => 'addObject',
+                    'body' => ['key' => 'baz',
+                        'foo' => '2',
+                    ],
+                ],
+            ],
+            ],
+        );
 
         // play with the response
         var_dump($response);
@@ -674,6 +836,27 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->runTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the RunTaskV1 method.
+     *
+     * runTaskV1
+     */
+    public function snippetForRunTaskV1()
+    {
+        // >SEPARATOR runTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->runTaskV1(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
@@ -773,6 +956,34 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->searchTasks(
+            ['taskIDs' => [
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+
+                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+            ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchTasksV1 method.
+     *
+     * searchTasksV1
+     */
+    public function snippetForSearchTasksV1()
+    {
+        // >SEPARATOR searchTasksV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->searchTasksV1(
             ['taskIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
@@ -943,6 +1154,30 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->updateTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['enabled' => false,
+                'cron' => '* * * * *',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the UpdateTaskV1 method.
+     *
+     * updateTaskV1
+     */
+    public function snippetForUpdateTaskV1()
+    {
+        // >SEPARATOR updateTaskV1 default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->updateTaskV1(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['enabled' => false,
             ],

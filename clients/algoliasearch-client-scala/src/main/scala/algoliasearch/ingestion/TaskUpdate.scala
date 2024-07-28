@@ -27,6 +27,8 @@ package algoliasearch.ingestion
   *
   * @param destinationID
   *   Universally unique identifier (UUID) of a destination resource.
+  * @param cron
+  *   Cron expression for the task's schedule.
   * @param enabled
   *   Whether the task is enabled.
   * @param failureThreshold
@@ -34,7 +36,7 @@ package algoliasearch.ingestion
   */
 case class TaskUpdate(
     destinationID: Option[String] = scala.None,
-    trigger: Option[TriggerUpdateInput] = scala.None,
+    cron: Option[String] = scala.None,
     input: Option[TaskInput] = scala.None,
     enabled: Option[Boolean] = scala.None,
     failureThreshold: Option[Int] = scala.None
