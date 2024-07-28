@@ -102,7 +102,7 @@ func SnippetForCreateTaskOfIngestion() {
 	/*
 	   Snippet for the createTask method.
 
-	   createTaskOnDemand
+	   task without cron
 	*/
 
 	// >SEPARATOR createTask default
@@ -116,7 +116,36 @@ func SnippetForCreateTaskOfIngestion() {
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace")),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCreateTaskV1OfIngestion() {
+	/*
+	   Snippet for the createTaskV1 method.
+
+	   createTaskOnDemand
+	*/
+
+	// >SEPARATOR createTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
 			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")),
 	))
 	if err != nil {
@@ -381,6 +410,34 @@ func SnippetForDeleteTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForDeleteTaskV1OfIngestion() {
+	/*
+	   Snippet for the deleteTaskV1 method.
+
+	   deleteTaskV1
+	*/
+
+	// >SEPARATOR deleteTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForDeleteTransformationOfIngestion() {
 	/*
 	   Snippet for the deleteTransformation method.
@@ -437,11 +494,39 @@ func SnippetForDisableTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForDisableTaskV1OfIngestion() {
+	/*
+	   Snippet for the disableTaskV1 method.
+
+	   disableTaskV1
+	*/
+
+	// >SEPARATOR disableTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForEnableTaskOfIngestion() {
 	/*
 	   Snippet for the enableTask method.
 
-	   enable task e2e
+	   enableTask
 	*/
 
 	// >SEPARATOR enableTask default
@@ -454,6 +539,34 @@ func SnippetForEnableTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.EnableTask(client.NewApiEnableTaskRequest(
+		"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForEnableTaskV1OfIngestion() {
+	/*
+	   Snippet for the enableTaskV1 method.
+
+	   enableTaskV1
+	*/
+
+	// >SEPARATOR enableTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(
 		"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
 	))
 	if err != nil {
@@ -493,32 +606,6 @@ func SnippetForGetAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetAuthenticationsOfIngestion() {
-	/*
-	   Snippet for the getAuthentications method.
-
-	   getAuthentications
-	*/
-
-	// >SEPARATOR getAuthentications default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest())
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
 func SnippetForGetDestinationOfIngestion() {
 	/*
 	   Snippet for the getDestination method.
@@ -547,32 +634,6 @@ func SnippetForGetDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetDestinationsOfIngestion() {
-	/*
-	   Snippet for the getDestinations method.
-
-	   getDestinations
-	*/
-
-	// >SEPARATOR getDestinations default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetDestinations(client.NewApiGetDestinationsRequest())
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
 func SnippetForGetEventOfIngestion() {
 	/*
 	   Snippet for the getEvent method.
@@ -591,34 +652,6 @@ func SnippetForGetEventOfIngestion() {
 	// Call the API
 	response, err := client.GetEvent(client.NewApiGetEventRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-	))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
-func SnippetForGetEventsOfIngestion() {
-	/*
-	   Snippet for the getEvents method.
-
-	   getEvents
-	*/
-
-	// >SEPARATOR getEvents default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetEvents(client.NewApiGetEventsRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -657,32 +690,6 @@ func SnippetForGetRunOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetRunsOfIngestion() {
-	/*
-	   Snippet for the getRuns method.
-
-	   getRuns
-	*/
-
-	// >SEPARATOR getRuns default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetRuns(client.NewApiGetRunsRequest())
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
 func SnippetForGetSourceOfIngestion() {
 	/*
 	   Snippet for the getSource method.
@@ -702,32 +709,6 @@ func SnippetForGetSourceOfIngestion() {
 	response, err := client.GetSource(client.NewApiGetSourceRequest(
 		"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
 	))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
-func SnippetForGetSourcesOfIngestion() {
-	/*
-	   Snippet for the getSources method.
-
-	   getSources
-	*/
-
-	// >SEPARATOR getSources default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetSources(client.NewApiGetSourcesRequest())
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -765,14 +746,14 @@ func SnippetForGetTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetTasksOfIngestion() {
+func SnippetForGetTaskV1OfIngestion() {
 	/*
-	   Snippet for the getTasks method.
+	   Snippet for the getTaskV1 method.
 
-	   getTasks
+	   getTaskV1
 	*/
 
-	// >SEPARATOR getTasks default
+	// >SEPARATOR getTaskV1 default
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -781,7 +762,9 @@ func SnippetForGetTasksOfIngestion() {
 	}
 
 	// Call the API
-	response, err := client.GetTasks(client.NewApiGetTasksRequest())
+	response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -819,14 +802,14 @@ func SnippetForGetTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetTransformationsOfIngestion() {
+func SnippetForListAuthenticationsOfIngestion() {
 	/*
-	   Snippet for the getTransformations method.
+	   Snippet for the listAuthentications method.
 
-	   getTransformations
+	   getAuthentications
 	*/
 
-	// >SEPARATOR getTransformations default
+	// >SEPARATOR listAuthentications default
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -835,7 +818,221 @@ func SnippetForGetTransformationsOfIngestion() {
 	}
 
 	// Call the API
-	response, err := client.GetTransformations(client.NewApiGetTransformationsRequest())
+	response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListDestinationsOfIngestion() {
+	/*
+	   Snippet for the listDestinations method.
+
+	   getDestinations
+	*/
+
+	// >SEPARATOR listDestinations default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListDestinations(client.NewApiListDestinationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListEventsOfIngestion() {
+	/*
+	   Snippet for the listEvents method.
+
+	   getEvents
+	*/
+
+	// >SEPARATOR listEvents default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListEvents(client.NewApiListEventsRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListRunsOfIngestion() {
+	/*
+	   Snippet for the listRuns method.
+
+	   getRuns
+	*/
+
+	// >SEPARATOR listRuns default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListRuns(client.NewApiListRunsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListSourcesOfIngestion() {
+	/*
+	   Snippet for the listSources method.
+
+	   getSources
+	*/
+
+	// >SEPARATOR listSources default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListSources(client.NewApiListSourcesRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListTasksOfIngestion() {
+	/*
+	   Snippet for the listTasks method.
+
+	   listTasks
+	*/
+
+	// >SEPARATOR listTasks default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListTasks(client.NewApiListTasksRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListTasksV1OfIngestion() {
+	/*
+	   Snippet for the listTasksV1 method.
+
+	   listTasksV1
+	*/
+
+	// >SEPARATOR listTasksV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListTasksV1(client.NewApiListTasksV1Request())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListTransformationsOfIngestion() {
+	/*
+	   Snippet for the listTransformations method.
+
+	   getTransformations
+	*/
+
+	// >SEPARATOR listTransformations default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListTransformations(client.NewApiListTransformationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPushTaskOfIngestion() {
+	/*
+	   Snippet for the pushTask method.
+
+	   pushTask
+	*/
+
+	// >SEPARATOR pushTask default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PushTask(client.NewApiPushTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyBatchWriteParams().SetRequests(
+			[]ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -862,6 +1059,34 @@ func SnippetForRunTaskOfIngestion() {
 
 	// Call the API
 	response, err := client.RunTask(client.NewApiRunTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForRunTaskV1OfIngestion() {
+	/*
+	   Snippet for the runTaskV1 method.
+
+	   runTaskV1
+	*/
+
+	// >SEPARATOR runTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 	))
 	if err != nil {
@@ -980,6 +1205,36 @@ func SnippetForSearchTasksOfIngestion() {
 
 	// Call the API
 	response, err := client.SearchTasks(client.NewApiSearchTasksRequest(
+
+		ingestion.NewEmptyTaskSearch().SetTaskIDs(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchTasksV1OfIngestion() {
+	/*
+	   Snippet for the searchTasksV1 method.
+
+	   searchTasksV1
+	*/
+
+	// >SEPARATOR searchTasksV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(
 
 		ingestion.NewEmptyTaskSearch().SetTaskIDs(
 			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
@@ -1185,7 +1440,36 @@ func SnippetForUpdateTaskOfIngestion() {
 	// Call the API
 	response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTaskUpdate().SetEnabled(false),
+		ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *"),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForUpdateTaskV1OfIngestion() {
+	/*
+	   Snippet for the updateTaskV1 method.
+
+	   updateTaskV1
+	*/
+
+	// >SEPARATOR updateTaskV1 default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyTaskUpdateV1().SetEnabled(false),
 	))
 	if err != nil {
 		// handle the eventual error

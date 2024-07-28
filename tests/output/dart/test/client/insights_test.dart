@@ -124,7 +124,7 @@ void main() {
 
   test('throws when incorrect region is given', () async {
     final requester = RequestInterceptor();
-    expectError(
+    await expectError(
       '`region` must be one of the following: de, us',
       () async {
         final client = InsightsClient(

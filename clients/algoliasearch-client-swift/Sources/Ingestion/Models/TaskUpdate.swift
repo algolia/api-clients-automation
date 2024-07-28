@@ -10,7 +10,8 @@ import Foundation
 public struct TaskUpdate: Codable, JSONEncodable {
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String?
-    public var trigger: TriggerUpdateInput?
+    /// Cron expression for the task's schedule.
+    public var cron: String?
     public var input: TaskInput?
     /// Whether the task is enabled.
     public var enabled: Bool?
@@ -19,13 +20,13 @@ public struct TaskUpdate: Codable, JSONEncodable {
 
     public init(
         destinationID: String? = nil,
-        trigger: TriggerUpdateInput? = nil,
+        cron: String? = nil,
         input: TaskInput? = nil,
         enabled: Bool? = nil,
         failureThreshold: Int? = nil
     ) {
         self.destinationID = destinationID
-        self.trigger = trigger
+        self.cron = cron
         self.input = input
         self.enabled = enabled
         self.failureThreshold = failureThreshold
@@ -33,7 +34,7 @@ public struct TaskUpdate: Codable, JSONEncodable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case destinationID
-        case trigger
+        case cron
         case input
         case enabled
         case failureThreshold
@@ -44,7 +45,7 @@ public struct TaskUpdate: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.destinationID, forKey: .destinationID)
-        try container.encodeIfPresent(self.trigger, forKey: .trigger)
+        try container.encodeIfPresent(self.cron, forKey: .cron)
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.failureThreshold, forKey: .failureThreshold)
@@ -54,7 +55,7 @@ public struct TaskUpdate: Codable, JSONEncodable {
 extension TaskUpdate: Equatable {
     public static func ==(lhs: TaskUpdate, rhs: TaskUpdate) -> Bool {
         lhs.destinationID == rhs.destinationID &&
-            lhs.trigger == rhs.trigger &&
+            lhs.cron == rhs.cron &&
             lhs.input == rhs.input &&
             lhs.enabled == rhs.enabled &&
             lhs.failureThreshold == rhs.failureThreshold
@@ -64,7 +65,7 @@ extension TaskUpdate: Equatable {
 extension TaskUpdate: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.destinationID?.hashValue)
-        hasher.combine(self.trigger?.hashValue)
+        hasher.combine(self.cron?.hashValue)
         hasher.combine(self.input?.hashValue)
         hasher.combine(self.enabled?.hashValue)
         hasher.combine(self.failureThreshold?.hashValue)

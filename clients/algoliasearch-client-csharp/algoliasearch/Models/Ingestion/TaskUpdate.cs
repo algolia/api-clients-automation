@@ -31,10 +31,11 @@ public partial class TaskUpdate
   public string DestinationID { get; set; }
 
   /// <summary>
-  /// Gets or Sets Trigger
+  /// Cron expression for the task's schedule.
   /// </summary>
-  [JsonPropertyName("trigger")]
-  public TriggerUpdateInput Trigger { get; set; }
+  /// <value>Cron expression for the task's schedule.</value>
+  [JsonPropertyName("cron")]
+  public string Cron { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
@@ -65,7 +66,7 @@ public partial class TaskUpdate
     StringBuilder sb = new StringBuilder();
     sb.Append("class TaskUpdate {\n");
     sb.Append("  DestinationID: ").Append(DestinationID).Append("\n");
-    sb.Append("  Trigger: ").Append(Trigger).Append("\n");
+    sb.Append("  Cron: ").Append(Cron).Append("\n");
     sb.Append("  Input: ").Append(Input).Append("\n");
     sb.Append("  Enabled: ").Append(Enabled).Append("\n");
     sb.Append("  FailureThreshold: ").Append(FailureThreshold).Append("\n");
@@ -96,7 +97,7 @@ public partial class TaskUpdate
 
     return
         (DestinationID == input.DestinationID || (DestinationID != null && DestinationID.Equals(input.DestinationID))) &&
-        (Trigger == input.Trigger || (Trigger != null && Trigger.Equals(input.Trigger))) &&
+        (Cron == input.Cron || (Cron != null && Cron.Equals(input.Cron))) &&
         (Input == input.Input || (Input != null && Input.Equals(input.Input))) &&
         (Enabled == input.Enabled || Enabled.Equals(input.Enabled)) &&
         (FailureThreshold == input.FailureThreshold || FailureThreshold.Equals(input.FailureThreshold));
@@ -115,9 +116,9 @@ public partial class TaskUpdate
       {
         hashCode = (hashCode * 59) + DestinationID.GetHashCode();
       }
-      if (Trigger != null)
+      if (Cron != null)
       {
-        hashCode = (hashCode * 59) + Trigger.GetHashCode();
+        hashCode = (hashCode * 59) + Cron.GetHashCode();
       }
       if (Input != null)
       {

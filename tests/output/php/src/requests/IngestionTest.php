@@ -127,11 +127,52 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('createTaskOnDemand')]
+    #[TestDox('task without cron')]
     public function testCreateTask()
     {
         $client = $this->getClient();
         $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'action' => 'replace',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","action":"replace"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('task with cron')]
+    public function testCreateTask1()
+    {
+        $client = $this->getClient();
+        $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('createTaskOnDemand')]
+    public function testCreateTaskV1()
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
             ['sourceID' => 'search',
                 'destinationID' => 'destinationName',
                 'trigger' => ['type' => 'onDemand',
@@ -150,10 +191,10 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createTaskSchedule')]
-    public function testCreateTask1()
+    public function testCreateTaskV11()
     {
         $client = $this->getClient();
-        $client->createTask(
+        $client->createTaskV1(
             ['sourceID' => 'search',
                 'destinationID' => 'destinationName',
                 'trigger' => ['type' => 'schedule',
@@ -173,10 +214,10 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createTaskSubscription')]
-    public function testCreateTask2()
+    public function testCreateTaskV12()
     {
         $client = $this->getClient();
-        $client->createTask(
+        $client->createTaskV1(
             ['sourceID' => 'search',
                 'destinationID' => 'destinationName',
                 'trigger' => ['type' => 'onDemand',
@@ -706,6 +747,23 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('deleteTaskV1')]
+    public function testDeleteTaskV1()
+    {
+        $client = $this->getClient();
+        $client->deleteTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
                 'body' => null,
@@ -740,6 +798,23 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
+                'method' => 'PUT',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    #[TestDox('disableTaskV1')]
+    public function testDisableTaskV1()
+    {
+        $client = $this->getClient();
+        $client->disableTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
                 'method' => 'PUT',
                 'body' => json_decode(''),
@@ -747,11 +822,28 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('enable task e2e')]
+    #[TestDox('enableTask')]
     public function testEnableTask()
     {
         $client = $this->getClient();
         $client->enableTask(
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
+                'method' => 'PUT',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    #[TestDox('enableTaskV1')]
+    public function testEnableTaskV1()
+    {
+        $client = $this->getClient();
+        $client->enableTaskV1(
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
@@ -781,50 +873,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getAuthentications')]
-    public function testGetAuthentications()
-    {
-        $client = $this->getClient();
-        $client->getAuthentications();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getAuthentications with query params')]
-    public function testGetAuthentications1()
-    {
-        $client = $this->getClient();
-        $client->getAuthentications(
-            2,
-            1,
-            [
-                'basic',
-
-                'algolia',
-            ],
-            [
-                'none',
-            ],
-            'createdAt',
-            'asc',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}', true),
-            ],
-        ]);
-    }
-
     #[TestDox('getDestination')]
     public function testGetDestination()
     {
@@ -836,21 +884,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getDestinations')]
-    public function testGetDestinations()
-    {
-        $client = $this->getClient();
-        $client->getDestinations();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -875,23 +908,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getEvents')]
-    public function testGetEvents()
-    {
-        $client = $this->getClient();
-        $client->getEvents(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
     #[TestDox('getRun')]
     public function testGetRun()
     {
@@ -903,21 +919,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getRuns')]
-    public function testGetRuns()
-    {
-        $client = $this->getClient();
-        $client->getRuns();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -941,21 +942,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getSources')]
-    public function testGetSources()
-    {
-        $client = $this->getClient();
-        $client->getSources();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
     #[TestDox('getTask')]
     public function testGetTask()
     {
@@ -966,22 +952,24 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
                 'body' => null,
             ],
         ]);
     }
 
-    #[TestDox('getTasks')]
-    public function testGetTasks()
+    #[TestDox('getTaskV1')]
+    public function testGetTaskV1()
     {
         $client = $this->getClient();
-        $client->getTasks();
+        $client->getTaskV1(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
 
         $this->assertRequests([
             [
-                'path' => '/1/tasks',
+                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -1005,11 +993,147 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getTransformations')]
-    public function testGetTransformations()
+    #[TestDox('getAuthentications')]
+    public function testListAuthentications()
     {
         $client = $this->getClient();
-        $client->getTransformations();
+        $client->listAuthentications();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/authentications',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getAuthentications with query params')]
+    public function testListAuthentications1()
+    {
+        $client = $this->getClient();
+        $client->listAuthentications(
+            2,
+            1,
+            [
+                'basic',
+
+                'algolia',
+            ],
+            [
+                'none',
+            ],
+            'createdAt',
+            'asc',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/authentications',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('getDestinations')]
+    public function testListDestinations()
+    {
+        $client = $this->getClient();
+        $client->listDestinations();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/destinations',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getEvents')]
+    public function testListEvents()
+    {
+        $client = $this->getClient();
+        $client->listEvents(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getRuns')]
+    public function testListRuns()
+    {
+        $client = $this->getClient();
+        $client->listRuns();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/runs',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getSources')]
+    public function testListSources()
+    {
+        $client = $this->getClient();
+        $client->listSources();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('listTasks')]
+    public function testListTasks()
+    {
+        $client = $this->getClient();
+        $client->listTasks();
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('listTasksV1')]
+    public function testListTasksV1()
+    {
+        $client = $this->getClient();
+        $client->listTasksV1();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/tasks',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getTransformations')]
+    public function testListTransformations()
+    {
+        $client = $this->getClient();
+        $client->listTransformations();
 
         $this->assertRequests([
             [
@@ -1020,11 +1144,59 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('pushTask')]
+    public function testPushTask()
+    {
+        $client = $this->getClient();
+        $client->pushTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['requests' => [
+                ['action' => 'addObject',
+                    'body' => ['key' => 'bar',
+                        'foo' => '1',
+                    ],
+                ],
+
+                ['action' => 'addObject',
+                    'body' => ['key' => 'baz',
+                        'foo' => '2',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('runTask')]
     public function testRunTask()
     {
         $client = $this->getClient();
         $client->runTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    #[TestDox('runTaskV1')]
+    public function testRunTaskV1()
+    {
+        $client = $this->getClient();
+        $client->runTaskV1(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
@@ -1108,6 +1280,30 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->searchTasks(
+            ['taskIDs' => [
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+
+                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/search',
+                'method' => 'POST',
+                'body' => json_decode('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('searchTasksV1')]
+    public function testSearchTasksV1()
+    {
+        $client = $this->getClient();
+        $client->searchTasksV1(
             ['taskIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
@@ -1250,6 +1446,26 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->updateTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['enabled' => false,
+                'cron' => '* * * * *',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'PATCH',
+                'body' => json_decode('{"enabled":false,"cron":"* * * * *"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateTaskV1')]
+    public function testUpdateTaskV1()
+    {
+        $client = $this->getClient();
+        $client->updateTaskV1(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['enabled' => false,
             ],

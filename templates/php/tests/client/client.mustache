@@ -1,0 +1,55 @@
+<?php
+
+// {{generationBanner}}
+
+namespace Algolia\AlgoliaSearch\Test\Client;
+
+use Algolia\AlgoliaSearch\Api\{{client}};
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
+use Algolia\AlgoliaSearch\Http\HttpClientInterface;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+/**
+ * Client tests for {{client}}
+ */
+#[CoversClass({{client}}::class)]
+class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
+{
+    public const APP_ID = 'test-app-id';
+    public const API_KEY = 'test-api-key';
+
+    private $recordedRequest;
+
+    /**
+     * @return {{client}}
+     */
+    private function createClient($appId, $apiKey{{#hasRegionalHost}}, $region = '{{{defaultRegion}}}'{{/hasRegionalHost}})
+    {
+        $config = {{clientPrefix}}Config::create($appId, $apiKey{{#hasRegionalHost}}, $region{{/hasRegionalHost}});
+        $clusterHosts = {{client}}::getClusterHosts($config);
+        $api = new ApiWrapper($this, $config, $clusterHosts);
+
+        return new {{client}}($api, $config);
+    }
+
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    {
+        $this->recordedRequest = [
+            'request' => $request,
+            'responseTimeout' => $timeout * 1000,
+            'connectTimeout' => $connectTimeout * 1000,
+        ];
+
+        return new Response(200, [], '{}');
+    }
+
+    {{#blocksClient}}
+    {{> tests/client/tests}}
+    {{/blocksClient}}
+}

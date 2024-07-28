@@ -72,7 +72,19 @@ let package = Package(
         .testTarget(
             name: "requests",
             dependencies: [
+                .target(name: "Utils"),
+            ] + libraries
+        ),
+        .testTarget(
+            name: "e2e",
+            dependencies: [
                 .product(name: "DotEnv", package: "DotEnv"),
+                .target(name: "Utils"),
+            ] + libraries
+        ),
+        .testTarget(
+            name: "benchmark",
+            dependencies: [
                 .target(name: "Utils"),
             ] + libraries
         ),

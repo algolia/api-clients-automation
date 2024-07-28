@@ -13,7 +13,12 @@ public struct Task: Codable, JSONEncodable {
     public var sourceID: String
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String
-    public var trigger: Trigger
+    /// Cron expression for the task's schedule.
+    public var cron: String?
+    /// The last time the scheduled task ran in RFC 3339 format.
+    public var lastRun: String?
+    /// The next scheduled run of the task in RFC 3339 format.
+    public var nextRun: String?
     public var input: TaskInput?
     /// Whether the task is enabled.
     public var enabled: Bool
@@ -31,7 +36,9 @@ public struct Task: Codable, JSONEncodable {
         taskID: String,
         sourceID: String,
         destinationID: String,
-        trigger: Trigger,
+        cron: String? = nil,
+        lastRun: String? = nil,
+        nextRun: String? = nil,
         input: TaskInput? = nil,
         enabled: Bool,
         failureThreshold: Int? = nil,
@@ -43,7 +50,9 @@ public struct Task: Codable, JSONEncodable {
         self.taskID = taskID
         self.sourceID = sourceID
         self.destinationID = destinationID
-        self.trigger = trigger
+        self.cron = cron
+        self.lastRun = lastRun
+        self.nextRun = nextRun
         self.input = input
         self.enabled = enabled
         self.failureThreshold = failureThreshold
@@ -57,7 +66,9 @@ public struct Task: Codable, JSONEncodable {
         case taskID
         case sourceID
         case destinationID
-        case trigger
+        case cron
+        case lastRun
+        case nextRun
         case input
         case enabled
         case failureThreshold
@@ -74,7 +85,9 @@ public struct Task: Codable, JSONEncodable {
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.sourceID, forKey: .sourceID)
         try container.encode(self.destinationID, forKey: .destinationID)
-        try container.encode(self.trigger, forKey: .trigger)
+        try container.encodeIfPresent(self.cron, forKey: .cron)
+        try container.encodeIfPresent(self.lastRun, forKey: .lastRun)
+        try container.encodeIfPresent(self.nextRun, forKey: .nextRun)
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encode(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.failureThreshold, forKey: .failureThreshold)
@@ -90,7 +103,9 @@ extension Task: Equatable {
         lhs.taskID == rhs.taskID &&
             lhs.sourceID == rhs.sourceID &&
             lhs.destinationID == rhs.destinationID &&
-            lhs.trigger == rhs.trigger &&
+            lhs.cron == rhs.cron &&
+            lhs.lastRun == rhs.lastRun &&
+            lhs.nextRun == rhs.nextRun &&
             lhs.input == rhs.input &&
             lhs.enabled == rhs.enabled &&
             lhs.failureThreshold == rhs.failureThreshold &&
@@ -106,7 +121,9 @@ extension Task: Hashable {
         hasher.combine(self.taskID.hashValue)
         hasher.combine(self.sourceID.hashValue)
         hasher.combine(self.destinationID.hashValue)
-        hasher.combine(self.trigger.hashValue)
+        hasher.combine(self.cron?.hashValue)
+        hasher.combine(self.lastRun?.hashValue)
+        hasher.combine(self.nextRun?.hashValue)
         hasher.combine(self.input?.hashValue)
         hasher.combine(self.enabled.hashValue)
         hasher.combine(self.failureThreshold?.hashValue)

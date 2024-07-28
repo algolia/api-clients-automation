@@ -19,9 +19,7 @@ export const endWithDot: Rule.RuleModule = {
 
     return {
       YAMLPair(node): void {
-        if (
-          !isPairWithKey(node, 'description')
-        ) {
+        if (!isPairWithKey(node, 'description')) {
           return;
         }
 

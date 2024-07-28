@@ -31,7 +31,7 @@ get:
             additionalProperties: false
             properties:
               status:
-                $ref: '../../search/common/enums.yml#/taskStatus'
+                $ref: '../../common/responses/common.yml#/taskStatus'
             required:
               - status
     '400':

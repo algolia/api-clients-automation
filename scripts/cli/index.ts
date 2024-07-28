@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients } from '../buildClients.js';
+import { buildClients, buildPlaygrounds } from '../buildClients.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -81,6 +81,17 @@ buildCommand
   });
 
 buildCommand
+  .command('playground')
+  .description('Build a specified playground')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildPlaygrounds(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(args.clients)
@@ -129,13 +140,15 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-e, --exclude-e2e', "don't run the e2e tests, useful for offline testing")
-  .option('-u, --exclude-unit', "don't run the client and requests tests")
+  .option('-e, --no-e2e', 'run the e2e tests, that requires internet connection')
+  .option('-c, --no-client', 'run the client tests')
+  .option('-r, --no-requests', 'run the requests tests')
+  .option('-b, --benchmark', 'run the benchmarks')
   .action(
     async (
       langArg: LangArg,
       clientArg: string[],
-      { verbose, excludeE2e: excludeE2E, excludeUnit },
+      { verbose, e2e, client: includeClient, requests, benchmark },
     ) => {
       const { language, client } = transformSelection({
         langArg,
@@ -144,12 +157,12 @@ ctsCommand
 
       setVerbose(Boolean(verbose));
 
-      await runCts(
-        language === ALL ? LANGUAGES : [language],
-        client,
-        Boolean(excludeE2E),
-        Boolean(excludeUnit),
-      );
+      await runCts(language === ALL ? LANGUAGES : [language], client, {
+        client: includeClient,
+        requests,
+        e2e,
+        benchmark,
+      });
     },
   );
 
@@ -158,7 +171,12 @@ ctsCommand
   .description('Start the test servers in standalone mode')
   .action(async () => {
     setVerbose(true);
-    await startTestServer();
+    await startTestServer({
+      benchmark: true,
+      client: true,
+      requests: true,
+      e2e: true,
+    });
   });
 
 program

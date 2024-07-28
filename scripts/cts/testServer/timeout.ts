@@ -5,7 +5,8 @@ import type express from 'express';
 
 import { setupServer } from '.';
 
-const timeoutState: Record<string, { timestamp: number[]; duration: number[] }> = {};
+const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> =
+  {};
 
 export function assertValidTimeouts(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out
@@ -15,6 +16,7 @@ export function assertValidTimeouts(expectedCount: number): void {
   }
 
   for (const [lang, state] of Object.entries(timeoutState)) {
+    expect(state.hangCount).to.equal(1);
     expect(state.timestamp.length).to.equal(3);
     expect(state.duration.length).to.equal(3);
     expect(state.timestamp[1] - state.timestamp[0]).to.be.closeTo(state.duration[0], 100);
@@ -22,13 +24,13 @@ export function assertValidTimeouts(expectedCount: number): void {
 
     // languages are not consistent yet for the delay between requests
     switch (lang) {
-      case 'JavaScript':
-        expect(state.duration[0] * 4).to.be.closeTo(state.duration[1], 200);
+      case 'javascript':
+        expect(state.duration[0] * 4).to.be.closeTo(state.duration[1], 300);
         break;
-      case 'PHP':
+      case 'php':
         expect(state.duration[0] * 2).to.be.closeTo(state.duration[1], 200);
         break;
-      case 'Swift':
+      case 'swift':
         expect(state.duration[0]).to.be.closeTo(state.duration[1], 800);
         break;
       default:
@@ -51,6 +53,7 @@ export function retryHandler(after: number, message: string): express.RequestHan
       timeoutState[lang] = {
         timestamp: [],
         duration: [],
+        hangCount: 0,
       };
     }
 
@@ -70,6 +73,21 @@ export function retryHandler(after: number, message: string): express.RequestHan
 function addRoutes(app: express.Express): void {
   // this endpoint is also defined in the gzip server but without the timeout
   app.get('/1/test/retry/:lang', retryHandler(20000, 'timeout test server response'));
+
+  app.get('/1/test/hang/:lang', (req) => {
+    const lang = req.params.lang;
+    if (!timeoutState[lang]) {
+      timeoutState[lang] = {
+        timestamp: [],
+        duration: [],
+        hangCount: 0,
+      };
+    }
+
+    timeoutState[lang].hangCount++;
+
+    // no response, just hang
+  });
 }
 
 export function timeoutServer(): Promise<Server> {

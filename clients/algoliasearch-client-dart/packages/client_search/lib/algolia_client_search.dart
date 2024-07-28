@@ -135,6 +135,7 @@ export 'src/model/search_user_ids_params.dart';
 export 'src/model/search_user_ids_response.dart';
 export 'src/model/secured_api_key_restrictions.dart';
 export 'src/model/semantic_search.dart';
+export 'src/model/settings_response.dart';
 export 'src/model/snippet_result_option.dart';
 export 'src/model/sort_remaining_by.dart';
 export 'src/model/source.dart';
@@ -153,5 +154,6 @@ export 'src/model/user_highlight_result.dart';
 export 'src/model/user_hit.dart';
 export 'src/model/user_id.dart';
 export 'src/model/value.dart';
+export 'src/model/with_primary.dart';
 
 export 'src/extension.dart';

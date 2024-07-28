@@ -1,0 +1,39 @@
+[
+  {
+    "parameters": {
+      "taskIDs": [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+        "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+      ]
+    },
+    "request": {
+      "path": "/1/tasks/search",
+      "method": "POST",
+      "body": {
+        "taskIDs": [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": [
+        {
+          "taskID": "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+          "sourceID": "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+          "destinationID": "506d79fa-e29d-4bcf-907c-6b6a41172153",
+          "trigger": {
+            "type": "onDemand"
+          },
+          "enabled": true,
+          "failureThreshold": 0,
+          "action": "replace",
+          "createdAt": "2024-01-08T16:47:41Z"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,28 @@
+post:
+  tags:
+    - tasks
+  summary: Push a `batch` request payload through the Pipeline
+  description: Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+  operationId: pushTask
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  requestBody:
+    description: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    content:
+      application/json:
+        schema:
+          $ref: '../../../../common/schemas/Batch.yml#/batchWriteParams'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/run.yml#/RunResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'

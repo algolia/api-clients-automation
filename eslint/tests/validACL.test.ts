@@ -1,6 +1,6 @@
 import { RuleTester } from 'eslint';
-import { validACL } from '../src/rules/validACL';
 
+import { validACL } from '../src/rules/validACL';
 
 const ruleTester = new RuleTester({
   parser: require.resolve('yaml-eslint-parser'),

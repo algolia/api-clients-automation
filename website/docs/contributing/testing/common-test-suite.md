@@ -291,6 +291,13 @@ There are currently 3 servers:
 
 The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
 
+The tests also include helpers from the seach client, the specs are defined in [this](https://github.com/algolia/api-clients-automation/tree/main/specs/search/helpers/README.md) folder, and are only used for tests for now.
+
+### Benchmark tests
+
+Reusing the clients tests templates and a custom server called `benchmark`, you can test the performance of your client by running a series of requests and measuring the time it takes to complete them.
+The benchmarks are defined in the `tests/CTS/benchmark/<apiName>/benchmark.json` files.
+
 ## Add common tests to every clients
 
 You might want to test how every clients behaves, without having to duplicate the same tests. We provide 4 methods on every clients, common to all languages.

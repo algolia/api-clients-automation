@@ -7,13 +7,13 @@ import Foundation
 #endif
 
 public struct MultipleBatchRequest: Codable, JSONEncodable {
-    public var action: Action
+    public var action: SearchAction
     /// Operation arguments (varies with specified `action`).
     public var body: AnyCodable
     /// Index name (case-sensitive).
     public var indexName: String
 
-    public init(action: Action, body: AnyCodable, indexName: String) {
+    public init(action: SearchAction, body: AnyCodable, indexName: String) {
         self.action = action
         self.body = body
         self.indexName = indexName

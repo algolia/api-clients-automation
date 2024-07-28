@@ -4824,7 +4824,7 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    _distinctSeqID:
+    distinctSeqID:
       type: integer
     recommendScore:
       type: number
@@ -4849,7 +4849,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
         _score:
           $ref: '#/components/schemas/recommendScore'
     trendingFacetHit:

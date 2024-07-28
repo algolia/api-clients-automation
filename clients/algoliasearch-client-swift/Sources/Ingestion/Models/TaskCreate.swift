@@ -12,8 +12,9 @@ public struct TaskCreate: Codable, JSONEncodable {
     public var sourceID: String
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String
-    public var trigger: TaskCreateTrigger
     public var action: ActionType
+    /// Cron expression for the task's schedule.
+    public var cron: String?
     /// Whether the task is enabled.
     public var enabled: Bool?
     /// Maximum accepted percentage of failures for a task run to finish successfully.
@@ -25,8 +26,8 @@ public struct TaskCreate: Codable, JSONEncodable {
     public init(
         sourceID: String,
         destinationID: String,
-        trigger: TaskCreateTrigger,
         action: ActionType,
+        cron: String? = nil,
         enabled: Bool? = nil,
         failureThreshold: Int? = nil,
         input: TaskInput? = nil,
@@ -34,8 +35,8 @@ public struct TaskCreate: Codable, JSONEncodable {
     ) {
         self.sourceID = sourceID
         self.destinationID = destinationID
-        self.trigger = trigger
         self.action = action
+        self.cron = cron
         self.enabled = enabled
         self.failureThreshold = failureThreshold
         self.input = input
@@ -45,8 +46,8 @@ public struct TaskCreate: Codable, JSONEncodable {
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case sourceID
         case destinationID
-        case trigger
         case action
+        case cron
         case enabled
         case failureThreshold
         case input
@@ -59,8 +60,8 @@ public struct TaskCreate: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.sourceID, forKey: .sourceID)
         try container.encode(self.destinationID, forKey: .destinationID)
-        try container.encode(self.trigger, forKey: .trigger)
         try container.encode(self.action, forKey: .action)
+        try container.encodeIfPresent(self.cron, forKey: .cron)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.failureThreshold, forKey: .failureThreshold)
         try container.encodeIfPresent(self.input, forKey: .input)
@@ -72,8 +73,8 @@ extension TaskCreate: Equatable {
     public static func ==(lhs: TaskCreate, rhs: TaskCreate) -> Bool {
         lhs.sourceID == rhs.sourceID &&
             lhs.destinationID == rhs.destinationID &&
-            lhs.trigger == rhs.trigger &&
             lhs.action == rhs.action &&
+            lhs.cron == rhs.cron &&
             lhs.enabled == rhs.enabled &&
             lhs.failureThreshold == rhs.failureThreshold &&
             lhs.input == rhs.input &&
@@ -85,8 +86,8 @@ extension TaskCreate: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.sourceID.hashValue)
         hasher.combine(self.destinationID.hashValue)
-        hasher.combine(self.trigger.hashValue)
         hasher.combine(self.action.hashValue)
+        hasher.combine(self.cron?.hashValue)
         hasher.combine(self.enabled?.hashValue)
         hasher.combine(self.failureThreshold?.hashValue)
         hasher.combine(self.input?.hashValue)

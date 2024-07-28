@@ -108,10 +108,44 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
-  # createTaskOnDemand
+  # task without cron
   def test_create_task
     req = @client.create_task_with_http_info(
-      TaskCreate.new(
+      TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # task with cron
+  def test_create_task1
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(source_id: "search", destination_id: "destinationName", cron: "* * * * *", action: "replace")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # createTaskOnDemand
+  def test_create_task_v1
+    req = @client.create_task_v1_with_http_info(
+      TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
         trigger: OnDemandTriggerInput.new(type: "onDemand"),
@@ -132,9 +166,9 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createTaskSchedule
-  def test_create_task1
-    req = @client.create_task_with_http_info(
-      TaskCreate.new(
+  def test_create_task_v11
+    req = @client.create_task_v1_with_http_info(
+      TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
         trigger: ScheduleTriggerInput.new(type: "schedule", cron: "* * * * *"),
@@ -155,9 +189,9 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createTaskSubscription
-  def test_create_task2
-    req = @client.create_task_with_http_info(
-      TaskCreate.new(
+  def test_create_task_v12
+    req = @client.create_task_v1_with_http_info(
+      TaskCreateV1.new(
         source_id: "search",
         destination_id: "destinationName",
         trigger: OnDemandTriggerInput.new(type: "onDemand"),
@@ -501,6 +535,18 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.delete_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:delete, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # deleteTaskV1
+  def test_delete_task_v1
+    req = @client.delete_task_v1_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:delete, req.method)
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -525,14 +571,34 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.disable_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:put, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
+  # disableTaskV1
+  def test_disable_task_v1
+    req = @client.disable_task_v1_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:put, req.method)
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # enable task e2e
+  # enableTask
   def test_enable_task
     req = @client.enable_task_with_http_info("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
+    assert_equal(:put, req.method)
+    assert_equal("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
+  # enableTaskV1
+  def test_enable_task_v1
+    req = @client.enable_task_v1_with_http_info("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
     assert_equal(:put, req.method)
     assert_equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path)
@@ -552,58 +618,12 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getAuthentications
-  def test_get_authentications
-    req = @client.get_authentications_with_http_info
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/authentications", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
-  # getAuthentications with query params
-  def test_get_authentications1
-    req = @client.get_authentications_with_http_info(2, 1, ["basic", "algolia"], ["none"], "createdAt", "asc")
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/authentications", req.path)
-    assert_equal(
-      {
-        :"itemsPerPage" => "2",
-        :"page" => "1",
-        :"type" => "basic%2Calgolia",
-        :"platform" => "none",
-        :"sort" => "createdAt",
-        :"order" => "asc"
-      }.to_a,
-      req.query_params.to_a
-    )
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
   # getDestination
   def test_get_destination
     req = @client.get_destination_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
     assert_equal("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
-  # getDestinations
-  def test_get_destinations
-    req = @client.get_destinations_with_http_info
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/destinations", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -625,36 +645,12 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getEvents
-  def test_get_events
-    req = @client.get_events_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
   # getRun
   def test_get_run
     req = @client.get_run_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
     assert_equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
-  # getRuns
-  def test_get_runs
-    req = @client.get_runs_with_http_info
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/runs", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -673,36 +669,24 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getSources
-  def test_get_sources
-    req = @client.get_sources_with_http_info
-
-    assert_equal(:get, req.method)
-    assert_equal("/1/sources", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
   # getTask
   def test_get_task
     req = @client.get_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
-    assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getTasks
-  def test_get_tasks
-    req = @client.get_tasks_with_http_info
+  # getTaskV1
+  def test_get_task_v1
+    req = @client.get_task_v1_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
-    assert_equal("/1/tasks", req.path)
+    assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -721,9 +705,115 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getAuthentications
+  def test_list_authentications
+    req = @client.list_authentications_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/authentications", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getAuthentications with query params
+  def test_list_authentications1
+    req = @client.list_authentications_with_http_info(2, 1, ["basic", "algolia"], ["none"], "createdAt", "asc")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/authentications", req.path)
+    assert_equal(
+      {
+        :"itemsPerPage" => "2",
+        :"page" => "1",
+        :"type" => "basic%2Calgolia",
+        :"platform" => "none",
+        :"sort" => "createdAt",
+        :"order" => "asc"
+      }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getDestinations
+  def test_list_destinations
+    req = @client.list_destinations_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/destinations", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getEvents
+  def test_list_events
+    req = @client.list_events_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getRuns
+  def test_list_runs
+    req = @client.list_runs_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/runs", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getSources
+  def test_list_sources
+    req = @client.list_sources_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/sources", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # listTasks
+  def test_list_tasks
+    req = @client.list_tasks_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/2/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # listTasksV1
+  def test_list_tasks_v1
+    req = @client.list_tasks_v1_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getTransformations
-  def test_get_transformations
-    req = @client.get_transformations_with_http_info
+  def test_list_transformations
+    req = @client.list_transformations_with_http_info
 
     assert_equal(:get, req.method)
     assert_equal("/1/transformations", req.path)
@@ -733,9 +823,43 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # pushTask
+  def test_push_task
+    req = @client.push_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      BatchWriteParams.new(
+        requests: [
+          BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+          BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # runTask
   def test_run_task
     req = @client.run_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
+  # runTaskV1
+  def test_run_task_v1
+    req = @client.run_task_v1_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:post, req.method)
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path)
@@ -802,6 +926,30 @@ class TestIngestionClient < Test::Unit::TestCase
   # searchTasks
   def test_search_tasks
     req = @client.search_tasks_with_http_info(
+      TaskSearch.new(
+        task_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks/search", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # searchTasksV1
+  def test_search_tasks_v1
+    req = @client.search_tasks_v1_with_http_info(
       TaskSearch.new(
         task_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -912,7 +1060,24 @@ class TestIngestionClient < Test::Unit::TestCase
 
   # updateTask
   def test_update_task
-    req = @client.update_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdate.new(enabled: false))
+    req = @client.update_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TaskUpdate.new(enabled: false, cron: "* * * * *")
+    )
+
+    assert_equal(:patch, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"enabled\":false,\"cron\":\"* * * * *\"}"), JSON.parse(req.body))
+  end
+
+  # updateTaskV1
+  def test_update_task_v1
+    req = @client.update_task_v1_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TaskUpdateV1.new(enabled: false)
+    )
 
     assert_equal(:patch, req.method)
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)

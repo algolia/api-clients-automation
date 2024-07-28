@@ -9,9 +9,10 @@ import (
 // TaskUpdate API request body for updating a task.
 type TaskUpdate struct {
 	// Universally unique identifier (UUID) of a destination resource.
-	DestinationID *string             `json:"destinationID,omitempty"`
-	Trigger       *TriggerUpdateInput `json:"trigger,omitempty"`
-	Input         *TaskInput          `json:"input,omitempty"`
+	DestinationID *string `json:"destinationID,omitempty"`
+	// Cron expression for the task's schedule.
+	Cron  *string    `json:"cron,omitempty"`
+	Input *TaskInput `json:"input,omitempty"`
 	// Whether the task is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// Maximum accepted percentage of failures for a task run to finish successfully.
@@ -26,9 +27,9 @@ func WithTaskUpdateDestinationID(val string) TaskUpdateOption {
 	}
 }
 
-func WithTaskUpdateTrigger(val TriggerUpdateInput) TaskUpdateOption {
+func WithTaskUpdateCron(val string) TaskUpdateOption {
 	return func(f *TaskUpdate) {
-		f.Trigger = &val
+		f.Cron = &val
 	}
 }
 
@@ -100,36 +101,36 @@ func (o *TaskUpdate) SetDestinationID(v string) *TaskUpdate {
 	return o
 }
 
-// GetTrigger returns the Trigger field value if set, zero value otherwise.
-func (o *TaskUpdate) GetTrigger() TriggerUpdateInput {
-	if o == nil || o.Trigger == nil {
-		var ret TriggerUpdateInput
+// GetCron returns the Cron field value if set, zero value otherwise.
+func (o *TaskUpdate) GetCron() string {
+	if o == nil || o.Cron == nil {
+		var ret string
 		return ret
 	}
-	return *o.Trigger
+	return *o.Cron
 }
 
-// GetTriggerOk returns a tuple with the Trigger field value if set, nil otherwise
+// GetCronOk returns a tuple with the Cron field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TaskUpdate) GetTriggerOk() (*TriggerUpdateInput, bool) {
-	if o == nil || o.Trigger == nil {
+func (o *TaskUpdate) GetCronOk() (*string, bool) {
+	if o == nil || o.Cron == nil {
 		return nil, false
 	}
-	return o.Trigger, true
+	return o.Cron, true
 }
 
-// HasTrigger returns a boolean if a field has been set.
-func (o *TaskUpdate) HasTrigger() bool {
-	if o != nil && o.Trigger != nil {
+// HasCron returns a boolean if a field has been set.
+func (o *TaskUpdate) HasCron() bool {
+	if o != nil && o.Cron != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetTrigger gets a reference to the given TriggerUpdateInput and assigns it to the Trigger field.
-func (o *TaskUpdate) SetTrigger(v *TriggerUpdateInput) *TaskUpdate {
-	o.Trigger = v
+// SetCron gets a reference to the given string and assigns it to the Cron field.
+func (o *TaskUpdate) SetCron(v string) *TaskUpdate {
+	o.Cron = &v
 	return o
 }
 
@@ -237,8 +238,8 @@ func (o TaskUpdate) MarshalJSON() ([]byte, error) {
 	if o.DestinationID != nil {
 		toSerialize["destinationID"] = o.DestinationID
 	}
-	if o.Trigger != nil {
-		toSerialize["trigger"] = o.Trigger
+	if o.Cron != nil {
+		toSerialize["cron"] = o.Cron
 	}
 	if o.Input != nil {
 		toSerialize["input"] = o.Input
@@ -260,7 +261,7 @@ func (o TaskUpdate) MarshalJSON() ([]byte, error) {
 func (o TaskUpdate) String() string {
 	out := ""
 	out += fmt.Sprintf("  destinationID=%v\n", o.DestinationID)
-	out += fmt.Sprintf("  trigger=%v\n", o.Trigger)
+	out += fmt.Sprintf("  cron=%v\n", o.Cron)
 	out += fmt.Sprintf("  input=%v\n", o.Input)
 	out += fmt.Sprintf("  enabled=%v\n", o.Enabled)
 	out += fmt.Sprintf("  failureThreshold=%v\n", o.FailureThreshold)

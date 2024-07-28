@@ -59,3 +59,8 @@ updatedAtResponse:
       $ref: '#/taskID'
     updatedAt:
       $ref: '#/updatedAt'
+
+taskStatus:
+  type: string
+  enum: [published, notPublished]
+  description: Task status, `published` if the task is completed, `notPublished` otherwise.

@@ -59,12 +59,40 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.custom_get("1/test/retry/Ruby")
+    req = client.custom_get("1/test/retry/ruby")
     assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # test the compression strategy
+  # tests the retry strategy error
   def test_api3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6676,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.custom_get("1/test/hang/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "Unreachable hosts. Last error for localhost: Net::ReadTimeout with #<TCPSocket:(closed)>",
+        e.message
+      )
+    end
+  end
+
+  # test the compression strategy
+  def test_api4
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -198,7 +226,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.replace_all_objects(
-      "cts_e2e_replace_all_objects_Ruby",
+      "cts_e2e_replace_all_objects_ruby",
       [
         {objectID: "1", name: "Adam"},
         {objectID: "2", name: "Benoit"},
@@ -246,18 +274,18 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.save_objects(
-      "cts_e2e_saveObjects_Ruby",
+      "cts_e2e_saveObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
     )
     assert_equal([{:"taskID" => 333, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # call partialUpdateObjects with createIfNotExists=true
+  # saveObjects should report errors
   def test_helpers4
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
-        "test-api-key",
+        "wrong-api-key",
         [
           Algolia::Transport::StatefulHost.new(
             "localhost",
@@ -269,15 +297,18 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.partial_update_objects(
-      "cts_e2e_partialUpdateObjects_Ruby",
-      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
-      true
-    )
-    assert_equal([{:"taskID" => 444, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    begin
+      client.save_objects(
+        "cts_e2e_saveObjects_ruby",
+        [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
+      )
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal("Invalid Application-ID or API key", e.message)
+    end
   end
 
-  # call partialUpdateObjects with createIfNotExists=false
+  # call partialUpdateObjects with createIfNotExists=true
   def test_helpers5
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -295,14 +326,14 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.partial_update_objects(
-      "cts_e2e_partialUpdateObjects_Ruby",
-      [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
-      false
+      "cts_e2e_partialUpdateObjects_ruby",
+      [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+      true
     )
-    assert_equal([{:"taskID" => 555, :"objectIDs" => ["3", "4"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal([{:"taskID" => 444, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # call deleteObjects without error
+  # call partialUpdateObjects with createIfNotExists=false
   def test_helpers6
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -319,11 +350,15 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.delete_objects("cts_e2e_deleteObjects_Ruby", ["1", "2"])
-    assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    req = client.partial_update_objects(
+      "cts_e2e_partialUpdateObjects_ruby",
+      [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
+      false
+    )
+    assert_equal([{:"taskID" => 555, :"objectIDs" => ["3", "4"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # wait for api key helper - add
+  # call deleteObjects without error
   def test_helpers7
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -333,29 +368,18 @@ class TestClientSearchClient < Test::Unit::TestCase
           Algolia::Transport::StatefulHost.new(
             "localhost",
             protocol: "http://",
-            port: 6681,
+            port: 6680,
             accept: CallType::READ | CallType::WRITE
           )
         ],
         "searchClient"
       )
     )
-    req = client.wait_for_api_key("api-key-add-operation-test-Ruby", "add")
-    assert_equal(
-      {
-        :"value" => "api-key-add-operation-test-Ruby",
-        :"description" => "my new api key",
-        :"acl" => ["search", "addObject"],
-        :"validity" => 300,
-        :"maxQueriesPerIPPerHour" => 100,
-        :"maxHitsPerQuery" => 20,
-        :"createdAt" => 1720094400
-      },
-      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
-    )
+    req = client.delete_objects("cts_e2e_deleteObjects_ruby", ["1", "2"])
+    assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # wait for api key - update
+  # wait for api key helper - add
   def test_helpers8
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -372,28 +396,14 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.wait_for_api_key(
-      "api-key-update-operation-test-Ruby",
-      "update",
-      ApiKey.new(
-        description: "my updated api key",
-        acl: ["search", "addObject", "deleteObject"],
-        indexes: ["Movies", "Books"],
-        referers: ["*google.com", "*algolia.com"],
-        validity: 305,
-        max_queries_per_ip_per_hour: 95,
-        max_hits_per_query: 20
-      )
-    )
+    req = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
     assert_equal(
       {
-        :"value" => "api-key-update-operation-test-Ruby",
-        :"description" => "my updated api key",
-        :"acl" => ["search", "addObject", "deleteObject"],
-        :"indexes" => ["Movies", "Books"],
-        :"referers" => ["*google.com", "*algolia.com"],
-        :"validity" => 305,
-        :"maxQueriesPerIPPerHour" => 95,
+        :"value" => "api-key-add-operation-test-ruby",
+        :"description" => "my new api key",
+        :"acl" => ["search", "addObject"],
+        :"validity" => 300,
+        :"maxQueriesPerIPPerHour" => 100,
         :"maxHitsPerQuery" => 20,
         :"createdAt" => 1720094400
       },
@@ -401,7 +411,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
-  # wait for api key - delete
+  # wait for api key - update
   def test_helpers9
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -418,7 +428,53 @@ class TestClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    req = client.wait_for_api_key("api-key-delete-operation-test-Ruby", "delete")
+    req = client.wait_for_api_key(
+      "api-key-update-operation-test-ruby",
+      "update",
+      ApiKey.new(
+        description: "my updated api key",
+        acl: ["search", "addObject", "deleteObject"],
+        indexes: ["Movies", "Books"],
+        referers: ["*google.com", "*algolia.com"],
+        validity: 305,
+        max_queries_per_ip_per_hour: 95,
+        max_hits_per_query: 20
+      )
+    )
+    assert_equal(
+      {
+        :"value" => "api-key-update-operation-test-ruby",
+        :"description" => "my updated api key",
+        :"acl" => ["search", "addObject", "deleteObject"],
+        :"indexes" => ["Movies", "Books"],
+        :"referers" => ["*google.com", "*algolia.com"],
+        :"validity" => 305,
+        :"maxQueriesPerIPPerHour" => 95,
+        :"maxHitsPerQuery" => 20,
+        :"createdAt" => 1720094400
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # wait for api key - delete
+  def test_helpers10
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
     assert_nil(req)
   end
 
