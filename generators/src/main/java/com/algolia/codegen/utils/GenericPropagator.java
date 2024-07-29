@@ -189,6 +189,10 @@ public class GenericPropagator {
     }
   }
 
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
+    propagateGenericsToModels(modelsMap, false);
+  }
+
   /** Mark operations with a generic return type with x-is-generic */
   public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
     Map<String, CodegenModel> models = convertToMap(allModels);
@@ -206,9 +210,5 @@ public class GenericPropagator {
         }
       }
     }
-  }
-
-  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
-    propagateGenericsToModels(modelsMap, false);
   }
 }
