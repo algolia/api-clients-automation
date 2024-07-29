@@ -40,8 +40,8 @@ get:
                 type: array
                 description: Daily number of searches.
                 items:
-                  type: object
                   title: dailySearches
+                  type: object
                   additionalProperties: false
                   required:
                     - date

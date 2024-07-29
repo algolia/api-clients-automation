@@ -13,7 +13,7 @@ post:
     content:
       application/json:
         schema:
-          title: InsightsEvents
+          title: insightsEvents
           type: object
           additionalProperties: false
           required:

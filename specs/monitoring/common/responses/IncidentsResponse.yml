@@ -2,7 +2,7 @@ description: OK
 content:
   application/json:
     schema:
-      title: IncidentsResponse
+      title: incidentsResponse
       type: object
       properties:
         incidents:

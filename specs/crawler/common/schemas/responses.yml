@@ -3,6 +3,7 @@ ActionAcknowledged:
   content:
     application/json:
       schema:
+        title: actionAcknowledged
         type: object
         properties:
           taskId:
@@ -18,6 +19,7 @@ DocSearchCreateApp:
   content:
     application/json:
       schema:
+        title: docSearchCreatedApp
         additionalProperties: false
         type: object
         properties:

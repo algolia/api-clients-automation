@@ -2,7 +2,7 @@ description: OK
 content:
   application/json:
     schema:
-      title: InventoryResponse
+      title: inventoryResponse
       type: object
       properties:
         inventory:

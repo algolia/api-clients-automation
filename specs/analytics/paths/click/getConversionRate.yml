@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily conversion rates.
                 items:
-                  type: object
                   title: dailyConversionRates
+                  type: object
                   additionalProperties: false
                   required:
                     - rate

@@ -6,6 +6,7 @@ post:
     content:
       application/json:
         schema:
+          title: docSearchCreateApp
           type: object
           properties:
             ownerEmail:

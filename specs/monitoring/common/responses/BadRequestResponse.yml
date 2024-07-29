@@ -2,6 +2,7 @@ description: Bad Request.
 content:
   application/json:
     schema:
+      title: badRequest
       type: object
       additionalProperties: false
       properties:

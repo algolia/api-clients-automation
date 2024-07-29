@@ -117,6 +117,7 @@ clickPositions:
   minItems: 12
   maxItems: 12
   items:
+    title: clickPosition
     type: object
     description: Click position.
     properties:
@@ -242,10 +243,12 @@ purchaseCount:
   example: 10
 
 currencies:
+  title: currencies
   type: object
   description: Revenue associated with this search, broken-down by currencies.
   default: {}
   additionalProperties:
+    title: currencyCode
     x-additionalPropertiesName: currency
     type: object
     description: Currency code.
