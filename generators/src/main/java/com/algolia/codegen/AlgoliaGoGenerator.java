@@ -3,7 +3,6 @@ package com.algolia.codegen;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.utils.*;
-import com.algolia.codegen.utils.OneOf;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.samskivert.mustache.Mustache;
@@ -132,6 +131,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    OrphanDestroyer.removeOrphans(this, operations, models, true);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

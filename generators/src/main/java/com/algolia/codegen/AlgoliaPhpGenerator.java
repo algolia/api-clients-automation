@@ -77,6 +77,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    OrphanDestroyer.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     return operations;
   }

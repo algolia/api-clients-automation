@@ -9,8 +9,6 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class GenericPropagator {
 
-  public String language;
-
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   // Only static use of this class

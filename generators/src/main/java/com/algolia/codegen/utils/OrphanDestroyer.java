@@ -9,9 +9,6 @@ import org.openapitools.codegen.model.OperationsMap;
 public class OrphanDestroyer {
 
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
-  private static Set<String> helperModels = new HashSet<>(
-    Arrays.asList("apiKeyOperation", "securedApiKeyRestrictions", "replaceAllObjectsResponse")
-  );
 
   private Map<String, CodegenModel> models;
   private HashSet<String> visitedModels;
@@ -21,15 +18,6 @@ public class OrphanDestroyer {
     this.models = models;
   }
 
-  private String stripType(String type) {
-    if (type.startsWith("List<")) {
-      return stripType(type.substring(5, type.length() - 1)).trim();
-    } else if (type.startsWith("Map<")) {
-      return stripType(type.substring(4, type.length() - 1).split(",", 2)[1].trim());
-    }
-    return type.trim();
-  }
-
   private CodegenModel getModel(String name) {
     // openapi generator returns some weird error when looking for primitive type, so we filter them
     // by hand
@@ -37,7 +25,7 @@ public class OrphanDestroyer {
       return null;
     }
 
-    return models.get(stripType(name));
+    return models.get(name);
   }
 
   private CodegenModel propertyToModel(CodegenProperty prop) {
@@ -84,13 +72,13 @@ public class OrphanDestroyer {
 
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       if (ope.returnType != null) {
-        CodegenModel returnType = getModel(ope.returnType);
+        CodegenModel returnType = getModel(ope.returnBaseType);
         if (returnType != null) {
           visitedModels.add(returnType.name);
         }
       }
       for (CodegenParameter param : ope.allParams) {
-        CodegenModel paramType = getModel(param.dataType);
+        CodegenModel paramType = getModel(param.baseType != null ? param.baseType : param.dataType);
         if (paramType != null) {
           visitedModels.add(paramType.name);
         }
@@ -103,7 +91,7 @@ public class OrphanDestroyer {
   }
 
   /** remove all the unused models, most likely the sub models of allOf */
-  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
+  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels, boolean keepError) {
     // visit all the models that are accessible from:
     // - the properties of a model (needs recursive search)
     // - the return type of an operation
@@ -111,13 +99,14 @@ public class OrphanDestroyer {
 
     OrphanDestroyer orphanDestroyer = new OrphanDestroyer(convertToMap(allModels));
 
-    Helpers.prettyPrint("Models: " + orphanDestroyer.models.keySet());
-
     orphanDestroyer.exploreGraph(operations);
 
     List<String> toRemove = new ArrayList<>();
     for (String modelName : orphanDestroyer.models.keySet()) {
-      if (!helperModels.contains(modelName) && !orphanDestroyer.visitedModels.contains(modelName)) {
+      if (keepError && modelName.equals("ErrorBase")) {
+        continue;
+      }
+      if (!orphanDestroyer.visitedModels.contains(modelName)) {
         toRemove.add(modelName);
       }
     }
@@ -132,5 +121,9 @@ public class OrphanDestroyer {
         System.out.println("Removed orphan model: " + modelName);
       }
     }
+  }
+
+  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
+    removeOrphans(config, operations, allModels, false);
   }
 }
