@@ -2,7 +2,7 @@ title: incidents
 description: Key-value pairs with the cluster names as keys and the list of incidents reported for this cluster as values.
 type: array
 items:
-  title: incident
+  title: incidentEntry
   type: object
   properties:
     t:
