@@ -140,7 +140,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    OrphanDestroyer.removeOrphans(this, operations, models);
+    OrphanDestroyer.removeOrphans(this, operations, models, true);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

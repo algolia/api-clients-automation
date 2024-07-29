@@ -19,6 +19,7 @@ public class OrphanDestroyer {
   }
 
   private CodegenModel getModel(String name) {
+    name = name.replace("?", "");
     // openapi generator returns some weird error when looking for primitive type, so we filter them
     // by hand
     if (primitiveModels.contains(name)) {
