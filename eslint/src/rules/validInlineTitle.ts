@@ -9,8 +9,10 @@ export const validInlineTitle: Rule.RuleModule = {
         'title must be set in inline models, should be the first property and start with a lowercase',
     },
     messages: {
-      validInlineTitle:
-        'title must be set in inline models, should be the first property and start with a lowercase',
+      inlineTitleExists: 'title must be set in inline models',
+      lowercaseTitle: 'title must start with a lowercase',
+      firstProperty: 'title must be the first property',
+      noSpaceInTitle: 'title must not contain spaces',
     },
   },
   create(context) {
@@ -38,14 +40,22 @@ export const validInlineTitle: Rule.RuleModule = {
           isPairWithKey(pair, 'title')
         );
         const titleNode = title?.value;
+        const titleValue = (titleNode as any)?.value as string;
         if (
           titleNode &&
-          (titleNode.type !== 'YAMLScalar' ||
-            !/^[a-z]/.test(titleNode.value as string))
+          (titleNode.type !== 'YAMLScalar' || !/^[a-z]/.test(titleValue))
         ) {
           context.report({
             node: title,
-            messageId: 'validInlineTitle',
+            messageId: 'lowercaseTitle',
+          });
+        }
+
+        // make sure title doesn't contain spaces
+        if (titleValue?.includes(' ')) {
+          context.report({
+            node: title,
+            messageId: 'noSpaceInTitle',
           });
         }
 
@@ -74,7 +84,7 @@ export const validInlineTitle: Rule.RuleModule = {
         if (!title) {
           context.report({
             node: node.value,
-            messageId: 'validInlineTitle',
+            messageId: 'inlineTitleExists',
           });
 
           return;
@@ -84,7 +94,7 @@ export const validInlineTitle: Rule.RuleModule = {
         if (!isPairWithKey(node.parent.pairs[0], 'title')) {
           context.report({
             node: title,
-            messageId: 'validInlineTitle',
+            messageId: 'firstProperty',
           });
         }
       },

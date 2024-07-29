@@ -50,7 +50,7 @@ currencies:
           type: string
           title: Currency
   `,
-      errors: [{ messageId: 'validInlineTitle' }],
+      errors: [{ messageId: 'inlineTitleExists' }],
     },
     {
       code: `
@@ -65,7 +65,7 @@ currencies:
           type: string
           title: Currency
   `,
-      errors: [{ messageId: 'validInlineTitle' }],
+      errors: [{ messageId: 'firstProperty' }],
     },
     {
       code: `
@@ -77,7 +77,19 @@ currencies:
       title: UpperCaseNotFine
       type: object
   `,
-      errors: [{ messageId: 'validInlineTitle' }],
+      errors: [{ messageId: 'lowercaseTitle' }],
+    },
+    {
+      code: `
+currencies:
+  title: spaces are fine
+  type: object
+  properties:
+    inner:
+      title: spaces are not fine
+      type: object
+  `,
+      errors: [{ messageId: 'noSpaceInTitle' }],
     },
   ],
 });
