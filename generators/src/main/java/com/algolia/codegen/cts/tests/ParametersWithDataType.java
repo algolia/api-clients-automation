@@ -329,6 +329,8 @@ public class ParametersWithDataType {
       return;
     }
 
+    System.out.println(param);
+
     Map<String, Object> vars = (Map<String, Object>) param;
     List<Map<String, Object>> values = new ArrayList<>();
     List<Map<String, Object>> additionalPropertyValues = new ArrayList<>();
