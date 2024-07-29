@@ -33,11 +33,8 @@ get:
       content:
         application/json:
           schema:
-            title: getObjectResponse
             type: object
             description: The requested record.
-            additionalProperties:
-              $ref: 'common/schemas.yml#/attribute'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
