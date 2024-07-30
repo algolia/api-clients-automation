@@ -777,11 +777,8 @@ paths:
           content:
             application/json:
               schema:
-                title: getObjectResponse
                 type: object
                 description: The requested record.
-                additionalProperties:
-                  $ref: '#/components/schemas/attribute'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -6093,9 +6090,6 @@ components:
       type: string
       example: '2023-06-27T14:42:38.831Z'
       description: Date and time when the object was deleted, in RFC 3339 format.
-    attribute:
-      type: string
-      description: Value of the attribute to update.
     updatedAt:
       type: string
       example: '2023-07-04T12:49:15Z'
@@ -6132,6 +6126,9 @@ components:
           $ref: '#/components/schemas/taskID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+    attribute:
+      type: string
+      description: Value of the attribute to update.
     builtInOperationType:
       type: string
       enum:

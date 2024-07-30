@@ -826,7 +826,7 @@ class SearchClient(
       objectID: String,
       attributesToRetrieve: Option[Seq[String]] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[Map[String, String]] = Future {
+  )(implicit ec: ExecutionContext): Future[Any] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getObject`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getObject`.")
 
@@ -836,7 +836,7 @@ class SearchClient(
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(objectID)}")
       .withQueryParameter("attributesToRetrieve", attributesToRetrieve)
       .build()
-    execute[Map[String, String]](request, requestOptions)
+    execute[Any](request, requestOptions)
   }
 
   /** Retrieves one or more records, potentially from different indices. Records are returned in the same order as the
