@@ -418,15 +418,7 @@ public class SearchClientRequestTests
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry
-            {
-              ObjectID = "1",
-              Language = Enum.Parse<SupportedLanguage>("En"),
-              Word = "fancy",
-              Words = new List<string> { "believe", "algolia" },
-              Decomposition = new List<string> { "trust", "algolia" },
-              State = Enum.Parse<DictionaryEntryState>("Enabled"),
-            },
+            Body = new DictionaryEntry { ObjectID = "1", },
           }
         },
       }
@@ -436,7 +428,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/dictionaries/plurals/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
+      "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

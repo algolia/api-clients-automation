@@ -319,19 +319,7 @@ def snippet_for_batch_dictionary_entries1
     "plurals",
     BatchDictionaryEntriesParams.new(
       clear_existing_dictionary_entries: true,
-      requests: [
-        BatchDictionaryEntriesRequest.new(
-          action: "deleteEntry",
-          body: DictionaryEntry.new(
-            object_id: "1",
-            language: "en",
-            word: "fancy",
-            words: ["believe", "algolia"],
-            decomposition: ["trust", "algolia"],
-            state: "enabled"
-          )
-        )
-      ]
+      requests: [BatchDictionaryEntriesRequest.new(action: "deleteEntry", body: DictionaryEntry.new(object_id: "1"))]
     )
   )
 

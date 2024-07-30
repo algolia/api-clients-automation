@@ -446,17 +446,6 @@ void main() {
               action: DictionaryAction.fromJson("deleteEntry"),
               body: DictionaryEntry(
                 objectID: "1",
-                language: SupportedLanguage.fromJson("en"),
-                word: "fancy",
-                words: [
-                  "believe",
-                  "algolia",
-                ],
-                decomposition: [
-                  "trust",
-                  "algolia",
-                ],
-                state: DictionaryEntryState.fromJson("enabled"),
               ),
             ),
           ],
@@ -466,7 +455,7 @@ void main() {
         expectPath(request.path, '/1/dictionaries/plurals/batch');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""");
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}""");
       },
     ),
   );

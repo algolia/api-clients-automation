@@ -290,19 +290,7 @@ describe('batchDictionaryEntries', () => {
       dictionaryName: 'plurals',
       batchDictionaryEntriesParams: {
         clearExistingDictionaryEntries: true,
-        requests: [
-          {
-            action: 'deleteEntry',
-            body: {
-              objectID: '1',
-              language: 'en',
-              word: 'fancy',
-              words: ['believe', 'algolia'],
-              decomposition: ['trust', 'algolia'],
-              state: 'enabled',
-            },
-          },
-        ],
+        requests: [{ action: 'deleteEntry', body: { objectID: '1' } }],
       },
     })) as unknown as EchoResponse;
 
@@ -310,19 +298,7 @@ describe('batchDictionaryEntries', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       clearExistingDictionaryEntries: true,
-      requests: [
-        {
-          action: 'deleteEntry',
-          body: {
-            objectID: '1',
-            language: 'en',
-            word: 'fancy',
-            words: ['believe', 'algolia'],
-            decomposition: ['trust', 'algolia'],
-            state: 'enabled',
-          },
-        },
-      ],
+      requests: [{ action: 'deleteEntry', body: { objectID: '1' } }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });

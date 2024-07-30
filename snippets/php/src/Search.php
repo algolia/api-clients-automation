@@ -402,19 +402,6 @@ class SnippetSearchClient
                 'requests' => [
                     ['action' => 'deleteEntry',
                         'body' => ['objectID' => '1',
-                            'language' => 'en',
-                            'word' => 'fancy',
-                            'words' => [
-                                'believe',
-
-                                'algolia',
-                            ],
-                            'decomposition' => [
-                                'trust',
-
-                                'algolia',
-                            ],
-                            'state' => 'enabled',
                         ],
                     ],
                 ],

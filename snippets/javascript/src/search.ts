@@ -306,19 +306,7 @@ export async function snippetForBatchDictionaryEntries1(): Promise<void> {
     dictionaryName: 'plurals',
     batchDictionaryEntriesParams: {
       clearExistingDictionaryEntries: true,
-      requests: [
-        {
-          action: 'deleteEntry',
-          body: {
-            objectID: '1',
-            language: 'en',
-            word: 'fancy',
-            words: ['believe', 'algolia'],
-            decomposition: ['trust', 'algolia'],
-            state: 'enabled',
-          },
-        },
-      ],
+      requests: [{ action: 'deleteEntry', body: { objectID: '1' } }],
     },
   });
 

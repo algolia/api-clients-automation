@@ -62,7 +62,7 @@ public class DictionaryEntry {
   }
 
   /** Get language */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public SupportedLanguage getLanguage() {
     return language;
   }

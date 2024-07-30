@@ -10331,7 +10331,7 @@ paths:
                     action = DictionaryAction.withName("addEntry"),
                     body = DictionaryEntry(
                       objectID = "1",
-                      language = SupportedLanguage.withName("en"),
+                      language = Some(SupportedLanguage.withName("en")),
                       word = Some("fancy"),
                       words = Some(Seq("believe", "algolia")),
                       decomposition = Some(Seq("trust", "algolia")),
@@ -19364,7 +19364,6 @@ components:
       additionalProperties: true
       required:
         - objectID
-        - language
       properties:
         objectID:
           type: string

@@ -415,9 +415,7 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 		search.DictionaryType("plurals"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
 			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-					[]string{"believe", "algolia"}).SetDecomposition(
-					[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
+				search.NewEmptyDictionaryEntry().SetObjectID("1"))}),
 	))
 	if err != nil {
 		// handle the eventual error
