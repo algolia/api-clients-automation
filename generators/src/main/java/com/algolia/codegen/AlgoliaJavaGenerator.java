@@ -95,7 +95,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    OrphanDestroyer.removeOrphans(this, operations, models);
+    ModelPruner.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

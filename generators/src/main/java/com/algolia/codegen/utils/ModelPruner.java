@@ -6,14 +6,14 @@ import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.OperationsMap;
 
-public class OrphanDestroyer {
+public class ModelPruner {
 
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   private Map<String, CodegenModel> models;
   private Set<String> visitedModels;
 
-  private OrphanDestroyer(Map<String, CodegenModel> models) {
+  private ModelPruner(Map<String, CodegenModel> models) {
     this.visitedModels = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
     this.models = models;
   }
@@ -101,16 +101,16 @@ public class OrphanDestroyer {
     // - the return type of an operation
     // - the parameters of an operation
 
-    OrphanDestroyer orphanDestroyer = new OrphanDestroyer(convertToMap(config, allModels));
-    Helpers.prettyPrint(orphanDestroyer.models.keySet());
-    orphanDestroyer.exploreGraph(operations);
+    ModelPruner modelPruner = new ModelPruner(convertToMap(config, allModels));
+    Helpers.prettyPrint(modelPruner.models.keySet());
+    modelPruner.exploreGraph(operations);
 
     List<String> toRemove = new ArrayList<>();
-    for (String modelName : orphanDestroyer.models.keySet()) {
+    for (String modelName : modelPruner.models.keySet()) {
       if (keepError && modelName.equals("ErrorBase")) {
         continue;
       }
-      if (!orphanDestroyer.visitedModels.contains(modelName)) {
+      if (!modelPruner.visitedModels.contains(modelName)) {
         toRemove.add(modelName);
       }
     }
