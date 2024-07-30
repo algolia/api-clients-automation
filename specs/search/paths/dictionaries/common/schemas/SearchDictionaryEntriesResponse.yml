@@ -25,7 +25,6 @@ dictionaryEntry:
   additionalProperties: true
   required:
     - objectID
-    - language
   properties:
     objectID:
       type: string
