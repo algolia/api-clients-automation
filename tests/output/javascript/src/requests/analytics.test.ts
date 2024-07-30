@@ -1003,19 +1003,6 @@ describe('getTopSearches', () => {
       tags: 'tag',
     });
   });
-
-  test('e2e with complex query params', async () => {
-    const req = (await client.getTopSearches({
-      index: 'cts_e2e_space in index',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/2/searches');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      index: 'cts_e2e_space%20in%20index',
-    });
-  });
 });
 
 describe('getUsersCount', () => {
