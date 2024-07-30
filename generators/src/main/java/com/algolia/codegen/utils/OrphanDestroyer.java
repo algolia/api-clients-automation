@@ -11,10 +11,10 @@ public class OrphanDestroyer {
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   private Map<String, CodegenModel> models;
-  private HashSet<String> visitedModels;
+  private Set<String> visitedModels;
 
   private OrphanDestroyer(Map<String, CodegenModel> models) {
-    this.visitedModels = new HashSet<>();
+    this.visitedModels = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
     this.models = models;
   }
 
@@ -43,7 +43,12 @@ public class OrphanDestroyer {
       }
       CodegenModel itemsModel = propertyToModel(property.mostInnerItems);
       if (itemsModel != null && !visitedModels.contains(itemsModel.name)) {
-        System.out.println("Visiting item: " + itemsModel.name + " from " + model.name);
+        System.out.println(
+          "Visiting item: " + itemsModel.name + " from " + model.name + " original name " + property.mostInnerItems.openApiType
+        );
+        // In csharp the real model name varies if its part of the modelMapping so we have to add
+        // both
+        visitedModels.add(property.mostInnerItems.openApiType);
         visitedModels.add(itemsModel.name);
         visitModelRecursive(itemsModel);
       }
@@ -57,11 +62,12 @@ public class OrphanDestroyer {
     }
   }
 
-  private static Map<String, CodegenModel> convertToMap(List<ModelMap> models) {
+  private static Map<String, CodegenModel> convertToMap(CodegenConfig config, List<ModelMap> models) {
     Map<String, CodegenModel> modelsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     for (ModelMap modelMap : models) {
       CodegenModel model = modelMap.getModel();
-      modelsMap.put(model.name, model);
+
+      modelsMap.put(config.toModelName(model.name), model);
     }
     return modelsMap;
   }
@@ -98,8 +104,8 @@ public class OrphanDestroyer {
     // - the return type of an operation
     // - the parameters of an operation
 
-    OrphanDestroyer orphanDestroyer = new OrphanDestroyer(convertToMap(allModels));
-
+    OrphanDestroyer orphanDestroyer = new OrphanDestroyer(convertToMap(config, allModels));
+    Helpers.prettyPrint(orphanDestroyer.models.keySet());
     orphanDestroyer.exploreGraph(operations);
 
     List<String> toRemove = new ArrayList<>();
