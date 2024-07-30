@@ -422,11 +422,6 @@ class SearchTest {
                 action = DictionaryAction.entries.first { it.value == "deleteEntry" },
                 body = DictionaryEntry(
                   objectID = "1",
-                  language = SupportedLanguage.entries.first { it.value == "en" },
-                  word = "fancy",
-                  words = listOf("believe", "algolia"),
-                  decomposition = listOf("trust", "algolia"),
-                  state = DictionaryEntryState.entries.first { it.value == "enabled" },
                 ),
               ),
             ),
@@ -436,7 +431,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/dictionaries/plurals/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""", it.body)
+        assertJsonBody("""{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}""", it.body)
       },
     )
   }

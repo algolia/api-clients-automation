@@ -341,7 +341,7 @@ class SnippetSearchClient {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = SupportedLanguage.withName("en"),
+              language = Some(SupportedLanguage.withName("en")),
               word = Some("fancy"),
               words = Some(Seq("believe", "algolia")),
               decomposition = Some(Seq("trust", "algolia")),
@@ -375,12 +375,7 @@ class SnippetSearchClient {
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
-              objectID = "1",
-              language = SupportedLanguage.withName("en"),
-              word = Some("fancy"),
-              words = Some(Seq("believe", "algolia")),
-              decomposition = Some(Seq("trust", "algolia")),
-              state = Some(DictionaryEntryState.withName("enabled"))
+              objectID = "1"
             )
           )
         )
@@ -410,7 +405,7 @@ class SnippetSearchClient {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = SupportedLanguage.withName("en"),
+              language = Some(SupportedLanguage.withName("en")),
               additionalProperties = Some(List(JField("additional", JString("try me"))))
             )
           )

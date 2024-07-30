@@ -377,17 +377,6 @@ class TestSearchClient:
                         "action": "deleteEntry",
                         "body": {
                             "objectID": "1",
-                            "language": "en",
-                            "word": "fancy",
-                            "words": [
-                                "believe",
-                                "algolia",
-                            ],
-                            "decomposition": [
-                                "trust",
-                                "algolia",
-                            ],
-                            "state": "enabled",
                         },
                     },
                 ],
@@ -399,7 +388,7 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}"""
         )
 
     async def test_batch_dictionary_entries_2(self):

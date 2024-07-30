@@ -521,14 +521,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 clearExistingDictionaryEntries: true,
                 requests: [BatchDictionaryEntriesRequest(
                     action: DictionaryAction.deleteEntry,
-                    body: DictionaryEntry(
-                        objectID: "1",
-                        language: SearchSupportedLanguage.en,
-                        word: "fancy",
-                        words: ["believe", "algolia"],
-                        decomposition: ["trust", "algolia"],
-                        state: DictionaryEntryState.enabled
-                    )
+                    body: DictionaryEntry(objectID: "1")
                 )]
             )
         )
@@ -539,7 +532,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
+            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

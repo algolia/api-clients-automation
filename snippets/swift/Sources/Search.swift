@@ -268,14 +268,7 @@ final class SearchClientSnippet {
                 clearExistingDictionaryEntries: true,
                 requests: [BatchDictionaryEntriesRequest(
                     action: DictionaryAction.deleteEntry,
-                    body: DictionaryEntry(
-                        objectID: "1",
-                        language: SearchSupportedLanguage.en,
-                        word: "fancy",
-                        words: ["believe", "algolia"],
-                        decomposition: ["trust", "algolia"],
-                        state: DictionaryEntryState.enabled
-                    )
+                    body: DictionaryEntry(objectID: "1")
                 )]
             )
         )

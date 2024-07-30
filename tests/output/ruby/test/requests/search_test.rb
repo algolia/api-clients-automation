@@ -273,19 +273,7 @@ class TestSearchClient < Test::Unit::TestCase
       "plurals",
       BatchDictionaryEntriesParams.new(
         clear_existing_dictionary_entries: true,
-        requests: [
-          BatchDictionaryEntriesRequest.new(
-            action: "deleteEntry",
-            body: DictionaryEntry.new(
-              object_id: "1",
-              language: "en",
-              word: "fancy",
-              words: ["believe", "algolia"],
-              decomposition: ["trust", "algolia"],
-              state: "enabled"
-            )
-          )
-        ]
+        requests: [BatchDictionaryEntriesRequest.new(action: "deleteEntry", body: DictionaryEntry.new(object_id: "1"))]
       )
     )
 
@@ -295,7 +283,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
+        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}"
       ),
       JSON.parse(req.body)
     )

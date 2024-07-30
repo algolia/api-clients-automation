@@ -286,9 +286,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 			search.DictionaryType("plurals"),
 			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-						[]string{"believe", "algolia"}).SetDecomposition(
-						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
+					search.NewEmptyDictionaryEntry().SetObjectID("1"))}),
 		))
 		require.NoError(t, err)
 
@@ -296,7 +294,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}`)
+		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}`)
 	})
 	t.Run("append", func(t *testing.T) {
 		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(

@@ -381,15 +381,7 @@ public class SnippetSearchClient
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry
-            {
-              ObjectID = "1",
-              Language = Enum.Parse<SupportedLanguage>("En"),
-              Word = "fancy",
-              Words = new List<string> { "believe", "algolia" },
-              Decomposition = new List<string> { "trust", "algolia" },
-              State = Enum.Parse<DictionaryEntryState>("Enabled"),
-            },
+            Body = new DictionaryEntry { ObjectID = "1", },
           }
         },
       }

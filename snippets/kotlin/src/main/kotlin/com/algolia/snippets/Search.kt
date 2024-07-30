@@ -393,11 +393,6 @@ class SnippetSearchClient {
             action = DictionaryAction.entries.first { it.value == "deleteEntry" },
             body = DictionaryEntry(
               objectID = "1",
-              language = SupportedLanguage.entries.first { it.value == "en" },
-              word = "fancy",
-              words = listOf("believe", "algolia"),
-              decomposition = listOf("trust", "algolia"),
-              state = DictionaryEntryState.entries.first { it.value == "enabled" },
             ),
           ),
         ),

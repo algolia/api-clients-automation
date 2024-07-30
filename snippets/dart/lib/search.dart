@@ -342,17 +342,6 @@ void snippetForbatchDictionaryEntries1() async {
           action: DictionaryAction.fromJson("deleteEntry"),
           body: DictionaryEntry(
             objectID: "1",
-            language: SupportedLanguage.fromJson("en"),
-            word: "fancy",
-            words: [
-              "believe",
-              "algolia",
-            ],
-            decomposition: [
-              "trust",
-              "algolia",
-            ],
-            state: DictionaryEntryState.fromJson("enabled"),
           ),
         ),
       ],

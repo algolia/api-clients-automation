@@ -13,8 +13,8 @@ DictionaryEntry _$DictionaryEntryFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = DictionaryEntry(
           objectID: $checkedConvert('objectID', (v) => v as String),
-          language: $checkedConvert(
-              'language', (v) => $enumDecode(_$SupportedLanguageEnumMap, v)),
+          language: $checkedConvert('language',
+              (v) => $enumDecodeNullable(_$SupportedLanguageEnumMap, v)),
           word: $checkedConvert('word', (v) => v as String?),
           words: $checkedConvert('words',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
@@ -39,7 +39,6 @@ const _$DictionaryEntryFieldMap = <String, String>{
 Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) {
   final val = <String, dynamic>{
     'objectID': instance.objectID,
-    'language': instance.language.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -48,6 +47,7 @@ Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) {
     }
   }
 
+  writeNotNull('language', instance.language?.toJson());
   writeNotNull('word', instance.word);
   writeNotNull('words', instance.words);
   writeNotNull('decomposition', instance.decomposition);
