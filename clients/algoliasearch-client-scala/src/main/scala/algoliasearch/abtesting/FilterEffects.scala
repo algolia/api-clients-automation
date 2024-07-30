@@ -26,6 +26,6 @@ package algoliasearch.abtesting
 /** A/B test filter effects resulting from configuration settings.
   */
 case class FilterEffects(
-    outliers: Option[FilterEffectsOutliers] = scala.None,
-    emptySearch: Option[FilterEffectsEmptySearch] = scala.None
+    outliers: Option[OutliersFilter] = scala.None,
+    emptySearch: Option[EmptySearchFilter] = scala.None
 )

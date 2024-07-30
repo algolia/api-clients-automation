@@ -21,5 +21,5 @@ package algoliasearch.monitoring
 /** LatencyResponse
   */
 case class LatencyResponse(
-    metrics: Option[LatencyResponseMetrics] = scala.None
+    metrics: Option[LatencyMetric] = scala.None
 )

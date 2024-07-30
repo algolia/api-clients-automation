@@ -16,7 +16,7 @@ RecommendRule _$RecommendRuleFromJson(Map<String, dynamic> json) =>
               '_metadata',
               (v) => v == null
                   ? null
-                  : RecommendRuleMetadata.fromJson(v as Map<String, dynamic>)),
+                  : RuleMetadata.fromJson(v as Map<String, dynamic>)),
           objectID: $checkedConvert('objectID', (v) => v as String?),
           condition: $checkedConvert(
               'condition',

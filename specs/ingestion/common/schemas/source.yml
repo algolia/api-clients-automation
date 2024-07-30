@@ -110,7 +110,6 @@ SourceType:
     - sfcc
 
 SourceCommercetools:
-  title: Commercetools
   type: object
   additionalProperties: false
   properties:
@@ -175,7 +174,6 @@ CommercetoolsCustomFields:
         - type: 'null'
 
 SourceBigCommerce:
-  title: BigCommerce
   type: object
   additionalProperties: false
   properties:
@@ -243,7 +241,6 @@ UniqueIDColumn:
   description: Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
 
 SourceJSON:
-  title: JSON
   type: object
   additionalProperties: false
   properties:
@@ -262,7 +259,6 @@ MappingTypeCSV:
   enum: [string, integer, float, boolean, json]
 
 SourceCSV:
-  title: CSV
   type: object
   additionalProperties: false
   properties:
@@ -290,7 +286,6 @@ SourceCSV:
     - url
 
 SourceGA4BigQueryExport:
-  title: GA4 BigQuery export
   type: object
   additionalProperties: false
   properties:
@@ -314,7 +309,6 @@ SourceGA4BigQueryExport:
     - tablePrefix
 
 SourceBigQuery:
-  title: BigQuery
   type: object
   additionalProperties: false
   properties:
@@ -348,7 +342,6 @@ BigQueryDataType:
   enum: [ga4, ga360]
 
 SourceDocker:
-  title: Docker
   type: object
   additionalProperties: false
   properties:
@@ -453,7 +446,6 @@ SourceUpdateInput:
     - $ref: '#/SourceUpdateShopify'
 
 SourceUpdateShopify:
-  title: Shopify
   type: object
   additionalProperties: false
   properties:

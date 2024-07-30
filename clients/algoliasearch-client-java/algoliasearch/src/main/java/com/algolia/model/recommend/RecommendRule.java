@@ -11,7 +11,7 @@ import java.util.Objects;
 public class RecommendRule {
 
   @JsonProperty("_metadata")
-  private RecommendRuleMetadata metadata;
+  private RuleMetadata metadata;
 
   @JsonProperty("objectID")
   private String objectID;
@@ -28,14 +28,14 @@ public class RecommendRule {
   @JsonProperty("enabled")
   private Boolean enabled;
 
-  public RecommendRule setMetadata(RecommendRuleMetadata metadata) {
+  public RecommendRule setMetadata(RuleMetadata metadata) {
     this.metadata = metadata;
     return this;
   }
 
   /** Get metadata */
   @javax.annotation.Nullable
-  public RecommendRuleMetadata getMetadata() {
+  public RuleMetadata getMetadata() {
     return metadata;
   }
 

@@ -6,7 +6,6 @@ import 'package:algolia_client_search/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_search/src/model/anchoring.dart';
 import 'package:algolia_client_search/src/model/api_key.dart';
 import 'package:algolia_client_search/src/model/api_key_operation.dart';
-import 'package:algolia_client_search/src/model/around_precision_from_value_inner.dart';
 import 'package:algolia_client_search/src/model/around_radius_all.dart';
 import 'package:algolia_client_search/src/model/assign_user_id_params.dart';
 import 'package:algolia_client_search/src/model/automatic_facet_filter.dart';
@@ -87,10 +86,11 @@ import 'package:algolia_client_search/src/model/personalization.dart';
 import 'package:algolia_client_search/src/model/promote_object_id.dart';
 import 'package:algolia_client_search/src/model/promote_object_ids.dart';
 import 'package:algolia_client_search/src/model/query_type.dart';
+import 'package:algolia_client_search/src/model/range.dart';
 import 'package:algolia_client_search/src/model/ranking_info.dart';
 import 'package:algolia_client_search/src/model/redirect.dart';
+import 'package:algolia_client_search/src/model/redirect_rule_index_data.dart';
 import 'package:algolia_client_search/src/model/redirect_rule_index_metadata.dart';
-import 'package:algolia_client_search/src/model/redirect_rule_index_metadata_data.dart';
 import 'package:algolia_client_search/src/model/redirect_url.dart';
 import 'package:algolia_client_search/src/model/remove_user_id_response.dart';
 import 'package:algolia_client_search/src/model/remove_words_if_no_results.dart';
@@ -185,9 +185,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ApiKey.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ApiKeyOperation':
       return ApiKeyOperation.fromJson(value) as ReturnType;
-    case 'AroundPrecisionFromValueInner':
-      return AroundPrecisionFromValueInner.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'AroundRadiusAll':
       return AroundRadiusAll.fromJson(value) as ReturnType;
     case 'AssignUserIdParams':
@@ -399,16 +396,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
+    case 'Range':
+      return Range.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RankingInfo':
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectRuleIndexData':
+      return RedirectRuleIndexData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RedirectRuleIndexMetadata':
       return RedirectRuleIndexMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'RedirectRuleIndexMetadataData':
-      return RedirectRuleIndexMetadataData.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'RedirectURL':
       return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RemoveUserIdResponse':

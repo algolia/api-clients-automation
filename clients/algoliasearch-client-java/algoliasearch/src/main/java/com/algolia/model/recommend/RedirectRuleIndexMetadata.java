@@ -23,7 +23,7 @@ public class RedirectRuleIndexMetadata {
   private Boolean succeed;
 
   @JsonProperty("data")
-  private RedirectRuleIndexMetadataData data;
+  private RedirectRuleIndexData data;
 
   public RedirectRuleIndexMetadata setSource(String source) {
     this.source = source;
@@ -69,14 +69,14 @@ public class RedirectRuleIndexMetadata {
     return succeed;
   }
 
-  public RedirectRuleIndexMetadata setData(RedirectRuleIndexMetadataData data) {
+  public RedirectRuleIndexMetadata setData(RedirectRuleIndexData data) {
     this.data = data;
     return this;
   }
 
   /** Get data */
   @javax.annotation.Nonnull
-  public RedirectRuleIndexMetadataData getData() {
+  public RedirectRuleIndexData getData() {
     return data;
   }
 

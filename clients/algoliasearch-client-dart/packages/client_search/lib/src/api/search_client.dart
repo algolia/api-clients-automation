@@ -1051,7 +1051,7 @@ final class SearchClient implements ApiClient {
   /// * [objectID] Unique record identifier.
   /// * [attributesToRetrieve] Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  `objectID` is always retrieved.  Attributes included in `unretrievableAttributes` won't be retrieved unless the request is authenticated with the admin API key.
   /// * [requestOptions] additional request configuration.
-  Future<Map<String, String>> getObject({
+  Future<Object> getObject({
     required String indexName,
     required String objectID,
     List<String>? attributesToRetrieve,
@@ -1081,9 +1081,9 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<Map<String, String>, String>(
+    return deserialize<Object, Object>(
       response,
-      'Map<String, String>',
+      'Object',
       growable: true,
     );
   }

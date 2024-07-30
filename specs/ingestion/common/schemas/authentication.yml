@@ -116,7 +116,6 @@ Platform:
     - type: 'null'
 
 AuthGoogleServiceAccountPartial:
-  title: Google service account
   type: object
   description: Credentials for authenticating with a Google service account, such as BigQuery.
   additionalProperties: false
@@ -130,7 +129,6 @@ AuthGoogleServiceAccountPartial:
       description: Private key of the Google service account. This field is `null` in the API response.
 
 AuthBasicPartial:
-  title: Basic
   type: object
   description: Credentials for authenticating with user name and password.
   additionalProperties: false
@@ -143,7 +141,6 @@ AuthBasicPartial:
       description: Password. This field is `null` in the API response.
 
 AuthAPIKeyPartial:
-  title: API key
   type: object
   description: Credentials for authenticating with an API key.
   additionalProperties: false
@@ -153,7 +150,6 @@ AuthAPIKeyPartial:
       description: API key. This field is `null` in the API response.
 
 AuthOAuthPartial:
-  title: OAuth
   type: object
   description: Credentials for authenticating with OAuth 2.0.
   additionalProperties: false
@@ -173,7 +169,6 @@ AuthOAuthPartial:
       description: OAuth scope.
 
 AuthAlgoliaPartial:
-  title: Algolia
   type: object
   description: Credentials for authenticating with Algolia.
   additionalProperties: false
@@ -188,7 +183,6 @@ AuthAlgoliaPartial:
         This field is `null` in the API response.
 
 AuthAlgoliaInsightsPartial:
-  title: Algolia Insights
   type: object
   additionalProperties: false
   description: Credentials for authenticating with the Algolia Insights API.
@@ -203,7 +197,6 @@ AuthAlgoliaInsightsPartial:
         This field is `null` in the API response.
 
 AuthGoogleServiceAccount:
-  title: Google service account
   type: object
   description: Credentials for authenticating with a Google service account, such as BigQuery.
   additionalProperties: false
@@ -220,7 +213,6 @@ AuthGoogleServiceAccount:
     - privateKey
 
 AuthBasic:
-  title: Basic
   type: object
   description: Credentials for authenticating with user name and password.
   additionalProperties: false
@@ -236,7 +228,6 @@ AuthBasic:
     - password
 
 AuthAPIKey:
-  title: API key
   type: object
   description: Credentials for authenticating with an API key.
   additionalProperties: false
@@ -248,7 +239,6 @@ AuthAPIKey:
     - key
 
 AuthOAuth:
-  title: OAuth
   type: object
   description: Credentials for authenticating with OAuth 2.0.
   additionalProperties: false
@@ -272,7 +262,6 @@ AuthOAuth:
     - client_secret
 
 AuthAlgolia:
-  title: Algolia
   type: object
   additionalProperties: false
   description: Credentials for authenticating with Algolia.
@@ -290,7 +279,6 @@ AuthAlgolia:
     - apiKey
 
 AuthAlgoliaInsights:
-  title: Algolia Insights
   type: object
   additionalProperties: false
   description: Credentials for authenticating with the Algolia Insights API.

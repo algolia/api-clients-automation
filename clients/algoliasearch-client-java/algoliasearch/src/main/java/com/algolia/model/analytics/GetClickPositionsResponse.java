@@ -13,21 +13,21 @@ import java.util.Objects;
 public class GetClickPositionsResponse {
 
   @JsonProperty("positions")
-  private List<ClickPositionsInner> positions = new ArrayList<>();
+  private List<ClickPosition> positions = new ArrayList<>();
 
-  public GetClickPositionsResponse setPositions(List<ClickPositionsInner> positions) {
+  public GetClickPositionsResponse setPositions(List<ClickPosition> positions) {
     this.positions = positions;
     return this;
   }
 
-  public GetClickPositionsResponse addPositions(ClickPositionsInner positionsItem) {
+  public GetClickPositionsResponse addPositions(ClickPosition positionsItem) {
     this.positions.add(positionsItem);
     return this;
   }
 
   /** List of positions in the search results and clicks associated with this search. */
   @javax.annotation.Nonnull
-  public List<ClickPositionsInner> getPositions() {
+  public List<ClickPosition> getPositions() {
     return positions;
   }
 

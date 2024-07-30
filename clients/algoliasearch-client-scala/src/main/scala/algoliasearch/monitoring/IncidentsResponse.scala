@@ -21,5 +21,5 @@ package algoliasearch.monitoring
 /** IncidentsResponse
   */
 case class IncidentsResponse(
-    incidents: Option[Map[String, Seq[IncidentsInner]]] = scala.None
+    incidents: Option[Map[String, Seq[IncidentEntry]]] = scala.None
 )

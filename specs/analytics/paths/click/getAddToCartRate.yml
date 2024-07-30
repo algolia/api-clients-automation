@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily add-to-cart rates.
                 items:
-                  type: object
                   title: dailyAddToCartRates
+                  type: object
                   additionalProperties: false
                   required:
                     - rate

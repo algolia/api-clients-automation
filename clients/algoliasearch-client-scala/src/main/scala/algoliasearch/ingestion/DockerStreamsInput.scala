@@ -23,7 +23,7 @@
   */
 package algoliasearch.ingestion
 
-/** DockerStreamsInput
+/** The selected streams of a singer or airbyte connector.
   */
 case class DockerStreamsInput(
     streams: Any

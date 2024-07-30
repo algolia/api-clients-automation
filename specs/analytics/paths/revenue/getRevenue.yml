@@ -34,8 +34,8 @@ get:
                 type: array
                 description: Daily revenue.
                 items:
-                  type: object
                   title: dailyRevenue
+                  type: object
                   additionalProperties: false
                   required:
                     - currencies

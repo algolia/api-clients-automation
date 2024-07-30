@@ -11,8 +11,8 @@ searchForFacetValuesResponse:
       type: array
       description: Matching facet values.
       items:
-        type: object
         title: facetHits
+        type: object
         additionalProperties: false
         required:
           - value

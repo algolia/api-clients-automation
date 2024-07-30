@@ -21,5 +21,5 @@ package algoliasearch.monitoring
 /** InfrastructureResponse
   */
 case class InfrastructureResponse(
-    metrics: Option[InfrastructureResponseMetrics] = scala.None
+    metrics: Option[Metrics] = scala.None
 )

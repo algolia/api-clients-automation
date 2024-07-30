@@ -9,8 +9,8 @@ topHitsResponse:
       type: array
       description: Most frequent search results.
       items:
-        type: object
         title: topHit
+        type: object
         additionalProperties: false
         required:
           - hit
@@ -32,8 +32,8 @@ topHitsResponseWithAnalytics:
       type: array
       description: Most frequent search results with click and conversion metrics.
       items:
-        type: object
         title: topHitWithAnalytics
+        type: object
         additionalProperties: false
         required:
           - hit
@@ -70,8 +70,8 @@ topHitsResponseWithRevenueAnalytics:
       type: array
       description: Most frequent search results with click, conversion, and revenue metrics.
       items:
-        type: object
         title: topHitWithRevenueAnalytics
+        type: object
         additionalProperties: false
         required:
           - hit

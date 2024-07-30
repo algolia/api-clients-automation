@@ -2342,6 +2342,7 @@ components:
       description: A/B test filter effects resulting from configuration settings.
       properties:
         outliers:
+          title: outliersFilter
           type: object
           description: >-
             Outliers removed from the A/B test as a result of configuration
@@ -2359,6 +2360,7 @@ components:
               description: Number of tracked searches removed from the A/B test.
               example: 237
         emptySearch:
+          title: emptySearchFilter
           type: object
           description: >-
             Empty searches removed from the A/B test as a result of

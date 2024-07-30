@@ -20,8 +20,8 @@ baseSearchResponse:
       type: string
       description: Distance from a central coordinate provided by `aroundLatLng`.
     exhaustive:
-      type: object
       title: exhaustive
+      type: object
       description: Whether certain properties of the search response are calculated exhaustive (exact) or approximated.
       properties:
         facetsCount:
@@ -75,8 +75,8 @@ baseSearchResponse:
       type: object
       description: Statistics for numerical facets.
       additionalProperties:
-        type: object
         title: facetStats
+        type: object
         properties:
           min:
             type: number
@@ -179,6 +179,7 @@ RedirectRuleIndexMetadata:
       type: boolean
       description: Redirect rule status.
     data:
+      title: redirectRuleIndexData
       type: object
       description: Redirect rule data.
       required:

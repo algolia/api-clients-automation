@@ -11,16 +11,16 @@ import java.util.Objects;
 public class IndexingTimeResponse {
 
   @JsonProperty("metrics")
-  private IndexingTimeResponseMetrics metrics;
+  private IndexingMetric metrics;
 
-  public IndexingTimeResponse setMetrics(IndexingTimeResponseMetrics metrics) {
+  public IndexingTimeResponse setMetrics(IndexingMetric metrics) {
     this.metrics = metrics;
     return this;
   }
 
   /** Get metrics */
   @javax.annotation.Nullable
-  public IndexingTimeResponseMetrics getMetrics() {
+  public IndexingMetric getMetrics() {
     return metrics;
   }
 

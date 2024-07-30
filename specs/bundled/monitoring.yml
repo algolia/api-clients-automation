@@ -447,6 +447,7 @@ components:
         reported for this cluster as values.
       type: array
       items:
+        title: incidentEntry
         type: object
         properties:
           t:
@@ -516,10 +517,11 @@ components:
         type:
           $ref: '#/components/schemas/Type'
     Time:
-      title: time
+      title: times
       description: Time measured by a probe.
       type: array
       items:
+        title: timeEntry
         type: object
         additionalProperties: false
         properties:
@@ -602,7 +604,7 @@ components:
       content:
         application/json:
           schema:
-            title: StatusResponse
+            title: statusResponse
             type: object
             properties:
               status:
@@ -640,7 +642,7 @@ components:
       content:
         application/json:
           schema:
-            title: IncidentsResponse
+            title: incidentsResponse
             type: object
             properties:
               incidents:
@@ -672,7 +674,7 @@ components:
       content:
         application/json:
           schema:
-            title: InventoryResponse
+            title: inventoryResponse
             type: object
             properties:
               inventory:
@@ -709,6 +711,7 @@ components:
       content:
         application/json:
           schema:
+            title: forbidden
             type: object
             additionalProperties: false
             properties:
@@ -723,10 +726,11 @@ components:
       content:
         application/json:
           schema:
-            title: LatencyResponse
+            title: latencyResponse
             type: object
             properties:
               metrics:
+                title: latencyMetric
                 type: object
                 additionalProperties: false
                 properties:
@@ -751,6 +755,7 @@ components:
       content:
         application/json:
           schema:
+            title: badRequest
             type: object
             additionalProperties: false
             properties:
@@ -765,10 +770,11 @@ components:
       content:
         application/json:
           schema:
-            title: IndexingTimeResponse
+            title: indexingTimeResponse
             type: object
             properties:
               metrics:
+                title: indexingMetric
                 type: object
                 additionalProperties: false
                 properties:
@@ -793,7 +799,7 @@ components:
       content:
         application/json:
           schema:
-            title: ReachabilityResponse
+            title: reachabilityResponse
             type: object
             additionalProperties:
               x-additionalPropertiesName: cluster
@@ -810,11 +816,12 @@ components:
       content:
         application/json:
           schema:
-            title: InfrastructureResponse
+            title: infrastructureResponse
             type: object
             additionalProperties: false
             properties:
               metrics:
+                title: metrics
                 type: object
                 additionalProperties: false
                 properties:
@@ -889,6 +896,7 @@ components:
       content:
         application/json:
           schema:
+            title: unauthorized
             type: object
             additionalProperties: false
             properties:

@@ -1215,23 +1215,6 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_searches_2(self):
-        """
-        e2e with complex query params
-        """
-        _req = await self._client.get_top_searches_with_http_info(
-            index="cts_e2e_space in index",
-        )
-
-        assert _req.path == "/2/searches"
-        assert _req.verb == "GET"
-        assert (
-            _req.query_parameters.items()
-            == {"index": "cts_e2e_space%20in%20index"}.items()
-        )
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
     async def test_get_users_count_(self):
         """
         get getUsersCount with minimal parameters

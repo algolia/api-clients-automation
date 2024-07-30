@@ -36,8 +36,8 @@ get:
                 type: array
                 description: Searches without results.
                 items:
-                  type: object
                   title: dailySearchesNoResults
+                  type: object
                   additionalProperties: false
                   required:
                     - search

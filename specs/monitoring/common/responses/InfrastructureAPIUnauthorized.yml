@@ -2,6 +2,7 @@ description: Unauthorized
 content:
   application/json:
     schema:
+      title: unauthorized
       type: object
       additionalProperties: false
       properties:

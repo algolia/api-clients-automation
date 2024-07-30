@@ -29,5 +29,5 @@ package algoliasearch.analytics
   *   List of positions in the search results and clicks associated with this search.
   */
 case class GetClickPositionsResponse(
-    positions: Seq[ClickPositionsInner]
+    positions: Seq[ClickPosition]
 )
