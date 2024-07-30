@@ -19,9 +19,7 @@ async function buildLanguage(
       break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
-      if (playground) {
-        await run('cd node && yarn build', { cwd });
-      } else {
+      if (!playground) {
         const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
