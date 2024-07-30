@@ -16,7 +16,7 @@ public class TransformationTryResponse {
   private List<Object> payloads = new ArrayList<>();
 
   @JsonProperty("error")
-  private TransformationTryResponseError error;
+  private TransformationError error;
 
   public TransformationTryResponse setPayloads(List<Object> payloads) {
     this.payloads = payloads;
@@ -34,14 +34,14 @@ public class TransformationTryResponse {
     return payloads;
   }
 
-  public TransformationTryResponse setError(TransformationTryResponseError error) {
+  public TransformationTryResponse setError(TransformationError error) {
     this.error = error;
     return this;
   }
 
   /** Get error */
   @javax.annotation.Nullable
-  public TransformationTryResponseError getError() {
+  public TransformationError getError() {
     return error;
   }
 

@@ -12,6 +12,7 @@ get:
       content:
         application/json:
           schema:
+            title: crawlerStats
             type: object
             properties:
               count:

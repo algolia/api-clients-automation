@@ -2,7 +2,6 @@ import 'package:algoliasearch/src/model/acl.dart';
 import 'package:algoliasearch/src/model/advanced_syntax_features.dart';
 import 'package:algoliasearch/src/model/alternatives_as_exact.dart';
 import 'package:algoliasearch/src/model/api_key.dart';
-import 'package:algoliasearch/src/model/around_precision_from_value_inner.dart';
 import 'package:algoliasearch/src/model/around_radius_all.dart';
 import 'package:algoliasearch/src/model/automatic_facet_filter.dart';
 import 'package:algoliasearch/src/model/base_get_api_key_response.dart';
@@ -46,6 +45,7 @@ import 'package:algoliasearch/src/model/mode.dart';
 import 'package:algoliasearch/src/model/params.dart';
 import 'package:algoliasearch/src/model/personalization.dart';
 import 'package:algoliasearch/src/model/query_type.dart';
+import 'package:algoliasearch/src/model/range.dart';
 import 'package:algoliasearch/src/model/ranking_info.dart';
 import 'package:algoliasearch/src/model/recommend_hit.dart';
 import 'package:algoliasearch/src/model/recommendations_hits.dart';
@@ -54,8 +54,8 @@ import 'package:algoliasearch/src/model/recommended_for_you.dart';
 import 'package:algoliasearch/src/model/recommended_for_you_model.dart';
 import 'package:algoliasearch/src/model/recommended_for_you_query.dart';
 import 'package:algoliasearch/src/model/redirect.dart';
+import 'package:algoliasearch/src/model/redirect_rule_index_data.dart';
 import 'package:algoliasearch/src/model/redirect_rule_index_metadata.dart';
-import 'package:algoliasearch/src/model/redirect_rule_index_metadata_data.dart';
 import 'package:algoliasearch/src/model/redirect_url.dart';
 import 'package:algoliasearch/src/model/related_model.dart';
 import 'package:algoliasearch/src/model/related_products.dart';
@@ -121,9 +121,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return AlternativesAsExact.fromJson(value) as ReturnType;
     case 'ApiKey':
       return ApiKey.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'AroundPrecisionFromValueInner':
-      return AroundPrecisionFromValueInner.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'AroundRadiusAll':
       return AroundRadiusAll.fromJson(value) as ReturnType;
     case 'AutomaticFacetFilter':
@@ -236,6 +233,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
+    case 'Range':
+      return Range.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RankingInfo':
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RecommendHit':
@@ -256,12 +255,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectRuleIndexData':
+      return RedirectRuleIndexData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RedirectRuleIndexMetadata':
       return RedirectRuleIndexMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'RedirectRuleIndexMetadataData':
-      return RedirectRuleIndexMetadataData.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'RedirectURL':
       return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RelatedModel':

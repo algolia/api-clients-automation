@@ -14,8 +14,8 @@ post:
     content:
       application/json:
         schema:
-          type: object
           title: searchRulesParams
+          type: object
           description: Rules search parameters.
           additionalProperties: false
           properties:

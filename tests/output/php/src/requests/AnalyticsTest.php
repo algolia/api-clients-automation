@@ -1254,24 +1254,6 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('e2e with complex query params')]
-    public function testGetTopSearches2()
-    {
-        $client = $this->getClient();
-        $client->getTopSearches(
-            'cts_e2e_space in index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"cts_e2e_space%20in%20index"}', true),
-            ],
-        ]);
-    }
-
     #[TestDox('get getUsersCount with minimal parameters')]
     public function testGetUsersCount()
     {

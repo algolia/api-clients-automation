@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily click-through rates.
                 items:
-                  type: object
                   title: dailyClickThroughRates
+                  type: object
                   additionalProperties: false
                   required:
                     - rate

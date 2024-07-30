@@ -4,12 +4,12 @@
 package algoliasearch.api
 
 import algoliasearch.querysuggestions.BaseResponse
+import algoliasearch.querysuggestions.ConfigStatus
 import algoliasearch.querysuggestions.Configuration
 import algoliasearch.querysuggestions.ConfigurationResponse
 import algoliasearch.querysuggestions.ConfigurationWithIndex
 import algoliasearch.querysuggestions.ErrorBase
-import algoliasearch.querysuggestions.GetConfigStatus200Response
-import algoliasearch.querysuggestions.GetLogFile200Response
+import algoliasearch.querysuggestions.LogFile
 import algoliasearch.querysuggestions._
 import algoliasearch.ApiClient
 import algoliasearch.api.QuerySuggestionsClient.hosts
@@ -263,7 +263,7 @@ class QuerySuggestionsClient(
     */
   def getConfigStatus(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[GetConfigStatus200Response] = Future {
+  ): Future[ConfigStatus] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.")
 
     val request = HttpRequest
@@ -271,7 +271,7 @@ class QuerySuggestionsClient(
       .withMethod("GET")
       .withPath(s"/1/configs/${escape(indexName)}/status")
       .build()
-    execute[GetConfigStatus200Response](request, requestOptions)
+    execute[ConfigStatus](request, requestOptions)
   }
 
   /** Retrieves the logs for a single Query Suggestions index.
@@ -284,7 +284,7 @@ class QuerySuggestionsClient(
     */
   def getLogFile(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[GetLogFile200Response] = Future {
+  ): Future[LogFile] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.")
 
     val request = HttpRequest
@@ -292,7 +292,7 @@ class QuerySuggestionsClient(
       .withMethod("GET")
       .withPath(s"/1/logs/${escape(indexName)}")
       .build()
-    execute[GetLogFile200Response](request, requestOptions)
+    execute[LogFile](request, requestOptions)
   }
 
   /** Updates a QuerySuggestions configuration.

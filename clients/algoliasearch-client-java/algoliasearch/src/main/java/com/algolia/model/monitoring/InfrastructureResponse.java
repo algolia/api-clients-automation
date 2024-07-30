@@ -11,16 +11,16 @@ import java.util.Objects;
 public class InfrastructureResponse {
 
   @JsonProperty("metrics")
-  private InfrastructureResponseMetrics metrics;
+  private Metrics metrics;
 
-  public InfrastructureResponse setMetrics(InfrastructureResponseMetrics metrics) {
+  public InfrastructureResponse setMetrics(Metrics metrics) {
     this.metrics = metrics;
     return this;
   }
 
   /** Get metrics */
   @javax.annotation.Nullable
-  public InfrastructureResponseMetrics getMetrics() {
+  public Metrics getMetrics() {
     return metrics;
   }
 

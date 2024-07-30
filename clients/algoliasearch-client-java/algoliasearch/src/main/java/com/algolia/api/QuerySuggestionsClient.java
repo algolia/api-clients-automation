@@ -683,8 +683,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConfigStatus200Response getConfigStatus(@Nonnull String indexName, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ConfigStatus getConfigStatus(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getConfigStatusAsync(indexName, requestOptions));
   }
 
@@ -694,7 +693,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConfigStatus200Response getConfigStatus(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public ConfigStatus getConfigStatus(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getConfigStatus(indexName, null);
   }
 
@@ -706,12 +705,12 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConfigStatus200Response> getConfigStatusAsync(@Nonnull String indexName, RequestOptions requestOptions)
+  public CompletableFuture<ConfigStatus> getConfigStatusAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfigStatus`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}/status", indexName).setMethod("GET").build();
-    return executeAsync(request, requestOptions, new TypeReference<GetConfigStatus200Response>() {});
+    return executeAsync(request, requestOptions, new TypeReference<ConfigStatus>() {});
   }
 
   /**
@@ -720,7 +719,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConfigStatus200Response> getConfigStatusAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public CompletableFuture<ConfigStatus> getConfigStatusAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getConfigStatusAsync(indexName, null);
   }
 
@@ -732,7 +731,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetLogFile200Response getLogFile(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public LogFile getLogFile(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getLogFileAsync(indexName, requestOptions));
   }
 
@@ -742,7 +741,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetLogFile200Response getLogFile(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public LogFile getLogFile(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getLogFile(indexName, null);
   }
 
@@ -754,13 +753,13 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetLogFile200Response> getLogFileAsync(@Nonnull String indexName, RequestOptions requestOptions)
+  public CompletableFuture<LogFile> getLogFileAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getLogFile`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/logs/{indexName}", indexName).setMethod("GET").build();
 
-    return executeAsync(request, requestOptions, new TypeReference<GetLogFile200Response>() {});
+    return executeAsync(request, requestOptions, new TypeReference<LogFile>() {});
   }
 
   /**
@@ -769,7 +768,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetLogFile200Response> getLogFileAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public CompletableFuture<LogFile> getLogFileAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getLogFileAsync(indexName, null);
   }
 

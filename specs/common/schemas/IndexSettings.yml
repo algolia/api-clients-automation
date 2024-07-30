@@ -6,7 +6,6 @@ indexSettings:
 
 baseIndexSettings:
   type: object
-  title: Index settings.
   additionalProperties: false
   properties:
     attributesForFaceting:

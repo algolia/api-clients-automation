@@ -6,6 +6,7 @@ allOf:
         type: array
         description: Configuration changes.
         items:
+          title: crawlerConfigVersionsResponse
           type: object
           properties:
             version:

@@ -39,13 +39,13 @@ sealed trait AroundPrecision
 object AroundPrecision {
 
   case class IntValue(value: Int) extends AroundPrecision
-  case class SeqOfAroundPrecisionFromValueInner(value: Seq[AroundPrecisionFromValueInner]) extends AroundPrecision
+  case class SeqOfRange(value: Seq[Range]) extends AroundPrecision
 
   def apply(value: Int): AroundPrecision = {
     AroundPrecision.IntValue(value)
   }
-  def apply(value: Seq[AroundPrecisionFromValueInner]): AroundPrecision = {
-    AroundPrecision.SeqOfAroundPrecisionFromValueInner(value)
+  def apply(value: Seq[Range]): AroundPrecision = {
+    AroundPrecision.SeqOfRange(value)
   }
 }
 
@@ -54,17 +54,16 @@ object AroundPrecisionSerializer extends Serializer[AroundPrecision] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AroundPrecision] =>
       json match {
-        case JInt(value) => AroundPrecision.IntValue(value.toInt)
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          AroundPrecision.SeqOfAroundPrecisionFromValueInner(value.map(_.extract))
+        case JInt(value)                                           => AroundPrecision.IntValue(value.toInt)
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => AroundPrecision.SeqOfRange(value.map(_.extract))
         case _ => throw new MappingException("Can't convert " + json + " to AroundPrecision")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AroundPrecision =>
     value match {
-      case AroundPrecision.IntValue(value)                           => JInt(value)
-      case AroundPrecision.SeqOfAroundPrecisionFromValueInner(value) => JArray(value.map(Extraction.decompose).toList)
+      case AroundPrecision.IntValue(value)   => JInt(value)
+      case AroundPrecision.SeqOfRange(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

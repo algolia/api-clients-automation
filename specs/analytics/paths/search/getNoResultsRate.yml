@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily no results rates.
                 items:
-                  type: object
                   title: dailyNoResultsRates
+                  type: object
                   additionalProperties: false
                   required:
                     - date

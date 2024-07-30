@@ -709,6 +709,7 @@ components:
       title: range objects
       type: array
       items:
+        title: range
         type: object
         description: >-
           Range object with lower and upper values in meters to define custom
@@ -2233,6 +2234,7 @@ components:
           type: boolean
           description: Redirect rule status.
         data:
+          title: redirectRuleIndexData
           type: object
           description: Redirect rule data.
           required:
@@ -2284,8 +2286,8 @@ components:
           type: string
           description: Distance from a central coordinate provided by `aroundLatLng`.
         exhaustive:
-          type: object
           title: exhaustive
+          type: object
           description: >-
             Whether certain properties of the search response are calculated
             exhaustive (exact) or approximated.
@@ -2365,8 +2367,8 @@ components:
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
-            type: object
             title: facetStats
+            type: object
             properties:
               min:
                 type: number
@@ -2815,8 +2817,8 @@ components:
           type: array
           description: Matching facet values.
           items:
-            type: object
             title: facetHits
+            type: object
             additionalProperties: false
             required:
               - value
@@ -2886,7 +2888,6 @@ components:
         - $ref: '#/components/schemas/cursor'
     baseIndexSettings:
       type: object
-      title: Index settings.
       additionalProperties: false
       properties:
         attributesForFaceting:

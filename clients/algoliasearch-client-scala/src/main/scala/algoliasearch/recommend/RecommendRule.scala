@@ -39,7 +39,7 @@ package algoliasearch.recommend
   *   Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
   */
 case class RecommendRule(
-    metadata: Option[RecommendRuleMetadata] = scala.None,
+    metadata: Option[RuleMetadata] = scala.None,
     objectID: Option[String] = scala.None,
     condition: Option[Condition] = scala.None,
     consequence: Option[Consequence] = scala.None,

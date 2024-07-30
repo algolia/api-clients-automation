@@ -19,7 +19,7 @@ class IndexingTimeResponse extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $modelTypes = [
-        'metrics' => '\Algolia\AlgoliaSearch\Model\Monitoring\IndexingTimeResponseMetrics',
+        'metrics' => '\Algolia\AlgoliaSearch\Model\Monitoring\IndexingMetric',
     ];
 
     /**
@@ -153,7 +153,7 @@ class IndexingTimeResponse extends AbstractModel implements ModelInterface, \Arr
     /**
      * Gets metrics.
      *
-     * @return null|IndexingTimeResponseMetrics
+     * @return null|IndexingMetric
      */
     public function getMetrics()
     {
@@ -163,7 +163,7 @@ class IndexingTimeResponse extends AbstractModel implements ModelInterface, \Arr
     /**
      * Sets metrics.
      *
-     * @param null|IndexingTimeResponseMetrics $metrics metrics
+     * @param null|IndexingMetric $metrics metrics
      *
      * @return self
      */

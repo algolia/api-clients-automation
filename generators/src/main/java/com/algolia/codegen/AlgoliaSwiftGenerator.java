@@ -4,9 +4,7 @@ import static org.openapitools.codegen.utils.CamelizeOption.LOWERCASE_FIRST_LETT
 import static org.openapitools.codegen.utils.StringUtils.camelize;
 
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.utils.GenericPropagator;
-import com.algolia.codegen.utils.Helpers;
-import com.algolia.codegen.utils.OneOf;
+import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -66,6 +64,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "facetordering",
     "facets",
     "facetsstats",
+    "forbidden",
     "highlightresult",
     "highlightresultoption",
     "ignoreplurals",
@@ -83,10 +82,11 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "promoteobjectids",
     "querysuggestionsconfiguration",
     "querytype",
+    "range",
     "rankinginfo",
     "redirect",
     "redirectruleindexmetadata",
-    "redirectruleindexmetadatadata",
+    "redirectruleindexdata",
     "redirecturl",
     "region",
     "removestopwords",

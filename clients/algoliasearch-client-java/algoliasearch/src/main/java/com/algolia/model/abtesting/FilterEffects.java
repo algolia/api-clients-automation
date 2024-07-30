@@ -11,30 +11,30 @@ import java.util.Objects;
 public class FilterEffects {
 
   @JsonProperty("outliers")
-  private FilterEffectsOutliers outliers;
+  private OutliersFilter outliers;
 
   @JsonProperty("emptySearch")
-  private FilterEffectsEmptySearch emptySearch;
+  private EmptySearchFilter emptySearch;
 
-  public FilterEffects setOutliers(FilterEffectsOutliers outliers) {
+  public FilterEffects setOutliers(OutliersFilter outliers) {
     this.outliers = outliers;
     return this;
   }
 
   /** Get outliers */
   @javax.annotation.Nullable
-  public FilterEffectsOutliers getOutliers() {
+  public OutliersFilter getOutliers() {
     return outliers;
   }
 
-  public FilterEffects setEmptySearch(FilterEffectsEmptySearch emptySearch) {
+  public FilterEffects setEmptySearch(EmptySearchFilter emptySearch) {
     this.emptySearch = emptySearch;
     return this;
   }
 
   /** Get emptySearch */
   @javax.annotation.Nullable
-  public FilterEffectsEmptySearch getEmptySearch() {
+  public EmptySearchFilter getEmptySearch() {
     return emptySearch;
   }
 

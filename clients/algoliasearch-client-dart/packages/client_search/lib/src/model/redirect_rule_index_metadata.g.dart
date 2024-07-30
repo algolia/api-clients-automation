@@ -17,10 +17,8 @@ RedirectRuleIndexMetadata _$RedirectRuleIndexMetadataFromJson(
           dest: $checkedConvert('dest', (v) => v as String),
           reason: $checkedConvert('reason', (v) => v as String),
           succeed: $checkedConvert('succeed', (v) => v as bool),
-          data: $checkedConvert(
-              'data',
-              (v) => RedirectRuleIndexMetadataData.fromJson(
-                  v as Map<String, dynamic>)),
+          data: $checkedConvert('data',
+              (v) => RedirectRuleIndexData.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

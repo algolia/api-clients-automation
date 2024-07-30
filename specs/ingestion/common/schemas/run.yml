@@ -41,6 +41,7 @@ Run:
     status:
       $ref: '#/RunStatus'
     progress:
+      title: runProgress
       type: object
       additionalProperties: false
       properties:

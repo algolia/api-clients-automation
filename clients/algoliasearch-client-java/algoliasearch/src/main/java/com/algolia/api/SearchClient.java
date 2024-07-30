@@ -2383,7 +2383,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, String> getObject(
+  public Object getObject(
     @Nonnull String indexName,
     @Nonnull String objectID,
     List<String> attributesToRetrieve,
@@ -2404,7 +2404,7 @@ public class SearchClient extends ApiClient {
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, String> getObject(@Nonnull String indexName, @Nonnull String objectID, List<String> attributesToRetrieve)
+  public Object getObject(@Nonnull String indexName, @Nonnull String objectID, List<String> attributesToRetrieve)
     throws AlgoliaRuntimeException {
     return this.getObject(indexName, objectID, attributesToRetrieve, null);
   }
@@ -2419,7 +2419,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, String> getObject(@Nonnull String indexName, @Nonnull String objectID, RequestOptions requestOptions)
+  public Object getObject(@Nonnull String indexName, @Nonnull String objectID, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return this.getObject(indexName, objectID, null, requestOptions);
   }
@@ -2432,7 +2432,7 @@ public class SearchClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, String> getObject(@Nonnull String indexName, @Nonnull String objectID) throws AlgoliaRuntimeException {
+  public Object getObject(@Nonnull String indexName, @Nonnull String objectID) throws AlgoliaRuntimeException {
     return this.getObject(indexName, objectID, null, null);
   }
 
@@ -2450,7 +2450,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, String>> getObjectAsync(
+  public CompletableFuture<Object> getObjectAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
     List<String> attributesToRetrieve,
@@ -2465,7 +2465,7 @@ public class SearchClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("attributesToRetrieve", attributesToRetrieve)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<Map<String, String>>() {});
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
   }
 
   /**
@@ -2480,11 +2480,8 @@ public class SearchClient extends ApiClient {
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, String>> getObjectAsync(
-    @Nonnull String indexName,
-    @Nonnull String objectID,
-    List<String> attributesToRetrieve
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> getObjectAsync(@Nonnull String indexName, @Nonnull String objectID, List<String> attributesToRetrieve)
+    throws AlgoliaRuntimeException {
     return this.getObjectAsync(indexName, objectID, attributesToRetrieve, null);
   }
 
@@ -2498,11 +2495,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, String>> getObjectAsync(
-    @Nonnull String indexName,
-    @Nonnull String objectID,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> getObjectAsync(@Nonnull String indexName, @Nonnull String objectID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return this.getObjectAsync(indexName, objectID, null, requestOptions);
   }
 
@@ -2514,8 +2508,7 @@ public class SearchClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, String>> getObjectAsync(@Nonnull String indexName, @Nonnull String objectID)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> getObjectAsync(@Nonnull String indexName, @Nonnull String objectID) throws AlgoliaRuntimeException {
     return this.getObjectAsync(indexName, objectID, null, null);
   }
 

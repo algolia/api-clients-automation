@@ -45,8 +45,8 @@ get:
                 type: array
                 description: Daily average click positions.
                 items:
-                  type: object
                   title: dailyAverageClicks
+                  type: object
                   additionalProperties: false
                   required:
                     - average

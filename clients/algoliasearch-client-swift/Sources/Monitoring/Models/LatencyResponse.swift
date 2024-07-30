@@ -7,9 +7,9 @@ import Foundation
 #endif
 
 public struct LatencyResponse: Codable, JSONEncodable {
-    public var metrics: LatencyResponseMetrics?
+    public var metrics: LatencyMetric?
 
-    public init(metrics: LatencyResponseMetrics? = nil) {
+    public init(metrics: LatencyMetric? = nil) {
         self.metrics = metrics
     }
 

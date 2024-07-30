@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily purchase rates.
                 items:
-                  type: object
                   title: dailyPurchaseRates
+                  type: object
                   additionalProperties: false
                   required:
                     - rate

@@ -46,8 +46,8 @@ get:
                 type: array
                 description: Daily no click rates.
                 items:
-                  type: object
                   title: dailyNoClickRates
+                  type: object
                   additionalProperties: false
                   required:
                     - rate

@@ -2,9 +2,11 @@ description: Invalid request.
 content:
   application/json:
     schema:
+      title: invalidRequest
       type: object
       properties:
         error:
+          title: invalidRequestError
           type: object
           properties:
             code:
@@ -14,6 +16,7 @@ content:
             errors:
               type: array
               items:
+                title: errorItem
                 type: object
                 properties:
                   code:

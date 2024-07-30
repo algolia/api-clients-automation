@@ -4,9 +4,10 @@
 package algoliasearch.api
 
 import algoliasearch.usage.ErrorBase
-import algoliasearch.usage.GetUsage200Response
-import algoliasearch.usage.GetUsage400Response
+import algoliasearch.usage.Forbidden
 import algoliasearch.usage.Granularity._
+import algoliasearch.usage.IndexUsage
+import algoliasearch.usage.InvalidRequest
 import algoliasearch.usage.Statistic._
 import algoliasearch.usage._
 import algoliasearch.ApiClient
@@ -273,7 +274,7 @@ class UsageClient(
       endDate: String,
       granularity: Option[Granularity] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[GetUsage200Response] = Future {
+  )(implicit ec: ExecutionContext): Future[IndexUsage] = Future {
     requireNotNull(statistic, "Parameter `statistic` is required when calling `getIndexUsage`.")
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getIndexUsage`.")
     requireNotNull(startDate, "Parameter `startDate` is required when calling `getIndexUsage`.")
@@ -287,7 +288,7 @@ class UsageClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("granularity", granularity)
       .build()
-    execute[GetUsage200Response](request, requestOptions)
+    execute[IndexUsage](request, requestOptions)
   }
 
   /** Retrieves usage statistics evaluated over a specified period.
@@ -393,7 +394,7 @@ class UsageClient(
       endDate: String,
       granularity: Option[Granularity] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[GetUsage200Response] = Future {
+  )(implicit ec: ExecutionContext): Future[IndexUsage] = Future {
     requireNotNull(statistic, "Parameter `statistic` is required when calling `getUsage`.")
     requireNotNull(startDate, "Parameter `startDate` is required when calling `getUsage`.")
     requireNotNull(endDate, "Parameter `endDate` is required when calling `getUsage`.")
@@ -406,7 +407,7 @@ class UsageClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("granularity", granularity)
       .build()
-    execute[GetUsage200Response](request, requestOptions)
+    execute[IndexUsage](request, requestOptions)
   }
 
 }

@@ -25,8 +25,8 @@ post:
             requests:
               type: array
               items:
-                description: Request body for retrieving records.
                 title: getObjectsRequest
+                description: Request body for retrieving records.
                 type: object
                 additionalProperties: false
                 required:

@@ -45,5 +45,5 @@ case class RedirectRuleIndexMetadata(
     dest: String,
     reason: String,
     succeed: Boolean,
-    data: RedirectRuleIndexMetadataData
+    data: RedirectRuleIndexData
 )

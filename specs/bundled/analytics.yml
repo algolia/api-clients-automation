@@ -322,8 +322,8 @@ paths:
                     type: array
                     description: Daily number of searches.
                     items:
-                      type: object
                       title: dailySearches
+                      type: object
                       additionalProperties: false
                       required:
                         - date
@@ -380,8 +380,8 @@ paths:
                     type: array
                     description: Searches without results.
                     items:
-                      type: object
                       title: dailySearchesNoResults
+                      type: object
                       additionalProperties: false
                       required:
                         - search
@@ -443,8 +443,8 @@ paths:
                     type: array
                     description: Searches without any clicks.
                     items:
-                      type: object
                       title: dailySearchesNoClicks
+                      type: object
                       additionalProperties: false
                       required:
                         - search
@@ -520,8 +520,8 @@ paths:
                     type: array
                     description: Daily no results rates.
                     items:
-                      type: object
                       title: dailyNoResultsRates
+                      type: object
                       additionalProperties: false
                       required:
                         - date
@@ -597,8 +597,8 @@ paths:
                     type: array
                     description: Daily no click rates.
                     items:
-                      type: object
                       title: dailyNoClickRates
+                      type: object
                       additionalProperties: false
                       required:
                         - rate
@@ -723,8 +723,8 @@ paths:
                     type: array
                     description: Daily number of unique users.
                     items:
-                      type: object
                       title: dailyUsers
+                      type: object
                       additionalProperties: false
                       required:
                         - date
@@ -918,8 +918,8 @@ paths:
                     type: array
                     description: Countries and number of searches.
                     items:
-                      type: object
                       title: topCountry
+                      type: object
                       additionalProperties: false
                       required:
                         - country
@@ -994,8 +994,8 @@ paths:
                     type: array
                     description: Daily average click positions.
                     items:
-                      type: object
                       title: dailyAverageClicks
+                      type: object
                       additionalProperties: false
                       required:
                         - average
@@ -1117,8 +1117,8 @@ paths:
                     type: array
                     description: Daily click-through rates.
                     items:
-                      type: object
                       title: dailyClickThroughRates
+                      type: object
                       additionalProperties: false
                       required:
                         - rate
@@ -1194,8 +1194,8 @@ paths:
                     type: array
                     description: Daily conversion rates.
                     items:
-                      type: object
                       title: dailyConversionRates
+                      type: object
                       additionalProperties: false
                       required:
                         - rate
@@ -1271,8 +1271,8 @@ paths:
                     type: array
                     description: Daily add-to-cart rates.
                     items:
-                      type: object
                       title: dailyAddToCartRates
+                      type: object
                       additionalProperties: false
                       required:
                         - rate
@@ -1348,8 +1348,8 @@ paths:
                     type: array
                     description: Daily purchase rates.
                     items:
-                      type: object
                       title: dailyPurchaseRates
+                      type: object
                       additionalProperties: false
                       required:
                         - rate
@@ -1414,8 +1414,8 @@ paths:
                     type: array
                     description: Daily revenue.
                     items:
-                      type: object
                       title: dailyRevenue
+                      type: object
                       additionalProperties: false
                       required:
                         - currencies
@@ -1667,8 +1667,8 @@ components:
           type: array
           description: Most popular searches and their number of search results (hits).
           items:
-            type: object
             title: topSearch
+            type: object
             additionalProperties: false
             required:
               - search
@@ -1716,6 +1716,7 @@ components:
       minItems: 12
       maxItems: 12
       items:
+        title: clickPosition
         type: object
         description: Click position.
         properties:
@@ -1789,8 +1790,8 @@ components:
             Most popular searches and their associated click and conversion
             metrics.
           items:
-            type: object
             title: topSearchWithAnalytics
+            type: object
             additionalProperties: false
             required:
               - search
@@ -1825,10 +1826,12 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     currencies:
+      title: currenciesValue
       type: object
       description: Revenue associated with this search, broken-down by currencies.
       default: {}
       additionalProperties:
+        title: currencyCode
         x-additionalPropertiesName: currency
         type: object
         description: Currency code.
@@ -1892,8 +1895,8 @@ components:
           type: array
           description: Most popular searches, including their click and revenue metrics.
           items:
-            type: object
             title: topSearchWithRevenueAnalytics
+            type: object
             additionalProperties: false
             required:
               - search
@@ -2003,8 +2006,8 @@ components:
           type: array
           description: Most frequent search results.
           items:
-            type: object
             title: topHit
+            type: object
             additionalProperties: false
             required:
               - hit
@@ -2025,8 +2028,8 @@ components:
           type: array
           description: Most frequent search results with click and conversion metrics.
           items:
-            type: object
             title: topHitWithAnalytics
+            type: object
             additionalProperties: false
             required:
               - hit
@@ -2064,8 +2067,8 @@ components:
             Most frequent search results with click, conversion, and revenue
             metrics.
           items:
-            type: object
             title: topHitWithRevenueAnalytics
+            type: object
             additionalProperties: false
             required:
               - hit

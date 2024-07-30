@@ -9,8 +9,6 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class GenericPropagator {
 
-  public String language;
-
   private static Set<String> primitiveModels = new HashSet<>(Arrays.asList("object", "array", "string", "boolean", "integer"));
 
   // Only static use of this class
@@ -189,6 +187,10 @@ public class GenericPropagator {
     }
   }
 
+  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
+    propagateGenericsToModels(modelsMap, false);
+  }
+
   /** Mark operations with a generic return type with x-is-generic */
   public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
     Map<String, CodegenModel> models = convertToMap(allModels);
@@ -206,9 +208,5 @@ public class GenericPropagator {
         }
       }
     }
-  }
-
-  public static void propagateGenericsToModels(Map<String, ModelsMap> modelsMap) {
-    propagateGenericsToModels(modelsMap, false);
   }
 }

@@ -46,6 +46,7 @@ patch:
     content:
       application/json:
         schema:
+          title: patchCrawler
           type: object
           properties:
             name:

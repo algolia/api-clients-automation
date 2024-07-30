@@ -1510,30 +1510,6 @@ public class AnalyticsClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "e2e with complex query params")]
-  public async Task GetTopSearchesTest2()
-  {
-    await client.GetTopSearchesAsync("cts_e2e_space in index");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/2/searches", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"index\":\"cts_e2e_space%20in%20index\"}"
-    );
-    Assert.NotNull(expectedQuery);
-
-    var actualQuery = req.QueryParameters;
-    Assert.Equal(expectedQuery.Count, actualQuery.Count);
-
-    foreach (var actual in actualQuery)
-    {
-      expectedQuery.TryGetValue(actual.Key, out var expected);
-      Assert.Equal(expected, actual.Value);
-    }
-  }
-
   [Fact(DisplayName = "get getUsersCount with minimal parameters")]
   public async Task GetUsersCountTest()
   {
