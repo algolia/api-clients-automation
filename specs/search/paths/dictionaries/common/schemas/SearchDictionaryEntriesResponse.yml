@@ -26,11 +26,14 @@ dictionaryEntry:
   required:
     - objectID
     - language
+    - type
   properties:
     objectID:
       type: string
       description: Unique identifier for the dictionary entry.
       example: 828afd405e1f4fe950b6b98c2c43c032
+    type:
+      $ref: '#/dictionaryType'
     language:
       $ref: '../../../../../common/schemas/IndexSettings.yml#/supportedLanguage'
     word:
@@ -53,3 +56,10 @@ dictionaryEntry:
         type: string
     state:
       $ref: '../../../../common/enums.yml#/dictionaryEntryState'
+
+dictionaryType:
+  type: string
+  enum: [custom, standard]
+  description: |
+    Set to "standard" if the entry is in the default Algolia stopwords dictionary.
+    Otherwise, set to "custom". For the compounds and plurals dictionaries, the type is always "custom".
