@@ -37,15 +37,12 @@ public class OrphanDestroyer {
     for (CodegenProperty property : properties) {
       CodegenModel propModel = propertyToModel(property);
       if (propModel != null && !visitedModels.contains(propModel.name)) {
-        System.out.println("Visiting property: " + propModel.name + " from " + model.name);
+        visitedModels.add(property.openApiType);
         visitedModels.add(propModel.name);
         visitModelRecursive(propModel);
       }
       CodegenModel itemsModel = propertyToModel(property.mostInnerItems);
       if (itemsModel != null && !visitedModels.contains(itemsModel.name)) {
-        System.out.println(
-          "Visiting item: " + itemsModel.name + " from " + model.name + " original name " + property.mostInnerItems.openApiType
-        );
         // In csharp the real model name varies if its part of the modelMapping so we have to add
         // both
         visitedModels.add(property.mostInnerItems.openApiType);
@@ -125,7 +122,6 @@ public class OrphanDestroyer {
       File file = new File(filename);
       if (file.exists()) {
         file.delete();
-        System.out.println("Removed orphan model: " + modelName);
       }
     }
   }

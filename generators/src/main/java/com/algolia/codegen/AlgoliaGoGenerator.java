@@ -43,6 +43,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     typeMapping.put("object", "map[string]any");
     typeMapping.put("AnyType", "any");
 
+    modelNameMapping.put("range", "modelRange");
+
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
