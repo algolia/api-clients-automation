@@ -1257,23 +1257,6 @@ class AnalyticsTest {
     )
   }
 
-  @Test
-  fun `e2e with complex query params2`() = runTest {
-    client.runTest(
-      call = {
-        getTopSearches(
-          index = "cts_e2e_space in index",
-        )
-      },
-      intercept = {
-        assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"index":"cts_e2e_space%20in%20index"}""", it.url.encodedParameters)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getUsersCount
 
   @Test

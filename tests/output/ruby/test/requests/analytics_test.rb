@@ -937,18 +937,6 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # e2e with complex query params
-  def test_get_top_searches2
-    req = @client.get_top_searches_with_http_info("cts_e2e_space in index")
-
-    assert_equal(:get, req.method)
-    assert_equal("/2/searches", req.path)
-    assert_equal({:"index" => "cts_e2e_space%20in%20index"}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, "body is not nil")
-  end
-
   # get getUsersCount with minimal parameters
   def test_get_users_count
     req = @client.get_users_count_with_http_info("index")
