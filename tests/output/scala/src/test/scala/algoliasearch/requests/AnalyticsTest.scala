@@ -1474,27 +1474,6 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("e2e with complex query params2") {
-    val (client, echo) = testClient()
-    val future = client.getTopSearches(
-      index = "cts_e2e_space in index"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/2/searches")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-    val expectedQuery = parse("""{"index":"cts_e2e_space%20in%20index"}""").asInstanceOf[JObject].obj.toMap
-    val actualQuery = res.queryParameters
-    assert(actualQuery.size == expectedQuery.size)
-    for ((k, v) <- actualQuery) {
-      assert(expectedQuery.contains(k))
-      assert(expectedQuery(k).values == v)
-    }
-  }
-
   test("get getUsersCount with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.getUsersCount(

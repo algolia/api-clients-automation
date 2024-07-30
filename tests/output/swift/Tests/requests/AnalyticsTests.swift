@@ -1997,34 +1997,6 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// e2e with complex query params
-    func testGetTopSearchesTest2() async throws {
-        let configuration = try AnalyticsClientConfiguration(
-            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
-            apiKey: AnalyticsClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getTopSearchesWithHTTPInfo(index: "cts_e2e_space in index")
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/2/searches")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"cts_e2e_space%20in%20index\"}".data(using: .utf8))
-        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
-            [String: String?].self,
-            from: expectedQueryParameters
-        )
-
-        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
-    }
-
     /// get getUsersCount with minimal parameters
     func testGetUsersCountTest() async throws {
         let configuration = try AnalyticsClientConfiguration(

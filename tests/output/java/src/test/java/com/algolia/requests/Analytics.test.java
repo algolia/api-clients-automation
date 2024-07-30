@@ -1539,33 +1539,6 @@ class AnalyticsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("e2e with complex query params")
-  void getTopSearchesTest2() {
-    assertDoesNotThrow(() -> {
-      client.getTopSearches("cts_e2e_space in index");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/2/searches", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-
-    try {
-      Map<String, String> expectedQuery = json.readValue(
-        "{\"index\":\"cts_e2e_space%20in%20index\"}",
-        new TypeReference<HashMap<String, String>>() {}
-      );
-      Map<String, Object> actualQuery = req.queryParameters;
-
-      assertEquals(expectedQuery.size(), actualQuery.size());
-      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
-        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
-      }
-    } catch (JsonProcessingException e) {
-      fail("failed to parse queryParameters json");
-    }
-  }
-
-  @Test
   @DisplayName("get getUsersCount with minimal parameters")
   void getUsersCountTest() {
     assertDoesNotThrow(() -> {

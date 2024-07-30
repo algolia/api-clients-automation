@@ -1165,23 +1165,6 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
-	t.Run("e2e with complex query params", func(t *testing.T) {
-		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-			"cts_e2e_space in index",
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/2/searches", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"index":"cts_e2e_space%20in%20index"}`), &queryParams))
-		require.Len(t, queryParams, len(echo.Query))
-		for k, v := range queryParams {
-			require.Equal(t, v, echo.Query.Get(k))
-		}
-	})
 }
 
 func TestAnalytics_GetUsersCount(t *testing.T) {
