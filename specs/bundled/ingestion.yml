@@ -250,7 +250,7 @@ paths:
         - ingestion
       summary: List authentication resources
       description: Retrieves a list of all authentication resources.
-      operationId: getAuthentications
+      operationId: listAuthentications
       x-acl:
         - addObject
         - deleteIndex
@@ -416,7 +416,7 @@ paths:
         - ingestion
       summary: List destinations
       description: Retrieves a list of destinations.
-      operationId: getDestinations
+      operationId: listDestinations
       x-acl:
         - addObject
         - deleteIndex
@@ -582,7 +582,7 @@ paths:
         - ingestion
       summary: List sources
       description: Retrieves a list of sources.
-      operationId: getSources
+      operationId: listSources
       x-acl:
         - addObject
         - deleteIndex
@@ -831,8 +831,247 @@ paths:
       tags:
         - ingestion
       summary: List tasks
+      description: >-
+        Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+        instead.
+      operationId: listTasksV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/action'
+        - $ref: '#/components/parameters/enabled'
+        - $ref: '#/components/parameters/sourceID'
+        - $ref: '#/components/parameters/destinationID'
+        - $ref: '#/components/parameters/triggerType'
+        - $ref: '#/components/parameters/taskParameters_sort'
+        - $ref: '#/components/parameters/order'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: listTasksResponseV1
+                type: object
+                description: Configured tasks and pagination information.
+                additionalProperties: false
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TaskV1'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                required:
+                  - tasks
+                  - pagination
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Create a task
+      description: >-
+        Creates a new task using the v1 endpoint, please use `createTask`
+        instead.
+      operationId: createTaskV1
+      x-codegen-request-body-name: taskCreate
+      requestBody:
+        description: Request body for creating a task.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreateV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/tasks/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search for tasks
+      description: >-
+        Searches for tasks using the v1 endpoint, please use `searchTasks`
+        instead.
+      operationId: searchTasksV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchTasksResponseV1
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskV1'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/tasks/{taskID}:
+    get:
+      tags:
+        - ingestion
+      summary: Retrieve a task
+      description: >-
+        Retrieves a task by its ID using the v1 endpoint, please use `getTask`
+        instead.
+      operationId: getTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskV1'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    patch:
+      tags:
+        - ingestion
+      summary: Update a task
+      description: >-
+        Updates a task by its ID using the v1 endpoint, please use `updateTask`
+        instead.
+      operationId: updateTaskV1
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      x-codegen-request-body-name: taskUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdateV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    delete:
+      tags:
+        - ingestion
+      summary: Delete a task
+      description: >-
+        Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+        instead.
+      operationId: deleteTaskV1
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/tasks/{taskID}/run:
+    post:
+      tags:
+        - ingestion
+      summary: Run a task
+      description: >-
+        Runs a task using the v1 endpoint, please use `runTask` instead. You can
+        check the status of task runs with the observability endpoints.
+      operationId: runTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/tasks/{taskID}/enable:
+    put:
+      tags:
+        - ingestion
+      summary: Enable a task
+      description: Enables a task using the v1 endpoint, please use `enableTask` instead.
+      operationId: enableTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/tasks/{taskID}/disable:
+    put:
+      tags:
+        - ingestion
+      summary: Disable a task
+      description: Disables a task using the v1 endpoint, please use `disableTask` instead.
+      operationId: disableTaskV1
+      deprecated: true
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /2/tasks:
+    get:
+      tags:
+        - ingestion
+      summary: List tasks
       description: Retrieves a list of tasks.
-      operationId: getTasks
+      operationId: listTasks
       x-acl:
         - addObject
         - deleteIndex
@@ -891,7 +1130,7 @@ paths:
                 $ref: '#/components/schemas/TaskCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/tasks/search:
+  /2/tasks/search:
     post:
       tags:
         - ingestion
@@ -920,7 +1159,7 @@ paths:
                   $ref: '#/components/schemas/Task'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/tasks/{taskID}:
+  /2/tasks/{taskID}:
     get:
       tags:
         - ingestion
@@ -982,7 +1221,7 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/tasks/{taskID}/run:
+  /2/tasks/{taskID}/run:
     post:
       tags:
         - ingestion
@@ -1006,7 +1245,40 @@ paths:
                 $ref: '#/components/schemas/RunResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/tasks/{taskID}/enable:
+  /2/tasks/{taskID}/push:
+    post:
+      tags:
+        - ingestion
+      summary: Push a `batch` request payload through the Pipeline
+      description: >-
+        Push a `batch` request payload through the Pipeline. You can check the
+        status of task pushes with the observability endpoints.
+      operationId: pushTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: >-
+          Request body of a Search API `batch` request that will be pushed in
+          the Connectors pipeline.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/batchWriteParams'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /2/tasks/{taskID}/enable:
     put:
       tags:
         - ingestion
@@ -1028,7 +1300,7 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/tasks/{taskID}/disable:
+  /2/tasks/{taskID}/disable:
     put:
       tags:
         - ingestion
@@ -1056,7 +1328,7 @@ paths:
         - ingestion
       summary: List transformations
       description: Retrieves a list of transformations.
-      operationId: getTransformations
+      operationId: listTransformations
       x-acl:
         - addObject
         - deleteIndex
@@ -1112,8 +1384,8 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for transformations
-      description: Searches for transformations.
+      summary: Try a transformation
+      description: Try a transformation.
       operationId: tryTransformations
       x-acl:
         - addObject
@@ -1231,7 +1503,7 @@ paths:
         - ingestion
       summary: List task runs
       description: Retrieve a list of task runs.
-      operationId: getRuns
+      operationId: listRuns
       x-acl:
         - addObject
         - deleteIndex
@@ -1294,7 +1566,7 @@ paths:
         - ingestion
       summary: List task run events
       description: Retrieves a list of events for a task run, identified by it's ID.
-      operationId: getEvents
+      operationId: listEvents
       x-acl:
         - addObject
         - deleteIndex
@@ -2594,66 +2866,10 @@ components:
       type: object
       additionalProperties: false
       properties:
-        collectionIDIndexing:
-          type: boolean
-          default: false
-          description: >
-            Whether to index collection IDs. 
-
-
-            If your store has `has_collection_search_page` set to true,
-
-            collection IDs will be indexed even if `collectionIDIndexing` is
-            false. 
-        increaseProductCollectionLimit:
-          type: boolean
-          default: false
-          description: |
-            Whether to increase the number of indexed collections per product.
-            If true, Algolia indexes 200 collections per product.
-            If false, 100 collections per product are indexed.
-        defaultPriceRatioAsOne:
-          type: boolean
-          default: true
-          description: >
-            Whether to set the default price ratio to 1 if no sale price is
-            present.
-
-
-            The price ratio is determined by the ratio: `sale_price` /
-            `regular_price`.
-
-            If no sale price is present, the price ratio would be 0.
-
-            If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1
-            instead.
-        excludeOOSVariantsForPriceAtTRS:
-          type: boolean
-          default: true
-          description: >
-            Whether to exclude out-of-stock variants when determining the
-            `max_variant_price` and `min_variant_price` attributes.
-        includeVariantsInventory:
-          type: boolean
-          default: true
-          description: >
-            Whether to include an inventory with every variant for every product
-            record.
-        hasCollectionSearchPage:
-          type: boolean
-          default: false
-          description: >
-            Whether to include collection IDs and handles in the product
-            records.
-        productNamedTags:
-          type: boolean
-          default: false
-          description: >
-            Whether to convert tags on products to named tags.
-
-
-            To learn more, see [Named
-            tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
+        featureFlags:
+          type: object
+          description: Feature flags for the Shopify source.
+          additionalProperties: true
     sourceShopifyBase:
       type: object
       additionalProperties: false
@@ -2986,6 +3202,9 @@ components:
       type: string
       description: Cron expression for the task's schedule.
       example: '* * 1 * *'
+    NextRun:
+      description: The next scheduled run of the task in RFC 3339 format.
+      type: string
     ScheduleTrigger:
       type: object
       additionalProperties: false
@@ -2998,8 +3217,7 @@ components:
         lastRun:
           $ref: '#/components/schemas/LastRun'
         nextRun:
-          description: The next scheduled run of the task in RFC 3339 format.
-          type: string
+          $ref: '#/components/schemas/NextRun'
       required:
         - type
         - cron
@@ -3104,47 +3322,7 @@ components:
       required:
         - format
         - actions
-    OnDemandDateUtilsInput:
-      title: On demand date range
-      type: object
-      additionalProperties: false
-      description: >-
-        Input for a manually-triggered task whose source is of type `bigquery`
-        and for which extracted data spans a given time range.
-      properties:
-        startDate:
-          description: >-
-            Earliest date in RFC 3339 format of the extracted data from Big
-            Query.
-          type: string
-        endDate:
-          description: Latest date in RFC 3339 format of the extracted data from Big Query.
-          type: string
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - startDate
-        - endDate
-    ScheduleDateUtilsInput:
-      title: Schedule dates
-      type: object
-      additionalProperties: false
-      description: >-
-        Input for scheduled tasks whose source is of type `bigquery` and for
-        which extracted data spans a fixed number of days.
-      properties:
-        timeframe:
-          description: >-
-            Number of days in the past until the current day for which to
-            extract Big Query data.
-          type: integer
-          minimum: 1
-          maximum: 30
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - timeframe
-    StreamingUtilsInput:
+    StreamingInput:
       title: Streaming input
       type: object
       additionalProperties: false
@@ -3156,6 +3334,14 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    DockerStreamsInput:
+      title: The selected streams of a singer or airbyte connector.
+      type: object
+      properties:
+        streams:
+          type: object
+      required:
+        - streams
     ShopifyMetafield:
       type: object
       additionalProperties: false
@@ -3212,9 +3398,8 @@ components:
     TaskInput:
       description: Configuration of the task, depending on its type.
       oneOf:
-        - $ref: '#/components/schemas/OnDemandDateUtilsInput'
-        - $ref: '#/components/schemas/ScheduleDateUtilsInput'
-        - $ref: '#/components/schemas/StreamingUtilsInput'
+        - $ref: '#/components/schemas/StreamingInput'
+        - $ref: '#/components/schemas/DockerStreamsInput'
         - $ref: '#/components/schemas/ShopifyInput'
     failureThreshold:
       type: integer
@@ -3226,9 +3411,13 @@ components:
     cursor:
       type: string
       description: Date of the last cursor in RFC 3339 format.
-    Task:
+    TaskV1:
       type: object
       additionalProperties: false
+      deprecated: true
+      description: >-
+        The V1 task object, please use methods and types that don't contain the
+        V1 suffix.
       properties:
         taskID:
           $ref: '#/components/schemas/taskID'
@@ -3291,10 +3480,13 @@ components:
         - $ref: '#/components/schemas/ScheduleTriggerInput'
         - $ref: '#/components/schemas/SubscriptionTrigger'
         - $ref: '#/components/schemas/StreamingTrigger'
-    TaskCreate:
+    TaskCreateV1:
       type: object
       additionalProperties: false
-      description: API request body for creating a task.
+      deprecated: true
+      description: >-
+        API request body for creating a task using the V1 shape, please use
+        methods and types that don't contain the V1 suffix.
       properties:
         sourceID:
           $ref: '#/components/schemas/sourceID'
@@ -3349,10 +3541,13 @@ components:
           $ref: '#/components/schemas/Cron'
       required:
         - cron
-    TaskUpdate:
+    TaskUpdateV1:
       type: object
       additionalProperties: false
-      description: API request body for updating a task.
+      deprecated: true
+      description: >-
+        API request body for updating a task using the V1 shape, please use
+        methods and types that don't contain the V1 suffix.
       properties:
         destinationID:
           $ref: '#/components/schemas/destinationID'
@@ -3389,6 +3584,140 @@ components:
       required:
         - runID
         - createdAt
+    Task:
+      type: object
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
+        nextRun:
+          $ref: '#/components/schemas/NextRun'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        enabled:
+          type: boolean
+          default: true
+          description: Whether the task is enabled.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - taskID
+        - sourceID
+        - destinationID
+        - enabled
+        - action
+        - createdAt
+    TaskCreate:
+      type: object
+      additionalProperties: false
+      description: API request body for creating a task.
+      properties:
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        enabled:
+          type: boolean
+          description: Whether the task is enabled.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        cursor:
+          $ref: '#/components/schemas/cursor'
+      required:
+        - sourceID
+        - destinationID
+        - action
+    TaskUpdate:
+      type: object
+      additionalProperties: false
+      description: API request body for updating a task.
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        enabled:
+          type: boolean
+          description: Whether the task is enabled.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+    action:
+      type: string
+      enum:
+        - addObject
+        - updateObject
+        - partialUpdateObject
+        - partialUpdateObjectNoCreate
+        - deleteObject
+        - delete
+        - clear
+      description: Type of indexing operation.
+    batchWriteParams:
+      title: batchWriteParams
+      description: Batch parameters.
+      type: object
+      additionalProperties: false
+      properties:
+        requests:
+          type: array
+          items:
+            title: batchRequest
+            type: object
+            additionalProperties: false
+            properties:
+              action:
+                $ref: '#/components/schemas/action'
+              body:
+                type: object
+                description: Operation arguments (varies with specified `action`).
+                example:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+            required:
+              - action
+              - body
+      required:
+        - requests
+      example:
+        batch:
+          summary: Batch indexing request
+          value:
+            requests:
+              - action: addObject
+                body:
+                  name: Betty Jane McCamey
+                  company: Vita Foods Inc.
+                  email: betty@mccamey.com
+              - action: addObject
+                body:
+                  name: Gayla geimer
+                  company: Ortman McCain Co.
+                  email: gayla@geimer.com
     sortKeys:
       type: string
       description: Property by which to sort the list.
@@ -3431,7 +3760,6 @@ components:
         - transformationID
         - code
         - name
-        - description
         - createdAt
     TransformationCreate:
       type: object
@@ -3447,7 +3775,6 @@ components:
       required:
         - code
         - name
-        - description
     TransformationCreateResponse:
       type: object
       additionalProperties: false
@@ -3679,7 +4006,8 @@ x-tagGroups:
   - name: Resources
     tags:
       - authentications
-      - sources
       - destinations
-      - tasks
       - observability
+      - sources
+      - tasks
+      - transformations

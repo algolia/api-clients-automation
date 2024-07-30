@@ -7,59 +7,65 @@ import (
 )
 
 func testSearch(appID, apiKey string) int {
-	indexName := getEnvWithDefault("SEARCH_INDEX", "test_index")
+	// indexName := getEnvWithDefault("SEARCH_INDEX", "test_index")
 	searchClient, err := search.NewClient(appID, apiKey)
 	if err != nil {
 		panic(err)
 	}
 
-	response, err := searchClient.AddOrUpdateObject(
-		searchClient.NewApiAddOrUpdateObjectRequest(
-			indexName,
-			"1",
-			map[string]any{
-				"name": "Foo",
-				"age":  42,
-				"city": "Paris",
-			},
-		),
-	)
+	err = searchClient.BrowseObjects("test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(len(res.(*search.BrowseResponse).Hits))
+	}))
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = searchClient.WaitForTask(
-		indexName,
-		*response.TaskID,
-		nil,
-		nil,
-		nil,
-	)
-	if err != nil {
-		panic(err)
-	}
-
-	searchResponse, err := searchClient.Search(
-		searchClient.NewApiSearchRequest(
-			search.NewSearchMethodParams(
-				[]search.SearchQuery{
-					*search.SearchForHitsAsSearchQuery(
-						search.NewSearchForHits(
-							indexName,
-							search.WithSearchForHitsQuery("foo"),
-						),
-					),
+	/*
+		response, err := searchClient.AddOrUpdateObject(
+			searchClient.NewApiAddOrUpdateObjectRequest(
+				indexName,
+				"1",
+				map[string]any{
+					"name": "Foo",
+					"age":  42,
+					"city": "Paris",
 				},
 			),
-		),
-	)
-	if err != nil {
-		panic(err)
-	}
+		)
+		if err != nil {
+			panic(err)
+		}
 
-	for _, result := range searchResponse.Results {
-		fmt.Printf("Result: %v", result.SearchResponse)
-	}
+		_, err = searchClient.WaitForTask(indexName, *response.TaskID)
+		if err != nil {
+			panic(err)
+		}
+
+		searchResponse, err := searchClient.Search(
+			searchClient.NewApiSearchRequest(
+				search.NewSearchMethodParams(
+					[]search.SearchQuery{
+						*search.SearchForHitsAsSearchQuery(
+							search.NewSearchForHits(
+								indexName,
+								search.WithSearchForHitsQuery("foo"),
+							),
+						),
+					},
+				),
+			),
+		)
+		if err != nil {
+			panic(err)
+		}
+
+		for _, result := range searchResponse.Results {
+			fmt.Printf("Result: %v", result.SearchResponse)
+		}
+	*/
 
 	return 0
 }

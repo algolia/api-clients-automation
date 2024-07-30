@@ -55,13 +55,13 @@
 
     async def wait_for_api_key(
         self,
-        operation: str,
         key: str,
+        operation: str,
         api_key: Optional[ApiKey] = None,
         max_retries: int = 50,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> GetApiKeyResponse:
+    ) -> GetApiKeyResponse | None:
         """
         Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
         """
@@ -72,7 +72,7 @@
                 "`apiKey` is required when waiting for an `update` operation."
             )
 
-        async def _func(_prev: GetApiKeyResponse) -> GetApiKeyResponse:
+        async def _func(_prev: GetApiKeyResponse | None) -> GetApiKeyResponse | None:
             try:
                 return await self.get_api_key(key=key, request_options=request_options)
             except RequestException as e:
@@ -80,18 +80,22 @@
                     return None
                 raise e
 
-        def _aggregator(_: GetApiKeyResponse) -> None:
+        def _aggregator(_: GetApiKeyResponse | None) -> None:
             self._retry_count += 1
 
-        def _validate(_resp: GetApiKeyResponse) -> bool:
+        def _validate(_resp: GetApiKeyResponse | None) -> bool:
             if operation == "update":
-                for field in api_key:
-                    if isinstance(api_key[field], list) and isinstance(_resp[field], list):
-                        if len(api_key[field]) != len(_resp[field]) or any(
-                            v != _resp[field][i] for i, v in enumerate(api_key[field])
+                resp_dict = _resp.to_dict()
+                api_key_dict = api_key.to_dict() if isinstance(api_key, ApiKey) else api_key
+                for field in api_key_dict:
+                    if isinstance(api_key_dict[field], list) and isinstance(
+                      resp_dict[field], list
+                    ):
+                        if len(api_key_dict[field]) != len(resp_dict[field]) or any(
+                            v != resp_dict[field][i] for i, v in enumerate(api_key_dict[field])
                         ):
                             return False
-                    elif api_key[field] != _resp[field]:
+                    elif api_key_dict[field] != resp_dict[field]:
                         return False
                 return True
             elif operation == "add":
@@ -111,7 +115,7 @@
         self,
         index_name: str,
         aggregator: Optional[Callable[[BrowseResponse], None]],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Optional[BrowseParamsObject] = BrowseParamsObject(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
@@ -234,13 +238,44 @@
         """
         Helper: Creates a temporary index name from the given `index_name`.
         """
-        return "{}_tmp_{}".format(index_name, "".join(choice(ascii_letters) for i in range(10)))
+        return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
+
+    async def save_objects(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+    ) -> List[BatchResponse]:
+        """
+        Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        """
+        return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT)
+
+    async def delete_objects(
+        self,
+        index_name: str,
+        object_ids: List[str],
+    ) -> List[BatchResponse]:
+        """
+        Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+        """
+        return await self.chunked_batch(index_name=index_name, objects=[{"objectID": id} for id in object_ids], action=Action.DELETEOBJECT)
+
+    async def partial_update_objects(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        create_if_not_exists: Optional[bool] = False,
+    ) -> List[BatchResponse]:
+        """
+        Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        """
+        return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE)
 
     async def chunked_batch(
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
-        action: Action = "addObject",
+        action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -290,8 +325,8 @@
                     destination=tmp_index_name,
                     scope=[
                         ScopeType("settings"),
-                        ScopeType("synonyms"),
                         ScopeType("rules"),
+                        ScopeType("synonyms"),
                     ],
                 ),
                 request_options=request_options,
@@ -328,8 +363,8 @@
             index_name=tmp_index_name, task_id=move_operation_response.task_id
         )
 
-        return {
-            "copy_operation_response": copy_operation_response,
-            "batch_responses": batch_responses,
-            "move_operation_response": move_operation_response,
-        }
+        return ReplaceAllObjectsResponse(
+            copy_operation_response=copy_operation_response,
+            batch_responses=batch_responses,
+            move_operation_response=move_operation_response,
+        )

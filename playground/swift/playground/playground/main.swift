@@ -44,7 +44,7 @@ Task {
             taskIDs.append(saveObjRes.taskID)
         }
         for taskID in taskIDs {
-            try await client.waitForTask(with: taskID, in: indexName)
+            try await client.waitForTask(indexName: indexName, taskID: taskID)
         }
 
         let searchParams = SearchSearchParamsObject(query: "Jimmy")

@@ -61,7 +61,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       ctsManager.addTestsSupportingFiles(supportingFiles);
 
       testsGenerators.add(new TestsRequest(language, client, false));
-      testsGenerators.add(new TestsClient(language, client));
+      testsGenerators.add(new TestsClient(language, client, true));
+      testsGenerators.add(new TestsClient(language, client, false));
     } else if (mode.equals("snippets")) {
       ctsManager.addSnippetsSupportingFiles(supportingFiles);
 
@@ -148,6 +149,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       if (hasRegionalHost) {
         bundle.put("defaultRegion", regionVariable.defaultValue);
       }
+      // special lambda for dynamic templates
+      bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
       bundle.put("lambda", lambda);
 
       ctsManager.addDataToBundle(bundle);
@@ -169,9 +172,6 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
           System.exit(1);
         }
       }
-
-      // special lambda for dynamic templates
-      bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
 
       // Generation notice, added on every generated files
       bundle.put("generationBanner", Helpers.setGenerationBanner(additionalProperties));

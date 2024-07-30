@@ -50,31 +50,32 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     modelTestTemplateFiles.clear();
 
     // Remove some files we don't want to output or change their paths
-    supportingFiles.removeIf(file ->
-      file.getTemplateFile().equals("git_push.sh.mustache") ||
-      file.getTemplateFile().equals("requirements.mustache") ||
-      file.getTemplateFile().equals("test-requirements.mustache") ||
-      file.getTemplateFile().equals("tox.mustache") ||
-      file.getTemplateFile().equals("setup_cfg.mustache") ||
-      file.getTemplateFile().equals("setup.mustache") ||
-      file.getTemplateFile().equals("pyproject.mustache") ||
-      file.getTemplateFile().equals("gitignore.mustache") ||
-      file.getTemplateFile().equals("py.typed.mustache") ||
-      file.getTemplateFile().equals("README.mustache") ||
-      file.getTemplateFile().equals("api_test.mustache") ||
-      file.getTemplateFile().equals("model_test.mustache") ||
-      file.getTemplateFile().equals("github-workflow.mustache") ||
-      file.getTemplateFile().equals("travis.mustache") ||
-      file.getTemplateFile().equals("__init__api.mustache") ||
-      file.getTemplateFile().equals("api_response.mustache") ||
-      file.getTemplateFile().equals("exceptions.mustache") ||
-      file.getTemplateFile().equals("api_client.mustache") ||
-      file.getTemplateFile().equals("rest.mustache") ||
-      file.getTemplateFile().equals("configuration.mustache") ||
-      file.getTemplateFile().equals("__init__.model.mustache") ||
-      file.getTemplateFile().equals("__init__.package.mustache") ||
-      file.getTemplateFile().equals("model_anyof.mustache") ||
-      file.getTemplateFile().equals("gitlab-ci.mustache")
+    supportingFiles.removeIf(
+      file ->
+        file.getTemplateFile().equals("git_push.sh.mustache") ||
+        file.getTemplateFile().equals("requirements.mustache") ||
+        file.getTemplateFile().equals("test-requirements.mustache") ||
+        file.getTemplateFile().equals("tox.mustache") ||
+        file.getTemplateFile().equals("setup_cfg.mustache") ||
+        file.getTemplateFile().equals("setup.mustache") ||
+        file.getTemplateFile().equals("pyproject.mustache") ||
+        file.getTemplateFile().equals("gitignore.mustache") ||
+        file.getTemplateFile().equals("py.typed.mustache") ||
+        file.getTemplateFile().equals("README.mustache") ||
+        file.getTemplateFile().equals("api_test.mustache") ||
+        file.getTemplateFile().equals("model_test.mustache") ||
+        file.getTemplateFile().equals("github-workflow.mustache") ||
+        file.getTemplateFile().equals("travis.mustache") ||
+        file.getTemplateFile().equals("__init__api.mustache") ||
+        file.getTemplateFile().equals("api_response.mustache") ||
+        file.getTemplateFile().equals("exceptions.mustache") ||
+        file.getTemplateFile().equals("api_client.mustache") ||
+        file.getTemplateFile().equals("rest.mustache") ||
+        file.getTemplateFile().equals("configuration.mustache") ||
+        file.getTemplateFile().equals("__init__.model.mustache") ||
+        file.getTemplateFile().equals("__init__.package.mustache") ||
+        file.getTemplateFile().equals("model_anyof.mustache") ||
+        file.getTemplateFile().equals("gitlab-ci.mustache")
     );
 
     // repository
@@ -85,6 +86,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     supportingFiles.add(new SupportingFile("__init__.mustache", packageName + "/models", "__init__.py"));
     supportingFiles.add(new SupportingFile("__init__.mustache", "http", "__init__.py"));
     supportingFiles.add(new SupportingFile("config.mustache", packageName, "config.py"));
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
   }
 
   @Override
@@ -140,6 +142,13 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
         imp.remove("import");
       }
     }
+
     return objs;
+  }
+
+  @Override
+  public String toEnumDefaultValue(CodegenProperty property, String value) {
+    // always default to None in the client, to let the server handle the default value.
+    return "None";
   }
 }

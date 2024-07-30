@@ -8,35 +8,24 @@ using Xunit;
 using System.Text.Json;
 using Quibble.Xunit;
 using dotenv.net;
+{{#isSearchClient}}
 using Action = Algolia.Search.Models.Search.Action;
+{{/isSearchClient}}
+{{^isSearchClient}}
+using Action = Algolia.Search.Models.Ingestion.Action;
+{{/isSearchClient}}
+
+namespace Algolia.Search.requests;
 
 public class {{client}}RequestTests
 {
-private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
+private readonly {{client}} client;
   private readonly EchoHttpRequester _echo;
 
   public {{client}}RequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
-
-    {{#hasE2E}}
-      DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
-
-      var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
-      if (e2EAppId == null)
-      {
-        throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
-      }
-
-      var e2EApiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");
-      if (e2EApiKey == null)
-      {
-        throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
-      }
-
-      _e2eClient = new {{client}}(new {{clientPrefix}}Config(e2EAppId, e2EApiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
-    {{/hasE2E}}
+    client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
   }
 
   [Fact]
@@ -50,15 +39,7 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
-      {{#requestOptions.queryParameters.parametersWithDataType}}
-          .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
-      {{/requestOptions.queryParameters.parametersWithDataType}}
-      {{#requestOptions.headers.parametersWithDataType}}
-          .AddExtraHeader("{{{key}}}", "{{{value}}}")
-      {{/requestOptions.headers.parametersWithDataType}}
-          .Build()
-    {{/hasRequestOptions}});
+     {{> tests/method}};
 
      var req = _echo.LastResponse;
     {{#request}}
@@ -99,32 +80,6 @@ private readonly {{client}} _client{{#hasE2E}}, _e2eClient{{/hasE2E}};
         }
     {{/headers}}
     {{/request}}
-
-
-    {{#response}}
-      // e2e
-      try {
-        var resp = await _e2eClient.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
-          {{#requestOptions.queryParameters}}
-            QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
-          {{/requestOptions.queryParameters}}
-          {{#requestOptions.headers}}
-            Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
-          {{/requestOptions.headers}}
-        }{{/hasRequestOptions}});
-      {{#statusCode}}
-          // Check status code {{statusCode}}
-          Assert.NotNull(resp);
-      {{/statusCode}}
-
-      {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
-      {{/body}}
-      } catch (Exception e)
-      {
-        Assert.Fail("An exception was thrown: " + e.Message);
-      }
-    {{/response}}
   }
   {{/tests}}
   {{/blocksRequests}}

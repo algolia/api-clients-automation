@@ -1,4 +1,4 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,7 +24,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class AnalyticsClientRequestsTests {
 
   private AnalyticsClient client;
-  private AnalyticsClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -35,13 +33,6 @@ class AnalyticsClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new AnalyticsClient("appId", "apiKey", "us", options);
-
-    if ("true".equals(System.getenv("CI"))) {
-      this.clientE2E = new AnalyticsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
-    } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
-      this.clientE2E = new AnalyticsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
-    }
   }
 
   @AfterAll
@@ -1572,11 +1563,6 @@ class AnalyticsClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
-
-    var res = clientE2E.getTopSearches("cts_e2e_space in index");
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
-    );
   }
 
   @Test

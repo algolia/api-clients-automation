@@ -17,12 +17,15 @@ import type {
 
 import type {
   CustomPostProps,
+  LegacyGetRecommendationsParams,
   LegacySearchMethodProps,
 } from '../model/clientMethodProps';
+import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
+import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.0.0-beta.4';
+export const apiClientVersion = '5.0.0-beta.12';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -151,6 +154,59 @@ export function createLiteClient({
         queryParameters,
         headers,
         data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves recommendations from selected AI models.
+     *
+     * Required API Key ACLs:
+     * - search.
+     *
+     * @param getRecommendationsParams - The getRecommendationsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRecommendations(
+      getRecommendationsParams:
+        | GetRecommendationsParams
+        | LegacyGetRecommendationsParams,
+      requestOptions?: RequestOptions
+    ): Promise<GetRecommendationsResponse> {
+      if (getRecommendationsParams && Array.isArray(getRecommendationsParams)) {
+        const newSignatureRequest: GetRecommendationsParams = {
+          requests: getRecommendationsParams,
+        };
+
+        // eslint-disable-next-line no-param-reassign
+        getRecommendationsParams = newSignatureRequest;
+      }
+
+      if (!getRecommendationsParams) {
+        throw new Error(
+          'Parameter `getRecommendationsParams` is required when calling `getRecommendations`.'
+        );
+      }
+
+      if (!getRecommendationsParams.requests) {
+        throw new Error(
+          'Parameter `getRecommendationsParams.requests` is required when calling `getRecommendations`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/*/recommendations';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: getRecommendationsParams,
+        useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(request, requestOptions);

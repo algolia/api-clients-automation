@@ -4,13 +4,16 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * TransformationCreate Class Doc Comment.
  *
  * @category Class
+ *
  * @description API request body for creating a transformation.
  */
-class TransformationCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class TransformationCreate extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -80,7 +83,7 @@ class TransformationCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel im
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['code'])) {
             $this->container['code'] = $data['code'];
@@ -159,9 +162,6 @@ class TransformationCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel im
         if (!isset($this->container['name']) || null === $this->container['name']) {
             $invalidProperties[] = "'name' can't be null";
         }
-        if (!isset($this->container['description']) || null === $this->container['description']) {
-            $invalidProperties[] = "'description' can't be null";
-        }
 
         return $invalidProperties;
     }
@@ -228,7 +228,7 @@ class TransformationCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel im
     /**
      * Gets description.
      *
-     * @return string
+     * @return null|string
      */
     public function getDescription()
     {
@@ -238,7 +238,7 @@ class TransformationCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel im
     /**
      * Sets description.
      *
-     * @param string $description a descriptive name for your transformation of what it does
+     * @param null|string $description a descriptive name for your transformation of what it does
      *
      * @return self
      */

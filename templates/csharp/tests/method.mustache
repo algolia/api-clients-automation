@@ -1,0 +1,9 @@
+{{#isAsync}}await {{/isAsync}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsync}}Async{{/isAsync}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
+{{#requestOptions.queryParameters.parametersWithDataType}}
+    .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
+{{/requestOptions.queryParameters.parametersWithDataType}}
+{{#requestOptions.headers.parametersWithDataType}}
+    .AddExtraHeader("{{{key}}}", "{{{value}}}")
+{{/requestOptions.headers.parametersWithDataType}}
+    .Build()
+{{/hasRequestOptions}})

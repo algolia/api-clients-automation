@@ -15,70 +15,70 @@ function createClient(): AbtestingClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('parameters', () => {
   test('fallbacks to the alias when region is not given', async () => {
-    const $client = abtestingClient('my-app-id', 'my-api-key', '', {
+    const client = abtestingClient('my-app-id', 'my-api-key', '', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.getABTest({
+    const result = (await client.getABTest({
       id: 123,
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.algolia.com');
-  });
+  }, 15000);
 
   test('uses the correct region', async () => {
-    const $client = abtestingClient('my-app-id', 'my-api-key', 'us', {
+    const client = abtestingClient('my-app-id', 'my-api-key', 'us', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.getABTest({
+    const result = (await client.getABTest({
       id: 123,
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.us.algolia.com');
-  });
+  }, 15000);
 
   test('throws when incorrect region is given', async () => {
     try {
-      const $client = abtestingClient(
+      const client = abtestingClient(
         'my-app-id',
         'my-api-key',
         'not_a_region',
@@ -90,7 +90,7 @@ describe('parameters', () => {
         '`region` must be one of the following: de, us'
       );
     }
-  });
+  }, 15000);
 });
 
 describe('init', () => {

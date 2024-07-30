@@ -3,10 +3,11 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/url"
 	"reflect"
+	"strings"
 	"time"
-
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
 )
 
 // ToPtr is a helper routine that returns a pointer to the given value.
@@ -65,49 +66,33 @@ func IsNilOrEmpty(i any) bool {
 	}
 }
 
-type IterableError[T any] struct {
-	Validate func(*T, error) bool
-	Message  func(*T, error) string
+// QueryParameterToString convert any query parameters to string.
+func QueryParameterToString(obj any) string {
+	return strings.ReplaceAll(url.QueryEscape(ParameterToString(obj)), "+", "%20")
 }
 
-func CreateIterable[T any](
-	execute func(*T, error) (*T, error),
-	validate func(*T, error) bool,
-	aggregator func(*T, error),
-	timeout func() time.Duration,
-	iterableErr *IterableError[T],
-) (*T, error) {
-	var executor func(*T, error) (*T, error)
-
-	executor = func(previousResponse *T, previousError error) (*T, error) {
-		response, responseErr := execute(previousResponse, previousError)
-
-		if aggregator != nil {
-			aggregator(response, responseErr)
+// ParameterToString convert any parameters to string.
+func ParameterToString(obj any) string {
+	objKind := reflect.TypeOf(obj).Kind()
+	if objKind == reflect.Slice {
+		var result []string
+		sliceValue := reflect.ValueOf(obj)
+		for i := 0; i < sliceValue.Len(); i++ {
+			element := sliceValue.Index(i).Interface()
+			result = append(result, ParameterToString(element))
 		}
-
-		if validate(response, responseErr) {
-			return response, responseErr
-		}
-
-		if iterableErr != nil && iterableErr.Validate(response, responseErr) {
-			if iterableErr.Message != nil {
-				return nil, errs.NewWaitError(iterableErr.Message(response, responseErr))
-			}
-
-			return nil, errs.NewWaitError("an error occurred")
-		}
-
-		if timeout == nil {
-			timeout = func() time.Duration {
-				return 1 * time.Second
-			}
-		}
-
-		time.Sleep(timeout())
-
-		return executor(response, responseErr)
+		return strings.Join(result, ",")
 	}
 
-	return executor(nil, nil)
+	if t, ok := obj.(time.Time); ok {
+		return t.Format(time.RFC3339)
+	}
+
+	if objKind == reflect.Struct {
+		if actualObj, ok := obj.(interface{ GetActualInstance() any }); ok {
+			return ParameterToString(actualObj.GetActualInstance())
+		}
+	}
+
+	return fmt.Sprintf("%v", obj)
 }

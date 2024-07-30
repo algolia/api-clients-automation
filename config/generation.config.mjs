@@ -118,7 +118,6 @@ export const patterns = [
 
   // Ruby
   '!snippets/ruby/Gemfile',
-  '!snippets/ruby/.rubocop.yml',
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
@@ -129,6 +128,8 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/logger_helper.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/user_agent.rb',
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
+
+  'tests/output/ruby/Gemfile.lock',
 
   // Scala
   '!snippets/scala/**',
@@ -159,4 +160,6 @@ export const patterns = [
   'tests/output/swift/Package.swift',
   '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
+
+  'clients/**/LICENSE'
 ];

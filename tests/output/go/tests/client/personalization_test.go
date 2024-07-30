@@ -15,7 +15,7 @@ import (
 
 func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := personalization.Configuration{
+	cfg := personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -32,9 +32,11 @@ func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tes
 // calls api with correct user agent
 func TestPersonalizationcommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createPersonalizationClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestPersonalizationcommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestPersonalizationcommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createPersonalizationClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestPersonalizationcommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createPersonalizationClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,12 +76,14 @@ func TestPersonalizationcommonApi2(t *testing.T) {
 // throws when region is not given
 func TestPersonalizationparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -90,12 +98,14 @@ func TestPersonalizationparameters0(t *testing.T) {
 // throws when incorrect region is given
 func TestPersonalizationparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -110,12 +120,14 @@ func TestPersonalizationparameters1(t *testing.T) {
 // does not throw when region is given
 func TestPersonalizationparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

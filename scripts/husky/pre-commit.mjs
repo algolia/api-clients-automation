@@ -22,6 +22,8 @@ export function getPatterns() {
   for (const [language, { tests }] of Object.entries(clientConfig)) {
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/client/**`);
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests/**`);
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/e2e/**`);
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/benchmark/**`);
   }
   return entries;
 }
@@ -52,7 +54,7 @@ async function preCommit(log) {
   await run(`git restore --staged ${toUnstage.join(' ')}`);
 }
 
-if (import.meta.url.endsWith(process.argv[1]) && process.env.CI !== 'true') {
+if (import.meta.url.endsWith(process.argv[1]) && process.env.CI === undefined) {
   preCommit(true).then(() => {
     // Run it twice because of renamed files, the first one delete the renamed one and leaves the deleted file, which is removed by this second pass
     preCommit(false);

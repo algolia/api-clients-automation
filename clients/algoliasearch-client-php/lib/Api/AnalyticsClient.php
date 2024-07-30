@@ -10,6 +10,7 @@ use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\Psr7\Query;
 
 /**
  * AnalyticsClient Class Doc Comment.
@@ -18,7 +19,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class AnalyticsClient
 {
-    public const VERSION = '4.0.0-beta.5';
+    public const VERSION = '4.0.0-beta.11';
 
     /**
      * @var ApiWrapperInterface
@@ -1360,7 +1361,7 @@ class AnalyticsClient
 
         $requestOptions['headers'] = array_merge($headers, $requestOptions['headers']);
         $requestOptions['queryParameters'] = array_merge($queryParameters, $requestOptions['queryParameters']);
-        $query = \GuzzleHttp\Psr7\Query::build($requestOptions['queryParameters']);
+        $query = Query::build($requestOptions['queryParameters']);
 
         return $this->api->sendRequest(
             $method,

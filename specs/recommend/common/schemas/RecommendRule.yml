@@ -33,7 +33,7 @@ Condition:
     filters:
       $ref: '../../../common/schemas/SearchParams.yml#/filters'
     context:
-      $ref: '../../../search/paths/rules/common/schemas.yml#/context'
+      $ref: '../../../common/schemas/Rule.yml#/context'
 
 Consequence:
   type: object

@@ -20,8 +20,8 @@ public extension SearchClient {
     /// - returns: GetTaskResponse
     @discardableResult
     func waitForTask(
-        with taskID: Int64,
-        in indexName: String,
+        indexName: String,
+        taskID: Int64,
         maxRetries: Int = 50,
         timeout: (Int) -> TimeInterval = { count in
             min(TimeInterval(count) * 0.2, 5)
@@ -62,7 +62,7 @@ public extension SearchClient {
     /// - returns: GetTaskResponse
     @discardableResult
     func waitForAppTask(
-        with taskID: Int64,
+        taskID: Int64,
         maxRetries: Int = 50,
         timeout: (Int) -> TimeInterval = { count in
             min(TimeInterval(count) * 0.2, 5)
@@ -105,7 +105,7 @@ public extension SearchClient {
     /// - returns: GetApiKeyResponse?
     @discardableResult
     func waitForApiKey(
-        with key: String,
+        key: String,
         operation: ApiKeyOperation,
         apiKey: ApiKey? = nil,
         maxRetries: Int = 50,
@@ -185,12 +185,15 @@ public extension SearchClient {
 
         return try await createIterable(
             execute: { _ in
-                let response = try await self.getApiKeyWithHTTPInfo(key: key, requestOptions: requestOptions)
-                if response.statusCode == 404 {
-                    return nil
-                }
+                do {
+                    return try await self.getApiKey(key: key, requestOptions: requestOptions)
+                } catch let AlgoliaError.httpError(error) {
+                    if error.statusCode == 404 {
+                        return nil
+                    }
 
-                return response.body
+                    throw error
+                }
             },
             validate: { response in
                 switch operation {
@@ -232,7 +235,7 @@ public extension SearchClient {
     /// - returns: BrowseResponse
     @discardableResult
     func browseObjects<T: Codable>(
-        in indexName: String,
+        indexName: String,
         browseParams: BrowseParamsObject,
         validate: (BrowseResponse<T>) -> Bool = { response in
             response.cursor == nil
@@ -267,7 +270,7 @@ public extension SearchClient {
     /// - returns: SearchRulesResponse
     @discardableResult
     func browseRules(
-        in indexName: String,
+        indexName: String,
         searchRulesParams: SearchRulesParams,
         validate: ((SearchRulesResponse) -> Bool)? = nil,
         aggregator: @escaping (SearchRulesResponse) -> Void,
@@ -310,7 +313,7 @@ public extension SearchClient {
     /// - returns: SearchSynonymsResponse
     @discardableResult
     func browseSynonyms(
-        in indexName: String,
+        indexName: String,
         searchSynonymsParams: SearchSynonymsParams,
         validate: ((SearchSynonymsResponse) -> Bool)? = nil,
         aggregator: @escaping (SearchSynonymsResponse) -> Void,
@@ -423,7 +426,7 @@ public extension SearchClient {
     func chunkedBatch(
         indexName: String,
         objects: [some Encodable],
-        action: Action = .addObject,
+        action: SearchAction = .addObject,
         waitForTasks: Bool = false,
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
@@ -436,7 +439,7 @@ public extension SearchClient {
         for batch in batches {
             let batchResponse = try await self.batch(
                 indexName: indexName,
-                batchWriteParams: BatchWriteParams(
+                batchWriteParams: SearchBatchWriteParams(
                     requests: batch.map {
                         .init(action: action, body: AnyCodable($0))
                     }
@@ -449,36 +452,103 @@ public extension SearchClient {
 
         if waitForTasks {
             for batchResponse in responses {
-                try await self.waitForTask(with: batchResponse.taskID, in: indexName)
+                try await self.waitForTask(indexName: indexName, taskID: batchResponse.taskID)
             }
         }
 
         return responses
     }
 
+    /// Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood,
+    /// which creates a `batch` requests with at most 1000 objects in it.
+    /// - parameter indexName: The name of the index where to save the objects
+    /// - parameter objects: The new objects
+    /// - parameter requestOptions: The request options
+    /// - returns: [BatchResponse]
+    func saveObjects(
+        indexName: String,
+        objects: [some Encodable],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [BatchResponse] {
+        try await self.chunkedBatch(
+            indexName: indexName,
+            objects: objects,
+            action: .addObject,
+            waitForTasks: false,
+            batchSize: 1000,
+            requestOptions: requestOptions
+        )
+    }
+
+    /// Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
+    /// creates a `batch` requests with at most 1000 objectIDs in it.
+    /// - parameter indexName: The name of the index to delete objectIDs from
+    /// - parameter objectIDs: The objectIDs to delete
+    /// - parameter requestOptions: The request options
+    /// - returns: [BatchResponse]
+    func deleteObjects(
+        indexName: String,
+        objectIDs: [String],
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [BatchResponse] {
+        try await self.chunkedBatch(
+            indexName: indexName,
+            objects: objectIDs.map { AnyCodable(["objectID": $0]) },
+            action: .deleteObject,
+            waitForTasks: false,
+            batchSize: 1000,
+            requestOptions: requestOptions
+        )
+    }
+
+    /// Helper: Replaces object content of all the given objects according to their respective `objectID` field. The
+    /// `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+    /// - parameter indexName: The name of the index where to update the objects
+    /// - parameter objects: The objects to update
+    /// - parameter createIfNotExists: To be provided if non-existing objects are passed, otherwise, the call will
+    /// fail..
+    /// - parameter requestOptions: The request options
+    /// - returns: [BatchResponse]
+    func partialUpdateObjects(
+        indexName: String,
+        objects: [some Encodable],
+        createIfNotExists: Bool = false,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [BatchResponse] {
+        try await self.chunkedBatch(
+            indexName: indexName,
+            objects: objects,
+            action: createIfNotExists ? .partialUpdateObject : .partialUpdateObjectNoCreate,
+            waitForTasks: false,
+            batchSize: 1000,
+            requestOptions: requestOptions
+        )
+    }
+
     /// Replace all objects in an index
     ///
     /// See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation
     /// details.
-    /// - parameter objects: The new objects
     /// - parameter indexName: The name of the index where to replace the objects
+    /// - parameter objects: The new objects
+    /// - parameter batchSize: The maximum number of objects to include in a batch
     /// - parameter requestOptions: The request options
     /// - returns: ReplaceAllObjectsResponse
     @discardableResult
     func replaceAllObjects(
-        with objects: [some Encodable],
-        in indexName: String,
+        indexName: String,
+        objects: [some Encodable],
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> ReplaceAllObjectsResponse {
-        let tmpIndexName = try "\(indexName)_tmp_\(randomString())"
+        let tmpIndexName = try "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         var copyOperationResponse = try await operationIndex(
             indexName: indexName,
             operationIndexParams: OperationIndexParams(
                 operation: .copy,
                 destination: tmpIndexName,
-                scope: [.rules, .settings, .synonyms]
+                scope: [.settings, .rules, .synonyms]
             ),
             requestOptions: requestOptions
         )
@@ -490,18 +560,18 @@ public extension SearchClient {
             batchSize: batchSize,
             requestOptions: requestOptions
         )
-        try await self.waitForTask(with: copyOperationResponse.taskID, in: tmpIndexName)
+        try await self.waitForTask(indexName: tmpIndexName, taskID: copyOperationResponse.taskID)
 
         copyOperationResponse = try await operationIndex(
             indexName: indexName,
             operationIndexParams: OperationIndexParams(
                 operation: .copy,
                 destination: tmpIndexName,
-                scope: [.rules, .settings, .synonyms]
+                scope: [.settings, .rules, .synonyms]
             ),
             requestOptions: requestOptions
         )
-        try await self.waitForTask(with: copyOperationResponse.taskID, in: tmpIndexName)
+        try await self.waitForTask(indexName: tmpIndexName, taskID: copyOperationResponse.taskID)
 
         let moveOperationResponse = try await self.operationIndex(
             indexName: tmpIndexName,
@@ -511,7 +581,7 @@ public extension SearchClient {
             ),
             requestOptions: requestOptions
         )
-        try await self.waitForTask(with: moveOperationResponse.taskID, in: tmpIndexName)
+        try await self.waitForTask(indexName: tmpIndexName, taskID: moveOperationResponse.taskID)
 
         return ReplaceAllObjectsResponse(
             copyOperationResponse: copyOperationResponse,
@@ -522,13 +592,13 @@ public extension SearchClient {
 
     /// Generate a secured API key
     /// - parameter parentApiKey: The parent API key
-    /// - parameter restriction: The restrictions
+    /// - parameter restrictions: The restrictions
     /// - returns: String?
     func generateSecuredApiKey(
         parentApiKey: String,
-        with restriction: SecuredApiKeyRestrictions = SecuredApiKeyRestrictions()
+        restrictions: SecuredApiKeyRestrictions = SecuredApiKeyRestrictions()
     ) throws -> String? {
-        let queryParams = try restriction.toURLEncodedString()
+        let queryParams = try restrictions.toURLEncodedString()
         let hash = queryParams.hmac256(withKey: parentApiKey)
         return "\(hash)\(queryParams)".data(using: .utf8)?.base64EncodedString()
     }
@@ -536,7 +606,7 @@ public extension SearchClient {
     /// Get the remaining validity of a secured API key
     /// - parameter securedApiKey: The secured API key
     /// - returns: TimeInterval?
-    func getSecuredApiKeyRemainingValidity(for securedApiKey: String) -> TimeInterval? {
+    func getSecuredApiKeyRemainingValidity(securedApiKey: String) -> TimeInterval? {
         guard let rawDecodedAPIKey = String(data: Data(base64Encoded: securedApiKey) ?? Data(), encoding: .utf8),
               !rawDecodedAPIKey.isEmpty else {
             return nil

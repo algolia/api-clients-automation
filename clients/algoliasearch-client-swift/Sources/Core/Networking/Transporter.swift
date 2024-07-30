@@ -15,14 +15,17 @@ open class Transporter {
     let configuration: BaseConfiguration
     let retryStrategy: RetryStrategy
     let requestBuilder: RequestBuilder
+    let exposeIntermediateErrors: Bool
 
     public init(
         configuration: BaseConfiguration,
         retryStrategy: RetryStrategy? = nil,
-        requestBuilder: RequestBuilder? = nil
+        requestBuilder: RequestBuilder? = nil,
+        exposeIntermediateErrors: Bool = false
     ) {
         self.configuration = configuration
         self.retryStrategy = retryStrategy ?? AlgoliaRetryStrategy(configuration: configuration)
+        self.exposeIntermediateErrors = exposeIntermediateErrors
 
         guard let requestBuilder else {
             let sessionConfiguration: URLSessionConfiguration = .default
@@ -132,13 +135,16 @@ open class Transporter {
                 self.retryStrategy.notify(host: host, error: error)
 
                 guard self.retryStrategy.canRetry(inCaseOf: error) else {
-                    throw AlgoliaError.requestError(error)
+                    throw error
                 }
 
                 intermediateErrors.append(error)
             }
         }
 
-        throw AlgoliaError.noReachableHosts(intermediateErrors: intermediateErrors)
+        throw AlgoliaError.noReachableHosts(
+            intermediateErrors: intermediateErrors,
+            exposeIntermediateErrors: self.exposeIntermediateErrors
+        )
     }
 }

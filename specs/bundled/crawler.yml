@@ -1824,6 +1824,11 @@ components:
         - count
         - alpha
         - hidden
+    hide:
+      description: Hide facet values.
+      type: array
+      items:
+        type: string
     value:
       type: object
       additionalProperties: false
@@ -1832,6 +1837,8 @@ components:
           $ref: '#/components/schemas/order'
         sortRemainingBy:
           $ref: '#/components/schemas/sortRemainingBy'
+        hide:
+          $ref: '#/components/schemas/hide'
     values:
       description: Order of facet values. One object for each facet.
       type: object
@@ -1847,6 +1854,13 @@ components:
           $ref: '#/components/schemas/facets'
         values:
           $ref: '#/components/schemas/values'
+    redirectURL:
+      description: The redirect rule container.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -1861,6 +1875,8 @@ components:
       properties:
         facetOrdering:
           $ref: '#/components/schemas/facetOrdering'
+        redirect:
+          $ref: '#/components/schemas/redirectURL'
       x-categories:
         - Advanced
     reRankingApplyFilter:

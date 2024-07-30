@@ -55,6 +55,7 @@ import 'package:algolia_client_search/src/model/search_synonyms_params.dart';
 import 'package:algolia_client_search/src/model/search_synonyms_response.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
+import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/source.dart';
 import 'package:algolia_client_search/src/model/synonym_hit.dart';
 import 'package:algolia_client_search/src/model/update_api_key_response.dart';
@@ -350,7 +351,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
   ///
   /// Required API Key ACLs:
   ///   - browse
@@ -1165,7 +1166,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
   /// * [requestOptions] additional request configuration.
-  Future<IndexSettings> getSettings({
+  Future<SettingsResponse> getSettings({
     required String indexName,
     RequestOptions? requestOptions,
   }) async {
@@ -1182,9 +1183,9 @@ final class SearchClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<IndexSettings, IndexSettings>(
+    return deserialize<SettingsResponse, SettingsResponse>(
       response,
-      'IndexSettings',
+      'SettingsResponse',
       growable: true,
     );
   }

@@ -1,184 +1,183 @@
+func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) (bool, error), opts ...IterableOption) (*T, error) {
+	conf := config{
+		maxRetries: -1,
+		timeout:    func(count int) time.Duration {
+      return 0 * time.Millisecond
+    },
+	}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var executor func(*T, error) (*T, error)
+
+	retryCount := 0
+
+	executor = func(previousResponse *T, previousError error) (*T, error) {
+		response, responseErr := execute(previousResponse, previousError)
+
+		retryCount++
+
+		if conf.aggregator != nil {
+			conf.aggregator(response, responseErr)
+		}
+
+    canStop, err := validate(response, responseErr)
+    if canStop || err != nil {
+      return response, err
+    }
+
+		if conf.maxRetries >= 0 && retryCount >= conf.maxRetries {
+			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, conf.maxRetries))
+		}
+
+		time.Sleep(conf.timeout(retryCount))
+
+		return executor(response, responseErr)
+	}
+
+	return executor(nil, nil)
+}
+
+/*
+SearchForHits calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
+Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
+
+  @param r ApiSearchRequest - Body of the `search` operation.
+  @param opts ...RequestOption - Optional parameters for the request.
+  @return []SearchResponse - List of hits.
+  @return error - Error if any.
+ */
+func (c *APIClient) SearchForHits(r ApiSearchRequest, opts ...RequestOption) ([]SearchResponse, error) {
+  res, err := c.Search(r, opts...)
+  if err != nil {
+    return nil, err
+  }
+
+  hits := make([]SearchResponse, 0, len(res.GetResults()))
+
+  for _, hit := range res.GetResults() {
+    if hit.SearchResponse != nil {
+      hits = append(hits, *hit.SearchResponse)
+    }
+  }
+
+  return slices.Clip(hits), nil
+}
+
+/*
+SearchForFacets calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
+Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
+
+  @param r ApiSearchRequest - Body of the `search` operation.
+  @param opts ...RequestOption - Optional parameters for the request.
+  @return []SearchForFacetValuesResponse - List of facet hits.
+  @return error - Error if any.
+ */
+func (c *APIClient) SearchForFacets(r ApiSearchRequest, opts ...RequestOption) ([]SearchForFacetValuesResponse, error) {
+  res, err := c.Search(r, opts...)
+  if err != nil {
+    return nil, err
+  }
+
+  facetHits := make([]SearchForFacetValuesResponse, 0, len(res.GetResults()))
+
+  for _, hit := range res.GetResults() {
+      if hit.SearchForFacetValuesResponse != nil {
+        facetHits = append(facetHits, *hit.SearchForFacetValuesResponse)
+      }
+  }
+
+  return slices.Clip(facetHits), nil
+}
+
 /*
 WaitForTask waits for a task to be published.
-Wraps WaitForTaskWithContext with context.Background().
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
-		@param indexName string - Index name.
-		@param taskID int64 - Task ID.
-		@param maxRetries *float64 - Maximum number of retries.
-	  @param timeout func(float64) time.Duration - Timeout function.
-		@param opts ...Option - Optional parameters for the request.
-		@return *GetTaskResponse - Task response.
-		@return error - Error if any.
+	@param indexName string - Index name.
+	@param taskID int64 - Task ID.
+	@param opts ...IterableOption - Optional parameters for the request.
+	@return *GetTaskResponse - Task response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForTask(
 	indexName string,
 	taskID int64,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
+	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-	return c.WaitForTaskWithContext(
-		context.Background(),
-		indexName,
-		taskID,
-		maxRetries,
-		timeout,
-		opts...,
-	)
-}
+  // provide a defalut timeout function
+  opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
+    return time.Duration(min(200*count, 5000)) * time.Millisecond
+  }), WithMaxRetries(50)}, opts...)
 
-/*
-WaitForTaskWithContext waits for a task to be published.
-It returns the task response if the operation was successful.
-It returns an error if the operation failed.
-
-	@param ctx context.Context - The context that will be drilled down to the actual request.
-	@param indexName string - Index name.
-	@param taskID int64 - Task ID.
-	@param maxRetries *float64 - Maximum number of retries.
-	@param timeout func(float64) time.Duration - Timeout function.
-	@param opts ...Option - Optional parameters for the request.
-	@return *GetTaskResponse - Task response.
-	@return error - Error if any.
-*/
-func (c *APIClient) WaitForTaskWithContext(
-	ctx context.Context,
-	indexName string,
-	taskID int64,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
-) (*GetTaskResponse, error) {
-	retryCount := float64(0)
-
-	if maxRetries == nil {
-		maxRetries = new(float64)
-		*maxRetries = 50
-	}
-
-	if timeout == nil {
-		timeout = func(count float64) time.Duration {
-			return time.Duration(min(count*0.2, 5)) * time.Second
-		}
-	}
-
-	return utils.CreateIterable( //nolint:wrapcheck
+	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
-			return c.GetTaskWithContext(ctx, c.NewApiGetTaskRequest(indexName, taskID), opts...)
+			return c.GetTask(c.NewApiGetTaskRequest(indexName, taskID), toRequestOptions(opts)...)
 		},
-		func(response *GetTaskResponse, err error) bool {
+		func(response *GetTaskResponse, err error) (bool, error) {
 			if err != nil || response == nil {
-				return false
+				return false, err
 			}
 
-			return response.Status == TASK_STATUS_PUBLISHED
+			return response.Status == TASK_STATUS_PUBLISHED, nil
 		},
-		func(*GetTaskResponse, error) {
-			retryCount++
-		},
-		func() time.Duration {
-			return timeout(retryCount)
-		},
-		&utils.IterableError[GetTaskResponse]{
-			Validate: func(*GetTaskResponse, error) bool {
-				return retryCount >= *maxRetries
-			},
-			Message: func(*GetTaskResponse, error) string {
-				return fmt.Sprintf("The maximum number of retries exceeded. (%f/%f)", retryCount, *maxRetries)
-			},
-		},
+		opts...,
 	)
 }
 
 /*
 WaitForAppTask waits for an application-level task to be published.
-Wraps WaitForAppTask with context.Background().
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
 	@param taskID int64 - Task ID.
-	@param maxRetries *float64 - Maximum number of retries.
-	@param timeout func(float64) time.Duration - Timeout function.
-	@param opts ...Option - Optional parameters for the request.
+	@param opts ...IterableOption - Optional parameters for the request.
 	@return *GetTaskResponse - Task response.
 	@return error - Error if any.
 */
 func (c *APIClient) WaitForAppTask(
 	taskID int64,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
+	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-	return c.WaitForAppTaskWithContext(
-		context.Background(),
-		taskID,
-		maxRetries,
-		timeout,
+  // provide a defalut timeout function
+  opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
+    return time.Duration(min(200*count, 5000)) * time.Millisecond
+  }), WithMaxRetries(50)}, opts...)
+
+	return CreateIterable( //nolint:wrapcheck
+		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
+			return c.GetAppTask(c.NewApiGetAppTaskRequest(taskID), toRequestOptions(opts)...)
+		},
+		func(response *GetTaskResponse, err error) (bool, error) {
+			if err != nil || response == nil {
+				return false, err
+			}
+
+			return response.Status == TASK_STATUS_PUBLISHED, nil
+		},
 		opts...,
 	)
 }
 
-/*
-WaitForAppTaskWithContext waits for an application-level task to be published.
-It returns the task response if the operation was successful.
-It returns an error if the operation failed.
+func slicesEqualUnordered[T cmp.Ordered](a []T, b []T) bool {
+  if len(a) != len(b) {
+    return false
+  }
 
-	@param ctx context.Context - The context that will be drilled down to the actual request.
-	@param taskID int64 - Task ID.
-	@param maxRetries *float64 - Maximum number of retries.
-	@param timeout func(float64) time.Duration - Timeout function.
-	@param opts ...Option - Optional parameters for the request.
-	@return *GetTaskResponse - Task response.
-	@return error - Error if any.
-*/
-func (c *APIClient) WaitForAppTaskWithContext(
-	ctx context.Context,
-	taskID int64,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
-) (*GetTaskResponse, error) {
-	retryCount := float64(0)
+  // make a copy and sort it to avoid modifying the original slice
+  aCopy := make([]T, len(a))
+  copy(aCopy, a)
 
-	if maxRetries == nil {
-		maxRetries = new(float64)
-		*maxRetries = 50
-	}
+  bCopy := make([]T, len(b))
+  copy(bCopy, b)
 
-	if timeout == nil {
-		timeout = func(count float64) time.Duration {
-			return time.Duration(min(count*0.2, 5)) * time.Second
-		}
-	}
+  slices.Sort(aCopy)
+  slices.Sort(bCopy)
 
-	return utils.CreateIterable( //nolint:wrapcheck
-		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
-			return c.GetAppTaskWithContext(ctx, c.NewApiGetAppTaskRequest(taskID), opts...)
-		},
-		func(response *GetTaskResponse, err error) bool {
-			if err != nil || response == nil {
-				return false
-			}
-
-			return response.Status == TASK_STATUS_PUBLISHED
-		},
-		func(*GetTaskResponse, error) {
-			retryCount++
-		},
-		func() time.Duration {
-			return timeout(retryCount)
-		},
-		&utils.IterableError[GetTaskResponse]{
-			Validate: func(*GetTaskResponse, error) bool {
-				return retryCount >= *maxRetries
-			},
-			Message: func(*GetTaskResponse, error) string {
-				return fmt.Sprintf("The maximum number of retries exceeded. (%f/%f)", retryCount, *maxRetries)
-			},
-		},
-	)
+  return slices.Equal(aCopy, bCopy)
 }
 
 /*
@@ -194,216 +193,228 @@ The operation can be one of the following:
 If the operation is "update", the apiKey parameter must be set.
 If the operation is "delete" or "add", the apiKey parameter is not used.
 
-	@param operation ApiKeyOperation - Operation type - add, delete or update.
 	@param key string - API key.
-	@param apiKey *ApiKey - API key structure - required for update operation.
-	@param opts ...Option - Optional parameters for the request.
+	@param operation ApiKeyOperation - Operation type - add, delete or update.
+	@param opts ...WaitForApiKeyOption - Optional parameters for the request, you must provide WithApiKey if the operation is "update".
 	@return *GetApiKeyResponse - API key response.
 	@return error - Error if any.
 */
 func (c *APIClient) WaitForApiKey(
+  key string,
 	operation ApiKeyOperation,
-	key string,
-	apiKey *ApiKey,
-	opts ...Option,
+	opts ...WaitForApiKeyOption,
 ) (*GetApiKeyResponse, error) {
-	return c.WaitForApiKeyWithContext(
-		context.Background(),
-		operation,
-		key,
-		apiKey,
-		nil,
-		nil,
-		opts...,
-	)
-}
+  conf := config{}
 
-/*
-WaitForApiKey waits for an API key to be created, deleted or updated.
-Wraps WaitForApiKeyWithContext with context.Background().
-It returns the API key response if the operation was successful.
-It returns an error if the operation failed.
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
 
-The operation can be one of the following:
-  - "add": wait for the API key to be created
-  - "delete": wait for the API key to be deleted
-  - "update": wait for the API key to be updated
+  var validateFunc func(*GetApiKeyResponse, error) (bool, error)
 
-If the operation is "update", the apiKey parameter must be set.
-If the operation is "delete" or "add", the apiKey parameter is not used.
-
-	@param operation ApiKeyOperation - Operation type - add, delete or update.
-	@param key string - API key.
-	@param apiKey *ApiKey - API key structure - required for update operation.
-	@param maxRetries *float64 - Maximum number of retries.
-	@param timeout func(float64) time.Duration - Timeout function.
-	@param opts ...Option - Optional parameters for the request.
-	@return *GetApiKeyResponse - API key response.
-	@return error - Error if any.
-*/
-func (c *APIClient) WaitForApiKeyWithOptions(
-	operation ApiKeyOperation,
-	key string,
-	apiKey *ApiKey,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
-) (*GetApiKeyResponse, error) {
-	return c.WaitForApiKeyWithContext(
-		context.Background(),
-		operation,
-		key,
-		apiKey,
-		maxRetries,
-		timeout,
-		opts...,
-	)
-}
-
-/*
-WaitForApiKeyWithContext waits for an API key to be created, deleted or updated.
-It returns the API key response if the operation was successful.
-It returns an error if the operation failed.
-
-The operation can be one of the following:
-  - "add": wait for the API key to be created
-  - "delete": wait for the API key to be deleted
-  - "update": wait for the API key to be updated
-
-If the operation is "update", the apiKey parameter must be set.
-If the operation is "delete" or "add", the apiKey parameter is not used.
-
-	@param ctx context.Context - The context that will be drilled down to the actual request.
-	@param operation ApiKeyOperation - Operation type - add, delete or update.
-	@param key string - API key.
-	@param apiKey *ApiKey - API key structure - required for update operation.
-	@param maxRetries *float64 - Maximum number of retries.
-	@param timeout func(float64) time.Duration - Timeout function.
-	@param opts ...Option - Optional parameters for the request.
-	@return *GetApiKeyResponse - API key response.
-	@return error - Error if any.
-*/
-func (c *APIClient) WaitForApiKeyWithContext(
-	ctx context.Context,
-	operation ApiKeyOperation,
-	key string,
-	apiKey *ApiKey,
-	maxRetries *float64,
-	timeout func(float64) time.Duration,
-	opts ...Option,
-) (*GetApiKeyResponse, error) {
-	if operation != API_KEY_OPERATION_ADD && operation != API_KEY_OPERATION_DELETE && operation != API_KEY_OPERATION_UPDATE {
-		return nil, &errs.WaitKeyOperationError{}
-	}
-
-	retryCount := float64(0)
-
-	if maxRetries == nil {
-		maxRetries = new(float64)
-		*maxRetries = 50
-	}
-
-	if timeout == nil {
-		timeout = func(count float64) time.Duration {
-			return time.Duration(min(count*0.2, 5)) * time.Second
-		}
-	}
-
-	var validateFunc func(*GetApiKeyResponse, error) bool
-
-	if operation == API_KEY_OPERATION_UPDATE {
-		if apiKey == nil {
+  switch operation {
+	case API_KEY_OPERATION_UPDATE:
+		if conf.apiKey == nil {
 			return nil, &errs.WaitKeyUpdateError{}
 		}
 
-		validateFunc = func(response *GetApiKeyResponse, err error) bool {
+		validateFunc = func(response *GetApiKeyResponse, err error) (bool, error) {
 			if err != nil || response == nil {
-				return false
+				return false, err
 			}
 
-			if apiKey.GetDescription() != response.GetDescription() {
-				return false
+			if conf.apiKey.GetDescription() != response.GetDescription() {
+				return false, nil
 			}
 
-			if apiKey.GetQueryParameters() != response.GetQueryParameters() {
-				return false
+			if conf.apiKey.GetQueryParameters() != response.GetQueryParameters() {
+				return false, nil
 			}
 
-			if apiKey.GetMaxHitsPerQuery() != response.GetMaxHitsPerQuery() {
-				return false
+			if conf.apiKey.GetMaxHitsPerQuery() != response.GetMaxHitsPerQuery() {
+				return false, nil
 			}
 
-			if apiKey.GetMaxQueriesPerIPPerHour() != response.GetMaxQueriesPerIPPerHour() {
-				return false
+			if conf.apiKey.GetMaxQueriesPerIPPerHour() != response.GetMaxQueriesPerIPPerHour() {
+				return false, nil
 			}
 
-			if apiKey.GetValidity() != response.GetValidity() {
-				return false
+			if conf.apiKey.GetValidity() != response.GetValidity() {
+				return false, nil
 			}
 
-			slices.Sort(apiKey.Acl)
-			slices.Sort(response.Acl)
-
-			if !slices.Equal(apiKey.Acl, response.Acl) {
-				return false
+			if !slicesEqualUnordered(conf.apiKey.Acl, response.Acl) {
+				return false, nil
 			}
 
-			slices.Sort(apiKey.Indexes)
-			slices.Sort(response.Indexes)
-
-			if !slices.Equal(apiKey.Indexes, response.Indexes) {
-				return false
+			if !slicesEqualUnordered(conf.apiKey.Indexes, response.Indexes) {
+				return false, nil
 			}
 
-			slices.Sort(apiKey.Referers)
-			slices.Sort(response.Referers)
-
-			return slices.Equal(apiKey.Referers, response.Referers)
+			return slicesEqualUnordered(conf.apiKey.Referers, response.Referers), nil
 		}
-	} else {
-		validateFunc = func(response *GetApiKeyResponse, err error) bool {
-			switch operation {
-			case API_KEY_OPERATION_ADD:
-				if _, ok := err.(*APIError); ok {
-					apiErr := err.(*APIError)
-
-					return apiErr.Status != 404
-				}
-
-				return true
-			case API_KEY_OPERATION_DELETE:
-				if _, ok := err.(*APIError); ok {
-					apiErr := err.(*APIError)
-
-					return apiErr.Status == 404
-				}
-
-				return false
+	case API_KEY_OPERATION_ADD:
+		validateFunc = func(response *GetApiKeyResponse, err error) (bool, error) {
+			var apiErr *APIError
+			if errors.As(err, &apiErr) {
+				return apiErr.Status != 404, nil
 			}
-			return false
+
+			return true, err
 		}
+	case API_KEY_OPERATION_DELETE:
+		validateFunc = func(response *GetApiKeyResponse, err error) (bool, error) {
+      var apiErr *APIError
+      if errors.As(err, &apiErr) {
+        return apiErr.Status == 404, nil
+      }
+
+      return false, err
+		}
+	default:
+		return nil, &errs.WaitKeyOperationError{}
 	}
 
-	return utils.CreateIterable( //nolint:wrapcheck
+
+  // provide a defalut timeout function
+  opts = append([]WaitForApiKeyOption{WithTimeout(func(count int) time.Duration {
+    return time.Duration(min(200*count, 5000)) * time.Millisecond
+  }), WithMaxRetries(50)}, opts...)
+
+	return CreateIterable( //nolint:wrapcheck
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
-			return c.GetApiKeyWithContext(ctx, c.NewApiGetApiKeyRequest(key), opts...)
+			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
 		},
 		validateFunc,
-		func(*GetApiKeyResponse, error) {
-			retryCount += 1
-		},
-		func() time.Duration {
-			return timeout(retryCount)
-		},
-		&utils.IterableError[GetApiKeyResponse]{
-			Validate: func(*GetApiKeyResponse, error) bool {
-				return retryCount >= *maxRetries
-			},
-			Message: func(*GetApiKeyResponse, error) string {
-				return fmt.Sprintf("The maximum number of retries exceeded. (%f/%f)", retryCount, *maxRetries)
-			},
-		},
+		toIterableOptionsWaitFor(opts)...,
 	)
+}
+
+/*
+BrowseObjects allows to aggregate all the hits returned by the API calls.
+Use the `WithAggregator` option to collect all the responses.
+
+  @param indexName string - Index name.
+  @param browseParams BrowseParamsObject - Browse parameters.
+  @param opts ...IterableOption - Optional parameters for the request.
+  @return *BrowseResponse - Browse response.
+  @return error - Error if any.
+*/
+func (c *APIClient) BrowseObjects(
+	indexName string,
+	browseParams BrowseParamsObject,
+	opts ...IterableOption,
+) error {
+	_, err := CreateIterable( //nolint:wrapcheck
+		func(previousResponse *BrowseResponse, previousErr error) (*BrowseResponse, error) {
+			if previousResponse != nil {
+				browseParams.Cursor = previousResponse.Cursor
+			}
+
+			return c.Browse(
+				c.NewApiBrowseRequest(indexName).WithBrowseParams(BrowseParamsObjectAsBrowseParams(&browseParams)),
+				toRequestOptions(opts)...,
+			)
+		},
+		func(response *BrowseResponse, err error) (bool, error) {
+			return err != nil || response != nil && response.Cursor == nil, err
+		},
+		opts...,
+	)
+  
+  return err
+}
+
+/*
+BrowseRules allows to aggregate all the rules returned by the API calls.
+Use the `WithAggregator` option to collect all the responses.
+
+	@param indexName string - Index name.
+	@param searchRulesParams SearchRulesParams - Search rules parameters.
+	@param opts ...IterableOption - Optional parameters for the request.
+	@return *SearchRulesResponse - Search rules response.
+	@return error - Error if any.
+*/
+func (c *APIClient) BrowseRules(
+	indexName string,
+	searchRulesParams SearchRulesParams,
+	opts ...IterableOption,
+) error {
+	hitsPerPage := int32(1000)
+	if searchRulesParams.HitsPerPage != nil {
+		hitsPerPage = *searchRulesParams.HitsPerPage
+	}
+
+	_, err := CreateIterable( //nolint:wrapcheck
+		func(previousResponse *SearchRulesResponse, previousErr error) (*SearchRulesResponse, error) {
+			searchRulesParams.HitsPerPage = &hitsPerPage
+
+			if previousResponse != nil {
+				searchRulesParams.Page = utils.ToPtr(previousResponse.Page + 1)
+			}
+
+			if searchRulesParams.Page == nil {
+				searchRulesParams.Page = utils.ToPtr(int32(0))
+			}
+
+			return c.SearchRules(
+				c.NewApiSearchRulesRequest(indexName).WithSearchRulesParams(&searchRulesParams),
+				toRequestOptions(opts)...,
+			)
+		},
+		func(response *SearchRulesResponse, err error) (bool, error) {
+			return err != nil || (response != nil && response.NbHits < hitsPerPage), err
+		},
+		opts...,
+	)
+
+  return err
+}
+
+/*
+BrowseSynonyms allows to aggregate all the synonyms returned by the API calls.
+Use the `WithAggregator` option to collect all the responses.
+
+	@param indexName string - Index name.
+	@param searchSynonymsParams SearchSynonymsParams - Search synonyms parameters.
+	@param opts ...IterableOption - Optional parameters for the request.
+	@return *SearchSynonymsResponse - Search synonyms response.
+	@return error - Error if any.
+*/
+func (c *APIClient) BrowseSynonyms(
+	indexName string,
+	searchSynonymsParams SearchSynonymsParams,
+	opts ...IterableOption,
+) error {
+	hitsPerPage := int32(1000)
+	if searchSynonymsParams.HitsPerPage != nil {
+		hitsPerPage = *searchSynonymsParams.HitsPerPage
+	}
+
+	if searchSynonymsParams.Page == nil {
+		searchSynonymsParams.Page = utils.ToPtr(int32(0))
+	}
+
+	_, err := CreateIterable( //nolint:wrapcheck
+		func(previousResponse *SearchSynonymsResponse, previousErr error) (*SearchSynonymsResponse, error) {
+			searchSynonymsParams.HitsPerPage = &hitsPerPage
+
+			defer func() {
+				searchSynonymsParams.Page = utils.ToPtr(*searchSynonymsParams.Page + 1)
+			}()
+
+			return c.SearchSynonyms(
+				c.NewApiSearchSynonymsRequest(indexName).WithSearchSynonymsParams(&searchSynonymsParams),
+				toRequestOptions(opts)...,
+			)
+		},
+		func(response *SearchSynonymsResponse, err error) (bool, error) {
+			return err != nil || (response != nil && response.NbHits < hitsPerPage), err
+		},
+		opts...,
+	)
+
+  return err
 }
 
 func encodeRestrictions(restrictions *SecuredApiKeyRestrictions) (string, error) {
@@ -448,15 +459,21 @@ func encodeRestrictions(restrictions *SecuredApiKeyRestrictions) (string, error)
 
 	queryString := make([]string, 0, len(toSerialize))
 	for _, k := range keys {
-		queryString = append(queryString, k+"="+queryParameterToString(toSerialize[k]))
+		queryString = append(queryString, k+"="+utils.QueryParameterToString(toSerialize[k]))
 	}
 
 	return strings.Join(queryString, "&"), nil
 }
 
-// GenerateSecuredApiKey generates a public API key intended to restrict access
-// to certain records. This new key is built upon the existing key named
-// `parentApiKey` and the following options.
+/*
+GenerateSecuredApiKey generates a public API key intended to restrict access
+to certain records. This new key is built upon the existing key named `parentApiKey` and the following options.
+
+  @param parentApiKey string - The parent API key.
+  @param restrictions *SecuredApiKeyRestrictions - The restrictions to apply to the new key.
+  @return string - The new secured API key.
+  @return error - Error if any.
+*/
 func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *SecuredApiKeyRestrictions) (string, error) {
 	h := hmac.New(sha256.New, []byte(parentApiKey))
 
@@ -475,7 +492,13 @@ func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *Sec
 	return key, nil
 }
 
-// GetSecuredApiKeyRemainingValidity retrieves the remaining validity of the previously generated `securedApiKey`, the `ValidUntil` parameter must have been provided.
+/*
+GetSecuredApiKeyRemainingValidity retrieves the remaining validity of the previously generated `securedApiKey`, the `ValidUntil` parameter must have been provided.
+
+  @param securedApiKey string - The secured API key.
+  @return time.Duration - The remaining validity of the secured API key.
+  @return error - Error if any.
+*/
 func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (time.Duration, error) {
 	if len(securedApiKey) == 0 {
 		return 0, fmt.Errorf("given secured API key is empty: %s", securedApiKey)
@@ -500,46 +523,109 @@ func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (tim
 	return time.Until(time.Unix(int64(ts), 0)), nil
 }
 
-// ChunkedBatch chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
-func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action *Action, waitForTasks *bool, batchSize *int) ([]BatchResponse, error) {
-	var (
-		defaultBatchSize   = 1000
-		defaultAction      = ACTION_ADD_OBJECT
-		defaultWaitForTask = false
-	)
 
-	if batchSize == nil {
-		batchSize = &defaultBatchSize
-	}
 
-	if action == nil {
-		action = &defaultAction
-	}
+/*
+Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
 
-	if waitForTasks == nil {
-		waitForTasks = &defaultWaitForTask
-	}
+  @param indexName string - the index name to save objects into.
+  @param objects []map[string]any - List of objects to save.
+  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @return []BatchResponse - List of batch responses.
+  @return error - Error if any.
+*/
+func (c *APIClient) SaveObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  return c.ChunkedBatch(indexName, objects, ACTION_ADD_OBJECT, opts...)
+}
 
-	requests := make([]BatchRequest, 0, len(objects)%1000)
-	responses := make([]BatchResponse, 0, len(objects)%1000)
+/*
+Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+
+  @param indexName string - the index name to delete objects from.
+  @param objectIDs []string - List of objectIDs to delete.
+  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @return []BatchResponse - List of batch responses.
+  @return error - Error if any.
+*/
+func (c *APIClient) DeleteObjects(indexName string, objectIDs []string, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  objects := make([]map[string]any, 0, len(objectIDs))
+
+  for _, id := range objectIDs {
+    objects = append(objects, map[string]any{"objectID":id})
+  }
+
+  return c.ChunkedBatch(indexName, objects, ACTION_DELETE_OBJECT, opts...)
+}
+
+/*
+Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+
+  @param indexName string - the index name to save objects into.
+  @param objects []map[string]any - List of objects to save.
+  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @return []BatchResponse - List of batch responses.
+  @return error - Error if any.
+*/
+func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]BatchResponse, error) {
+  conf := config{
+    createIfNotExists: true,
+  }
+
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
+
+  var action Action
+
+  if conf.createIfNotExists {
+    action = ACTION_PARTIAL_UPDATE_OBJECT
+  } else {
+    action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
+  }
+
+  return c.ChunkedBatch(indexName, objects, action, toChunkedBatchOptions(opts)...)
+}
+
+/*
+ChunkedBatch chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+
+  @param indexName string - the index name to save objects into.
+  @param objects []map[string]any - List of objects to save.
+  @param action Action - The action to perform on the objects.
+  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @return []BatchResponse - List of batch responses.
+  @return error - Error if any.
+*/
+func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action Action, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  conf := config{
+    waitForTasks: false,
+    batchSize:    1000,
+  }
+	
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
+
+	requests := make([]BatchRequest, 0, len(objects)%conf.batchSize)
+	responses := make([]BatchResponse, 0, len(objects)%conf.batchSize)
 
 	for i, obj := range objects {
-		requests = append(requests, *NewBatchRequest(*action, obj))
+		requests = append(requests, *NewBatchRequest(action, obj))
 
-		if len(requests) == *batchSize || i == len(objects)-1 {
-			resp, err := c.Batch(c.NewApiBatchRequest(indexName, NewBatchWriteParams(requests)))
+		if len(requests) == conf.batchSize || i == len(objects)-1 {
+			resp, err := c.Batch(c.NewApiBatchRequest(indexName, NewBatchWriteParams(requests)), toRequestOptions(opts)...)
 			if err != nil {
 				return nil, err
 			}
 
 			responses = append(responses, *resp)
-			requests = make([]BatchRequest, 0, len(objects)%1000)
+			requests = make([]BatchRequest, 0, len(objects)%conf.batchSize)
 		}
 	}
 
-	if *waitForTasks {
+	if conf.waitForTasks {
 		for _, resp := range responses {
-			_, err := c.WaitForTask(indexName, resp.TaskID, nil, nil)
+			_, err := c.WaitForTask(indexName, resp.TaskID, toIterableOptions(opts)...)
 			if err != nil {
 				return nil, err
 			}
@@ -549,44 +635,52 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 	return responses, nil
 }
 
-// ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
-// See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
-func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, batchSize *int) (*ReplaceAllObjectsResponse, error) {
+/*
+ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
+See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+
+  @param indexName string - the index name to replace objects into.
+  @param objects []map[string]any - List of objects to replace.
+  @param opts ...ChunkedBatchOption - Optional parameters for the request.
+  @return *ReplaceAllObjectsResponse - The response of the replace all objects operation.
+  @return error - Error if any.
+*/
+func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ReplaceAllObjectsResponse, error) {
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
-	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_RULES, SCOPE_TYPE_SETTINGS, SCOPE_TYPE_SYNONYMS}))))
+	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	waitForTask := true
+  opts = append(opts, WithWaitForTasks(true))
 
-	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, nil, &waitForTask, batchSize)
+	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, opts...)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, nil, nil)
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_RULES, SCOPE_TYPE_SETTINGS, SCOPE_TYPE_SYNONYMS}))))
+	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, nil, nil)
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, toIterableOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)))
+	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, nil, nil)
+	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, toIterableOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}

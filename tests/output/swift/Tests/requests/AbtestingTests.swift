@@ -2,52 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 import XCTest
 
-import DotEnv
 import Utils
 
 @testable import Abtesting
 @testable import Core
 
 final class AbtestingClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: AbtestingClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? AbtestingClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// addABTests with minimal parameters
     func testAddABTestsTest() async throws {
@@ -202,16 +164,14 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-header-1": "spaces are left alone"],
-
-            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
-        )
-
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-header-1": "spaces are left alone"],
+
+                queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -318,15 +278,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -361,15 +319,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query2": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query2": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -407,15 +363,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -458,15 +412,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -509,15 +461,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["isItWorking": true]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["isItWorking": true]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -555,15 +505,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": 2]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": 2]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -601,15 +549,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": ["b and c", "d"]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": ["b and c", "d"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -647,15 +593,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [true, true, false]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [true, true, false]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -693,15 +637,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [1, 2]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [1, 2]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -896,30 +838,6 @@ final class AbtestingClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
-
-        guard let e2eClient = AbtestingClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.listABTestsWithHTTPInfo(
-            offset: 0,
-            limit: 21,
-            indexPrefix: "cts_e2e ab",
-            indexSuffix: "t"
-        )
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"abtests\":[{\"abTestID\":85635,\"createdAt\":\"2024-05-13T10:12:27.739233Z\",\"endAt\":\"2124-05-13T00:00:00Z\",\"name\":\"cts_e2e_abtest\",\"status\":\"active\",\"variants\":[{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"this abtest is used for api client automation tests and will expire in 2124\",\"index\":\"cts_e2e_search_facet\",\"purchaseCount\":0,\"trafficPercentage\":25},{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"\",\"index\":\"cts_e2e abtest\",\"purchaseCount\":0,\"trafficPercentage\":75}]}],\"count\":1,\"total\":1}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// stopABTest

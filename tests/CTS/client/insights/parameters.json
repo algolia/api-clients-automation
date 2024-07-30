@@ -8,13 +8,11 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "pushEvents",
+        "method": "pushEvents",
         "parameters": {
           "events": [
             {
@@ -53,13 +51,11 @@
           "appId": "my-app-id",
           "apiKey": "my-api-key",
           "region": "us"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customDelete",
+        "method": "customDelete",
         "parameters": {
           "path": "test"
         },

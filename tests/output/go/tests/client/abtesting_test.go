@@ -15,7 +15,7 @@ import (
 
 func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := abtesting.Configuration{
+	cfg := abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -32,9 +32,11 @@ func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoReque
 // calls api with correct user agent
 func TestAbtestingcommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAbtestingClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestAbtestingcommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestAbtestingcommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAbtestingClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestAbtestingcommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestAbtestingcommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createAbtestingClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,12 +76,14 @@ func TestAbtestingcommonApi2(t *testing.T) {
 // fallbacks to the alias when region is not given
 func TestAbtestingparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -84,7 +92,7 @@ func TestAbtestingparameters0(t *testing.T) {
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.GetABTest(client.NewApiGetABTestRequest(
+	res, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
 	))
 	require.NoError(t, err)
@@ -94,12 +102,14 @@ func TestAbtestingparameters0(t *testing.T) {
 // uses the correct region
 func TestAbtestingparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -109,7 +119,7 @@ func TestAbtestingparameters1(t *testing.T) {
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.GetABTest(client.NewApiGetABTestRequest(
+	res, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
 	))
 	require.NoError(t, err)
@@ -119,12 +129,14 @@ func TestAbtestingparameters1(t *testing.T) {
 // throws when incorrect region is given
 func TestAbtestingparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

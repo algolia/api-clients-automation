@@ -15,7 +15,7 @@ import (
 
 func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := suggestions.Configuration{
+	cfg := suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -32,9 +32,11 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 // calls api with correct user agent
 func TestSuggestionscommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSuggestionsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestSuggestionscommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestSuggestionscommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSuggestionsClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestSuggestionscommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestSuggestionscommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createSuggestionsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,12 +76,14 @@ func TestSuggestionscommonApi2(t *testing.T) {
 // throws when region is not given
 func TestSuggestionsparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -90,12 +98,14 @@ func TestSuggestionsparameters0(t *testing.T) {
 // throws when incorrect region is given
 func TestSuggestionsparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -110,12 +120,14 @@ func TestSuggestionsparameters1(t *testing.T) {
 // does not throw when region is given
 func TestSuggestionsparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

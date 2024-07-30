@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients } from '../buildClients.js';
+import { buildClients, buildPlaygrounds } from '../buildClients.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -9,8 +9,7 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
-import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
-import type { Versions } from '../release/types.js';
+import { createReleasePR } from '../release/createReleasePR.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
@@ -82,6 +81,17 @@ buildCommand
   });
 
 buildCommand
+  .command('playground')
+  .description('Build a specified playground')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildPlaygrounds(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(args.clients)
@@ -130,23 +140,43 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
-    const { language, client } = transformSelection({
-      langArg,
-      clientArg,
-    });
+  .option('-e, --no-e2e', 'run the e2e tests, that requires internet connection')
+  .option('-c, --no-client', 'run the client tests')
+  .option('-r, --no-requests', 'run the requests tests')
+  .option('-b, --benchmark', 'run the benchmarks')
+  .action(
+    async (
+      langArg: LangArg,
+      clientArg: string[],
+      { verbose, e2e, client: includeClient, requests, benchmark },
+    ) => {
+      const { language, client } = transformSelection({
+        langArg,
+        clientArg,
+      });
 
-    setVerbose(Boolean(verbose));
+      setVerbose(Boolean(verbose));
 
-    await runCts(language === ALL ? LANGUAGES : [language], client);
-  });
+      await runCts(language === ALL ? LANGUAGES : [language], client, {
+        client: includeClient,
+        requests,
+        e2e,
+        benchmark,
+      });
+    },
+  );
 
 ctsCommand
   .command('server')
   .description('Start the test servers in standalone mode')
   .action(async () => {
     setVerbose(true);
-    await startTestServer();
+    await startTestServer({
+      benchmark: true,
+      client: true,
+      requests: true,
+      e2e: true,
+    });
   });
 
 program
@@ -214,15 +244,8 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .option('-gg, --generate-graph', 'only generates the graph')
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, generateGraph }) => {
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun }) => {
     setVerbose(Boolean(verbose));
-
-    if (generateGraph) {
-      await updateSLA({} as Versions, true);
-
-      return;
-    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];

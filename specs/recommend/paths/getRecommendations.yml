@@ -6,6 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - search
+  x-legacy-signature-recommend: true
   summary: Retrieve recommendations
   description: |
     Retrieves recommendations from selected AI models.
@@ -40,6 +41,8 @@ post:
                 type: array
                 items:
                   $ref: '../common/schemas/RecommendationsResponse.yml#/recommendationsResults'
+            required:
+              - results
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

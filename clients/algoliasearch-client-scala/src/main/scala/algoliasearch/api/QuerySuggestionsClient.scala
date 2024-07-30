@@ -4,12 +4,12 @@
 package algoliasearch.api
 
 import algoliasearch.querysuggestions.BaseResponse
+import algoliasearch.querysuggestions.Configuration
+import algoliasearch.querysuggestions.ConfigurationResponse
+import algoliasearch.querysuggestions.ConfigurationWithIndex
 import algoliasearch.querysuggestions.ErrorBase
 import algoliasearch.querysuggestions.GetConfigStatus200Response
 import algoliasearch.querysuggestions.GetLogFile200Response
-import algoliasearch.querysuggestions.QuerySuggestionsConfiguration
-import algoliasearch.querysuggestions.QuerySuggestionsConfigurationResponse
-import algoliasearch.querysuggestions.QuerySuggestionsConfigurationWithIndex
 import algoliasearch.querysuggestions._
 import algoliasearch.ApiClient
 import algoliasearch.api.QuerySuggestionsClient.hosts
@@ -75,20 +75,19 @@ class QuerySuggestionsClient(
     * Required API Key ACLs:
     *   - editSettings
     */
-  def createConfig(
-      querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[BaseResponse] = Future {
+  def createConfig(configurationWithIndex: ConfigurationWithIndex, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[BaseResponse] = Future {
     requireNotNull(
-      querySuggestionsConfigurationWithIndex,
-      "Parameter `querySuggestionsConfigurationWithIndex` is required when calling `createConfig`."
+      configurationWithIndex,
+      "Parameter `configurationWithIndex` is required when calling `createConfig`."
     )
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/configs")
-      .withBody(querySuggestionsConfigurationWithIndex)
+      .withBody(configurationWithIndex)
       .build()
     execute[BaseResponse](request, requestOptions)
   }
@@ -223,14 +222,14 @@ class QuerySuggestionsClient(
     */
   def getAllConfigs(
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[Seq[QuerySuggestionsConfigurationResponse]] = Future {
+  )(implicit ec: ExecutionContext): Future[Seq[ConfigurationResponse]] = Future {
 
     val request = HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/configs")
       .build()
-    execute[Seq[QuerySuggestionsConfigurationResponse]](request, requestOptions)
+    execute[Seq[ConfigurationResponse]](request, requestOptions)
   }
 
   /** Retrieves a single Query Suggestions configuration by its index name.
@@ -243,7 +242,7 @@ class QuerySuggestionsClient(
     */
   def getConfig(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[QuerySuggestionsConfigurationResponse] = Future {
+  ): Future[ConfigurationResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getConfig`.")
 
     val request = HttpRequest
@@ -251,7 +250,7 @@ class QuerySuggestionsClient(
       .withMethod("GET")
       .withPath(s"/1/configs/${escape(indexName)}")
       .build()
-    execute[QuerySuggestionsConfigurationResponse](request, requestOptions)
+    execute[ConfigurationResponse](request, requestOptions)
   }
 
   /** Reports the status of a Query Suggestions index.
@@ -304,22 +303,17 @@ class QuerySuggestionsClient(
     * @param indexName
     *   Query Suggestions index name.
     */
-  def updateConfig(
-      indexName: String,
-      querySuggestionsConfiguration: QuerySuggestionsConfiguration,
-      requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[BaseResponse] = Future {
+  def updateConfig(indexName: String, configuration: Configuration, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[BaseResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.")
-    requireNotNull(
-      querySuggestionsConfiguration,
-      "Parameter `querySuggestionsConfiguration` is required when calling `updateConfig`."
-    )
+    requireNotNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/1/configs/${escape(indexName)}")
-      .withBody(querySuggestionsConfiguration)
+      .withBody(configuration)
       .build()
     execute[BaseResponse](request, requestOptions)
   }

@@ -87,7 +87,9 @@ async function run(): Promise<void> {
       throw new Error(`Unknown type: ${actionType}`);
     }
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 

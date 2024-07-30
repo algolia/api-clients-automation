@@ -1,4 +1,4 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,7 +24,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class InsightsClientRequestsTests {
 
   private InsightsClient client;
-  private InsightsClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -35,13 +33,6 @@ class InsightsClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new InsightsClient("appId", "apiKey", "us", options);
-
-    if ("true".equals(System.getenv("CI"))) {
-      this.clientE2E = new InsightsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
-    } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
-      this.clientE2E = new InsightsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
-    }
   }
 
   @AfterAll
@@ -615,7 +606,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1718755200000L)
+                .setTimestamp(1722124800000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
@@ -624,7 +615,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1718755200000L)
+                .setTimestamp(1722124800000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
             )
           )
@@ -636,40 +627,12 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1722124800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1722124800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
-    );
-
-    var res = clientE2E.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          List.of(
-            new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.CONVERSION)
-              .setEventName("Product Purchased")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1718755200000L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
-            new ViewedObjectIDs()
-              .setEventType(ViewEvent.VIEW)
-              .setEventName("Product Detail Page Viewed")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1718755200000L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
-          )
-        )
-    );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
     );
   }
 

@@ -9,6 +9,7 @@ import com.algolia.EchoResponse;
 import com.algolia.api.AnalyticsClient;
 import com.algolia.config.*;
 import com.algolia.model.analytics.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -26,7 +27,10 @@ class AnalyticsClientClientTests {
 
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.builder()
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .serializationInclusion(JsonInclude.Include.NON_NULL)
+      .build();
   }
 
   AnalyticsClient createClient() {
@@ -109,12 +113,9 @@ class AnalyticsClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest2() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` must be one of the following: de, us", exception.getMessage());
     }
   }
@@ -125,13 +126,10 @@ class AnalyticsClientClientTests {
     AnalyticsClient client = createClient();
 
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          client.getClickPositions(null);
-          EchoResponse result = echo.getLastResponse();
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        client.getClickPositions(null);
+        EchoResponse result = echo.getLastResponse();
+      });
       assertEquals("Parameter `index` is required when calling `getClickPositions`.", exception.getMessage());
     }
   }

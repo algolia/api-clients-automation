@@ -9,6 +9,8 @@ use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -16,16 +18,13 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for SearchClient.
  *
  * @internal
- * @coversNothing
  */
+#[CoversClass(SearchClient::class)]
 class SearchTest extends TestCase implements HttpClientInterface
 {
     public const APP_ID = 'test-app-id';
     public const API_KEY = 'test-api-key';
 
-    /**
-     * @var RequestInterface
-     */
     private $recordedRequest;
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
@@ -39,9 +38,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    /**
-     * Test case : calls api with correct read host.
-     */
+    #[TestDox('calls api with correct read host')]
     public function test0api()
     {
         $client = $this->createClient(
@@ -59,9 +56,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct write host.
-     */
+    #[TestDox('calls api with correct write host')]
     public function test1api()
     {
         $client = $this->createClient(
@@ -79,15 +74,13 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : tests the retry strategy.
-     */
+    #[TestDox('tests the retry strategy')]
     public function test2api()
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6677', 'http://localhost:6678']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
 
         $res = $client->customGet(
-            '1/test/retry',
+            '1/test/retry/php',
         );
         $this->assertEquals(
             '{"message":"ok test server response"}',
@@ -95,9 +88,22 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct user agent.
-     */
+    #[TestDox('tests the retry strategy error')]
+    public function test3api()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/hang/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id.');
+        }
+    }
+
+    #[TestDox('calls api with correct user agent')]
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -106,15 +112,13 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
+                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
     }
 
-    /**
-     * Test case : calls api with default read timeouts.
-     */
+    #[TestDox('calls api with default read timeouts')]
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -132,9 +136,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with default write timeouts.
-     */
+    #[TestDox('calls api with default write timeouts')]
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -152,9 +154,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : generate secured api key basic.
-     */
+    #[TestDox('generate secured api key basic')]
     public function test0helpers()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -172,9 +172,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : generate secured api key with searchParams.
-     */
+    #[TestDox('generate secured api key with searchParams')]
     public function test1helpers()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -208,9 +206,241 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : client throws with invalid parameters.
-     */
+    #[TestDox('call replaceAllObjects without error')]
+    public function test2helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
+
+        $res = $client->replaceAllObjects(
+            'cts_e2e_replace_all_objects_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fiona',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gael',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'Igor',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'Julia',
+                ],
+            ],
+            3,
+        );
+        $this->assertEquals(
+            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('call saveObjects without error')]
+    public function test3helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->saveObjects(
+            'cts_e2e_saveObjects_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+        );
+        $this->assertEquals(
+            '[{"taskID":333,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('saveObjects should report errors')]
+    public function test4helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://localhost:6680']));
+
+        try {
+            $res = $client->saveObjects(
+                'cts_e2e_saveObjects_php',
+                [
+                    ['objectID' => '1',
+                        'name' => 'Adam',
+                    ],
+
+                    ['objectID' => '2',
+                        'name' => 'Benoit',
+                    ],
+                ],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
+        }
+    }
+
+    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
+    public function test5helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+        $this->assertEquals(
+            '[{"taskID":444,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
+    public function test6helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_php',
+            [
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            false,
+        );
+        $this->assertEquals(
+            '[{"taskID":555,"objectIDs":["3","4"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('call deleteObjects without error')]
+    public function test7helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->deleteObjects(
+            'cts_e2e_deleteObjects_php',
+            [
+                '1',
+
+                '2',
+            ],
+        );
+        $this->assertEquals(
+            '[{"taskID":666,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('wait for api key helper - add')]
+    public function test8helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-add-operation-test-php',
+            'add',
+        );
+        $this->assertEquals(
+            '{"value":"api-key-add-operation-test-php","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('wait for api key - update')]
+    public function test9helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-update-operation-test-php',
+            'update',
+            ['description' => 'my updated api key',
+                'acl' => [
+                    'search',
+
+                    'addObject',
+
+                    'deleteObject',
+                ],
+                'indexes' => [
+                    'Movies',
+
+                    'Books',
+                ],
+                'referers' => [
+                    '*google.com',
+
+                    '*algolia.com',
+                ],
+                'validity' => 305,
+                'maxQueriesPerIPPerHour' => 95,
+                'maxHitsPerQuery' => 20,
+            ],
+        );
+        $this->assertEquals(
+            '{"value":"api-key-update-operation-test-php","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('wait for api key - delete')]
+    public function test10helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-delete-operation-test-php',
+            'delete',
+        );
+        $this->assertNull($res);
+    }
+
+    #[TestDox('client throws with invalid parameters')]
     public function test0parameters()
     {
         try {
@@ -250,9 +480,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    /**
-     * Test case : `addApiKey` throws with invalid parameters.
-     */
+    #[TestDox('`addApiKey` throws with invalid parameters')]
     public function test1parameters()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -267,9 +495,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    /**
-     * Test case : `addOrUpdateObject` throws with invalid parameters.
-     */
+    #[TestDox('`addOrUpdateObject` throws with invalid parameters')]
     public function test2parameters()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);

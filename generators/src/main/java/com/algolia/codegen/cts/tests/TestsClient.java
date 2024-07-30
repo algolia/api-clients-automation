@@ -4,6 +4,7 @@ import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
 
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
+import io.swagger.util.Json;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +16,13 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
 
-  public TestsClient(String language, String client) {
+  private final boolean withBenchmark;
+  private final String testType;
+
+  public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
+    this.withBenchmark = withBenchmark;
+    this.testType = withBenchmark ? "benchmark" : "client";
   }
 
   @Override
@@ -26,8 +32,17 @@ public class TestsClient extends TestsGenerator {
       return false;
     }
 
-    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
-    return templates.exists();
+    File templates = new File("templates/" + language + "/tests/client/" + testType + ".mustache");
+    if (!templates.exists()) {
+      return false;
+    }
+
+    if (withBenchmark) {
+      File benchmarkTest = new File("tests/CTS/benchmark/" + client + "/benchmark.json");
+      return benchmarkTest.exists();
+    }
+
+    return true;
   }
 
   @Override
@@ -37,15 +52,15 @@ public class TestsClient extends TestsGenerator {
     }
     supportingFiles.add(
       new SupportingFile(
-        "tests/client/suite.mustache",
-        "tests/output/" + language + "/" + outputFolder + "/client",
+        "tests/client/" + testType + ".mustache",
+        "tests/output/" + language + "/" + outputFolder + "/" + testType,
         Helpers.createClientName(client, language) + extension
       )
     );
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, ClientTestData[]> cts = loadCTS("client", client, ClientTestData[].class);
+    Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
 
     List<Object> blocks = new ArrayList<>();
@@ -61,17 +76,18 @@ public class TestsClient extends TestsGenerator {
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
+          testOut.put("useEchoRequester", true);
+          testOut.put("isBenchmark", withBenchmark);
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
-            stepOut.put("useEchoRequester", true);
+            if (step.times > 1) stepOut.put("times", step.times);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
-              stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
+              stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
-
-              stepOut.put("useEchoRequester", !hasCustomHosts);
+              if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
@@ -87,30 +103,27 @@ public class TestsClient extends TestsGenerator {
               }
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
-              ope = operations.get(step.path);
+              ope = operations.get(step.method);
               if (ope == null) {
-                throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
+                throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
-              stepOut.put("hasOperationParams", ope.hasParams);
+              stepOut.put("hasParams", ope.hasParams);
+              stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+              if (ope.returnType != null && ope.returnType.length() > 0) {
+                stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
+              }
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
               testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
             }
 
-            stepOut.put("object", step.object);
-            stepOut.put("path", step.path);
+            stepOut.put("method", step.method);
 
-            if (step.requestOptions != null) {
-              Map<String, Object> requestOptions = new HashMap<>();
-              paramsType.enhanceParameters(step.requestOptions, requestOptions);
-              stepOut.put("requestOptions", requestOptions);
-            }
-
-            if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
-              stepOut.put("isCustom", true);
+            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
+              stepOut.put("isCustomRequest", true);
             }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
@@ -128,40 +141,57 @@ public class TestsClient extends TestsGenerator {
               }
             }
 
-            if (step.expected.type != null) {
-              switch (step.expected.type) {
-                case "userAgent":
-                  stepOut.put("testUserAgent", true);
-                  break;
-                case "host":
-                  stepOut.put("testHost", true);
-                  break;
-                case "timeouts":
-                  stepOut.put("testTimeouts", true);
-                  break;
-                case "response":
-                  stepOut.put("testResponse", true);
-                  stepOut.put("useEchoRequester", false);
-                  break;
-                default:
-                  throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
+            if (step.expected != null) {
+              if (step.expected.type != null) {
+                switch (step.expected.type) {
+                  case "userAgent":
+                    stepOut.put("testUserAgent", true);
+                    break;
+                  case "host":
+                    stepOut.put("testHost", true);
+                    break;
+                  case "timeouts":
+                    stepOut.put("testTimeouts", true);
+                    break;
+                  case "response":
+                    stepOut.put("testResponse", true);
+                    stepOut.put("useEchoRequester", false);
+                    break;
+                  default:
+                    throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
+                }
               }
-            }
-            if (step.expected.error != null) {
-              stepOut.put("isError", true);
-              stepOut.put("expectedError", step.expected.error);
-              if (language.equals("go") && step.path != null) {
-                // hack for go that use PascalCase, but just in the operationID
-                stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
-              }
-            } else if (step.expected.match != null) {
-              Map<String, Object> matchMap = new HashMap<>();
-              if (step.expected.match instanceof Map match) {
-                paramsType.enhanceParameters(match, matchMap);
-                stepOut.put("match", matchMap);
-                stepOut.put("matchIsObject", true);
-              } else {
-                stepOut.put("match", step.expected.match);
+              if (step.expected.error != null) {
+                stepOut.put("isError", true);
+                if (step.expected.error instanceof Map errorMap) {
+                  stepOut.put("expectedError", errorMap.getOrDefault(language, "<missing error for " + language + ">"));
+                } else {
+                  stepOut.put("expectedError", step.expected.error);
+                }
+                if (language.equals("go") && step.method != null) {
+                  // hack for go that use PascalCase, but just in the operationID
+                  stepOut.put(
+                    "expectedError",
+                    ((String) stepOut.get("expectedError")).replace(step.method, Helpers.toPascalCase(step.method))
+                  );
+                }
+              } else if (step.expected.match != null) {
+                Map<String, Object> matchMap = new HashMap<>();
+                if (step.expected.match instanceof Map match) {
+                  paramsType.enhanceParameters(match, matchMap);
+                  stepOut.put("match", matchMap);
+                  stepOut.put("matchIsJSON", true);
+                } else if (step.expected.match instanceof List match) {
+                  matchMap.put("parameters", Json.mapper().writeValueAsString(step.expected.match));
+                  stepOut.put("match", matchMap);
+                  stepOut.put("matchIsJSON", true);
+                } else {
+                  stepOut.put("match", step.expected.match);
+                }
+              } else if (step.expected.match == null) {
+                stepOut.put("match", Map.of());
+                stepOut.put("matchIsJSON", false);
+                stepOut.put("matchIsNull", true);
               }
             }
             steps.add(stepOut);
@@ -177,6 +207,6 @@ public class TestsClient extends TestsGenerator {
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    bundle.put("blocksClient", blocks);
+    bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
   }
 }

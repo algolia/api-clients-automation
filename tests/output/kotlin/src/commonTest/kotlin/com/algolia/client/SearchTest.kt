@@ -3,6 +3,7 @@ package com.algolia.client
 
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
+import com.algolia.client.extensions.*
 import com.algolia.client.model.search.*
 import com.algolia.client.transport.*
 import com.algolia.utils.*
@@ -46,18 +47,29 @@ class SearchTest {
 
   @Test
   fun `tests the retry strategy`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676), Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
     client.runTest(
       call = {
         customGet(
-          path = "1/test/retry",
+          path = "1/test/retry/kotlin",
         )
       },
+
       response = {
         val response = Json.encodeToString(it)
         assertEquals("{\"message\":\"ok test server response\"}", response)
       },
     )
+  }
+
+  @Test
+  fun `tests the retry strategy error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676))))
+    assertFails {
+      client.customGet(
+        path = "1/test/hang/kotlin",
+      )
+    }.let { error -> assertError(error, "Error(s) while processing the retry strategy") }
   }
 
   @Test
@@ -76,6 +88,7 @@ class SearchTest {
           },
         )
       },
+
       response = {
         val response = Json.encodeToString(it)
         assertEquals("{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}", response)
@@ -129,6 +142,432 @@ class SearchTest {
         assertEquals(2000, it.connectTimeout)
         assertEquals(30000, it.socketTimeout)
       },
+    )
+  }
+
+  @Test
+  fun `generate secured api key basic`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            validUntil = 2524604400L,
+            restrictIndices = listOf("Movies"),
+          ),
+        )
+      },
+
+      response = {
+        assertEquals("""NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw""", it)
+      },
+
+    )
+  }
+
+  @Test
+  fun `generate secured api key with searchParams`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            validUntil = 2524604400L,
+            restrictIndices = listOf("Movies", "cts_e2e_settings"),
+            restrictSources = "192.168.1.0/24",
+            filters = "category:Book OR category:Ebook AND _tags:published",
+            userToken = "user123",
+            searchParams = SearchParamsObject(
+              query = "batman",
+              typoTolerance = TypoToleranceEnum.entries.first { it.value == "strict" },
+              aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
+              mode = Mode.entries.first { it.value == "neuralSearch" },
+              hitsPerPage = 10,
+              optionalWords = listOf("one", "two"),
+            ),
+          ),
+        )
+      },
+
+      response = {
+        assertEquals("""MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw""", it)
+      },
+
+    )
+  }
+
+  @Test
+  fun `call replaceAllObjects without error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6679))))
+    client.runTest(
+      call = {
+        replaceAllObjects(
+          indexName = "cts_e2e_replace_all_objects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("3"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Cyril"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("4"),
+              )
+              put(
+                "name",
+                JsonPrimitive("David"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("5"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Eva"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("6"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Fiona"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("7"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Gael"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("8"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Hugo"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("9"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Igor"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("10"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Julia"),
+              )
+            },
+          ),
+          batchSize = 3,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `call saveObjects without error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        saveObjects(
+          indexName = "cts_e2e_saveObjects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+          ),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":333,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `saveObjects should report errors`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "wrong-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    assertFails {
+      client.saveObjects(
+        indexName = "cts_e2e_saveObjects_kotlin",
+        objects = listOf(
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("1"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Adam"),
+            )
+          },
+          buildJsonObject {
+            put(
+              "objectID",
+              JsonPrimitive("2"),
+            )
+            put(
+              "name",
+              JsonPrimitive("Benoit"),
+            )
+          },
+        ),
+      )
+    }.let { error -> assertError(error, "Client request(POST http://localhost:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"") }
+  }
+
+  @Test
+  fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+          ),
+          createIfNotExists = true,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":444,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `call partialUpdateObjects with createIfNotExists=false`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("3"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Cyril"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("4"),
+              )
+              put(
+                "name",
+                JsonPrimitive("David"),
+              )
+            },
+          ),
+          createIfNotExists = false,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":555,"objectIDs":["3","4"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `call deleteObjects without error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        deleteObjects(
+          indexName = "cts_e2e_deleteObjects_kotlin",
+          objectIDs = listOf("1", "2"),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""[{"taskID":666,"objectIDs":["1","2"]}]""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key helper - add`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-add-operation-test-kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "add" },
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key - update`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-update-operation-test-kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "update" },
+          apiKey = ApiKey(
+            description = "my updated api key",
+            acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }, Acl.entries.first { it.value == "deleteObject" }),
+            indexes = listOf("Movies", "Books"),
+            referers = listOf("*google.com", "*algolia.com"),
+            validity = 305,
+            maxQueriesPerIPPerHour = 95,
+            maxHitsPerQuery = 20,
+          ),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
+        val actual = Json.encodeToJsonElement(it)
+        areJsonElementsEqual(expected, actual)
+      },
+
+    )
+  }
+
+  @Test
+  fun `wait for api key - delete`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForApiKey(
+          key = "api-key-delete-operation-test-kotlin",
+          operation = ApiKeyOperation.entries.first { it.value == "delete" },
+        )
+      },
+
+      response = {
+        assertNull(it)
+      },
+
     )
   }
 

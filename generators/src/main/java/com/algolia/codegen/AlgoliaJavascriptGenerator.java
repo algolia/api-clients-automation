@@ -58,6 +58,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // root export files
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
 
     // `client` related files, `algoliasearch` have it's own logic below
     if (!isAlgoliasearchClient) {
@@ -121,11 +122,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   // Get the packageName from the output field in clients.config.json
   public String getPackageName(String client) throws ConfigException {
-    String output = StreamSupport
-      .stream(
-        Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
-        false
-      )
+    String output = StreamSupport.stream(
+      Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
+      false
+    )
       .filter(node -> node.get("name").asText().equals((String) additionalProperties.get("client")))
       .findFirst()
       .orElseThrow(() -> new ConfigException("Cannot find client " + additionalProperties.get("client") + " in config/clients.config.json"))
@@ -155,6 +155,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       additionalProperties.put("abtestingVersion", Helpers.getPackageJsonVersion("client-abtesting"));
       additionalProperties.put("personalizationVersion", Helpers.getPackageJsonVersion("client-personalization"));
       additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
+      additionalProperties.put("recommendVersion", Helpers.getPackageJsonVersion("recommend"));
 
       // Files used to generate the `lite` client
       apiName = "lite" + Helpers.API_SUFFIX;
@@ -185,7 +186,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions();
     try {
       additionalProperties.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
-      additionalProperties.put("npmNamespace", Helpers.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

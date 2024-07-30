@@ -300,8 +300,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -311,12 +311,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -506,8 +506,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -517,12 +517,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -712,8 +712,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -723,12 +723,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -926,8 +926,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -937,12 +937,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -983,6 +983,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
+      x-legacy-signature-recommend: true
       summary: Retrieve recommendations
       description: |
         Retrieves recommendations from selected AI models.
@@ -1019,6 +1020,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/recommendationsResults'
+                required:
+                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1234,29 +1237,29 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
             response = client.get_recommendations(
               GetRecommendationsParams.new(
-                requests: [RelatedQuery.new(
-                  index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42.1
-                )]
+                requests: [
+                  RelatedQuery.new(index_name: "indexName", object_id: "objectID", model: "related-products", threshold: 42.1)
+                ]
               )
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1491,24 +1494,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
             response = client.get_recommend_rule("indexName",
-            'related-products', "objectID")
+            "related-products", "objectID")
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1724,24 +1727,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
             response = client.delete_recommend_rule("indexName",
-            'related-products', "objectID")
+            "related-products", "objectID")
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1984,24 +1987,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
             response = client.get_recommend_status("indexName",
-            'related-products', 12_345)
+            "related-products", 12345)
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2288,24 +2291,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::RecommendClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
             response = client.search_recommend_rules("indexName",
-            'related-products')
+            "related-products")
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3421,6 +3424,11 @@ components:
         - count
         - alpha
         - hidden
+    hide:
+      description: Hide facet values.
+      type: array
+      items:
+        type: string
     value:
       type: object
       additionalProperties: false
@@ -3429,6 +3437,8 @@ components:
           $ref: '#/components/schemas/order'
         sortRemainingBy:
           $ref: '#/components/schemas/sortRemainingBy'
+        hide:
+          $ref: '#/components/schemas/hide'
     values:
       description: Order of facet values. One object for each facet.
       type: object
@@ -3444,6 +3454,13 @@ components:
           $ref: '#/components/schemas/facets'
         values:
           $ref: '#/components/schemas/values'
+    redirectURL:
+      description: The redirect rule container.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -3458,6 +3475,8 @@ components:
       properties:
         facetOrdering:
           $ref: '#/components/schemas/facetOrdering'
+        redirect:
+          $ref: '#/components/schemas/redirectURL'
       x-categories:
         - Advanced
     reRankingApplyFilter:
@@ -4272,8 +4291,6 @@ components:
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
       required:
-        - facetName
-        - facetValue
         - model
     trendingItemsQuery:
       title: Trending items
@@ -4362,14 +4379,6 @@ components:
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/lookingSimilarQuery'
         - $ref: '#/components/schemas/recommendedForYouQuery'
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
@@ -4419,10 +4428,6 @@ components:
       type: object
       additionalProperties: true
       required:
-        - nbHits
-        - page
-        - nbPages
-        - hitsPerPage
         - processingTimeMS
       properties:
         abTestID:
@@ -4545,8 +4550,6 @@ components:
                 type: number
                 format: double
                 description: Sum of all values in the results.
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
         index:
           type: string
           example: indexName
@@ -4560,16 +4563,10 @@ components:
         message:
           type: string
           description: Warnings about the query.
-        nbHits:
-          $ref: '#/components/schemas/nbHits'
-        nbPages:
-          $ref: '#/components/schemas/nbPages'
         nbSortedHits:
           type: integer
           description: Number of hits selected and sorted by the relevant sort algorithm.
           example: 20
-        page:
-          $ref: '#/components/schemas/page'
         parsedQuery:
           type: string
           description: >-
@@ -4594,7 +4591,8 @@ components:
           type: object
           description: >
             [Redirect results to a
-            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/).
+            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/),
+            this this parameter is for internal use only.
           properties:
             index:
               type: array
@@ -4618,6 +4616,31 @@ components:
             Unique identifier for the query. This is used for [click
             analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
           example: a00dbc80a8d13c4565a442e7e2dca80a
+    nbHits:
+      type: integer
+      description: Number of results (hits).
+      example: 20
+    nbPages:
+      type: integer
+      description: Number of pages of results.
+      example: 1
+    SearchPagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+      required:
+        - page
+        - nbHits
+        - nbPages
+        - hitsPerPage
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -4801,7 +4824,7 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    _distinctSeqID:
+    distinctSeqID:
       type: integer
     recommendScore:
       type: number
@@ -4826,7 +4849,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
         _score:
           $ref: '#/components/schemas/recommendScore'
     trendingFacetHit:
@@ -4860,6 +4883,7 @@ components:
     recommendationsResults:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
         - $ref: '#/components/schemas/recommendationsHits'
     recommendModels:
       type: string

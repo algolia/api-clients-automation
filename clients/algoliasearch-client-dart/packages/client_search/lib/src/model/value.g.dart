@@ -15,6 +15,8 @@ Value _$ValueFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           sortRemainingBy: $checkedConvert('sortRemainingBy',
               (v) => $enumDecodeNullable(_$SortRemainingByEnumMap, v)),
+          hide: $checkedConvert('hide',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -31,6 +33,7 @@ Map<String, dynamic> _$ValueToJson(Value instance) {
 
   writeNotNull('order', instance.order);
   writeNotNull('sortRemainingBy', instance.sortRemainingBy?.toJson());
+  writeNotNull('hide', instance.hide);
   return val;
 }
 

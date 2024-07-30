@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Recommend;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * GetRecommendationsResponse Class Doc Comment.
  *
  * @category Class
  */
-class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class GetRecommendationsResponse extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -69,7 +71,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['results'])) {
             $this->container['results'] = $data['results'];
@@ -134,7 +136,13 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
      */
     public function listInvalidProperties()
     {
-        return [];
+        $invalidProperties = [];
+
+        if (!isset($this->container['results']) || null === $this->container['results']) {
+            $invalidProperties[] = "'results' can't be null";
+        }
+
+        return $invalidProperties;
     }
 
     /**
@@ -151,7 +159,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
     /**
      * Gets results.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResults[]
+     * @return \Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResults[]
      */
     public function getResults()
     {
@@ -161,7 +169,7 @@ class GetRecommendationsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
     /**
      * Sets results.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResults[] $results results
+     * @param \Algolia\AlgoliaSearch\Model\Recommend\RecommendationsResults[] $results results
      *
      * @return self
      */

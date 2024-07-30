@@ -15,7 +15,7 @@ suspend fun main() {
         options = ClientOptions(logLevel = LogLevel.BODY),
     )
 
-    val response = client.getAuthentications()
+    val response = client.listAuthentications()
     println(response)
 
     exitProcess(0)

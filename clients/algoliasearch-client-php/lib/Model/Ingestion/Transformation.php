@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * Transformation Class Doc Comment.
  *
  * @category Class
  */
-class Transformation extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class Transformation extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -94,7 +96,7 @@ class Transformation extends \Algolia\AlgoliaSearch\Model\AbstractModel implemen
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['transformationID'])) {
             $this->container['transformationID'] = $data['transformationID'];
@@ -184,9 +186,6 @@ class Transformation extends \Algolia\AlgoliaSearch\Model\AbstractModel implemen
         }
         if (!isset($this->container['name']) || null === $this->container['name']) {
             $invalidProperties[] = "'name' can't be null";
-        }
-        if (!isset($this->container['description']) || null === $this->container['description']) {
-            $invalidProperties[] = "'description' can't be null";
         }
         if (!isset($this->container['createdAt']) || null === $this->container['createdAt']) {
             $invalidProperties[] = "'createdAt' can't be null";
@@ -281,7 +280,7 @@ class Transformation extends \Algolia\AlgoliaSearch\Model\AbstractModel implemen
     /**
      * Gets description.
      *
-     * @return string
+     * @return null|string
      */
     public function getDescription()
     {
@@ -291,7 +290,7 @@ class Transformation extends \Algolia\AlgoliaSearch\Model\AbstractModel implemen
     /**
      * Sets description.
      *
-     * @param string $description a descriptive name for your transformation of what it does
+     * @param null|string $description a descriptive name for your transformation of what it does
      *
      * @return self
      */

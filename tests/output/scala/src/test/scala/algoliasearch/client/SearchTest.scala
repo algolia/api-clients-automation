@@ -39,7 +39,7 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.customGet[Any](
+      client.customGet[JObject](
         path = "test"
       ),
       Duration.Inf
@@ -52,7 +52,7 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "test"
       ),
       Duration.Inf
@@ -69,6 +69,7 @@ class SearchTest extends AnyFunSuite {
         .builder()
         .withHosts(
           List(
+            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676)),
             Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6677)),
             Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))
           )
@@ -77,12 +78,33 @@ class SearchTest extends AnyFunSuite {
     )
 
     var res = Await.result(
-      client.customGet[Any](
-        path = "1/test/retry"
+      client.customGet[JObject](
+        path = "1/test/retry/scala"
       ),
       Duration.Inf
     )
     assert(write(res) == "{\"message\":\"ok test server response\"}")
+  }
+
+  test("tests the retry strategy error") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676))))
+        .build()
+    )
+
+    assertError("Error(s) while processing the retry strategy") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/hang/scala"
+        ),
+        Duration.Inf
+      )
+    }
   }
 
   test("test the compression strategy") {
@@ -98,7 +120,7 @@ class SearchTest extends AnyFunSuite {
     )
 
     var res = Await.result(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test/gzip",
         parameters = Some(Map()),
         body = Some(JObject(List(JField("message", JString("this is a compressed body")))))
@@ -116,7 +138,7 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -131,7 +153,7 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customGet[Any](
+      client.customGet[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -144,7 +166,7 @@ class SearchTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf

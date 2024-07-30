@@ -1,4 +1,4 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +24,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class RecommendClientRequestsTests {
 
   private RecommendClient client;
-
   private EchoInterceptor echo;
   private ObjectMapper json;
 

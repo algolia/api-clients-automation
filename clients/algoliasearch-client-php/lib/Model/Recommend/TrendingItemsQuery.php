@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Recommend;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * TrendingItemsQuery Class Doc Comment.
  *
  * @category Class
  */
-class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class TrendingItemsQuery extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -104,7 +106,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['indexName'])) {
             $this->container['indexName'] = $data['indexName'];
@@ -214,12 +216,6 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
             $invalidProperties[] = "invalid value for 'maxRecommendations', must be bigger than or equal to 1.";
         }
 
-        if (!isset($this->container['facetName']) || null === $this->container['facetName']) {
-            $invalidProperties[] = "'facetName' can't be null";
-        }
-        if (!isset($this->container['facetValue']) || null === $this->container['facetValue']) {
-            $invalidProperties[] = "'facetValue' can't be null";
-        }
         if (!isset($this->container['model']) || null === $this->container['model']) {
             $invalidProperties[] = "'model' can't be null";
         }
@@ -327,7 +323,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets queryParameters.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParams
+     * @return null|SearchParams
      */
     public function getQueryParameters()
     {
@@ -337,7 +333,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets queryParameters.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParams $queryParameters queryParameters
+     * @param null|SearchParams $queryParameters queryParameters
      *
      * @return self
      */
@@ -351,7 +347,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets facetName.
      *
-     * @return string
+     * @return null|string
      */
     public function getFacetName()
     {
@@ -361,7 +357,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets facetName.
      *
-     * @param string $facetName Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
+     * @param null|string $facetName Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
      *
      * @return self
      */
@@ -375,7 +371,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets facetValue.
      *
-     * @return string
+     * @return null|string
      */
     public function getFacetValue()
     {
@@ -385,7 +381,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets facetValue.
      *
-     * @param string $facetValue Facet value. To be used in combination with `facetName`. If specified, only recommendations matching the facet filter will be returned.
+     * @param null|string $facetValue Facet value. To be used in combination with `facetName`. If specified, only recommendations matching the facet filter will be returned.
      *
      * @return self
      */
@@ -399,7 +395,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets model.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel
+     * @return TrendingItemsModel
      */
     public function getModel()
     {
@@ -409,7 +405,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets model.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Recommend\TrendingItemsModel $model model
+     * @param TrendingItemsModel $model model
      *
      * @return self
      */
@@ -423,7 +419,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets fallbackParameters.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject
+     * @return null|SearchParamsObject
      */
     public function getFallbackParameters()
     {
@@ -433,7 +429,7 @@ class TrendingItemsQuery extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets fallbackParameters.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Recommend\SearchParamsObject $fallbackParameters fallbackParameters
+     * @param null|SearchParamsObject $fallbackParameters fallbackParameters
      *
      * @return self
      */

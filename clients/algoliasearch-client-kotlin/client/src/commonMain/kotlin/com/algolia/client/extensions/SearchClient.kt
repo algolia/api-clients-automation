@@ -10,8 +10,8 @@ import com.algolia.client.transport.RequestOptions
 import io.ktor.util.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.*
+import kotlinx.serialization.json.JsonObject
 import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -20,8 +20,8 @@ import kotlin.time.Duration.Companion.seconds
 /**
  * Wait for an API key to be added, updated or deleted based on a given `operation`.
  *
- * @param operation The `operation` that was done on a `key`.
  * @param key The `key` that has been added, deleted or updated.
+ * @param operation The `operation` that was done on a `key`.
  * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
  *     the response with it.
  * @param maxRetries The maximum number of retries. 50 by default. (optional)
@@ -31,16 +31,16 @@ import kotlin.time.Duration.Companion.seconds
  *     the transporter requestOptions. (optional)
  */
 public suspend fun SearchClient.waitForApiKey(
-  operation: ApiKeyOperation,
   key: String,
+  operation: ApiKeyOperation,
   apiKey: ApiKey? = null,
   maxRetries: Int = 50,
   timeout: Duration = Duration.INFINITE,
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-) {
-  when (operation) {
+): GetApiKeyResponse? {
+  return when (operation) {
     ApiKeyOperation.Add -> waitKeyCreation(
       key = key,
       maxRetries = maxRetries,
@@ -226,25 +226,25 @@ public suspend fun SearchClient.waitKeyDelete(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-) {
-  retryUntil(
+): GetApiKeyResponse? {
+  return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
     initialDelay = initialDelay,
     maxDelay = maxDelay,
     retry = {
       try {
-        val response = getApiKey(key, requestOptions)
-        Result.success(response)
+        return@retryUntil getApiKey(key, requestOptions)
       } catch (e: AlgoliaApiException) {
-        Result.failure(e)
+        if (e.httpErrorCode == 404) {
+          return@retryUntil null
+        }
+
+        throw e
       }
     },
     until = { result ->
-      result.fold(
-        onSuccess = { false },
-        onFailure = { (it as AlgoliaApiException).httpErrorCode == 404 },
-      )
+      result == null
     },
   )
 }
@@ -280,8 +280,7 @@ public suspend fun SearchClient.searchForFacets(
  * Helper: Chunks the given `objects` list in subset of 1000 elements max to make it fit in `batch` requests.
  *
  * @param indexName The index in which to perform the request.
- * @param records The list of objects to index.
- * @param serializer The serializer to use for the objects.
+ * @param objects The list of objects to index.
  * @param action The action to perform on the objects. Default is `Action.AddObject`.
  * @param waitForTask If true, wait for the task to complete.
  * @param batchSize The size of the batch. Default is 1000.
@@ -289,21 +288,20 @@ public suspend fun SearchClient.searchForFacets(
  * @return The list of responses from the batch requests.
  *
  */
-public suspend fun <T> SearchClient.chunkedBatch(
+public suspend fun SearchClient.chunkedBatch(
   indexName: String,
-  records: List<T>,
-  serializer: KSerializer<T>,
+  objects: List<JsonObject>,
   action: Action = Action.AddObject,
   waitForTask: Boolean,
   batchSize: Int = 1000,
   requestOptions: RequestOptions? = null,
 ): List<BatchResponse> {
   val tasks = mutableListOf<BatchResponse>()
-  records.chunked(batchSize).forEach { chunk ->
+  objects.chunked(batchSize).forEach { chunk ->
     val requests = chunk.map {
       BatchRequest(
         action = action,
-        body = options.json.encodeToJsonElement(serializer, it).jsonObject,
+        body = it,
       )
     }
     val batch = batch(
@@ -320,6 +318,80 @@ public suspend fun <T> SearchClient.chunkedBatch(
 }
 
 /**
+ * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param objects The list of objects to index.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+ * @return The list of responses from the batch requests.
+ *
+ */
+public suspend fun SearchClient.saveObjects(
+  indexName: String,
+  objects: List<JsonObject>,
+  requestOptions: RequestOptions? = null,
+): List<BatchResponse> {
+  return this.chunkedBatch(
+    indexName = indexName,
+    objects = objects,
+    action = Action.AddObject,
+    waitForTask = false,
+    batchSize = 1000,
+    requestOptions = requestOptions,
+  )
+}
+
+/**
+ * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param objectIDs The list of objectIDs to delete from the index.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+ * @return The list of responses from the batch requests.
+ *
+ */
+public suspend fun SearchClient.deleteObjects(
+  indexName: String,
+  objectIDs: List<String>,
+  requestOptions: RequestOptions? = null,
+): List<BatchResponse> {
+  return this.chunkedBatch(
+    indexName = indexName,
+    objects = objectIDs.map { id -> JsonObject(mapOf("objectID" to Json.encodeToJsonElement(id))) },
+    action = Action.DeleteObject,
+    waitForTask = false,
+    batchSize = 1000,
+    requestOptions = requestOptions,
+  )
+}
+
+/**
+ * Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param objectIDs The list of objects to update in the index.
+ * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+ * @return The list of responses from the batch requests.
+ *
+ */
+public suspend fun SearchClient.partialUpdateObjects(
+  indexName: String,
+  objects: List<JsonObject>,
+  createIfNotExists: Boolean,
+  requestOptions: RequestOptions? = null,
+): List<BatchResponse> {
+  return this.chunkedBatch(
+    indexName = indexName,
+    objects = objects,
+    action = if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
+    waitForTask = false,
+    batchSize = 1000,
+    requestOptions = requestOptions,
+  )
+}
+
+/**
  * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
  * Replace all objects in an index without any downtime.
  * Internally, this method copies the existing index settings, synonyms and query rules and indexes all
@@ -328,17 +400,15 @@ public suspend fun <T> SearchClient.chunkedBatch(
  * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
  *
  * @param indexName The index in which to perform the request.
- * @param records The list of records to replace.
- * @param serializer [KSerializer] of type [T] for serialization.
+ * @param objects The list of objects to replace.
  * @param batchSize The size of the batch. Default is 1000.
  * @return responses from the three-step operations: copy, batch, move.
  */
-public suspend fun <T> SearchClient.replaceAllObjects(
+public suspend fun SearchClient.replaceAllObjects(
   indexName: String,
-  records: List<T>,
-  serializer: KSerializer<T>,
+  objects: List<JsonObject>,
   batchSize: Int = 1000,
-  requestOptions: RequestOptions?,
+  requestOptions: RequestOptions? = null,
 ): ReplaceAllObjectsResponse {
   val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
@@ -354,8 +424,7 @@ public suspend fun <T> SearchClient.replaceAllObjects(
 
   val batchResponses = this.chunkedBatch(
     indexName = tmpIndexName,
-    records = records,
-    serializer = serializer,
+    objects = objects,
     action = Action.AddObject,
     waitForTask = true,
     batchSize = batchSize,
@@ -392,8 +461,8 @@ public suspend fun <T> SearchClient.replaceAllObjects(
  * @param restriction Restriction to add the key
  * @throws Exception if an error occurs during the encoding
  */
-public fun SearchClient.generateSecuredApiKey(parentApiKey: String, restriction: SecuredApiKeyRestrictions): String {
-  val restrictionString = buildRestrictionString(restriction)
+public fun SearchClient.generateSecuredApiKey(parentApiKey: String, restrictions: SecuredApiKeyRestrictions): String {
+  val restrictionString = buildRestrictionString(restrictions)
   val hash = encodeKeySHA256(parentApiKey, restrictionString)
   return "$hash$restrictionString".encodeBase64()
 }

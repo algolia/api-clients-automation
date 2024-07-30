@@ -1,13 +1,13 @@
 [versions]
 kotlin = "2.0.0"
-ktor = "2.3.11"
+ktor = "2.3.12"
 
 [libraries]
 # Kotlin
 kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common" }
 kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.0" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.1" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.0" }
 
 # Ktor
@@ -29,6 +29,6 @@ ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.r
 [plugins]
 kotlin-multiplaform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlinx-binary-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.14.0" }
-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
+kotlinx-binary-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.16.2" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.29.0" }
 spotless = { id = "com.diffplug.gradle.spotless", version = "6.23.3" }

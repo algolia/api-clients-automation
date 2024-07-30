@@ -39,7 +39,7 @@ class UsageTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.customGet[Any](
+      client.customGet[JObject](
         path = "test"
       ),
       Duration.Inf
@@ -52,7 +52,7 @@ class UsageTest extends AnyFunSuite {
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "test"
       ),
       Duration.Inf
@@ -64,7 +64,7 @@ class UsageTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -79,7 +79,7 @@ class UsageTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customGet[Any](
+      client.customGet[JObject](
         path = "1/test"
       ),
       Duration.Inf
@@ -92,7 +92,7 @@ class UsageTest extends AnyFunSuite {
     val (client, echo) = testClient()
 
     Await.ready(
-      client.customPost[Any](
+      client.customPost[JObject](
         path = "1/test"
       ),
       Duration.Inf

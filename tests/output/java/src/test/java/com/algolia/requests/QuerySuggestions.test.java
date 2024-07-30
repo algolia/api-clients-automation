@@ -1,4 +1,4 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,7 +24,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class QuerySuggestionsClientRequestsTests {
 
   private QuerySuggestionsClient client;
-  private QuerySuggestionsClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -35,13 +33,6 @@ class QuerySuggestionsClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new QuerySuggestionsClient("appId", "apiKey", "us", options);
-
-    if ("true".equals(System.getenv("CI"))) {
-      this.clientE2E = new QuerySuggestionsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
-    } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
-      this.clientE2E = new QuerySuggestionsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
-    }
   }
 
   @AfterAll
@@ -54,7 +45,7 @@ class QuerySuggestionsClientRequestsTests {
   void createConfigTest() {
     assertDoesNotThrow(() -> {
       client.createConfig(
-        new QuerySuggestionsConfigurationWithIndex()
+        new ConfigurationWithIndex()
           .setIndexName("theIndexName")
           .setSourceIndices(
             List.of(
@@ -619,15 +610,6 @@ class QuerySuggestionsClientRequestsTests {
     assertEquals("/1/configs/cts_e2e_browse_query_suggestions", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
-
-    var res = clientE2E.getConfig("cts_e2e_browse_query_suggestions");
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -660,7 +642,7 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateConfig(
         "theIndexName",
-        new QuerySuggestionsConfiguration()
+        new Configuration()
           .setSourceIndices(
             List.of(
               new SourceIndex()

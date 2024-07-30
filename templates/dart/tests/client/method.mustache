@@ -1,17 +1,17 @@
 try {
-  final res = await client.{{path}}(
+  final res = await client.{{method}}(
       {{#parametersWithDataType}}
       {{> tests/request_param}}
       {{/parametersWithDataType}}
   );
   {{#match}}
   {{#testResponse}}
-  {{#matchIsObject}}
+  {{#matchIsJSON}}
   expectBody(res, """{{{match.parameters}}}""");
-  {{/matchIsObject}}
-  {{^matchIsObject}}
+  {{/matchIsJSON}}
+  {{^matchIsJSON}}
   expect(res, """{{match}}""");
-  {{/matchIsObject}}
+  {{/matchIsJSON}}
   {{/testResponse}}
   {{/match}}
 } on InterceptionException catch (_) {

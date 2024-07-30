@@ -13,16 +13,15 @@ public class ClientTestData {
 class Step {
 
   public String type;
-  public String object;
-  public String path;
+  public String method;
+  public int times;
   public Map<String, Object> parameters;
-  public Map<String, Object> requestOptions;
   public Expected expected;
 }
 
 class Expected {
 
   public String type;
-  public String error;
+  public Object error;
   public Object match;
 }

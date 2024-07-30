@@ -4,7 +4,7 @@
 // >IMPORT
 import { {{client}} } from '{{{import}}}';
 // IMPORT<
-import type { RequestOptions } from '{{{npmNamespace}}}/client-common';
+import type { RequestOptions } from '@algolia/client-common';
 
 {{#blocksRequests}}
 {{#snippets}}
@@ -16,13 +16,8 @@ export async function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascal
   // Initialize the client
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
-  {{#hasRequestOptions}}const requestOptions: RequestOptions = {
-    {{#requestOptions.queryParameters.parameters}}queryParameters: {{{.}}},{{/requestOptions.queryParameters.parameters}}
-    {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}
-  };{{/hasRequestOptions}}
-
   // Call the API
-  const response = await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+  const response = {{> tests/method}};
 
   // use typed response
   console.log(response);

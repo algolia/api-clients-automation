@@ -100,7 +100,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the createTask method.
     *
-    * createTaskOnDemand
+    * task without cron
     */
   def snippetForIngestionClientCreateTask(): Unit = {
     // >SEPARATOR createTask default
@@ -110,6 +110,29 @@ class SnippetIngestionClient {
     // Call the API
     val response = client.createTask(
       taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        action = ActionType.withName("replace")
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the createTaskV1 method.
+    *
+    * createTaskOnDemand
+    */
+  def snippetForIngestionClientCreateTaskV1(): Unit = {
+    // >SEPARATOR createTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
@@ -138,7 +161,7 @@ class SnippetIngestionClient {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 
@@ -299,6 +322,25 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the deleteTaskV1 method.
+    *
+    * deleteTaskV1
+    */
+  def snippetForIngestionClientDeleteTaskV1(): Unit = {
+    // >SEPARATOR deleteTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.deleteTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the deleteTransformation method.
     *
     * deleteTransformation
@@ -337,9 +379,28 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the disableTaskV1 method.
+    *
+    * disableTaskV1
+    */
+  def snippetForIngestionClientDisableTaskV1(): Unit = {
+    // >SEPARATOR disableTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.disableTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the enableTask method.
     *
-    * enable task e2e
+    * enableTask
     */
   def snippetForIngestionClientEnableTask(): Unit = {
     // >SEPARATOR enableTask default
@@ -348,6 +409,25 @@ class SnippetIngestionClient {
 
     // Call the API
     val response = client.enableTask(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the enableTaskV1 method.
+    *
+    * enableTaskV1
+    */
+  def snippetForIngestionClientEnableTaskV1(): Unit = {
+    // >SEPARATOR enableTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.enableTaskV1(
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     )
 
@@ -375,24 +455,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getAuthentications method.
-    *
-    * getAuthentications
-    */
-  def snippetForIngestionClientGetAuthentications(): Unit = {
-    // >SEPARATOR getAuthentications default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getAuthentications(
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
   /** Snippet for the getDestination method.
     *
     * getDestination
@@ -405,24 +467,6 @@ class SnippetIngestionClient {
     // Call the API
     val response = client.getDestination(
       destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the getDestinations method.
-    *
-    * getDestinations
-    */
-  def snippetForIngestionClientGetDestinations(): Unit = {
-    // >SEPARATOR getDestinations default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getDestinations(
     )
 
     // Use the response
@@ -450,25 +494,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getEvents method.
-    *
-    * getEvents
-    */
-  def snippetForIngestionClientGetEvents(): Unit = {
-    // >SEPARATOR getEvents default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getEvents(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
   /** Snippet for the getRun method.
     *
     * getRun
@@ -481,24 +506,6 @@ class SnippetIngestionClient {
     // Call the API
     val response = client.getRun(
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the getRuns method.
-    *
-    * getRuns
-    */
-  def snippetForIngestionClientGetRuns(): Unit = {
-    // >SEPARATOR getRuns default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getRuns(
     )
 
     // Use the response
@@ -525,24 +532,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getSources method.
-    *
-    * getSources
-    */
-  def snippetForIngestionClientGetSources(): Unit = {
-    // >SEPARATOR getSources default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getSources(
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
   /** Snippet for the getTask method.
     *
     * getTask
@@ -562,17 +551,18 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getTasks method.
+  /** Snippet for the getTaskV1 method.
     *
-    * getTasks
+    * getTaskV1
     */
-  def snippetForIngestionClientGetTasks(): Unit = {
-    // >SEPARATOR getTasks default
+  def snippetForIngestionClientGetTaskV1(): Unit = {
+    // >SEPARATOR getTaskV1 default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val response = client.getTasks(
+    val response = client.getTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
     // Use the response
@@ -599,17 +589,175 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getTransformations method.
+  /** Snippet for the listAuthentications method.
     *
-    * getTransformations
+    * getAuthentications
     */
-  def snippetForIngestionClientGetTransformations(): Unit = {
-    // >SEPARATOR getTransformations default
+  def snippetForIngestionClientListAuthentications(): Unit = {
+    // >SEPARATOR listAuthentications default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val response = client.getTransformations(
+    val response = client.listAuthentications(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listDestinations method.
+    *
+    * getDestinations
+    */
+  def snippetForIngestionClientListDestinations(): Unit = {
+    // >SEPARATOR listDestinations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listDestinations(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listEvents method.
+    *
+    * getEvents
+    */
+  def snippetForIngestionClientListEvents(): Unit = {
+    // >SEPARATOR listEvents default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listEvents(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listRuns method.
+    *
+    * getRuns
+    */
+  def snippetForIngestionClientListRuns(): Unit = {
+    // >SEPARATOR listRuns default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listRuns(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listSources method.
+    *
+    * getSources
+    */
+  def snippetForIngestionClientListSources(): Unit = {
+    // >SEPARATOR listSources default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listSources(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listTasks method.
+    *
+    * listTasks
+    */
+  def snippetForIngestionClientListTasks(): Unit = {
+    // >SEPARATOR listTasks default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listTasks(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listTasksV1 method.
+    *
+    * listTasksV1
+    */
+  def snippetForIngestionClientListTasksV1(): Unit = {
+    // >SEPARATOR listTasksV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listTasksV1(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listTransformations method.
+    *
+    * getTransformations
+    */
+  def snippetForIngestionClientListTransformations(): Unit = {
+    // >SEPARATOR listTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listTransformations(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the pushTask method.
+    *
+    * pushTask
+    */
+  def snippetForIngestionClientPushTask(): Unit = {
+    // >SEPARATOR pushTask default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      batchWriteParams = BatchWriteParams(
+        requests = Seq(
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
     )
 
     // Use the response
@@ -628,6 +776,25 @@ class SnippetIngestionClient {
 
     // Call the API
     val response = client.runTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the runTaskV1 method.
+    *
+    * runTaskV1
+    */
+  def snippetForIngestionClientRunTaskV1(): Unit = {
+    // >SEPARATOR runTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.runTaskV1(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
@@ -710,6 +877,31 @@ class SnippetIngestionClient {
 
     // Call the API
     val response = client.searchTasks(
+      taskSearch = TaskSearch(
+        taskIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchTasksV1 method.
+    *
+    * searchTasksV1
+    */
+  def snippetForIngestionClientSearchTasksV1(): Unit = {
+    // >SEPARATOR searchTasksV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.searchTasksV1(
       taskSearch = TaskSearch(
         taskIDs = Seq(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -869,6 +1061,29 @@ class SnippetIngestionClient {
     val response = client.updateTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
+        enabled = Some(false),
+        cron = Some("* * * * *")
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the updateTaskV1 method.
+    *
+    * updateTaskV1
+    */
+  def snippetForIngestionClientUpdateTaskV1(): Unit = {
+    // >SEPARATOR updateTaskV1 default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.updateTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskUpdate = TaskUpdateV1(
         enabled = Some(false)
       )
     )
@@ -893,7 +1108,7 @@ class SnippetIngestionClient {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 

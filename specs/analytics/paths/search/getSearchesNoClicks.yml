@@ -18,11 +18,11 @@ get:
       description: OK
       headers:
         x-ratelimit-limit:
-          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
+          $ref: '../../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -52,7 +52,7 @@ get:
                       minimum: 1
                       example: 7
                     nbHits:
-                      $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+                      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

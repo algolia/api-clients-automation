@@ -11,9 +11,10 @@ type TaskCreate struct {
 	// Universally uniqud identifier (UUID) of a source.
 	SourceID string `json:"sourceID"`
 	// Universally unique identifier (UUID) of a destination resource.
-	DestinationID string            `json:"destinationID"`
-	Trigger       TaskCreateTrigger `json:"trigger"`
-	Action        ActionType        `json:"action"`
+	DestinationID string     `json:"destinationID"`
+	Action        ActionType `json:"action"`
+	// Cron expression for the task's schedule.
+	Cron *string `json:"cron,omitempty"`
 	// Whether the task is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// Maximum accepted percentage of failures for a task run to finish successfully.
@@ -24,6 +25,12 @@ type TaskCreate struct {
 }
 
 type TaskCreateOption func(f *TaskCreate)
+
+func WithTaskCreateCron(val string) TaskCreateOption {
+	return func(f *TaskCreate) {
+		f.Cron = &val
+	}
+}
 
 func WithTaskCreateEnabled(val bool) TaskCreateOption {
 	return func(f *TaskCreate) {
@@ -53,11 +60,10 @@ func WithTaskCreateCursor(val string) TaskCreateOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewTaskCreate(sourceID string, destinationID string, trigger TaskCreateTrigger, action ActionType, opts ...TaskCreateOption) *TaskCreate {
+func NewTaskCreate(sourceID string, destinationID string, action ActionType, opts ...TaskCreateOption) *TaskCreate {
 	this := &TaskCreate{}
 	this.SourceID = sourceID
 	this.DestinationID = destinationID
-	this.Trigger = trigger
 	this.Action = action
 	for _, opt := range opts {
 		opt(this)
@@ -120,31 +126,6 @@ func (o *TaskCreate) SetDestinationID(v string) *TaskCreate {
 	return o
 }
 
-// GetTrigger returns the Trigger field value.
-func (o *TaskCreate) GetTrigger() TaskCreateTrigger {
-	if o == nil {
-		var ret TaskCreateTrigger
-		return ret
-	}
-
-	return o.Trigger
-}
-
-// GetTriggerOk returns a tuple with the Trigger field value
-// and a boolean to check if the value has been set.
-func (o *TaskCreate) GetTriggerOk() (*TaskCreateTrigger, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Trigger, true
-}
-
-// SetTrigger sets field value.
-func (o *TaskCreate) SetTrigger(v *TaskCreateTrigger) *TaskCreate {
-	o.Trigger = *v
-	return o
-}
-
 // GetAction returns the Action field value.
 func (o *TaskCreate) GetAction() ActionType {
 	if o == nil {
@@ -167,6 +148,39 @@ func (o *TaskCreate) GetActionOk() (*ActionType, bool) {
 // SetAction sets field value.
 func (o *TaskCreate) SetAction(v ActionType) *TaskCreate {
 	o.Action = v
+	return o
+}
+
+// GetCron returns the Cron field value if set, zero value otherwise.
+func (o *TaskCreate) GetCron() string {
+	if o == nil || o.Cron == nil {
+		var ret string
+		return ret
+	}
+	return *o.Cron
+}
+
+// GetCronOk returns a tuple with the Cron field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TaskCreate) GetCronOk() (*string, bool) {
+	if o == nil || o.Cron == nil {
+		return nil, false
+	}
+	return o.Cron, true
+}
+
+// HasCron returns a boolean if a field has been set.
+func (o *TaskCreate) HasCron() bool {
+	if o != nil && o.Cron != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCron gets a reference to the given string and assigns it to the Cron field.
+func (o *TaskCreate) SetCron(v string) *TaskCreate {
+	o.Cron = &v
 	return o
 }
 
@@ -311,10 +325,10 @@ func (o TaskCreate) MarshalJSON() ([]byte, error) {
 		toSerialize["destinationID"] = o.DestinationID
 	}
 	if true {
-		toSerialize["trigger"] = o.Trigger
-	}
-	if true {
 		toSerialize["action"] = o.Action
+	}
+	if o.Cron != nil {
+		toSerialize["cron"] = o.Cron
 	}
 	if o.Enabled != nil {
 		toSerialize["enabled"] = o.Enabled
@@ -340,8 +354,8 @@ func (o TaskCreate) String() string {
 	out := ""
 	out += fmt.Sprintf("  sourceID=%v\n", o.SourceID)
 	out += fmt.Sprintf("  destinationID=%v\n", o.DestinationID)
-	out += fmt.Sprintf("  trigger=%v\n", o.Trigger)
 	out += fmt.Sprintf("  action=%v\n", o.Action)
+	out += fmt.Sprintf("  cron=%v\n", o.Cron)
 	out += fmt.Sprintf("  enabled=%v\n", o.Enabled)
 	out += fmt.Sprintf("  failureThreshold=%v\n", o.FailureThreshold)
 	out += fmt.Sprintf("  input=%v\n", o.Input)

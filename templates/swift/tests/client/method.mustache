@@ -1,9 +1,6 @@
-let response = {{#isAsync}}try await {{/isAsync}}client{{#path}}.{{.}}{{#isAsync}}WithHTTPInfo{{/isAsync}}{{/path}}(
-{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}},{{/-last}}
-{{/parametersWithDataType}}{{#requestOptions.parametersWithDataType}}{{#-first}}, requestOptions: RequestOptions({{/-first}}
-{{> tests/generateParams }}{{^-last}},{{/-last}}
-){{/requestOptions.parametersWithDataType}})
+let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
 {{^isHelper}}
+{{^isBenchmark}}
 let responseBodyData = try XCTUnwrap(response.bodyData)
 {{#useEchoRequester}}
 let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -11,4 +8,5 @@ let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from:
 {{^useEchoRequester}}
 let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 {{/useEchoRequester}}
+{{/isBenchmark}}
 {{/isHelper}}

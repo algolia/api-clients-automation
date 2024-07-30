@@ -27,7 +27,7 @@ public class IngestionPlayground : IPlayground
     {
       // Get existing JSON source
       Console.WriteLine("--- Get existing JSON source `GetSourcesAsync` ---");
-      var jsonSources = await _client.GetSourcesAsync(type: [SourceType.Json]).ConfigureAwait(false);
+      var jsonSources = await _client.ListSourcesAsync(type: [SourceType.Json]).ConfigureAwait(false);
       Console.WriteLine(jsonSources.Sources.Count == 0
         ? "There is no JSON Source !"
         : $"There is {jsonSources.Sources.Count} JSON source(s)");

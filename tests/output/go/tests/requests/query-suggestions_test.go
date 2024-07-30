@@ -3,14 +3,10 @@ package requests
 
 import (
 	"encoding/json"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -22,7 +18,7 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := suggestions.Configuration{
+	cfg := suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -36,22 +32,6 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 	return client, echo
 }
 
-func createE2ESuggestionsClient(t *testing.T) *suggestions.APIClient {
-	t.Helper()
-
-	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
-	if appID == "" && os.Getenv("CI") != "true" {
-		err := godotenv.Load("../../../../.env")
-		require.NoError(t, err)
-		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
-	}
-	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client, err := suggestions.NewClient(appID, apiKey, suggestions.US)
-	require.NoError(t, err)
-
-	return client
-}
-
 func TestSuggestions_CreateConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
@@ -59,7 +39,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 	t.Run("createConfig", func(t *testing.T) {
 		_, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
-			suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
+			suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
 				[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 					[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 					[][]string{
@@ -148,8 +128,8 @@ func TestSuggestions_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			suggestions.QueryParamOption("query", "parameters with space"), suggestions.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), suggestions.HeaderParamOption("x-header-1", "spaces are left alone"),
+			suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -209,7 +189,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("query", "myQueryParameter"),
+			suggestions.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -229,7 +209,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("query2", "myQueryParameter"),
+			suggestions.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -249,7 +229,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -274,7 +254,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -299,7 +279,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("isItWorking", true),
+			suggestions.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -319,7 +299,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam", 2),
+			suggestions.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -339,7 +319,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -360,7 +340,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -381,7 +361,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.QueryParamOption("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)
@@ -482,31 +462,6 @@ func TestSuggestions_GetConfig(t *testing.T) {
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
-		clientE2E := createE2ESuggestionsClient(t)
-		res, err := clientE2E.GetConfig(client.NewApiGetConfigRequest(
-			"cts_e2e_browse_query_suggestions",
-		))
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -551,7 +506,7 @@ func TestSuggestions_UpdateConfig(t *testing.T) {
 	t.Run("updateConfig", func(t *testing.T) {
 		_, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
 			"theIndexName",
-			suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
+			suggestions.NewEmptyConfiguration().SetSourceIndices(
 				[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 					[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 					[][]string{

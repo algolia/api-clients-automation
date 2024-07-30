@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Search;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * FetchedIndex Class Doc Comment.
  *
  * @category Class
  */
-class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -28,6 +30,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'pendingTask' => 'bool',
         'primary' => 'string',
         'replicas' => 'string[]',
+        'virtual' => 'bool',
     ];
 
     /**
@@ -47,6 +50,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'pendingTask' => null,
         'primary' => null,
         'replicas' => null,
+        'virtual' => null,
     ];
 
     /**
@@ -67,6 +71,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'pendingTask' => 'pendingTask',
         'primary' => 'primary',
         'replicas' => 'replicas',
+        'virtual' => 'virtual',
     ];
 
     /**
@@ -86,6 +91,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'pendingTask' => 'setPendingTask',
         'primary' => 'setPrimary',
         'replicas' => 'setReplicas',
+        'virtual' => 'setVirtual',
     ];
 
     /**
@@ -105,6 +111,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'pendingTask' => 'getPendingTask',
         'primary' => 'getPrimary',
         'replicas' => 'getReplicas',
+        'virtual' => 'getVirtual',
     ];
 
     /**
@@ -119,7 +126,7 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['name'])) {
             $this->container['name'] = $data['name'];
@@ -153,6 +160,9 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         }
         if (isset($data['replicas'])) {
             $this->container['replicas'] = $data['replicas'];
+        }
+        if (isset($data['virtual'])) {
+            $this->container['virtual'] = $data['virtual'];
         }
     }
 
@@ -518,6 +528,30 @@ class FetchedIndex extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     public function setReplicas($replicas)
     {
         $this->container['replicas'] = $replicas;
+
+        return $this;
+    }
+
+    /**
+     * Gets virtual.
+     *
+     * @return null|bool
+     */
+    public function getVirtual()
+    {
+        return $this->container['virtual'] ?? null;
+    }
+
+    /**
+     * Sets virtual.
+     *
+     * @param null|bool $virtual Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+     *
+     * @return self
+     */
+    public function setVirtual($virtual)
+    {
+        $this->container['virtual'] = $virtual;
 
         return $this;
     }

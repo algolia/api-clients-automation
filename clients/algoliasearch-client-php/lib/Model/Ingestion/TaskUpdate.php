@@ -4,13 +4,16 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * TaskUpdate Class Doc Comment.
  *
  * @category Class
+ *
  * @description API request body for updating a task.
  */
-class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -19,7 +22,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      */
     protected static $modelTypes = [
         'destinationID' => 'string',
-        'trigger' => '\Algolia\AlgoliaSearch\Model\Ingestion\TriggerUpdateInput',
+        'cron' => 'string',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput',
         'enabled' => 'bool',
         'failureThreshold' => 'int',
@@ -32,7 +35,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      */
     protected static $modelFormats = [
         'destinationID' => null,
-        'trigger' => null,
+        'cron' => null,
         'input' => null,
         'enabled' => null,
         'failureThreshold' => null,
@@ -46,7 +49,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      */
     protected static $attributeMap = [
         'destinationID' => 'destinationID',
-        'trigger' => 'trigger',
+        'cron' => 'cron',
         'input' => 'input',
         'enabled' => 'enabled',
         'failureThreshold' => 'failureThreshold',
@@ -59,7 +62,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      */
     protected static $setters = [
         'destinationID' => 'setDestinationID',
-        'trigger' => 'setTrigger',
+        'cron' => 'setCron',
         'input' => 'setInput',
         'enabled' => 'setEnabled',
         'failureThreshold' => 'setFailureThreshold',
@@ -72,7 +75,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      */
     protected static $getters = [
         'destinationID' => 'getDestinationID',
-        'trigger' => 'getTrigger',
+        'cron' => 'getCron',
         'input' => 'getInput',
         'enabled' => 'getEnabled',
         'failureThreshold' => 'getFailureThreshold',
@@ -90,13 +93,13 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['destinationID'])) {
             $this->container['destinationID'] = $data['destinationID'];
         }
-        if (isset($data['trigger'])) {
-            $this->container['trigger'] = $data['trigger'];
+        if (isset($data['cron'])) {
+            $this->container['cron'] = $data['cron'];
         }
         if (isset($data['input'])) {
             $this->container['input'] = $data['input'];
@@ -216,25 +219,25 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     }
 
     /**
-     * Gets trigger.
+     * Gets cron.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\TriggerUpdateInput
+     * @return null|string
      */
-    public function getTrigger()
+    public function getCron()
     {
-        return $this->container['trigger'] ?? null;
+        return $this->container['cron'] ?? null;
     }
 
     /**
-     * Sets trigger.
+     * Sets cron.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\TriggerUpdateInput $trigger trigger
+     * @param null|string $cron cron expression for the task's schedule
      *
      * @return self
      */
-    public function setTrigger($trigger)
+    public function setCron($cron)
     {
-        $this->container['trigger'] = $trigger;
+        $this->container['cron'] = $cron;
 
         return $this;
     }
@@ -242,7 +245,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     /**
      * Gets input.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput
+     * @return null|TaskInput
      */
     public function getInput()
     {
@@ -252,7 +255,7 @@ class TaskUpdate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     /**
      * Sets input.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput $input input
+     * @param null|TaskInput $input input
      *
      * @return self
      */

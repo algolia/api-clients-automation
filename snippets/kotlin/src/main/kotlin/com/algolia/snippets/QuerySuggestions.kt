@@ -17,7 +17,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.createConfig(
-      querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+      configurationWithIndex = ConfigurationWithIndex(
         indexName = "theIndexName",
         sourceIndices = listOf(
           SourceIndex(
@@ -201,7 +201,7 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     var response = client.updateConfig(
       indexName = "theIndexName",
-      querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+      configuration = Configuration(
         sourceIndices = listOf(
           SourceIndex(
             indexName = "testIndex",

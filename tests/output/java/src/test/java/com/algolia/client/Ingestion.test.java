@@ -9,6 +9,7 @@ import com.algolia.EchoResponse;
 import com.algolia.api.IngestionClient;
 import com.algolia.config.*;
 import com.algolia.model.ingestion.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -26,7 +27,10 @@ class IngestionClientClientTests {
 
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.builder()
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .serializationInclusion(JsonInclude.Include.NON_NULL)
+      .build();
   }
 
   IngestionClient createClient() {
@@ -99,12 +103,9 @@ class IngestionClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest1() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }

@@ -26,134 +26,163 @@
     "csharp": {
       "6.1.17": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "7.0.0-beta.5": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "7.0.0-beta.11": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "dart": {
       "1.12.0": {
-        "start": "2024-06-13",
+        "start": "2024-06-21",
         "end": "2026-06-13",
-        "maintenance": "2024-06-21"
+        "status": "maintenance"
       },
       "1.13.0": {
-        "start": "2024-06-21",
-        "lts": "2024-06-21",
+        "start": "2024-06-24",
         "end": "2026-06-21",
-        "prerelease": false
+        "status": "maintenance"
+      },
+      "1.14.0": {
+        "start": "2024-06-26",
+        "end": "2026-06-24",
+        "status": "maintenance"
+      },
+      "1.15.1": {
+        "start": "2024-07-01",
+        "end": "2026-06-27",
+        "status": "maintenance"
+      },
+      "1.16.0": {
+        "start": "2024-07-08",
+        "end": "2026-07-01",
+        "status": "maintenance"
+      },
+      "1.17.1": {
+        "start": "2024-07-19",
+        "status": "maintenance",
+        "end": "2026-07-12"
+      },
+      "1.18.0": {
+        "start": "2024-07-26",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "1.19.0": {
+        "start": "2024-07-26",
+        "status": "active",
+        "end": "2026-07-26"
       }
     },
     "go": {
       "3.31.1": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "4.0.0-beta.17": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "4.0.0-beta.25": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "java": {
       "3.16.9": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "4.0.0-beta.35": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "4.0.0-beta.42": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "javascript": {
       "4.23.3": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "5.0.0-beta.5": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "5.0.0-beta.13": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "kotlin": {
       "2.1.12": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "3.0.0-beta.30": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "3.0.0-beta.37": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "php": {
       "3.4.1": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "4.0.0-beta.5": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "4.0.0-beta.11": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "python": {
       "3.0.0": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "4.0.0b20": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "4.0.0b26": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "ruby": {
       "2.3.4": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "3.0.0.beta.6": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "3.0.0.beta.11": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "scala": {
       "1.45.2": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "2.0.0-beta.5": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "2.0.0-beta.11": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     },
     "swift": {
       "8.20.1": {
         "start": "2024-01-01",
-        "lts": "2024-01-01",
-        "end": "2026-08-01"
+        "end": "2026-07-16",
+        "status": "active"
       },
-      "9.0.0-beta.5": {
-        "start": "2024-06-21",
-        "end": "2026-06-21",
-        "prerelease": true
+      "9.0.0-beta.12": {
+        "start": "2024-07-26",
+        "status": "prerelease",
+        "end": "2026-07-26"
       }
     }
   }

@@ -7,11 +7,14 @@ import { {{classname}} } from '{{filename}}';
 {{/imports}}
 
 {{! Imports for the legacy search method signature }}
-{{#operations}}{{#operation}}{{#vendorExtensions.x-legacy-signature}}{{> client/api/operation/legacySearchCompatible/imports}}{{/vendorExtensions.x-legacy-signature}}{{/operation}}{{/operations}}
+{{#operations}}
+  {{#operation}}{{#vendorExtensions.x-legacy-signature}}{{> client/api/operation/legacySearchCompatible/imports}}{{/vendorExtensions.x-legacy-signature}}{{/operation}}
+  {{#operation}}{{#vendorExtensions.x-legacy-signature-recommend}}{{> client/api/operation/legacyGetRecommendationsCompatible/imports}}{{/vendorExtensions.x-legacy-signature-recommend}}{{/operation}}
+{{/operations}}
 
 {{! Imports for the helpers method of the search client }}
 {{#isSearchClient}}
-import type { CreateIterablePromise } from '{{{npmNamespace}}}/client-common';
+import type { CreateIterablePromise } from '@algolia/client-common';
 import type { Action } from './action';
 {{/isSearchClient}}
 
@@ -36,6 +39,7 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
 {{/x-create-wrapping-object}}
 
 {{#x-legacy-signature}}{{> client/api/operation/legacySearchCompatible/model}}{{/x-legacy-signature}}
+{{#x-legacy-signature-recommend}}{{> client/api/operation/legacyGetRecommendationsCompatible/model}}{{/x-legacy-signature-recommend}}
 
 {{/vendorExtensions}}
 
@@ -120,6 +124,28 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
    */
   securedApiKey: string;
 }
+
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
+  /**
+   * The objectIDs to delete.
+   */
+  objectIDs: string[];
+};
+
+export type PartialUpdateObjectsOptions = Pick<
+  ChunkedBatchOptions,
+  'indexName' | 'objects'
+> & {
+  /**
+   *To be provided if non-existing objects are passed, otherwise, the call will fail.
+   */
+  createIfNotExists?: boolean;
+};
+
+export type SaveObjectsOptions = Pick<
+  ChunkedBatchOptions,
+  'indexName' | 'objects'
+>;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**

@@ -15,7 +15,7 @@ import (
 
 func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := insights.Configuration{
+	cfg := insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -32,9 +32,11 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 // calls api with correct user agent
 func TestInsightscommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createInsightsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestInsightscommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestInsightscommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createInsightsClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestInsightscommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestInsightscommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createInsightsClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,12 +76,14 @@ func TestInsightscommonApi2(t *testing.T) {
 // fallbacks to the alias when region is not given
 func TestInsightsparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -84,7 +92,7 @@ func TestInsightsparameters0(t *testing.T) {
 	}
 	client, err = insights.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.PushEvents(client.NewApiPushEventsRequest(
+	res, err = client.PushEvents(client.NewApiPushEventsRequest(
 
 		insights.NewEmptyInsightsEvents().SetEvents(
 			[]insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
@@ -99,12 +107,14 @@ func TestInsightsparameters0(t *testing.T) {
 // uses the correct region
 func TestInsightsparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -114,7 +124,7 @@ func TestInsightsparameters1(t *testing.T) {
 	}
 	client, err = insights.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test",
 	))
 	require.NoError(t, err)
@@ -124,12 +134,14 @@ func TestInsightsparameters1(t *testing.T) {
 // throws when incorrect region is given
 func TestInsightsparameters2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

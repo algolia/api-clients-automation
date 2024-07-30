@@ -8,11 +8,6 @@ import algoliasearch.ingestion.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
-import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -35,24 +30,6 @@ class IngestionTest extends AnyFunSuite {
       ),
       echo
     )
-  }
-
-  def testE2EClient(): IngestionClient = {
-    val region = "us"
-    if (System.getenv("CI") == "true") {
-      IngestionClient(
-        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
-        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    } else {
-      val dotenv = Dotenv.configure.directory("../../").load
-      IngestionClient(
-        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
-        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    }
   }
 
   test("createAuthenticationOAuth") {
@@ -158,10 +135,52 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("createTaskOnDemand") {
+  test("task without cron") {
     val (client, echo) = testClient()
     val future = client.createTask(
       taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        action = ActionType.withName("replace")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"sourceID":"search","destinationID":"destinationName","action":"replace"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("task with cron1") {
+    val (client, echo) = testClient()
+    val future = client.createTask(
+      taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        cron = Some("* * * * *"),
+        action = ActionType.withName("replace")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("createTaskOnDemand") {
+    val (client, echo) = testClient()
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
@@ -185,8 +204,8 @@ class IngestionTest extends AnyFunSuite {
 
   test("createTaskSchedule1") {
     val (client, echo) = testClient()
-    val future = client.createTask(
-      taskCreate = TaskCreate(
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = ScheduleTriggerInput(
@@ -211,8 +230,8 @@ class IngestionTest extends AnyFunSuite {
 
   test("createTaskSubscription2") {
     val (client, echo) = testClient()
-    val future = client.createTask(
-      taskCreate = TaskCreate(
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
         sourceID = "search",
         destinationID = "destinationName",
         trigger = OnDemandTriggerInput(
@@ -240,7 +259,7 @@ class IngestionTest extends AnyFunSuite {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 
@@ -790,6 +809,20 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("deleteTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.deleteTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
@@ -818,14 +851,42 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
+    assert(res.method == "PUT")
+    assert(res.body.contains("{}"))
+  }
+
+  test("disableTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.disableTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
     assert(res.method == "PUT")
     assert(res.body.contains("{}"))
   }
 
-  test("enable task e2e") {
+  test("enableTask") {
     val (client, echo) = testClient()
     val future = client.enableTask(
+      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
+    assert(res.method == "PUT")
+    assert(res.body.contains("{}"))
+  }
+
+  test("enableTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.enableTaskV1(
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
     )
 
@@ -835,13 +896,6 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
     assert(res.method == "PUT")
     assert(res.body.contains("{}"))
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.enableTask(
-      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
   }
 
   test("getAuthentication") {
@@ -858,9 +912,108 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getDestination") {
+    val (client, echo) = testClient()
+    val future = client.getDestination(
+      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getEvent") {
+    val (client, echo) = testClient()
+    val future = client.getEvent(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getRun") {
+    val (client, echo) = testClient()
+    val future = client.getRun(
+      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getSource") {
+    val (client, echo) = testClient()
+    val future = client.getSource(
+      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTask") {
+    val (client, echo) = testClient()
+    val future = client.getTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.getTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTransformation") {
+    val (client, echo) = testClient()
+    val future = client.getTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getAuthentications") {
     val (client, echo) = testClient()
-    val future = client.getAuthentications(
+    val future = client.listAuthentications(
     )
 
     Await.ready(future, Duration.Inf)
@@ -873,7 +1026,7 @@ class IngestionTest extends AnyFunSuite {
 
   test("getAuthentications with query params1") {
     val (client, echo) = testClient()
-    val future = client.getAuthentications(
+    val future = client.listAuthentications(
       itemsPerPage = Some(2),
       page = Some(1),
       `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
@@ -897,41 +1050,11 @@ class IngestionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.getAuthentications(
-      itemsPerPage = Some(2),
-      page = Some(1),
-      `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
-      platform = Some(Seq(PlatformNone.withName("none"))),
-      sort = Some(AuthenticationSortKeys.withName("createdAt")),
-      order = Some(OrderKeys.withName("asc"))
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
-  }
-
-  test("getDestination") {
-    val (client, echo) = testClient()
-    val future = client.getDestination(
-      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
   }
 
   test("getDestinations") {
     val (client, echo) = testClient()
-    val future = client.getDestinations(
+    val future = client.listDestinations(
     )
 
     Await.ready(future, Duration.Inf)
@@ -942,24 +1065,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getEvent") {
-    val (client, echo) = testClient()
-    val future = client.getEvent(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getEvents") {
     val (client, echo) = testClient()
-    val future = client.getEvents(
+    val future = client.listEvents(
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
@@ -971,23 +1079,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRun") {
-    val (client, echo) = testClient()
-    val future = client.getRun(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getRuns") {
     val (client, echo) = testClient()
-    val future = client.getRuns(
+    val future = client.listRuns(
     )
 
     Await.ready(future, Duration.Inf)
@@ -998,34 +1092,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSource") {
-    val (client, echo) = testClient()
-    val future = client.getSource(
-      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.getSource(
-      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
-  }
-
   test("getSources") {
     val (client, echo) = testClient()
-    val future = client.getSources(
+    val future = client.listSources(
     )
 
     Await.ready(future, Duration.Inf)
@@ -1036,23 +1105,22 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTask") {
+  test("listTasks") {
     val (client, echo) = testClient()
-    val future = client.getTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    val future = client.listTasks(
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.path == "/2/tasks")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
 
-  test("getTasks") {
+  test("listTasksV1") {
     val (client, echo) = testClient()
-    val future = client.getTasks(
+    val future = client.listTasksV1(
     )
 
     Await.ready(future, Duration.Inf)
@@ -1063,23 +1131,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTransformation") {
-    val (client, echo) = testClient()
-    val future = client.getTransformation(
-      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getTransformations") {
     val (client, echo) = testClient()
-    val future = client.getTransformations(
+    val future = client.listTransformations(
     )
 
     Await.ready(future, Duration.Inf)
@@ -1090,9 +1144,53 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("pushTask") {
+    val (client, echo) = testClient()
+    val future = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      batchWriteParams = BatchWriteParams(
+        requests = Seq(
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("runTask") {
     val (client, echo) = testClient()
     val future = client.runTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
+    assert(res.method == "POST")
+    assert(res.body.contains("{}"))
+  }
+
+  test("runTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.runTaskV1(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
@@ -1176,15 +1274,18 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/tasks/search")
+    assert(res.path == "/2/tasks/search")
     assert(res.method == "POST")
     val expectedBody = parse(
       """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.searchTasks(
+  }
+
+  test("searchTasksV1") {
+    val (client, echo) = testClient()
+    val future = client.searchTasksV1(
       taskSearch = TaskSearch(
         taskIDs = Seq(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1194,12 +1295,16 @@ class IngestionTest extends AnyFunSuite {
       )
     )
 
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]""",
-      write(response),
-      JSONCompareMode.LENIENT
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/tasks/search")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
     )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("searchTransformations") {
@@ -1321,6 +1426,26 @@ class IngestionTest extends AnyFunSuite {
     val future = client.updateTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
+        enabled = Some(false),
+        cron = Some("* * * * *")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PATCH")
+    val expectedBody = parse("""{"enabled":false,"cron":"* * * * *"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateTaskV1") {
+    val (client, echo) = testClient()
+    val future = client.updateTaskV1(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskUpdate = TaskUpdateV1(
         enabled = Some(false)
       )
     )
@@ -1342,7 +1467,7 @@ class IngestionTest extends AnyFunSuite {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 

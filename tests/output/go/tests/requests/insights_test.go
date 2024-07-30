@@ -3,14 +3,10 @@ package requests
 
 import (
 	"encoding/json"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -22,7 +18,7 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := insights.Configuration{
+	cfg := insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -34,22 +30,6 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 	require.NoError(t, err)
 
 	return client, echo
-}
-
-func createE2EInsightsClient(t *testing.T) *insights.APIClient {
-	t.Helper()
-
-	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
-	if appID == "" && os.Getenv("CI") != "true" {
-		err := godotenv.Load("../../../../.env")
-		require.NoError(t, err)
-		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
-	}
-	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client, err := insights.NewClient(appID, apiKey, insights.US)
-	require.NoError(t, err)
-
-	return client
 }
 
 func TestInsights_CustomDelete(t *testing.T) {
@@ -122,8 +102,8 @@ func TestInsights_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			insights.QueryParamOption("query", "parameters with space"), insights.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), insights.HeaderParamOption("x-header-1", "spaces are left alone"),
+			insights.WithQueryParam("query", "parameters with space"), insights.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), insights.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -183,7 +163,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("query", "myQueryParameter"),
+			insights.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -203,7 +183,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("query2", "myQueryParameter"),
+			insights.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -223,7 +203,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -248,7 +228,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -273,7 +253,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("isItWorking", true),
+			insights.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -293,7 +273,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("myParam", 2),
+			insights.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -313,7 +293,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("myParam",
+			insights.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -334,7 +314,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("myParam",
+			insights.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -355,7 +335,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.QueryParamOption("myParam",
+			insights.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)
@@ -453,9 +433,9 @@ func TestInsights_PushEvents(t *testing.T) {
 
 			insights.NewEmptyInsightsEvents().SetEvents(
 				[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1718755200000).SetObjectIDs(
+					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1722124800000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1718755200000).SetObjectIDs(
+					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1722124800000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}))}),
 		))
 		require.NoError(t, err)
@@ -464,38 +444,7 @@ func TestInsights_PushEvents(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"]}]}`)
-		clientE2E := createE2EInsightsClient(t)
-		res, err := clientE2E.PushEvents(client.NewApiPushEventsRequest(
-
-			insights.NewEmptyInsightsEvents().SetEvents(
-				[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1718755200000).SetObjectIDs(
-						[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1718755200000).SetObjectIDs(
-						[]string{"9780545139700", "9780439784542"}))}),
-		))
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"message":"OK","status":200}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
+		ja.Assertf(*echo.Body, `{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1722124800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1722124800000,"objectIDs":["9780545139700","9780439784542"]}]}`)
 	})
 	t.Run("ConvertedObjectIDsAfterSearch", func(t *testing.T) {
 		_, err := client.PushEvents(client.NewApiPushEventsRequest(

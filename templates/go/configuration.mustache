@@ -17,8 +17,8 @@ const (
 )
 {{/hasRegionalHost}}
 
-// Configuration stores the configuration of the API client
-type Configuration struct {
+// {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration stores the configuration of the API client
+type {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration struct {
 	transport.Configuration
   
   {{#hasRegionalHost}}Region Region{{/hasRegionalHost}}

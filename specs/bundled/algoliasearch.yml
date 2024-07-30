@@ -367,6 +367,62 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/*/recommendations:
+    post:
+      tags:
+        - algoliasearch
+      operationId: getRecommendations
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-acl:
+        - search
+      x-legacy-signature-recommend: true
+      summary: Retrieve recommendations
+      description: |
+        Retrieves recommendations from selected AI models.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: getRecommendationsParams
+              description: Recommend request body.
+              type: object
+              additionalProperties: false
+              properties:
+                requests:
+                  type: array
+                  description: >-
+                    Recommendation request with parameters depending on the
+                    requested model.
+                  items:
+                    $ref: '#/components/schemas/recommendationsRequest'
+              required:
+                - requests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendationsResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recommendationsResults'
+                required:
+                  - results
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
 components:
   securitySchemes:
     appId:
@@ -411,20 +467,6 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    paramsAsString:
-      description: Search parameters as a URL-encoded query string.
-      example: hitsPerPage=2&getRankingInfo=1
-      type: string
-      default: ''
-    searchParamsString:
-      type: object
-      title: Search parameters as query string
-      additionalProperties: false
-      x-discriminator-fields:
-        - params
-      properties:
-        params:
-          $ref: '#/components/schemas/paramsAsString'
     query:
       type: string
       description: Search query.
@@ -1433,6 +1475,11 @@ components:
         - count
         - alpha
         - hidden
+    hide:
+      description: Hide facet values.
+      type: array
+      items:
+        type: string
     value:
       type: object
       additionalProperties: false
@@ -1441,6 +1488,8 @@ components:
           $ref: '#/components/schemas/order'
         sortRemainingBy:
           $ref: '#/components/schemas/sortRemainingBy'
+        hide:
+          $ref: '#/components/schemas/hide'
     values:
       description: Order of facet values. One object for each facet.
       type: object
@@ -1456,6 +1505,13 @@ components:
           $ref: '#/components/schemas/facets'
         values:
           $ref: '#/components/schemas/values'
+    redirectURL:
+      description: The redirect rule container.
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -1470,6 +1526,8 @@ components:
       properties:
         facetOrdering:
           $ref: '#/components/schemas/facetOrdering'
+        redirect:
+          $ref: '#/components/schemas/redirectURL'
       x-categories:
         - Advanced
     reRankingApplyFilter:
@@ -2143,17 +2201,11 @@ components:
         - $ref: '#/components/schemas/baseSearchParams'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
     searchParams:
-      oneOf:
-        - $ref: '#/components/schemas/searchParamsString'
+      title: queryParameters
+      allOf:
         - $ref: '#/components/schemas/searchParamsObject'
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
+        - type: object
+          description: Search parameters for filtering the recommendations.
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
@@ -2203,10 +2255,6 @@ components:
       type: object
       additionalProperties: true
       required:
-        - nbHits
-        - page
-        - nbPages
-        - hitsPerPage
         - processingTimeMS
       properties:
         abTestID:
@@ -2329,8 +2377,6 @@ components:
                 type: number
                 format: double
                 description: Sum of all values in the results.
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
         index:
           type: string
           example: indexName
@@ -2344,16 +2390,10 @@ components:
         message:
           type: string
           description: Warnings about the query.
-        nbHits:
-          $ref: '#/components/schemas/nbHits'
-        nbPages:
-          $ref: '#/components/schemas/nbPages'
         nbSortedHits:
           type: integer
           description: Number of hits selected and sorted by the relevant sort algorithm.
           example: 20
-        page:
-          $ref: '#/components/schemas/page'
         parsedQuery:
           type: string
           description: >-
@@ -2378,7 +2418,8 @@ components:
           type: object
           description: >
             [Redirect results to a
-            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/).
+            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/),
+            this this parameter is for internal use only.
           properties:
             index:
               type: array
@@ -2402,6 +2443,31 @@ components:
             Unique identifier for the query. This is used for [click
             analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
           example: a00dbc80a8d13c4565a442e7e2dca80a
+    nbHits:
+      type: integer
+      description: Number of results (hits).
+      example: 20
+    nbPages:
+      type: integer
+      description: Number of pages of results.
+      example: 1
+    SearchPagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+      required:
+        - page
+        - nbHits
+        - nbPages
+        - hitsPerPage
     objectID:
       type: string
       description: Unique record identifier.
@@ -2589,7 +2655,7 @@ components:
         - geoDistance
         - nbExactWords
         - userScore
-    _distinctSeqID:
+    distinctSeqID:
       type: integer
     hit:
       type: object
@@ -2613,7 +2679,7 @@ components:
         _rankingInfo:
           $ref: '#/components/schemas/rankingInfo'
         _distinctSeqID:
-          $ref: '#/components/schemas/_distinctSeqID'
+          $ref: '#/components/schemas/distinctSeqID'
     searchHits:
       type: object
       additionalProperties: true
@@ -2642,6 +2708,7 @@ components:
       additionalProperties: true
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
         - $ref: '#/components/schemas/searchHits'
     indexName:
       type: string
@@ -2792,9 +2859,22 @@ components:
       allOf:
         - $ref: '#/components/schemas/searchParamsObject'
         - $ref: '#/components/schemas/cursor'
+    BrowsePagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
     browseResponse:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BrowsePagination'
         - $ref: '#/components/schemas/searchHits'
         - $ref: '#/components/schemas/cursor'
     baseIndexSettings:
@@ -3192,6 +3272,19 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseIndexSettings'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
+    WithPrimary:
+      type: object
+      additionalProperties: false
+      properties:
+        primary:
+          type: string
+          description: >
+            Replica indices only: the name of the primary index for this
+            replica.
+    settingsResponse:
+      allOf:
+        - $ref: '#/components/schemas/indexSettings'
+        - $ref: '#/components/schemas/WithPrimary'
     keyString:
       type: string
       description: API key.
@@ -3480,6 +3573,285 @@ components:
         - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
         - $ref: '#/components/schemas/params'
+    baseRecommendRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/searchParams'
+      required:
+        - indexName
+        - threshold
+    fbtModel:
+      type: string
+      description: >
+        Frequently bought together model.
+
+
+        This model recommends items that have been purchased within 1 day with
+        the item with the ID `objectID`.
+      enum:
+        - bought-together
+    frequentlyBoughtTogether:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/fbtModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+      required:
+        - model
+        - objectID
+    boughtTogetherQuery:
+      title: Frequently bought together
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/frequentlyBoughtTogether'
+    relatedModel:
+      type: string
+      description: >
+        Related products or similar content model.
+
+
+        This model recommends items that are similar to the item with the ID
+        `objectID`.
+
+        Similarity is determined from the user interactions and attributes.
+      enum:
+        - related-products
+    fallbackParams:
+      title: fallbackParameters
+      allOf:
+        - $ref: '#/components/schemas/searchParamsObject'
+        - type: object
+          description: >-
+            Search parameters to use for a fallback request if there aren't
+            enough recommendations.
+    relatedProducts:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/relatedModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - model
+        - objectID
+    relatedQuery:
+      title: Related products
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/relatedProducts'
+    facetName:
+      type: string
+      description: >
+        Facet attribute. To be used in combination with `facetValue`.
+
+        If specified, only recommendations matching the facet filter will be
+        returned.
+    facetValue:
+      type: string
+      description: >
+        Facet value. To be used in combination with `facetName`.
+
+        If specified, only recommendations matching the facet filter will be
+        returned.
+    trendingItemsModel:
+      description: >
+        Trending items model.
+
+
+        Trending items are determined from the number of conversion events
+        collected on them.
+      type: string
+      enum:
+        - trending-items
+    trendingItems:
+      type: object
+      properties:
+        facetName:
+          $ref: '#/components/schemas/facetName'
+        facetValue:
+          $ref: '#/components/schemas/facetValue'
+        model:
+          $ref: '#/components/schemas/trendingItemsModel'
+        fallbackParameters:
+          $ref: '#/components/schemas/searchParamsObject'
+      required:
+        - model
+    trendingItemsQuery:
+      title: Trending items
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/trendingItems'
+    trendingFacetsModel:
+      type: string
+      description: >
+        Trending facet values model.
+
+
+        This model recommends trending facet values for the specified facet
+        attribute.
+      enum:
+        - trending-facets
+    trendingFacets:
+      type: object
+      properties:
+        facetName:
+          description: Facet attribute for which to retrieve trending facet values.
+        model:
+          $ref: '#/components/schemas/trendingFacetsModel'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - facetName
+        - model
+    trendingFacetsQuery:
+      title: Trending facet values
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/trendingFacets'
+    lookingSimilarModel:
+      type: string
+      description: >
+        Looking similar model.
+
+
+        This model recommends items that look similar to the item with the ID
+        `objectID` based on image attributes in your index.
+      enum:
+        - looking-similar
+    lookingSimilar:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/lookingSimilarModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - model
+        - objectID
+    lookingSimilarQuery:
+      title: Looking similar
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/lookingSimilar'
+    recommendedForYouModel:
+      type: string
+      description: |
+        "Recommened for you" model.
+      enum:
+        - recommended-for-you
+    recommendedForYou:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/recommendedForYouModel'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - model
+    recommendedForYouQuery:
+      title: Recommended for you
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/recommendedForYou'
+    recommendationsRequest:
+      oneOf:
+        - $ref: '#/components/schemas/boughtTogetherQuery'
+        - $ref: '#/components/schemas/relatedQuery'
+        - $ref: '#/components/schemas/trendingItemsQuery'
+        - $ref: '#/components/schemas/trendingFacetsQuery'
+        - $ref: '#/components/schemas/lookingSimilarQuery'
+        - $ref: '#/components/schemas/recommendedForYouQuery'
+    recommendScore:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
+      description: Recommendation score.
+    recommendHit:
+      type: object
+      description: Recommend hit.
+      additionalProperties: true
+      required:
+        - objectID
+        - _score
+      properties:
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        _highlightResult:
+          $ref: '#/components/schemas/highlightResultMap'
+        _snippetResult:
+          $ref: '#/components/schemas/snippetResultMap'
+        _rankingInfo:
+          $ref: '#/components/schemas/rankingInfo'
+        _distinctSeqID:
+          $ref: '#/components/schemas/distinctSeqID'
+        _score:
+          $ref: '#/components/schemas/recommendScore'
+    trendingFacetHit:
+      type: object
+      description: Trending facet hit.
+      required:
+        - _score
+        - facetName
+        - facetValue
+      properties:
+        _score:
+          $ref: '#/components/schemas/recommendScore'
+        facetName:
+          $ref: '#/components/schemas/facetName'
+        facetValue:
+          $ref: '#/components/schemas/facetValue'
+    recommendationsHit:
+      oneOf:
+        - $ref: '#/components/schemas/recommendHit'
+        - $ref: '#/components/schemas/trendingFacetHit'
+    recommendationsHits:
+      type: object
+      additionalProperties: false
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/recommendationsHit'
+      required:
+        - hits
+    recommendationsResults:
+      allOf:
+        - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
+        - $ref: '#/components/schemas/recommendationsHits'
   responses:
     BadRequest:
       description: Bad request or request arguments.

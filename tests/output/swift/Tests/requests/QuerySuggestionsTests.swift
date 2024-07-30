@@ -2,52 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 import XCTest
 
-import DotEnv
 import Utils
 
 @testable import Core
 @testable import QuerySuggestions
 
 final class QuerySuggestionsClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: QuerySuggestionsClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? QuerySuggestionsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// createConfig
     func testCreateConfigTest() async throws {
@@ -59,17 +21,16 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
-            .createConfigWithHTTPInfo(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                sourceIndices: [SourceIndex(
-                    indexName: "testIndex",
-                    facets: [Facet(attribute: "test")],
-                    generate: [["facetA", "facetB"], ["facetC"]]
-                )],
-                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                exclude: ["test"],
-                indexName: "theIndexName"
-            ))
+        let response = try await client.createConfigWithHTTPInfo(configurationWithIndex: ConfigurationWithIndex(
+            sourceIndices: [SourceIndex(
+                indexName: "testIndex",
+                facets: [Facet(attribute: "test")],
+                generate: [["facetA", "facetB"], ["facetC"]]
+            )],
+            languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+            exclude: ["test"],
+            indexName: "theIndexName"
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -205,16 +166,14 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-header-1": "spaces are left alone"],
-
-            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
-        )
-
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-header-1": "spaces are left alone"],
+
+                queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -321,15 +280,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -364,15 +321,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query2": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query2": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -410,15 +365,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -461,15 +414,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -512,15 +463,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["isItWorking": true]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["isItWorking": true]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -558,15 +507,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": 2]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": 2]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -604,15 +551,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": ["b and c", "d"]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": ["b and c", "d"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -650,15 +595,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [true, true, false]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [true, true, false]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -696,15 +639,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [1, 2]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [1, 2]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -862,25 +803,6 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = QuerySuggestionsClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// getConfigStatus

@@ -4,13 +4,16 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * TaskCreate Class Doc Comment.
  *
  * @category Class
+ *
  * @description API request body for creating a task.
  */
-class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class TaskCreate extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -20,8 +23,8 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     protected static $modelTypes = [
         'sourceID' => 'string',
         'destinationID' => 'string',
-        'trigger' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskCreateTrigger',
         'action' => '\Algolia\AlgoliaSearch\Model\Ingestion\ActionType',
+        'cron' => 'string',
         'enabled' => 'bool',
         'failureThreshold' => 'int',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput',
@@ -36,8 +39,8 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     protected static $modelFormats = [
         'sourceID' => null,
         'destinationID' => null,
-        'trigger' => null,
         'action' => null,
+        'cron' => null,
         'enabled' => null,
         'failureThreshold' => null,
         'input' => null,
@@ -53,8 +56,8 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     protected static $attributeMap = [
         'sourceID' => 'sourceID',
         'destinationID' => 'destinationID',
-        'trigger' => 'trigger',
         'action' => 'action',
+        'cron' => 'cron',
         'enabled' => 'enabled',
         'failureThreshold' => 'failureThreshold',
         'input' => 'input',
@@ -69,8 +72,8 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     protected static $setters = [
         'sourceID' => 'setSourceID',
         'destinationID' => 'setDestinationID',
-        'trigger' => 'setTrigger',
         'action' => 'setAction',
+        'cron' => 'setCron',
         'enabled' => 'setEnabled',
         'failureThreshold' => 'setFailureThreshold',
         'input' => 'setInput',
@@ -85,8 +88,8 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     protected static $getters = [
         'sourceID' => 'getSourceID',
         'destinationID' => 'getDestinationID',
-        'trigger' => 'getTrigger',
         'action' => 'getAction',
+        'cron' => 'getCron',
         'enabled' => 'getEnabled',
         'failureThreshold' => 'getFailureThreshold',
         'input' => 'getInput',
@@ -105,7 +108,7 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['sourceID'])) {
             $this->container['sourceID'] = $data['sourceID'];
@@ -113,11 +116,11 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
         if (isset($data['destinationID'])) {
             $this->container['destinationID'] = $data['destinationID'];
         }
-        if (isset($data['trigger'])) {
-            $this->container['trigger'] = $data['trigger'];
-        }
         if (isset($data['action'])) {
             $this->container['action'] = $data['action'];
+        }
+        if (isset($data['cron'])) {
+            $this->container['cron'] = $data['cron'];
         }
         if (isset($data['enabled'])) {
             $this->container['enabled'] = $data['enabled'];
@@ -199,9 +202,6 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
         if (!isset($this->container['destinationID']) || null === $this->container['destinationID']) {
             $invalidProperties[] = "'destinationID' can't be null";
         }
-        if (!isset($this->container['trigger']) || null === $this->container['trigger']) {
-            $invalidProperties[] = "'trigger' can't be null";
-        }
         if (!isset($this->container['action']) || null === $this->container['action']) {
             $invalidProperties[] = "'action' can't be null";
         }
@@ -276,33 +276,9 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     }
 
     /**
-     * Gets trigger.
-     *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TaskCreateTrigger
-     */
-    public function getTrigger()
-    {
-        return $this->container['trigger'] ?? null;
-    }
-
-    /**
-     * Sets trigger.
-     *
-     * @param \Algolia\AlgoliaSearch\Model\Ingestion\TaskCreateTrigger $trigger trigger
-     *
-     * @return self
-     */
-    public function setTrigger($trigger)
-    {
-        $this->container['trigger'] = $trigger;
-
-        return $this;
-    }
-
-    /**
      * Gets action.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\ActionType
+     * @return ActionType
      */
     public function getAction()
     {
@@ -312,13 +288,37 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     /**
      * Sets action.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Ingestion\ActionType $action action
+     * @param ActionType $action action
      *
      * @return self
      */
     public function setAction($action)
     {
         $this->container['action'] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Gets cron.
+     *
+     * @return null|string
+     */
+    public function getCron()
+    {
+        return $this->container['cron'] ?? null;
+    }
+
+    /**
+     * Sets cron.
+     *
+     * @param null|string $cron cron expression for the task's schedule
+     *
+     * @return self
+     */
+    public function setCron($cron)
+    {
+        $this->container['cron'] = $cron;
 
         return $this;
     }
@@ -381,7 +381,7 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     /**
      * Gets input.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput
+     * @return null|TaskInput
      */
     public function getInput()
     {
@@ -391,7 +391,7 @@ class TaskCreate extends \Algolia\AlgoliaSearch\Model\AbstractModel implements M
     /**
      * Sets input.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput $input input
+     * @param null|TaskInput $input input
      *
      * @return self
      */

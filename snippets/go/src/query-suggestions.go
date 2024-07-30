@@ -24,7 +24,7 @@ func SnippetForCreateConfigOfSuggestions() {
 	// Call the API
 	response, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
-		suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
+		suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
 			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{
@@ -310,7 +310,7 @@ func SnippetForUpdateConfigOfSuggestions() {
 	// Call the API
 	response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
 		"theIndexName",
-		suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
+		suggestions.NewEmptyConfiguration().SetSourceIndices(
 			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{

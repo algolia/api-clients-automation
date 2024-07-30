@@ -22,6 +22,7 @@ import 'package:algolia_client_search/src/model/batch_params.dart';
 import 'package:algolia_client_search/src/model/batch_request.dart';
 import 'package:algolia_client_search/src/model/batch_response.dart';
 import 'package:algolia_client_search/src/model/batch_write_params.dart';
+import 'package:algolia_client_search/src/model/browse_pagination.dart';
 import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
 import 'package:algolia_client_search/src/model/built_in_operation.dart';
@@ -90,6 +91,7 @@ import 'package:algolia_client_search/src/model/ranking_info.dart';
 import 'package:algolia_client_search/src/model/redirect.dart';
 import 'package:algolia_client_search/src/model/redirect_rule_index_metadata.dart';
 import 'package:algolia_client_search/src/model/redirect_rule_index_metadata_data.dart';
+import 'package:algolia_client_search/src/model/redirect_url.dart';
 import 'package:algolia_client_search/src/model/remove_user_id_response.dart';
 import 'package:algolia_client_search/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_search/src/model/rendering_content.dart';
@@ -109,6 +111,7 @@ import 'package:algolia_client_search/src/model/search_for_hits.dart';
 import 'package:algolia_client_search/src/model/search_for_hits_options.dart';
 import 'package:algolia_client_search/src/model/search_hits.dart';
 import 'package:algolia_client_search/src/model/search_method_params.dart';
+import 'package:algolia_client_search/src/model/search_pagination.dart';
 import 'package:algolia_client_search/src/model/search_params_object.dart';
 import 'package:algolia_client_search/src/model/search_params_query.dart';
 import 'package:algolia_client_search/src/model/search_params_string.dart';
@@ -125,6 +128,7 @@ import 'package:algolia_client_search/src/model/search_user_ids_params.dart';
 import 'package:algolia_client_search/src/model/search_user_ids_response.dart';
 import 'package:algolia_client_search/src/model/secured_api_key_restrictions.dart';
 import 'package:algolia_client_search/src/model/semantic_search.dart';
+import 'package:algolia_client_search/src/model/settings_response.dart';
 import 'package:algolia_client_search/src/model/snippet_result_option.dart';
 import 'package:algolia_client_search/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_search/src/model/source.dart';
@@ -143,6 +147,7 @@ import 'package:algolia_client_search/src/model/user_highlight_result.dart';
 import 'package:algolia_client_search/src/model/user_hit.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
 import 'package:algolia_client_search/src/model/value.dart';
+import 'package:algolia_client_search/src/model/with_primary.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -224,6 +229,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BatchWriteParams':
       return BatchWriteParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BrowsePagination':
+      return BrowsePagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BrowseParamsObject':
       return BrowseParamsObject.fromJson(value as Map<String, dynamic>)
@@ -401,6 +409,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RedirectRuleIndexMetadataData':
       return RedirectRuleIndexMetadataData.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectURL':
+      return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RemoveUserIdResponse':
       return RemoveUserIdResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -454,6 +464,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchMethodParams':
       return SearchMethodParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SearchPagination':
+      return SearchPagination.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SearchParamsObject':
       return SearchParamsObject.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -499,6 +512,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SettingsResponse':
+      return SettingsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SnippetResultOption':
       return SnippetResultOption.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -542,6 +558,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return UserId.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'WithPrimary':
+      return WithPrimary.fromJson(value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 

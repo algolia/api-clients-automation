@@ -1,0 +1,9 @@
+[
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/tasks",
+      "method": "GET"
+    }
+  }
+]

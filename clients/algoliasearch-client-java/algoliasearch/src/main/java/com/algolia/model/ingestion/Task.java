@@ -19,8 +19,14 @@ public class Task {
   @JsonProperty("destinationID")
   private String destinationID;
 
-  @JsonProperty("trigger")
-  private Trigger trigger;
+  @JsonProperty("cron")
+  private String cron;
+
+  @JsonProperty("lastRun")
+  private String lastRun;
+
+  @JsonProperty("nextRun")
+  private String nextRun;
 
   @JsonProperty("input")
   private TaskInput input;
@@ -76,15 +82,37 @@ public class Task {
     return destinationID;
   }
 
-  public Task setTrigger(Trigger trigger) {
-    this.trigger = trigger;
+  public Task setCron(String cron) {
+    this.cron = cron;
     return this;
   }
 
-  /** Get trigger */
-  @javax.annotation.Nonnull
-  public Trigger getTrigger() {
-    return trigger;
+  /** Cron expression for the task's schedule. */
+  @javax.annotation.Nullable
+  public String getCron() {
+    return cron;
+  }
+
+  public Task setLastRun(String lastRun) {
+    this.lastRun = lastRun;
+    return this;
+  }
+
+  /** The last time the scheduled task ran in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getLastRun() {
+    return lastRun;
+  }
+
+  public Task setNextRun(String nextRun) {
+    this.nextRun = nextRun;
+    return this;
+  }
+
+  /** The next scheduled run of the task in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getNextRun() {
+    return nextRun;
   }
 
   public Task setInput(TaskInput input) {
@@ -180,7 +208,9 @@ public class Task {
       Objects.equals(this.taskID, task.taskID) &&
       Objects.equals(this.sourceID, task.sourceID) &&
       Objects.equals(this.destinationID, task.destinationID) &&
-      Objects.equals(this.trigger, task.trigger) &&
+      Objects.equals(this.cron, task.cron) &&
+      Objects.equals(this.lastRun, task.lastRun) &&
+      Objects.equals(this.nextRun, task.nextRun) &&
       Objects.equals(this.input, task.input) &&
       Objects.equals(this.enabled, task.enabled) &&
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
@@ -193,7 +223,21 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, sourceID, destinationID, trigger, input, enabled, failureThreshold, action, cursor, createdAt, updatedAt);
+    return Objects.hash(
+      taskID,
+      sourceID,
+      destinationID,
+      cron,
+      lastRun,
+      nextRun,
+      input,
+      enabled,
+      failureThreshold,
+      action,
+      cursor,
+      createdAt,
+      updatedAt
+    );
   }
 
   @Override
@@ -203,7 +247,9 @@ public class Task {
     sb.append("    taskID: ").append(toIndentedString(taskID)).append("\n");
     sb.append("    sourceID: ").append(toIndentedString(sourceID)).append("\n");
     sb.append("    destinationID: ").append(toIndentedString(destinationID)).append("\n");
-    sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
+    sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
+    sb.append("    lastRun: ").append(toIndentedString(lastRun)).append("\n");
+    sb.append("    nextRun: ").append(toIndentedString(nextRun)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");

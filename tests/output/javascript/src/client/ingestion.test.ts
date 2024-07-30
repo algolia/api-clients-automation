@@ -15,58 +15,58 @@ function createClient(): IngestionClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('parameters', () => {
   test('uses the correct region', async () => {
-    const $client = ingestionClient('my-app-id', 'my-api-key', 'us', {
+    const client = ingestionClient('my-app-id', 'my-api-key', 'us', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.getSource({
+    const result = (await client.getSource({
       sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('data.us.algolia.com');
-  });
+  }, 15000);
 
   test('throws when incorrect region is given', async () => {
     try {
-      const $client = ingestionClient(
+      const client = ingestionClient(
         'my-app-id',
         'my-api-key',
         'not_a_region',
@@ -78,7 +78,7 @@ describe('parameters', () => {
         '`region` is required and must be one of the following: eu, us'
       );
     }
-  });
+  }, 15000);
 });
 
 describe('init', () => {

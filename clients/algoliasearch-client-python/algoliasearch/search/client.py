@@ -10,9 +10,8 @@ import base64
 import hashlib
 import hmac
 from json import dumps
-from random import choice
+from random import randint
 from re import search
-from string import ascii_letters
 from time import time
 from typing import Annotated, Any, Callable, Dict, List, Optional, Self, Tuple, Union
 from urllib.parse import quote
@@ -43,6 +42,7 @@ from algoliasearch.search.models.batch_request import BatchRequest
 from algoliasearch.search.models.batch_response import BatchResponse
 from algoliasearch.search.models.batch_write_params import BatchWriteParams
 from algoliasearch.search.models.browse_params import BrowseParams
+from algoliasearch.search.models.browse_params_object import BrowseParamsObject
 from algoliasearch.search.models.browse_response import BrowseResponse
 from algoliasearch.search.models.created_at_response import CreatedAtResponse
 from algoliasearch.search.models.delete_api_key_response import DeleteApiKeyResponse
@@ -75,6 +75,9 @@ from algoliasearch.search.models.log_type import LogType
 from algoliasearch.search.models.multiple_batch_response import MultipleBatchResponse
 from algoliasearch.search.models.operation_index_params import OperationIndexParams
 from algoliasearch.search.models.remove_user_id_response import RemoveUserIdResponse
+from algoliasearch.search.models.replace_all_objects_response import (
+    ReplaceAllObjectsResponse,
+)
 from algoliasearch.search.models.replace_source_response import ReplaceSourceResponse
 from algoliasearch.search.models.rule import Rule
 from algoliasearch.search.models.save_object_response import SaveObjectResponse
@@ -105,6 +108,7 @@ from algoliasearch.search.models.search_user_ids_response import SearchUserIdsRe
 from algoliasearch.search.models.secured_api_key_restrictions import (
     SecuredApiKeyRestrictions,
 )
+from algoliasearch.search.models.settings_response import SettingsResponse
 from algoliasearch.search.models.source import Source
 from algoliasearch.search.models.synonym_hit import SynonymHit
 from algoliasearch.search.models.update_api_key_response import UpdateApiKeyResponse
@@ -251,13 +255,13 @@ class SearchClient:
 
     async def wait_for_api_key(
         self,
-        operation: str,
         key: str,
+        operation: str,
         api_key: Optional[ApiKey] = None,
         max_retries: int = 50,
         timeout: RetryTimeout = RetryTimeout(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> GetApiKeyResponse:
+    ) -> GetApiKeyResponse | None:
         """
         Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
         """
@@ -268,7 +272,7 @@ class SearchClient:
                 "`apiKey` is required when waiting for an `update` operation."
             )
 
-        async def _func(_prev: GetApiKeyResponse) -> GetApiKeyResponse:
+        async def _func(_prev: GetApiKeyResponse | None) -> GetApiKeyResponse | None:
             try:
                 return await self.get_api_key(key=key, request_options=request_options)
             except RequestException as e:
@@ -278,20 +282,25 @@ class SearchClient:
                     return None
                 raise e
 
-        def _aggregator(_: GetApiKeyResponse) -> None:
+        def _aggregator(_: GetApiKeyResponse | None) -> None:
             self._retry_count += 1
 
-        def _validate(_resp: GetApiKeyResponse) -> bool:
+        def _validate(_resp: GetApiKeyResponse | None) -> bool:
             if operation == "update":
-                for field in api_key:
-                    if isinstance(api_key[field], list) and isinstance(
-                        _resp[field], list
+                resp_dict = _resp.to_dict()
+                api_key_dict = (
+                    api_key.to_dict() if isinstance(api_key, ApiKey) else api_key
+                )
+                for field in api_key_dict:
+                    if isinstance(api_key_dict[field], list) and isinstance(
+                        resp_dict[field], list
                     ):
-                        if len(api_key[field]) != len(_resp[field]) or any(
-                            v != _resp[field][i] for i, v in enumerate(api_key[field])
+                        if len(api_key_dict[field]) != len(resp_dict[field]) or any(
+                            v != resp_dict[field][i]
+                            for i, v in enumerate(api_key_dict[field])
                         ):
                             return False
-                    elif api_key[field] != _resp[field]:
+                    elif api_key_dict[field] != resp_dict[field]:
                         return False
                 return True
             elif operation == "add":
@@ -311,7 +320,7 @@ class SearchClient:
         self,
         index_name: str,
         aggregator: Optional[Callable[[BrowseResponse], None]],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Optional[BrowseParamsObject] = BrowseParamsObject(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
@@ -439,15 +448,56 @@ class SearchClient:
         """
         Helper: Creates a temporary index name from the given `index_name`.
         """
-        return "{}_tmp_{}".format(
-            index_name, "".join(choice(ascii_letters) for i in range(10))
+        return "{}_tmp_{}".format(index_name, randint(1000000, 9999999))
+
+    async def save_objects(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+    ) -> List[BatchResponse]:
+        """
+        Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        """
+        return await self.chunked_batch(
+            index_name=index_name, objects=objects, action=Action.ADDOBJECT
+        )
+
+    async def delete_objects(
+        self,
+        index_name: str,
+        object_ids: List[str],
+    ) -> List[BatchResponse]:
+        """
+        Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+        """
+        return await self.chunked_batch(
+            index_name=index_name,
+            objects=[{"objectID": id} for id in object_ids],
+            action=Action.DELETEOBJECT,
+        )
+
+    async def partial_update_objects(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        create_if_not_exists: Optional[bool] = False,
+    ) -> List[BatchResponse]:
+        """
+        Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        """
+        return await self.chunked_batch(
+            index_name=index_name,
+            objects=objects,
+            action=Action.PARTIALUPDATEOBJECT
+            if create_if_not_exists
+            else Action.PARTIALUPDATEOBJECTNOCREATE,
         )
 
     async def chunked_batch(
         self,
         index_name: str,
         objects: List[Dict[str, Any]],
-        action: Action = "addObject",
+        action: Action = Action.ADDOBJECT,
         wait_for_tasks: bool = False,
         batch_size: int = 1000,
         request_options: Optional[Union[dict, RequestOptions]] = None,
@@ -497,8 +547,8 @@ class SearchClient:
                     destination=tmp_index_name,
                     scope=[
                         ScopeType("settings"),
-                        ScopeType("synonyms"),
                         ScopeType("rules"),
+                        ScopeType("synonyms"),
                     ],
                 ),
                 request_options=request_options,
@@ -535,11 +585,11 @@ class SearchClient:
             index_name=tmp_index_name, task_id=move_operation_response.task_id
         )
 
-        return {
-            "copy_operation_response": copy_operation_response,
-            "batch_responses": batch_responses,
-            "move_operation_response": move_operation_response,
-        }
+        return ReplaceAllObjectsResponse(
+            copy_operation_response=copy_operation_response,
+            batch_responses=batch_responses,
+            move_operation_response=move_operation_response,
+        )
 
     async def add_api_key_with_http_info(
         self,
@@ -1081,7 +1131,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -1125,7 +1175,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """
-        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+        Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.
 
         Required API Key ACLs:
           - browse
@@ -2755,7 +2805,7 @@ class SearchClient:
             Field(description="Name of the index on which to perform the operation."),
         ],
         request_options: Optional[Union[dict, RequestOptions]] = None,
-    ) -> IndexSettings:
+    ) -> SettingsResponse:
         """
         Retrieves an object with non-null index settings.
 
@@ -2765,11 +2815,11 @@ class SearchClient:
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns the deserialized response in a 'IndexSettings' result object.
+        :return: Returns the deserialized response in a 'SettingsResponse' result object.
         """
         return (
             await self.get_settings_with_http_info(index_name, request_options)
-        ).deserialize(IndexSettings)
+        ).deserialize(SettingsResponse)
 
     async def get_sources_with_http_info(
         self, request_options: Optional[Union[dict, RequestOptions]] = None

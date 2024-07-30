@@ -174,8 +174,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(body)
@@ -302,8 +301,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping")
       .setMethod("POST")
       .setBody(assignUserIdParams)
@@ -377,8 +375,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/batch", indexName)
       .setMethod("POST")
       .setBody(batchWriteParams)
@@ -452,8 +449,7 @@ public class SearchClient extends ApiClient {
       "Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/batch")
       .setMethod("POST")
       .setBody(batchAssignUserIdsParams)
@@ -530,8 +526,7 @@ public class SearchClient extends ApiClient {
       "Parameter `batchDictionaryEntriesParams` is required when calling" + " `batchDictionaryEntries`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/{dictionaryName}/batch", dictionaryName)
       .setMethod("POST")
       .setBody(batchDictionaryEntriesParams)
@@ -559,8 +554,13 @@ public class SearchClient extends ApiClient {
    * (records augmented with attributes for highlighting and ranking details), browsing _just_
    * returns matching records. This can be useful if you want to export your indices. - The
    * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
-   * typo-tolerance, number of matched words, proximity, geo distance.
+   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
+   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
+   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
+   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
+   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
+   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
+   * browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -583,8 +583,13 @@ public class SearchClient extends ApiClient {
    * (records augmented with attributes for highlighting and ranking details), browsing _just_
    * returns matching records. This can be useful if you want to export your indices. - The
    * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
-   * typo-tolerance, number of matched words, proximity, geo distance.
+   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
+   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
+   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
+   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
+   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
+   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
+   * browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -601,8 +606,13 @@ public class SearchClient extends ApiClient {
    * (records augmented with attributes for highlighting and ranking details), browsing _just_
    * returns matching records. This can be useful if you want to export your indices. - The
    * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
-   * typo-tolerance, number of matched words, proximity, geo distance.
+   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
+   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
+   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
+   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
+   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
+   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
+   * browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -620,8 +630,13 @@ public class SearchClient extends ApiClient {
    * (records augmented with attributes for highlighting and ranking details), browsing _just_
    * returns matching records. This can be useful if you want to export your indices. - The
    * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
-   * typo-tolerance, number of matched words, proximity, geo distance.
+   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
+   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
+   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
+   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
+   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
+   * `false` (`min` and `strict` is evaluated to `true`) If you send these parameters with your
+   * browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -636,8 +651,13 @@ public class SearchClient extends ApiClient {
    * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
    * browsing _just_ returns matching records. This can be useful if you want to export your
    * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
-   * for: typo-tolerance, number of matched words, proximity, geo distance.
+   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
+   * words, proximity, geo distance. Browse requests automatically apply these settings: -
+   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
+   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
+   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
+   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
+   * these parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -654,8 +674,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `browse`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
       .setBody(browseParams)
@@ -668,8 +687,13 @@ public class SearchClient extends ApiClient {
    * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
    * browsing _just_ returns matching records. This can be useful if you want to export your
    * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
-   * for: typo-tolerance, number of matched words, proximity, geo distance.
+   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
+   * words, proximity, geo distance. Browse requests automatically apply these settings: -
+   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
+   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
+   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
+   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
+   * these parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -686,8 +710,13 @@ public class SearchClient extends ApiClient {
    * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
    * browsing _just_ returns matching records. This can be useful if you want to export your
    * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
-   * for: typo-tolerance, number of matched words, proximity, geo distance.
+   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
+   * words, proximity, geo distance. Browse requests automatically apply these settings: -
+   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
+   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
+   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
+   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
+   * these parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -705,8 +734,13 @@ public class SearchClient extends ApiClient {
    * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
    * browsing _just_ returns matching records. This can be useful if you want to export your
    * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
-   * for: typo-tolerance, number of matched words, proximity, geo distance.
+   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
+   * words, proximity, geo distance. Browse requests automatically apply these settings: -
+   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
+   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
+   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
+   * `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`) If you send
+   * these parameters with your browse requests, they'll be ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -830,8 +864,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/clear", indexName)
       .setMethod("POST")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -937,8 +970,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
       .setMethod("POST")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -1242,8 +1274,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -1354,8 +1385,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -1497,8 +1527,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/deleteByQuery", indexName)
       .setMethod("POST")
       .setBody(deleteByParams)
@@ -1637,8 +1666,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .build();
@@ -1741,8 +1769,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -1928,8 +1955,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -2280,8 +2306,7 @@ public class SearchClient extends ApiClient {
     LogType type,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/logs")
       .setMethod("GET")
       .addQueryParameter("offset", offset)
@@ -2435,8 +2460,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("GET")
       .addQueryParameter("attributesToRetrieve", attributesToRetrieve)
@@ -2543,8 +2567,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(getObjectsParams, "Parameter `getObjectsParams` is required when calling `getObjects`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/*/objects")
       .setMethod("POST")
       .setBody(getObjectsParams)
@@ -2608,8 +2631,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("GET")
       .build();
@@ -2636,7 +2658,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public IndexSettings getSettings(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public SettingsResponse getSettings(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getSettingsAsync(indexName, requestOptions));
   }
 
@@ -2646,7 +2668,7 @@ public class SearchClient extends ApiClient {
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public IndexSettings getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public SettingsResponse getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getSettings(indexName, null);
   }
 
@@ -2658,12 +2680,12 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<IndexSettings> getSettingsAsync(@Nonnull String indexName, RequestOptions requestOptions)
+  public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}/settings", indexName).setMethod("GET").build();
-    return executeAsync(request, requestOptions, new TypeReference<IndexSettings>() {});
+    return executeAsync(request, requestOptions, new TypeReference<SettingsResponse>() {});
   }
 
   /**
@@ -2672,7 +2694,7 @@ public class SearchClient extends ApiClient {
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<IndexSettings> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getSettingsAsync(indexName, null);
   }
 
@@ -2761,8 +2783,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("GET")
       .build();
@@ -3012,8 +3033,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(Boolean getClusters, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/pending")
       .setMethod("GET")
       .addQueryParameter("getClusters", getClusters)
@@ -3210,8 +3230,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<ListIndicesResponse> listIndicesAsync(Integer page, Integer hitsPerPage, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes")
       .setMethod("GET")
       .addQueryParameter("page", page)
@@ -3318,8 +3337,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(Integer page, Integer hitsPerPage, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping")
       .setMethod("GET")
       .addQueryParameter("page", page)
@@ -3512,8 +3530,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/operation", indexName)
       .setMethod("POST")
       .setBody(operationIndexParams)
@@ -3671,8 +3688,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}/partial", indexName, objectID)
       .setMethod("POST")
       .setBody(attributesToUpdate)
@@ -4088,8 +4104,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(rule, "Parameter `rule` is required when calling `saveRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(rule)
@@ -4248,8 +4263,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/batch", indexName)
       .setMethod("POST")
       .setBody(rules)
@@ -4415,8 +4429,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(synonymHit)
@@ -4578,8 +4591,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/batch", indexName)
       .setMethod("POST")
       .setBody(synonymHit)
@@ -4691,8 +4703,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(searchMethodParams, "Parameter `searchMethodParams` is required when calling `search`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/*/queries")
       .setMethod("POST")
       .setBody(searchMethodParams)
@@ -4769,8 +4780,7 @@ public class SearchClient extends ApiClient {
       "Parameter `searchDictionaryEntriesParams` is required when calling" + " `searchDictionaryEntries`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/{dictionaryName}/search", dictionaryName)
       .setMethod("POST")
       .setBody(searchDictionaryEntriesParams)
@@ -4897,8 +4907,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
       .setMethod("POST")
       .setBody(searchForFacetValuesRequest)
@@ -5027,8 +5036,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
       .setMethod("POST")
       .setBody(searchRulesParams)
@@ -5157,8 +5165,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
       .setMethod("POST")
       .setBody(searchParams)
@@ -5285,8 +5292,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
       .setMethod("POST")
       .setBody(searchSynonymsParams)
@@ -5381,8 +5387,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(searchUserIdsParams, "Parameter `searchUserIdsParams` is required when calling `searchUserIds`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/search")
       .setMethod("POST")
       .setBody(searchUserIdsParams)
@@ -5447,8 +5452,7 @@ public class SearchClient extends ApiClient {
       "Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/*/settings")
       .setMethod("PUT")
       .setBody(dictionarySettingsParams)
@@ -5554,8 +5558,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/settings", indexName)
       .setMethod("PUT")
       .setBody(indexSettings)
@@ -5798,8 +5801,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public GetApiKeyResponse waitForApiKey(
-    ApiKeyOperation operation,
     String key,
+    ApiKeyOperation operation,
     ApiKey apiKey,
     int maxRetries,
     IntUnaryOperator timeout,
@@ -5832,28 +5835,26 @@ public class SearchClient extends ApiClient {
       );
     }
 
-    // bypass lambda restriction to modify final object
-    final GetApiKeyResponse[] addedKey = new GetApiKeyResponse[] { null };
-
-    // check the status of the getApiKey method
-    TaskUtils.retryUntil(
+    return TaskUtils.retryUntil(
       () -> {
         try {
-          addedKey[0] = this.getApiKey(key, requestOptions);
-          // magic number to signify we found the key
-          return -2;
+          return this.getApiKey(key, requestOptions);
         } catch (AlgoliaApiException e) {
-          return e.getStatusCode();
+          if (e.getStatusCode() == 404) {
+            return null;
+          }
+
+          throw e;
         }
       },
-      (Integer status) -> {
+      (GetApiKeyResponse response) -> {
         switch (operation) {
           case ADD:
-            // stop either when the key is created or when we don't receive 404
-            return status == -2 || status != 404;
+            // stop when we don't receive 404 meaning the key is created
+            return response != null;
           case DELETE:
             // stop when the key is not found
-            return status == 404;
+            return response == null;
           default:
             // continue
             return false;
@@ -5862,15 +5863,13 @@ public class SearchClient extends ApiClient {
       maxRetries,
       timeout
     );
-
-    return addedKey[0];
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5878,89 +5877,89 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public GetApiKeyResponse waitForApiKey(
-    ApiKeyOperation operation,
     String key,
+    ApiKeyOperation operation,
     int maxRetries,
     IntUnaryOperator timeout,
     RequestOptions requestOptions
   ) {
-    return this.waitForApiKey(operation, key, null, maxRetries, timeout, requestOptions);
+    return this.waitForApiKey(key, operation, null, maxRetries, timeout, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, RequestOptions requestOptions) {
-    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, RequestOptions requestOptions) {
+    return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, RequestOptions requestOptions) {
-    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, RequestOptions requestOptions) {
+    return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
-    return this.waitForApiKey(operation, key, apiKey, maxRetries, timeout, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(key, operation, apiKey, maxRetries, timeout, null);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, int maxRetries, IntUnaryOperator timeout) {
-    return this.waitForApiKey(operation, key, null, maxRetries, timeout, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForApiKey(key, operation, null, maxRetries, timeout, null);
   }
 
   /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`.
    * @param key The `key` that has been added, deleted or updated.
+   * @param operation The `operation` that was done on a `key`.
    * @param apiKey Necessary to know if an `update` operation has been processed, compare fields of
    *     the response with it.
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key, ApiKey apiKey) {
-    return this.waitForApiKey(operation, key, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation, ApiKey apiKey) {
+    return this.waitForApiKey(key, operation, apiKey, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
    * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
-   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    * @param key The `key` that has been added or deleted.
+   * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
    */
-  public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key) {
-    return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetApiKeyResponse waitForApiKey(String key, ApiKeyOperation operation) {
+    return this.waitForApiKey(key, operation, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
@@ -5995,6 +5994,16 @@ public class SearchClient extends ApiClient {
    */
   public <T> Iterable<T> browseObjects(String indexName, BrowseParamsObject params, Class<T> innerType) {
     return browseObjects(indexName, params, innerType, null);
+  }
+
+  /**
+   * Helper: Returns an iterator on top of the `browse` method.
+   *
+   * @param indexName The index in which to perform the request.
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
+   */
+  public <T> Iterable<T> browseObjects(String indexName, Class<T> innerType) {
+    return browseObjects(indexName, new BrowseParamsObject(), innerType, null);
   }
 
   /**
@@ -6162,8 +6171,9 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params, innerType)
-      .thenApply(searchResponses -> searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList()));
+    return searchAsync(params, innerType).thenApply(searchResponses ->
+      searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList())
+    );
   }
 
   /**
@@ -6242,10 +6252,9 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params, Hit.class)
-      .thenApply(searchResponses ->
-        searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
-      );
+    return searchAsync(params, Hit.class).thenApply(searchResponses ->
+      searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
+    );
   }
 
   /**
@@ -6298,6 +6307,24 @@ public class SearchClient extends ApiClient {
     return responses;
   }
 
+  public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, 1000, null);
+  }
+
+  public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks, int batchSize) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, null);
+  }
+
+  public <T> List<BatchResponse> chunkedBatch(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, 1000, requestOptions);
+  }
+
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
@@ -6308,6 +6335,124 @@ public class SearchClient extends ApiClient {
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
    *     to `length(objects) / batchSize`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
+    return replaceAllObjects(indexName, objects, batchSize, null);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   */
+  public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects) {
+    return saveObjects(indexName, objects, null);
+  }
+
+  /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   */
+  public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs) {
+    return deleteObjects(indexName, objectIDs, null);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, RequestOptions requestOptions) {
+    List<Map<String, String>> objects = new ArrayList<>();
+
+    for (String id : objectIDs) {
+      Map<String, String> obj = new HashMap<>();
+      obj.put("objectID", id);
+      objects.add(obj);
+    }
+
+    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(String indexName, Iterable<T> objects, boolean createIfNotExists) {
+    return partialUpdateObjects(indexName, objects, createIfNotExists, null);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(
+      indexName,
+      objects,
+      createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+      false,
+      1000,
+      requestOptions
+    );
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for
+   * implementation details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
    * @throws AlgoliaRetryException When the retry has failed on all hosts
    * @throws AlgoliaApiException When the API sends an http error code
    * @throws AlgoliaRuntimeException When an error occurred during the serialization
@@ -6338,17 +6483,16 @@ public class SearchClient extends ApiClient {
 
     waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-    copyOperationResponse =
-      operationIndex(
-        indexName,
-        new OperationIndexParams()
-          .setOperation(OperationType.COPY)
-          .setDestination(tmpIndexName)
-          .addScope(ScopeType.SETTINGS)
-          .addScope(ScopeType.RULES)
-          .addScope(ScopeType.SYNONYMS),
-        requestOptions
-      );
+    copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
     waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
     // Move temporary index to source index
@@ -6391,8 +6535,7 @@ public class SearchClient extends ApiClient {
     if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
 
     if (restrictions.getSearchParams() != null) {
-      Map<String, Object> searchParamsMap = JsonSerializer
-        .getObjectMapper()
+      Map<String, Object> searchParamsMap = JsonSerializer.getObjectMapper()
         .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
       searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
     }

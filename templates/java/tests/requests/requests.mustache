@@ -1,38 +1,31 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.*;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.junit.jupiter.api.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import com.algolia.config.*;
-import com.algolia.model.{{import}}.*;
-import com.algolia.api.{{client}};
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
+import com.algolia.api.{{client}};
+import com.algolia.config.*;
+import com.algolia.model.{{import}}.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import java.util.*;
+import org.junit.jupiter.api.*;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class {{client}}RequestsTests {
     private {{client}} client;
-    {{#hasE2E}}private {{client}} clientE2E;{{/hasE2E}}
     private EchoInterceptor echo;
     private ObjectMapper json;
     
-
     @BeforeAll
     void init() {
         this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
@@ -41,14 +34,6 @@ class {{client}}RequestsTests {
                 .setRequesterConfig(requester -> requester.addInterceptor(echo))
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);
-
-        {{#hasE2E}}
-        if ("true".equals(System.getenv("CI"))) {
-          this.clientE2E = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
-          } else {
-          var dotenv = Dotenv.configure().directory("../../").load();
-          this.clientE2E = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
-        }{{/hasE2E}}
     }
 
     @AfterAll
@@ -62,14 +47,7 @@ class {{client}}RequestsTests {
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
         assertDoesNotThrow(() -> {
-            client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-              {{#requestOptions.queryParameters.parametersWithDataType}}
-                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-              {{/requestOptions.queryParameters.parametersWithDataType}}
-              {{#requestOptions.headers.parametersWithDataType}}
-                .addExtraHeader("{{{key}}}", "{{{value}}}")
-              {{/requestOptions.headers.parametersWithDataType}}
-            {{/hasRequestOptions}});
+            {{> tests/method}};
         });
         {{#request}}
         EchoResponse req = echo.getLastResponse();
@@ -114,20 +92,6 @@ class {{client}}RequestsTests {
         }
         {{/headers}}
         {{/request}}
-
-        {{#response}}
-        var res = clientE2E.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-              {{#requestOptions.queryParameters.parametersWithDataType}}
-                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-              {{/requestOptions.queryParameters.parametersWithDataType}}
-              {{#requestOptions.headers.parametersWithDataType}}
-                .addExtraHeader("{{{key}}}", "{{{value}}}")
-              {{/requestOptions.headers.parametersWithDataType}}
-            {{/hasRequestOptions}});
-        {{#body}}
-        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
-        {{/body}}
-        {{/response}}
     }
     {{/tests}}
     {{/blocksRequests}}

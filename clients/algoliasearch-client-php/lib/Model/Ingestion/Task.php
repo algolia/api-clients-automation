@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * Task Class Doc Comment.
  *
  * @category Class
  */
-class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class Task extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -20,7 +22,9 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         'taskID' => 'string',
         'sourceID' => 'string',
         'destinationID' => 'string',
-        'trigger' => '\Algolia\AlgoliaSearch\Model\Ingestion\Trigger',
+        'cron' => 'string',
+        'lastRun' => 'string',
+        'nextRun' => 'string',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput',
         'enabled' => 'bool',
         'failureThreshold' => 'int',
@@ -39,7 +43,9 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         'taskID' => null,
         'sourceID' => null,
         'destinationID' => null,
-        'trigger' => null,
+        'cron' => null,
+        'lastRun' => null,
+        'nextRun' => null,
         'input' => null,
         'enabled' => null,
         'failureThreshold' => null,
@@ -59,7 +65,9 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         'taskID' => 'taskID',
         'sourceID' => 'sourceID',
         'destinationID' => 'destinationID',
-        'trigger' => 'trigger',
+        'cron' => 'cron',
+        'lastRun' => 'lastRun',
+        'nextRun' => 'nextRun',
         'input' => 'input',
         'enabled' => 'enabled',
         'failureThreshold' => 'failureThreshold',
@@ -78,7 +86,9 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         'taskID' => 'setTaskID',
         'sourceID' => 'setSourceID',
         'destinationID' => 'setDestinationID',
-        'trigger' => 'setTrigger',
+        'cron' => 'setCron',
+        'lastRun' => 'setLastRun',
+        'nextRun' => 'setNextRun',
         'input' => 'setInput',
         'enabled' => 'setEnabled',
         'failureThreshold' => 'setFailureThreshold',
@@ -97,7 +107,9 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         'taskID' => 'getTaskID',
         'sourceID' => 'getSourceID',
         'destinationID' => 'getDestinationID',
-        'trigger' => 'getTrigger',
+        'cron' => 'getCron',
+        'lastRun' => 'getLastRun',
+        'nextRun' => 'getNextRun',
         'input' => 'getInput',
         'enabled' => 'getEnabled',
         'failureThreshold' => 'getFailureThreshold',
@@ -119,7 +131,7 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['taskID'])) {
             $this->container['taskID'] = $data['taskID'];
@@ -130,8 +142,14 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         if (isset($data['destinationID'])) {
             $this->container['destinationID'] = $data['destinationID'];
         }
-        if (isset($data['trigger'])) {
-            $this->container['trigger'] = $data['trigger'];
+        if (isset($data['cron'])) {
+            $this->container['cron'] = $data['cron'];
+        }
+        if (isset($data['lastRun'])) {
+            $this->container['lastRun'] = $data['lastRun'];
+        }
+        if (isset($data['nextRun'])) {
+            $this->container['nextRun'] = $data['nextRun'];
         }
         if (isset($data['input'])) {
             $this->container['input'] = $data['input'];
@@ -224,9 +242,6 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
         }
         if (!isset($this->container['destinationID']) || null === $this->container['destinationID']) {
             $invalidProperties[] = "'destinationID' can't be null";
-        }
-        if (!isset($this->container['trigger']) || null === $this->container['trigger']) {
-            $invalidProperties[] = "'trigger' can't be null";
         }
         if (!isset($this->container['enabled']) || null === $this->container['enabled']) {
             $invalidProperties[] = "'enabled' can't be null";
@@ -333,25 +348,73 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
     }
 
     /**
-     * Gets trigger.
+     * Gets cron.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\Trigger
+     * @return null|string
      */
-    public function getTrigger()
+    public function getCron()
     {
-        return $this->container['trigger'] ?? null;
+        return $this->container['cron'] ?? null;
     }
 
     /**
-     * Sets trigger.
+     * Sets cron.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Ingestion\Trigger $trigger trigger
+     * @param null|string $cron cron expression for the task's schedule
      *
      * @return self
      */
-    public function setTrigger($trigger)
+    public function setCron($cron)
     {
-        $this->container['trigger'] = $trigger;
+        $this->container['cron'] = $cron;
+
+        return $this;
+    }
+
+    /**
+     * Gets lastRun.
+     *
+     * @return null|string
+     */
+    public function getLastRun()
+    {
+        return $this->container['lastRun'] ?? null;
+    }
+
+    /**
+     * Sets lastRun.
+     *
+     * @param null|string $lastRun the last time the scheduled task ran in RFC 3339 format
+     *
+     * @return self
+     */
+    public function setLastRun($lastRun)
+    {
+        $this->container['lastRun'] = $lastRun;
+
+        return $this;
+    }
+
+    /**
+     * Gets nextRun.
+     *
+     * @return null|string
+     */
+    public function getNextRun()
+    {
+        return $this->container['nextRun'] ?? null;
+    }
+
+    /**
+     * Sets nextRun.
+     *
+     * @param null|string $nextRun the next scheduled run of the task in RFC 3339 format
+     *
+     * @return self
+     */
+    public function setNextRun($nextRun)
+    {
+        $this->container['nextRun'] = $nextRun;
 
         return $this;
     }
@@ -359,7 +422,7 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
     /**
      * Gets input.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput
+     * @return null|TaskInput
      */
     public function getInput()
     {
@@ -369,7 +432,7 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
     /**
      * Sets input.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\TaskInput $input input
+     * @param null|TaskInput $input input
      *
      * @return self
      */
@@ -438,7 +501,7 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
     /**
      * Gets action.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\ActionType
+     * @return ActionType
      */
     public function getAction()
     {
@@ -448,7 +511,7 @@ class Task extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelIn
     /**
      * Sets action.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Ingestion\ActionType $action action
+     * @param ActionType $action action
      *
      * @return self
      */

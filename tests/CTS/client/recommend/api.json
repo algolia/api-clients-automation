@@ -8,13 +8,11 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customGet",
+        "method": "customGet",
         "parameters": {
           "path": "test"
         },
@@ -34,13 +32,11 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customPost",
+        "method": "customPost",
         "parameters": {
           "path": "test"
         },

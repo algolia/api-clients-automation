@@ -40,8 +40,8 @@ def main(): Unit = {
   val value = Await.result(res, Duration(100, "sec"))
   val response = value.results.head.asInstanceOf[SearchResponse]
   for (hit <- response.hits) {
-    val actor = hit.extract[Actor]
-    println(actor)
+    //val actor = hit.extract[Actor]
+    //println(actor)
   }
 }
 

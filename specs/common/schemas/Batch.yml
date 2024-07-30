@@ -1,0 +1,54 @@
+batchWriteParams:
+  title: batchWriteParams
+  description: Batch parameters.
+  type: object
+  additionalProperties: false
+  properties:
+    requests:
+      type: array
+      items:
+        title: batchRequest
+        type: object
+        additionalProperties: false
+        properties:
+          action:
+            $ref: '#/action'
+          body:
+            type: object
+            description: Operation arguments (varies with specified `action`).
+            example:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+        required:
+          - action
+          - body
+  required:
+    - requests
+  example:
+    batch:
+      summary: Batch indexing request
+      value:
+        requests:
+          - action: addObject
+            body:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+          - action: addObject
+            body:
+              name: Gayla geimer
+              company: Ortman McCain Co.
+              email: gayla@geimer.com
+
+action:
+  type: string
+  enum:
+    - addObject
+    - updateObject
+    - partialUpdateObject
+    - partialUpdateObjectNoCreate
+    - deleteObject
+    - delete
+    - clear
+  description: Type of indexing operation.

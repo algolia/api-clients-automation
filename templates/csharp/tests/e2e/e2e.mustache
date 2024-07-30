@@ -1,0 +1,73 @@
+// {{generationBanner}}
+using Algolia.Search.Http;
+using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
+using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
+using Xunit;
+using System.Text.Json;
+using Quibble.Xunit;
+using dotenv.net;
+{{#isSearchClient}}
+using Action = Algolia.Search.Models.Search.Action;
+{{/isSearchClient}}
+{{^isSearchClient}}
+using Action = Algolia.Search.Models.Ingestion.Action;
+{{/isSearchClient}}
+
+namespace Algolia.Search.e2e;
+
+public class {{client}}RequestTestsE2E
+{
+private readonly {{client}} client;
+
+  public {{client}}RequestTestsE2E()
+  {
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+
+    var appId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    if (appId == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var apiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");
+    if (apiKey == null)
+    {
+      throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
+    }
+
+    client = new {{client}}(new {{clientPrefix}}Config(appId, apiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
+  }
+
+  [Fact]
+  public void Dispose()
+  {
+
+  }
+
+  {{#blocksE2E}}
+  {{#tests}}
+  [Fact(DisplayName = "{{{testName}}}")]
+  public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
+  {
+      try {
+        var resp = {{> tests/method}};
+      {{#response}}
+      {{#statusCode}}
+          // Check status code {{statusCode}}
+          Assert.NotNull(resp);
+      {{/statusCode}}
+
+      {{#body}}
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
+      {{/body}}
+      } catch (Exception e)
+      {
+        Assert.Fail("An exception was thrown: " + e.Message);
+      }
+    {{/response}}
+  }
+  {{/tests}}
+  {{/blocksE2E}}
+}

@@ -1,7 +1,8 @@
 recommendationsResults:
   allOf:
     # TODO: this isn't correct. Not all elements of the Search response are included for Recommend.
-    - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
     - $ref: '#/recommendationsHits'
 
 recommendationsHits:
@@ -35,9 +36,9 @@ recommendHit:
     _snippetResult:
       $ref: '../../../common/schemas/SnippetResult.yml#/snippetResultMap'
     _rankingInfo:
-      $ref: '../../../search/common/schemas/Hit.yml#/rankingInfo'
+      $ref: '../../../common/schemas/Hit.yml#/rankingInfo'
     _distinctSeqID:
-      $ref: '../../../search/common/schemas/Hit.yml#/_distinctSeqID'
+      $ref: '../../../common/schemas/Hit.yml#/distinctSeqID'
     _score:
       $ref: '#/recommendScore'
 

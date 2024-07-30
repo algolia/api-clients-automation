@@ -22,7 +22,7 @@ topSearchesResponse:
           count:
             $ref: '../parameters.yml#/count'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
 
 topSearchesResponseWithAnalytics:
   type: object
@@ -63,13 +63,13 @@ topSearchesResponseWithAnalytics:
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedSearchCount:
-            $ref: '../parameters.yml#/trackedSearchCount'
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
 
 topSearchesResponseWithRevenueAnalytics:
   type: object
@@ -115,13 +115,13 @@ topSearchesResponseWithRevenueAnalytics:
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedSearchCount:
-            $ref: '../parameters.yml#/trackedSearchCount'
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
           currencies:
             $ref: '../parameters.yml#/currencies'
           addToCartRate:

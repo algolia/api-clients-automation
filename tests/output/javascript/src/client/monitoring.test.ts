@@ -15,54 +15,54 @@ function createClient(): MonitoringClient {
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customGet({
+    const result = (await client.customGet({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
-    const $client = createClient();
+    const client = createClient();
 
-    const result = (await $client.customPost({
+    const result = (await client.customPost({
       path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('parameters', () => {
   test('use the correct host', async () => {
-    const $client = monitoringClient('my-app-id', 'my-api-key', {
+    const client = monitoringClient('my-app-id', 'my-api-key', {
       requester: echoRequester(),
     });
 
-    const result = (await $client.customDelete({
+    const result = (await client.customDelete({
       path: 'test',
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('status.algolia.com');
-  });
+  }, 15000);
 });
 
 describe('init', () => {

@@ -167,7 +167,7 @@ async function buildCustomGenerators(): Promise<void> {
     return;
   }
 
-  await run('./gradle/gradlew --no-daemon -p generators assemble', { language: 'java' });
+  await run('./gradle/gradlew -p generators assemble', { language: 'java' });
 
   spinner.text = 'storing custom generators cache';
   await cache.store();

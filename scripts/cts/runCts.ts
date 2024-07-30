@@ -1,68 +1,134 @@
-import * as fsp from 'fs/promises';
+import fsp from 'fs/promises';
 
-import { isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
+import { getTestOutputFolder } from '../config.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import { getTimeoutCounter, startTestServer } from './testServer.js';
+import { startTestServer } from './testServer';
+import { printBenchmarkReport } from './testServer/benchmark.js';
+import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
+import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
+import { assertValidTimeouts } from './testServer/timeout.js';
+import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
 
-async function runCtsOne(language: string): Promise<void> {
-  const spinner = createSpinner(`running cts for '${language}'`);
+export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
+
+async function buildFilter(
+  language: Language,
+  suites: Record<CTSType, boolean>,
+): Promise<CTSType[]> {
+  const folders: CTSType[] = [];
+  for (const [suite, include] of Object.entries(suites)) {
+    // check if the folder has files in it
+    const folder = toAbsolutePath(
+      `tests/output/${language}/${getTestOutputFolder(language)}/${suite}`,
+    );
+    if (
+      include &&
+      (await exists(folder)) &&
+      (await fsp.readdir(folder)).filter((f) => f !== '__init__.py' && f !== '__pycache__').length >
+        0
+    ) {
+      folders.push(suite as CTSType);
+    }
+  }
+
+  return folders;
+}
+
+async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): Promise<void> {
   const cwd = `tests/output/${language}`;
+  const folders = await buildFilter(language, suites);
+  const spinner = createSpinner(`running cts for '${language}' in folder(s) ${folders.join(', ')}`);
+
+  if (folders.length === 0) {
+    spinner.succeed(`skipping '${language}' because all tests are excluded`);
+    return;
+  }
+
+  const filter = (mapper: (f: string) => string): string => folders.map(mapper).join(' ');
+
   switch (language) {
     case 'csharp':
-      await run('dotnet test /clp:ErrorsOnly', { cwd, language });
+      await run(
+        `dotnet test /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
+        { cwd, language },
+      );
       break;
     case 'dart':
-      await run('dart test', { cwd, language });
+      await run(`dart test ${filter((f) => `test/${f}`)}`, {
+        cwd,
+        language,
+      });
       break;
     case 'go':
-      await run(`go test -race -count 1 ${isVerbose() ? '-v' : ''} ./...`, {
-        cwd,
-        language,
-      });
+      await run(
+        `go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'java':
-      // I guess this is a bug from gradle and can be removed once it's fixed, it doesn't affect the cache.
-      await fsp.rm(toAbsolutePath('tests/output/java/.gradle'), { recursive: true, force: true });
-      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
+      await run(
+        `./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
+        { language },
+      );
       break;
     case 'javascript':
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
-        cwd,
-      });
+      await run(
+        `YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `dist/${f}`)}`,
+        {
+          cwd,
+        },
+      );
       break;
-
     case 'kotlin':
-      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
+      await run(
+        `./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
+        { language },
+      );
       break;
-    case 'php': {
+    case 'php':
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit ${cwd}`, {
-        language,
-      });
+      await run(
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${filter((f) => `${cwd}/src/${f}`)}`,
+        {
+          language,
+        },
+      );
       break;
-    }
     case 'python':
-      await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
-        cwd,
-        language,
-      });
+      await run(
+        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, {
+      await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
         cwd,
         language,
       });
       break;
     case 'scala':
-      await run('sbt test', { cwd, language });
-      break;
-    case 'swift':
-      await run('rm -rf .build && swift test -Xswiftc -suppress-warnings -q --parallel', {
+      await run(`sbt 'testOnly ${filter((f) => `algoliasearch.${f}.*`)}'`, {
         cwd,
         language,
       });
+      break;
+    case 'swift':
+      await run(
+        `swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter ${f}.*`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
@@ -72,23 +138,35 @@ async function runCtsOne(language: string): Promise<void> {
 }
 
 // the clients option is only used to determine if we need to start the test server, it will run the tests for all clients anyway.
-export async function runCts(languages: Language[], clients: string[]): Promise<void> {
-  const useTestServer = clients.includes('search') || clients.includes('all');
-  let close: () => Promise<void> = async () => {};
-  if (useTestServer) {
-    close = await startTestServer();
-  }
+export async function runCts(
+  languages: Language[],
+  clients: string[],
+  suites: Record<CTSType, boolean>,
+): Promise<void> {
+  const withBenchmarkServer =
+    suites.benchmark && (clients.includes('search') || clients.includes('all'));
+  const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
+  const closeTestServer = await startTestServer({
+    ...suites,
+    benchmark: withBenchmarkServer,
+    client: withClientServer,
+  });
+
   for (const lang of languages) {
-    await runCtsOne(lang);
+    await runCtsOne(lang, suites);
   }
 
-  if (useTestServer) {
-    await close();
+  await closeTestServer();
 
-    if (languages.length !== getTimeoutCounter()) {
-      throw new Error(
-        `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`,
-      );
-    }
+  if (withClientServer) {
+    const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
+
+    assertValidTimeouts(languages.length);
+    assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
+    assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
+  }
+  if (withBenchmarkServer) {
+    printBenchmarkReport();
   }
 }

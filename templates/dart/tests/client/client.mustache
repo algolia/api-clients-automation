@@ -1,0 +1,55 @@
+// {{generationBanner}}
+import '{{{import}}}';
+import 'package:algolia_test/algolia_test.dart';
+import 'package:test/test.dart';
+import 'package:test_api/hooks.dart';
+
+void main() {
+  {{#blocksClient}}
+  {{#tests}}
+  {{^isHelper}} {{! Helper tests are not supported yet}}
+  test('{{{testName}}}', () async { 
+    final requester = RequestInterceptor();
+    {{#autoCreateClient}}
+    final client =  {{client}}(
+      appId: 'appId', 
+      apiKey: 'apiKey',
+      {{#hasRegionalHost}}
+      region: '{{defaultRegion}}',
+      {{/hasRegionalHost}}
+      options: ClientOptions(requester: requester),
+    );
+    {{/autoCreateClient}}    
+    {{#steps}}    
+    {{#isError}}
+    await expectError(
+      '{{{expectedError}}}',
+      () async {
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
+      },
+    );
+    {{/isError}}
+    {{^isError}}
+    {{#match}}
+    requester.setOnRequest((request) {
+      {{#testUserAgent}}
+          TestHandle.current.markSkipped('User agent added using an interceptor');
+      {{/testUserAgent}}
+      {{#testTimeouts}}
+          expect({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, request.timeout.inMilliseconds);
+      {{/testTimeouts}}
+      {{#testHost}}
+          expect(request.host.url, '{{{match}}}');
+      {{/testHost}}
+    });
+    {{/match}}
+    {{#dynamicTemplate}}{{/dynamicTemplate}}
+    {{/isError}}
+    {{/steps}}
+    }
+  );
+
+  {{/isHelper}}
+  {{/tests}}
+  {{/blocksClient}}
+}

@@ -3,14 +3,10 @@ package requests
 
 import (
 	"encoding/json"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -22,7 +18,7 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := analytics.Configuration{
+	cfg := analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -34,22 +30,6 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	require.NoError(t, err)
 
 	return client, echo
-}
-
-func createE2EAnalyticsClient(t *testing.T) *analytics.APIClient {
-	t.Helper()
-
-	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
-	if appID == "" && os.Getenv("CI") != "true" {
-		err := godotenv.Load("../../../../.env")
-		require.NoError(t, err)
-		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
-	}
-	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client, err := analytics.NewClient(appID, apiKey, analytics.US)
-	require.NoError(t, err)
-
-	return client
 }
 
 func TestAnalytics_CustomDelete(t *testing.T) {
@@ -122,8 +102,8 @@ func TestAnalytics_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			analytics.QueryParamOption("query", "parameters with space"), analytics.QueryParamOption("and an array",
-				[]string{"array", "with spaces"}), analytics.HeaderParamOption("x-header-1", "spaces are left alone"),
+			analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), analytics.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -183,7 +163,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("query", "myQueryParameter"),
+			analytics.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -203,7 +183,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("query2", "myQueryParameter"),
+			analytics.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -223,7 +203,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			analytics.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -248,7 +228,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.HeaderParamOption("x-algolia-api-key", "myApiKey"),
+			analytics.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -273,7 +253,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("isItWorking", true),
+			analytics.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -293,7 +273,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("myParam", 2),
+			analytics.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -313,7 +293,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("myParam",
+			analytics.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -334,7 +314,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("myParam",
+			analytics.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -355,7 +335,7 @@ func TestAnalytics_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			analytics.QueryParamOption("myParam",
+			analytics.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)
@@ -1201,31 +1181,6 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
-		clientE2E := createE2EAnalyticsClient(t)
-		res, err := clientE2E.GetTopSearches(client.NewApiGetTopSearchesRequest(
-			"cts_e2e_space in index",
-		))
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"searches":[{"search":"","nbHits":0}]}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

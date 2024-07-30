@@ -1,3 +1,49 @@
+## [9.0.0-beta.12](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.11...9.0.0-beta.12)
+
+- [3ec5f5f7e](https://github.com/algolia/api-clients-automation/commit/3ec5f5f7e) feat(specs): add v2 endpoints for ingestion ([#3416](https://github.com/algolia/api-clients-automation/pull/3416)) by [@shortcuts](https://github.com/shortcuts/)
+- [200f07e9c](https://github.com/algolia/api-clients-automation/commit/200f07e9c) fix(specs): add primary to get settings response ([#3415](https://github.com/algolia/api-clients-automation/pull/3415)) by [@kai687](https://github.com/kai687/)
+- [81c15cf5b](https://github.com/algolia/api-clients-automation/commit/81c15cf5b) chore(specs): add eslint rule to avoid cross-references ([#3413](https://github.com/algolia/api-clients-automation/pull/3413)) by [@millotp](https://github.com/millotp/)
+- [be060a060](https://github.com/algolia/api-clients-automation/commit/be060a060) fix(specs): remove cross-references of analytics ([#3414](https://github.com/algolia/api-clients-automation/pull/3414)) by [@millotp](https://github.com/millotp/)
+- [fe6f5edab](https://github.com/algolia/api-clients-automation/commit/fe6f5edab) feat(specs): add v2 endpoints for ingestion ([#3410](https://github.com/algolia/api-clients-automation/pull/3410)) by [@shortcuts](https://github.com/shortcuts/)
+- [e3c6b8401](https://github.com/algolia/api-clients-automation/commit/e3c6b8401) fix(specs): remove cross-specs references ([#3412](https://github.com/algolia/api-clients-automation/pull/3412)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [9.0.0-beta.11](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.10...9.0.0-beta.11)
+
+- [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)
+- [a68907d1c](https://github.com/algolia/api-clients-automation/commit/a68907d1c) feat(clients): add api key helper test ([#3338](https://github.com/algolia/api-clients-automation/pull/3338)) by [@Fluf22](https://github.com/Fluf22/)
+- [31ba7f6d0](https://github.com/algolia/api-clients-automation/commit/31ba7f6d0) fix(specs): recommend non required parameters ([#3355](https://github.com/algolia/api-clients-automation/pull/3355)) by [@shortcuts](https://github.com/shortcuts/)
+- [337eea93e](https://github.com/algolia/api-clients-automation/commit/337eea93e) fix(specs): results is required in GetRecommendationsResponse ([#3357](https://github.com/algolia/api-clients-automation/pull/3357)) by [@millotp](https://github.com/millotp/)
+
+## [9.0.0-beta.10](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.9...9.0.0-beta.10)
+
+- [a009967f6](https://github.com/algolia/api-clients-automation/commit/a009967f6) fix(specs): browse response required properties ([#3348](https://github.com/algolia/api-clients-automation/pull/3348)) by [@millotp](https://github.com/millotp/)
+- [04a799417](https://github.com/algolia/api-clients-automation/commit/04a799417) fix(specs): ingestion task and transformation ([#3347](https://github.com/algolia/api-clients-automation/pull/3347)) by [@shortcuts](https://github.com/shortcuts/)
+- [ce83a1115](https://github.com/algolia/api-clients-automation/commit/ce83a1115) fix(swift): wait for api key helper update operation ([#3340](https://github.com/algolia/api-clients-automation/pull/3340)) by [@Fluf22](https://github.com/Fluf22/)
+- [9451edcd4](https://github.com/algolia/api-clients-automation/commit/9451edcd4) fix(swift): api key helpers ([#3337](https://github.com/algolia/api-clients-automation/pull/3337)) by [@Fluf22](https://github.com/Fluf22/)
+- [dcb1b59dc](https://github.com/algolia/api-clients-automation/commit/dcb1b59dc) fix(specs): clarify browse parameters ([#3333](https://github.com/algolia/api-clients-automation/pull/3333)) by [@kai687](https://github.com/kai687/)
+
+## [9.0.0-beta.9](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.8...9.0.0-beta.9)
+
+- [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [9.0.0-beta.8](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.7...9.0.0-beta.8)
+
+- [197d1989a](https://github.com/algolia/api-clients-automation/commit/197d1989a) feat(swift): generate tests for helpers ([#3248](https://github.com/algolia/api-clients-automation/pull/3248)) by [@millotp](https://github.com/millotp/)
+- [8e98407c1](https://github.com/algolia/api-clients-automation/commit/8e98407c1) fix(clients): update ingestion transformations description and fix taggroups ([#3265](https://github.com/algolia/api-clients-automation/pull/3265)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [9.0.0-beta.7](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.6...9.0.0-beta.7)
+
+- [e5cfcf0c4](https://github.com/algolia/api-clients-automation/commit/e5cfcf0c4) feat(clients): generate common LICENSE ([#3258](https://github.com/algolia/api-clients-automation/pull/3258)) by [@shortcuts](https://github.com/shortcuts/)
+- [47dd4bb5b](https://github.com/algolia/api-clients-automation/commit/47dd4bb5b) fix(clients): update README snippets and contributing guides ([#3257](https://github.com/algolia/api-clients-automation/pull/3257)) by [@shortcuts](https://github.com/shortcuts/)
+- [7a90e4532](https://github.com/algolia/api-clients-automation/commit/7a90e4532) feat(clients): add `saveObjects`, `deleteObjects` and `partialUpdateObjects` helpers ([#3180](https://github.com/algolia/api-clients-automation/pull/3180)) by [@shortcuts](https://github.com/shortcuts/)
+- [5dbdb91e9](https://github.com/algolia/api-clients-automation/commit/5dbdb91e9) fix(specs): virtual is a fetchedIndex props ([#3255](https://github.com/algolia/api-clients-automation/pull/3255)) by [@shortcuts](https://github.com/shortcuts/)
+- [0a6277937](https://github.com/algolia/api-clients-automation/commit/0a6277937) fix(specs): add virtual index settings and update renderingContent ([#3254](https://github.com/algolia/api-clients-automation/pull/3254)) by [@shortcuts](https://github.com/shortcuts/)
+- [536a348f1](https://github.com/algolia/api-clients-automation/commit/536a348f1) fix(clients): chunked batch helper size property consistency ([#3253](https://github.com/algolia/api-clients-automation/pull/3253)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [9.0.0-beta.6](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.5...9.0.0-beta.6)
+
+- [07e074806](https://github.com/algolia/api-clients-automation/commit/07e074806) feat(clients): add recommend to algoliasearch ([#2860](https://github.com/algolia/api-clients-automation/pull/2860)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [9.0.0-beta.5](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.4...9.0.0-beta.5)
 
 - [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)

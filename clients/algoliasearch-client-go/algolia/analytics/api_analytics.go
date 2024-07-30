@@ -12,26 +12,39 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
-type Option struct {
-	optionType string
-	name       string
-	value      string
+type config struct {
+	// -- Request options for API calls
+	context      context.Context
+	queryParams  url.Values
+	headerParams map[string]string
 }
 
-func QueryParamOption(name string, val any) Option {
-	return Option{
-		optionType: "query",
-		name:       queryParameterToString(name),
-		value:      queryParameterToString(val),
-	}
+type RequestOption interface {
+	apply(*config)
 }
 
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-		optionType: "header",
-		name:       name,
-		value:      parameterToString(val),
-	}
+type requestOption func(*config)
+
+func (r requestOption) apply(c *config) {
+	r(c)
+}
+
+func WithContext(ctx context.Context) requestOption {
+	return requestOption(func(c *config) {
+		c.context = ctx
+	})
+}
+
+func WithHeaderParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.headerParams[key] = utils.ParameterToString(value)
+	})
+}
+
+func WithQueryParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
 }
 
 func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
@@ -82,68 +95,69 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]any) ApiCus
 }
 
 /*
-CustomDelete Wraps CustomDeleteWithContext using context.Background.
+CustomDelete calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
+	Request can be constructed by NewApiCustomDeleteRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomDeleteWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomDelete
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomDeleteRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomDelete`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomDelete`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomDelete casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomDeleteRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
+*/
+func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomDeleteWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -223,68 +237,69 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]any) ApiCustom
 }
 
 /*
-CustomGet Wraps CustomGetWithContext using context.Background.
+CustomGet calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomGetRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
+	Request can be constructed by NewApiCustomGetRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomGetWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomGet
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomGetRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomGet`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomGet`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomGet casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomGetRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
+*/
+func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomGetWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -380,63 +395,46 @@ func (r ApiCustomPostRequest) WithBody(body map[string]any) ApiCustomPostRequest
 }
 
 /*
-CustomPost Wraps CustomPostWithContext using context.Background.
+CustomPost calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomPostRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
+	Request can be constructed by NewApiCustomPostRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	  @param body map[string]any - Parameters to send with the custom request.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPostWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomPost
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPostRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomPost`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomPost`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -444,12 +442,30 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomPost casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomPostRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
+*/
+func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomPostWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -545,63 +561,46 @@ func (r ApiCustomPutRequest) WithBody(body map[string]any) ApiCustomPutRequest {
 }
 
 /*
-CustomPut Wraps CustomPutWithContext using context.Background.
+CustomPut calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomPutRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
+	Request can be constructed by NewApiCustomPutRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	  @param body map[string]any - Parameters to send with the custom request.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPutWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomPut
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPutRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomPut`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomPut`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -609,12 +608,30 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomPut casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomPutRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
+*/
+func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomPutWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -726,86 +743,86 @@ func (r ApiGetAddToCartRateRequest) WithTags(tags string) ApiGetAddToCartRateReq
 }
 
 /*
-GetAddToCartRate Wraps GetAddToCartRateWithContext using context.Background.
+GetAddToCartRate calls the API and returns the raw response from it.
 
-Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetAddToCartRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetAddToCartRateResponse
-*/
-func (c *APIClient) GetAddToCartRate(r ApiGetAddToCartRateRequest, opts ...Option) (*GetAddToCartRateResponse, error) {
-	return c.GetAddToCartRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetAddToCartRate
-
-Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
+	Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetAddToCartRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetAddToCartRateResponse
+	Request can be constructed by NewApiGetAddToCartRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetAddToCartRateWithContext(ctx context.Context, r ApiGetAddToCartRateRequest, opts ...Option) (*GetAddToCartRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetAddToCartRateResponse
-	)
-
+func (c *APIClient) GetAddToCartRateWithHTTPInfo(r ApiGetAddToCartRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/conversions/addToCartRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetAddToCartRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetAddToCartRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetAddToCartRate casts the HTTP response body to a defined struct.
+
+Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetAddToCartRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetAddToCartRateResponse
+*/
+func (c *APIClient) GetAddToCartRate(r ApiGetAddToCartRateRequest, opts ...RequestOption) (*GetAddToCartRateResponse, error) {
+	var returnValue *GetAddToCartRateResponse
+
+	res, resBody, err := c.GetAddToCartRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -917,90 +934,90 @@ func (r ApiGetAverageClickPositionRequest) WithTags(tags string) ApiGetAverageCl
 }
 
 /*
-GetAverageClickPosition Wraps GetAverageClickPositionWithContext using context.Background.
+GetAverageClickPosition calls the API and returns the raw response from it.
 
-Retrieves the average click position of your search results, including a daily breakdown.
-
-The average click position is the average of all clicked search results' positions.
-For example, if users only ever click on the first result for any search, the average click position is 1.
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetAverageClickPositionRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetAverageClickPositionResponse
-*/
-func (c *APIClient) GetAverageClickPosition(r ApiGetAverageClickPositionRequest, opts ...Option) (*GetAverageClickPositionResponse, error) {
-	return c.GetAverageClickPositionWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetAverageClickPosition
-
-Retrieves the average click position of your search results, including a daily breakdown.
+	Retrieves the average click position of your search results, including a daily breakdown.
 
 The average click position is the average of all clicked search results' positions.
 For example, if users only ever click on the first result for any search, the average click position is 1.
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetAverageClickPositionRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetAverageClickPositionResponse
+	Request can be constructed by NewApiGetAverageClickPositionRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetAverageClickPositionWithContext(ctx context.Context, r ApiGetAverageClickPositionRequest, opts ...Option) (*GetAverageClickPositionResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetAverageClickPositionResponse
-	)
-
+func (c *APIClient) GetAverageClickPositionWithHTTPInfo(r ApiGetAverageClickPositionRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/clicks/averageClickPosition"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetAverageClickPosition`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetAverageClickPosition`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetAverageClickPosition casts the HTTP response body to a defined struct.
+
+Retrieves the average click position of your search results, including a daily breakdown.
+
+The average click position is the average of all clicked search results' positions.
+For example, if users only ever click on the first result for any search, the average click position is 1.
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetAverageClickPositionRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetAverageClickPositionResponse
+*/
+func (c *APIClient) GetAverageClickPosition(r ApiGetAverageClickPositionRequest, opts ...RequestOption) (*GetAverageClickPositionResponse, error) {
+	var returnValue *GetAverageClickPositionResponse
+
+	res, resBody, err := c.GetAverageClickPositionWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1112,86 +1129,86 @@ func (r ApiGetClickPositionsRequest) WithTags(tags string) ApiGetClickPositionsR
 }
 
 /*
-GetClickPositions Wraps GetClickPositionsWithContext using context.Background.
+GetClickPositions calls the API and returns the raw response from it.
 
-Retrieves the positions in the search results and their associated number of clicks.
-
-This lets you check how many clicks the first, second, or tenth search results receive.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetClickPositionsRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetClickPositionsResponse
-*/
-func (c *APIClient) GetClickPositions(r ApiGetClickPositionsRequest, opts ...Option) (*GetClickPositionsResponse, error) {
-	return c.GetClickPositionsWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetClickPositions
-
-Retrieves the positions in the search results and their associated number of clicks.
+	Retrieves the positions in the search results and their associated number of clicks.
 
 This lets you check how many clicks the first, second, or tenth search results receive.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetClickPositionsRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetClickPositionsResponse
+	Request can be constructed by NewApiGetClickPositionsRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetClickPositionsWithContext(ctx context.Context, r ApiGetClickPositionsRequest, opts ...Option) (*GetClickPositionsResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetClickPositionsResponse
-	)
-
+func (c *APIClient) GetClickPositionsWithHTTPInfo(r ApiGetClickPositionsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/clicks/positions"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetClickPositions`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetClickPositions`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetClickPositions casts the HTTP response body to a defined struct.
+
+Retrieves the positions in the search results and their associated number of clicks.
+
+This lets you check how many clicks the first, second, or tenth search results receive.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetClickPositionsRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetClickPositionsResponse
+*/
+func (c *APIClient) GetClickPositions(r ApiGetClickPositionsRequest, opts ...RequestOption) (*GetClickPositionsResponse, error) {
+	var returnValue *GetClickPositionsResponse
+
+	res, resBody, err := c.GetClickPositionsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1303,86 +1320,86 @@ func (r ApiGetClickThroughRateRequest) WithTags(tags string) ApiGetClickThroughR
 }
 
 /*
-GetClickThroughRate Wraps GetClickThroughRateWithContext using context.Background.
+GetClickThroughRate calls the API and returns the raw response from it.
 
-# Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetClickThroughRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetClickThroughRateResponse
-*/
-func (c *APIClient) GetClickThroughRate(r ApiGetClickThroughRateRequest, opts ...Option) (*GetClickThroughRateResponse, error) {
-	return c.GetClickThroughRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetClickThroughRate
-
-# Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
+	Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetClickThroughRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetClickThroughRateResponse
+	Request can be constructed by NewApiGetClickThroughRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetClickThroughRateWithContext(ctx context.Context, r ApiGetClickThroughRateRequest, opts ...Option) (*GetClickThroughRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetClickThroughRateResponse
-	)
-
+func (c *APIClient) GetClickThroughRateWithHTTPInfo(r ApiGetClickThroughRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/clicks/clickThroughRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetClickThroughRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetClickThroughRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetClickThroughRate casts the HTTP response body to a defined struct.
+
+# Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetClickThroughRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetClickThroughRateResponse
+*/
+func (c *APIClient) GetClickThroughRate(r ApiGetClickThroughRateRequest, opts ...RequestOption) (*GetClickThroughRateResponse, error) {
+	var returnValue *GetClickThroughRateResponse
+
+	res, resBody, err := c.GetClickThroughRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1494,86 +1511,86 @@ func (r ApiGetConversionRateRequest) WithTags(tags string) ApiGetConversionRateR
 }
 
 /*
-GetConversionRate Wraps GetConversionRateWithContext using context.Background.
+GetConversionRate calls the API and returns the raw response from it.
 
-Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetConversionRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetConversionRateResponse
-*/
-func (c *APIClient) GetConversionRate(r ApiGetConversionRateRequest, opts ...Option) (*GetConversionRateResponse, error) {
-	return c.GetConversionRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetConversionRate
-
-Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
+	Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetConversionRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetConversionRateResponse
+	Request can be constructed by NewApiGetConversionRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetConversionRateWithContext(ctx context.Context, r ApiGetConversionRateRequest, opts ...Option) (*GetConversionRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetConversionRateResponse
-	)
-
+func (c *APIClient) GetConversionRateWithHTTPInfo(r ApiGetConversionRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/conversions/conversionRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetConversionRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetConversionRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetConversionRate casts the HTTP response body to a defined struct.
+
+Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetConversionRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetConversionRateResponse
+*/
+func (c *APIClient) GetConversionRate(r ApiGetConversionRateRequest, opts ...RequestOption) (*GetConversionRateResponse, error) {
+	var returnValue *GetConversionRateResponse
+
+	res, resBody, err := c.GetConversionRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1685,86 +1702,86 @@ func (r ApiGetNoClickRateRequest) WithTags(tags string) ApiGetNoClickRateRequest
 }
 
 /*
-GetNoClickRate Wraps GetNoClickRateWithContext using context.Background.
+GetNoClickRate calls the API and returns the raw response from it.
 
-Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetNoClickRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetNoClickRateResponse
-*/
-func (c *APIClient) GetNoClickRate(r ApiGetNoClickRateRequest, opts ...Option) (*GetNoClickRateResponse, error) {
-	return c.GetNoClickRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetNoClickRate
-
-Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
+	Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetNoClickRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetNoClickRateResponse
+	Request can be constructed by NewApiGetNoClickRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetNoClickRateWithContext(ctx context.Context, r ApiGetNoClickRateRequest, opts ...Option) (*GetNoClickRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetNoClickRateResponse
-	)
-
+func (c *APIClient) GetNoClickRateWithHTTPInfo(r ApiGetNoClickRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches/noClickRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetNoClickRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetNoClickRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetNoClickRate casts the HTTP response body to a defined struct.
+
+Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetNoClickRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetNoClickRateResponse
+*/
+func (c *APIClient) GetNoClickRate(r ApiGetNoClickRateRequest, opts ...RequestOption) (*GetNoClickRateResponse, error) {
+	var returnValue *GetNoClickRateResponse
+
+	res, resBody, err := c.GetNoClickRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1876,86 +1893,86 @@ func (r ApiGetNoResultsRateRequest) WithTags(tags string) ApiGetNoResultsRateReq
 }
 
 /*
-GetNoResultsRate Wraps GetNoResultsRateWithContext using context.Background.
+GetNoResultsRate calls the API and returns the raw response from it.
 
-Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetNoResultsRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetNoResultsRateResponse
-*/
-func (c *APIClient) GetNoResultsRate(r ApiGetNoResultsRateRequest, opts ...Option) (*GetNoResultsRateResponse, error) {
-	return c.GetNoResultsRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetNoResultsRate
-
-Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
+	Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetNoResultsRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetNoResultsRateResponse
+	Request can be constructed by NewApiGetNoResultsRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetNoResultsRateWithContext(ctx context.Context, r ApiGetNoResultsRateRequest, opts ...Option) (*GetNoResultsRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetNoResultsRateResponse
-	)
-
+func (c *APIClient) GetNoResultsRateWithHTTPInfo(r ApiGetNoResultsRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches/noResultRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetNoResultsRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetNoResultsRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetNoResultsRate casts the HTTP response body to a defined struct.
+
+Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetNoResultsRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetNoResultsRateResponse
+*/
+func (c *APIClient) GetNoResultsRate(r ApiGetNoResultsRateRequest, opts ...RequestOption) (*GetNoResultsRateResponse, error) {
+	var returnValue *GetNoResultsRateResponse
+
+	res, resBody, err := c.GetNoResultsRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2067,86 +2084,86 @@ func (r ApiGetPurchaseRateRequest) WithTags(tags string) ApiGetPurchaseRateReque
 }
 
 /*
-GetPurchaseRate Wraps GetPurchaseRateWithContext using context.Background.
+GetPurchaseRate calls the API and returns the raw response from it.
 
-Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetPurchaseRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetPurchaseRateResponse
-*/
-func (c *APIClient) GetPurchaseRate(r ApiGetPurchaseRateRequest, opts ...Option) (*GetPurchaseRateResponse, error) {
-	return c.GetPurchaseRateWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetPurchaseRate
-
-Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
+	Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetPurchaseRateRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetPurchaseRateResponse
+	Request can be constructed by NewApiGetPurchaseRateRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetPurchaseRateWithContext(ctx context.Context, r ApiGetPurchaseRateRequest, opts ...Option) (*GetPurchaseRateResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetPurchaseRateResponse
-	)
-
+func (c *APIClient) GetPurchaseRateWithHTTPInfo(r ApiGetPurchaseRateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/conversions/purchaseRate"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetPurchaseRate`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetPurchaseRate`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetPurchaseRate casts the HTTP response body to a defined struct.
+
+Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetPurchaseRateRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetPurchaseRateResponse
+*/
+func (c *APIClient) GetPurchaseRate(r ApiGetPurchaseRateRequest, opts ...RequestOption) (*GetPurchaseRateResponse, error) {
+	var returnValue *GetPurchaseRateResponse
+
+	res, resBody, err := c.GetPurchaseRateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2258,88 +2275,88 @@ func (r ApiGetRevenueRequest) WithTags(tags string) ApiGetRevenueRequest {
 }
 
 /*
-GetRevenue Wraps GetRevenueWithContext using context.Background.
+GetRevenue calls the API and returns the raw response from it.
 
-Retrieves revenue-related metrics, such as the total revenue or the average order value.
-
-To retrieve revenue-related metrics, sent purchase events.
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetRevenueRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetRevenue
-*/
-func (c *APIClient) GetRevenue(r ApiGetRevenueRequest, opts ...Option) (*GetRevenue, error) {
-	return c.GetRevenueWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetRevenue
-
-Retrieves revenue-related metrics, such as the total revenue or the average order value.
+	Retrieves revenue-related metrics, such as the total revenue or the average order value.
 
 To retrieve revenue-related metrics, sent purchase events.
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetRevenueRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetRevenue
+	Request can be constructed by NewApiGetRevenueRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetRevenueWithContext(ctx context.Context, r ApiGetRevenueRequest, opts ...Option) (*GetRevenue, error) {
-	var (
-		postBody    any
-		returnValue *GetRevenue
-	)
-
+func (c *APIClient) GetRevenueWithHTTPInfo(r ApiGetRevenueRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/conversions/revenue"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetRevenue`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetRevenue`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetRevenue casts the HTTP response body to a defined struct.
+
+Retrieves revenue-related metrics, such as the total revenue or the average order value.
+
+To retrieve revenue-related metrics, sent purchase events.
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetRevenueRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetRevenue
+*/
+func (c *APIClient) GetRevenue(r ApiGetRevenueRequest, opts ...RequestOption) (*GetRevenue, error) {
+	var returnValue *GetRevenue
+
+	res, resBody, err := c.GetRevenueWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2451,86 +2468,86 @@ func (r ApiGetSearchesCountRequest) WithTags(tags string) ApiGetSearchesCountReq
 }
 
 /*
-GetSearchesCount Wraps GetSearchesCountWithContext using context.Background.
+GetSearchesCount calls the API and returns the raw response from it.
 
-Retrieves the number of searches within a time range, including a daily breakdown.
-
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetSearchesCountRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesCountResponse
-*/
-func (c *APIClient) GetSearchesCount(r ApiGetSearchesCountRequest, opts ...Option) (*GetSearchesCountResponse, error) {
-	return c.GetSearchesCountWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetSearchesCount
-
-Retrieves the number of searches within a time range, including a daily breakdown.
+	Retrieves the number of searches within a time range, including a daily breakdown.
 
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetSearchesCountRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesCountResponse
+	Request can be constructed by NewApiGetSearchesCountRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetSearchesCountWithContext(ctx context.Context, r ApiGetSearchesCountRequest, opts ...Option) (*GetSearchesCountResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetSearchesCountResponse
-	)
-
+func (c *APIClient) GetSearchesCountWithHTTPInfo(r ApiGetSearchesCountRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches/count"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetSearchesCount`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetSearchesCount`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetSearchesCount casts the HTTP response body to a defined struct.
+
+Retrieves the number of searches within a time range, including a daily breakdown.
+
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetSearchesCountRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetSearchesCountResponse
+*/
+func (c *APIClient) GetSearchesCount(r ApiGetSearchesCountRequest, opts ...RequestOption) (*GetSearchesCountResponse, error) {
+	var returnValue *GetSearchesCountResponse
+
+	res, resBody, err := c.GetSearchesCountWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2674,92 +2691,92 @@ func (r ApiGetSearchesNoClicksRequest) WithTags(tags string) ApiGetSearchesNoCli
 }
 
 /*
-GetSearchesNoClicks Wraps GetSearchesNoClicksWithContext using context.Background.
+GetSearchesNoClicks calls the API and returns the raw response from it.
 
-Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
+	  Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetSearchesNoClicksRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesNoClicksResponse
+	Request can be constructed by NewApiGetSearchesNoClicksRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetSearchesNoClicks(r ApiGetSearchesNoClicksRequest, opts ...Option) (*GetSearchesNoClicksResponse, error) {
-	return c.GetSearchesNoClicksWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetSearchesNoClicks
-
-Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetSearchesNoClicksRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesNoClicksResponse
-*/
-func (c *APIClient) GetSearchesNoClicksWithContext(ctx context.Context, r ApiGetSearchesNoClicksRequest, opts ...Option) (*GetSearchesNoClicksResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetSearchesNoClicksResponse
-	)
-
+func (c *APIClient) GetSearchesNoClicksWithHTTPInfo(r ApiGetSearchesNoClicksRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches/noClicks"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetSearchesNoClicks`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetSearchesNoClicks`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetSearchesNoClicks casts the HTTP response body to a defined struct.
+
+Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetSearchesNoClicksRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetSearchesNoClicksResponse
+*/
+func (c *APIClient) GetSearchesNoClicks(r ApiGetSearchesNoClicksRequest, opts ...RequestOption) (*GetSearchesNoClicksResponse, error) {
+	var returnValue *GetSearchesNoClicksResponse
+
+	res, resBody, err := c.GetSearchesNoClicksWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -2903,92 +2920,92 @@ func (r ApiGetSearchesNoResultsRequest) WithTags(tags string) ApiGetSearchesNoRe
 }
 
 /*
-GetSearchesNoResults Wraps GetSearchesNoResultsWithContext using context.Background.
+GetSearchesNoResults calls the API and returns the raw response from it.
 
-Retrieves the most popular searches that didn't return any results.
+	  Retrieves the most popular searches that didn't return any results.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetSearchesNoResultsRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesNoResultsResponse
+	Request can be constructed by NewApiGetSearchesNoResultsRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetSearchesNoResults(r ApiGetSearchesNoResultsRequest, opts ...Option) (*GetSearchesNoResultsResponse, error) {
-	return c.GetSearchesNoResultsWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetSearchesNoResults
-
-Retrieves the most popular searches that didn't return any results.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetSearchesNoResultsRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetSearchesNoResultsResponse
-*/
-func (c *APIClient) GetSearchesNoResultsWithContext(ctx context.Context, r ApiGetSearchesNoResultsRequest, opts ...Option) (*GetSearchesNoResultsResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetSearchesNoResultsResponse
-	)
-
+func (c *APIClient) GetSearchesNoResultsWithHTTPInfo(r ApiGetSearchesNoResultsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches/noResults"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetSearchesNoResults`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetSearchesNoResults`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetSearchesNoResults casts the HTTP response body to a defined struct.
+
+Retrieves the most popular searches that didn't return any results.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetSearchesNoResultsRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetSearchesNoResultsResponse
+*/
+func (c *APIClient) GetSearchesNoResults(r ApiGetSearchesNoResultsRequest, opts ...RequestOption) (*GetSearchesNoResultsResponse, error) {
+	var returnValue *GetSearchesNoResultsResponse
+
+	res, resBody, err := c.GetSearchesNoResultsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3052,71 +3069,71 @@ func (c *APIClient) NewApiGetStatusRequest(index string) ApiGetStatusRequest {
 }
 
 /*
-GetStatus Wraps GetStatusWithContext using context.Background.
+GetStatus calls the API and returns the raw response from it.
 
-Retrieves the time when the Analytics data for the specified index was last updated.
-
-The Analytics data is updated every 5 minutes.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetStatusRequest with parameters below.
-
-	@param index string - Index name.
-	@return GetStatusResponse
-*/
-func (c *APIClient) GetStatus(r ApiGetStatusRequest, opts ...Option) (*GetStatusResponse, error) {
-	return c.GetStatusWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetStatus
-
-Retrieves the time when the Analytics data for the specified index was last updated.
+	Retrieves the time when the Analytics data for the specified index was last updated.
 
 The Analytics data is updated every 5 minutes.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetStatusRequest with parameters below.
-
-	@param index string - Index name.
-	@return GetStatusResponse
+	Request can be constructed by NewApiGetStatusRequest with parameters below.
+	  @param index string - Index name.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetStatusWithContext(ctx context.Context, r ApiGetStatusRequest, opts ...Option) (*GetStatusResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetStatusResponse
-	)
-
+func (c *APIClient) GetStatusWithHTTPInfo(r ApiGetStatusRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/status"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetStatus`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetStatus`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetStatus casts the HTTP response body to a defined struct.
+
+Retrieves the time when the Analytics data for the specified index was last updated.
+
+The Analytics data is updated every 5 minutes.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetStatusRequest with parameters below.
+
+	@param index string - Index name.
+	@return GetStatusResponse
+*/
+func (c *APIClient) GetStatus(r ApiGetStatusRequest, opts ...RequestOption) (*GetStatusResponse, error) {
+	var returnValue *GetStatusResponse
+
+	res, resBody, err := c.GetStatusWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3260,92 +3277,92 @@ func (r ApiGetTopCountriesRequest) WithTags(tags string) ApiGetTopCountriesReque
 }
 
 /*
-GetTopCountries Wraps GetTopCountriesWithContext using context.Background.
+GetTopCountries calls the API and returns the raw response from it.
 
-Retrieves the countries with the most searches to your index.
+	  Retrieves the countries with the most searches to your index.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopCountriesRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopCountriesResponse
+	Request can be constructed by NewApiGetTopCountriesRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopCountries(r ApiGetTopCountriesRequest, opts ...Option) (*GetTopCountriesResponse, error) {
-	return c.GetTopCountriesWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopCountries
-
-Retrieves the countries with the most searches to your index.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopCountriesRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopCountriesResponse
-*/
-func (c *APIClient) GetTopCountriesWithContext(ctx context.Context, r ApiGetTopCountriesRequest, opts ...Option) (*GetTopCountriesResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopCountriesResponse
-	)
-
+func (c *APIClient) GetTopCountriesWithHTTPInfo(r ApiGetTopCountriesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/countries"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopCountries`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopCountries`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopCountries casts the HTTP response body to a defined struct.
+
+Retrieves the countries with the most searches to your index.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopCountriesRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopCountriesResponse
+*/
+func (c *APIClient) GetTopCountries(r ApiGetTopCountriesRequest, opts ...RequestOption) (*GetTopCountriesResponse, error) {
+	var returnValue *GetTopCountriesResponse
+
+	res, resBody, err := c.GetTopCountriesWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3505,101 +3522,101 @@ func (r ApiGetTopFilterAttributesRequest) WithTags(tags string) ApiGetTopFilterA
 }
 
 /*
-GetTopFilterAttributes Wraps GetTopFilterAttributesWithContext using context.Background.
+GetTopFilterAttributes calls the API and returns the raw response from it.
 
-Retrieves the most frequently used filter attributes.
-
-These are attributes of your records that you included in the `attributesForFaceting` setting.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopFilterAttributesRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFilterAttributesResponse
-*/
-func (c *APIClient) GetTopFilterAttributes(r ApiGetTopFilterAttributesRequest, opts ...Option) (*GetTopFilterAttributesResponse, error) {
-	return c.GetTopFilterAttributesWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopFilterAttributes
-
-Retrieves the most frequently used filter attributes.
+	Retrieves the most frequently used filter attributes.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopFilterAttributesRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFilterAttributesResponse
+	Request can be constructed by NewApiGetTopFilterAttributesRequest with parameters below.
+	  @param index string - Index name.
+	  @param search string - Search query.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopFilterAttributesWithContext(ctx context.Context, r ApiGetTopFilterAttributesRequest, opts ...Option) (*GetTopFilterAttributesResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopFilterAttributesResponse
-	)
-
+func (c *APIClient) GetTopFilterAttributesWithHTTPInfo(r ApiGetTopFilterAttributesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/filters"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopFilterAttributes`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopFilterAttributes`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.search) {
-		queryParams.Set("search", queryParameterToString(*r.search))
+		conf.queryParams.Set("search", utils.QueryParameterToString(*r.search))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopFilterAttributes casts the HTTP response body to a defined struct.
+
+Retrieves the most frequently used filter attributes.
+
+These are attributes of your records that you included in the `attributesForFaceting` setting.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopFilterAttributesRequest with parameters below.
+
+	@param index string - Index name.
+	@param search string - Search query.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopFilterAttributesResponse
+*/
+func (c *APIClient) GetTopFilterAttributes(r ApiGetTopFilterAttributesRequest, opts ...RequestOption) (*GetTopFilterAttributesResponse, error) {
+	var returnValue *GetTopFilterAttributesResponse
+
+	res, resBody, err := c.GetTopFilterAttributesWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -3770,107 +3787,107 @@ func (r ApiGetTopFilterForAttributeRequest) WithTags(tags string) ApiGetTopFilte
 }
 
 /*
-GetTopFilterForAttribute Wraps GetTopFilterForAttributeWithContext using context.Background.
+GetTopFilterForAttribute calls the API and returns the raw response from it.
 
-Retrieves the most frequent filter (facet) values for a filter attribute.
-
-These are attributes of your records that you included in the `attributesForFaceting` setting.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopFilterForAttributeRequest with parameters below.
-
-	@param attribute string - Attribute name.
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFilterForAttributeResponse
-*/
-func (c *APIClient) GetTopFilterForAttribute(r ApiGetTopFilterForAttributeRequest, opts ...Option) (*GetTopFilterForAttributeResponse, error) {
-	return c.GetTopFilterForAttributeWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopFilterForAttribute
-
-Retrieves the most frequent filter (facet) values for a filter attribute.
+	Retrieves the most frequent filter (facet) values for a filter attribute.
 
 These are attributes of your records that you included in the `attributesForFaceting` setting.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopFilterForAttributeRequest with parameters below.
-
-	@param attribute string - Attribute name.
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFilterForAttributeResponse
+	Request can be constructed by NewApiGetTopFilterForAttributeRequest with parameters below.
+	  @param attribute string - Attribute name.
+	  @param index string - Index name.
+	  @param search string - Search query.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopFilterForAttributeWithContext(ctx context.Context, r ApiGetTopFilterForAttributeRequest, opts ...Option) (*GetTopFilterForAttributeResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopFilterForAttributeResponse
-	)
-
+func (c *APIClient) GetTopFilterForAttributeWithHTTPInfo(r ApiGetTopFilterForAttributeRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/filters/{attribute}"
-	requestPath = strings.ReplaceAll(requestPath, "{attribute}", url.PathEscape(parameterToString(r.attribute)))
+	requestPath = strings.ReplaceAll(requestPath, "{attribute}", url.PathEscape(utils.ParameterToString(r.attribute)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.attribute == "" {
-		return returnValue, reportError("Parameter `attribute` is required when calling `GetTopFilterForAttribute`.")
+		return nil, nil, reportError("Parameter `attribute` is required when calling `GetTopFilterForAttribute`.")
 	}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopFilterForAttribute`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopFilterForAttribute`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.search) {
-		queryParams.Set("search", queryParameterToString(*r.search))
+		conf.queryParams.Set("search", utils.QueryParameterToString(*r.search))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopFilterForAttribute casts the HTTP response body to a defined struct.
+
+Retrieves the most frequent filter (facet) values for a filter attribute.
+
+These are attributes of your records that you included in the `attributesForFaceting` setting.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopFilterForAttributeRequest with parameters below.
+
+	@param attribute string - Attribute name.
+	@param index string - Index name.
+	@param search string - Search query.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopFilterForAttributeResponse
+*/
+func (c *APIClient) GetTopFilterForAttribute(r ApiGetTopFilterForAttributeRequest, opts ...RequestOption) (*GetTopFilterForAttributeResponse, error) {
+	var returnValue *GetTopFilterForAttributeResponse
+
+	res, resBody, err := c.GetTopFilterForAttributeWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4030,101 +4047,101 @@ func (r ApiGetTopFiltersNoResultsRequest) WithTags(tags string) ApiGetTopFilters
 }
 
 /*
-GetTopFiltersNoResults Wraps GetTopFiltersNoResultsWithContext using context.Background.
+GetTopFiltersNoResults calls the API and returns the raw response from it.
 
-Retrieves the most frequently used filters for a search that didn't return any results.
-
-To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopFiltersNoResultsRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFiltersNoResultsResponse
-*/
-func (c *APIClient) GetTopFiltersNoResults(r ApiGetTopFiltersNoResultsRequest, opts ...Option) (*GetTopFiltersNoResultsResponse, error) {
-	return c.GetTopFiltersNoResultsWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopFiltersNoResults
-
-Retrieves the most frequently used filters for a search that didn't return any results.
+	Retrieves the most frequently used filters for a search that didn't return any results.
 
 To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopFiltersNoResultsRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopFiltersNoResultsResponse
+	Request can be constructed by NewApiGetTopFiltersNoResultsRequest with parameters below.
+	  @param index string - Index name.
+	  @param search string - Search query.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopFiltersNoResultsWithContext(ctx context.Context, r ApiGetTopFiltersNoResultsRequest, opts ...Option) (*GetTopFiltersNoResultsResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopFiltersNoResultsResponse
-	)
-
+func (c *APIClient) GetTopFiltersNoResultsWithHTTPInfo(r ApiGetTopFiltersNoResultsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/filters/noResults"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopFiltersNoResults`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopFiltersNoResults`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.search) {
-		queryParams.Set("search", queryParameterToString(*r.search))
+		conf.queryParams.Set("search", utils.QueryParameterToString(*r.search))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopFiltersNoResults casts the HTTP response body to a defined struct.
+
+Retrieves the most frequently used filters for a search that didn't return any results.
+
+To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopFiltersNoResultsRequest with parameters below.
+
+	@param index string - Index name.
+	@param search string - Search query.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopFiltersNoResultsResponse
+*/
+func (c *APIClient) GetTopFiltersNoResults(r ApiGetTopFiltersNoResultsRequest, opts ...RequestOption) (*GetTopFiltersNoResultsResponse, error) {
+	var returnValue *GetTopFiltersNoResultsResponse
+
+	res, resBody, err := c.GetTopFiltersNoResultsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4316,107 +4333,107 @@ func (r ApiGetTopHitsRequest) WithTags(tags string) ApiGetTopHitsRequest {
 }
 
 /*
-GetTopHits Wraps GetTopHitsWithContext using context.Background.
+GetTopHits calls the API and returns the raw response from it.
 
-Retrieves the object IDs of the most frequent search results.
+	  Retrieves the object IDs of the most frequent search results.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopHitsRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopHitsResponse
+	Request can be constructed by NewApiGetTopHitsRequest with parameters below.
+	  @param index string - Index name.
+	  @param search string - Search query.
+	  @param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
+	  @param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopHits(r ApiGetTopHitsRequest, opts ...Option) (*GetTopHitsResponse, error) {
-	return c.GetTopHitsWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopHits
-
-Retrieves the object IDs of the most frequent search results.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopHitsRequest with parameters below.
-
-	@param index string - Index name.
-	@param search string - Search query.
-	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopHitsResponse
-*/
-func (c *APIClient) GetTopHitsWithContext(ctx context.Context, r ApiGetTopHitsRequest, opts ...Option) (*GetTopHitsResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopHitsResponse
-	)
-
+func (c *APIClient) GetTopHitsWithHTTPInfo(r ApiGetTopHitsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/hits"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopHits`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopHits`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.search) {
-		queryParams.Set("search", queryParameterToString(*r.search))
+		conf.queryParams.Set("search", utils.QueryParameterToString(*r.search))
 	}
 	if !utils.IsNilOrEmpty(r.clickAnalytics) {
-		queryParams.Set("clickAnalytics", queryParameterToString(*r.clickAnalytics))
+		conf.queryParams.Set("clickAnalytics", utils.QueryParameterToString(*r.clickAnalytics))
 	}
 	if !utils.IsNilOrEmpty(r.revenueAnalytics) {
-		queryParams.Set("revenueAnalytics", queryParameterToString(*r.revenueAnalytics))
+		conf.queryParams.Set("revenueAnalytics", utils.QueryParameterToString(*r.revenueAnalytics))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopHits casts the HTTP response body to a defined struct.
+
+Retrieves the object IDs of the most frequent search results.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopHitsRequest with parameters below.
+
+	@param index string - Index name.
+	@param search string - Search query.
+	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
+	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopHitsResponse
+*/
+func (c *APIClient) GetTopHits(r ApiGetTopHitsRequest, opts ...RequestOption) (*GetTopHitsResponse, error) {
+	var returnValue *GetTopHitsResponse
+
+	res, resBody, err := c.GetTopHitsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4624,112 +4641,112 @@ func (r ApiGetTopSearchesRequest) WithTags(tags string) ApiGetTopSearchesRequest
 }
 
 /*
-GetTopSearches Wraps GetTopSearchesWithContext using context.Background.
+GetTopSearches calls the API and returns the raw response from it.
 
-Returns the most popular search terms.
+	  Returns the most popular search terms.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
-
-	@param index string - Index name.
-	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
-	@param direction Direction - Sorting direction of the results: ascending or descending.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopSearchesResponse
+	Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
+	  @param index string - Index name.
+	  @param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
+	  @param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
+	  @param direction Direction - Sorting direction of the results: ascending or descending.
+	  @param limit int32 - Number of items to return.
+	  @param offset int32 - Position of the first item to return.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetTopSearches(r ApiGetTopSearchesRequest, opts ...Option) (*GetTopSearchesResponse, error) {
-	return c.GetTopSearchesWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetTopSearches
-
-Returns the most popular search terms.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
-
-	@param index string - Index name.
-	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
-	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
-	@param direction Direction - Sorting direction of the results: ascending or descending.
-	@param limit int32 - Number of items to return.
-	@param offset int32 - Position of the first item to return.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetTopSearchesResponse
-*/
-func (c *APIClient) GetTopSearchesWithContext(ctx context.Context, r ApiGetTopSearchesRequest, opts ...Option) (*GetTopSearchesResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetTopSearchesResponse
-	)
-
+func (c *APIClient) GetTopSearchesWithHTTPInfo(r ApiGetTopSearchesRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/searches"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetTopSearches`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetTopSearches`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.clickAnalytics) {
-		queryParams.Set("clickAnalytics", queryParameterToString(*r.clickAnalytics))
+		conf.queryParams.Set("clickAnalytics", utils.QueryParameterToString(*r.clickAnalytics))
 	}
 	if !utils.IsNilOrEmpty(r.revenueAnalytics) {
-		queryParams.Set("revenueAnalytics", queryParameterToString(*r.revenueAnalytics))
+		conf.queryParams.Set("revenueAnalytics", utils.QueryParameterToString(*r.revenueAnalytics))
 	}
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.orderBy) {
-		queryParams.Set("orderBy", queryParameterToString(r.orderBy))
+		conf.queryParams.Set("orderBy", utils.QueryParameterToString(r.orderBy))
 	}
 	if !utils.IsNilOrEmpty(r.direction) {
-		queryParams.Set("direction", queryParameterToString(r.direction))
+		conf.queryParams.Set("direction", utils.QueryParameterToString(r.direction))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetTopSearches casts the HTTP response body to a defined struct.
+
+Returns the most popular search terms.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetTopSearchesRequest with parameters below.
+
+	@param index string - Index name.
+	@param clickAnalytics bool - Whether to include metrics related to click and conversion events in the response.
+	@param revenueAnalytics bool - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param orderBy OrderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
+	@param direction Direction - Sorting direction of the results: ascending or descending.
+	@param limit int32 - Number of items to return.
+	@param offset int32 - Position of the first item to return.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetTopSearchesResponse
+*/
+func (c *APIClient) GetTopSearches(r ApiGetTopSearchesRequest, opts ...RequestOption) (*GetTopSearchesResponse, error) {
+	var returnValue *GetTopSearchesResponse
+
+	res, resBody, err := c.GetTopSearchesWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -4841,92 +4858,92 @@ func (r ApiGetUsersCountRequest) WithTags(tags string) ApiGetUsersCountRequest {
 }
 
 /*
-GetUsersCount Wraps GetUsersCountWithContext using context.Background.
+GetUsersCount calls the API and returns the raw response from it.
 
-Retrieves the number of unique users within a time range, including a daily breakdown.
-
-Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
-
-By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
-By default, the analyzed period includes the last eight days including the current day.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetUsersCountRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetUsersCountResponse
-*/
-func (c *APIClient) GetUsersCount(r ApiGetUsersCountRequest, opts ...Option) (*GetUsersCountResponse, error) {
-	return c.GetUsersCountWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetUsersCount
-
-Retrieves the number of unique users within a time range, including a daily breakdown.
+	Retrieves the number of unique users within a time range, including a daily breakdown.
 
 Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
 
 By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
 By default, the analyzed period includes the last eight days including the current day.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetUsersCountRequest with parameters below.
-
-	@param index string - Index name.
-	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
-	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
-	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-	@return GetUsersCountResponse
+	Request can be constructed by NewApiGetUsersCountRequest with parameters below.
+	  @param index string - Index name.
+	  @param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	  @param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetUsersCountWithContext(ctx context.Context, r ApiGetUsersCountRequest, opts ...Option) (*GetUsersCountResponse, error) {
-	var (
-		postBody    any
-		returnValue *GetUsersCountResponse
-	)
-
+func (c *APIClient) GetUsersCountWithHTTPInfo(r ApiGetUsersCountRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/users/count"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.index == "" {
-		return returnValue, reportError("Parameter `index` is required when calling `GetUsersCount`.")
+		return nil, nil, reportError("Parameter `index` is required when calling `GetUsersCount`.")
 	}
 
-	queryParams.Set("index", queryParameterToString(r.index))
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("index", utils.QueryParameterToString(r.index))
 	if !utils.IsNilOrEmpty(r.startDate) {
-		queryParams.Set("startDate", queryParameterToString(*r.startDate))
+		conf.queryParams.Set("startDate", utils.QueryParameterToString(*r.startDate))
 	}
 	if !utils.IsNilOrEmpty(r.endDate) {
-		queryParams.Set("endDate", queryParameterToString(*r.endDate))
+		conf.queryParams.Set("endDate", utils.QueryParameterToString(*r.endDate))
 	}
 	if !utils.IsNilOrEmpty(r.tags) {
-		queryParams.Set("tags", queryParameterToString(*r.tags))
+		conf.queryParams.Set("tags", utils.QueryParameterToString(*r.tags))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetUsersCount casts the HTTP response body to a defined struct.
+
+Retrieves the number of unique users within a time range, including a daily breakdown.
+
+Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
+
+By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
+By default, the analyzed period includes the last eight days including the current day.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetUsersCountRequest with parameters below.
+
+	@param index string - Index name.
+	@param startDate string - Start date of the period to analyze, in `YYYY-MM-DD` format.
+	@param endDate string - End date of the period to analyze, in `YYYY-MM-DD` format.
+	@param tags string - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+	@return GetUsersCountResponse
+*/
+func (c *APIClient) GetUsersCount(r ApiGetUsersCountRequest, opts ...RequestOption) (*GetUsersCountResponse, error) {
+	var returnValue *GetUsersCountResponse
+
+	res, resBody, err := c.GetUsersCountWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}

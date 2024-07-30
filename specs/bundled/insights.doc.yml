@@ -291,8 +291,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -302,12 +302,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -515,8 +515,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -526,12 +526,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -739,8 +739,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -750,12 +750,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -964,8 +964,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -975,12 +975,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1732,39 +1732,39 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.push_events(
               InsightsEvents.new(
-                events: [ClickedObjectIDsAfterSearch.new(
-                  event_type: 'click',
-                  event_name: "Product Clicked",
-                  index: "products",
-                  user_token: "user-123456",
-                  authenticated_user_token: "user-123456",
-                  timestamp: 1_641_290_601_962,
-                  object_ids: [
-                    "9780545139700", "9780439784542"
-                  ],
-                  query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
-                  positions: [7, 6]
-                )]
+                events: [
+                  ClickedObjectIDsAfterSearch.new(
+                    event_type: "click",
+                    event_name: "Product Clicked",
+                    index: "products",
+                    user_token: "user-123456",
+                    authenticated_user_token: "user-123456",
+                    timestamp: 1641290601962,
+                    object_ids: ["9780545139700", "9780439784542"],
+                    query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions: [7, 6]
+                  )
+                ]
               )
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1848,19 +1848,11 @@ paths:
           description: No content.
           headers:
             x-ratelimit-limit:
-              description: Maximum number of requests you can make to this endpoint.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-limit'
             x-ratelimit-remaining:
-              description: >-
-                Number of remaining API requests you can make to this endpoint
-                before reaching the rate limit.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-remaining'
             x-ratelimit-reset:
-              description: Timestamp in Unix epoch time when the rate limit will reset.
-              schema:
-                type: integer
+              $ref: '#/components/headers/x-ratelimit-reset'
         '422':
           description: Unprocessable Entity.
           content:
@@ -2025,8 +2017,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::InsightsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2036,12 +2028,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2865,6 +2857,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
 x-tagGroups:
   - name: General
     tags:

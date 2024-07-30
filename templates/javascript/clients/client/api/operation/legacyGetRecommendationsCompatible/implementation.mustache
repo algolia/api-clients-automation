@@ -1,0 +1,8 @@
+if (getRecommendationsParams && Array.isArray(getRecommendationsParams)) {
+  const newSignatureRequest: GetRecommendationsParams = {
+    requests: getRecommendationsParams,
+  };
+
+  // eslint-disable-next-line no-param-reassign
+  getRecommendationsParams = newSignatureRequest;
+}

@@ -41,30 +41,26 @@ end
 
 # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
 #
-# @param operation [String] the `operation` that was done on a `key`.
 # @param key [String] the `key` that has been added, deleted or updated.
+# @param operation [String] the `operation` that was done on a `key`.
 # @param api_key [Hash] necessary to know if an `update` operation has been processed, compare fields of the response with it.
 # @param max_retries [Integer] the maximum number of retries.
 # @param timeout [Proc] the function to decide how long to wait between retries.
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
 # @return [Http::Response] the last get_api_key response
-def wait_for_api_key(operation, key, api_key = {}, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
   retries = 0
   if operation == 'update'
     raise ArgumentError, '`api_key` is required when waiting for an `update` operation.' if api_key.nil?
     while retries < max_retries
-      begin
-        updatad_key = get_api_key(key, request_options)
-        updated_key_hash = updatad_key.to_hash
-        equals = true
-        api_key.to_hash.each do |k, v|
-          equals &&= updated_key_hash[k] == v
-        end
-      
-        return updatad_key if equals
-      rescue AlgoliaError => e
-        raise e unless e.code == 404
+      updated_key = get_api_key(key, request_options)
+      updated_key_hash = updated_key.to_hash
+      equals = true
+      api_key.to_hash.each do |k, v|
+        equals &&= updated_key_hash[k] == v
       end
+
+      return updated_key if equals
 
       retries += 1
       sleep(timeout.call(retries) / 1000.0)
@@ -76,13 +72,19 @@ def wait_for_api_key(operation, key, api_key = {}, max_retries = 50, timeout = -
   while retries < max_retries
     begin
       res = get_api_key(key, request_options)
-      return res if operation == 'add'
-    rescue AlgoliaError => e
-      return res if operation == 'delete' && e.code == 404
+      return res if operation == "add"
+    rescue AlgoliaHttpError => e
+      if e.code == 404
+        return nil if operation == "delete"
+      else
+        raise e
+      end
     end
+
     retries += 1
     sleep(timeout.call(retries) / 1000.0)
   end
+
   raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
 end
 
@@ -203,6 +205,64 @@ def get_secured_api_key_remaining_validity(secured_api_key)
   valid_until - now
 end
 
+# Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+#
+# @param index_name [String]: The `index_name` to save `objects` in.
+# @param objects [Array]: The array of `objects` to store in the given Algolia `indexName`.
+# @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+#
+# @return [BatchResponse]
+#
+def save_objects(index_name, objects, request_options = {})
+  chunked_batch(
+    index_name,
+    objects,
+    Search::Action::ADD_OBJECT,
+    false,
+    1000,
+    request_options
+  )
+end
+
+# Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+#
+# @param index_name [String]: The `index_name` to delete `object_ids` from.
+# @param object_ids [Array]: The object_ids to delete.
+# @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+#
+# @return [BatchResponse]
+#
+def delete_objects(index_name, object_ids, request_options = {})
+  chunked_batch(
+    index_name,
+    object_ids.map { |id| { "objectID" => id } },
+    Search::Action::DELETE_OBJECT,
+    false,
+    1000,
+    request_options
+  )
+end
+
+# Helper: Replaces object content of all the given objects according to their respective `object_id` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+#
+# @param index_name [String]: The `index_name` to delete `object_ids` from.
+# @param objects [Array]: The objects to partially update.
+# @param create_if_not_exists [Boolean]: To be provided if non-existing objects are passed, otherwise, the call will fail.
+# @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+#
+# @return [BatchResponse]
+#
+def partial_update_objects(index_name, objects, create_if_not_exists, request_options = {})
+  chunked_batch(
+    index_name,
+    objects,
+    create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
+    false,
+    1000,
+    request_options
+  )
+end
+
 # Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
 #
 # @param index_name [String] the `index_name` where the operation will be performed.
@@ -251,8 +311,8 @@ def replace_all_objects(index_name, objects, batch_size = 1000, request_options 
       destination: tmp_index_name,
       scope: [
         Search::ScopeType::SETTINGS,
-        Search::ScopeType::SYNONYMS,
-        Search::ScopeType::RULES
+        Search::ScopeType::RULES,
+        Search::ScopeType::SYNONYMS
       ]
     ),
     request_options
@@ -276,8 +336,8 @@ def replace_all_objects(index_name, objects, batch_size = 1000, request_options 
       destination: tmp_index_name,
       scope: [
         Search::ScopeType::SETTINGS,
-        Search::ScopeType::SYNONYMS,
-        Search::ScopeType::RULES
+        Search::ScopeType::RULES,
+        Search::ScopeType::SYNONYMS
       ]
     ),
     request_options

@@ -7,7 +7,7 @@ import {
   serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
-} from '{{{npmNamespace}}}/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -19,7 +19,7 @@ import type {
   ApiError,
   IterableOptions,
   {{/isSearchClient}}
-} from '{{{npmNamespace}}}/client-common';
+} from '@algolia/client-common';
 
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
@@ -30,10 +30,13 @@ import type {
   {{#isSearchClient}}
     BrowseOptions,
     ChunkedBatchOptions,
+    DeleteObjectsOptions,
+    PartialUpdateObjectsOptions,
     ReplaceAllObjectsOptions,
+    SaveObjectsOptions,
     WaitForApiKeyOptions,
-    WaitForTaskOptions,
     WaitForAppTaskOptions,
+    WaitForTaskOptions,
   {{/isSearchClient}}
   {{#operation}}
     {{#vendorExtensions}}
@@ -43,6 +46,9 @@ import type {
       {{#x-legacy-signature}}
         LegacySearchMethodProps,
       {{/x-legacy-signature}}
+      {{#x-legacy-signature-recommend}}
+        LegacyGetRecommendationsParams,
+      {{/x-legacy-signature-recommend}}
     {{/vendorExtensions}}
   {{/operation}}
 } from '../model/clientMethodProps';

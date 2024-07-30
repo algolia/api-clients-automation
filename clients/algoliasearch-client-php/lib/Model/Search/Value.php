@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Search;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * Value Class Doc Comment.
  *
  * @category Class
  */
-class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class Value extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -19,6 +21,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     protected static $modelTypes = [
         'order' => 'string[]',
         'sortRemainingBy' => '\Algolia\AlgoliaSearch\Model\Search\SortRemainingBy',
+        'hide' => 'string[]',
     ];
 
     /**
@@ -29,6 +32,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     protected static $modelFormats = [
         'order' => null,
         'sortRemainingBy' => null,
+        'hide' => null,
     ];
 
     /**
@@ -40,6 +44,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     protected static $attributeMap = [
         'order' => 'order',
         'sortRemainingBy' => 'sortRemainingBy',
+        'hide' => 'hide',
     ];
 
     /**
@@ -50,6 +55,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     protected static $setters = [
         'order' => 'setOrder',
         'sortRemainingBy' => 'setSortRemainingBy',
+        'hide' => 'setHide',
     ];
 
     /**
@@ -60,6 +66,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     protected static $getters = [
         'order' => 'getOrder',
         'sortRemainingBy' => 'getSortRemainingBy',
+        'hide' => 'getHide',
     ];
 
     /**
@@ -74,13 +81,16 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['order'])) {
             $this->container['order'] = $data['order'];
         }
         if (isset($data['sortRemainingBy'])) {
             $this->container['sortRemainingBy'] = $data['sortRemainingBy'];
+        }
+        if (isset($data['hide'])) {
+            $this->container['hide'] = $data['hide'];
         }
     }
 
@@ -183,7 +193,7 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     /**
      * Gets sortRemainingBy.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Search\SortRemainingBy
+     * @return null|SortRemainingBy
      */
     public function getSortRemainingBy()
     {
@@ -193,13 +203,37 @@ class Value extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelI
     /**
      * Sets sortRemainingBy.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Search\SortRemainingBy $sortRemainingBy sortRemainingBy
+     * @param null|SortRemainingBy $sortRemainingBy sortRemainingBy
      *
      * @return self
      */
     public function setSortRemainingBy($sortRemainingBy)
     {
         $this->container['sortRemainingBy'] = $sortRemainingBy;
+
+        return $this;
+    }
+
+    /**
+     * Gets hide.
+     *
+     * @return null|string[]
+     */
+    public function getHide()
+    {
+        return $this->container['hide'] ?? null;
+    }
+
+    /**
+     * Sets hide.
+     *
+     * @param null|string[] $hide hide facet values
+     *
+     * @return self
+     */
+    public function setHide($hide)
+    {
+        $this->container['hide'] = $hide;
 
         return $this;
     }

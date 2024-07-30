@@ -15,7 +15,7 @@ import (
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := ingestion.Configuration{
+	cfg := ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -32,9 +32,11 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 // calls api with correct user agent
 func TestIngestioncommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -44,9 +46,11 @@ func TestIngestioncommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestIngestioncommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -57,9 +61,11 @@ func TestIngestioncommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestIngestioncommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -70,12 +76,14 @@ func TestIngestioncommonApi2(t *testing.T) {
 // uses the correct region
 func TestIngestionparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *ingestion.APIClient
-	var cfg ingestion.Configuration
+	var cfg ingestion.IngestionConfiguration
 	_ = client
 	_ = echo
-	cfg = ingestion.Configuration{
+	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -85,7 +93,7 @@ func TestIngestionparameters0(t *testing.T) {
 	}
 	client, err = ingestion.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.GetSource(client.NewApiGetSourceRequest(
+	res, err = client.GetSource(client.NewApiGetSourceRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 	))
 	require.NoError(t, err)
@@ -95,12 +103,14 @@ func TestIngestionparameters0(t *testing.T) {
 // throws when incorrect region is given
 func TestIngestionparameters1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *ingestion.APIClient
-	var cfg ingestion.Configuration
+	var cfg ingestion.IngestionConfiguration
 	_ = client
 	_ = echo
-	cfg = ingestion.Configuration{
+	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

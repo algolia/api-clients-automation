@@ -21,9 +21,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -52,9 +50,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -71,9 +67,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "1/test"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

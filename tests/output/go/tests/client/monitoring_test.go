@@ -15,7 +15,7 @@ import (
 
 func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := monitoring.Configuration{
+	cfg := monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -31,9 +31,11 @@ func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoReq
 // calls api with correct user agent
 func TestMonitoringcommonApi0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createMonitoringClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -43,9 +45,11 @@ func TestMonitoringcommonApi0(t *testing.T) {
 // calls api with default read timeouts
 func TestMonitoringcommonApi1(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createMonitoringClient(t)
 	_ = echo
-	_, err = client.CustomGet(client.NewApiCustomGetRequest(
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -56,9 +60,11 @@ func TestMonitoringcommonApi1(t *testing.T) {
 // calls api with default write timeouts
 func TestMonitoringcommonApi2(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	client, echo := createMonitoringClient(t)
 	_ = echo
-	_, err = client.CustomPost(client.NewApiCustomPostRequest(
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
 	))
 	require.NoError(t, err)
@@ -69,12 +75,14 @@ func TestMonitoringcommonApi2(t *testing.T) {
 // use the correct host
 func TestMonitoringparameters0(t *testing.T) {
 	var err error
+	var res any
+	_ = res
 	echo := &tests.EchoRequester{}
 	var client *monitoring.APIClient
-	var cfg monitoring.Configuration
+	var cfg monitoring.MonitoringConfiguration
 	_ = client
 	_ = echo
-	cfg = monitoring.Configuration{
+	cfg = monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -83,7 +91,7 @@ func TestMonitoringparameters0(t *testing.T) {
 	}
 	client, err = monitoring.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test",
 	))
 	require.NoError(t, err)

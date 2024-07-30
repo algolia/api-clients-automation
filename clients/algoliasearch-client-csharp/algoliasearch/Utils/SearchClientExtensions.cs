@@ -76,14 +76,15 @@ public partial class SearchClient
   /// <summary>
   /// Helper method that waits for an API key task to be processed.
   /// </summary>
-  /// <param name="operation">The `operation` that was done on a `key`.</param>
   /// <param name="key">The key that has been added, deleted or updated.</param>
+  /// <param name="operation">The `operation` that was done on a `key`.</param>
   /// <param name="apiKey">Necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)</param>
   /// <param name="maxRetries">The maximum number of retry. 50 by default. (optional)</param>
   /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
-  public async Task<GetApiKeyResponse> WaitForApiKeyAsync(ApiKeyOperation operation, string key,
+  public async Task<GetApiKeyResponse> WaitForApiKeyAsync(string key,
+    ApiKeyOperation operation,
     ApiKey apiKey = default, int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null,
     RequestOptions requestOptions = null, CancellationToken ct = default)
   {
@@ -112,36 +113,35 @@ public partial class SearchClient
         }, maxRetries, timeout, ct).ConfigureAwait(false);
     }
 
-    var addedKey = new GetApiKeyResponse();
-
-    // check the status of the getApiKey method
-    await RetryUntil(async () =>
+    return await RetryUntil(async () =>
       {
         try
         {
-          addedKey = await GetApiKeyAsync(key, requestOptions, ct).ConfigureAwait(false);
-          // magic number to signify we found the key
-          return -2;
+          return await GetApiKeyAsync(key, requestOptions, ct).ConfigureAwait(false);
         }
         catch (AlgoliaApiException e)
         {
-          return e.HttpErrorCode;
+          if (e.HttpErrorCode is 404)
+          {
+            return null;
+          }
+
+          throw;
         }
-      }, (status) =>
+      }, (response) =>
       {
         return operation switch
         {
           ApiKeyOperation.Add =>
             // stop either when the key is created or when we don't receive 404
-            status is -2 or not 404 and not 0,
+            response is not null,
           ApiKeyOperation.Delete =>
             // stop when the key is not found
-            status == 404,
+            response is null,
           _ => false
         };
       },
       maxRetries, timeout, ct);
-    return addedKey;
   }
 
   /// <summary>
@@ -154,10 +154,10 @@ public partial class SearchClient
   /// <param name="timeout">The function to decide how long to wait between retries. Math.Min(retryCount * 200, 5000) by default. (optional)</param>
   /// <param name="requestOptions">The requestOptions to send along with the query, they will be merged with the transporter requestOptions. (optional)</param>
   /// <param name="ct">Cancellation token (optional)</param>
-  public GetApiKeyResponse WaitForApiKey(ApiKeyOperation operation, string key, ApiKey apiKey = default,
+  public GetApiKeyResponse WaitForApiKey(string key, ApiKeyOperation operation, ApiKey apiKey = default,
     int maxRetries = DefaultMaxRetries, Func<int, int> timeout = null, RequestOptions requestOptions = null,
     CancellationToken ct = default) =>
-    AsyncHelper.RunSync(() => WaitForApiKeyAsync(operation, key, apiKey, maxRetries, timeout, requestOptions, ct));
+    AsyncHelper.RunSync(() => WaitForApiKeyAsync(key, operation, apiKey, maxRetries, timeout, requestOptions, ct));
 
 
   /// <summary>
@@ -445,10 +445,10 @@ public partial class SearchClient
 
     var copyResponse = await OperationIndexAsync(indexName,
         new OperationIndexParams(OperationType.Copy, tmpIndexName)
-        { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+        { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
       .ConfigureAwait(false);
 
-    var batchResponse = await ChunkedBatchAsync(tmpIndexName, objects, Action.AddObject, batchSize,
+    var batchResponse = await ChunkedBatchAsync(tmpIndexName, objects, Action.AddObject, true, batchSize,
       options, cancellationToken).ConfigureAwait(false);
 
     await WaitForTaskAsync(tmpIndexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken)
@@ -456,7 +456,7 @@ public partial class SearchClient
 
     copyResponse = await OperationIndexAsync(indexName,
         new OperationIndexParams(OperationType.Copy, tmpIndexName)
-        { Scope = [ScopeType.Rules, ScopeType.Settings, ScopeType.Synonyms] }, options, cancellationToken)
+        { Scope = [ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms] }, options, cancellationToken)
       .ConfigureAwait(false);
     await WaitForTaskAsync(tmpIndexName, copyResponse.TaskID, requestOptions: options, ct: cancellationToken)
       .ConfigureAwait(false);
@@ -487,9 +487,9 @@ public partial class SearchClient
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <typeparam name="T"></typeparam>
   public List<BatchResponse> ChunkedBatch<T>(string indexName, IEnumerable<T> objects, Action action = Action.AddObject,
-    int batchSize = 1000, RequestOptions options = null, CancellationToken cancellationToken = default)
+    bool waitForTasks = false, int batchSize = 1000, RequestOptions options = null, CancellationToken cancellationToken = default)
     where T : class =>
-    AsyncHelper.RunSync(() => ChunkedBatchAsync(indexName, objects, action, batchSize, options, cancellationToken));
+    AsyncHelper.RunSync(() => ChunkedBatchAsync(indexName, objects, action, waitForTasks, batchSize, options, cancellationToken));
 
   /// <summary>
   /// Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
@@ -502,7 +502,7 @@ public partial class SearchClient
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <typeparam name="T"></typeparam>
   public async Task<List<BatchResponse>> ChunkedBatchAsync<T>(string indexName, IEnumerable<T> objects,
-    Action action = Action.AddObject, int batchSize = 1000, RequestOptions options = null,
+    Action action = Action.AddObject, bool waitForTasks = false, int batchSize = 1000, RequestOptions options = null,
     CancellationToken cancellationToken = default) where T : class
   {
     var batchCount = (int)Math.Ceiling((double)objects.Count() / batchSize);
@@ -518,10 +518,13 @@ public partial class SearchClient
       responses.Add(batchResponse);
     }
 
-    foreach (var batch in responses)
+    if (waitForTasks)
     {
-      await WaitForTaskAsync(indexName, batch.TaskID, requestOptions: options, ct: cancellationToken)
-        .ConfigureAwait(false);
+      foreach (var batch in responses)
+      {
+        await WaitForTaskAsync(indexName, batch.TaskID, requestOptions: options, ct: cancellationToken)
+          .ConfigureAwait(false);
+      }
     }
 
     return responses;
@@ -530,6 +533,50 @@ public partial class SearchClient
   private static int NextDelay(int retryCount)
   {
     return Math.Min(retryCount * 200, 5000);
+  }
+
+  /// <summary>
+  /// Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+  /// </summary>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="objects">The list of `objects` to store in the given Algolia `indexName`.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <typeparam name="T"></typeparam>
+  public async Task<List<BatchResponse>> SaveObjectsAsync<T>(string indexName, IEnumerable<T> objects,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default) where T : class
+  {
+    return await ChunkedBatchAsync(indexName, objects, Action.AddObject, false, 1000, options, cancellationToken).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  /// Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+  /// </summary>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="objectIDs">The list of `objectIDs` to remove from the given Algolia `indexName`.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  public async Task<List<BatchResponse>> DeleteObjectsAsync(string indexName, IEnumerable<String> objectIDs,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default)
+  {
+    return await ChunkedBatchAsync(indexName, objectIDs.Select(id => new { objectID = id }), Action.DeleteObject, false, 1000, options, cancellationToken).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  /// Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+  /// </summary>
+  /// <param name="indexName">The index in which to perform the request.</param>
+  /// <param name="objects">The list of `objects` to update in the given Algolia `indexName`.</param>
+  /// <param name="createIfNotExists">To be provided if non-existing objects are passed, otherwise, the call will fail.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  public async Task<List<BatchResponse>> PartialUpdateObjectsAsync<T>(string indexName, IEnumerable<T> objects, bool createIfNotExists,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default) where T : class
+  {
+    return await ChunkedBatchAsync(indexName, objects, createIfNotExists ? Action.PartialUpdateObject : Action.PartialUpdateObjectNoCreate, false, 1000, options, cancellationToken).ConfigureAwait(false);
   }
 
   private static async Task<List<TU>> CreateIterable<TU>(Func<TU, Task<TU>> executeQuery,

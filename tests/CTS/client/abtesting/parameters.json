@@ -8,13 +8,11 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "getABTest",
+        "method": "getABTest",
         "parameters": {
           "id": 123
         },
@@ -35,13 +33,11 @@
           "appId": "my-app-id",
           "apiKey": "my-api-key",
           "region": "us"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "getABTest",
+        "method": "getABTest",
         "parameters": {
           "id": 123
         },

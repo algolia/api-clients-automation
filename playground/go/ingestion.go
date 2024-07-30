@@ -16,7 +16,7 @@ func testIngestion(appID, apiKey string) int {
 	// another example to generate payload for a request.
 	createAuthenticationResponse, err := ingestionClient.CreateAuthentication(ingestionClient.NewApiCreateAuthenticationRequest(
 		&ingestion.AuthenticationCreate{
-			Type: ingestion.AUTHENTICATIONTYPE_BASIC,
+			Type: ingestion.AUTHENTICATION_TYPE_BASIC,
 			Name: fmt.Sprintf("my-authentication-%d", time.Now().Unix()),
 			Input: ingestion.AuthInput{
 				AuthBasic: &ingestion.AuthBasic{
@@ -33,8 +33,8 @@ func testIngestion(appID, apiKey string) int {
 
 	printResponse(createAuthenticationResponse)
 
-	listAuthenticationsResponse, err := ingestionClient.GetAuthentications(
-		ingestionClient.NewApiGetAuthenticationsRequest().WithItemsPerPage(2),
+	listAuthenticationsResponse, err := ingestionClient.ListAuthentications(
+		ingestionClient.NewApiListAuthenticationsRequest().WithItemsPerPage(2),
 	)
 	if err != nil {
 		fmt.Printf("request error with GetAuthentications: %v\n", err)

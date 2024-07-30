@@ -11,10 +11,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/go-playground/validator/v10"
 
@@ -27,13 +25,13 @@ import (
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	appID     string
-	cfg       *Configuration
+	cfg       *MonitoringConfiguration
 	transport *transport.Transport
 }
 
 // NewClient creates a new API client with appID and apiKey.
 func NewClient(appID, apiKey string) (*APIClient, error) {
-	return NewClientWithConfig(Configuration{
+	return NewClientWithConfig(MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:         appID,
 			ApiKey:        apiKey,
@@ -45,9 +43,7 @@ func NewClient(appID, apiKey string) (*APIClient, error) {
 }
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
-func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
-	var hosts []transport.StatefulHost
-
+func NewClientWithConfig(cfg MonitoringConfiguration) (*APIClient, error) {
 	if cfg.AppID == "" {
 		return nil, errors.New("`appId` is missing.")
 	}
@@ -55,12 +51,7 @@ func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
 		return nil, errors.New("`apiKey` is missing.")
 	}
 	if len(cfg.Hosts) == 0 {
-		hosts = getDefaultHosts()
-	} else {
-		hosts = cfg.Hosts
-	}
-	if cfg.Requester == nil {
-		cfg.Requester = transport.NewDefaultRequester(&cfg.ConnectTimeout)
+		cfg.Hosts = getDefaultHosts()
 	}
 	if cfg.UserAgent == "" {
 		cfg.UserAgent = getUserAgent()
@@ -70,12 +61,7 @@ func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
 		appID: cfg.AppID,
 		cfg:   &cfg,
 		transport: transport.New(
-			hosts,
-			cfg.Requester,
-			cfg.ReadTimeout,
-			cfg.WriteTimeout,
-			cfg.ConnectTimeout,
-			cfg.Compression,
+			cfg.Configuration,
 		),
 	}, nil
 }
@@ -85,38 +71,7 @@ func getDefaultHosts() []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.0.0-beta.17); Go (%s); Monitoring (4.0.0-beta.17)", runtime.Version())
-}
-
-// queryParameterToString convert any query parameters to string.
-func queryParameterToString(obj any) string {
-	return strings.ReplaceAll(url.QueryEscape(parameterToString(obj)), "+", "%20")
-}
-
-// parameterToString convert any parameters to string.
-func parameterToString(obj any) string {
-	objKind := reflect.TypeOf(obj).Kind()
-	if objKind == reflect.Slice {
-		var result []string
-		sliceValue := reflect.ValueOf(obj)
-		for i := 0; i < sliceValue.Len(); i++ {
-			element := sliceValue.Index(i).Interface()
-			result = append(result, parameterToString(element))
-		}
-		return strings.Join(result, ",")
-	}
-
-	if t, ok := obj.(time.Time); ok {
-		return t.Format(time.RFC3339)
-	}
-
-	if objKind == reflect.Struct {
-		if actualObj, ok := obj.(interface{ GetActualInstance() any }); ok {
-			return parameterToString(actualObj.GetActualInstance())
-		}
-	}
-
-	return fmt.Sprintf("%v", obj)
+	return fmt.Sprintf("Algolia for Go (4.0.0-beta.25); Go (%s); Monitoring (4.0.0-beta.25)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -141,7 +96,7 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*ht
 
 // Allow modification of underlying config for alternate implementations and testing
 // Caution: modifying the configuration while live can cause data races and potentially unwanted behavior.
-func (c *APIClient) GetConfiguration() *Configuration {
+func (c *APIClient) GetConfiguration() *MonitoringConfiguration {
 	return c.cfg
 }
 

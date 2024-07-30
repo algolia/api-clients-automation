@@ -1,4 +1,4 @@
-package com.algolia.methods.requests;
+package com.algolia.requests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,7 +24,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 class SearchClientRequestsTests {
 
   private SearchClient client;
-  private SearchClient clientE2E;
   private EchoInterceptor echo;
   private ObjectMapper json;
 
@@ -35,13 +33,6 @@ class SearchClientRequestsTests {
     this.echo = new EchoInterceptor();
     var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new SearchClient("appId", "apiKey", options);
-
-    if ("true".equals(System.getenv("CI"))) {
-      this.clientE2E = new SearchClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"));
-    } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
-      this.clientE2E = new SearchClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"));
-    }
   }
 
   @AfterAll
@@ -442,15 +433,6 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_browse/browse", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
-
-    var res = clientE2E.browse("cts_e2e_browse", Hit.class);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -1285,15 +1267,6 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_settings/settings", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
-
-    var res = clientE2E.getSettings("cts_e2e_settings");
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -2077,18 +2050,6 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}", req.body, JSONCompareMode.STRICT)
     );
-
-    var res = clientE2E.search(
-      new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
-      Hit.class
-    );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -2158,22 +2119,6 @@ class SearchClientRequestsTests {
         "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}",
         req.body,
         JSONCompareMode.STRICT
-      )
-    );
-
-    var res = clientE2E.search(
-      new SearchMethodParams()
-        .setRequests(List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor")))
-        .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
-      Hit.class
-    );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"visual" +
-        " studio\",\"value\":\"visual" +
-        " studio\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
       )
     );
   }
@@ -2414,45 +2359,6 @@ class SearchClientRequestsTests {
         JSONCompareMode.STRICT
       )
     );
-
-    var res = clientE2E.search(
-      new SearchMethodParams()
-        .setRequests(
-          List.of(
-            new SearchForHits().setIndexName("cts_e2e_search_facet").setFilters("editor:'visual studio' OR editor:neovim"),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(
-                FacetFilters.of(
-                  List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(List.of(FacetFilters.of("editor:neovim"))))
-                )
-              ),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(
-                FacetFilters.of(
-                  List.of(
-                    FacetFilters.of("editor:'visual studio'"),
-                    FacetFilters.of(List.of(FacetFilters.of("editor:neovim"), FacetFilters.of(List.of(FacetFilters.of("editor:goland")))))
-                  )
-                )
-              )
-          )
-        ),
-      Hit.class
-    );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"results\":[{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":2,\"nbPages\":1,\"page\":0,\"hits\":[{\"editor\":\"visual" +
-        " studio\",\"_highlightResult\":{\"editor\":{\"value\":\"visual" +
-        " studio\",\"matchLevel\":\"none\"}}},{\"editor\":\"neovim\",\"_highlightResult\":{\"editor\":{\"value\":\"neovim\",\"matchLevel\":\"none\"}}}],\"query\":\"\",\"params\":\"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D\"}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -2575,15 +2481,6 @@ class SearchClientRequestsTests {
     assertEquals("/1/dictionaries/stopwords/search", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"about\"}", req.body, JSONCompareMode.STRICT));
-
-    var res = clientE2E.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
-      )
-    );
   }
 
   @Test
@@ -2671,8 +2568,6 @@ class SearchClientRequestsTests {
     assertEquals("/1/indexes/cts_e2e_space%20in%20index/query", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
-
-    var res = clientE2E.searchSingleIndex("cts_e2e_space in index", Hit.class);
   }
 
   @Test
@@ -2714,22 +2609,6 @@ class SearchClientRequestsTests {
         "{\"query\":\"batman mask of the" + " phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}",
         req.body,
         JSONCompareMode.STRICT
-      )
-    );
-
-    var res = clientE2E.searchSingleIndex(
-      "cts_e2e_browse",
-      new SearchParamsObject()
-        .setQuery("batman mask of the phantasm")
-        .setAttributesToRetrieve(List.of("*"))
-        .setAttributesToSnippet(List.of("*:20")),
-      Hit.class
-    );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}",
-        json.writeValueAsString(res),
-        JSONCompareMode.LENIENT
       )
     );
   }
@@ -2878,8 +2757,6 @@ class SearchClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
-
-    var res = clientE2E.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
   }
 
   @Test

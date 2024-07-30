@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
+import { setOutput } from '@actions/core';
+
 import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 
 import text, { commitStartPrepareRelease } from './text.js';
-
-const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
@@ -34,10 +34,6 @@ export async function pushGeneratedCode(): Promise<void> {
   if (nbDiff === 0) {
     console.log(`No generated code changes found for '${baseBranch}'.`);
 
-    if (PR_NUMBER) {
-      await run(`yarn workspace scripts upsertGenerationComment noGen`);
-    }
-
     return;
   }
 
@@ -47,7 +43,7 @@ export async function pushGeneratedCode(): Promise<void> {
   const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
   if (!isMainBranch) {
-    await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
+    await run(`git push -d origin generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
     await run(`git checkout -b ${branchToPush}`);
@@ -62,7 +58,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
   let message = await run(
-    `git show -s ${baseBranch} --format="${text.commitStartMessage} %H. ${skipCi}"`,
+    `git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`,
   );
   const authors = await run(
     `git show -s ${baseBranch} --format="
@@ -83,9 +79,7 @@ Co-authored-by: %an <%ae>
   await run(`git commit -m "${message}"`);
   await run(`git push origin ${branchToPush}`);
 
-  if (PR_NUMBER) {
-    await run(`yarn workspace scripts upsertGenerationComment codegen`);
-  }
+  setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {

@@ -1,25 +1,20 @@
 /* eslint-disable no-case-declarations */
-import * as core from '@actions/core';
+import { setOutput } from '@actions/core';
 
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
-import {
-  getClientsConfigField,
-  getLanguageFolder,
-  getTestExtension,
-  getTestOutputFolder,
-} from '../../config.js';
+import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
-import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
-import { isBaseChanged } from './utils.js';
+import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
 
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
+  // PRs have origin/* as a baseBranch, main is always running from a specific commit
   const commonDependenciesChanged =
-    baseBranch === 'main' || (await isBaseChanged(baseBranch, COMMON_DEPENDENCIES));
+    !baseBranch.startsWith('origin/') || (await isBaseChanged(baseBranch, COMMON_DEPENDENCIES));
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
@@ -73,7 +68,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`;
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
@@ -81,7 +76,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
       })
       .join(' ');
 
@@ -102,12 +97,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
-        const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
         const packageNames = matrix[language].toRun.map((client) => {
           const packageName = GENERATORS[`${language}-${client}`].additionalProperties.packageName;
 
           // `algoliasearch` is not preceded by `@algolia`
-          return client === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`;
+          return client === 'algoliasearch' ? packageName : `@algolia/${packageName}`;
         });
 
         buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(
@@ -144,25 +138,31 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   // If there are updates for the Swift client, we allow ourselves to run the CTS on macOS
   const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
   if (swiftData) {
-    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
-    core.setOutput('RUN_MACOS_SWIFT_CTS', true);
+    setOutput('SWIFT_DATA', JSON.stringify(swiftData));
+    setOutput('RUN_MACOS_SWIFT_CTS', true);
+  }
+
+  // If there are updates for the Kotlin client, we allow ourselves to run the build step on macOS
+  const runKotlin = clientMatrix.client.find((c) => c.language === 'kotlin');
+  if (runKotlin) {
+    setOutput('RUN_MACOS_KOTLIN_BUILD', true);
   }
 
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
   if (javascriptData) {
-    core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
-    core.setOutput('RUN_GEN_JAVASCRIPT', true);
+    setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
+    setOutput('RUN_GEN_JAVASCRIPT', true);
     clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
   }
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  core.setOutput('RUN_GEN', shouldRun);
-  core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
+  setOutput('RUN_GEN', shouldRun);
+  setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
 }
 
 function createSpecMatrix(): void {
-  core.setOutput(
+  setOutput(
     'MATRIX',
     JSON.stringify({
       bundledPath: 'specs/bundled',

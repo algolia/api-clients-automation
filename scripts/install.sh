@@ -12,15 +12,11 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
-  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
-}
-
-apicb() {
-  (cd $ROOT/scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+  # this is the same as `yarn build:cli && yarn start` but without the overhead of yarn
+  (cd $ROOT/scripts && cd $ROOT/scripts && cat package.json | jq  '.scripts."build:cli"' | xargs -I{} sh -c "eval '../node_modules/.bin/{}'" && NODE_NO_WARNINGS=1 node --enable-source-maps dist/cli/index.js $* || true)
 }
 
 export apic
-export apicb
 
 _list_languages() {
   cat $ROOT/config/clients.config.json | jq -r 'keys[]'
@@ -69,13 +65,15 @@ _apic_build_specs_complete() {
 
 _apic_build_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
-    COMPREPLY=($(compgen -W "clients specs" -- "$cur"))
+    COMPREPLY=($(compgen -W "clients specs playground" -- "$cur"))
   else
     second="${COMP_WORDS[2]}"
     if [[ $second == "clients" ]]; then
       _apic_lang_client_complete 3
     elif [[ $second == "specs" ]]; then
       _apic_build_specs_complete
+    elif [[ $second == "playground" ]]; then
+      COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
     fi
   fi
 }
@@ -110,4 +108,3 @@ _apic_complete() {
 }
 
 complete -F _apic_complete apic
-complete -F _apic_complete apicb

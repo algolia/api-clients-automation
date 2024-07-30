@@ -2,52 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 import XCTest
 
-import DotEnv
 import Utils
 
 @testable import Core
 @testable import Search
 
 final class SearchClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: SearchClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? SearchClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// addApiKey
     func testAddApiKeyTest() async throws {
@@ -232,9 +194,9 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [
-                BatchRequest(action: Action.addObject, body: ["key": "bar", "foo": "1"]),
-                BatchRequest(action: Action.addObject, body: ["key": "baz", "foo": "2"]),
+            batchWriteParams: SearchBatchWriteParams(requests: [
+                SearchBatchRequest(action: SearchAction.addObject, body: ["key": "bar", "foo": "1"]),
+                SearchBatchRequest(action: SearchAction.addObject, body: ["key": "baz", "foo": "2"]),
             ])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -267,7 +229,10 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear, body: ["key": "value"])])
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.clear,
+                body: ["key": "value"]
+            )])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -298,7 +263,10 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete, body: ["key": "value"])])
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.delete,
+                body: ["key": "value"]
+            )])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -329,8 +297,8 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.deleteObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.deleteObject,
                 body: ["key": "value"]
             )])
         )
@@ -363,8 +331,8 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.partialUpdateObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.partialUpdateObject,
                 body: ["key": "value"]
             )])
         )
@@ -397,8 +365,8 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.partialUpdateObjectNoCreate,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.partialUpdateObjectNoCreate,
                 body: ["key": "value"]
             )])
         )
@@ -432,8 +400,8 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.batchWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.updateObject,
+            batchWriteParams: SearchBatchWriteParams(requests: [SearchBatchRequest(
+                action: SearchAction.updateObject,
                 body: ["key": "value"]
             )])
         )
@@ -647,26 +615,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<BrowseResponse<Hit>> = try await e2eClient
-            .browseWithHTTPInfo(indexName: "cts_e2e_browse")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// browse with search parameters
@@ -912,16 +860,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-header-1": "spaces are left alone"],
-
-            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
-        )
-
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-header-1": "spaces are left alone"],
+
+                queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1025,15 +971,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1067,15 +1011,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["query2": "myQueryParameter"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["query2": "myQueryParameter"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1112,15 +1054,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1162,15 +1102,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            headers: ["x-algolia-api-key": "myApiKey"]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                headers: ["x-algolia-api-key": "myApiKey"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1212,15 +1150,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["isItWorking": true]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["isItWorking": true]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1257,15 +1193,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": 2]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": 2]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1302,15 +1236,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": ["b and c", "d"]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": ["b and c", "d"]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1347,15 +1279,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [true, true, false]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [true, true, false]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1392,15 +1322,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let requestOptions = RequestOptions(
-            queryParameters: ["myParam": [1, 2]]
-        )
-
         let response = try await client.customPostWithHTTPInfo(
             path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
-            requestOptions: requestOptions
+            requestOptions: RequestOptions(
+                queryParameters: ["myParam": [1, 2]]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1918,25 +1846,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// getSources
@@ -2241,7 +2150,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client
             .multipleBatchWithHTTPInfo(batchParams: BatchParams(requests: [MultipleBatchRequest(
-                action: Action.addObject,
+                action: SearchAction.addObject,
                 body: ["key": "value"],
                 indexName: "theIndexName"
             )]))
@@ -3019,29 +2928,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
-            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
-                SearchQuery
-                    .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
-            ]))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// retrieveFacets
@@ -3153,33 +3039,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
-            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-                requests: [SearchQuery.searchForFacets(SearchForFacets(
-                    facet: "editor",
-                    indexName: "cts_e2e_search_facet",
-                    type: SearchTypeFacet.facet
-                ))],
-                strategy: SearchStrategy.stopIfEnoughMatches
-            ))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"visual studio\",\"value\":\"visual studio\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// search for a single hits request with all parameters
@@ -3477,55 +3336,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
-            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
-                SearchQuery.searchForHits(SearchForHits(
-                    filters: "editor:'visual studio' OR editor:neovim",
-                    indexName: "cts_e2e_search_facet"
-                )),
-                SearchQuery.searchForHits(SearchForHits(
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
-                        SearchFacetFilters.string("editor:'visual studio'"),
-                        SearchFacetFilters.string("editor:neovim"),
-                    ]),
-                    indexName: "cts_e2e_search_facet"
-                )),
-                SearchQuery.searchForHits(SearchForHits(
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
-                        SearchFacetFilters.string("editor:'visual studio'"),
-                        SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:neovim")]),
-                    ]),
-                    indexName: "cts_e2e_search_facet"
-                )),
-                SearchQuery.searchForHits(SearchForHits(
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
-                        SearchFacetFilters.string("editor:'visual studio'"),
-                        SearchFacetFilters.arrayOfSearchFacetFilters([
-                            SearchFacetFilters.string("editor:neovim"),
-                            SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:goland")]),
-                        ]),
-                    ]),
-                    indexName: "cts_e2e_search_facet"
-                )),
-            ]))
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"results\":[{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":2,\"nbPages\":1,\"page\":0,\"hits\":[{\"editor\":\"visual studio\",\"_highlightResult\":{\"editor\":{\"value\":\"visual studio\",\"matchLevel\":\"none\"}}},{\"editor\":\"neovim\",\"_highlightResult\":{\"editor\":{\"value\":\"neovim\",\"matchLevel\":\"none\"}}}],\"query\":\"\",\"params\":\"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D\"}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// search with all search parameters
@@ -3674,28 +3484,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.searchDictionaryEntriesWithHTTPInfo(
-            dictionaryName: DictionaryType.stopwords,
-            searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
-        )
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// get searchDictionaryEntries results with all parameters
@@ -3882,16 +3670,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient
-            .searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// search with searchParams
@@ -3961,32 +3739,6 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient.searchSingleIndexWithHTTPInfo(
-            indexName: "cts_e2e_browse",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                query: "batman mask of the phantasm",
-                attributesToRetrieve: ["*"],
-                attributesToSnippet: ["*:20"]
-            ))
-        )
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"nbHits\":1,\"hits\":[{\"_snippetResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\"},{\"value\":\"Superhero\",\"matchLevel\":\"none\"},{\"value\":\"Romance\",\"matchLevel\":\"none\"}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\"}},\"_highlightResult\":{\"genres\":[{\"value\":\"Animated\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Superhero\",\"matchLevel\":\"none\",\"matchedWords\":[]},{\"value\":\"Romance\",\"matchLevel\":\"none\",\"matchedWords\":[]}],\"year\":{\"value\":\"1993\",\"matchLevel\":\"none\",\"matchedWords\":[]}}}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// searchSynonyms with minimal parameters
@@ -4227,22 +3979,9 @@ final class SearchClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
-
-        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.setSettingsWithHTTPInfo(
-            indexName: "cts_e2e_settings",
-            indexSettings: IndexSettings(paginationLimitedTo: 10),
-            forwardToReplicas: true
-        )
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
-    /// setSettings allow boolean &#x60;typoTolerance&#x60;
+    /// setSettings allow boolean `typoTolerance`
     func testSetSettingsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4279,7 +4018,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow enum &#x60;typoTolerance&#x60;
+    /// setSettings allow enum `typoTolerance`
     func testSetSettingsTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4319,7 +4058,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;ignorePlurals&#x60;
+    /// setSettings allow boolean `ignorePlurals`
     func testSetSettingsTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4356,7 +4095,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string &#x60;ignorePlurals&#x60;
+    /// setSettings allow list of string `ignorePlurals`
     func testSetSettingsTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4396,7 +4135,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;removeStopWords&#x60;
+    /// setSettings allow boolean `removeStopWords`
     func testSetSettingsTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4433,7 +4172,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string &#x60;removeStopWords&#x60;
+    /// setSettings allow list of string `removeStopWords`
     func testSetSettingsTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4473,7 +4212,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;distinct&#x60;
+    /// setSettings allow boolean `distinct`
     func testSetSettingsTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4510,7 +4249,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow integers for &#x60;distinct&#x60;
+    /// setSettings allow integers for `distinct`
     func testSetSettingsTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4547,7 +4286,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow all &#x60;indexSettings&#x60;
+    /// setSettings allow all `indexSettings`
     func testSetSettingsTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,

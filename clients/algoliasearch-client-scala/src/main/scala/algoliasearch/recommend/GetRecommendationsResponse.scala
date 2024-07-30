@@ -32,5 +32,5 @@ package algoliasearch.recommend
 /** GetRecommendationsResponse
   */
 case class GetRecommendationsResponse(
-    results: Option[Seq[RecommendationsResults]] = scala.None
+    results: Seq[RecommendationsResults]
 )

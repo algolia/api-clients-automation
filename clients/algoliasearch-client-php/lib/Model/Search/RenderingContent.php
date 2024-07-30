@@ -4,13 +4,16 @@
 
 namespace Algolia\AlgoliaSearch\Model\Search;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * RenderingContent Class Doc Comment.
  *
  * @category Class
+ *
  * @description Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the order of facet names and values without changing your frontend code.
  */
-class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class RenderingContent extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -19,6 +22,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      */
     protected static $modelTypes = [
         'facetOrdering' => '\Algolia\AlgoliaSearch\Model\Search\FacetOrdering',
+        'redirect' => '\Algolia\AlgoliaSearch\Model\Search\RedirectURL',
     ];
 
     /**
@@ -28,6 +32,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      */
     protected static $modelFormats = [
         'facetOrdering' => null,
+        'redirect' => null,
     ];
 
     /**
@@ -38,6 +43,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      */
     protected static $attributeMap = [
         'facetOrdering' => 'facetOrdering',
+        'redirect' => 'redirect',
     ];
 
     /**
@@ -47,6 +53,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      */
     protected static $setters = [
         'facetOrdering' => 'setFacetOrdering',
+        'redirect' => 'setRedirect',
     ];
 
     /**
@@ -56,6 +63,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      */
     protected static $getters = [
         'facetOrdering' => 'getFacetOrdering',
+        'redirect' => 'getRedirect',
     ];
 
     /**
@@ -70,10 +78,13 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['facetOrdering'])) {
             $this->container['facetOrdering'] = $data['facetOrdering'];
+        }
+        if (isset($data['redirect'])) {
+            $this->container['redirect'] = $data['redirect'];
         }
     }
 
@@ -152,7 +163,7 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Gets facetOrdering.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Search\FacetOrdering
+     * @return null|FacetOrdering
      */
     public function getFacetOrdering()
     {
@@ -162,13 +173,37 @@ class RenderingContent extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Sets facetOrdering.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Search\FacetOrdering $facetOrdering facetOrdering
+     * @param null|FacetOrdering $facetOrdering facetOrdering
      *
      * @return self
      */
     public function setFacetOrdering($facetOrdering)
     {
         $this->container['facetOrdering'] = $facetOrdering;
+
+        return $this;
+    }
+
+    /**
+     * Gets redirect.
+     *
+     * @return null|RedirectURL
+     */
+    public function getRedirect()
+    {
+        return $this->container['redirect'] ?? null;
+    }
+
+    /**
+     * Sets redirect.
+     *
+     * @param null|RedirectURL $redirect redirect
+     *
+     * @return self
+     */
+    public function setRedirect($redirect)
+    {
+        $this->container['redirect'] = $redirect;
 
         return $this;
     }

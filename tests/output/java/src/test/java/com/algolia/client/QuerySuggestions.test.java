@@ -9,6 +9,7 @@ import com.algolia.EchoResponse;
 import com.algolia.api.QuerySuggestionsClient;
 import com.algolia.config.*;
 import com.algolia.model.querysuggestions.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -26,7 +27,10 @@ class QuerySuggestionsClientClientTests {
 
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.builder()
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .serializationInclusion(JsonInclude.Include.NON_NULL)
+      .build();
   }
 
   QuerySuggestionsClient createClient() {
@@ -89,12 +93,9 @@ class QuerySuggestionsClientClientTests {
   @DisplayName("throws when region is not given")
   void parametersTest0() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }
@@ -103,12 +104,9 @@ class QuerySuggestionsClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest1() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }

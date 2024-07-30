@@ -9,6 +9,7 @@ import com.algolia.EchoResponse;
 import com.algolia.api.UsageClient;
 import com.algolia.config.*;
 import com.algolia.model.usage.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -26,7 +27,10 @@ class UsageClientClientTests {
 
   @BeforeAll
   void init() {
-    this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+    this.json = JsonMapper.builder()
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .serializationInclusion(JsonInclude.Include.NON_NULL)
+      .build();
   }
 
   UsageClient createClient() {
@@ -109,30 +113,21 @@ class UsageClientClientTests {
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("", "", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("", "my-api-key", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("", "my-api-key", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("my-app-id", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("my-app-id", "", withEchoRequester());
+      });
       assertEquals("`apiKey` is missing.", exception.getMessage());
     }
   }

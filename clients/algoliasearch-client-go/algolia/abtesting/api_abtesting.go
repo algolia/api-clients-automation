@@ -12,26 +12,39 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
-type Option struct {
-	optionType string
-	name       string
-	value      string
+type config struct {
+	// -- Request options for API calls
+	context      context.Context
+	queryParams  url.Values
+	headerParams map[string]string
 }
 
-func QueryParamOption(name string, val any) Option {
-	return Option{
-		optionType: "query",
-		name:       queryParameterToString(name),
-		value:      queryParameterToString(val),
-	}
+type RequestOption interface {
+	apply(*config)
 }
 
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-		optionType: "header",
-		name:       name,
-		value:      parameterToString(val),
-	}
+type requestOption func(*config)
+
+func (r requestOption) apply(c *config) {
+	r(c)
+}
+
+func WithContext(ctx context.Context) requestOption {
+	return requestOption(func(c *config) {
+		c.context = ctx
+	})
+}
+
+func WithHeaderParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.headerParams[key] = utils.ParameterToString(value)
+	})
+}
+
+func WithQueryParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		c.queryParams.Set(utils.QueryParameterToString(key), utils.QueryParameterToString(value))
+	})
 }
 
 func (r *ApiAddABTestsRequest) UnmarshalJSON(b []byte) error {
@@ -71,68 +84,67 @@ func (c *APIClient) NewApiAddABTestsRequest(addABTestsRequest *AddABTestsRequest
 }
 
 /*
-AddABTests Wraps AddABTestsWithContext using context.Background.
+AddABTests calls the API and returns the raw response from it.
 
-Creates a new A/B test.
+	  Creates a new A/B test.
 
-Required API Key ACLs:
-  - editSettings
+	    Required API Key ACLs:
+	    - editSettings
 
-Request can be constructed by NewApiAddABTestsRequest with parameters below.
-
-	@param addABTestsRequest AddABTestsRequest
-	@return ABTestResponse
+	Request can be constructed by NewApiAddABTestsRequest with parameters below.
+	  @param addABTestsRequest AddABTestsRequest
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) AddABTests(r ApiAddABTestsRequest, opts ...Option) (*ABTestResponse, error) {
-	return c.AddABTestsWithContext(context.Background(), r, opts...)
-}
-
-/*
-AddABTests
-
-Creates a new A/B test.
-
-Required API Key ACLs:
-  - editSettings
-
-Request can be constructed by NewApiAddABTestsRequest with parameters below.
-
-	@param addABTestsRequest AddABTestsRequest
-	@return ABTestResponse
-*/
-func (c *APIClient) AddABTestsWithContext(ctx context.Context, r ApiAddABTestsRequest, opts ...Option) (*ABTestResponse, error) {
-	var (
-		postBody    any
-		returnValue *ABTestResponse
-	)
-
+func (c *APIClient) AddABTestsWithHTTPInfo(r ApiAddABTestsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/abtests"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
-
 	if r.addABTestsRequest == nil {
-		return returnValue, reportError("Parameter `addABTestsRequest` is required when calling `AddABTests`.")
+		return nil, nil, reportError("Parameter `addABTestsRequest` is required when calling `AddABTests`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	postBody = r.addABTestsRequest
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+AddABTests casts the HTTP response body to a defined struct.
+
+Creates a new A/B test.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiAddABTestsRequest with parameters below.
+
+	@param addABTestsRequest AddABTestsRequest
+	@return ABTestResponse
+*/
+func (c *APIClient) AddABTests(r ApiAddABTestsRequest, opts ...RequestOption) (*ABTestResponse, error) {
+	var returnValue *ABTestResponse
+
+	res, resBody, err := c.AddABTestsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -212,68 +224,69 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]any) ApiCus
 }
 
 /*
-CustomDelete Wraps CustomDeleteWithContext using context.Background.
+CustomDelete calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
+	Request can be constructed by NewApiCustomDeleteRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomDeleteWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomDelete
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomDeleteRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomDelete`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomDelete`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomDelete casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomDeleteRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
+*/
+func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomDeleteWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -353,68 +366,69 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]any) ApiCustom
 }
 
 /*
-CustomGet Wraps CustomGetWithContext using context.Background.
+CustomGet calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomGetRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
+	Request can be constructed by NewApiCustomGetRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomGetWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomGet
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomGetRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@return map[string]any
-*/
-func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomGet`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomGet`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomGet casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomGetRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
+*/
+func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomGetWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -510,63 +524,46 @@ func (r ApiCustomPostRequest) WithBody(body map[string]any) ApiCustomPostRequest
 }
 
 /*
-CustomPost Wraps CustomPostWithContext using context.Background.
+CustomPost calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomPostRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
+	Request can be constructed by NewApiCustomPostRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	  @param body map[string]any - Parameters to send with the custom request.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPostWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomPost
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPostRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomPost`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomPost`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -574,12 +571,30 @@ func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRe
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomPost casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomPostRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
+*/
+func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomPostWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -675,63 +690,46 @@ func (r ApiCustomPutRequest) WithBody(body map[string]any) ApiCustomPutRequest {
 }
 
 /*
-CustomPut Wraps CustomPutWithContext using context.Background.
+CustomPut calls the API and returns the raw response from it.
 
-This method allow you to send requests to the Algolia REST API.
+	  This method allow you to send requests to the Algolia REST API.
 
-Request can be constructed by NewApiCustomPutRequest with parameters below.
 
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
+	Request can be constructed by NewApiCustomPutRequest with parameters below.
+	  @param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	  @param parameters map[string]any - Query parameters to apply to the current query.
+	  @param body map[string]any - Parameters to send with the custom request.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
-	return c.CustomPutWithContext(context.Background(), r, opts...)
-}
-
-/*
-CustomPut
-
-This method allow you to send requests to the Algolia REST API.
-
-Request can be constructed by NewApiCustomPutRequest with parameters below.
-
-	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]any - Query parameters to apply to the current query.
-	@param body map[string]any - Parameters to send with the custom request.
-	@return map[string]any
-*/
-func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
-	var (
-		postBody    any
-		returnValue *map[string]any
-	)
-
+func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/{path}"
-	requestPath = strings.ReplaceAll(requestPath, "{path}", parameterToString(r.path))
+	requestPath = strings.ReplaceAll(requestPath, "{path}", utils.ParameterToString(r.path))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	if r.path == "" {
-		return returnValue, reportError("Parameter `path` is required when calling `CustomPut`.")
+		return nil, nil, reportError("Parameter `path` is required when calling `CustomPut`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
 	}
 
 	if !utils.IsNilOrEmpty(r.parameters) {
 		for k, v := range r.parameters {
-			queryParams.Set(k, queryParameterToString(v))
+			conf.queryParams.Set(k, utils.QueryParameterToString(v))
 		}
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
+
+	var postBody any
 
 	// body params
 	if utils.IsNilOrEmpty(r.body) {
@@ -739,12 +737,30 @@ func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequ
 	} else {
 		postBody = r.body
 	}
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPut, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+CustomPut casts the HTTP response body to a defined struct.
+
+This method allow you to send requests to the Algolia REST API.
+
+Request can be constructed by NewApiCustomPutRequest with parameters below.
+
+	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
+*/
+func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*map[string]any, error) {
+	var returnValue *map[string]any
+
+	res, resBody, err := c.CustomPutWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -808,63 +824,62 @@ func (c *APIClient) NewApiDeleteABTestRequest(id int32) ApiDeleteABTestRequest {
 }
 
 /*
-DeleteABTest Wraps DeleteABTestWithContext using context.Background.
+DeleteABTest calls the API and returns the raw response from it.
 
-Deletes an A/B test by its ID.
+	  Deletes an A/B test by its ID.
 
-Required API Key ACLs:
-  - editSettings
+	    Required API Key ACLs:
+	    - editSettings
 
-Request can be constructed by NewApiDeleteABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTestResponse
+	Request can be constructed by NewApiDeleteABTestRequest with parameters below.
+	  @param id int32 - Unique A/B test identifier.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) DeleteABTest(r ApiDeleteABTestRequest, opts ...Option) (*ABTestResponse, error) {
-	return c.DeleteABTestWithContext(context.Background(), r, opts...)
-}
-
-/*
-DeleteABTest
-
-Deletes an A/B test by its ID.
-
-Required API Key ACLs:
-  - editSettings
-
-Request can be constructed by NewApiDeleteABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTestResponse
-*/
-func (c *APIClient) DeleteABTestWithContext(ctx context.Context, r ApiDeleteABTestRequest, opts ...Option) (*ABTestResponse, error) {
-	var (
-		postBody    any
-		returnValue *ABTestResponse
-	)
-
+func (c *APIClient) DeleteABTestWithHTTPInfo(r ApiDeleteABTestRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/abtests/{id}"
-	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(parameterToString(r.id)))
+	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(utils.ParameterToString(r.id)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodDelete, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+DeleteABTest casts the HTTP response body to a defined struct.
+
+Deletes an A/B test by its ID.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiDeleteABTestRequest with parameters below.
+
+	@param id int32 - Unique A/B test identifier.
+	@return ABTestResponse
+*/
+func (c *APIClient) DeleteABTest(r ApiDeleteABTestRequest, opts ...RequestOption) (*ABTestResponse, error) {
+	var returnValue *ABTestResponse
+
+	res, resBody, err := c.DeleteABTestWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -928,63 +943,62 @@ func (c *APIClient) NewApiGetABTestRequest(id int32) ApiGetABTestRequest {
 }
 
 /*
-GetABTest Wraps GetABTestWithContext using context.Background.
+GetABTest calls the API and returns the raw response from it.
 
-Retrieves the details for an A/B test by its ID.
+	  Retrieves the details for an A/B test by its ID.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiGetABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTest
+	Request can be constructed by NewApiGetABTestRequest with parameters below.
+	  @param id int32 - Unique A/B test identifier.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) GetABTest(r ApiGetABTestRequest, opts ...Option) (*ABTest, error) {
-	return c.GetABTestWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetABTest
-
-Retrieves the details for an A/B test by its ID.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiGetABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTest
-*/
-func (c *APIClient) GetABTestWithContext(ctx context.Context, r ApiGetABTestRequest, opts ...Option) (*ABTest, error) {
-	var (
-		postBody    any
-		returnValue *ABTest
-	)
-
+func (c *APIClient) GetABTestWithHTTPInfo(r ApiGetABTestRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/abtests/{id}"
-	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(parameterToString(r.id)))
+	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(utils.ParameterToString(r.id)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+GetABTest casts the HTTP response body to a defined struct.
+
+Retrieves the details for an A/B test by its ID.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiGetABTestRequest with parameters below.
+
+	@param id int32 - Unique A/B test identifier.
+	@return ABTest
+*/
+func (c *APIClient) GetABTest(r ApiGetABTestRequest, opts ...RequestOption) (*ABTest, error) {
+	var returnValue *ABTest
+
+	res, resBody, err := c.GetABTestWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1100,81 +1114,80 @@ func (r ApiListABTestsRequest) WithIndexSuffix(indexSuffix string) ApiListABTest
 }
 
 /*
-ListABTests Wraps ListABTestsWithContext using context.Background.
+ListABTests calls the API and returns the raw response from it.
 
-Lists all A/B tests you configured for this application.
+	  Lists all A/B tests you configured for this application.
 
-Required API Key ACLs:
-  - analytics
+	    Required API Key ACLs:
+	    - analytics
 
-Request can be constructed by NewApiListABTestsRequest with parameters below.
-
-	@param offset int32 - Position of the first item to return.
-	@param limit int32 - Number of items to return.
-	@param indexPrefix string - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
-	@param indexSuffix string - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
-	@return ListABTestsResponse
+	Request can be constructed by NewApiListABTestsRequest with parameters below.
+	  @param offset int32 - Position of the first item to return.
+	  @param limit int32 - Number of items to return.
+	  @param indexPrefix string - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+	  @param indexSuffix string - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) ListABTests(r ApiListABTestsRequest, opts ...Option) (*ListABTestsResponse, error) {
-	return c.ListABTestsWithContext(context.Background(), r, opts...)
-}
-
-/*
-ListABTests
-
-Lists all A/B tests you configured for this application.
-
-Required API Key ACLs:
-  - analytics
-
-Request can be constructed by NewApiListABTestsRequest with parameters below.
-
-	@param offset int32 - Position of the first item to return.
-	@param limit int32 - Number of items to return.
-	@param indexPrefix string - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
-	@param indexSuffix string - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
-	@return ListABTestsResponse
-*/
-func (c *APIClient) ListABTestsWithContext(ctx context.Context, r ApiListABTestsRequest, opts ...Option) (*ListABTestsResponse, error) {
-	var (
-		postBody    any
-		returnValue *ListABTestsResponse
-	)
-
+func (c *APIClient) ListABTestsWithHTTPInfo(r ApiListABTestsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/abtests"
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	if !utils.IsNilOrEmpty(r.offset) {
-		queryParams.Set("offset", queryParameterToString(*r.offset))
+		conf.queryParams.Set("offset", utils.QueryParameterToString(*r.offset))
 	}
 	if !utils.IsNilOrEmpty(r.limit) {
-		queryParams.Set("limit", queryParameterToString(*r.limit))
+		conf.queryParams.Set("limit", utils.QueryParameterToString(*r.limit))
 	}
 	if !utils.IsNilOrEmpty(r.indexPrefix) {
-		queryParams.Set("indexPrefix", queryParameterToString(*r.indexPrefix))
+		conf.queryParams.Set("indexPrefix", utils.QueryParameterToString(*r.indexPrefix))
 	}
 	if !utils.IsNilOrEmpty(r.indexSuffix) {
-		queryParams.Set("indexSuffix", queryParameterToString(*r.indexSuffix))
+		conf.queryParams.Set("indexSuffix", utils.QueryParameterToString(*r.indexSuffix))
 	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodGet, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+ListABTests casts the HTTP response body to a defined struct.
+
+Lists all A/B tests you configured for this application.
+
+Required API Key ACLs:
+  - analytics
+
+Request can be constructed by NewApiListABTestsRequest with parameters below.
+
+	@param offset int32 - Position of the first item to return.
+	@param limit int32 - Number of items to return.
+	@param indexPrefix string - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+	@param indexSuffix string - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+	@return ListABTestsResponse
+*/
+func (c *APIClient) ListABTests(r ApiListABTestsRequest, opts ...RequestOption) (*ListABTestsResponse, error) {
+	var returnValue *ListABTestsResponse
+
+	res, resBody, err := c.ListABTestsWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}
@@ -1238,67 +1251,66 @@ func (c *APIClient) NewApiStopABTestRequest(id int32) ApiStopABTestRequest {
 }
 
 /*
-StopABTest Wraps StopABTestWithContext using context.Background.
+StopABTest calls the API and returns the raw response from it.
 
-Stops an A/B test by its ID.
-
-You can't restart stopped A/B tests.
-
-Required API Key ACLs:
-  - editSettings
-
-Request can be constructed by NewApiStopABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTestResponse
-*/
-func (c *APIClient) StopABTest(r ApiStopABTestRequest, opts ...Option) (*ABTestResponse, error) {
-	return c.StopABTestWithContext(context.Background(), r, opts...)
-}
-
-/*
-StopABTest
-
-Stops an A/B test by its ID.
+	Stops an A/B test by its ID.
 
 You can't restart stopped A/B tests.
 
-Required API Key ACLs:
-  - editSettings
+	    Required API Key ACLs:
+	    - editSettings
 
-Request can be constructed by NewApiStopABTestRequest with parameters below.
-
-	@param id int32 - Unique A/B test identifier.
-	@return ABTestResponse
+	Request can be constructed by NewApiStopABTestRequest with parameters below.
+	  @param id int32 - Unique A/B test identifier.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
-func (c *APIClient) StopABTestWithContext(ctx context.Context, r ApiStopABTestRequest, opts ...Option) (*ABTestResponse, error) {
-	var (
-		postBody    any
-		returnValue *ABTestResponse
-	)
-
+func (c *APIClient) StopABTestWithHTTPInfo(r ApiStopABTestRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/2/abtests/{id}/stop"
-	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(parameterToString(r.id)))
+	requestPath = strings.ReplaceAll(requestPath, "{id}", url.PathEscape(utils.ParameterToString(r.id)))
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
 
 	// optional params if any
 	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
+		opt.apply(&conf)
 	}
 
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	var postBody any
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
 	if err != nil {
-		return returnValue, err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, false)
+	return c.callAPI(req, false)
+}
+
+/*
+StopABTest casts the HTTP response body to a defined struct.
+
+Stops an A/B test by its ID.
+
+You can't restart stopped A/B tests.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiStopABTestRequest with parameters below.
+
+	@param id int32 - Unique A/B test identifier.
+	@return ABTestResponse
+*/
+func (c *APIClient) StopABTest(r ApiStopABTestRequest, opts ...RequestOption) (*ABTestResponse, error) {
+	var returnValue *ABTestResponse
+
+	res, resBody, err := c.StopABTestWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}

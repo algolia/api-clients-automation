@@ -58,7 +58,7 @@ searchSynonymsResponse:
     hits:
       $ref: '#/synonymHits'
     nbHits:
-      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
+      $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
   required:
     - hits
     - nbHits

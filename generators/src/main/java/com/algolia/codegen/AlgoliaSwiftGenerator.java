@@ -32,6 +32,7 @@ import org.openapitools.codegen.utils.ModelUtils;
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
   private static final List<String> reservedModelNames = List.of(
+    "action",
     "advancedsyntaxfeatures",
     "alternativesasexact",
     "anchoring",
@@ -44,6 +45,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "basesearchparams",
     "basesearchparamswithoutquery",
     "basesearchresponse",
+    "batchrequest",
+    "batchwriteparams",
     "condition",
     "configuration",
     "consequence",
@@ -78,16 +81,19 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "promote",
     "promoteobjectid",
     "promoteobjectids",
+    "querysuggestionsconfiguration",
     "querytype",
     "rankinginfo",
     "redirect",
     "redirectruleindexmetadata",
     "redirectruleindexmetadatadata",
+    "redirecturl",
     "region",
     "removestopwords",
     "removewordsifnoresults",
     "renderingcontent",
     "rerankingapplyfilter",
+    "searchpagination",
     "searchparams",
     "searchparamsobject",
     "searchparamsquery",
@@ -130,21 +136,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     var camelizedName = camelize(name);
     if (isReservedModelName(camelizedName)) {
       return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
-    }
-
-    return name;
-  }
-
-  public static String removeReservedModelNamePrefix(String name, String client) {
-    if (name == null || name.isEmpty()) {
-      return name;
-    }
-
-    var camelizedName = camelize(name, LOWERCASE_FIRST_LETTER);
-    var clientName = camelize(INSTANCE.getClientName(client), LOWERCASE_FIRST_LETTER);
-    var trimmedName = camelize(camelizedName.replaceFirst(clientName, ""), LOWERCASE_FIRST_LETTER);
-    if (isReservedModelName(trimmedName)) {
-      return trimmedName;
     }
 
     return name;
@@ -206,6 +197,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     supportingFiles.add(
       new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
     );
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));
     supportingFiles.add(
@@ -215,29 +207,30 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       )
     );
 
-    supportingFiles.removeIf(file ->
-      file.getTemplateFile().equals("gitignore.mustache") ||
-      file.getTemplateFile().equals("Package.swift.mustache") ||
-      file.getTemplateFile().equals("CodableHelper.mustache") ||
-      file.getTemplateFile().equals("JSONDataEncoding.mustache") ||
-      file.getTemplateFile().equals("JSONEncodingHelper.mustache") ||
-      file.getTemplateFile().equals("SynchronizedDictionary.mustache") ||
-      file.getTemplateFile().equals("APIHelper.mustache") ||
-      file.getTemplateFile().equals("Models.mustache") ||
-      file.getTemplateFile().equals("Configuration.mustache") ||
-      file.getTemplateFile().equals("Extensions.mustache") ||
-      file.getTemplateFile().equals("OpenISO8601DateFormatter.mustache") ||
-      file.getTemplateFile().equals("OpenAPIDateWithoutTime.mustache") ||
-      file.getTemplateFile().equals("APIs.mustache") ||
-      file.getTemplateFile().equals("Validation.mustache") ||
-      file.getTemplateFile().equals("AlamofireImplementations.mustache") ||
-      file.getTemplateFile().equals("URLSessionImplementations.mustache") ||
-      file.getTemplateFile().equals("README.mustache") ||
-      file.getTemplateFile().equals("git_push.sh.mustache") ||
-      file.getTemplateFile().equals("Cartfile.mustache") ||
-      file.getTemplateFile().equals("XcodeGen.mustache") ||
-      file.getTemplateFile().equals("swiftformat.mustache") ||
-      file.getTemplateFile().equals("Podspec.mustache")
+    supportingFiles.removeIf(
+      file ->
+        file.getTemplateFile().equals("gitignore.mustache") ||
+        file.getTemplateFile().equals("Package.swift.mustache") ||
+        file.getTemplateFile().equals("CodableHelper.mustache") ||
+        file.getTemplateFile().equals("JSONDataEncoding.mustache") ||
+        file.getTemplateFile().equals("JSONEncodingHelper.mustache") ||
+        file.getTemplateFile().equals("SynchronizedDictionary.mustache") ||
+        file.getTemplateFile().equals("APIHelper.mustache") ||
+        file.getTemplateFile().equals("Models.mustache") ||
+        file.getTemplateFile().equals("Configuration.mustache") ||
+        file.getTemplateFile().equals("Extensions.mustache") ||
+        file.getTemplateFile().equals("OpenISO8601DateFormatter.mustache") ||
+        file.getTemplateFile().equals("OpenAPIDateWithoutTime.mustache") ||
+        file.getTemplateFile().equals("APIs.mustache") ||
+        file.getTemplateFile().equals("Validation.mustache") ||
+        file.getTemplateFile().equals("AlamofireImplementations.mustache") ||
+        file.getTemplateFile().equals("URLSessionImplementations.mustache") ||
+        file.getTemplateFile().equals("README.mustache") ||
+        file.getTemplateFile().equals("git_push.sh.mustache") ||
+        file.getTemplateFile().equals("Cartfile.mustache") ||
+        file.getTemplateFile().equals("XcodeGen.mustache") ||
+        file.getTemplateFile().equals("swiftformat.mustache") ||
+        file.getTemplateFile().equals("Podspec.mustache")
     );
 
     reservedWords.add("LogLevel");
@@ -319,8 +312,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     // Iterate through each model
     for (ModelMap modelMap : processedModels.getModels()) {
       CodegenModel codegenModel = modelMap.getModel();
-      var codegenModelVars = List
-        .of(codegenModel.vars, codegenModel.allVars, codegenModel.requiredVars, codegenModel.optionalVars)
+      var codegenModelVars = List.of(codegenModel.vars, codegenModel.allVars, codegenModel.requiredVars, codegenModel.optionalVars)
         .stream()
         .flatMap(Collection::stream)
         .toList();
@@ -382,8 +374,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       // additionalproperties: true
       Schema<?> inner = ModelUtils.getAdditionalProperties(target);
       if (inner == null) {
-        Logger
-          .getGlobal()
+        Logger.getGlobal()
           .warning("`" + p.getName() + "` (map property) does not have a proper inner type defined. Default to" + " type:string");
         inner = new StringSchema().description("TODO default missing map inner type to string");
         p.setAdditionalProperties(inner);

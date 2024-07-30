@@ -8,13 +8,11 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customDelete",
+        "method": "customDelete",
         "parameters": {
           "path": "test"
         },

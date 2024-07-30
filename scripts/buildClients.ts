@@ -1,38 +1,37 @@
-/* eslint-disable no-case-declarations */
-import * as fsp from 'fs/promises';
-
-import { run, toAbsolutePath } from './common.js';
-import { getClientsConfigField, getLanguageFolder } from './config.js';
+import { run } from './common.js';
+import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
 
 /**
- * Build client for a language at the same time, for those who live in the same folder.
+ * Build code for a specific language.
  */
-async function buildClient(language: Language, gens: Generator[]): Promise<void> {
-  const cwd = getLanguageFolder(language);
-  const spinner = createSpinner(`building '${language}'`);
+async function buildLanguage(
+  language: Language,
+  gens: Generator[],
+  playground: boolean,
+): Promise<void> {
+  const cwd = playground ? `playground/${language}` : getLanguageFolder(language);
+  const spinner = createSpinner(`building ${playground ? 'playground' : 'client'} '${language}'`);
   switch (language) {
     case 'csharp':
       await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'javascript':
-      const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
-      const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
-        packageName === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`,
-      );
-
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
-      await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
+      if (playground) {
+        await run('cd node && yarn build', { cwd });
+      } else {
+        const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
+          packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
+        );
+        await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
+      }
 
       break;
     case 'java':
     case 'kotlin':
-      await fsp.rm(toAbsolutePath(`${cwd}/.gradle`), {
-        recursive: true,
-        force: true,
-      });
-      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
+      await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
       break;
     case 'python':
       await run('poetry build', { cwd, language });
@@ -41,7 +40,10 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
       break;
     case 'swift':
-      await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      // make this work in the playground
+      if (!playground) {
+        await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      }
       break;
     default:
   }
@@ -63,5 +65,9 @@ export async function buildClients(generators: Generator[]): Promise<void> {
     {} as Record<Language, Generator[]>,
   );
 
-  await Promise.all(langs.map((lang) => buildClient(lang, generatorsMap[lang])));
+  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], false)));
+}
+
+export async function buildPlaygrounds(languages: Language[]): Promise<void> {
+  await Promise.all(languages.map((lang) => buildLanguage(lang, [], true)));
 }

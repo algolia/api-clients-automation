@@ -27,10 +27,13 @@ import type { BrowseResponse } from '../model/browseResponse';
 import type {
   BrowseOptions,
   ChunkedBatchOptions,
+  DeleteObjectsOptions,
+  PartialUpdateObjectsOptions,
   ReplaceAllObjectsOptions,
+  SaveObjectsOptions,
   WaitForApiKeyOptions,
-  WaitForTaskOptions,
   WaitForAppTaskOptions,
+  WaitForTaskOptions,
   AddOrUpdateObjectProps,
   AssignUserIdProps,
   BatchProps,
@@ -95,7 +98,6 @@ import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
-import type { IndexSettings } from '../model/indexSettings';
 import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
@@ -117,6 +119,7 @@ import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
+import type { SettingsResponse } from '../model/settingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
@@ -125,7 +128,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-beta.4';
+export const apiClientVersion = '5.0.0-beta.12';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -317,18 +320,19 @@ export function createSearchClient({
           Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions
-    ): Promise<ApiError | GetApiKeyResponse> {
+    ): Promise<GetApiKeyResponse | undefined> {
       let retryCount = 0;
-      const baseIteratorOptions: IterableOptions<ApiError | GetApiKeyResponse> =
-        {
-          aggregator: () => (retryCount += 1),
-          error: {
-            validate: () => retryCount >= maxRetries,
-            message: () =>
-              `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
-          },
-          timeout: () => timeout(retryCount),
-        };
+      const baseIteratorOptions: IterableOptions<
+        GetApiKeyResponse | undefined
+      > = {
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      };
 
       if (operation === 'update') {
         if (!apiKey) {
@@ -363,9 +367,15 @@ export function createSearchClient({
       return createIterablePromise({
         ...baseIteratorOptions,
         func: () =>
-          this.getApiKey({ key }, requestOptions).catch((error) => error),
-        validate: (error: ApiError) =>
-          operation === 'add' ? error.status !== 404 : error.status === 404,
+          this.getApiKey({ key }, requestOptions).catch((error: ApiError) => {
+            if (error.status === 404) {
+              return undefined;
+            }
+
+            throw error;
+          }),
+        validate: (response) =>
+          operation === 'add' ? response !== undefined : response === undefined,
       });
     },
 
@@ -578,6 +588,74 @@ export function createSearchClient({
     },
 
     /**
+     * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+     *
+     * @summary Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+     * @param saveObjects - The `saveObjects` object.
+     * @param saveObjects.indexName - The `indexName` to save `objects` in.
+     * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
+     */
+    async saveObjects(
+      { indexName, objects }: SaveObjectsOptions,
+      requestOptions?: RequestOptions
+    ): Promise<BatchResponse[]> {
+      return await this.chunkedBatch(
+        { indexName, objects, action: 'addObject' },
+        requestOptions
+      );
+    },
+
+    /**
+     * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+     *
+     * @summary Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+     * @param deleteObjects - The `deleteObjects` object.
+     * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
+     * @param deleteObjects.objectIDs - The objectIDs to delete.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
+     */
+    async deleteObjects(
+      { indexName, objectIDs }: DeleteObjectsOptions,
+      requestOptions?: RequestOptions
+    ): Promise<BatchResponse[]> {
+      return await this.chunkedBatch(
+        {
+          indexName,
+          objects: objectIDs.map((objectID) => ({ objectID })),
+          action: 'deleteObject',
+        },
+        requestOptions
+      );
+    },
+
+    /**
+     * Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+     *
+     * @summary Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+     * @param partialUpdateObjects - The `partialUpdateObjects` object.
+     * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
+     * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
+     * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+     */
+    async partialUpdateObjects(
+      { indexName, objects, createIfNotExists }: PartialUpdateObjectsOptions,
+      requestOptions?: RequestOptions
+    ): Promise<BatchResponse[]> {
+      return await this.chunkedBatch(
+        {
+          indexName,
+          objects,
+          action: createIfNotExists
+            ? 'partialUpdateObject'
+            : 'partialUpdateObjectNoCreate',
+        },
+        requestOptions
+      );
+    },
+
+    /**
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
      *
@@ -586,13 +664,13 @@ export function createSearchClient({
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
-     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
       { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions
     ): Promise<ReplaceAllObjectsResponse> {
-      const randomSuffix = Math.random().toString(36).substring(7);
+      const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
       let copyOperationResponse = await this.operationIndex(
@@ -647,7 +725,6 @@ export function createSearchClient({
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
     },
-
     /**
      * Creates a new API key with specific permissions and restrictions.
      *
@@ -991,7 +1068,7 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn\'t collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There\'s no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn\'t collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There\'s no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they\'ll be ignored.
      *
      * Required API Key ACLs:
      * - browse.
@@ -1891,7 +1968,7 @@ export function createSearchClient({
     getSettings(
       { indexName }: GetSettingsProps,
       requestOptions?: RequestOptions
-    ): Promise<IndexSettings> {
+    ): Promise<SettingsResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getSettings`.'

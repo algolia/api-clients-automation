@@ -1,0 +1,21 @@
+post:
+  tags:
+    - tasks
+  summary: Run a task
+  description: Runs a task. You can check the status of task runs with the observability endpoints.
+  operationId: runTask
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/run.yml#/RunResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'

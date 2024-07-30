@@ -4,12 +4,14 @@
 
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+
 /**
  * SourceUpdateInput Class Doc Comment.
  *
  * @category Class
  */
-class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class SourceUpdateInput extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -36,13 +38,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         'image' => 'string',
         'version' => 'string',
         'configuration' => 'object',
-        'collectionIDIndexing' => 'bool',
-        'increaseProductCollectionLimit' => 'bool',
-        'defaultPriceRatioAsOne' => 'bool',
-        'excludeOOSVariantsForPriceAtTRS' => 'bool',
-        'includeVariantsInventory' => 'bool',
-        'hasCollectionSearchPage' => 'bool',
-        'productNamedTags' => 'bool',
+        'featureFlags' => 'array<string,mixed>',
     ];
 
     /**
@@ -70,13 +66,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         'image' => null,
         'version' => null,
         'configuration' => null,
-        'collectionIDIndexing' => null,
-        'increaseProductCollectionLimit' => null,
-        'defaultPriceRatioAsOne' => null,
-        'excludeOOSVariantsForPriceAtTRS' => null,
-        'includeVariantsInventory' => null,
-        'hasCollectionSearchPage' => null,
-        'productNamedTags' => null,
+        'featureFlags' => null,
     ];
 
     /**
@@ -105,13 +95,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         'image' => 'image',
         'version' => 'version',
         'configuration' => 'configuration',
-        'collectionIDIndexing' => 'collectionIDIndexing',
-        'increaseProductCollectionLimit' => 'increaseProductCollectionLimit',
-        'defaultPriceRatioAsOne' => 'defaultPriceRatioAsOne',
-        'excludeOOSVariantsForPriceAtTRS' => 'excludeOOSVariantsForPriceAtTRS',
-        'includeVariantsInventory' => 'includeVariantsInventory',
-        'hasCollectionSearchPage' => 'hasCollectionSearchPage',
-        'productNamedTags' => 'productNamedTags',
+        'featureFlags' => 'featureFlags',
     ];
 
     /**
@@ -139,13 +123,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         'image' => 'setImage',
         'version' => 'setVersion',
         'configuration' => 'setConfiguration',
-        'collectionIDIndexing' => 'setCollectionIDIndexing',
-        'increaseProductCollectionLimit' => 'setIncreaseProductCollectionLimit',
-        'defaultPriceRatioAsOne' => 'setDefaultPriceRatioAsOne',
-        'excludeOOSVariantsForPriceAtTRS' => 'setExcludeOOSVariantsForPriceAtTRS',
-        'includeVariantsInventory' => 'setIncludeVariantsInventory',
-        'hasCollectionSearchPage' => 'setHasCollectionSearchPage',
-        'productNamedTags' => 'setProductNamedTags',
+        'featureFlags' => 'setFeatureFlags',
     ];
 
     /**
@@ -173,13 +151,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         'image' => 'getImage',
         'version' => 'getVersion',
         'configuration' => 'getConfiguration',
-        'collectionIDIndexing' => 'getCollectionIDIndexing',
-        'increaseProductCollectionLimit' => 'getIncreaseProductCollectionLimit',
-        'defaultPriceRatioAsOne' => 'getDefaultPriceRatioAsOne',
-        'excludeOOSVariantsForPriceAtTRS' => 'getExcludeOOSVariantsForPriceAtTRS',
-        'includeVariantsInventory' => 'getIncludeVariantsInventory',
-        'hasCollectionSearchPage' => 'getHasCollectionSearchPage',
-        'productNamedTags' => 'getProductNamedTags',
+        'featureFlags' => 'getFeatureFlags',
     ];
 
     /**
@@ -194,7 +166,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
      *
      * @param mixed[] $data Associated array of property values
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (isset($data['storeKeys'])) {
             $this->container['storeKeys'] = $data['storeKeys'];
@@ -253,26 +225,8 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
         if (isset($data['configuration'])) {
             $this->container['configuration'] = $data['configuration'];
         }
-        if (isset($data['collectionIDIndexing'])) {
-            $this->container['collectionIDIndexing'] = $data['collectionIDIndexing'];
-        }
-        if (isset($data['increaseProductCollectionLimit'])) {
-            $this->container['increaseProductCollectionLimit'] = $data['increaseProductCollectionLimit'];
-        }
-        if (isset($data['defaultPriceRatioAsOne'])) {
-            $this->container['defaultPriceRatioAsOne'] = $data['defaultPriceRatioAsOne'];
-        }
-        if (isset($data['excludeOOSVariantsForPriceAtTRS'])) {
-            $this->container['excludeOOSVariantsForPriceAtTRS'] = $data['excludeOOSVariantsForPriceAtTRS'];
-        }
-        if (isset($data['includeVariantsInventory'])) {
-            $this->container['includeVariantsInventory'] = $data['includeVariantsInventory'];
-        }
-        if (isset($data['hasCollectionSearchPage'])) {
-            $this->container['hasCollectionSearchPage'] = $data['hasCollectionSearchPage'];
-        }
-        if (isset($data['productNamedTags'])) {
-            $this->container['productNamedTags'] = $data['productNamedTags'];
+        if (isset($data['featureFlags'])) {
+            $this->container['featureFlags'] = $data['featureFlags'];
         }
     }
 
@@ -473,7 +427,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Gets customFields.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\CommercetoolsCustomFields
+     * @return null|CommercetoolsCustomFields
      */
     public function getCustomFields()
     {
@@ -483,7 +437,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Sets customFields.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\CommercetoolsCustomFields $customFields customFields
+     * @param null|CommercetoolsCustomFields $customFields customFields
      *
      * @return self
      */
@@ -521,7 +475,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Gets method.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\MethodType
+     * @return null|MethodType
      */
     public function getMethod()
     {
@@ -531,7 +485,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Sets method.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\MethodType $method method
+     * @param null|MethodType $method method
      *
      * @return self
      */
@@ -648,7 +602,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Gets dataType.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\BigQueryDataType
+     * @return null|BigQueryDataType
      */
     public function getDataType()
     {
@@ -658,7 +612,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Sets dataType.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\BigQueryDataType $dataType dataType
+     * @param null|BigQueryDataType $dataType dataType
      *
      * @return self
      */
@@ -744,7 +698,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Gets registry.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\DockerRegistry
+     * @return null|DockerRegistry
      */
     public function getRegistry()
     {
@@ -754,7 +708,7 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Sets registry.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\DockerRegistry $registry registry
+     * @param null|DockerRegistry $registry registry
      *
      * @return self
      */
@@ -838,169 +792,25 @@ class SourceUpdateInput extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     }
 
     /**
-     * Gets collectionIDIndexing.
+     * Gets featureFlags.
      *
-     * @return null|bool
+     * @return null|array<string,mixed>
      */
-    public function getCollectionIDIndexing()
+    public function getFeatureFlags()
     {
-        return $this->container['collectionIDIndexing'] ?? null;
+        return $this->container['featureFlags'] ?? null;
     }
 
     /**
-     * Sets collectionIDIndexing.
+     * Sets featureFlags.
      *
-     * @param null|bool $collectionIDIndexing Whether to index collection IDs.   If your store has `has_collection_search_page` set to true, collection IDs will be indexed even if `collectionIDIndexing` is false.
+     * @param null|array<string,mixed> $featureFlags feature flags for the Shopify source
      *
      * @return self
      */
-    public function setCollectionIDIndexing($collectionIDIndexing)
+    public function setFeatureFlags($featureFlags)
     {
-        $this->container['collectionIDIndexing'] = $collectionIDIndexing;
-
-        return $this;
-    }
-
-    /**
-     * Gets increaseProductCollectionLimit.
-     *
-     * @return null|bool
-     */
-    public function getIncreaseProductCollectionLimit()
-    {
-        return $this->container['increaseProductCollectionLimit'] ?? null;
-    }
-
-    /**
-     * Sets increaseProductCollectionLimit.
-     *
-     * @param null|bool $increaseProductCollectionLimit Whether to increase the number of indexed collections per product. If true, Algolia indexes 200 collections per product. If false, 100 collections per product are indexed.
-     *
-     * @return self
-     */
-    public function setIncreaseProductCollectionLimit($increaseProductCollectionLimit)
-    {
-        $this->container['increaseProductCollectionLimit'] = $increaseProductCollectionLimit;
-
-        return $this;
-    }
-
-    /**
-     * Gets defaultPriceRatioAsOne.
-     *
-     * @return null|bool
-     */
-    public function getDefaultPriceRatioAsOne()
-    {
-        return $this->container['defaultPriceRatioAsOne'] ?? null;
-    }
-
-    /**
-     * Sets defaultPriceRatioAsOne.
-     *
-     * @param null|bool $defaultPriceRatioAsOne Whether to set the default price ratio to 1 if no sale price is present.  The price ratio is determined by the ratio: `sale_price` / `regular_price`. If no sale price is present, the price ratio would be 0. If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
-     *
-     * @return self
-     */
-    public function setDefaultPriceRatioAsOne($defaultPriceRatioAsOne)
-    {
-        $this->container['defaultPriceRatioAsOne'] = $defaultPriceRatioAsOne;
-
-        return $this;
-    }
-
-    /**
-     * Gets excludeOOSVariantsForPriceAtTRS.
-     *
-     * @return null|bool
-     */
-    public function getExcludeOOSVariantsForPriceAtTRS()
-    {
-        return $this->container['excludeOOSVariantsForPriceAtTRS'] ?? null;
-    }
-
-    /**
-     * Sets excludeOOSVariantsForPriceAtTRS.
-     *
-     * @param null|bool $excludeOOSVariantsForPriceAtTRS whether to exclude out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes
-     *
-     * @return self
-     */
-    public function setExcludeOOSVariantsForPriceAtTRS($excludeOOSVariantsForPriceAtTRS)
-    {
-        $this->container['excludeOOSVariantsForPriceAtTRS'] = $excludeOOSVariantsForPriceAtTRS;
-
-        return $this;
-    }
-
-    /**
-     * Gets includeVariantsInventory.
-     *
-     * @return null|bool
-     */
-    public function getIncludeVariantsInventory()
-    {
-        return $this->container['includeVariantsInventory'] ?? null;
-    }
-
-    /**
-     * Sets includeVariantsInventory.
-     *
-     * @param null|bool $includeVariantsInventory whether to include an inventory with every variant for every product record
-     *
-     * @return self
-     */
-    public function setIncludeVariantsInventory($includeVariantsInventory)
-    {
-        $this->container['includeVariantsInventory'] = $includeVariantsInventory;
-
-        return $this;
-    }
-
-    /**
-     * Gets hasCollectionSearchPage.
-     *
-     * @return null|bool
-     */
-    public function getHasCollectionSearchPage()
-    {
-        return $this->container['hasCollectionSearchPage'] ?? null;
-    }
-
-    /**
-     * Sets hasCollectionSearchPage.
-     *
-     * @param null|bool $hasCollectionSearchPage whether to include collection IDs and handles in the product records
-     *
-     * @return self
-     */
-    public function setHasCollectionSearchPage($hasCollectionSearchPage)
-    {
-        $this->container['hasCollectionSearchPage'] = $hasCollectionSearchPage;
-
-        return $this;
-    }
-
-    /**
-     * Gets productNamedTags.
-     *
-     * @return null|bool
-     */
-    public function getProductNamedTags()
-    {
-        return $this->container['productNamedTags'] ?? null;
-    }
-
-    /**
-     * Sets productNamedTags.
-     *
-     * @param null|bool $productNamedTags Whether to convert tags on products to named tags.  To learn more, see [Named tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
-     *
-     * @return self
-     */
-    public function setProductNamedTags($productNamedTags)
-    {
-        $this->container['productNamedTags'] = $productNamedTags;
+        $this->container['featureFlags'] = $featureFlags;
 
         return $this;
     }

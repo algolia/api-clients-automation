@@ -4,8 +4,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "generateSecuredApiKey",
+        "method": "generateSecuredApiKey",
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
@@ -27,8 +26,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "generateSecuredApiKey",
+        "method": "generateSecuredApiKey",
         "parameters": {
           "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
           "restrictions": {
@@ -56,6 +54,501 @@
         "expected": {
           "type": "response",
           "match": "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call replaceAllObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6679
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "replaceAllObjects",
+        "parameters": {
+          "indexName": "cts_e2e_replace_all_objects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            },
+            {
+              "objectID": "3",
+              "name": "Cyril"
+            },
+            {
+              "objectID": "4",
+              "name": "David"
+            },
+            {
+              "objectID": "5",
+              "name": "Eva"
+            },
+            {
+              "objectID": "6",
+              "name": "Fiona"
+            },
+            {
+              "objectID": "7",
+              "name": "Gael"
+            },
+            {
+              "objectID": "8",
+              "name": "Hugo"
+            },
+            {
+              "objectID": "9",
+              "name": "Igor"
+            },
+            {
+              "objectID": "10",
+              "name": "Julia"
+            }
+          ],
+          "batchSize": 3
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "copyOperationResponse": {
+              "taskID": 125,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            },
+            "batchResponses": [
+              {
+                "taskID": 127,
+                "objectIDs": [
+                  "1",
+                  "2",
+                  "3"
+                ]
+              },
+              {
+                "taskID": 130,
+                "objectIDs": [
+                  "4",
+                  "5",
+                  "6"
+                ]
+              },
+              {
+                "taskID": 133,
+                "objectIDs": [
+                  "7",
+                  "8",
+                  "9"
+                ]
+              },
+              {
+                "taskID": 134,
+                "objectIDs": [
+                  "10"
+                ]
+              }
+            ],
+            "moveOperationResponse": {
+              "taskID": 777,
+              "updatedAt": "2021-01-01T00:00:00.000Z"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call saveObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_e2e_saveObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 333,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "saveObjects should report errors",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "wrong-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "cts_e2e_saveObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ]
+        },
+        "expected": {
+          "error": {
+            "csharp": "{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "go": "API error [403] {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
+            "javascript": "Invalid Application-ID or API key",
+            "kotlin": "Client request(POST http://${{localhost}}:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}\\\"",
+            "php": "Invalid Application-ID or API key",
+            "python": "Invalid Application-ID or API key",
+            "ruby": "Invalid Application-ID or API key",
+            "scala": "Invalid Application-ID or API key",
+            "swift": "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=true",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "createIfNotExists": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 444,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=false",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "3",
+              "name": "Cyril"
+            },
+            {
+              "objectID": "4",
+              "name": "David"
+            }
+          ],
+          "createIfNotExists": false
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 555,
+              "objectIDs": [
+                "3",
+                "4"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call deleteObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "deleteObjects",
+        "parameters": {
+          "indexName": "cts_e2e_deleteObjects_${{language}}",
+          "objectIDs": [
+            "1",
+            "2"
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 666,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "wait for api key helper - add",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-add-operation-test-${{language}}",
+          "operation": "add"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "value": "api-key-add-operation-test-${{language}}",
+            "description": "my new api key",
+            "acl": [
+              "search",
+              "addObject"
+            ],
+            "validity": 300,
+            "maxQueriesPerIPPerHour": 100,
+            "maxHitsPerQuery": 20,
+            "createdAt": 1720094400
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "wait for api key - update",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-update-operation-test-${{language}}",
+          "operation": "update",
+          "apiKey": {
+            "description": "my updated api key",
+            "acl": [
+              "search",
+              "addObject",
+              "deleteObject"
+            ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "value": "api-key-update-operation-test-${{language}}",
+            "description": "my updated api key",
+            "acl": [
+              "search",
+              "addObject",
+              "deleteObject"
+            ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20,
+            "createdAt": 1720094400
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "wait for api key - delete",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-delete-operation-test-${{language}}",
+          "operation": "delete"
+        },
+        "expected": {
+          "type": "response",
+          "match": null
         }
       }
     ]

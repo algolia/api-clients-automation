@@ -1,0 +1,57 @@
+{{#tests}}
+@Test
+@DisplayName("{{{testName}}}")
+void {{testType}}Test{{testIndex}}() {
+  {{#autoCreateClient}}
+    {{client}} client = createClient();
+  {{/autoCreateClient}}
+
+  {{#isHelper}}assertDoesNotThrow(() -> { {{/isHelper}}
+  {{#steps}}
+  {{#times}}
+  for (int i = 0; i < {{.}}; i++) {
+  {{/times}}
+    {{#isError}}
+      {
+        Exception exception = assertThrows(Exception.class, () -> {
+          {{#dynamicTemplate}}{{/dynamicTemplate}}
+        });
+        assertEquals("{{{expectedError}}}", exception.getMessage());
+      }
+    {{/isError}}
+    {{^isError}}
+      {{#dynamicTemplate}}{{/dynamicTemplate}}
+      {{#match}}
+        {{#testUserAgent}} {
+          String regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}";
+          assertTrue(result.headers.get("user-agent").matches(regexp), "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp);
+        }{{/testUserAgent}}
+        {{#testTimeouts}}
+          assertEquals({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, result.connectTimeout);
+          assertEquals({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, result.responseTimeout);
+        {{/testTimeouts}}
+        {{#testHost}}
+          assertEquals("{{{match}}}", result.host);
+        {{/testHost}}
+        {{#testResponse}}
+          {{#matchIsJSON}}
+          assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+          {{/matchIsJSON}}
+          {{^matchIsJSON}}
+            {{#matchIsNull}}
+              assertEquals(null, res);
+            {{/matchIsNull}}
+            {{^matchIsNull}}
+              assertEquals("{{{match}}}", res);
+            {{/matchIsNull}}
+          {{/matchIsJSON}}
+        {{/testResponse}}
+      {{/match}}
+    {{/isError}}
+  {{#times}}
+  }
+  {{/times}}
+  {{/steps}}
+  {{#isHelper}} });{{/isHelper}}
+}
+{{/tests}}

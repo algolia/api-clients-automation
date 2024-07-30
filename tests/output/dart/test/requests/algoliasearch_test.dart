@@ -358,6 +358,282 @@ void main() {
     ),
   );
 
+  // getRecommendations
+  test(
+    'get recommendations for recommend model with minimal parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            RelatedQuery(
+              indexName: "indexName",
+              objectID: "objectID",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 42.1,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get recommendations for recommend model with all parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            RelatedQuery(
+              indexName: "indexName",
+              objectID: "objectID",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 42.1,
+              maxRecommendations: 10,
+              queryParameters: SearchParams(
+                query: "myQuery",
+                facetFilters: [
+                  "query",
+                ],
+              ),
+              fallbackParameters: FallbackParams(
+                query: "myQuery",
+                facetFilters: [
+                  "fallback",
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get recommendations for trending model with minimal parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            TrendingItemsQuery(
+              indexName: "indexName",
+              model: TrendingItemsModel.fromJson("trending-items"),
+              threshold: 42.1,
+              facetName: "facet",
+              facetValue: "value",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get recommendations for trending model with all parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            TrendingItemsQuery(
+              indexName: "indexName",
+              model: TrendingItemsModel.fromJson("trending-items"),
+              threshold: 42.1,
+              maxRecommendations: 10,
+              facetName: "myFacetName",
+              facetValue: "myFacetValue",
+              queryParameters: SearchParams(
+                query: "myQuery",
+                facetFilters: [
+                  "query",
+                ],
+              ),
+              fallbackParameters: SearchParamsObject(
+                query: "myQuery",
+                facetFilters: [
+                  "fallback",
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get multiple recommendations with minimal parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            RelatedQuery(
+              indexName: "indexName1",
+              objectID: "objectID1",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
+            ),
+            RelatedQuery(
+              indexName: "indexName2",
+              objectID: "objectID2",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get multiple recommendations with all parameters',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            RelatedQuery(
+              indexName: "indexName1",
+              objectID: "objectID1",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
+              maxRecommendations: 10,
+              queryParameters: SearchParams(
+                query: "myQuery",
+                facetFilters: [
+                  "query1",
+                ],
+              ),
+              fallbackParameters: FallbackParams(
+                query: "myQuery",
+                facetFilters: [
+                  "fallback1",
+                ],
+              ),
+            ),
+            RelatedQuery(
+              indexName: "indexName2",
+              objectID: "objectID2",
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
+              maxRecommendations: 10,
+              queryParameters: SearchParams(
+                query: "myQuery",
+                facetFilters: [
+                  "query2",
+                ],
+              ),
+              fallbackParameters: FallbackParams(
+                query: "myQuery",
+                facetFilters: [
+                  "fallback2",
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""");
+      },
+    ),
+  );
+
+  // getRecommendations
+  test(
+    'get frequently bought together recommendations',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendations(
+        getRecommendationsParams: GetRecommendationsParams(
+          requests: [
+            BoughtTogetherQuery(
+              indexName: "indexName1",
+              objectID: "objectID1",
+              model: FbtModel.fromJson("bought-together"),
+              threshold: 42.7,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/recommendations');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}""");
+      },
+    ),
+  );
+
   // search
   test(
     'withHitsPerPage',

@@ -4,4 +4,4 @@ IndexName:
   required: true
   description: Query Suggestions index name.
   schema:
-    $ref: './schemas/QuerySuggestionsIndexName.yml'
+    $ref: './schemas/IndexName.yml'

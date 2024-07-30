@@ -202,7 +202,7 @@ public interface ISearchClient
   UpdatedAtResponse BatchDictionaryEntries(DictionaryType dictionaryName, BatchDictionaryEntriesParams batchDictionaryEntriesParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance. 
+  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored. 
   /// </summary>
   /// <param name="indexName">Name of the index on which to perform the operation.</param>
   /// <param name="browseParams"> (optional)</param>
@@ -215,7 +215,7 @@ public interface ISearchClient
   Task<BrowseResponse<T>> BrowseAsync<T>(string indexName, BrowseParams browseParams = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  (Synchronous version)
+  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.  (Synchronous version)
   /// </summary>
   /// <param name="indexName">Name of the index on which to perform the operation.</param>
   /// <param name="browseParams"> (optional)</param>
@@ -800,8 +800,8 @@ public interface ISearchClient
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of IndexSettings</returns>
-  Task<IndexSettings> GetSettingsAsync(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default);
+  /// <returns>Task of SettingsResponse</returns>
+  Task<SettingsResponse> GetSettingsAsync(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// Retrieves an object with non-null index settings. (Synchronous version)
@@ -812,8 +812,8 @@ public interface ISearchClient
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>IndexSettings</returns>
-  IndexSettings GetSettings(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default);
+  /// <returns>SettingsResponse</returns>
+  SettingsResponse GetSettings(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// Retrieves all allowed IP addresses with access to your application.
@@ -2021,7 +2021,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance. 
+  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored. 
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -2050,7 +2050,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <summary>
-  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  (Synchronous version)
+  /// Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` is evaluated to `true`)  If you send these parameters with your browse requests, they'll be ignored.  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -3077,8 +3077,8 @@ public partial class SearchClient : ISearchClient
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of IndexSettings</returns>
-  public async Task<IndexSettings> GetSettingsAsync(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default)
+  /// <returns>Task of SettingsResponse</returns>
+  public async Task<SettingsResponse> GetSettingsAsync(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
     if (indexName == null)
@@ -3088,7 +3088,7 @@ public partial class SearchClient : ISearchClient
 
     requestOptions.PathParameters.Add("indexName", QueryStringHelper.ParameterToString(indexName));
 
-    return await _transport.ExecuteRequestAsync<IndexSettings>(new HttpMethod("GET"), "/1/indexes/{indexName}/settings", requestOptions, cancellationToken).ConfigureAwait(false);
+    return await _transport.ExecuteRequestAsync<SettingsResponse>(new HttpMethod("GET"), "/1/indexes/{indexName}/settings", requestOptions, cancellationToken).ConfigureAwait(false);
   }
 
 
@@ -3104,8 +3104,8 @@ public partial class SearchClient : ISearchClient
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>IndexSettings</returns>
-  public IndexSettings GetSettings(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default) =>
+  /// <returns>SettingsResponse</returns>
+  public SettingsResponse GetSettings(string indexName, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => GetSettingsAsync(indexName, options, cancellationToken));
 
 
