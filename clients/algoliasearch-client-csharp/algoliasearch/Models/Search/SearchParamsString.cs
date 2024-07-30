@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Algolia.Search.Models.Search;
 
 /// <summary>
-/// SearchParamsString
+/// Search parameters as query string.
 /// </summary>
 public partial class SearchParamsString
 {

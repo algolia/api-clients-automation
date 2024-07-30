@@ -2063,8 +2063,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               title: searchRecommendRulesParams
+              type: object
               description: Recommend rules parameters.
               additionalProperties: false
               properties:
@@ -2658,6 +2658,7 @@ components:
       title: range objects
       type: array
       items:
+        title: range
         type: object
         description: >-
           Range object with lower and upper values in meters to define custom
@@ -3838,7 +3839,8 @@ components:
         decompoundQuery:
           type: boolean
           description: >
-            Whether to split compound words into their building blocks.
+            Whether to split compound words in the query into their building
+            blocks.
 
 
             For more information, see [Word
@@ -3846,6 +3848,12 @@ components:
 
             Word segmentation is supported for these languages: German, Dutch,
             Finnish, Swedish, and Norwegian.
+
+            Decompounding doesn't work for words with [non-spacing mark Unicode
+            characters](https://www.charactercodes.net/category/non-spacing_mark).
+
+            For example, `Gartenstühle` won't be decompounded if the `ü`
+            consists of `u` (U+0075) and `◌̈` (U+0308).
           default: true
           x-categories:
             - Languages
@@ -4399,6 +4407,7 @@ components:
           type: boolean
           description: Redirect rule status.
         data:
+          title: redirectRuleIndexData
           type: object
           description: Redirect rule data.
           required:
@@ -4450,8 +4459,8 @@ components:
           type: string
           description: Distance from a central coordinate provided by `aroundLatLng`.
         exhaustive:
-          type: object
           title: exhaustive
+          type: object
           description: >-
             Whether certain properties of the search response are calculated
             exhaustive (exact) or approximated.
@@ -4531,8 +4540,8 @@ components:
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
-            type: object
             title: facetStats
+            type: object
             properties:
               min:
                 type: number
@@ -5021,6 +5030,7 @@ components:
       additionalProperties: false
       properties:
         _metadata:
+          title: ruleMetadata
           type: object
           description: Rule metadata.
           properties:

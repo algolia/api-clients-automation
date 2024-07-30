@@ -1,13 +1,6 @@
 import type { Rule } from 'eslint';
-import type { AST } from 'yaml-eslint-parser';
 
-import {
-  isBlockScalar,
-  isMapping,
-  isPairWithKey,
-  isScalar,
-  isSequence,
-} from '../utils';
+import { isNullable, isPairWithKey } from '../utils';
 
 export function createOutOfLineRule({
   property,
@@ -73,18 +66,4 @@ export function createOutOfLineRule({
     },
   };
   return rule;
-}
-
-function isNullable(node: AST.YAMLNode | null): boolean {
-  return (
-    isSequence(node) &&
-    node.entries.some(
-      (entry) =>
-        isMapping(entry) &&
-        isPairWithKey(entry.pairs[0], 'type') &&
-        isScalar(entry.pairs[0].value) &&
-        !isBlockScalar(entry.pairs[0].value) &&
-        entry.pairs[0].value.raw === "'null'"
-    )
-  );
 }

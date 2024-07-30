@@ -29,7 +29,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'java':
       await run(
-        `find . -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+        `find . -path ./.gradle -prune -o -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \

@@ -777,11 +777,8 @@ paths:
           content:
             application/json:
               schema:
-                title: getObjectResponse
                 type: object
                 description: The requested record.
-                additionalProperties:
-                  $ref: '#/components/schemas/attribute'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1129,8 +1126,8 @@ paths:
                 requests:
                   type: array
                   items:
-                    description: Request body for retrieving records.
                     title: getObjectsRequest
+                    description: Request body for retrieving records.
                     type: object
                     additionalProperties: false
                     required:
@@ -1848,8 +1845,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               title: searchRulesParams
+              type: object
               description: Rules search parameters.
               additionalProperties: false
               properties:
@@ -2872,8 +2869,8 @@ paths:
                           type: array
                           description: Queries performed for the given request.
                           items:
-                            type: object
                             title: logQuery
+                            type: object
                             properties:
                               index_name:
                                 type: string
@@ -3648,7 +3645,7 @@ components:
       default: ''
     searchParamsString:
       type: object
-      title: Search parameters as query string
+      description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
         - params
@@ -3897,6 +3894,7 @@ components:
       title: range objects
       type: array
       items:
+        title: range
         type: object
         description: >-
           Range object with lower and upper values in meters to define custom
@@ -5077,7 +5075,8 @@ components:
         decompoundQuery:
           type: boolean
           description: >
-            Whether to split compound words into their building blocks.
+            Whether to split compound words in the query into their building
+            blocks.
 
 
             For more information, see [Word
@@ -5085,6 +5084,12 @@ components:
 
             Word segmentation is supported for these languages: German, Dutch,
             Finnish, Swedish, and Norwegian.
+
+            Decompounding doesn't work for words with [non-spacing mark Unicode
+            characters](https://www.charactercodes.net/category/non-spacing_mark).
+
+            For example, `Gartenstühle` won't be decompounded if the `ü`
+            consists of `u` (U+0075) and `◌̈` (U+0308).
           default: true
           x-categories:
             - Languages
@@ -5412,6 +5417,7 @@ components:
           type: boolean
           description: Redirect rule status.
         data:
+          title: redirectRuleIndexData
           type: object
           description: Redirect rule data.
           required:
@@ -5463,8 +5469,8 @@ components:
           type: string
           description: Distance from a central coordinate provided by `aroundLatLng`.
         exhaustive:
-          type: object
           title: exhaustive
+          type: object
           description: >-
             Whether certain properties of the search response are calculated
             exhaustive (exact) or approximated.
@@ -5544,8 +5550,8 @@ components:
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
-            type: object
             title: facetStats
+            type: object
             properties:
               min:
                 type: number
@@ -5994,8 +6000,8 @@ components:
           type: array
           description: Matching facet values.
           items:
-            type: object
             title: facetHits
+            type: object
             additionalProperties: false
             required:
               - value
@@ -6086,9 +6092,6 @@ components:
       type: string
       example: '2023-06-27T14:42:38.831Z'
       description: Date and time when the object was deleted, in RFC 3339 format.
-    attribute:
-      type: string
-      description: Value of the attribute to update.
     updatedAt:
       type: string
       example: '2023-07-04T12:49:15Z'
@@ -6125,6 +6128,9 @@ components:
           $ref: '#/components/schemas/taskID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
+    attribute:
+      type: string
+      description: Value of the attribute to update.
     builtInOperationType:
       type: string
       enum:
@@ -6229,7 +6235,6 @@ components:
         - objectIDs
     baseIndexSettings:
       type: object
-      title: Index settings.
       additionalProperties: false
       properties:
         attributesForFaceting:
@@ -6424,6 +6429,12 @@ components:
 
             Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish
             (`sv`), and Norwegian (`no`).
+
+            Decompounding doesn't work for words with [non-spacing mark Unicode
+            characters](https://www.charactercodes.net/category/non-spacing_mark).
+
+            For example, `Gartenstühle` won't be decompounded if the `ü`
+            consists of `u` (U+0075) and `◌̈` (U+0308).
           default: {}
           x-categories:
             - Languages

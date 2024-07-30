@@ -21,5 +21,5 @@ package algoliasearch.monitoring
 /** IndexingTimeResponse
   */
 case class IndexingTimeResponse(
-    metrics: Option[IndexingTimeResponseMetrics] = scala.None
+    metrics: Option[IndexingMetric] = scala.None
 )

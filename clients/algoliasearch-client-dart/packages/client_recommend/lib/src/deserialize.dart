@@ -1,6 +1,5 @@
 import 'package:algolia_client_recommend/src/model/advanced_syntax_features.dart';
 import 'package:algolia_client_recommend/src/model/alternatives_as_exact.dart';
-import 'package:algolia_client_recommend/src/model/around_precision_from_value_inner.dart';
 import 'package:algolia_client_recommend/src/model/around_radius_all.dart';
 import 'package:algolia_client_recommend/src/model/auto_facet_filter.dart';
 import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
@@ -36,25 +35,26 @@ import 'package:algolia_client_recommend/src/model/params_consequence.dart';
 import 'package:algolia_client_recommend/src/model/personalization.dart';
 import 'package:algolia_client_recommend/src/model/promote_consequence_object.dart';
 import 'package:algolia_client_recommend/src/model/query_type.dart';
+import 'package:algolia_client_recommend/src/model/range.dart';
 import 'package:algolia_client_recommend/src/model/ranking_info.dart';
 import 'package:algolia_client_recommend/src/model/recommend_hit.dart';
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
 import 'package:algolia_client_recommend/src/model/recommend_rule.dart';
-import 'package:algolia_client_recommend/src/model/recommend_rule_metadata.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_hits.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_results.dart';
 import 'package:algolia_client_recommend/src/model/recommended_for_you.dart';
 import 'package:algolia_client_recommend/src/model/recommended_for_you_model.dart';
 import 'package:algolia_client_recommend/src/model/recommended_for_you_query.dart';
 import 'package:algolia_client_recommend/src/model/redirect.dart';
+import 'package:algolia_client_recommend/src/model/redirect_rule_index_data.dart';
 import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata.dart';
-import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata_data.dart';
 import 'package:algolia_client_recommend/src/model/redirect_url.dart';
 import 'package:algolia_client_recommend/src/model/related_model.dart';
 import 'package:algolia_client_recommend/src/model/related_products.dart';
 import 'package:algolia_client_recommend/src/model/related_query.dart';
 import 'package:algolia_client_recommend/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_recommend/src/model/rendering_content.dart';
+import 'package:algolia_client_recommend/src/model/rule_metadata.dart';
 import 'package:algolia_client_recommend/src/model/search_pagination.dart';
 import 'package:algolia_client_recommend/src/model/search_params.dart';
 import 'package:algolia_client_recommend/src/model/search_params_object.dart';
@@ -99,9 +99,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return AdvancedSyntaxFeatures.fromJson(value) as ReturnType;
     case 'AlternativesAsExact':
       return AlternativesAsExact.fromJson(value) as ReturnType;
-    case 'AroundPrecisionFromValueInner':
-      return AroundPrecisionFromValueInner.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'AroundRadiusAll':
       return AroundRadiusAll.fromJson(value) as ReturnType;
     case 'AutoFacetFilter':
@@ -194,6 +191,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
+    case 'Range':
+      return Range.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RankingInfo':
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RecommendHit':
@@ -202,9 +201,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RecommendModels.fromJson(value) as ReturnType;
     case 'RecommendRule':
       return RecommendRule.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'RecommendRuleMetadata':
-      return RecommendRuleMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'RecommendationsHits':
       return RecommendationsHits.fromJson(value as Map<String, dynamic>)
@@ -222,12 +218,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectRuleIndexData':
+      return RedirectRuleIndexData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RedirectRuleIndexMetadata':
       return RedirectRuleIndexMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'RedirectRuleIndexMetadataData':
-      return RedirectRuleIndexMetadataData.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'RedirectURL':
       return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RelatedModel':
@@ -242,6 +238,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RenderingContent':
       return RenderingContent.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'RuleMetadata':
+      return RuleMetadata.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchPagination':
       return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;

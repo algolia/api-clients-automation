@@ -14,14 +14,14 @@ import java.util.Objects;
 public class IncidentsResponse {
 
   @JsonProperty("incidents")
-  private Map<String, List<IncidentsInner>> incidents;
+  private Map<String, List<IncidentEntry>> incidents;
 
-  public IncidentsResponse setIncidents(Map<String, List<IncidentsInner>> incidents) {
+  public IncidentsResponse setIncidents(Map<String, List<IncidentEntry>> incidents) {
     this.incidents = incidents;
     return this;
   }
 
-  public IncidentsResponse putIncidents(String key, List<IncidentsInner> incidentsItem) {
+  public IncidentsResponse putIncidents(String key, List<IncidentEntry> incidentsItem) {
     if (this.incidents == null) {
       this.incidents = new HashMap<>();
     }
@@ -31,7 +31,7 @@ public class IncidentsResponse {
 
   /** Get incidents */
   @javax.annotation.Nullable
-  public Map<String, List<IncidentsInner>> getIncidents() {
+  public Map<String, List<IncidentEntry>> getIncidents() {
     return incidents;
   }
 

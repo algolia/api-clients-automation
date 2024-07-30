@@ -18,8 +18,8 @@ post:
     content:
       application/json:
         schema:
-          type: object
           title: searchRecommendRulesParams
+          type: object
           description: Recommend rules parameters.
           additionalProperties: false
           properties:

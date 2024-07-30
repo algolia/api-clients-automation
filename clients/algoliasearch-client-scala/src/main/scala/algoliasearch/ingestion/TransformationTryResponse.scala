@@ -30,5 +30,5 @@ package algoliasearch.ingestion
   */
 case class TransformationTryResponse(
     payloads: Seq[Any],
-    error: Option[TransformationTryResponseError] = scala.None
+    error: Option[TransformationError] = scala.None
 )

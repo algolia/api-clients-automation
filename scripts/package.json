@@ -48,11 +48,11 @@
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
     "js-yaml": "4.1.0",
-    "knip": "5.26.0",
+    "knip": "5.27.0",
     "micromatch": "4.0.7",
     "semver": "7.6.3",
     "spinnies": "0.5.1",
-    "typescript": "5.5.3",
-    "vitest": "2.0.3"
+    "typescript": "5.5.4",
+    "vitest": "2.0.4"
   }
 }

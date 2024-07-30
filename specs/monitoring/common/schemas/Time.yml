@@ -1,7 +1,8 @@
-title: time
+title: times
 description: Time measured by a probe.
 type: array
 items:
+  title: timeEntry
   type: object
   additionalProperties: false
   properties:

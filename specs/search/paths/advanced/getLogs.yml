@@ -127,8 +127,8 @@ get:
                       type: array
                       description: Queries performed for the given request.
                       items:
-                        type: object
                         title: logQuery
+                        type: object
                         properties:
                           index_name:
                             type: string

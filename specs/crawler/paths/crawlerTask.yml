@@ -13,6 +13,7 @@ get:
       content:
         application/json:
           schema:
+            title: taskStatus
             type: object
             properties:
               pending:

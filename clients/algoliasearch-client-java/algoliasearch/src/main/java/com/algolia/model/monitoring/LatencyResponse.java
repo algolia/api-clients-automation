@@ -11,16 +11,16 @@ import java.util.Objects;
 public class LatencyResponse {
 
   @JsonProperty("metrics")
-  private LatencyResponseMetrics metrics;
+  private LatencyMetric metrics;
 
-  public LatencyResponse setMetrics(LatencyResponseMetrics metrics) {
+  public LatencyResponse setMetrics(LatencyMetric metrics) {
     this.metrics = metrics;
     return this;
   }
 
   /** Get metrics */
   @javax.annotation.Nullable
-  public LatencyResponseMetrics getMetrics() {
+  public LatencyMetric getMetrics() {
     return metrics;
   }
 

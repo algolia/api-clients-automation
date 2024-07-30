@@ -33,7 +33,7 @@
   */
 package algoliasearch.search
 
-/** SearchParamsString
+/** Search parameters as query string.
   *
   * @param params
   *   Search parameters as a URL-encoded query string.

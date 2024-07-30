@@ -2033,7 +2033,6 @@ components:
       type: string
       description: Descriptive name for the resource.
     AuthGoogleServiceAccountPartial:
-      title: Google service account
       type: object
       description: >-
         Credentials for authenticating with a Google service account, such as
@@ -2050,7 +2049,6 @@ components:
             Private key of the Google service account. This field is `null` in
             the API response.
     AuthBasicPartial:
-      title: Basic
       type: object
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
@@ -2062,7 +2060,6 @@ components:
           type: string
           description: Password. This field is `null` in the API response.
     AuthAPIKeyPartial:
-      title: API key
       type: object
       description: Credentials for authenticating with an API key.
       additionalProperties: false
@@ -2071,7 +2068,6 @@ components:
           type: string
           description: API key. This field is `null` in the API response.
     AuthOAuthPartial:
-      title: OAuth
       type: object
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
@@ -2090,7 +2086,6 @@ components:
           default: ''
           description: OAuth scope.
     AuthAlgoliaPartial:
-      title: Algolia
       type: object
       description: Credentials for authenticating with Algolia.
       additionalProperties: false
@@ -2106,7 +2101,6 @@ components:
 
             This field is `null` in the API response.
     AuthAlgoliaInsightsPartial:
-      title: Algolia Insights
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
@@ -2183,7 +2177,6 @@ components:
         - nbItems
         - itemsPerPage
     AuthGoogleServiceAccount:
-      title: Google service account
       type: object
       description: >-
         Credentials for authenticating with a Google service account, such as
@@ -2203,7 +2196,6 @@ components:
         - clientEmail
         - privateKey
     AuthBasic:
-      title: Basic
       type: object
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
@@ -2218,7 +2210,6 @@ components:
         - username
         - password
     AuthAPIKey:
-      title: API key
       type: object
       description: Credentials for authenticating with an API key.
       additionalProperties: false
@@ -2229,7 +2220,6 @@ components:
       required:
         - key
     AuthOAuth:
-      title: OAuth
       type: object
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
@@ -2252,7 +2242,6 @@ components:
         - client_id
         - client_secret
     AuthAlgolia:
-      title: Algolia
       type: object
       additionalProperties: false
       description: Credentials for authenticating with Algolia.
@@ -2271,7 +2260,6 @@ components:
         - appID
         - apiKey
     AuthAlgoliaInsights:
-      title: Algolia Insights
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.
@@ -2609,7 +2597,6 @@ components:
                 type: string
             - type: 'null'
     SourceCommercetools:
-      title: Commercetools
       type: object
       additionalProperties: false
       properties:
@@ -2678,7 +2665,6 @@ components:
         - namespace
         - key
     SourceBigCommerce:
-      title: BigCommerce
       type: object
       additionalProperties: false
       properties:
@@ -2715,7 +2701,6 @@ components:
         - GET
         - POST
     SourceJSON:
-      title: JSON
       type: object
       additionalProperties: false
       properties:
@@ -2737,7 +2722,6 @@ components:
         - boolean
         - json
     SourceCSV:
-      title: CSV
       type: object
       additionalProperties: false
       properties:
@@ -2771,7 +2755,6 @@ components:
         - ga4
         - ga360
     SourceBigQuery:
-      title: BigQuery
       type: object
       additionalProperties: false
       properties:
@@ -2800,7 +2783,6 @@ components:
       x-discriminator-fields:
         - projectID
     SourceGA4BigQueryExport:
-      title: GA4 BigQuery export
       type: object
       additionalProperties: false
       properties:
@@ -2836,7 +2818,6 @@ components:
         - dockerhub
         - ghcr
     SourceDocker:
-      title: Docker
       type: object
       additionalProperties: false
       properties:
@@ -2862,7 +2843,6 @@ components:
         - imageType
         - configuration
     SourceUpdateShopify:
-      title: Shopify
       type: object
       additionalProperties: false
       properties:
@@ -3228,7 +3208,6 @@ components:
       enum:
         - subscription
     SubscriptionTrigger:
-      title: Subscription
       type: object
       additionalProperties: false
       description: Trigger input for subscription tasks.
@@ -3243,7 +3222,6 @@ components:
       enum:
         - streaming
     StreamingTrigger:
-      title: Streaming
       type: object
       additionalProperties: false
       description: Trigger input for continuously running tasks.
@@ -3323,7 +3301,6 @@ components:
         - format
         - actions
     StreamingInput:
-      title: Streaming input
       type: object
       additionalProperties: false
       description: >-
@@ -3335,7 +3312,7 @@ components:
       required:
         - mapping
     DockerStreamsInput:
-      title: The selected streams of a singer or airbyte connector.
+      description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
@@ -3379,7 +3356,6 @@ components:
         - currencies
         - locales
     ShopifyInput:
-      title: Shopify input
       type: object
       additionalProperties: false
       description: >-
@@ -3452,7 +3428,6 @@ components:
         - action
         - createdAt
     OnDemandTriggerInput:
-      title: On demand
       type: object
       additionalProperties: false
       description: Trigger information for manually-triggered tasks.
@@ -3462,7 +3437,6 @@ components:
       required:
         - type
     ScheduleTriggerInput:
-      title: Schedule
       type: object
       additionalProperties: false
       description: Trigger input for scheduled tasks.
@@ -3809,6 +3783,7 @@ components:
           items:
             type: object
         error:
+          title: transformationError
           type: object
           description: The error if the transformation failed.
           properties:
@@ -3905,6 +3880,7 @@ components:
         status:
           $ref: '#/components/schemas/RunStatus'
         progress:
+          title: runProgress
           type: object
           additionalProperties: false
           properties:

@@ -12,5 +12,5 @@ import kotlinx.serialization.json.*
 @Serializable
 public data class IncidentsResponse(
 
-  @SerialName(value = "incidents") val incidents: Map<kotlin.String, List<IncidentsInner>>? = null,
+  @SerialName(value = "incidents") val incidents: Map<kotlin.String, List<IncidentEntry>>? = null,
 )

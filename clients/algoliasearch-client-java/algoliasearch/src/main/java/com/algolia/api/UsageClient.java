@@ -594,7 +594,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getIndexUsage(
+  public IndexUsage getIndexUsage(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -735,7 +735,7 @@ public class UsageClient extends ApiClient {
    *     days. (optional, default to daily)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getIndexUsage(
+  public IndexUsage getIndexUsage(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -874,7 +874,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getIndexUsage(
+  public IndexUsage getIndexUsage(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1011,7 +1011,7 @@ public class UsageClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getIndexUsage(
+  public IndexUsage getIndexUsage(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1152,7 +1152,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getIndexUsageAsync(
+  public CompletableFuture<IndexUsage> getIndexUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1175,7 +1175,7 @@ public class UsageClient extends ApiClient {
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("granularity", granularity)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<GetUsage200Response>() {});
+    return executeAsync(request, requestOptions, new TypeReference<IndexUsage>() {});
   }
 
   /**
@@ -1308,7 +1308,7 @@ public class UsageClient extends ApiClient {
    *     days. (optional, default to daily)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getIndexUsageAsync(
+  public CompletableFuture<IndexUsage> getIndexUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1447,7 +1447,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getIndexUsageAsync(
+  public CompletableFuture<IndexUsage> getIndexUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1584,7 +1584,7 @@ public class UsageClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getIndexUsageAsync(
+  public CompletableFuture<IndexUsage> getIndexUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String indexName,
     @Nonnull String startDate,
@@ -1724,7 +1724,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getUsage(
+  public IndexUsage getUsage(
     @Nonnull Statistic statistic,
     @Nonnull String startDate,
     @Nonnull String endDate,
@@ -1863,12 +1863,8 @@ public class UsageClient extends ApiClient {
    *     days. (optional, default to daily)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getUsage(
-    @Nonnull Statistic statistic,
-    @Nonnull String startDate,
-    @Nonnull String endDate,
-    Granularity granularity
-  ) throws AlgoliaRuntimeException {
+  public IndexUsage getUsage(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate, Granularity granularity)
+    throws AlgoliaRuntimeException {
     return this.getUsage(statistic, startDate, endDate, granularity, null);
   }
 
@@ -2000,7 +1996,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getUsage(
+  public IndexUsage getUsage(
     @Nonnull Statistic statistic,
     @Nonnull String startDate,
     @Nonnull String endDate,
@@ -2135,7 +2131,7 @@ public class UsageClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsage200Response getUsage(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
+  public IndexUsage getUsage(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
     throws AlgoliaRuntimeException {
     return this.getUsage(statistic, startDate, endDate, null, null);
   }
@@ -2271,7 +2267,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getUsageAsync(
+  public CompletableFuture<IndexUsage> getUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String startDate,
     @Nonnull String endDate,
@@ -2291,7 +2287,7 @@ public class UsageClient extends ApiClient {
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("granularity", granularity)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<GetUsage200Response>() {});
+    return executeAsync(request, requestOptions, new TypeReference<IndexUsage>() {});
   }
 
   /**
@@ -2423,7 +2419,7 @@ public class UsageClient extends ApiClient {
    *     days. (optional, default to daily)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getUsageAsync(
+  public CompletableFuture<IndexUsage> getUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String startDate,
     @Nonnull String endDate,
@@ -2560,7 +2556,7 @@ public class UsageClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getUsageAsync(
+  public CompletableFuture<IndexUsage> getUsageAsync(
     @Nonnull Statistic statistic,
     @Nonnull String startDate,
     @Nonnull String endDate,
@@ -2695,11 +2691,8 @@ public class UsageClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsage200Response> getUsageAsync(
-    @Nonnull Statistic statistic,
-    @Nonnull String startDate,
-    @Nonnull String endDate
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<IndexUsage> getUsageAsync(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
+    throws AlgoliaRuntimeException {
     return this.getUsageAsync(statistic, startDate, endDate, null, null);
   }
 }

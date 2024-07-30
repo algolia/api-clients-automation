@@ -63,6 +63,7 @@ Action:
       items:
         $ref: '#/urlPattern'
     recordExtractor:
+      title: recordExtractor
       type: object
       description: Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
       properties:

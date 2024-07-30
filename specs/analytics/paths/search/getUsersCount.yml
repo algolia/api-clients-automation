@@ -48,8 +48,8 @@ get:
                 type: array
                 description: Daily number of unique users.
                 items:
-                  type: object
                   title: dailyUsers
+                  type: object
                   additionalProperties: false
                   required:
                     - date

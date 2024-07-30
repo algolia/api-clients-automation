@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** SearchParamsString */
+/** Search parameters as query string. */
 @JsonDeserialize(as = SearchParamsString.class)
 public class SearchParamsString implements SearchParams, BrowseParams {
 

@@ -2316,6 +2316,7 @@ paths:
           content:
             application/json:
               schema:
+                title: configStatus
                 type: object
                 additionalProperties: false
                 properties:
@@ -2550,6 +2551,7 @@ paths:
           content:
             application/json:
               schema:
+                title: logFile
                 type: object
                 additionalProperties: false
                 properties:
@@ -3028,6 +3030,7 @@ components:
         - sourceIndices
       allOf:
         - type: object
+          additionalProperties: false
           properties:
             indexName:
               $ref: '#/components/schemas/IndexName'

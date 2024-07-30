@@ -3,8 +3,9 @@
   */
 package algoliasearch.api
 
+import algoliasearch.monitoring.BadRequest
 import algoliasearch.monitoring.ErrorBase
-import algoliasearch.monitoring.GetServers403Response
+import algoliasearch.monitoring.Forbidden
 import algoliasearch.monitoring.IncidentsResponse
 import algoliasearch.monitoring.IndexingTimeResponse
 import algoliasearch.monitoring.InfrastructureResponse
@@ -13,6 +14,7 @@ import algoliasearch.monitoring.LatencyResponse
 import algoliasearch.monitoring.Metric._
 import algoliasearch.monitoring.Period._
 import algoliasearch.monitoring.StatusResponse
+import algoliasearch.monitoring.Unauthorized
 import algoliasearch.monitoring._
 import algoliasearch.ApiClient
 import algoliasearch.api.MonitoringClient.hosts

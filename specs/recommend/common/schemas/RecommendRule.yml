@@ -4,6 +4,7 @@ RecommendRule:
   additionalProperties: false
   properties:
     _metadata:
+      title: ruleMetadata
       type: object
       description: Rule metadata.
       properties:

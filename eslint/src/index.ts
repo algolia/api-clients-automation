@@ -5,6 +5,7 @@ import { createOutOfLineRule } from './rules/outOfLineRule';
 import { refCommon } from './rules/refCommon';
 import { singleQuoteRef } from './rules/singleQuoteRef';
 import { validACL } from './rules/validACL';
+import { validInlineTitle } from './rules/validInlineTitle';
 
 const rules = {
   'end-with-dot': endWithDot,
@@ -17,6 +18,7 @@ const rules = {
   'valid-acl': validACL,
   'no-new-line': noNewLine,
   'ref-common': refCommon,
+  'valid-inline-title': validInlineTitle,
 };
 
 // Custom parser for ESLint, to read plain text file like mustache.

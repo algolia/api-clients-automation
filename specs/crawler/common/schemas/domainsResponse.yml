@@ -5,6 +5,7 @@ allOf:
       items:
         type: array
         items:
+          title: domainResponse
           type: object
           properties:
             appId:

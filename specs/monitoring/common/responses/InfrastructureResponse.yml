@@ -2,11 +2,12 @@ description: OK
 content:
   application/json:
     schema:
-      title: InfrastructureResponse
+      title: infrastructureResponse
       type: object
       additionalProperties: false
       properties:
         metrics:
+          title: metrics
           type: object
           additionalProperties: false
           properties:
