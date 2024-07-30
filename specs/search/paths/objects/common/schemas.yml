@@ -15,7 +15,7 @@ builtInOperationValue:
     - type: string
       description: A string to append or remove for the `Add`, `Remove`, and `AddUnique` operations.
     - type: integer
-      description: A number fo add, remove, or append, depending on the operation.
+      description: A number to add, remove, or append, depending on the operation.
 
 attribute:
   type: string
