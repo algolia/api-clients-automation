@@ -436,8 +436,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               title: searchRecommendRulesParams
+              type: object
               description: Recommend rules parameters.
               additionalProperties: false
               properties:
@@ -829,6 +829,7 @@ components:
       title: range objects
       type: array
       items:
+        title: range
         type: object
         description: >-
           Range object with lower and upper values in meters to define custom
@@ -2577,6 +2578,7 @@ components:
           type: boolean
           description: Redirect rule status.
         data:
+          title: redirectRuleIndexData
           type: object
           description: Redirect rule data.
           required:
@@ -2628,8 +2630,8 @@ components:
           type: string
           description: Distance from a central coordinate provided by `aroundLatLng`.
         exhaustive:
-          type: object
           title: exhaustive
+          type: object
           description: >-
             Whether certain properties of the search response are calculated
             exhaustive (exact) or approximated.
@@ -2709,8 +2711,8 @@ components:
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
-            type: object
             title: facetStats
+            type: object
             properties:
               min:
                 type: number
@@ -3199,6 +3201,7 @@ components:
       additionalProperties: false
       properties:
         _metadata:
+          title: ruleMetadata
           type: object
           description: Rule metadata.
           properties:

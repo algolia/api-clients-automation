@@ -183,7 +183,7 @@ final class BrowseParamsObject {
   final dynamic aroundRadius;
 
   /// One of types:
-  /// - [List<AroundPrecisionFromValueInner>]
+  /// - [List<Range>]
   /// - [int]
   @JsonKey(name: r'aroundPrecision')
   final dynamic aroundPrecision;

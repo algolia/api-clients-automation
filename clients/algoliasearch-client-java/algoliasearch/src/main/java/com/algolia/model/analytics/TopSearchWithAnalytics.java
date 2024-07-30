@@ -25,7 +25,7 @@ public class TopSearchWithAnalytics {
   private Double averageClickPosition;
 
   @JsonProperty("clickPositions")
-  private List<ClickPositionsInner> clickPositions = new ArrayList<>();
+  private List<ClickPosition> clickPositions = new ArrayList<>();
 
   @JsonProperty("conversionRate")
   private Double conversionRate;
@@ -93,19 +93,19 @@ public class TopSearchWithAnalytics {
     return averageClickPosition;
   }
 
-  public TopSearchWithAnalytics setClickPositions(List<ClickPositionsInner> clickPositions) {
+  public TopSearchWithAnalytics setClickPositions(List<ClickPosition> clickPositions) {
     this.clickPositions = clickPositions;
     return this;
   }
 
-  public TopSearchWithAnalytics addClickPositions(ClickPositionsInner clickPositionsItem) {
+  public TopSearchWithAnalytics addClickPositions(ClickPosition clickPositionsItem) {
     this.clickPositions.add(clickPositionsItem);
     return this;
   }
 
   /** List of positions in the search results and clicks associated with this search. */
   @javax.annotation.Nonnull
-  public List<ClickPositionsInner> getClickPositions() {
+  public List<ClickPosition> getClickPositions() {
     return clickPositions;
   }
 

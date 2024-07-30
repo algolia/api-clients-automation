@@ -24,9 +24,9 @@ public interface AroundPrecision {
     return new IntegerWrapper(value);
   }
 
-  // AroundPrecision as List<AroundPrecisionFromValueInner> wrapper.
-  static AroundPrecision of(List<AroundPrecisionFromValueInner> value) {
-    return new ListOfAroundPrecisionFromValueInnerWrapper(value);
+  // AroundPrecision as List<Range> wrapper.
+  static AroundPrecision of(List<Range> value) {
+    return new ListOfRangeWrapper(value);
   }
 
   // AroundPrecision as Integer wrapper.
@@ -52,25 +52,24 @@ public interface AroundPrecision {
     }
   }
 
-  // AroundPrecision as List<AroundPrecisionFromValueInner> wrapper.
-  @JsonSerialize(using = ListOfAroundPrecisionFromValueInnerWrapper.Serializer.class)
-  class ListOfAroundPrecisionFromValueInnerWrapper implements AroundPrecision {
+  // AroundPrecision as List<Range> wrapper.
+  @JsonSerialize(using = ListOfRangeWrapper.Serializer.class)
+  class ListOfRangeWrapper implements AroundPrecision {
 
-    private final List<AroundPrecisionFromValueInner> value;
+    private final List<Range> value;
 
-    ListOfAroundPrecisionFromValueInnerWrapper(List<AroundPrecisionFromValueInner> value) {
+    ListOfRangeWrapper(List<Range> value) {
       this.value = value;
     }
 
-    public List<AroundPrecisionFromValueInner> getValue() {
+    public List<Range> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfAroundPrecisionFromValueInnerWrapper> {
+    static class Serializer extends JsonSerializer<ListOfRangeWrapper> {
 
       @Override
-      public void serialize(ListOfAroundPrecisionFromValueInnerWrapper value, JsonGenerator gen, SerializerProvider provider)
-        throws IOException {
+      public void serialize(ListOfRangeWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -93,18 +92,14 @@ public interface AroundPrecision {
           LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");
         }
       }
-      // deserialize List<AroundPrecisionFromValueInner>
+      // deserialize List<Range>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<AroundPrecisionFromValueInner> value = parser.readValueAs(new TypeReference<List<AroundPrecisionFromValueInner>>() {});
-          return new AroundPrecision.ListOfAroundPrecisionFromValueInnerWrapper(value);
+          List<Range> value = parser.readValueAs(new TypeReference<List<Range>>() {});
+          return new AroundPrecision.ListOfRangeWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<AroundPrecisionFromValueInner> (error: " +
-            e.getMessage() +
-            ") (type: List<AroundPrecisionFromValueInner>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<Range> (error: " + e.getMessage() + ") (type: List<Range>)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

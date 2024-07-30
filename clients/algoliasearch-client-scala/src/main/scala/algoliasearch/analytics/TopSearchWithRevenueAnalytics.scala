@@ -66,7 +66,7 @@ case class TopSearchWithRevenueAnalytics(
     count: Int,
     clickThroughRate: Option[Double] = scala.None,
     averageClickPosition: Option[Double] = scala.None,
-    clickPositions: Seq[ClickPositionsInner],
+    clickPositions: Seq[ClickPosition],
     conversionRate: Option[Double] = scala.None,
     trackedSearchCount: Int,
     clickCount: Int,

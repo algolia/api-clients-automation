@@ -4744,8 +4744,8 @@ paths:
                 requests:
                   type: array
                   items:
-                    description: Request body for retrieving records.
                     title: getObjectsRequest
+                    description: Request body for retrieving records.
                     type: object
                     additionalProperties: false
                     required:
@@ -9688,8 +9688,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               title: searchRulesParams
+              type: object
               description: Rules search parameters.
               additionalProperties: false
               properties:
@@ -14386,8 +14386,8 @@ paths:
                           type: array
                           description: Queries performed for the given request.
                           items:
-                            type: object
                             title: logQuery
+                            type: object
                             properties:
                               index_name:
                                 type: string
@@ -15689,7 +15689,7 @@ components:
       default: ''
     searchParamsString:
       type: object
-      title: Search parameters as query string
+      description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
         - params
@@ -15938,6 +15938,7 @@ components:
       title: range objects
       type: array
       items:
+        title: range
         type: object
         description: >-
           Range object with lower and upper values in meters to define custom
@@ -17460,6 +17461,7 @@ components:
           type: boolean
           description: Redirect rule status.
         data:
+          title: redirectRuleIndexData
           type: object
           description: Redirect rule data.
           required:
@@ -17511,8 +17513,8 @@ components:
           type: string
           description: Distance from a central coordinate provided by `aroundLatLng`.
         exhaustive:
-          type: object
           title: exhaustive
+          type: object
           description: >-
             Whether certain properties of the search response are calculated
             exhaustive (exact) or approximated.
@@ -17592,8 +17594,8 @@ components:
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
-            type: object
             title: facetStats
+            type: object
             properties:
               min:
                 type: number
@@ -18042,8 +18044,8 @@ components:
           type: array
           description: Matching facet values.
           items:
-            type: object
             title: facetHits
+            type: object
             additionalProperties: false
             required:
               - value
@@ -18277,7 +18279,6 @@ components:
         - objectIDs
     baseIndexSettings:
       type: object
-      title: Index settings.
       additionalProperties: false
       properties:
         attributesForFaceting:

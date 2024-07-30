@@ -748,11 +748,13 @@ components:
       content:
         application/json:
           schema:
+            title: indexUsage
             type: object
             properties:
               statistics:
                 type: array
                 items:
+                  title: statisticEntry
                   type: object
                   properties:
                     t:
@@ -769,9 +771,11 @@ components:
       content:
         application/json:
           schema:
+            title: invalidRequest
             type: object
             properties:
               error:
+                title: invalidRequestError
                 type: object
                 properties:
                   code:
@@ -781,6 +785,7 @@ components:
                   errors:
                     type: array
                     items:
+                      title: errorItem
                       type: object
                       properties:
                         code:
@@ -811,9 +816,11 @@ components:
       content:
         application/json:
           schema:
+            title: forbidden
             type: object
             properties:
               error:
+                title: forbiddenError
                 type: object
                 properties:
                   code:
@@ -823,6 +830,7 @@ components:
                   errors:
                     type: array
                     items:
+                      title: errorItem
                       type: object
                       properties:
                         code:

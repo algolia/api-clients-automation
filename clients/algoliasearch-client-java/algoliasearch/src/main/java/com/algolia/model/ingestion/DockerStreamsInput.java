@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** DockerStreamsInput */
+/** The selected streams of a singer or airbyte connector. */
 @JsonDeserialize(as = DockerStreamsInput.class)
 public class DockerStreamsInput implements TaskInput {
 
