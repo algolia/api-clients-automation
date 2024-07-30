@@ -65,18 +65,7 @@
           {
             "action": "deleteEntry",
             "body": {
-              "objectID": "1",
-              "language": "en",
-              "word": "fancy",
-              "words": [
-                "believe",
-                "algolia"
-              ],
-              "decomposition": [
-                "trust",
-                "algolia"
-              ],
-              "state": "enabled"
+              "objectID": "1"
             }
           }
         ]
@@ -91,18 +80,7 @@
           {
             "action": "deleteEntry",
             "body": {
-              "objectID": "1",
-              "language": "en",
-              "word": "fancy",
-              "words": [
-                "believe",
-                "algolia"
-              ],
-              "decomposition": [
-                "trust",
-                "algolia"
-              ],
-              "state": "enabled"
+              "objectID": "1"
             }
           }
         ]

@@ -366,17 +366,7 @@ class SearchClientRequestsTests {
           .setClearExistingDictionaryEntries(true)
           .setRequests(
             List.of(
-              new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.DELETE_ENTRY)
-                .setBody(
-                  new DictionaryEntry()
-                    .setObjectID("1")
-                    .setLanguage(SupportedLanguage.EN)
-                    .setWord("fancy")
-                    .setWords(List.of("believe", "algolia"))
-                    .setDecomposition(List.of("trust", "algolia"))
-                    .setState(DictionaryEntryState.ENABLED)
-                )
+              new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID("1"))
             )
           )
       );
@@ -386,7 +376,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
+        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )

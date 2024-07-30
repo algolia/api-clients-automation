@@ -13,7 +13,7 @@ final class DictionaryEntry extends DelegatingMap<String, dynamic> {
   /// Returns a new [DictionaryEntry] instance.
   const DictionaryEntry({
     required this.objectID,
-    required this.language,
+    this.language,
     this.word,
     this.words,
     this.decomposition,
@@ -26,7 +26,7 @@ final class DictionaryEntry extends DelegatingMap<String, dynamic> {
   final String objectID;
 
   @JsonKey(name: r'language')
-  final SupportedLanguage language;
+  final SupportedLanguage? language;
 
   /// Matching dictionary word for `stopwords` and `compounds` dictionaries.
   @JsonKey(name: r'word')

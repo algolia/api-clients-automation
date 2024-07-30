@@ -247,17 +247,7 @@ class SnippetSearchClient {
         .setClearExistingDictionaryEntries(true)
         .setRequests(
           List.of(
-            new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.DELETE_ENTRY)
-              .setBody(
-                new DictionaryEntry()
-                  .setObjectID("1")
-                  .setLanguage(SupportedLanguage.EN)
-                  .setWord("fancy")
-                  .setWords(List.of("believe", "algolia"))
-                  .setDecomposition(List.of("trust", "algolia"))
-                  .setState(DictionaryEntryState.ENABLED)
-              )
+            new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID("1"))
           )
         )
     );

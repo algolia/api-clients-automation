@@ -52,7 +52,7 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   */
 case class DictionaryEntry(
     objectID: String,
-    language: SupportedLanguage,
+    language: Option[SupportedLanguage] = scala.None,
     word: Option[String] = scala.None,
     words: Option[Seq[String]] = scala.None,
     decomposition: Option[Seq[String]] = scala.None,

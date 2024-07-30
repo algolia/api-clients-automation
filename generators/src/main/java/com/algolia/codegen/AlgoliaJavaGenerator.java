@@ -2,7 +2,6 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
-import com.algolia.codegen.utils.OneOf;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Mustache.Lambda;
@@ -96,6 +95,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    ModelPruner.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

@@ -384,19 +384,6 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'requests' => [
                     ['action' => 'deleteEntry',
                         'body' => ['objectID' => '1',
-                            'language' => 'en',
-                            'word' => 'fancy',
-                            'words' => [
-                                'believe',
-
-                                'algolia',
-                            ],
-                            'decomposition' => [
-                                'trust',
-
-                                'algolia',
-                            ],
-                            'state' => 'enabled',
                         ],
                     ],
                 ],
@@ -407,7 +394,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/dictionaries/plurals/batch',
                 'method' => 'POST',
-                'body' => json_decode('{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}'),
+                'body' => json_decode('{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}'),
             ],
         ]);
     }

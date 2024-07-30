@@ -353,7 +353,7 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = SupportedLanguage.withName("en"),
+              language = Some(SupportedLanguage.withName("en")),
               word = Some("fancy"),
               words = Some(Seq("believe", "algolia")),
               decomposition = Some(Seq("trust", "algolia")),
@@ -386,12 +386,7 @@ class SearchTest extends AnyFunSuite {
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
-              objectID = "1",
-              language = SupportedLanguage.withName("en"),
-              word = Some("fancy"),
-              words = Some(Seq("believe", "algolia")),
-              decomposition = Some(Seq("trust", "algolia")),
-              state = Some(DictionaryEntryState.withName("enabled"))
+              objectID = "1"
             )
           )
         )
@@ -403,9 +398,8 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/dictionaries/plurals/batch")
     assert(res.method == "POST")
-    val expectedBody = parse(
-      """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
-    )
+    val expectedBody =
+      parse("""{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -420,7 +414,7 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = SupportedLanguage.withName("en"),
+              language = Some(SupportedLanguage.withName("en")),
               additionalProperties = Some(List(JField("additional", JString("try me"))))
             )
           )

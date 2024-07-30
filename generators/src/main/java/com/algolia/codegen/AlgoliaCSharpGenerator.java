@@ -2,7 +2,6 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
-import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -142,6 +141,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+    ModelPruner.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

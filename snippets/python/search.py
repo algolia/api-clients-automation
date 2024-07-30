@@ -449,17 +449,6 @@ async def snippet_for_batch_dictionary_entries1():
                     "action": "deleteEntry",
                     "body": {
                         "objectID": "1",
-                        "language": "en",
-                        "word": "fancy",
-                        "words": [
-                            "believe",
-                            "algolia",
-                        ],
-                        "decomposition": [
-                            "trust",
-                            "algolia",
-                        ],
-                        "state": "enabled",
                     },
                 },
             ],
