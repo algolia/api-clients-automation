@@ -36,8 +36,8 @@ get:
                 type: array
                 description: Searches without any clicks.
                 items:
-                  type: object
                   title: dailySearchesNoClicks
+                  type: object
                   additionalProperties: false
                   required:
                     - search

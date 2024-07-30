@@ -2,10 +2,11 @@ description: OK
 content:
   application/json:
     schema:
-      title: IndexingTimeResponse
+      title: indexingTimeResponse
       type: object
       properties:
         metrics:
+          title: indexingMetric
           type: object
           additionalProperties: false
           properties:

@@ -65,6 +65,7 @@ module.exports = {
                 'automation-custom/out-of-line-any-of': 'error',
                 'automation-custom/valid-acl': 'error',
                 'automation-custom/ref-common': 'error',
+                'automation-custom/valid-inline-title': 'error',
               },
             },
           ],

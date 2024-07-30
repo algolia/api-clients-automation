@@ -6,6 +6,7 @@ ConfigurationWithIndex:
     - sourceIndices
   allOf:
     - type: object
+      additionalProperties: false
       properties:
         indexName:
           $ref: './IndexName.yml'

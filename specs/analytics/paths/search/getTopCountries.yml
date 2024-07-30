@@ -36,8 +36,8 @@ get:
                 type: array
                 description: Countries and number of searches.
                 items:
-                  type: object
                   title: topCountry
+                  type: object
                   additionalProperties: false
                   required:
                     - country

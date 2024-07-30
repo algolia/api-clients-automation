@@ -2,6 +2,7 @@ description: Forbidden
 content:
   application/json:
     schema:
+      title: forbidden
       type: object
       additionalProperties: false
       properties:

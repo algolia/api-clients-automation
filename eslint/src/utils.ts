@@ -29,3 +29,17 @@ export function isPairWithKey(
     return false;
   return isScalar(node.key) && node.key.value === key;
 }
+
+export function isNullable(node: AST.YAMLNode | null): boolean {
+  return (
+    isSequence(node) &&
+    node.entries.some(
+      (entry) =>
+        isMapping(entry) &&
+        isPairWithKey(entry.pairs[0], 'type') &&
+        isScalar(entry.pairs[0].value) &&
+        !isBlockScalar(entry.pairs[0].value) &&
+        entry.pairs[0].value.raw === "'null'"
+    )
+  );
+}

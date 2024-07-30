@@ -107,6 +107,7 @@ TransformationTryResponse:
       items:
         type: object
     error:
+      title: transformationError
       type: object
       description: The error if the transformation failed.
       properties:

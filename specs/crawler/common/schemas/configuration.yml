@@ -116,6 +116,7 @@ Configuration:
         $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
         x-additionalPropertiesName: indexName
     linkExtractor:
+      title: linkExtractor
       type: object
       description: Function for extracting URLs for links found on crawled pages.
       properties:
@@ -239,7 +240,8 @@ renderJavaScript:
 
           The pattern support globs and wildcard matching with [micromark](https://github.com/micromatch/micromatch).
         example: https://www.example.com
-    - type: object
+    - title: headlessBrowserConfig
+      type: object
       description: Configuration for rendering HTML with a headless browser.
       properties:
         enabled:

@@ -2,10 +2,11 @@ description: OK
 content:
   application/json:
     schema:
-      title: LatencyResponse
+      title: latencyResponse
       type: object
       properties:
         metrics:
+          title: latencyMetric
           type: object
           additionalProperties: false
           properties:

@@ -2,7 +2,7 @@ description: OK
 content:
   application/json:
     schema:
-      title: ReachabilityResponse
+      title: reachabilityResponse
       type: object
       additionalProperties:
         x-additionalPropertiesName: cluster

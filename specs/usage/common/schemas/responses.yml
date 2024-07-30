@@ -3,11 +3,13 @@ Success:
   content:
     application/json:
       schema:
+        title: indexUsage
         type: object
         properties:
           statistics:
             type: array
             items:
+              title: statisticEntry
               type: object
               properties:
                 t:

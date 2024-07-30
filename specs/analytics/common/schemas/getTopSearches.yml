@@ -9,8 +9,8 @@ topSearchesResponse:
       type: array
       description: Most popular searches and their number of search results (hits).
       items:
-        type: object
         title: topSearch
+        type: object
         additionalProperties: false
         required:
           - search
@@ -35,8 +35,8 @@ topSearchesResponseWithAnalytics:
       type: array
       description: Most popular searches and their associated click and conversion metrics.
       items:
-        type: object
         title: topSearchWithAnalytics
+        type: object
         additionalProperties: false
         required:
           - search
@@ -82,8 +82,8 @@ topSearchesResponseWithRevenueAnalytics:
       type: array
       description: Most popular searches, including their click and revenue metrics.
       items:
-        type: object
         title: topSearchWithRevenueAnalytics
+        type: object
         additionalProperties: false
         required:
           - search
