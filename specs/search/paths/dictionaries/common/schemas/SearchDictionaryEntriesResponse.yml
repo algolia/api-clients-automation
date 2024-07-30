@@ -33,7 +33,7 @@ dictionaryEntry:
       description: Unique identifier for the dictionary entry.
       example: 828afd405e1f4fe950b6b98c2c43c032
     type:
-      $ref: '#/dictionaryType'
+      $ref: '#/dictionaryEntryType'
     language:
       $ref: '../../../../../common/schemas/IndexSettings.yml#/supportedLanguage'
     word:
@@ -57,7 +57,7 @@ dictionaryEntry:
     state:
       $ref: '../../../../common/enums.yml#/dictionaryEntryState'
 
-dictionaryType:
+dictionaryEntryType:
   type: string
   enum: [custom, standard]
   description: |
