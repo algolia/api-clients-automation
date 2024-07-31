@@ -14,18 +14,27 @@ BuiltInOperation _$BuiltInOperationFromJson(Map<String, dynamic> json) =>
         final val = BuiltInOperation(
           operation: $checkedConvert('_operation',
               (v) => $enumDecode(_$BuiltInOperationTypeEnumMap, v)),
-          value: $checkedConvert('value', (v) => v as String),
+          value: $checkedConvert('value', (v) => v),
         );
         return val;
       },
       fieldKeyMap: const {'operation': '_operation'},
     );
 
-Map<String, dynamic> _$BuiltInOperationToJson(BuiltInOperation instance) =>
-    <String, dynamic>{
-      '_operation': instance.operation.toJson(),
-      'value': instance.value,
-    };
+Map<String, dynamic> _$BuiltInOperationToJson(BuiltInOperation instance) {
+  final val = <String, dynamic>{
+    '_operation': instance.operation.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('value', instance.value);
+  return val;
+}
 
 const _$BuiltInOperationTypeEnumMap = {
   BuiltInOperationType.increment: 'Increment',

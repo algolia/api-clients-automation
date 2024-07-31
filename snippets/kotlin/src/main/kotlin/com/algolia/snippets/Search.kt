@@ -1121,7 +1121,7 @@ class SnippetSearchClient {
         "id1" to AttributeToUpdate.of("test"),
         "id2" to BuiltInOperation(
           operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-          value = "test2",
+          value = BuiltInOperationValue.of("test2"),
         ),
       ),
       createIfNotExists = true,

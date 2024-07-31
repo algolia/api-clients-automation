@@ -1909,7 +1909,7 @@ void main() {
 
   // partialUpdateObject
   test(
-    'partialUpdateObject',
+    'Partial update with string value',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1935,6 +1935,34 @@ void main() {
             request.queryParameters, """{"createIfNotExists":"true"}""");
         expectBody(request.body,
             """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""");
+      },
+    ),
+  );
+
+  // partialUpdateObject
+  test(
+    'Partial update with integer value',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "uniqueID",
+        attributesToUpdate: {
+          'attributeId': BuiltInOperation(
+            operation: BuiltInOperationType.fromJson("Increment"),
+            value: 2,
+          ),
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"attributeId":{"_operation":"Increment","value":2}}""");
       },
     ),
   );

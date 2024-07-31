@@ -1539,7 +1539,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("partialUpdateObject")
+  @DisplayName("Partial update with string value")
   void partialUpdateObjectTest() {
     assertDoesNotThrow(() -> {
       client.partialUpdateObject(
@@ -1549,7 +1549,7 @@ class SearchClientRequestsTests {
           "id1",
           AttributeToUpdate.of("test"),
           "id2",
-          new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
+          new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
         ),
         true
       );
@@ -1579,6 +1579,24 @@ class SearchClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("Partial update with integer value")
+  void partialUpdateObjectTest1() {
+    assertDoesNotThrow(() -> {
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        Map.of("attributeId", new BuiltInOperation().setOperation(BuiltInOperationType.INCREMENT).setValue(BuiltInOperationValue.of(2)))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}", req.body, JSONCompareMode.STRICT)
+    );
   }
 
   @Test

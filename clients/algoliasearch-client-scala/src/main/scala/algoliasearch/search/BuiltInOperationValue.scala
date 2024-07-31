@@ -35,69 +35,39 @@ package algoliasearch.search
 
 import org.json4s._
 
-object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new AclSerializer() :+
-    new ActionSerializer() :+
-    new AdvancedSyntaxFeaturesSerializer() :+
-    new AlternativesAsExactSerializer() :+
-    new AnchoringSerializer() :+
-    new ApiKeyOperationSerializer() :+
-    new AroundRadiusAllSerializer() :+
-    new BuiltInOperationTypeSerializer() :+
-    new DictionaryActionSerializer() :+
-    new DictionaryEntryStateSerializer() :+
-    new DictionaryTypeSerializer() :+
-    new EditTypeSerializer() :+
-    new ExactOnSingleWordQuerySerializer() :+
-    new LogTypeSerializer() :+
-    new MatchLevelSerializer() :+
-    new ModeSerializer() :+
-    new OperationTypeSerializer() :+
-    new QueryTypeSerializer() :+
-    new RemoveWordsIfNoResultsSerializer() :+
-    new ScopeTypeSerializer() :+
-    new SearchStrategySerializer() :+
-    new SearchTypeDefaultSerializer() :+
-    new SearchTypeFacetSerializer() :+
-    new SortRemainingBySerializer() :+
-    new SupportedLanguageSerializer() :+
-    new SynonymTypeSerializer() :+
-    new TaskStatusSerializer() :+
-    new TypoToleranceEnumSerializer()
+/** BuiltInOperationValue
+  */
+sealed trait BuiltInOperationValue
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    AroundPrecisionSerializer :+
-    AroundRadiusSerializer :+
-    AttributeToUpdateSerializer :+
-    AutomaticFacetFiltersSerializer :+
-    BrowseParamsSerializer :+
-    BuiltInOperationValueSerializer :+
-    ConsequenceQuerySerializer :+
-    DistinctSerializer :+
-    FacetFiltersSerializer :+
-    HighlightResultSerializer :+
-    IgnorePluralsSerializer :+
-    NumericFiltersSerializer :+
-    OptionalFiltersSerializer :+
-    PromoteSerializer :+
-    ReRankingApplyFilterSerializer :+
-    RemoveStopWordsSerializer :+
-    SearchParamsSerializer :+
-    SearchQuerySerializer :+
-    SearchResultSerializer :+
-    SnippetResultSerializer :+
-    TagFiltersSerializer :+
-    TypoToleranceSerializer
+object BuiltInOperationValue {
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new BaseSearchResponseSerializer() :+
-    new DictionaryEntrySerializer() :+
-    new ErrorBaseSerializer() :+
-    new HitSerializer() :+
-    new SearchHitsSerializer() :+
-    new SearchSynonymsResponseSerializer()
+  case class StringValue(value: String) extends BuiltInOperationValue
+  case class IntValue(value: Int) extends BuiltInOperationValue
 
-  implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
-  implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization
+  def apply(value: String): BuiltInOperationValue = {
+    BuiltInOperationValue.StringValue(value)
+  }
+  def apply(value: Int): BuiltInOperationValue = {
+    BuiltInOperationValue.IntValue(value)
+  }
+}
+
+object BuiltInOperationValueSerializer extends Serializer[BuiltInOperationValue] {
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), BuiltInOperationValue] = {
+
+    case (TypeInfo(clazz, _), json) if clazz == classOf[BuiltInOperationValue] =>
+      json match {
+        case JString(value) => BuiltInOperationValue.StringValue(value)
+        case JInt(value)    => BuiltInOperationValue.IntValue(value.toInt)
+        case _              => throw new MappingException("Can't convert " + json + " to BuiltInOperationValue")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value: BuiltInOperationValue =>
+      value match {
+        case BuiltInOperationValue.StringValue(value) => JString(value)
+        case BuiltInOperationValue.IntValue(value)    => JInt(value)
+      }
+  }
 }

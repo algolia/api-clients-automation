@@ -1407,7 +1407,7 @@ async def snippet_for_partial_update_object():
     """
     Snippet for the partialUpdateObject method.
 
-    partialUpdateObject
+    Partial update with string value
     """
     # >SEPARATOR partialUpdateObject default
     # Initialize the client

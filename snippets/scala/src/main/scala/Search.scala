@@ -1172,7 +1172,7 @@ class SnippetSearchClient {
 
   /** Snippet for the partialUpdateObject method.
     *
-    * partialUpdateObject
+    * Partial update with string value
     */
   def snippetForSearchClientPartialUpdateObject(): Unit = {
     // >SEPARATOR partialUpdateObject default
@@ -1187,7 +1187,7 @@ class SnippetSearchClient {
         "id1" -> AttributeToUpdate("test"),
         "id2" -> BuiltInOperation(
           _operation = BuiltInOperationType.withName("AddUnique"),
-          value = "test2"
+          value = BuiltInOperationValue("test2")
         )
       ),
       createIfNotExists = Some(true)

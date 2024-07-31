@@ -1452,7 +1452,7 @@ class TestSearchClient:
 
     async def test_partial_update_object_(self):
         """
-        partialUpdateObject
+        Partial update with string value
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
@@ -1473,6 +1473,29 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}"""
+        )
+
+    async def test_partial_update_object_1(self):
+        """
+        Partial update with integer value
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": {
+                    "_operation": "Increment",
+                    "value": 2,
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeId":{"_operation":"Increment","value":2}}"""
         )
 
     async def test_remove_user_id_(self):

@@ -1679,7 +1679,7 @@ class SearchTest {
   // partialUpdateObject
 
   @Test
-  fun `partialUpdateObject`() = runTest {
+  fun `Partial update with string value`() = runTest {
     client.runTest(
       call = {
         partialUpdateObject(
@@ -1689,7 +1689,7 @@ class SearchTest {
             "id1" to AttributeToUpdate.of("test"),
             "id2" to BuiltInOperation(
               operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-              value = "test2",
+              value = BuiltInOperationValue.of("test2"),
             ),
           ),
           createIfNotExists = true,
@@ -1700,6 +1700,29 @@ class SearchTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"createIfNotExists":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `Partial update with integer value1`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "uniqueID",
+          attributesToUpdate = mapOf(
+            "attributeId" to BuiltInOperation(
+              operation = BuiltInOperationType.entries.first { it.value == "Increment" },
+              value = BuiltInOperationValue.of(2),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"attributeId":{"_operation":"Increment","value":2}}""", it.body)
       },
     )
   }

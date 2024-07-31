@@ -1107,7 +1107,7 @@ end
 
 # Snippet for the partialUpdateObject method.
 #
-# partialUpdateObject
+# Partial update with string value
 def snippet_for_partial_update_object
   # >SEPARATOR partialUpdateObject default
   # Initialize the client

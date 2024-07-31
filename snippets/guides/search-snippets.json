@@ -143,7 +143,7 @@
       "move": "var response = await client.OperationIndexAsync(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams\n  {\n    Operation = Enum.Parse<OperationType>(\"Move\"),\n    Destination = \"<DESTINATION_INDEX_NAME>\",\n  }\n);"
     },
     "partialUpdateObject": {
-      "default": "var response = await client.PartialUpdateObjectAsync(\n  \"theIndexName\",\n  \"uniqueID\",\n  new Dictionary<string, AttributeToUpdate>\n  {\n    { \"id1\", new AttributeToUpdate(\"test\") },\n    {\n      \"id2\",\n      new AttributeToUpdate(\n        new BuiltInOperation\n        {\n          Operation = Enum.Parse<BuiltInOperationType>(\"AddUnique\"),\n          Value = \"test2\",\n        }\n      )\n    }\n  },\n  true\n);"
+      "default": "var response = await client.PartialUpdateObjectAsync(\n  \"theIndexName\",\n  \"uniqueID\",\n  new Dictionary<string, AttributeToUpdate>\n  {\n    { \"id1\", new AttributeToUpdate(\"test\") },\n    {\n      \"id2\",\n      new AttributeToUpdate(\n        new BuiltInOperation\n        {\n          Operation = Enum.Parse<BuiltInOperationType>(\"AddUnique\"),\n          Value = new BuiltInOperationValue(\"test2\"),\n        }\n      )\n    }\n  },\n  true\n);"
     },
     "removeUserId": {
       "default": "var response = await client.RemoveUserIdAsync(\"uniqueID\");"
@@ -587,7 +587,7 @@
       "move": "response, err := client.OperationIndex(client.NewApiOperationIndexRequest(\n  \"<SOURCE_INDEX_NAME>\",\n  search.NewEmptyOperationIndexParams().SetOperation(search.OperationType(\"move\")).SetDestination(\"<DESTINATION_INDEX_NAME>\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "partialUpdateObject": {
-      "default": "response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(\n  \"theIndexName\", \"uniqueID\", map[string]search.AttributeToUpdate{\"id1\": *search.StringAsAttributeToUpdate(\"test\"), \"id2\": *search.BuiltInOperationAsAttributeToUpdate(\n    search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType(\"AddUnique\")).SetValue(\"test2\"))},\n).WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+      "default": "response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(\n  \"theIndexName\", \"uniqueID\", map[string]search.AttributeToUpdate{\"id1\": *search.StringAsAttributeToUpdate(\"test\"), \"id2\": *search.BuiltInOperationAsAttributeToUpdate(\n    search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType(\"AddUnique\")).SetValue(search.StringAsBuiltInOperationValue(\"test2\")))},\n).WithCreateIfNotExists(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "removeUserId": {
       "default": "response, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(\n  \"uniqueID\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
@@ -809,7 +809,7 @@
       "move": "client.operationIndex(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(\"<DESTINATION_INDEX_NAME>\")\n);"
     },
     "partialUpdateObject": {
-      "default": "client.partialUpdateObject(\n  \"theIndexName\",\n  \"uniqueID\",\n  Map.of(\n    \"id1\",\n    AttributeToUpdate.of(\"test\"),\n    \"id2\",\n    new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(\"test2\")\n  ),\n  true\n);"
+      "default": "client.partialUpdateObject(\n  \"theIndexName\",\n  \"uniqueID\",\n  Map.of(\n    \"id1\",\n    AttributeToUpdate.of(\"test\"),\n    \"id2\",\n    new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of(\"test2\"))\n  ),\n  true\n);"
     },
     "removeUserId": {
       "default": "client.removeUserId(\"uniqueID\");"
@@ -1253,7 +1253,7 @@
       "move": "var response = client.operationIndex(\n  indexName = \"<SOURCE_INDEX_NAME>\",\n  operationIndexParams = OperationIndexParams(\n    operation = OperationType.entries.first { it.value == \"move\" },\n    destination = \"<DESTINATION_INDEX_NAME>\",\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "partialUpdateObject": {
-      "default": "var response = client.partialUpdateObject(\n  indexName = \"theIndexName\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = mapOf(\n    \"id1\" to AttributeToUpdate.of(\"test\"),\n    \"id2\" to BuiltInOperation(\n      operation = BuiltInOperationType.entries.first { it.value == \"AddUnique\" },\n      value = \"test2\",\n    ),\n  ),\n  createIfNotExists = true,\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.partialUpdateObject(\n  indexName = \"theIndexName\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = mapOf(\n    \"id1\" to AttributeToUpdate.of(\"test\"),\n    \"id2\" to BuiltInOperation(\n      operation = BuiltInOperationType.entries.first { it.value == \"AddUnique\" },\n      value = BuiltInOperationValue.of(\"test2\"),\n    ),\n  ),\n  createIfNotExists = true,\n)\n\n// Use the response\nprintln(response)"
     },
     "removeUserId": {
       "default": "var response = client.removeUserId(\n  userID = \"uniqueID\",\n)\n\n// Use the response\nprintln(response)"
@@ -2141,7 +2141,7 @@
       "move": "val response = client.operationIndex(\n  indexName = \"<SOURCE_INDEX_NAME>\",\n  operationIndexParams = OperationIndexParams(\n    operation = OperationType.withName(\"move\"),\n    destination = \"<DESTINATION_INDEX_NAME>\"\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "partialUpdateObject": {
-      "default": "val response = client.partialUpdateObject(\n  indexName = \"theIndexName\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = Map(\n    \"id1\" -> AttributeToUpdate(\"test\"),\n    \"id2\" -> BuiltInOperation(\n      _operation = BuiltInOperationType.withName(\"AddUnique\"),\n      value = \"test2\"\n    )\n  ),\n  createIfNotExists = Some(true)\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.partialUpdateObject(\n  indexName = \"theIndexName\",\n  objectID = \"uniqueID\",\n  attributesToUpdate = Map(\n    \"id1\" -> AttributeToUpdate(\"test\"),\n    \"id2\" -> BuiltInOperation(\n      _operation = BuiltInOperationType.withName(\"AddUnique\"),\n      value = BuiltInOperationValue(\"test2\")\n    )\n  ),\n  createIfNotExists = Some(true)\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "removeUserId": {
       "default": "val response = client.removeUserId(\n  userID = \"uniqueID\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
@@ -2363,7 +2363,7 @@
       "move": "let response = try await client.operationIndex(\n    indexName: \"<SOURCE_INDEX_NAME>\",\n    operationIndexParams: OperationIndexParams(\n        operation: OperationType.move,\n        destination: \"<DESTINATION_INDEX_NAME>\"\n    )\n)"
     },
     "partialUpdateObject": {
-      "default": "let response = try await client.partialUpdateObject(\n    indexName: \"theIndexName\",\n    objectID: \"uniqueID\",\n    attributesToUpdate: [\n        \"id1\": AttributeToUpdate.string(\"test\"),\n        \"id2\": AttributeToUpdate\n            .builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: \"test2\")),\n    ],\n    createIfNotExists: true\n)"
+      "default": "let response = try await client.partialUpdateObject(\n    indexName: \"theIndexName\",\n    objectID: \"uniqueID\",\n    attributesToUpdate: [\n        \"id1\": AttributeToUpdate.string(\"test\"),\n        \"id2\": AttributeToUpdate\n            .builtInOperation(BuiltInOperation(\n                operation: BuiltInOperationType.addUnique,\n                value: BuiltInOperationValue.string(\"test2\")\n            )),\n    ],\n    createIfNotExists: true\n)"
     },
     "removeUserId": {
       "default": "let response = try await client.removeUserId(userID: \"uniqueID\")"

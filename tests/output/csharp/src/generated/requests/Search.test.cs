@@ -1568,7 +1568,7 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "partialUpdateObject")]
+  [Fact(DisplayName = "Partial update with string value")]
   public async Task PartialUpdateObjectTest()
   {
     await client.PartialUpdateObjectAsync(
@@ -1583,7 +1583,7 @@ public class SearchClientRequestTests
             new BuiltInOperation
             {
               Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-              Value = "test2",
+              Value = new BuiltInOperationValue("test2"),
             }
           )
         }
@@ -1612,6 +1612,37 @@ public class SearchClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
+  }
+
+  [Fact(DisplayName = "Partial update with integer value")]
+  public async Task PartialUpdateObjectTest1()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, AttributeToUpdate>
+      {
+        {
+          "attributeId",
+          new AttributeToUpdate(
+            new BuiltInOperation
+            {
+              Operation = Enum.Parse<BuiltInOperationType>("Increment"),
+              Value = new BuiltInOperationValue(2),
+            }
+          )
+        }
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "removeUserId")]

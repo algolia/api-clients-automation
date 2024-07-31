@@ -800,7 +800,7 @@ class SnippetSearchClient {
 
   // Snippet for the partialUpdateObject method.
   //
-  // partialUpdateObject
+  // Partial update with string value
   void snippetForPartialUpdateObject() {
     // >SEPARATOR partialUpdateObject default
     // Initialize the client
@@ -814,7 +814,7 @@ class SnippetSearchClient {
         "id1",
         AttributeToUpdate.of("test"),
         "id2",
-        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
+        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
       ),
       true
     );

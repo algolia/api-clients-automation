@@ -1597,7 +1597,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("partialUpdateObject") {
+  test("Partial update with string value") {
     val (client, echo) = testClient()
     val future = client.partialUpdateObject(
       indexName = "theIndexName",
@@ -1606,7 +1606,7 @@ class SearchTest extends AnyFunSuite {
         "id1" -> AttributeToUpdate("test"),
         "id2" -> BuiltInOperation(
           _operation = BuiltInOperationType.withName("AddUnique"),
-          value = "test2"
+          value = BuiltInOperationValue("test2")
         )
       ),
       createIfNotExists = Some(true)
@@ -1627,6 +1627,29 @@ class SearchTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("Partial update with integer value1") {
+    val (client, echo) = testClient()
+    val future = client.partialUpdateObject(
+      indexName = "theIndexName",
+      objectID = "uniqueID",
+      attributesToUpdate = Map(
+        "attributeId" -> BuiltInOperation(
+          _operation = BuiltInOperationType.withName("Increment"),
+          value = BuiltInOperationValue(2)
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"attributeId":{"_operation":"Increment","value":2}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("removeUserId") {

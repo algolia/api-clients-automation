@@ -36,12 +36,8 @@ package algoliasearch.search
 import algoliasearch.search.BuiltInOperationType._
 
 /** Update to perform on the attribute.
-  *
-  * @param value
-  *   Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove`
-  *   value.
   */
 case class BuiltInOperation(
     _operation: BuiltInOperationType,
-    value: String
+    value: BuiltInOperationValue
 ) extends AttributeToUpdateTrait

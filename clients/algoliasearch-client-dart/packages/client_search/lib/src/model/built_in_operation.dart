@@ -17,9 +17,11 @@ final class BuiltInOperation {
   @JsonKey(name: r'_operation')
   final BuiltInOperationType operation;
 
-  /// Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value.
+  /// One of types:
+  /// - [String]
+  /// - [int]
   @JsonKey(name: r'value')
-  final String value;
+  final dynamic value;
 
   @override
   bool operator ==(Object other) =>
