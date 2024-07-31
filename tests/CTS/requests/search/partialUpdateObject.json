@@ -1,6 +1,6 @@
 [
   {
-    "requestName": "Partial update with string value",
+    "testName": "Partial update with string value",
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -29,7 +29,7 @@
     }
   },
   {
-    "requestName": "Partial update with integer value",
+    "testName": "Partial update with integer value",
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
