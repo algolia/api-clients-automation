@@ -31,7 +31,9 @@ post:
                 additionalProperties:
                   type: string
               createdAt:
-                type: string
-                format: date-time
+                $ref: '../../common/schemas/common.yml#/createdAt'
+            required:
+              - taskWithRunID
+              - createdAt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
