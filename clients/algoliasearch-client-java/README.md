@@ -27,11 +27,6 @@
 * Thread-safe clients
 * Typed requests and responses
 
-**Migration note from v3.x to v4.x**
->
-> In July 2024, we released the v4 of our Java client. If you are using version 2.x or 3.x of the client, read the [migration guide to version 4.x](https://www.algolia.com/doc/api-client/getting-started/upgrade-guides/java/).
-Version 3.x will **no longer** be under active development.
-
 ## 💡 Getting Started
 
 To get started, add the algoliasearch-client-java dependency to your project, either with [Maven](Maven):
