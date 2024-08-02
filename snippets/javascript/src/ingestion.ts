@@ -828,6 +828,33 @@ export async function snippetForPushTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the runSource method.
+//
+// runSource
+export async function snippetForRunSource(): Promise<void> {
+  // >SEPARATOR runSource default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.runSource({
+    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    runSourcePayload: {
+      indexToInclude: ['products_us', 'products eu'],
+      entityIDs: ['1234', '5678'],
+      entityType: 'product',
+    },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the runTask method.
 //
 // runTask

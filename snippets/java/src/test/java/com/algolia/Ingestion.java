@@ -527,6 +527,25 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the runSource method.
+  //
+  // runSource
+  void snippetForRunSource() {
+    // >SEPARATOR runSource default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.runSource(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new RunSourcePayload()
+        .setIndexToInclude(List.of("products_us", "products eu"))
+        .setEntityIDs(List.of("1234", "5678"))
+        .setEntityType(EntityType.PRODUCT)
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the runTask method.
   //
   // runTask

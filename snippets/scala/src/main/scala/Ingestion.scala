@@ -765,6 +765,32 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the runSource method.
+    *
+    * runSource
+    */
+  def snippetForIngestionClientRunSource(): Unit = {
+    // >SEPARATOR runSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.runSource(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      runSourcePayload = Some(
+        RunSourcePayload(
+          indexToInclude = Some(Seq("products_us", "products eu")),
+          entityIDs = Some(Seq("1234", "5678")),
+          entityType = Some(EntityType.withName("product"))
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the runTask method.
     *
     * runTask

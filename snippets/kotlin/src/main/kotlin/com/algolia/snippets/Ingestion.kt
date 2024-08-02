@@ -696,6 +696,28 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForRunSource() {
+    // >SEPARATOR runSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.runSource(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      runSourcePayload = RunSourcePayload(
+        indexToInclude = listOf("products_us", "products eu"),
+        entityIDs = listOf("1234", "5678"),
+        entityType = EntityType.entries.first { it.value == "product" },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForRunTask() {
     // >SEPARATOR runTask default
     // Initialize the client

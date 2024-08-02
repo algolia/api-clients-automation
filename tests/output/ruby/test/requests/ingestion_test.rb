@@ -847,6 +847,29 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # runSource
+  def test_run_source
+    req = @client.run_source_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      RunSourcePayload.new(
+        index_to_include: ["products_us", "products eu"],
+        entity_ids: ["1234", "5678"],
+        entity_type: "product"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"indexToInclude\":[\"products_us\",\"products eu\"],\"entityIDs\":[\"1234\",\"5678\"],\"entityType\":\"product\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # runTask
   def test_run_task
     req = @client.run_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")

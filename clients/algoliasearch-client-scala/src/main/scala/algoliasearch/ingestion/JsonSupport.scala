@@ -36,6 +36,7 @@ object JsonSupport {
     new DestinationTypeSerializer() :+
     new DockerImageTypeSerializer() :+
     new DockerRegistrySerializer() :+
+    new EntityTypeSerializer() :+
     new EventSortKeysSerializer() :+
     new EventStatusSerializer() :+
     new EventTypeSerializer() :+

@@ -6021,6 +6021,305 @@ paths:
             let response = try await
             client.triggerDockerSourceDiscover(sourceID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  /1/sources/{sourceID}/run:
+    post:
+      tags:
+        - sources
+      summary: Run all tasks linked to a source
+      description: >-
+        Runs all tasks linked to a source, only available for Shopify sources.
+        It will create 1 run per task.
+      operationId: runSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathSourceID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunSourcePayload'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: runSourceResponse
+                type: object
+                properties:
+                  taskWithRunID:
+                    type: object
+                    description: >-
+                      Map of taskID sent for reindex with the corresponding
+                      runID.
+                    additionalProperties:
+                      type: string
+                  createdAt:
+                    $ref: '#/components/schemas/createdAt'
+                required:
+                  - taskWithRunID
+                  - createdAt
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.RunSourceAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new RunSourcePayload
+              {
+                IndexToInclude = new List<string> { "products_us", "products eu" },
+                EntityIDs = new List<string> { "1234", "5678" },
+                EntityType = Enum.Parse<EntityType>("Product"),
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.RunSource(client.NewApiRunSourceRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            ).WithRunSourcePayload(
+              ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
+                []string{"products_us", "products eu"}).SetEntityIDs(
+                []string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.runSource(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new RunSourcePayload()
+                .setIndexToInclude(List.of("products_us", "products eu"))
+                .setEntityIDs(List.of("1234", "5678"))
+                .setEntityType(EntityType.PRODUCT)
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.runSource({
+              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              runSourcePayload: {
+                indexToInclude: ['products_us', 'products eu'],
+                entityIDs: ['1234', '5678'],
+                entityType: 'product',
+              },
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.runSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              runSourcePayload = RunSourcePayload(
+                indexToInclude = listOf("products_us", "products eu"),
+                entityIDs = listOf("1234", "5678"),
+                entityType = EntityType.entries.first { it.value == "product" },
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->runSource(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['indexToInclude' => [
+                    'products_us',
+
+                    'products eu',
+                ],
+                    'entityIDs' => [
+                        '1234',
+
+                        '5678',
+                    ],
+                    'entityType' => 'product',
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.run_source(
+                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                run_source_payload={
+                    "indexToInclude": [
+                        "products_us",
+                        "products eu",
+                    ],
+                    "entityIDs": [
+                        "1234",
+                        "5678",
+                    ],
+                    "entityType": "product",
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.run_source(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              RunSourcePayload.new(
+                index_to_include: ["products_us", "products eu"],
+                entity_ids: ["1234", "5678"],
+                entity_type: "product"
+              )
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.runSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              runSourcePayload = Some(
+                RunSourcePayload(
+                  indexToInclude = Some(Seq("products_us", "products eu")),
+                  entityIDs = Some(Seq("1234", "5678")),
+                  entityType = Some(EntityType.withName("product"))
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.runSource(
+                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                runSourcePayload: RunSourcePayload(
+                    indexToInclude: ["products_us", "products eu"],
+                    entityIDs: ["1234", "5678"],
+                    entityType: EntityType.product
+                )
+            )
   /1/tasks:
     get:
       tags:
@@ -14460,6 +14759,33 @@ components:
         - sourceID
         - name
         - updatedAt
+    EntityType:
+      type: string
+      description: Type of entity to update.
+      enum:
+        - product
+        - collection
+    RunSourcePayload:
+      type: object
+      additionalProperties: false
+      properties:
+        indexToInclude:
+          type: array
+          description: List of index names to include in reidexing/update.
+          items:
+            type: string
+        indexToExclude:
+          type: array
+          description: List of index names to exclude in reidexing/update.
+          items:
+            type: string
+        entityIDs:
+          type: array
+          items:
+            type: string
+          description: List of entityID to update.
+        entityType:
+          $ref: '#/components/schemas/EntityType'
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
