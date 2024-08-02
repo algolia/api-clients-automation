@@ -52,3 +52,5 @@ dictionaryEntry:
         type: string
     state:
       $ref: '../../../../common/enums.yml#/dictionaryEntryState'
+    type:
+      $ref: '../../../../common/enums.yml#/dictionaryEntryType'
