@@ -34,7 +34,6 @@ post:
                     $ref: '../../../common/parameters.yml#/indexName'
                 required:
                   - action
-                  - body
                   - indexName
           required:
             - requests
