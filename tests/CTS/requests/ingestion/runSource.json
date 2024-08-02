@@ -1,0 +1,33 @@
+[
+  {
+    "parameters": {
+      "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "runSourcePayload": {
+        "indexToInclude": [
+          "products_us",
+          "products eu"
+        ],
+        "entityIDs": [
+          "1234",
+          "5678"
+        ],
+        "entityType": "product"
+      }
+    },
+    "request": {
+      "path": "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run",
+      "method": "POST",
+      "body": {
+        "indexToInclude": [
+          "products_us",
+          "products eu"
+        ],
+        "entityIDs": [
+          "1234",
+          "5678"
+        ],
+        "entityType": "product"
+      }
+    }
+  }
+]
