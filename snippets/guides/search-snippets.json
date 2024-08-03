@@ -2133,7 +2133,7 @@
       "default": "val response = client.listUserIds(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "multipleBatch": {
-      "default": "val response = client.multipleBatch(\n  batchParams = BatchParams(\n    requests = Seq(\n      MultipleBatchRequest(\n        action = Action.withName(\"addObject\"),\n        body = JObject(List(JField(\"key\", JString(\"value\")))),\n        indexName = \"theIndexName\"\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.multipleBatch(\n  batchParams = BatchParams(\n    requests = Seq(\n      MultipleBatchRequest(\n        action = Action.withName(\"addObject\"),\n        body = Some(JObject(List(JField(\"key\", JString(\"value\"))))),\n        indexName = \"theIndexName\"\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "operationIndex": {
       "scopes": "val response = client.operationIndex(\n  indexName = \"<SOURCE_INDEX_NAME>\",\n  operationIndexParams = OperationIndexParams(\n    operation = OperationType.withName(\"move\"),\n    destination = \"<DESTINATION_INDEX_NAME>\",\n    scope = Some(Seq(ScopeType.withName(\"rules\"), ScopeType.withName(\"settings\")))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))",

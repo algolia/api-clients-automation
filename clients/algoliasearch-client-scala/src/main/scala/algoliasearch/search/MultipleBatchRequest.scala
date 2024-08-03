@@ -44,6 +44,6 @@ import algoliasearch.search.Action._
   */
 case class MultipleBatchRequest(
     action: Action,
-    body: Any,
+    body: Option[Any] = scala.None,
     indexName: String
 )
