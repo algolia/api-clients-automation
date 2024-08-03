@@ -1049,7 +1049,6 @@ paths:
                         $ref: '#/components/schemas/indexName'
                     required:
                       - action
-                      - body
                       - indexName
               required:
                 - requests
