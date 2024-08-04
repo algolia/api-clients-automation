@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@actions/artifact@npm:2.1.8":
-  version: 2.1.8
-  resolution: "@actions/artifact@npm:2.1.8"
+"@actions/artifact@npm:2.1.9":
+  version: 2.1.9
+  resolution: "@actions/artifact@npm:2.1.9"
   dependencies:
     "@actions/core": "npm:^1.10.0"
     "@actions/github": "npm:^5.1.1"
@@ -23,7 +23,7 @@ __metadata:
     jwt-decode: "npm:^3.1.2"
     twirp-ts: "npm:^2.5.0"
     unzip-stream: "npm:^0.3.1"
-  checksum: 10/7d4c34a42ed43fa00aa0905d398cedf9454b3d70a6d2af9ef809df89922ae911b97a617fa3136e26bcc1cfd8a7a52edb49d358358a3e2412c4f6b2a2a859545f
+  checksum: 10/69d25300897b465d5cf038827ae5c9ba8e911a23982ee261b8cd9db90b9974e6885bcf94068a5b49b1ab4b1ff3f1ea59dca02feb686a8324465479d438f04be6
   languageName: node
   linkType: hard
 
@@ -12157,7 +12157,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
-    "@actions/artifact": "npm:2.1.8"
+    "@actions/artifact": "npm:2.1.9"
     "@actions/core": "npm:1.10.1"
     "@actions/exec": "npm:1.1.1"
     "@actions/io": "npm:1.1.3"
