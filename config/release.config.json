@@ -24,170 +24,355 @@
   },
   "sla": {
     "csharp": {
-      "6.1.17": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "6.13.0": {
+        "start": "2022-08-31",
+        "end": "2024-08-31",
+        "status": "maintenance"
       },
-      "7.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "6.14.0": {
+        "start": "2022-11-08",
+        "end": "2024-11-08",
+        "status": "maintenance"
+      },
+      "6.15.0": {
+        "start": "2023-08-08",
+        "end": "2025-08-08",
+        "status": "maintenance"
+      },
+      "6.16.0": {
+        "start": "2023-11-20",
+        "end": "2025-11-20",
+        "status": "maintenance"
+      },
+      "6.17.0": {
+        "start": "2024-02-26",
+        "end": "2026-02-26",
+        "status": "active"
       }
     },
     "dart": {
+      "0.3.1": {
+        "start": "2023-06-15",
+        "end": "2025-06-15",
+        "status": "maintenance"
+      },
+      "0.1.1": {
+        "start": "2023-06-20",
+        "end": "2025-06-20",
+        "status": "maintenance"
+      },
+      "algolia_client_search-v0.2.0": {
+        "start": "2023-07-20",
+        "end": "2025-07-20",
+        "status": "maintenance"
+      },
+      "algoliasearch-v0.1.1+5": {
+        "start": "2023-07-20",
+        "end": "2025-07-20",
+        "status": "maintenance"
+      },
+      "0.2.0": {
+        "start": "2023-08-08",
+        "end": "2025-08-08",
+        "status": "maintenance"
+      },
+      "0.3.0": {
+        "start": "2023-09-28",
+        "end": "2025-09-28",
+        "status": "maintenance"
+      },
+      "0.4.0": {
+        "start": "2023-10-10",
+        "end": "2025-10-10",
+        "status": "maintenance"
+      },
+      "0.5.0": {
+        "start": "2023-10-12",
+        "end": "2025-10-12",
+        "status": "maintenance"
+      },
+      "0.6.0": {
+        "start": "2023-10-18",
+        "end": "2025-10-18",
+        "status": "maintenance"
+      },
+      "1.0.0": {
+        "start": "2023-10-19",
+        "end": "2025-10-19",
+        "status": "maintenance"
+      },
+      "1.1.0": {
+        "start": "2023-11-07",
+        "end": "2025-11-07",
+        "status": "maintenance"
+      },
+      "1.2.0": {
+        "start": "2023-11-09",
+        "end": "2025-11-09",
+        "status": "maintenance"
+      },
+      "1.3.0": {
+        "start": "2024-01-09",
+        "end": "2026-01-09",
+        "status": "maintenance"
+      },
+      "1.4.0": {
+        "start": "2024-01-16",
+        "end": "2026-01-16",
+        "status": "maintenance"
+      },
+      "1.5.0": {
+        "start": "2024-01-23",
+        "end": "2026-01-23",
+        "status": "maintenance"
+      },
+      "1.6.0": {
+        "start": "2024-03-13",
+        "end": "2026-03-13",
+        "status": "maintenance"
+      },
+      "1.7.0": {
+        "start": "2024-04-09",
+        "end": "2026-04-09",
+        "status": "maintenance"
+      },
+      "1.8.0": {
+        "start": "2024-04-16",
+        "end": "2026-04-16",
+        "status": "maintenance"
+      },
+      "1.9.0": {
+        "start": "2024-04-23",
+        "end": "2026-04-23",
+        "status": "maintenance"
+      },
+      "1.10.0": {
+        "start": "2024-05-17",
+        "end": "2026-05-17",
+        "status": "maintenance"
+      },
+      "1.11.0": {
+        "start": "2024-06-11",
+        "end": "2026-06-11",
+        "status": "maintenance"
+      },
       "1.12.0": {
-        "start": "2024-06-21",
+        "start": "2024-06-13",
         "end": "2026-06-13",
         "status": "maintenance"
       },
       "1.13.0": {
-        "start": "2024-06-24",
+        "start": "2024-06-21",
         "end": "2026-06-21",
         "status": "maintenance"
       },
       "1.14.0": {
-        "start": "2024-06-26",
+        "start": "2024-06-24",
         "end": "2026-06-24",
         "status": "maintenance"
       },
-      "1.15.1": {
-        "start": "2024-07-01",
-        "end": "2026-06-27",
+      "1.15.0": {
+        "start": "2024-06-26",
+        "end": "2026-06-26",
         "status": "maintenance"
       },
       "1.16.0": {
-        "start": "2024-07-08",
+        "start": "2024-07-01",
         "end": "2026-07-01",
         "status": "maintenance"
       },
-      "1.17.1": {
-        "start": "2024-07-19",
-        "status": "maintenance",
-        "end": "2026-07-12"
+      "1.17.0": {
+        "start": "2024-07-08",
+        "end": "2026-07-08",
+        "status": "maintenance"
       },
       "1.18.0": {
-        "start": "2024-07-26",
-        "status": "maintenance",
-        "end": "2026-07-19"
+        "start": "2024-07-19",
+        "end": "2026-07-19",
+        "status": "maintenance"
       },
       "1.19.0": {
-        "start": "2024-08-01",
-        "status": "maintenance",
-        "end": "2026-07-26"
+        "start": "2024-07-26",
+        "end": "2026-07-26",
+        "status": "maintenance"
       },
       "1.20.0": {
         "start": "2024-08-01",
-        "status": "active",
-        "end": "2026-08-01"
+        "end": "2026-08-01",
+        "status": "active"
       }
     },
     "go": {
-      "3.31.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "3.26.1": {
+        "start": "2022-08-31",
+        "end": "2024-08-31",
+        "status": "maintenance"
       },
-      "4.0.0-beta.26": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "3.27.0": {
+        "start": "2023-03-30",
+        "end": "2025-03-30",
+        "status": "maintenance"
+      },
+      "3.28.0": {
+        "start": "2023-04-13",
+        "end": "2025-04-13",
+        "status": "maintenance"
+      },
+      "3.29.0": {
+        "start": "2023-05-09",
+        "end": "2025-05-09",
+        "status": "maintenance"
+      },
+      "3.30.0": {
+        "start": "2023-06-06",
+        "end": "2025-06-06",
+        "status": "maintenance"
+      },
+      "3.31.0": {
+        "start": "2023-08-25",
+        "end": "2025-08-25",
+        "status": "active"
       }
     },
     "java": {
-      "3.16.9": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
+      "3.16.7": {
+        "start": "2023-06-02",
+        "end": "2025-06-02",
         "status": "active"
-      },
-      "4.0.0-beta.43": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
       }
     },
     "javascript": {
-      "4.23.3": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "4.14.3": {
+        "start": "2022-12-19",
+        "end": "2024-12-19",
+        "status": "maintenance"
       },
-      "5.0.0-beta.14": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "4.15.0": {
+        "start": "2023-03-02",
+        "end": "2025-03-02",
+        "status": "maintenance"
+      },
+      "4.16.0": {
+        "start": "2023-03-22",
+        "end": "2025-03-22",
+        "status": "maintenance"
+      },
+      "4.17.0": {
+        "start": "2023-04-03",
+        "end": "2025-04-03",
+        "status": "maintenance"
+      },
+      "4.18.0": {
+        "start": "2023-06-23",
+        "end": "2025-06-23",
+        "status": "maintenance"
+      },
+      "4.19.0": {
+        "start": "2023-07-18",
+        "end": "2025-07-18",
+        "status": "maintenance"
+      },
+      "4.20.0": {
+        "start": "2023-09-12",
+        "end": "2025-09-12",
+        "status": "maintenance"
+      },
+      "4.21.0": {
+        "start": "2023-12-11",
+        "end": "2025-12-11",
+        "status": "maintenance"
+      },
+      "4.22.0": {
+        "start": "2023-12-14",
+        "end": "2025-12-14",
+        "status": "maintenance"
+      },
+      "4.23.0": {
+        "start": "2024-03-26",
+        "end": "2026-03-26",
+        "status": "maintenance"
+      },
+      "4.24.0": {
+        "start": "2024-06-25",
+        "end": "2026-06-25",
+        "status": "active"
       }
     },
     "kotlin": {
-      "2.1.12": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
+      "2.1.1": {
+        "start": "2022-09-26",
+        "end": "2024-09-26",
         "status": "active"
-      },
-      "3.0.0-beta.38": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
       }
     },
     "php": {
-      "3.4.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "3.3.2": {
+        "start": "2022-09-22",
+        "end": "2024-09-22",
+        "status": "maintenance"
       },
-      "4.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "3.4.0": {
+        "start": "2023-08-10",
+        "end": "2025-08-10",
+        "status": "active"
       }
     },
     "python": {
-      "3.0.0": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "2.6.3": {
+        "start": "2023-01-03",
+        "end": "2025-01-03",
+        "status": "maintenance"
       },
-      "4.0.0b27": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "3.0.0": {
+        "start": "2023-02-27",
+        "end": "2025-02-27",
+        "status": "active"
       }
     },
     "ruby": {
-      "2.3.4": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
+      "2.3.0": {
+        "start": "2022-09-26",
+        "end": "2024-09-26",
         "status": "active"
-      },
-      "3.0.0.beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
       }
     },
     "scala": {
-      "1.45.2": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
+      "1.45.1": {
+        "start": "2022-12-15",
+        "end": "2024-12-15",
         "status": "active"
-      },
-      "2.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
       }
     },
     "swift": {
-      "8.20.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
+      "8.15.1": {
+        "start": "2022-08-29",
+        "end": "2024-08-29",
+        "status": "maintenance"
       },
-      "9.0.0-beta.13": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
+      "8.16.0": {
+        "start": "2022-10-24",
+        "end": "2024-10-24",
+        "status": "maintenance"
+      },
+      "8.17.0": {
+        "start": "2023-02-06",
+        "end": "2025-02-06",
+        "status": "maintenance"
+      },
+      "8.18.0": {
+        "start": "2023-03-24",
+        "end": "2025-03-24",
+        "status": "maintenance"
+      },
+      "8.19.0": {
+        "start": "2023-12-07",
+        "end": "2025-12-07",
+        "status": "maintenance"
+      },
+      "8.20.0": {
+        "start": "2024-02-02",
+        "end": "2026-02-02",
+        "status": "active"
       }
     }
   }

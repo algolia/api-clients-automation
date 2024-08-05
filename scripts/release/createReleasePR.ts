@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import fsp from 'fs/promises';
-
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
@@ -21,13 +19,12 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
-  fullReleaseConfig,
-  toAbsolutePath,
 } from '../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
 import { getLastReleasedTag } from './common.js';
+import { generateSLA } from './sla.js';
 import TEXT from './text.js';
 import type {
   Versions,
@@ -46,7 +43,7 @@ export const COMMON_SCOPES = ['specs', 'clients'];
 // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
 // see https://peps.python.org/pep-0440/
 // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
-const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
+export const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
 
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
@@ -399,85 +396,6 @@ async function prepareGitEnvironment(): Promise<void> {
   await run('git pull origin $(git branch --show-current)');
 }
 
-// updates the release.config.json file for the sla field, which contains a release history of start and end date support
-// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule
-export async function updateSLA(versions: Versions): Promise<void> {
-  const start = new Date();
-  const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
-
-  let queryStart = start;
-  let queryEnd = end;
-
-  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.sla)) {
-    const next = versions[lang].next;
-    const current = versions[lang].current;
-
-    // no ongoing release for this client, nothing changes
-    if (!next || current === next) {
-      continue;
-    }
-
-    // update the previously supported SLA version fields
-    if (current in supportedVersions) {
-      const nextMinor = next.match(/.+\.(.+)\..*/);
-      const currentMinor = current.match(/.+\.(.+)\..*/);
-
-      if (!currentMinor || !nextMinor) {
-        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
-      }
-
-      // if it's not a major release, and we are on the same minor, we remove the current
-      // patch because we support SLA at minor level
-      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
-        delete supportedVersions[current];
-        // if it's a major or not the same minor, it means we release a new latest versions, so the
-        // current SLA goes in maintenance mode
-      } else {
-        supportedVersions[current].status = 'maintenance';
-
-        // any other release cases make the previous version enter in maintenance
-        supportedVersions[current].start = start.toISOString().split('T')[0];
-      }
-    }
-
-    // we don't support SLA for pre-releases, so we will:
-    // - set them as `prerelease`
-    // - not the set `lts` field, the gen script will set the as `unstable`
-    const isPreRelease = next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
-
-    supportedVersions[next] = {
-      start: start.toISOString().split('T')[0],
-      status: isPreRelease ? 'prerelease' : 'active',
-      end: end.toISOString().split('T')[0],
-    };
-
-    // define the boundaries of the graph by searching for older and newest dates
-    for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
-      // delete maintenance versions that are not supported anymore
-      if (dates.status === 'maintenance' && new Date(dates.end as string) < start) {
-        delete supportedVersions[supportedVersion];
-
-        continue;
-      }
-
-      const versionStart = new Date(dates.start);
-      if (versionStart < queryStart) {
-        queryStart = versionStart;
-      }
-
-      const versionEnd = new Date(dates.end);
-      if (versionEnd > queryEnd) {
-        queryEnd = versionEnd;
-      }
-    }
-  }
-
-  await fsp.writeFile(
-    toAbsolutePath('config/release.config.json'),
-    JSON.stringify(fullReleaseConfig, null, 2),
-  );
-}
-
 export async function createReleasePR({
   languages,
   releaseType,
@@ -501,7 +419,7 @@ export async function createReleasePR({
     releaseType,
   });
 
-  await updateSLA(versions);
+  await generateSLA(versions);
 
   const versionChanges = getVersionChangesText(versions);
 
