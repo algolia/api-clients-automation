@@ -83,7 +83,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->createDestination(
             ['type' => 'search',
                 'name' => 'destinationName',
-                'input' => ['indexPrefix' => 'prefix_',
+                'input' => ['indexName' => 'full_name______',
                 ],
                 'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ],
@@ -93,7 +93,31 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/destinations',
                 'method' => 'POST',
-                'body' => json_decode('{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
+                'body' => json_decode('{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('with transformationIDs')]
+    public function testCreateDestination1()
+    {
+        $client = $this->getClient();
+        $client->createDestination(
+            ['type' => 'search',
+                'name' => 'destinationName',
+                'input' => ['indexName' => 'full_name______',
+                ],
+                'transformationIDs' => [
+                    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/destinations',
+                'method' => 'POST',
+                'body' => json_decode('{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'),
             ],
         ]);
     }
@@ -1069,7 +1093,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getRuns')]
+    #[TestDox('listRuns')]
     public function testListRuns()
     {
         $client = $this->getClient();
@@ -1084,7 +1108,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getSources')]
+    #[TestDox('listSources')]
     public function testListSources()
     {
         $client = $this->getClient();
@@ -1129,7 +1153,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('getTransformations')]
+    #[TestDox('listTransformations')]
     public function testListTransformations()
     {
         $client = $this->getClient();

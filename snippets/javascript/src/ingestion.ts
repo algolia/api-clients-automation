@@ -49,7 +49,7 @@ export async function snippetForCreateDestination(): Promise<void> {
   const response = await client.createDestination({
     type: 'search',
     name: 'destinationName',
-    input: { indexPrefix: 'prefix_' },
+    input: { indexName: 'full_name______' },
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
@@ -702,7 +702,7 @@ export async function snippetForListEvents(): Promise<void> {
 
 // Snippet for the listRuns method.
 //
-// getRuns
+// listRuns
 export async function snippetForListRuns(): Promise<void> {
   // >SEPARATOR listRuns default
   // Initialize the client
@@ -722,7 +722,7 @@ export async function snippetForListRuns(): Promise<void> {
 
 // Snippet for the listSources method.
 //
-// getSources
+// listSources
 export async function snippetForListSources(): Promise<void> {
   // >SEPARATOR listSources default
   // Initialize the client
@@ -782,7 +782,7 @@ export async function snippetForListTasksV1(): Promise<void> {
 
 // Snippet for the listTransformations method.
 //
-// getTransformations
+// listTransformations
 export async function snippetForListTransformations(): Promise<void> {
   // >SEPARATOR listTransformations default
   // Initialize the client

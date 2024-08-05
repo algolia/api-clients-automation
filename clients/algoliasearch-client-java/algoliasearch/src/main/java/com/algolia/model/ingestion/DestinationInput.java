@@ -21,17 +21,6 @@ public interface DestinationInput {
     @Override
     public DestinationInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize DestinationIndexPrefix
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(DestinationIndexPrefix.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf DestinationIndexPrefix (error: " + e.getMessage() + ") (type: DestinationIndexPrefix)"
-          );
-        }
-      }
       // deserialize DestinationIndexName
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

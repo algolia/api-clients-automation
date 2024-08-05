@@ -57,8 +57,8 @@ class SnippetIngestionClient {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexPrefix(
-          indexPrefix = "prefix_"
+        input = DestinationIndexName(
+          indexName = "full_name______"
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       )
@@ -646,7 +646,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listRuns method.
     *
-    * getRuns
+    * listRuns
     */
   def snippetForIngestionClientListRuns(): Unit = {
     // >SEPARATOR listRuns default
@@ -664,7 +664,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listSources method.
     *
-    * getSources
+    * listSources
     */
   def snippetForIngestionClientListSources(): Unit = {
     // >SEPARATOR listSources default
@@ -718,7 +718,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listTransformations method.
     *
-    * getTransformations
+    * listTransformations
     */
   def snippetForIngestionClientListTransformations(): Unit = {
     // >SEPARATOR listTransformations default

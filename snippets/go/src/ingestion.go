@@ -54,8 +54,8 @@ func SnippetForCreateDestinationOfIngestion() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexPrefixAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexPrefix().SetIndexPrefix("prefix_"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
+			ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -886,7 +886,7 @@ func SnippetForListRunsOfIngestion() {
 	/*
 	   Snippet for the listRuns method.
 
-	   getRuns
+	   listRuns
 	*/
 
 	// >SEPARATOR listRuns default
@@ -912,7 +912,7 @@ func SnippetForListSourcesOfIngestion() {
 	/*
 	   Snippet for the listSources method.
 
-	   getSources
+	   listSources
 	*/
 
 	// >SEPARATOR listSources default
@@ -990,7 +990,7 @@ func SnippetForListTransformationsOfIngestion() {
 	/*
 	   Snippet for the listTransformations method.
 
-	   getTransformations
+	   listTransformations
 	*/
 
 	// >SEPARATOR listTransformations default

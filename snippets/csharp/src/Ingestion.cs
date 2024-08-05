@@ -59,7 +59,7 @@ public class SnippetIngestionClient
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexPrefix { IndexPrefix = "prefix_", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -634,7 +634,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListRuns method.
   ///
-  /// getRuns
+  /// listRuns
   /// </summary>
   public async Task SnippetForIngestionClientListRuns()
   {
@@ -652,7 +652,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListSources method.
   ///
-  /// getSources
+  /// listSources
   /// </summary>
   public async Task SnippetForIngestionClientListSources()
   {
@@ -706,7 +706,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListTransformations method.
   ///
-  /// getTransformations
+  /// listTransformations
   /// </summary>
   public async Task SnippetForIngestionClientListTransformations()
   {

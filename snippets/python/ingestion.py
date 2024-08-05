@@ -51,7 +51,7 @@ async def snippet_for_create_destination():
             "type": "search",
             "name": "destinationName",
             "input": {
-                "indexPrefix": "prefix_",
+                "indexName": "full_name______",
             },
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
@@ -762,7 +762,7 @@ async def snippet_for_list_runs():
     """
     Snippet for the listRuns method.
 
-    getRuns
+    listRuns
     """
     # >SEPARATOR listRuns default
     # Initialize the client
@@ -783,7 +783,7 @@ async def snippet_for_list_sources():
     """
     Snippet for the listSources method.
 
-    getSources
+    listSources
     """
     # >SEPARATOR listSources default
     # Initialize the client
@@ -846,7 +846,7 @@ async def snippet_for_list_transformations():
     """
     Snippet for the listTransformations method.
 
-    getTransformations
+    listTransformations
     """
     # >SEPARATOR listTransformations default
     # Initialize the client

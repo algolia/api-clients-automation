@@ -118,16 +118,6 @@ DestinationType:
       Data is recorded as user events in the Insights API.
   enum: [search, insights]
 
-DestinationIndexPrefix:
-  type: object
-  additionalProperties: false
-  properties:
-    indexPrefix:
-      type: string
-      description: String added to the beginning of all indices created by this destination.
-  required:
-    - indexPrefix
-
 DestinationIndexName:
   type: object
   additionalProperties: false
@@ -164,5 +154,4 @@ AttributesToExclude:
 
 DestinationInput:
   oneOf:
-    - $ref: '#/DestinationIndexPrefix'
     - $ref: '#/DestinationIndexName'

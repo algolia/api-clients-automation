@@ -88,8 +88,8 @@ class IngestionTest extends AnyFunSuite {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexPrefix(
-          indexPrefix = "prefix_"
+        input = DestinationIndexName(
+          indexName = "full_name______"
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       )
@@ -101,7 +101,32 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/destinations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+      """{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("with transformationIDs1") {
+    val (client, echo) = testClient()
+    val future = client.createDestination(
+      destinationCreate = DestinationCreate(
+        `type` = DestinationType.withName("search"),
+        name = "destinationName",
+        input = DestinationIndexName(
+          indexName = "full_name______"
+        ),
+        transformationIDs = Some(Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/destinations")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1079,7 +1104,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRuns") {
+  test("listRuns") {
     val (client, echo) = testClient()
     val future = client.listRuns(
     )
@@ -1092,7 +1117,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSources") {
+  test("listSources") {
     val (client, echo) = testClient()
     val future = client.listSources(
     )
@@ -1131,7 +1156,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTransformations") {
+  test("listTransformations") {
     val (client, echo) = testClient()
     val future = client.listTransformations(
     )

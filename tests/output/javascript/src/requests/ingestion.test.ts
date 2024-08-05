@@ -59,7 +59,7 @@ describe('createDestination', () => {
     const req = (await client.createDestination({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -68,8 +68,27 @@ describe('createDestination', () => {
     expect(req.data).toEqual({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('with transformationIDs', async () => {
+    const req = (await client.createDestination({
+      type: 'search',
+      name: 'destinationName',
+      input: { indexName: 'full_name______' },
+      transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/destinations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      type: 'search',
+      name: 'destinationName',
+      input: { indexName: 'full_name______' },
+      transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -850,7 +869,7 @@ describe('listEvents', () => {
 });
 
 describe('listRuns', () => {
-  test('getRuns', async () => {
+  test('listRuns', async () => {
     const req = (await client.listRuns()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/runs');
@@ -861,7 +880,7 @@ describe('listRuns', () => {
 });
 
 describe('listSources', () => {
-  test('getSources', async () => {
+  test('listSources', async () => {
     const req = (await client.listSources()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/sources');
@@ -894,7 +913,7 @@ describe('listTasksV1', () => {
 });
 
 describe('listTransformations', () => {
-  test('getTransformations', async () => {
+  test('listTransformations', async () => {
     const req = (await client.listTransformations()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations');

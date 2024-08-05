@@ -92,7 +92,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexPrefix(DestinationIndexPrefix(indexPrefix: "prefix_")),
+            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -102,7 +102,42 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+            "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/destinations")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// with transformationIDs
+    func testCreateDestinationTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
+            type: DestinationType.search,
+            name: "destinationName",
+            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            transformationIDs: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1573,7 +1608,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getRuns
+    /// listRuns
     func testListRunsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
@@ -1595,7 +1630,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getSources
+    /// listSources
     func testListSourcesTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
@@ -1661,7 +1696,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getTransformations
+    /// listTransformations
     func testListTransformationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,

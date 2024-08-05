@@ -94,7 +94,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
+          .setInput(new DestinationIndexName().setIndexName("full_name______"))
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       );
     });
@@ -103,7 +103,31 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("with transformationIDs")
+  void createDestinationTest1() {
+    assertDoesNotThrow(() -> {
+      client.createDestination(
+        new DestinationCreate()
+          .setType(DestinationType.SEARCH)
+          .setName("destinationName")
+          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setTransformationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/destinations", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1057,7 +1081,7 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRuns")
+  @DisplayName("listRuns")
   void listRunsTest() {
     assertDoesNotThrow(() -> {
       client.listRuns();
@@ -1069,7 +1093,7 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSources")
+  @DisplayName("listSources")
   void listSourcesTest() {
     assertDoesNotThrow(() -> {
       client.listSources();
@@ -1105,7 +1129,7 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTransformations")
+  @DisplayName("listTransformations")
   void listTransformationsTest() {
     assertDoesNotThrow(() -> {
       client.listTransformations();

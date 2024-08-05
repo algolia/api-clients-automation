@@ -1378,6 +1378,8 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/parameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
@@ -2432,17 +2434,6 @@ components:
       type: string
       description: Universally unique identifier (UUID) of a destination resource.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    DestinationIndexPrefix:
-      type: object
-      additionalProperties: false
-      properties:
-        indexPrefix:
-          type: string
-          description: >-
-            String added to the beginning of all indices created by this
-            destination.
-      required:
-        - indexPrefix
     RecordType:
       type: string
       description: Record type for ecommerce sources.
@@ -2486,8 +2477,15 @@ components:
         - indexName
     DestinationInput:
       oneOf:
-        - $ref: '#/components/schemas/DestinationIndexPrefix'
         - $ref: '#/components/schemas/DestinationIndexName'
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    transformationIDs:
+      type: array
+      items:
+        $ref: '#/components/schemas/transformationID'
     Destination:
       type: object
       description: Destinations are Algolia resources like indices or event streams.
@@ -2507,6 +2505,8 @@ components:
           $ref: '#/components/schemas/updatedAt'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
       required:
         - destinationID
         - type
@@ -2526,6 +2526,8 @@ components:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
       required:
         - type
         - name
@@ -2569,6 +2571,8 @@ components:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
     DestinationUpdateResponse:
       type: object
       additionalProperties: false
@@ -3772,10 +3776,6 @@ components:
         - type
         - updatedAt
         - createdAt
-    transformationID:
-      type: string
-      description: Universally unique identifier (UUID) of a transformation.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     Code:
       type: string
       description: The source code of the transformation.
