@@ -47,6 +47,7 @@ export 'src/model/deleted_at_response.dart';
 export 'src/model/dictionary_action.dart';
 export 'src/model/dictionary_entry.dart';
 export 'src/model/dictionary_entry_state.dart';
+export 'src/model/dictionary_entry_type.dart';
 export 'src/model/dictionary_language.dart';
 export 'src/model/dictionary_settings_params.dart';
 export 'src/model/dictionary_type.dart';
