@@ -3,7 +3,7 @@ get:
     - transformations
   summary: Retrieve existing LLM transformation helpers
   description: Retrieves a list of existing LLM transformation helpers.
-  operationId: listCopilots
+  operationId: listTransformationModels
   x-acl:
     - addObject
     - deleteIndex
@@ -14,9 +14,9 @@ get:
       content:
         application/json:
           schema:
-            title: listTransformationModels
+            title: transformationModels
             type: object
-            description: List of available copilot LLM for transformation purposes.
+            description: List of available AI models for transformation purposes.
             additionalProperties: false
             properties:
               llms:
