@@ -87,17 +87,19 @@ export async function generateLanguageSLA(lang: Language, versions: Versions): P
 
     const { major: tagMajor, minor: tagMinor } = getMajorMinor(lang, tagVersion);
 
-    // we only support the last patch of every minor
-    if (tagMajor !== prevTagMajor || tagMinor !== prevTagMinor) {
-      fullReleaseConfig.sla[lang][tagVersion] = {
-        start: releaseDate.toISOString().split('T')[0],
-        end: deadline.toISOString().split('T')[0],
-        status: 'maintenance',
-      };
-      prevTagMajor = tagMajor;
-      prevTagMinor = tagMinor;
-      activeVersion = tagVersion;
+    // we only want the last patch of the current major.minor
+    if (tagMajor === prevTagMajor && tagMinor === prevTagMinor) {
+      delete fullReleaseConfig.sla[lang][activeVersion];
     }
+
+    fullReleaseConfig.sla[lang][tagVersion] = {
+      start: releaseDate.toISOString().split('T')[0],
+      end: deadline.toISOString().split('T')[0],
+      status: 'maintenance',
+    };
+    prevTagMajor = tagMajor;
+    prevTagMinor = tagMinor;
+    activeVersion = tagVersion;
   }
 
   // if there's no release planned, or if the release is a pre-release, then the latest tagged version is the active one
