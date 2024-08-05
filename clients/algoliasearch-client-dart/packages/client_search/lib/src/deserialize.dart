@@ -40,6 +40,7 @@ import 'package:algolia_client_search/src/model/deleted_at_response.dart';
 import 'package:algolia_client_search/src/model/dictionary_action.dart';
 import 'package:algolia_client_search/src/model/dictionary_entry.dart';
 import 'package:algolia_client_search/src/model/dictionary_entry_state.dart';
+import 'package:algolia_client_search/src/model/dictionary_entry_type.dart';
 import 'package:algolia_client_search/src/model/dictionary_language.dart';
 import 'package:algolia_client_search/src/model/dictionary_settings_params.dart';
 import 'package:algolia_client_search/src/model/dictionary_type.dart';
@@ -278,6 +279,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'DictionaryEntryState':
       return DictionaryEntryState.fromJson(value) as ReturnType;
+    case 'DictionaryEntryType':
+      return DictionaryEntryType.fromJson(value) as ReturnType;
     case 'DictionaryLanguage':
       return DictionaryLanguage.fromJson(value as Map<String, dynamic>)
           as ReturnType;

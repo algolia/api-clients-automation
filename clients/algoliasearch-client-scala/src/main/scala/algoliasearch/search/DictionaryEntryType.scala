@@ -35,70 +35,33 @@ package algoliasearch.search
 
 import org.json4s._
 
-object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new AclSerializer() :+
-    new ActionSerializer() :+
-    new AdvancedSyntaxFeaturesSerializer() :+
-    new AlternativesAsExactSerializer() :+
-    new AnchoringSerializer() :+
-    new ApiKeyOperationSerializer() :+
-    new AroundRadiusAllSerializer() :+
-    new BuiltInOperationTypeSerializer() :+
-    new DictionaryActionSerializer() :+
-    new DictionaryEntryStateSerializer() :+
-    new DictionaryEntryTypeSerializer() :+
-    new DictionaryTypeSerializer() :+
-    new EditTypeSerializer() :+
-    new ExactOnSingleWordQuerySerializer() :+
-    new LogTypeSerializer() :+
-    new MatchLevelSerializer() :+
-    new ModeSerializer() :+
-    new OperationTypeSerializer() :+
-    new QueryTypeSerializer() :+
-    new RemoveWordsIfNoResultsSerializer() :+
-    new ScopeTypeSerializer() :+
-    new SearchStrategySerializer() :+
-    new SearchTypeDefaultSerializer() :+
-    new SearchTypeFacetSerializer() :+
-    new SortRemainingBySerializer() :+
-    new SupportedLanguageSerializer() :+
-    new SynonymTypeSerializer() :+
-    new TaskStatusSerializer() :+
-    new TypoToleranceEnumSerializer()
+sealed trait DictionaryEntryType
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    AroundPrecisionSerializer :+
-    AroundRadiusSerializer :+
-    AttributeToUpdateSerializer :+
-    AutomaticFacetFiltersSerializer :+
-    BrowseParamsSerializer :+
-    BuiltInOperationValueSerializer :+
-    ConsequenceQuerySerializer :+
-    DistinctSerializer :+
-    FacetFiltersSerializer :+
-    HighlightResultSerializer :+
-    IgnorePluralsSerializer :+
-    NumericFiltersSerializer :+
-    OptionalFiltersSerializer :+
-    PromoteSerializer :+
-    ReRankingApplyFilterSerializer :+
-    RemoveStopWordsSerializer :+
-    SearchParamsSerializer :+
-    SearchQuerySerializer :+
-    SearchResultSerializer :+
-    SnippetResultSerializer :+
-    TagFiltersSerializer :+
-    TypoToleranceSerializer
+/** Whether a dictionary entry is provided by Algolia (standard), or has been added by you (custom).
+  */
+object DictionaryEntryType {
+  case object Custom extends DictionaryEntryType {
+    override def toString = "custom"
+  }
+  case object Standard extends DictionaryEntryType {
+    override def toString = "standard"
+  }
+  val values: Seq[DictionaryEntryType] = Seq(Custom, Standard)
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new BaseSearchResponseSerializer() :+
-    new DictionaryEntrySerializer() :+
-    new ErrorBaseSerializer() :+
-    new HitSerializer() :+
-    new SearchHitsSerializer() :+
-    new SearchSynonymsResponseSerializer()
-
-  implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
-  implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization
+  def withName(name: String): DictionaryEntryType = DictionaryEntryType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown DictionaryEntryType value: $name"))
 }
+
+class DictionaryEntryTypeSerializer
+    extends CustomSerializer[DictionaryEntryType](_ =>
+      (
+        {
+          case JString(value) => DictionaryEntryType.withName(value)
+          case JNull          => null
+        },
+        { case value: DictionaryEntryType =>
+          JString(value.toString)
+        }
+      )
+    )

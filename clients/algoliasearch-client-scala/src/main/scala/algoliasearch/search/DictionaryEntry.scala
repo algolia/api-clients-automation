@@ -34,6 +34,7 @@
 package algoliasearch.search
 
 import algoliasearch.search.DictionaryEntryState._
+import algoliasearch.search.DictionaryEntryType._
 import algoliasearch.search.SupportedLanguage._
 
 import org.json4s.MonadicJValue.jvalueToMonadic
@@ -57,6 +58,7 @@ case class DictionaryEntry(
     words: Option[Seq[String]] = scala.None,
     decomposition: Option[Seq[String]] = scala.None,
     state: Option[DictionaryEntryState] = scala.None,
+    `type`: Option[DictionaryEntryType] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
@@ -70,7 +72,7 @@ class DictionaryEntrySerializer extends Serializer[DictionaryEntry] {
           val mf = manifest[DictionaryEntry]
           val obj = Extraction.extract[DictionaryEntry](jobject)(formats, mf)
 
-          val fields = Set("objectID", "language", "word", "words", "decomposition", "state")
+          val fields = Set("objectID", "language", "word", "words", "decomposition", "state", "`type`")
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false

@@ -22,6 +22,8 @@ DictionaryEntry _$DictionaryEntryFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           state: $checkedConvert('state',
               (v) => $enumDecodeNullable(_$DictionaryEntryStateEnumMap, v)),
+          type: $checkedConvert('type',
+              (v) => $enumDecodeNullable(_$DictionaryEntryTypeEnumMap, v)),
         );
         return val;
       },
@@ -34,6 +36,7 @@ const _$DictionaryEntryFieldMap = <String, String>{
   'words': 'words',
   'decomposition': 'decomposition',
   'state': 'state',
+  'type': 'type',
 };
 
 Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) {
@@ -52,6 +55,7 @@ Map<String, dynamic> _$DictionaryEntryToJson(DictionaryEntry instance) {
   writeNotNull('words', instance.words);
   writeNotNull('decomposition', instance.decomposition);
   writeNotNull('state', instance.state?.toJson());
+  writeNotNull('type', instance.type?.toJson());
   return val;
 }
 
@@ -129,4 +133,9 @@ const _$SupportedLanguageEnumMap = {
 const _$DictionaryEntryStateEnumMap = {
   DictionaryEntryState.enabled: 'enabled',
   DictionaryEntryState.disabled: 'disabled',
+};
+
+const _$DictionaryEntryTypeEnumMap = {
+  DictionaryEntryType.custom: 'custom',
+  DictionaryEntryType.standard: 'standard',
 };
