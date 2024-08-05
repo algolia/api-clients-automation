@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** Destinations are Algolia resources like indices or event streams. */
@@ -30,6 +32,9 @@ public class Destination {
 
   @JsonProperty("authenticationID")
   private String authenticationID;
+
+  @JsonProperty("transformationIDs")
+  private List<String> transformationIDs;
 
   public Destination setDestinationID(String destinationID) {
     this.destinationID = destinationID;
@@ -108,6 +113,25 @@ public class Destination {
     return authenticationID;
   }
 
+  public Destination setTransformationIDs(List<String> transformationIDs) {
+    this.transformationIDs = transformationIDs;
+    return this;
+  }
+
+  public Destination addTransformationIDs(String transformationIDsItem) {
+    if (this.transformationIDs == null) {
+      this.transformationIDs = new ArrayList<>();
+    }
+    this.transformationIDs.add(transformationIDsItem);
+    return this;
+  }
+
+  /** Get transformationIDs */
+  @javax.annotation.Nullable
+  public List<String> getTransformationIDs() {
+    return transformationIDs;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -124,13 +148,14 @@ public class Destination {
       Objects.equals(this.input, destination.input) &&
       Objects.equals(this.createdAt, destination.createdAt) &&
       Objects.equals(this.updatedAt, destination.updatedAt) &&
-      Objects.equals(this.authenticationID, destination.authenticationID)
+      Objects.equals(this.authenticationID, destination.authenticationID) &&
+      Objects.equals(this.transformationIDs, destination.transformationIDs)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationID, type, name, input, createdAt, updatedAt, authenticationID);
+    return Objects.hash(destinationID, type, name, input, createdAt, updatedAt, authenticationID, transformationIDs);
   }
 
   @Override
@@ -144,6 +169,7 @@ public class Destination {
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    authenticationID: ").append(toIndentedString(authenticationID)).append("\n");
+    sb.append("    transformationIDs: ").append(toIndentedString(transformationIDs)).append("\n");
     sb.append("}");
     return sb.toString();
   }

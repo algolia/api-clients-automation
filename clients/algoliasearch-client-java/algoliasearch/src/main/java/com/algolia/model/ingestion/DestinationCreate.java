@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** API request body for creating a new destination. */
@@ -21,6 +23,9 @@ public class DestinationCreate {
 
   @JsonProperty("authenticationID")
   private String authenticationID;
+
+  @JsonProperty("transformationIDs")
+  private List<String> transformationIDs;
 
   public DestinationCreate setType(DestinationType type) {
     this.type = type;
@@ -66,6 +71,25 @@ public class DestinationCreate {
     return authenticationID;
   }
 
+  public DestinationCreate setTransformationIDs(List<String> transformationIDs) {
+    this.transformationIDs = transformationIDs;
+    return this;
+  }
+
+  public DestinationCreate addTransformationIDs(String transformationIDsItem) {
+    if (this.transformationIDs == null) {
+      this.transformationIDs = new ArrayList<>();
+    }
+    this.transformationIDs.add(transformationIDsItem);
+    return this;
+  }
+
+  /** Get transformationIDs */
+  @javax.annotation.Nullable
+  public List<String> getTransformationIDs() {
+    return transformationIDs;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -79,13 +103,14 @@ public class DestinationCreate {
       Objects.equals(this.type, destinationCreate.type) &&
       Objects.equals(this.name, destinationCreate.name) &&
       Objects.equals(this.input, destinationCreate.input) &&
-      Objects.equals(this.authenticationID, destinationCreate.authenticationID)
+      Objects.equals(this.authenticationID, destinationCreate.authenticationID) &&
+      Objects.equals(this.transformationIDs, destinationCreate.transformationIDs)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, input, authenticationID);
+    return Objects.hash(type, name, input, authenticationID, transformationIDs);
   }
 
   @Override
@@ -96,6 +121,7 @@ public class DestinationCreate {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    authenticationID: ").append(toIndentedString(authenticationID)).append("\n");
+    sb.append("    transformationIDs: ").append(toIndentedString(transformationIDs)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -646,7 +646,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listRuns method.
     *
-    * getRuns
+    * listRuns
     */
   def snippetForIngestionClientListRuns(): Unit = {
     // >SEPARATOR listRuns default
@@ -664,7 +664,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listSources method.
     *
-    * getSources
+    * listSources
     */
   def snippetForIngestionClientListSources(): Unit = {
     // >SEPARATOR listSources default
@@ -718,7 +718,7 @@ class SnippetIngestionClient {
 
   /** Snippet for the listTransformations method.
     *
-    * getTransformations
+    * listTransformations
     */
   def snippetForIngestionClientListTransformations(): Unit = {
     // >SEPARATOR listTransformations default

@@ -81,6 +81,31 @@ class TestIngestionClient:
             """{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
         )
 
+    async def test_create_destination_1(self):
+        """
+        with transformationIDs
+        """
+        _req = await self._client.create_destination_with_http_info(
+            destination_create={
+                "type": "search",
+                "name": "destinationName",
+                "input": {
+                    "indexPrefix": "prefix_",
+                },
+                "transformationIDs": [
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/destinations"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}"""
+        )
+
     async def test_create_source_(self):
         """
         createSource
@@ -955,7 +980,7 @@ class TestIngestionClient:
 
     async def test_list_runs_(self):
         """
-        getRuns
+        listRuns
         """
         _req = await self._client.list_runs_with_http_info()
 
@@ -967,7 +992,7 @@ class TestIngestionClient:
 
     async def test_list_sources_(self):
         """
-        getSources
+        listSources
         """
         _req = await self._client.list_sources_with_http_info()
 
@@ -1003,7 +1028,7 @@ class TestIngestionClient:
 
     async def test_list_transformations_(self):
         """
-        getTransformations
+        listTransformations
         """
         _req = await self._client.list_transformations_with_http_info()
 

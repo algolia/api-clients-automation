@@ -696,7 +696,7 @@ class SnippetIngestionClient
     /**
      * Snippet for the ListRuns method.
      *
-     * getRuns
+     * listRuns
      */
     public function snippetForListRuns()
     {
@@ -715,7 +715,7 @@ class SnippetIngestionClient
     /**
      * Snippet for the ListSources method.
      *
-     * getSources
+     * listSources
      */
     public function snippetForListSources()
     {
@@ -772,7 +772,7 @@ class SnippetIngestionClient
     /**
      * Snippet for the ListTransformations method.
      *
-     * getTransformations
+     * listTransformations
      */
     public function snippetForListTransformations()
     {

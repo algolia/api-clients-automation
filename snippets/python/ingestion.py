@@ -762,7 +762,7 @@ async def snippet_for_list_runs():
     """
     Snippet for the listRuns method.
 
-    getRuns
+    listRuns
     """
     # >SEPARATOR listRuns default
     # Initialize the client
@@ -783,7 +783,7 @@ async def snippet_for_list_sources():
     """
     Snippet for the listSources method.
 
-    getSources
+    listSources
     """
     # >SEPARATOR listSources default
     # Initialize the client
@@ -846,7 +846,7 @@ async def snippet_for_list_transformations():
     """
     Snippet for the listTransformations method.
 
-    getTransformations
+    listTransformations
     """
     # >SEPARATOR listTransformations default
     # Initialize the client

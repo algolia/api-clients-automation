@@ -84,6 +84,21 @@ func TestIngestion_CreateDestination(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
+	t.Run("with transformationIDs", func(t *testing.T) {
+		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
+
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexPrefixAsDestinationInput(
+				ingestion.NewEmptyDestinationIndexPrefix().SetIndexPrefix("prefix_"))).SetTransformationIDs(
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/destinations", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`)
+	})
 }
 
 func TestIngestion_CreateSource(t *testing.T) {
@@ -939,7 +954,7 @@ func TestIngestion_ListRuns(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getRuns", func(t *testing.T) {
+	t.Run("listRuns", func(t *testing.T) {
 		_, err := client.ListRuns(client.NewApiListRunsRequest())
 		require.NoError(t, err)
 
@@ -954,7 +969,7 @@ func TestIngestion_ListSources(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getSources", func(t *testing.T) {
+	t.Run("listSources", func(t *testing.T) {
 		_, err := client.ListSources(client.NewApiListSourcesRequest())
 		require.NoError(t, err)
 
@@ -999,7 +1014,7 @@ func TestIngestion_ListTransformations(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getTransformations", func(t *testing.T) {
+	t.Run("listTransformations", func(t *testing.T) {
 		_, err := client.ListTransformations(client.NewApiListTransformationsRequest())
 		require.NoError(t, err)
 

@@ -1126,12 +1126,18 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
     * @param sort
     *   Property by which to sort the list.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
   def listTransformations(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
       sort: Option[SortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -1141,6 +1147,8 @@ class IngestionClient(
       .builder()
       .withMethod("GET")
       .withPath(s"/1/transformations")
+      .withQueryParameter("itemsPerPage", itemsPerPage)
+      .withQueryParameter("page", page)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()

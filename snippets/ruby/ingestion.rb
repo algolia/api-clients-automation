@@ -629,7 +629,7 @@ end
 
 # Snippet for the listRuns method.
 #
-# getRuns
+# listRuns
 def snippet_for_list_runs
   # >SEPARATOR listRuns default
   # Initialize the client
@@ -648,7 +648,7 @@ end
 
 # Snippet for the listSources method.
 #
-# getSources
+# listSources
 def snippet_for_list_sources
   # >SEPARATOR listSources default
   # Initialize the client
@@ -705,7 +705,7 @@ end
 
 # Snippet for the listTransformations method.
 #
-# getTransformations
+# listTransformations
 def snippet_for_list_transformations
   # >SEPARATOR listTransformations default
   # Initialize the client
