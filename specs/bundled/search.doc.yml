@@ -19365,6 +19365,14 @@ components:
         - disabled
       default: enabled
       description: Whether a dictionary entry is active.
+    dictionaryEntryType:
+      type: string
+      enum:
+        - custom
+        - standard
+      description: >-
+        Whether a dictionary entry is provided by Algolia (standard), or has
+        been added by you (custom).
     dictionaryEntry:
       type: object
       description: Dictionary entry.
@@ -19405,6 +19413,8 @@ components:
             type: string
         state:
           $ref: '#/components/schemas/dictionaryEntryState'
+        type:
+          $ref: '#/components/schemas/dictionaryEntryType'
     searchDictionaryEntriesResponse:
       type: object
       additionalProperties: false
