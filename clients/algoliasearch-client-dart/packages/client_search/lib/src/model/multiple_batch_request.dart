@@ -11,7 +11,7 @@ final class MultipleBatchRequest {
   /// Returns a new [MultipleBatchRequest] instance.
   const MultipleBatchRequest({
     required this.action,
-    required this.body,
+    this.body,
     required this.indexName,
   });
 
@@ -20,7 +20,7 @@ final class MultipleBatchRequest {
 
   /// Operation arguments (varies with specified `action`).
   @JsonKey(name: r'body')
-  final Object body;
+  final Object? body;
 
   /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')

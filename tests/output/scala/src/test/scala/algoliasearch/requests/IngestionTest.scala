@@ -1174,6 +1174,30 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("runSource") {
+    val (client, echo) = testClient()
+    val future = client.runSource(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      runSourcePayload = Some(
+        RunSourcePayload(
+          indexToInclude = Some(Seq("products_us", "products eu")),
+          entityIDs = Some(Seq("1234", "5678")),
+          entityType = Some(EntityType.withName("product"))
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("runTask") {
     val (client, echo) = testClient()
     val future = client.runTask(

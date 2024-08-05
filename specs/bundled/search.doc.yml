@@ -3778,7 +3778,7 @@ paths:
                     new BuiltInOperation
                     {
                       Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-                      Value = "test2",
+                      Value = new BuiltInOperationValue("test2"),
                     }
                   )
                 }
@@ -3826,7 +3826,7 @@ paths:
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
               "theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
-                search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue("test2"))},
+                search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue(search.StringAsBuiltInOperationValue("test2")))},
             ).WithCreateIfNotExists(true))
 
             if err != nil {
@@ -3856,7 +3856,7 @@ paths:
                 "id1",
                 AttributeToUpdate.of("test"),
                 "id2",
-                new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
+                new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
               ),
               true
             );
@@ -3897,7 +3897,7 @@ paths:
                 "id1" to AttributeToUpdate.of("test"),
                 "id2" to BuiltInOperation(
                   operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-                  value = "test2",
+                  value = BuiltInOperationValue.of("test2"),
                 ),
               ),
               createIfNotExists = true,
@@ -3989,7 +3989,7 @@ paths:
                 "id1" -> AttributeToUpdate("test"),
                 "id2" -> BuiltInOperation(
                   _operation = BuiltInOperationType.withName("AddUnique"),
-                  value = "test2"
+                  value = BuiltInOperationValue("test2")
                 )
               ),
               createIfNotExists = Some(true)
@@ -4016,7 +4016,10 @@ paths:
                 attributesToUpdate: [
                     "id1": AttributeToUpdate.string("test"),
                     "id2": AttributeToUpdate
-                        .builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: "test2")),
+                        .builtInOperation(BuiltInOperation(
+                            operation: BuiltInOperationType.addUnique,
+                            value: BuiltInOperationValue.string("test2")
+                        )),
                 ],
                 createIfNotExists: true
             )
@@ -4410,7 +4413,6 @@ paths:
                         $ref: '#/components/schemas/indexName'
                     required:
                       - action
-                      - body
                       - indexName
               required:
                 - requests
@@ -4688,7 +4690,7 @@ paths:
                 requests = Seq(
                   MultipleBatchRequest(
                     action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("value")))),
+                    body = Some(JObject(List(JField("key", JString("value"))))),
                     indexName = "theIndexName"
                   )
                 )
@@ -18186,6 +18188,14 @@ components:
         - IncrementFrom
         - IncrementSet
       description: How to change the attribute.
+    builtInOperationValue:
+      oneOf:
+        - type: string
+          description: >-
+            A string to append or remove for the `Add`, `Remove`, and
+            `AddUnique` operations.
+        - type: integer
+          description: A number to add, remove, or append, depending on the operation.
     builtInOperation:
       type: object
       description: Update to perform on the attribute.
@@ -18194,10 +18204,7 @@ components:
         _operation:
           $ref: '#/components/schemas/builtInOperationType'
         value:
-          type: string
-          description: >-
-            Value that corresponds to the operation, for example an `Increment`
-            or `Decrement` step, or an `Add` or `Remove` value.
+          $ref: '#/components/schemas/builtInOperationValue'
       required:
         - _operation
         - value
@@ -19358,6 +19365,14 @@ components:
         - disabled
       default: enabled
       description: Whether a dictionary entry is active.
+    dictionaryEntryType:
+      type: string
+      enum:
+        - custom
+        - standard
+      description: >-
+        Whether a dictionary entry is provided by Algolia (standard), or has
+        been added by you (custom).
     dictionaryEntry:
       type: object
       description: Dictionary entry.
@@ -19398,6 +19413,8 @@ components:
             type: string
         state:
           $ref: '#/components/schemas/dictionaryEntryState'
+        type:
+          $ref: '#/components/schemas/dictionaryEntryType'
     searchDictionaryEntriesResponse:
       type: object
       additionalProperties: false

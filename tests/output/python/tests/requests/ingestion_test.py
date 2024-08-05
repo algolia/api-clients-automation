@@ -1047,6 +1047,33 @@ class TestIngestionClient:
             """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
         )
 
+    async def test_run_source_(self):
+        """
+        runSource
+        """
+        _req = await self._client.run_source_with_http_info(
+            source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            run_source_payload={
+                "indexToInclude": [
+                    "products_us",
+                    "products eu",
+                ],
+                "entityIDs": [
+                    "1234",
+                    "5678",
+                ],
+                "entityType": "product",
+            },
+        )
+
+        assert _req.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}"""
+        )
+
     async def test_run_task_(self):
         """
         runTask

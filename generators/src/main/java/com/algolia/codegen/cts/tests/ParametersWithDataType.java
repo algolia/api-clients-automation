@@ -146,7 +146,7 @@ public class ParametersWithDataType {
       handleEnum(param, testOutput);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
-      handleModel(paramName, param, testOutput, spec, baseType, parent, depth, isParentFreeFormObject);
+      handleModel(paramName, param, testOutput, spec, baseType, parent, depth, isParentFreeFormObject, isRequired != null && isRequired);
     } else if (baseType.equals("Object")) {
       // not var, no item, pure free form
       handleObject(paramName, param, testOutput, true, depth);
@@ -259,7 +259,8 @@ public class ParametersWithDataType {
     String baseType,
     String parent,
     int depth,
-    boolean isParentFreeFormObject
+    boolean isParentFreeFormObject,
+    boolean parentIsRequired
   ) throws CTSException {
     if (!spec.getHasVars()) {
       // In this case we might have a complex `allOf`, we will first check if it exists
@@ -326,6 +327,8 @@ public class ParametersWithDataType {
       oneOfModel.put("x-one-of-explicit-name", useExplicitName);
       oneOfModel.put("hasWrapper", isList || isString(current) || current.getIsNumber() || current.getIsBoolean());
       testOutput.put("oneOfModel", oneOfModel);
+      // use required from the parent since oneOf don't have that property
+      testOutput.put("required", parentIsRequired);
       return;
     }
 

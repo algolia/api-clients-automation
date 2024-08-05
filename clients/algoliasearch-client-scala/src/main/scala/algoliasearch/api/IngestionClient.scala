@@ -40,6 +40,8 @@ import algoliasearch.ingestion.Run
 import algoliasearch.ingestion.RunListResponse
 import algoliasearch.ingestion.RunResponse
 import algoliasearch.ingestion.RunSortKeys._
+import algoliasearch.ingestion.RunSourcePayload
+import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
 import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
@@ -1171,6 +1173,33 @@ class IngestionClient(
       .withBody(batchWriteParams)
       .build()
     execute[RunResponse](request, requestOptions)
+  }
+
+  /** Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    * @param runSourcePayload
+    */
+  def runSource(
+      sourceID: String,
+      runSourcePayload: Option[RunSourcePayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[RunSourceResponse] = Future {
+    requireNotNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/sources/${escape(sourceID)}/run")
+      .withBody(runSourcePayload)
+      .build()
+    execute[RunSourceResponse](request, requestOptions)
   }
 
   /** Runs a task. You can check the status of task runs with the observability endpoints.

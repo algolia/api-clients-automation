@@ -1220,7 +1220,7 @@ describe('operationIndex', () => {
 });
 
 describe('partialUpdateObject', () => {
-  test('partialUpdateObject', async () => {
+  test('Partial update with string value', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -1238,6 +1238,23 @@ describe('partialUpdateObject', () => {
       id2: { _operation: 'AddUnique', value: 'test2' },
     });
     expect(req.searchParams).toStrictEqual({ createIfNotExists: 'true' });
+  });
+
+  test('Partial update with integer value', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: {
+        attributeId: { _operation: 'Increment', value: 2 },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      attributeId: { _operation: 'Increment', value: 2 },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

@@ -1230,6 +1230,29 @@ class IngestionTest {
     )
   }
 
+  // runSource
+
+  @Test
+  fun `runSource`() = runTest {
+    client.runTest(
+      call = {
+        runSource(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          runSourcePayload = RunSourcePayload(
+            indexToInclude = listOf("products_us", "products eu"),
+            entityIDs = listOf("1234", "5678"),
+            entityType = EntityType.entries.first { it.value == "product" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}""", it.body)
+      },
+    )
+  }
+
   // runTask
 
   @Test

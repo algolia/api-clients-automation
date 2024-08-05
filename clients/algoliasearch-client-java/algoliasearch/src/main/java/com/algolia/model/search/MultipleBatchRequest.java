@@ -36,7 +36,7 @@ public class MultipleBatchRequest {
   }
 
   /** Operation arguments (varies with specified `action`). */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Object getBody() {
     return body;
   }

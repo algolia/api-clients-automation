@@ -1011,7 +1011,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
 
 // Snippet for the partialUpdateObject method.
 //
-// partialUpdateObject
+// Partial update with string value
 export async function snippetForPartialUpdateObject(): Promise<void> {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client

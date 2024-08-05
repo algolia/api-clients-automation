@@ -1030,6 +1030,27 @@ func TestIngestion_PushTask(t *testing.T) {
 	})
 }
 
+func TestIngestion_RunSource(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("runSource", func(t *testing.T) {
+		_, err := client.RunSource(client.NewApiRunSourceRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		).WithRunSourcePayload(
+			ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
+				[]string{"products_us", "products eu"}).SetEntityIDs(
+				[]string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}`)
+	})
+}
+
 func TestIngestion_RunTask(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo

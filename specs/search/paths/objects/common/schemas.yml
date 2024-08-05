@@ -10,6 +10,13 @@ builtInOperationType:
     - IncrementSet
   description: How to change the attribute.
 
+builtInOperationValue:
+  oneOf:
+    - type: string
+      description: A string to append or remove for the `Add`, `Remove`, and `AddUnique` operations.
+    - type: integer
+      description: A number to add, remove, or append, depending on the operation.
+
 attribute:
   type: string
   description: Value of the attribute to update.
@@ -22,8 +29,7 @@ builtInOperation:
     _operation:
       $ref: '#/builtInOperationType'
     value:
-      type: string
-      description: Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value.
+      $ref: '#/builtInOperationValue'
   required:
     - _operation
     - value

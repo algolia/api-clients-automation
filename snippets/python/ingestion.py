@@ -904,6 +904,40 @@ async def snippet_for_push_task():
     # SEPARATOR<
 
 
+async def snippet_for_run_source():
+    """
+    Snippet for the runSource method.
+
+    runSource
+    """
+    # >SEPARATOR runSource default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.run_source(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        run_source_payload={
+            "indexToInclude": [
+                "products_us",
+                "products eu",
+            ],
+            "entityIDs": [
+                "1234",
+                "5678",
+            ],
+            "entityType": "product",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_run_task():
     """
     Snippet for the runTask method.

@@ -930,6 +930,30 @@ describe('pushTask', () => {
   });
 });
 
+describe('runSource', () => {
+  test('runSource', async () => {
+    const req = (await client.runSource({
+      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      runSourcePayload: {
+        indexToInclude: ['products_us', 'products eu'],
+        entityIDs: ['1234', '5678'],
+        entityType: 'product',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      indexToInclude: ['products_us', 'products eu'],
+      entityIDs: ['1234', '5678'],
+      entityType: 'product',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('runTask', () => {
   test('runTask', async () => {
     const req = (await client.runTask({

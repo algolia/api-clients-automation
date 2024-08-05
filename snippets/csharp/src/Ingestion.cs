@@ -758,6 +758,32 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the RunSource method.
+  ///
+  /// runSource
+  /// </summary>
+  public async Task SnippetForIngestionClientRunSource()
+  {
+    // >SEPARATOR runSource default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.RunSourceAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new RunSourcePayload
+      {
+        IndexToInclude = new List<string> { "products_us", "products eu" },
+        EntityIDs = new List<string> { "1234", "5678" },
+        EntityType = Enum.Parse<EntityType>("Product"),
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the RunTask method.
   ///
   /// runTask

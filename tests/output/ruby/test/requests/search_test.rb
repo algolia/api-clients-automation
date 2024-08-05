@@ -1112,7 +1112,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # partialUpdateObject
+  # Partial update with string value
   def test_partial_update_object
     req = @client.partial_update_object_with_http_info(
       "theIndexName",
@@ -1129,6 +1129,21 @@ class TestSearchClient < Test::Unit::TestCase
       JSON.parse("{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}"),
       JSON.parse(req.body)
     )
+  end
+
+  # Partial update with integer value
+  def test_partial_update_object1
+    req = @client.partial_update_object_with_http_info(
+      "theIndexName",
+      "uniqueID",
+      {attributeId: BuiltInOperation.new(_operation: "Increment", value: 2)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}"), JSON.parse(req.body))
   end
 
   # removeUserId

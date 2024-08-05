@@ -492,3 +492,32 @@ SourceWatchResponse:
       type: string
   required:
     - message
+
+RunSourcePayload:
+  type: object
+  additionalProperties: false
+  properties:
+    indexToInclude:
+      type: array
+      description: List of index names to include in reidexing/update.
+      items:
+        type: string
+    indexToExclude:
+      type: array
+      description: List of index names to exclude in reidexing/update.
+      items:
+        type: string
+    entityIDs:
+      type: array
+      items:
+        type: string
+      description: List of entityID to update.
+    entityType:
+      $ref: '#/EntityType'
+
+EntityType:
+  type: string
+  description: Type of entity to update.
+  enum:
+    - product
+    - collection

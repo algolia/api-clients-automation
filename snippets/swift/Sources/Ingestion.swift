@@ -529,6 +529,26 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the runSource method.
+    ///
+    /// runSource
+    func snippetForRunSource() async throws {
+        // >SEPARATOR runSource default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.runSource(
+            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            runSourcePayload: RunSourcePayload(
+                indexToInclude: ["products_us", "products eu"],
+                entityIDs: ["1234", "5678"],
+                entityType: EntityType.product
+            )
+        )
+        // SEPARATOR<
+    }
+
     /// Snippet for the runTask method.
     ///
     /// runTask

@@ -1175,6 +1175,35 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('runSource')]
+    public function testRunSource()
+    {
+        $client = $this->getClient();
+        $client->runSource(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['indexToInclude' => [
+                'products_us',
+
+                'products eu',
+            ],
+                'entityIDs' => [
+                    '1234',
+
+                    '5678',
+                ],
+                'entityType' => 'product',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
+                'method' => 'POST',
+                'body' => json_decode('{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('runTask')]
     public function testRunTask()
     {

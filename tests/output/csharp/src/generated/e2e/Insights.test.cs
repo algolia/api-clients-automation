@@ -63,7 +63,7 @@ public class InsightsClientRequestTestsE2E
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1722124800000L,
+                Timestamp = 1722643200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
                 QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               }
@@ -76,7 +76,7 @@ public class InsightsClientRequestTestsE2E
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1722124800000L,
+                Timestamp = 1722643200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               }
             )
