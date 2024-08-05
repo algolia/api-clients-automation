@@ -102,7 +102,6 @@ public class ModelPruner {
     // - the parameters of an operation
 
     ModelPruner modelPruner = new ModelPruner(convertToMap(config, allModels));
-    Helpers.prettyPrint(modelPruner.models.keySet());
     modelPruner.exploreGraph(operations);
 
     List<String> toRemove = new ArrayList<>();
