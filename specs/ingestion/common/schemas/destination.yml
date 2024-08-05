@@ -17,6 +17,8 @@ Destination:
       $ref: './common.yml#/updatedAt'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
   required:
     - destinationID
     - type
@@ -37,6 +39,8 @@ DestinationCreate:
       $ref: '#/DestinationInput'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
   required:
     - type
     - name
@@ -71,6 +75,8 @@ DestinationUpdate:
       $ref: '#/DestinationInput'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
 
 DestinationUpdateResponse:
   type: object
