@@ -40,7 +40,6 @@ object DestinationInputSerializer extends Serializer[DestinationInput] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[DestinationInput] =>
       json match {
-        case value: JObject => Extraction.extract[DestinationIndexPrefix](value)
         case value: JObject => Extraction.extract[DestinationIndexName](value)
         case _              => throw new MappingException("Can't convert " + json + " to DestinationInput")
       }
@@ -48,8 +47,7 @@ object DestinationInputSerializer extends Serializer[DestinationInput] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: DestinationInput =>
     value match {
-      case value: DestinationIndexPrefix => Extraction.decompose(value)(format - this)
-      case value: DestinationIndexName   => Extraction.decompose(value)(format - this)
+      case value: DestinationIndexName => Extraction.decompose(value)(format - this)
     }
   }
 }

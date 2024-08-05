@@ -45,8 +45,8 @@ class SnippetIngestionClient {
       destinationCreate = DestinationCreate(
         type = DestinationType.entries.first { it.value == "search" },
         name = "destinationName",
-        input = DestinationIndexPrefix(
-          indexPrefix = "prefix_",
+        input = DestinationIndexName(
+          indexName = "full_name______",
         ),
         authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       ),

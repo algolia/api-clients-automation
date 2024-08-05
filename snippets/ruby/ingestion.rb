@@ -42,7 +42,7 @@ def snippet_for_create_destination
     DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+      input: DestinationIndexName.new(index_name: "full_name______"),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
   )

@@ -2434,17 +2434,6 @@ components:
       type: string
       description: Universally unique identifier (UUID) of a destination resource.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    DestinationIndexPrefix:
-      type: object
-      additionalProperties: false
-      properties:
-        indexPrefix:
-          type: string
-          description: >-
-            String added to the beginning of all indices created by this
-            destination.
-      required:
-        - indexPrefix
     RecordType:
       type: string
       description: Record type for ecommerce sources.
@@ -2488,7 +2477,6 @@ components:
         - indexName
     DestinationInput:
       oneOf:
-        - $ref: '#/components/schemas/DestinationIndexPrefix'
         - $ref: '#/components/schemas/DestinationIndexName'
     transformationID:
       type: string

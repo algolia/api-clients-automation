@@ -63,7 +63,7 @@ class TestIngestionClient < Test::Unit::TestCase
       DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+        input: DestinationIndexName.new(index_name: "full_name______"),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
     )
@@ -74,7 +74,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
       ),
       JSON.parse(req.body)
     )
@@ -86,7 +86,7 @@ class TestIngestionClient < Test::Unit::TestCase
       DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+        input: DestinationIndexName.new(index_name: "full_name______"),
         transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
       )
     )
@@ -97,7 +97,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}"
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}"
       ),
       JSON.parse(req.body)
     )
