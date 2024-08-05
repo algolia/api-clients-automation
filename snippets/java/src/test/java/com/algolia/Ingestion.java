@@ -442,7 +442,7 @@ class SnippetIngestionClient {
 
   // Snippet for the listRuns method.
   //
-  // getRuns
+  // listRuns
   void snippetForListRuns() {
     // >SEPARATOR listRuns default
     // Initialize the client
@@ -455,7 +455,7 @@ class SnippetIngestionClient {
 
   // Snippet for the listSources method.
   //
-  // getSources
+  // listSources
   void snippetForListSources() {
     // >SEPARATOR listSources default
     // Initialize the client
@@ -494,7 +494,7 @@ class SnippetIngestionClient {
 
   // Snippet for the listTransformations method.
   //
-  // getTransformations
+  // listTransformations
   void snippetForListTransformations() {
     // >SEPARATOR listTransformations default
     // Initialize the client

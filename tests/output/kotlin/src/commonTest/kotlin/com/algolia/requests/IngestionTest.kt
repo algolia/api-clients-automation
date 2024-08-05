@@ -93,6 +93,29 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `with transformationIDs1`() = runTest {
+    client.runTest(
+      call = {
+        createDestination(
+          destinationCreate = DestinationCreate(
+            type = DestinationType.entries.first { it.value == "search" },
+            name = "destinationName",
+            input = DestinationIndexPrefix(
+              indexPrefix = "prefix_",
+            ),
+            transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/destinations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}""", it.body)
+      },
+    )
+  }
+
   // createSource
 
   @Test
@@ -1105,7 +1128,7 @@ class IngestionTest {
   // listRuns
 
   @Test
-  fun `getRuns`() = runTest {
+  fun `listRuns`() = runTest {
     client.runTest(
       call = {
         listRuns()
@@ -1121,7 +1144,7 @@ class IngestionTest {
   // listSources
 
   @Test
-  fun `getSources`() = runTest {
+  fun `listSources`() = runTest {
     client.runTest(
       call = {
         listSources()
@@ -1169,7 +1192,7 @@ class IngestionTest {
   // listTransformations
 
   @Test
-  fun `getTransformations`() = runTest {
+  fun `listTransformations`() = runTest {
     client.runTest(
       call = {
         listTransformations()

@@ -886,7 +886,7 @@ func SnippetForListRunsOfIngestion() {
 	/*
 	   Snippet for the listRuns method.
 
-	   getRuns
+	   listRuns
 	*/
 
 	// >SEPARATOR listRuns default
@@ -912,7 +912,7 @@ func SnippetForListSourcesOfIngestion() {
 	/*
 	   Snippet for the listSources method.
 
-	   getSources
+	   listSources
 	*/
 
 	// >SEPARATOR listSources default
@@ -990,7 +990,7 @@ func SnippetForListTransformationsOfIngestion() {
 	/*
 	   Snippet for the listTransformations method.
 
-	   getTransformations
+	   listTransformations
 	*/
 
 	// >SEPARATOR listTransformations default

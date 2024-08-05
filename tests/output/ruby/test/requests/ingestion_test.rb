@@ -80,6 +80,29 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # with transformationIDs
+  def test_create_destination1
+    req = @client.create_destination_with_http_info(
+      DestinationCreate.new(
+        type: "search",
+        name: "destinationName",
+        input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
+        transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/destinations", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # createSource
   def test_create_source
     req = @client.create_source_with_http_info(
@@ -763,7 +786,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getRuns
+  # listRuns
   def test_list_runs
     req = @client.list_runs_with_http_info
 
@@ -775,7 +798,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getSources
+  # listSources
   def test_list_sources
     req = @client.list_sources_with_http_info
 
@@ -811,7 +834,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # getTransformations
+  # listTransformations
   def test_list_transformations
     req = @client.list_transformations_with_http_info
 

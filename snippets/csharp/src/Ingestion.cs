@@ -634,7 +634,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListRuns method.
   ///
-  /// getRuns
+  /// listRuns
   /// </summary>
   public async Task SnippetForIngestionClientListRuns()
   {
@@ -652,7 +652,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListSources method.
   ///
-  /// getSources
+  /// listSources
   /// </summary>
   public async Task SnippetForIngestionClientListSources()
   {
@@ -706,7 +706,7 @@ public class SnippetIngestionClient
   /// <summary>
   /// Snippet for the ListTransformations method.
   ///
-  /// getTransformations
+  /// listTransformations
   /// </summary>
   public async Task SnippetForIngestionClientListTransformations()
   {

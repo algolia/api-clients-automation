@@ -45,5 +45,6 @@ case class Destination(
     input: DestinationInput,
     createdAt: String,
     updatedAt: Option[String] = scala.None,
-    authenticationID: Option[String] = scala.None
+    authenticationID: Option[String] = scala.None,
+    transformationIDs: Option[Seq[String]] = scala.None
 )

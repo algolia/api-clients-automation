@@ -447,7 +447,7 @@ final class IngestionClientSnippet {
 
     /// Snippet for the listRuns method.
     ///
-    /// getRuns
+    /// listRuns
     func snippetForListRuns() async throws {
         // >SEPARATOR listRuns default
         // Initialize the client
@@ -460,7 +460,7 @@ final class IngestionClientSnippet {
 
     /// Snippet for the listSources method.
     ///
-    /// getSources
+    /// listSources
     func snippetForListSources() async throws {
         // >SEPARATOR listSources default
         // Initialize the client
@@ -499,7 +499,7 @@ final class IngestionClientSnippet {
 
     /// Snippet for the listTransformations method.
     ///
-    /// getTransformations
+    /// listTransformations
     func snippetForListTransformations() async throws {
         // >SEPARATOR listTransformations default
         // Initialize the client
