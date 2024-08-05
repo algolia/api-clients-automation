@@ -28,6 +28,11 @@ dictionaryEntryState:
   default: enabled
   description: Whether a dictionary entry is active.
 
+dictionaryEntryType:
+  type: string
+  enum: [custom, standard]
+  description: Whether a dictionary entry is provided by Algolia (standard), or has been added by you (custom).
+
 logType:
   type: string
   enum: [all, query, build, error]
