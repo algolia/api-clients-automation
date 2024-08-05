@@ -1343,10 +1343,10 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("partialUpdateObject", func(t *testing.T) {
+	t.Run("Partial update with string value", func(t *testing.T) {
 		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
 			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
-				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue("test2"))},
+				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue(search.StringAsBuiltInOperationValue("test2")))},
 		).WithCreateIfNotExists(true))
 		require.NoError(t, err)
 
@@ -1361,6 +1361,19 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+	})
+	t.Run("Partial update with integer value", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"attributeId": *search.BuiltInOperationAsAttributeToUpdate(
+				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("Increment")).SetValue(search.Int32AsBuiltInOperationValue(2)))},
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeId":{"_operation":"Increment","value":2}}`)
 	})
 }
 

@@ -1093,7 +1093,7 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the PartialUpdateObject method.
   ///
-  /// partialUpdateObject
+  /// Partial update with string value
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObject()
   {
@@ -1114,7 +1114,7 @@ public class SnippetSearchClient
             new BuiltInOperation
             {
               Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-              Value = "test2",
+              Value = new BuiltInOperationValue("test2"),
             }
           )
         }

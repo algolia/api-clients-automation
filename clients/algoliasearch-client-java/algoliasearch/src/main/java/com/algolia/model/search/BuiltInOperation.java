@@ -15,7 +15,7 @@ public class BuiltInOperation implements AttributeToUpdate {
   private BuiltInOperationType operation;
 
   @JsonProperty("value")
-  private String value;
+  private BuiltInOperationValue value;
 
   public BuiltInOperation setOperation(BuiltInOperationType operation) {
     this.operation = operation;
@@ -28,17 +28,14 @@ public class BuiltInOperation implements AttributeToUpdate {
     return operation;
   }
 
-  public BuiltInOperation setValue(String value) {
+  public BuiltInOperation setValue(BuiltInOperationValue value) {
     this.value = value;
     return this;
   }
 
-  /**
-   * Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an
-   * `Add` or `Remove` value.
-   */
+  /** Get value */
   @javax.annotation.Nonnull
-  public String getValue() {
+  public BuiltInOperationValue getValue() {
     return value;
   }
 

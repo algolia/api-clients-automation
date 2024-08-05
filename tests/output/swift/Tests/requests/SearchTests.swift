@@ -2270,7 +2270,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// partialUpdateObject
+    /// Partial update with string value
     func testPartialUpdateObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -2285,7 +2285,10 @@ final class SearchClientRequestsTests: XCTestCase {
             attributesToUpdate: [
                 "id1": AttributeToUpdate.string("test"),
                 "id2": AttributeToUpdate
-                    .builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: "test2")),
+                    .builtInOperation(BuiltInOperation(
+                        operation: BuiltInOperationType.addUnique,
+                        value: BuiltInOperationValue.string("test2")
+                    )),
             ],
             createIfNotExists: true
         )
@@ -2311,6 +2314,43 @@ final class SearchClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// Partial update with integer value
+    func testPartialUpdateObjectTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "uniqueID",
+            attributesToUpdate: [
+                "attributeId": AttributeToUpdate
+                    .builtInOperation(BuiltInOperation(
+                        operation: BuiltInOperationType.increment,
+                        value: BuiltInOperationValue.int(2)
+                    )),
+            ]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// removeUserId

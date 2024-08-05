@@ -20,7 +20,7 @@ class AttributeToUpdate extends AbstractModel implements ModelInterface, \ArrayA
      */
     protected static $modelTypes = [
         'operation' => '\Algolia\AlgoliaSearch\Model\Search\BuiltInOperationType',
-        'value' => 'string',
+        'value' => '\Algolia\AlgoliaSearch\Model\Search\BuiltInOperationValue',
     ];
 
     /**
@@ -194,7 +194,7 @@ class AttributeToUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets value.
      *
-     * @return string
+     * @return BuiltInOperationValue
      */
     public function getValue()
     {
@@ -204,7 +204,7 @@ class AttributeToUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets value.
      *
-     * @param string $value value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value
+     * @param BuiltInOperationValue $value value
      *
      * @return self
      */

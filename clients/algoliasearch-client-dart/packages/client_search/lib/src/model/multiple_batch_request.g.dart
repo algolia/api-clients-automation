@@ -15,7 +15,7 @@ MultipleBatchRequest _$MultipleBatchRequestFromJson(
         final val = MultipleBatchRequest(
           action:
               $checkedConvert('action', (v) => $enumDecode(_$ActionEnumMap, v)),
-          body: $checkedConvert('body', (v) => v as Object),
+          body: $checkedConvert('body', (v) => v),
           indexName: $checkedConvert('indexName', (v) => v as String),
         );
         return val;
@@ -23,12 +23,21 @@ MultipleBatchRequest _$MultipleBatchRequestFromJson(
     );
 
 Map<String, dynamic> _$MultipleBatchRequestToJson(
-        MultipleBatchRequest instance) =>
-    <String, dynamic>{
-      'action': instance.action.toJson(),
-      'body': instance.body,
-      'indexName': instance.indexName,
-    };
+    MultipleBatchRequest instance) {
+  final val = <String, dynamic>{
+    'action': instance.action.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('body', instance.body);
+  val['indexName'] = instance.indexName;
+  return val;
+}
 
 const _$ActionEnumMap = {
   Action.addObject: 'addObject',

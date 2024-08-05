@@ -1269,7 +1269,7 @@ class SnippetSearchClient
     /**
      * Snippet for the PartialUpdateObject method.
      *
-     * partialUpdateObject
+     * Partial update with string value
      */
     public function snippetForPartialUpdateObject()
     {

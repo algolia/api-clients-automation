@@ -1144,6 +1144,30 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("runSource")
+  void runSourceTest() {
+    assertDoesNotThrow(() -> {
+      client.runSource(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new RunSourcePayload()
+          .setIndexToInclude(List.of("products_us", "products eu"))
+          .setEntityIDs(List.of("1234", "5678"))
+          .setEntityType(EntityType.PRODUCT)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"indexToInclude\":[\"products_us\",\"products" + " eu\"],\"entityIDs\":[\"1234\",\"5678\"],\"entityType\":\"product\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("runTask")
   void runTaskTest() {
     assertDoesNotThrow(() -> {

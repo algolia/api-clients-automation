@@ -1128,6 +1128,29 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "runSource")]
+  public async Task RunSourceTest()
+  {
+    await client.RunSourceAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new RunSourcePayload
+      {
+        IndexToInclude = new List<string> { "products_us", "products eu" },
+        EntityIDs = new List<string> { "1234", "5678" },
+        EntityType = Enum.Parse<EntityType>("Product"),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"indexToInclude\":[\"products_us\",\"products eu\"],\"entityIDs\":[\"1234\",\"5678\"],\"entityType\":\"product\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "runTask")]
   public async Task RunTaskTest()
   {

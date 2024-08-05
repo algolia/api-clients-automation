@@ -1,5 +1,6 @@
 [
   {
+    "testName": "Partial update with string value",
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -24,6 +25,29 @@
       },
       "queryParameters": {
         "createIfNotExists": "true"
+      }
+    }
+  },
+  {
+    "testName": "Partial update with integer value",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": {
+          "_operation": "Increment",
+          "value": 2
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": {
+          "_operation": "Increment",
+          "value": 2
+        }
       }
     }
   }

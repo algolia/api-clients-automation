@@ -32,6 +32,9 @@ public class DictionaryEntry {
   @JsonProperty("state")
   private DictionaryEntryState state;
 
+  @JsonProperty("type")
+  private DictionaryEntryType type;
+
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonAnyGetter
@@ -127,6 +130,17 @@ public class DictionaryEntry {
     return state;
   }
 
+  public DictionaryEntry setType(DictionaryEntryType type) {
+    this.type = type;
+    return this;
+  }
+
+  /** Get type */
+  @javax.annotation.Nullable
+  public DictionaryEntryType getType() {
+    return type;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -143,13 +157,14 @@ public class DictionaryEntry {
       Objects.equals(this.words, dictionaryEntry.words) &&
       Objects.equals(this.decomposition, dictionaryEntry.decomposition) &&
       Objects.equals(this.state, dictionaryEntry.state) &&
+      Objects.equals(this.type, dictionaryEntry.type) &&
       super.equals(o)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objectID, language, word, words, decomposition, state, super.hashCode());
+    return Objects.hash(objectID, language, word, words, decomposition, state, type, super.hashCode());
   }
 
   @Override
@@ -163,6 +178,7 @@ public class DictionaryEntry {
     sb.append("    words: ").append(toIndentedString(words)).append("\n");
     sb.append("    decomposition: ").append(toIndentedString(decomposition)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

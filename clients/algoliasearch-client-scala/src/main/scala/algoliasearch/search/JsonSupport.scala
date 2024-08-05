@@ -47,6 +47,7 @@ object JsonSupport {
     new BuiltInOperationTypeSerializer() :+
     new DictionaryActionSerializer() :+
     new DictionaryEntryStateSerializer() :+
+    new DictionaryEntryTypeSerializer() :+
     new DictionaryTypeSerializer() :+
     new EditTypeSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
@@ -72,6 +73,7 @@ object JsonSupport {
     AttributeToUpdateSerializer :+
     AutomaticFacetFiltersSerializer :+
     BrowseParamsSerializer :+
+    BuiltInOperationValueSerializer :+
     ConsequenceQuerySerializer :+
     DistinctSerializer :+
     FacetFiltersSerializer :+

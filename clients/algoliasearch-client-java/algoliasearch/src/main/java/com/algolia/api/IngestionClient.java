@@ -3003,6 +3003,120 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
+   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
+   * task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunSourceResponse runSource(@Nonnull String sourceID, RunSourcePayload runSourcePayload, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runSourceAsync(sourceID, runSourcePayload, requestOptions));
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
+   * task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunSourceResponse runSource(@Nonnull String sourceID, RunSourcePayload runSourcePayload) throws AlgoliaRuntimeException {
+    return this.runSource(sourceID, runSourcePayload, null);
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
+   * task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunSourceResponse runSource(@Nonnull String sourceID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.runSource(sourceID, null, requestOptions);
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
+   * task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunSourceResponse runSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.runSource(sourceID, null, null);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
+   * create 1 run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunSourceResponse> runSourceAsync(
+    @Nonnull String sourceID,
+    RunSourcePayload runSourcePayload,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources/{sourceID}/run", sourceID)
+      .setMethod("POST")
+      .setBody(runSourcePayload)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RunSourceResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
+   * create 1 run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunSourceResponse> runSourceAsync(@Nonnull String sourceID, RunSourcePayload runSourcePayload)
+    throws AlgoliaRuntimeException {
+    return this.runSourceAsync(sourceID, runSourcePayload, null);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
+   * create 1 run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunSourceResponse> runSourceAsync(@Nonnull String sourceID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.runSourceAsync(sourceID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
+   * create 1 run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunSourceResponse> runSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.runSourceAsync(sourceID, null, null);
+  }
+
+  /**
    * Runs a task. You can check the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)

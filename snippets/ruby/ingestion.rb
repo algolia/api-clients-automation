@@ -749,6 +749,32 @@ def snippet_for_push_task
   # SEPARATOR<
 end
 
+# Snippet for the runSource method.
+#
+# runSource
+def snippet_for_run_source
+  # >SEPARATOR runSource default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.run_source(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    RunSourcePayload.new(
+      index_to_include: ["products_us", "products eu"],
+      entity_ids: ["1234", "5678"],
+      entity_type: "product"
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the runTask method.
 #
 # runTask

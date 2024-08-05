@@ -1596,7 +1596,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('partialUpdateObject')]
+    #[TestDox('Partial update with string value')]
     public function testPartialUpdateObject()
     {
         $client = $this->getClient();
@@ -1617,6 +1617,28 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}'),
                 'queryParameters' => json_decode('{"createIfNotExists":"true"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with integer value')]
+    public function testPartialUpdateObject1()
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => ['_operation' => 'Increment',
+                'value' => 2,
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":{"_operation":"Increment","value":2}}'),
             ],
         ]);
     }

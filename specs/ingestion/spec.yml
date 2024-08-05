@@ -137,6 +137,8 @@ paths:
     $ref: 'paths/sources/validateID.yml'
   /1/sources/{sourceID}/discover:
     $ref: 'paths/sources/discover.yml'
+  /1/sources/{sourceID}/run:
+    $ref: 'paths/sources/runSource.yml'
 
   # tasks API.
   /1/tasks:

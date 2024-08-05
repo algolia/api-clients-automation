@@ -980,7 +980,7 @@ void snippetForoperationIndex2() async {
 
 // Snippet for the partialUpdateObject method.
 //
-// partialUpdateObject
+// Partial update with string value
 void snippetForpartialUpdateObject() async {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
