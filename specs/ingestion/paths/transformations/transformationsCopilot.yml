@@ -1,0 +1,29 @@
+get:
+  tags:
+    - transformations
+  summary: Retrieve existing LLM transformation helpers
+  description: Retrieves a list of existing LLM transformation helpers.
+  operationId: listCopilots
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: listTransformationModels
+            type: object
+            description: List of available copilot LLM for transformation purposes.
+            additionalProperties: false
+            properties:
+              llms:
+                type: array
+                items:
+                  $ref: '../../common/schemas/transformation.yml#/Model'
+            required:
+              - llms
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
