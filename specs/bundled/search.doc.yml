@@ -4413,7 +4413,6 @@ paths:
                         $ref: '#/components/schemas/indexName'
                     required:
                       - action
-                      - body
                       - indexName
               required:
                 - requests
@@ -4691,7 +4690,7 @@ paths:
                 requests = Seq(
                   MultipleBatchRequest(
                     action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("value")))),
+                    body = Some(JObject(List(JField("key", JString("value"))))),
                     indexName = "theIndexName"
                   )
                 )

@@ -1517,7 +1517,7 @@ class SearchTest extends AnyFunSuite {
         requests = Seq(
           MultipleBatchRequest(
             action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("value")))),
+            body = Some(JObject(List(JField("key", JString("value"))))),
             indexName = "theIndexName"
           )
         )
