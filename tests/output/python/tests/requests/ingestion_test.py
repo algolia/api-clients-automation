@@ -67,7 +67,7 @@ class TestIngestionClient:
                 "type": "search",
                 "name": "destinationName",
                 "input": {
-                    "indexPrefix": "prefix_",
+                    "indexName": "full_name______",
                 },
                 "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             },
@@ -78,7 +78,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+            """{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
         )
 
     async def test_create_destination_1(self):
@@ -90,7 +90,7 @@ class TestIngestionClient:
                 "type": "search",
                 "name": "destinationName",
                 "input": {
-                    "indexPrefix": "prefix_",
+                    "indexName": "full_name______",
                 },
                 "transformationIDs": [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -103,7 +103,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}"""
+            """{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}"""
         )
 
     async def test_create_source_(self):

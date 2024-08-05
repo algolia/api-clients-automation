@@ -78,8 +78,8 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexPrefix(
-              indexPrefix = "prefix_",
+            input = DestinationIndexName(
+              indexName = "full_name______",
             ),
             authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           ),
@@ -88,7 +88,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/destinations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
+        assertJsonBody("""{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
       },
     )
   }
@@ -101,8 +101,8 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexPrefix(
-              indexPrefix = "prefix_",
+            input = DestinationIndexName(
+              indexName = "full_name______",
             ),
             transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
           ),
@@ -111,7 +111,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/destinations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}""", it.body)
+        assertJsonBody("""{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}""", it.body)
       },
     )
   }

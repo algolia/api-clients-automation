@@ -59,7 +59,7 @@ describe('createDestination', () => {
     const req = (await client.createDestination({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -68,7 +68,7 @@ describe('createDestination', () => {
     expect(req.data).toEqual({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -78,7 +78,7 @@ describe('createDestination', () => {
     const req = (await client.createDestination({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],
     })) as unknown as EchoResponse;
 
@@ -87,7 +87,7 @@ describe('createDestination', () => {
     expect(req.data).toEqual({
       type: 'search',
       name: 'destinationName',
-      input: { indexPrefix: 'prefix_' },
+      input: { indexName: 'full_name______' },
       transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],
     });
     expect(req.searchParams).toStrictEqual(undefined);

@@ -85,7 +85,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexPrefix { IndexPrefix = "prefix_", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -94,7 +94,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/destinations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+      "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -108,7 +108,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexPrefix { IndexPrefix = "prefix_", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
         TransformationIDs = new List<string> { "6c02aeb1-775e-418e-870b-1faccd4b2c0f" },
       }
     );
@@ -117,7 +117,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/destinations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}",
+      "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
