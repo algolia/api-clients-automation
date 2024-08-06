@@ -169,7 +169,6 @@ export async function generateSLA(versions: Versions): Promise<void> {
       return generateLanguageSLA(tags, lang, versions);
     }),
   );
-  // await generateLanguageSLA('csharp', versions);
 
   await fsp.writeFile(
     toAbsolutePath('config/release.config.json'),
