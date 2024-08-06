@@ -31,13 +31,9 @@ function isPreRelease(version: string): boolean {
   );
 }
 
-function setSupportStatus(lang: Language, version: string, status: 'active' | 'inactive'): void {
-  if (status === 'inactive') {
-    delete fullReleaseConfig.sla[lang][version].supportStart;
-    delete fullReleaseConfig.sla[lang][version].supportEnd;
-  }
-
-  fullReleaseConfig.sla[lang][version].supportStatus = status;
+function setInactive(lang: Language, version: string, supportEnd: Date): void {
+  fullReleaseConfig.sla[lang][version].supportEnd = supportEnd.toISOString().split('T')[0];
+  fullReleaseConfig.sla[lang][version].supportStatus = 'inactive';
 }
 
 function setMaintenance(
@@ -129,7 +125,7 @@ export function generateLanguageSLA(tags: string[], lang: Language, version: Ver
     if (prevTagVersion !== '') {
       // if the previous tag is on the same major.minor version, we don't support it
       if (tagMajor === prevTagMajor && tagMinor === prevTagMinor) {
-        setSupportStatus(lang, prevTagVersion, 'inactive');
+        setInactive(lang, prevTagVersion, releaseDate);
       } else {
         setMaintenance(lang, prevTagVersion, releaseDate, deadline);
       }
@@ -142,24 +138,25 @@ export function generateLanguageSLA(tags: string[], lang: Language, version: Ver
 
   // if there's no release planned, or if the release is a pre-release, then the latest tagged version is the active one
   if (!version?.next || isPreRelease(version?.next)) {
-    return setSupportStatus(lang, prevTagVersion, 'active');
+    fullReleaseConfig.sla[lang][prevTagVersion].supportStatus = 'active';
+
+    return;
   }
 
   const { major: nextMajor, minor: nextMinor } = getMajorMinor(lang, version.next);
 
   // if we release a new patch on the same major.minor version as the active one, we set it as inactive
   if (nextMajor === prevTagMajor && nextMinor === prevTagMinor) {
-    setSupportStatus(lang, prevTagVersion, 'inactive');
+    setInactive(lang, prevTagVersion, start);
   } else {
     setMaintenance(lang, prevTagVersion, start, end);
   }
 
+  // if it's a new major or minor, it's just a new active version, the previous one is already in maintenance
   fullReleaseConfig.sla[lang][version.next] = {
     releaseDate: start.toISOString().split('T')[0],
+    supportStatus: 'active',
   };
-
-  // if it's a new major or minor, it's just a new active version, the previous one is already in maintenance
-  return setSupportStatus(lang, version.next, 'active');
 }
 
 export async function generateSLA(versions: Versions): Promise<void> {
