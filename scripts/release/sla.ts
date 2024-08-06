@@ -41,6 +41,20 @@ function setSupportStatus(lang: Language, version: string, status: 'active' | 'i
   fullReleaseConfig.sla[lang][version].supportStatus = status;
 }
 
+function setMaintenance(
+  lang: Language,
+  version: string,
+  supportStart: Date,
+  supportEnd: Date,
+): void {
+  fullReleaseConfig.sla[lang][version] = {
+    ...fullReleaseConfig.sla[lang][version],
+    supportStart: supportStart.toISOString().split('T')[0],
+    supportEnd: supportEnd.toISOString().split('T')[0],
+    supportStatus: 'maintenance',
+  };
+}
+
 // fetch the git tags for the given `lang`
 async function getTags(lang: Language): Promise<string[]> {
   const githubToken = ensureGitHubToken();
@@ -70,6 +84,8 @@ async function getTags(lang: Language): Promise<string[]> {
 // updates the release.config.json in order to generate a map of version and SLA for every clients
 export function generateLanguageSLA(tags: string[], lang: Language, versions: Versions): void {
   const start = new Date();
+  const end = new Date(start);
+  end.setFullYear(start.getFullYear() + 2);
 
   // @ts-expect-error -- force reset our sla policy to remove outdated ones
   fullReleaseConfig.sla[lang] = {};
@@ -108,16 +124,11 @@ export function generateLanguageSLA(tags: string[], lang: Language, versions: Ve
 
     // the current tag version defines the maintenance policy of the previous one
     if (prevTagVersion !== '') {
-      fullReleaseConfig.sla[lang][prevTagVersion] = {
-        ...fullReleaseConfig.sla[lang][prevTagVersion],
-        supportStart: releaseDate.toISOString().split('T')[0],
-        supportEnd: deadline.toISOString().split('T')[0],
-        supportStatus: 'maintenance',
-      };
-
       // if the previous tag is on the same major.minor version, we don't support it
       if (tagMajor === prevTagMajor && tagMinor === prevTagMinor) {
         setSupportStatus(lang, prevTagVersion, 'inactive');
+      } else {
+        setMaintenance(lang, prevTagVersion, releaseDate, deadline);
       }
     }
 
@@ -135,8 +146,14 @@ export function generateLanguageSLA(tags: string[], lang: Language, versions: Ve
 
   // if we release a new patch on the same major.minor version as the active one, we set it as inactive
   if (nextMajor === prevTagMajor && nextMinor === prevTagMinor) {
-    return setSupportStatus(lang, prevTagVersion, 'inactive');
+    setSupportStatus(lang, prevTagVersion, 'inactive');
+  } else {
+    setMaintenance(lang, prevTagVersion, start, end);
   }
+
+  fullReleaseConfig.sla[lang][versions[lang].next] = {
+    releaseDate: start.toISOString().split('T')[0],
+  };
 
   // if it's a new major or minor, it's just a new active version, the previous one is already in maintenance
   return setSupportStatus(lang, versions[lang].next, 'active');
