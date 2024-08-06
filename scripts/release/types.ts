@@ -2,7 +2,7 @@ import type { ReleaseType } from 'semver';
 
 import type { Language } from '../types.js';
 
-type Version = {
+export type Version = {
   current: string;
   releaseType: ReleaseType | null;
   next: string | null;

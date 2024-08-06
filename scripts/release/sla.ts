@@ -8,7 +8,7 @@ import { ensureGitHubToken, fullReleaseConfig, LANGUAGES, run, toAbsolutePath } 
 import type { Language } from '../types.js';
 
 import { preReleaseRegExp } from './createReleasePR.js';
-import type { Versions } from './types.js';
+import type { Version, Versions } from './types.js';
 
 function getMajorMinor(lang: Language, version: string): { major: number; minor: number } {
   const matches = version.match(/(\d+)\.(\d+)/);
@@ -20,7 +20,6 @@ function getMajorMinor(lang: Language, version: string): { major: number; minor:
   return { major: parseInt(matches[1], 10), minor: parseInt(matches[2], 10) };
 }
 
-// isPreRelease
 function isPreRelease(version: string): boolean {
   return (
     version.match(preReleaseRegExp) !== null ||
@@ -55,7 +54,7 @@ function setMaintenance(
   };
 }
 
-// fetch the git tags for the given `lang`
+// fetches the git tags on the given `lang` repository, throws if none.
 async function getTags(lang: Language): Promise<string[]> {
   const githubToken = ensureGitHubToken();
 
@@ -81,8 +80,12 @@ async function getTags(lang: Language): Promise<string[]> {
   return tags;
 }
 
-// updates the release.config.json in order to generate a map of version and SLA for every clients
-export function generateLanguageSLA(tags: string[], lang: Language, versions: Versions): void {
+/*
+ * udpates the release.config.json file for the given `lang` by generating an SLA policy map of every versions in a now-2years window.
+ * the given `version` to release is added to the map once existing tags are computed.
+ * any pre-release and non-semver tags are excluded
+ */
+export function generateLanguageSLA(tags: string[], lang: Language, version: Version): void {
   const start = new Date();
   const end = new Date(start);
   end.setFullYear(start.getFullYear() + 2);
@@ -138,11 +141,11 @@ export function generateLanguageSLA(tags: string[], lang: Language, versions: Ve
   }
 
   // if there's no release planned, or if the release is a pre-release, then the latest tagged version is the active one
-  if (!versions[lang]?.next || isPreRelease(versions[lang]?.next)) {
+  if (!version?.next || isPreRelease(version?.next)) {
     return setSupportStatus(lang, prevTagVersion, 'active');
   }
 
-  const { major: nextMajor, minor: nextMinor } = getMajorMinor(lang, versions[lang].next);
+  const { major: nextMajor, minor: nextMinor } = getMajorMinor(lang, version.next);
 
   // if we release a new patch on the same major.minor version as the active one, we set it as inactive
   if (nextMajor === prevTagMajor && nextMinor === prevTagMinor) {
@@ -151,12 +154,12 @@ export function generateLanguageSLA(tags: string[], lang: Language, versions: Ve
     setMaintenance(lang, prevTagVersion, start, end);
   }
 
-  fullReleaseConfig.sla[lang][versions[lang].next] = {
+  fullReleaseConfig.sla[lang][version.next] = {
     releaseDate: start.toISOString().split('T')[0],
   };
 
   // if it's a new major or minor, it's just a new active version, the previous one is already in maintenance
-  return setSupportStatus(lang, versions[lang].next, 'active');
+  return setSupportStatus(lang, version.next, 'active');
 }
 
 export async function generateSLA(versions: Versions): Promise<void> {
@@ -166,7 +169,7 @@ export async function generateSLA(versions: Versions): Promise<void> {
 
       const tags = await getTags(lang);
 
-      return generateLanguageSLA(tags, lang, versions);
+      return generateLanguageSLA(tags, lang, versions[lang]);
     }),
   );
 
