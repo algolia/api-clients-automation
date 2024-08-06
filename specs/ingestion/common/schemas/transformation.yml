@@ -119,3 +119,24 @@ TransformationTryResponse:
           type: string
   required:
     - payloads
+
+Model:
+  type: object
+  additionalProperties: false
+  properties:
+    fullname:
+      type: string
+    modelName:
+      type: string
+    systemPrompt:
+      type: string
+    id:
+      type: string
+    provider:
+      type: string
+  required:
+    - fullname
+    - modelName
+    - systemPrompt
+    - id
+    - provider

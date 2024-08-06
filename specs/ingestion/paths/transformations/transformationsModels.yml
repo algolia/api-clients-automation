@@ -1,0 +1,29 @@
+get:
+  tags:
+    - transformations
+  summary: Retrieve existing LLM transformation helpers
+  description: Retrieves a list of existing LLM transformation helpers.
+  operationId: listTransformationModels
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: transformationModels
+            type: object
+            description: List of available AI models for transformation purposes.
+            additionalProperties: false
+            properties:
+              llms:
+                type: array
+                items:
+                  $ref: '../../common/schemas/transformation.yml#/Model'
+            required:
+              - llms
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
