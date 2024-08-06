@@ -15,14 +15,17 @@ describe('generateLanguageSLA', () => {
       expect(fullReleaseConfig.sla.csharp).toEqual({
         "1.2.4": {
           "releaseDate": "2023-12-28",
+          "supportEnd": "2024-01-02",
           "supportStatus": "inactive",
         },
         "1.2.5": {
           "releaseDate": "2024-01-02",
+          "supportEnd": "2024-01-02",
           "supportStatus": "inactive",
         },
         "1.2.6":  {
           "releaseDate": "2024-01-02",
+          "supportEnd": "2024-01-04",
           "supportStatus": "inactive",
         },
         "1.2.7":  {
@@ -155,6 +158,7 @@ describe('generateLanguageSLA', () => {
       expect(fullReleaseConfig.sla.swift).toEqual({
         "1.2.4": {
           "releaseDate": "2023-12-28",
+          "supportEnd": start.toISOString().split('T')[0],
           "supportStatus": "inactive",
         },
         "1.2.5": {
