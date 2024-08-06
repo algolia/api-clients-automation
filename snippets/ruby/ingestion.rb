@@ -703,6 +703,25 @@ def snippet_for_list_tasks_v1
   # SEPARATOR<
 end
 
+# Snippet for the listTransformationModels method.
+#
+# listTransformationModels
+def snippet_for_list_transformation_models
+  # >SEPARATOR listTransformationModels default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.list_transformation_models
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the listTransformations method.
 #
 # listTransformations

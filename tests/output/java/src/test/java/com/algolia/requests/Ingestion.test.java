@@ -1129,6 +1129,18 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("listTransformationModels")
+  void listTransformationModelsTest() {
+    assertDoesNotThrow(() -> {
+      client.listTransformationModels();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/copilot", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("listTransformations")
   void listTransformationsTest() {
     assertDoesNotThrow(() -> {

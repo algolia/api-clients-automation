@@ -108,6 +108,9 @@
     "listTasksV1": {
       "default": "var response = await client.ListTasksV1Async();"
     },
+    "listTransformationModels": {
+      "default": "var response = await client.ListTransformationModelsAsync();"
+    },
     "listTransformations": {
       "default": "var response = await client.ListTransformationsAsync();"
     },
@@ -312,6 +315,9 @@
     "listTasksV1": {
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ListTasksV1(client.NewApiListTasksV1Request())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
+    "listTransformationModels": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ListTransformationModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
     "listTransformations": {
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
@@ -497,6 +503,9 @@
     },
     "listTasksV1": {
       "default": "client.listTasksV1();"
+    },
+    "listTransformationModels": {
+      "default": "client.listTransformationModels();"
     },
     "listTransformations": {
       "default": "client.listTransformations();"
@@ -687,6 +696,9 @@
     "listTasksV1": {
       "default": "const response = await client.listTasksV1();\n\n// use typed response\nconsole.log(response);"
     },
+    "listTransformationModels": {
+      "default": "const response = await client.listTransformationModels();\n\n// use typed response\nconsole.log(response);"
+    },
     "listTransformations": {
       "default": "const response = await client.listTransformations();\n\n// use typed response\nconsole.log(response);"
     },
@@ -875,6 +887,9 @@
     },
     "listTasksV1": {
       "default": "var response = client.listTasksV1()\n\n// Use the response\nprintln(response)"
+    },
+    "listTransformationModels": {
+      "default": "var response = client.listTransformationModels()\n\n// Use the response\nprintln(response)"
     },
     "listTransformations": {
       "default": "var response = client.listTransformations()\n\n// Use the response\nprintln(response)"
@@ -1065,6 +1080,9 @@
     "listTasksV1": {
       "default": "$response = $client->listTasksV1();\n\n// play with the response\nvar_dump($response);"
     },
+    "listTransformationModels": {
+      "default": "$response = $client->listTransformationModels();\n\n// play with the response\nvar_dump($response);"
+    },
     "listTransformations": {
       "default": "$response = $client->listTransformations();\n\n// play with the response\nvar_dump($response);"
     },
@@ -1253,6 +1271,9 @@
     },
     "listTasksV1": {
       "default": "response = await _client.list_tasks_v1()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "listTransformationModels": {
+      "default": "response = await _client.list_transformation_models()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "listTransformations": {
       "default": "response = await _client.list_transformations()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -1443,6 +1464,9 @@
     "listTasksV1": {
       "default": "response = client.list_tasks_v1\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
+    "listTransformationModels": {
+      "default": "response = client.list_transformation_models\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
     "listTransformations": {
       "default": "response = client.list_transformations\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
@@ -1632,6 +1656,9 @@
     "listTasksV1": {
       "default": "val response = client.listTasksV1(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
+    "listTransformationModels": {
+      "default": "val response = client.listTransformationModels(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
     "listTransformations": {
       "default": "val response = client.listTransformations(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
@@ -1820,6 +1847,9 @@
     },
     "listTasksV1": {
       "default": "let response = try await client.listTasksV1()"
+    },
+    "listTransformationModels": {
+      "default": "let response = try await client.listTransformationModels()"
     },
     "listTransformations": {
       "default": "let response = try await client.listTransformations()"

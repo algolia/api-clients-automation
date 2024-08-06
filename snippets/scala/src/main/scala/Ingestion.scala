@@ -716,6 +716,24 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the listTransformationModels method.
+    *
+    * listTransformationModels
+    */
+  def snippetForIngestionClientListTransformationModels(): Unit = {
+    // >SEPARATOR listTransformationModels default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.listTransformationModels(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the listTransformations method.
     *
     * listTransformations

@@ -1153,6 +1153,21 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('listTransformationModels')]
+    public function testListTransformationModels()
+    {
+        $client = $this->getClient();
+        $client->listTransformationModels();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/copilot',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('listTransformations')]
     public function testListTransformations()
     {

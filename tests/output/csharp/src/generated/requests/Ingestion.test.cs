@@ -1107,6 +1107,17 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "listTransformationModels")]
+  public async Task ListTransformationModelsTest()
+  {
+    await client.ListTransformationModelsAsync();
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/copilot", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "listTransformations")]
   public async Task ListTransformationsTest()
   {

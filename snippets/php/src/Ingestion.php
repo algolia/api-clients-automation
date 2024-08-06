@@ -770,6 +770,25 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the ListTransformationModels method.
+     *
+     * listTransformationModels
+     */
+    public function snippetForListTransformationModels()
+    {
+        // >SEPARATOR listTransformationModels default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->listTransformationModels();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the ListTransformations method.
      *
      * listTransformations

@@ -1156,6 +1156,19 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("listTransformationModels") {
+    val (client, echo) = testClient()
+    val future = client.listTransformationModels(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/copilot")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("listTransformations") {
     val (client, echo) = testClient()
     val future = client.listTransformations(

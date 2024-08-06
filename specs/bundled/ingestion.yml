@@ -1481,6 +1481,36 @@ paths:
                   $ref: '#/components/schemas/Transformation'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/transformations/copilot:
+    get:
+      tags:
+        - ingestion
+      summary: Retrieve existing LLM transformation helpers
+      description: Retrieves a list of existing LLM transformation helpers.
+      operationId: listTransformationModels
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: transformationModels
+                type: object
+                description: List of available AI models for transformation purposes.
+                additionalProperties: false
+                properties:
+                  llms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Model'
+                required:
+                  - llms
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/transformations/{transformationID}:
     get:
       tags:
@@ -3876,6 +3906,26 @@ components:
             $ref: '#/components/schemas/transformationID'
       required:
         - transformationsIDs
+    Model:
+      type: object
+      additionalProperties: false
+      properties:
+        fullname:
+          type: string
+        modelName:
+          type: string
+        systemPrompt:
+          type: string
+        id:
+          type: string
+        provider:
+          type: string
+      required:
+        - fullname
+        - modelName
+        - systemPrompt
+        - id
+        - provider
     TransformationUpdateResponse:
       type: object
       description: API response for updating a transformation.

@@ -912,6 +912,18 @@ describe('listTasksV1', () => {
   });
 });
 
+describe('listTransformationModels', () => {
+  test('listTransformationModels', async () => {
+    const req =
+      (await client.listTransformationModels()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/copilot');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('listTransformations', () => {
   test('listTransformations', async () => {
     const req = (await client.listTransformations()) as unknown as EchoResponse;

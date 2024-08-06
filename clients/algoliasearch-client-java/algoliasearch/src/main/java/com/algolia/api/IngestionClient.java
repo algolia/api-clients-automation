@@ -2831,6 +2831,49 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
+   * Retrieves a list of existing LLM transformation helpers.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TransformationModels listTransformationModels(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listTransformationModelsAsync(requestOptions));
+  }
+
+  /**
+   * Retrieves a list of existing LLM transformation helpers.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TransformationModels listTransformationModels() throws AlgoliaRuntimeException {
+    return this.listTransformationModels(null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of existing LLM transformation helpers.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TransformationModels> listTransformationModelsAsync(RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/transformations/copilot").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<TransformationModels>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of existing LLM transformation helpers.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TransformationModels> listTransformationModelsAsync() throws AlgoliaRuntimeException {
+    return this.listTransformationModelsAsync(null);
+  }
+
+  /**
    * Retrieves a list of transformations.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)

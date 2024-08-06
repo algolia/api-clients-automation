@@ -497,6 +497,19 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the listTransformationModels method.
+    ///
+    /// listTransformationModels
+    func snippetForListTransformationModels() async throws {
+        // >SEPARATOR listTransformationModels default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.listTransformationModels()
+        // SEPARATOR<
+    }
+
     /// Snippet for the listTransformations method.
     ///
     /// listTransformations
