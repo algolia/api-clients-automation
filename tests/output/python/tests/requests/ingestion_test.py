@@ -1026,6 +1026,18 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_list_transformation_models_(self):
+        """
+        listTransformationModels
+        """
+        _req = await self._client.list_transformation_models_with_http_info()
+
+        assert _req.path == "/1/transformations/copilot"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_list_transformations_(self):
         """
         listTransformations

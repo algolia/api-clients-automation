@@ -1189,6 +1189,22 @@ class IngestionTest {
     )
   }
 
+  // listTransformationModels
+
+  @Test
+  fun `listTransformationModels`() = runTest {
+    client.runTest(
+      call = {
+        listTransformationModels()
+      },
+      intercept = {
+        assertEquals("/1/transformations/copilot".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // listTransformations
 
   @Test

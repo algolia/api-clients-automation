@@ -834,6 +834,18 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # listTransformationModels
+  def test_list_transformation_models
+    req = @client.list_transformation_models_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/transformations/copilot", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # listTransformations
   def test_list_transformations
     req = @client.list_transformations_with_http_info

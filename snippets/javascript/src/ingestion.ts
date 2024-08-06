@@ -780,6 +780,26 @@ export async function snippetForListTasksV1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the listTransformationModels method.
+//
+// listTransformationModels
+export async function snippetForListTransformationModels(): Promise<void> {
+  // >SEPARATOR listTransformationModels default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.listTransformationModels();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the listTransformations method.
 //
 // listTransformations

@@ -634,6 +634,21 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForListTransformationModels() {
+    // >SEPARATOR listTransformationModels default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.listTransformationModels()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForListTransformations() {
     // >SEPARATOR listTransformations default
     // Initialize the client

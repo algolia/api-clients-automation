@@ -66,6 +66,7 @@ import algoliasearch.ingestion.TaskV1
 import algoliasearch.ingestion.Transformation
 import algoliasearch.ingestion.TransformationCreate
 import algoliasearch.ingestion.TransformationCreateResponse
+import algoliasearch.ingestion.TransformationModels
 import algoliasearch.ingestion.TransformationSearch
 import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
@@ -1117,6 +1118,25 @@ class IngestionClient(
       .withQueryParameter("order", order)
       .build()
     execute[ListTasksResponseV1](request, requestOptions)
+  }
+
+  /** Retrieves a list of existing LLM transformation helpers.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def listTransformationModels(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationModels] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/transformations/copilot")
+      .build()
+    execute[TransformationModels](request, requestOptions)
   }
 
   /** Retrieves a list of transformations.

@@ -842,6 +842,27 @@ async def snippet_for_list_tasks_v1():
     # SEPARATOR<
 
 
+async def snippet_for_list_transformation_models():
+    """
+    Snippet for the listTransformationModels method.
+
+    listTransformationModels
+    """
+    # >SEPARATOR listTransformationModels default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_transformation_models()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_list_transformations():
     """
     Snippet for the listTransformations method.

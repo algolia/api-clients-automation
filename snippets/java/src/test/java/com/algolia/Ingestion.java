@@ -492,6 +492,19 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the listTransformationModels method.
+  //
+  // listTransformationModels
+  void snippetForListTransformationModels() {
+    // >SEPARATOR listTransformationModels default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listTransformationModels();
+    // SEPARATOR<
+  }
+
   // Snippet for the listTransformations method.
   //
   // listTransformations

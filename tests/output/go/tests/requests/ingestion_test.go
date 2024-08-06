@@ -1010,6 +1010,21 @@ func TestIngestion_ListTasksV1(t *testing.T) {
 	})
 }
 
+func TestIngestion_ListTransformationModels(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("listTransformationModels", func(t *testing.T) {
+		_, err := client.ListTransformationModels()
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/copilot", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestIngestion_ListTransformations(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo

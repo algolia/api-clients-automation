@@ -704,6 +704,24 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the ListTransformationModels method.
+  ///
+  /// listTransformationModels
+  /// </summary>
+  public async Task SnippetForIngestionClientListTransformationModels()
+  {
+    // >SEPARATOR listTransformationModels default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListTransformationModelsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the ListTransformations method.
   ///
   /// listTransformations
