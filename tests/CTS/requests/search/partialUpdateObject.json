@@ -1,6 +1,6 @@
 [
   {
-    "testName": "Partial update with string value",
+    "testName": "Partial update with a built-in operation using a string",
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -29,7 +29,7 @@
     }
   },
   {
-    "testName": "Partial update with integer value",
+    "testName": "Partial update with a built-in operation using an integer",
     "parameters": {
       "indexName": "theIndexName",
       "objectID": "uniqueID",
@@ -47,6 +47,105 @@
         "attributeId": {
           "_operation": "Increment",
           "value": 2
+        }
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for a string attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": "new value"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": "new value"
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for an integer attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": 1
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": 1
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for a boolean attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": true
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for an object attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": {
+          "nested": "value"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": {
+          "nested": "value"
+        }
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for an array attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": [
+          "one",
+          "two",
+          "three"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": {
+          "attributeId": [
+            "one",
+            "two",
+            "three"
+          ]
         }
       }
     }
