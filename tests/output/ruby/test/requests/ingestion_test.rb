@@ -677,6 +677,27 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
+  # generateTransformationCode
+  def test_generate_transformation_code
+    req = @client.generate_transformation_code_with_http_info(
+      GenerateTransformationCodePayload.new(
+        id: "foo",
+        user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/models", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # getAuthentication
   def test_get_authentication
     req = @client.get_authentication_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -887,7 +908,7 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.list_transformation_models_with_http_info
 
     assert_equal(:get, req.method)
-    assert_equal("/1/transformations/copilot", req.path)
+    assert_equal("/1/transformations/models", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 

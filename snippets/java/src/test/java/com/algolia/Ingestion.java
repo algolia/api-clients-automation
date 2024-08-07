@@ -297,6 +297,23 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the generateTransformationCode method.
+  //
+  // generateTransformationCode
+  void snippetForGenerateTransformationCode() {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.generateTransformationCode(
+      new GenerateTransformationCodePayload()
+        .setId("foo")
+        .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the getAuthentication method.
   //
   // getAuthentication

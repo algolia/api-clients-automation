@@ -968,6 +968,27 @@ class IngestionTest {
     )
   }
 
+  // generateTransformationCode
+
+  @Test
+  fun `generateTransformationCode`() = runTest {
+    client.runTest(
+      call = {
+        generateTransformationCode(
+          generateTransformationCodePayload = GenerateTransformationCodePayload(
+            id = "foo",
+            userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}""", it.body)
+      },
+    )
+  }
+
   // getAuthentication
 
   @Test
@@ -1258,7 +1279,7 @@ class IngestionTest {
         listTransformationModels()
       },
       intercept = {
-        assertEquals("/1/transformations/copilot".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },

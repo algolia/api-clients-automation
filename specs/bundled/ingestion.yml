@@ -1481,7 +1481,7 @@ paths:
                   $ref: '#/components/schemas/Transformation'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/transformations/copilot:
+  /1/transformations/models:
     get:
       tags:
         - ingestion
@@ -1509,6 +1509,48 @@ paths:
                       $ref: '#/components/schemas/Model'
                 required:
                   - llms
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/transformations/{transformationID}:

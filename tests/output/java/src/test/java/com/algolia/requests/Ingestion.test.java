@@ -970,6 +970,29 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("generateTransformationCode")
+  void generateTransformationCodeTest() {
+    assertDoesNotThrow(() -> {
+      client.generateTransformationCode(
+        new GenerateTransformationCodePayload()
+          .setId("foo")
+          .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH" + " LINE of code is doing")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/models", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of" +
+        " comments that describe what EACH LINE of code is doing\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getAuthentication")
   void getAuthenticationTest() {
     assertDoesNotThrow(() -> {
@@ -1190,7 +1213,7 @@ class IngestionClientRequestsTests {
       client.listTransformationModels();
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/transformations/copilot", req.path);
+    assertEquals("/1/transformations/models", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }

@@ -436,6 +436,29 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the generateTransformationCode method.
+    *
+    * generateTransformationCode
+    */
+  def snippetForIngestionClientGenerateTransformationCode(): Unit = {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.generateTransformationCode(
+      generateTransformationCodePayload = GenerateTransformationCodePayload(
+        id = "foo",
+        userPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the getAuthentication method.
     *
     * getAuthentication

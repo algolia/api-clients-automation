@@ -508,6 +508,32 @@ async def snippet_for_enable_task_v1():
     # SEPARATOR<
 
 
+async def snippet_for_generate_transformation_code():
+    """
+    Snippet for the generateTransformationCode method.
+
+    generateTransformationCode
+    """
+    # >SEPARATOR generateTransformationCode default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.generate_transformation_code(
+        generate_transformation_code_payload={
+            "id": "foo",
+            "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_get_authentication():
     """
     Snippet for the getAuthentication method.

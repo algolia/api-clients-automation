@@ -11724,7 +11724,7 @@ paths:
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                     "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
                 ]))
-  /1/transformations/copilot:
+  /1/transformations/models:
     get:
       tags:
         - transformations
@@ -11929,6 +11929,269 @@ paths:
             // Call the API
 
             let response = try await client.listTransformationModels()
+    post:
+      tags:
+        - transformations
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GenerateTransformationCodeAsync(
+              new GenerateTransformationCodePayload
+              {
+                Id = "foo",
+                UserPrompt =
+                  "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
+
+              ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.generateTransformationCode(
+              new GenerateTransformationCodePayload()
+                .setId("foo")
+                .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.generateTransformationCode({
+              id: 'foo',
+              userPrompt:
+                'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.generateTransformationCode(
+              generateTransformationCodePayload = GenerateTransformationCodePayload(
+                id = "foo",
+                userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->generateTransformationCode(
+                ['id' => 'foo',
+                    'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.generate_transformation_code(
+                generate_transformation_code_payload={
+                    "id": "foo",
+                    "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.generate_transformation_code(
+              GenerateTransformationCodePayload.new(
+                id: "foo",
+                user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+              )
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.generateTransformationCode(
+              generateTransformationCodePayload = GenerateTransformationCodePayload(
+                id = "foo",
+                userPrompt =
+                  "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client
+                .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(
+                    id: "foo",
+                    userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+                ))
   /1/transformations/{transformationID}:
     get:
       tags:
