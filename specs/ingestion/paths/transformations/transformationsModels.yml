@@ -38,24 +38,35 @@ post:
     - addObject
     - deleteIndex
     - editSettings
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: generateTransformationCodePayload
+          type: object
+          additionalProperties: false
+          properties:
+            selectedLLMID:
+              type: string
+            systemPrompt:
+              type: string
+            userPrompt:
+              type: string
+          required:
+            - selectedLLMID
+            - userPrompt
+    required: true
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            title: generateTransformationCodePayload
+            title: generateTransformationCodeResponse
             type: object
             additionalProperties: false
             properties:
-              selectedLLMID:
+              generatedCode:
                 type: string
-              systemPrompt:
-                type: string
-              userPrompt:
-                type: string
-            required:
-              - selectedLLMID
-              - userPrompt
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
