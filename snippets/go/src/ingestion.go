@@ -578,6 +578,35 @@ func SnippetForEnableTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGenerateTransformationCodeOfIngestion() {
+	/*
+	   Snippet for the generateTransformationCode method.
+
+	   generateTransformationCode
+	*/
+
+	// >SEPARATOR generateTransformationCode default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
+
+		ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetAuthenticationOfIngestion() {
 	/*
 	   Snippet for the getAuthentication method.

@@ -466,6 +466,29 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the GenerateTransformationCode method.
+     *
+     * generateTransformationCode
+     */
+    public function snippetForGenerateTransformationCode()
+    {
+        // >SEPARATOR generateTransformationCode default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->generateTransformationCode(
+            ['id' => 'foo',
+                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetAuthentication method.
      *
      * getAuthentication

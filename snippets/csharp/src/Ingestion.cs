@@ -431,6 +431,31 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the GenerateTransformationCode method.
+  ///
+  /// generateTransformationCode
+  /// </summary>
+  public async Task SnippetForIngestionClientGenerateTransformationCode()
+  {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GenerateTransformationCodeAsync(
+      new GenerateTransformationCodePayload
+      {
+        Id = "foo",
+        UserPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetAuthentication method.
   ///
   /// getAuthentication

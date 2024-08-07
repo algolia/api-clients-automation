@@ -991,6 +991,28 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
+  test("generateTransformationCode") {
+    val (client, echo) = testClient()
+    val future = client.generateTransformationCode(
+      generateTransformationCodePayload = GenerateTransformationCodePayload(
+        id = "foo",
+        userPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/models")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("getAuthentication") {
     val (client, echo) = testClient()
     val future = client.getAuthentication(
@@ -1232,7 +1254,7 @@ class IngestionTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/transformations/copilot")
+    assert(res.path == "/1/transformations/models")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }

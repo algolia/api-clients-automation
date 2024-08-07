@@ -27,6 +27,8 @@ import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
+import algoliasearch.ingestion.GenerateTransformationCodePayload
+import algoliasearch.ingestion.GenerateTransformationCodeResponse
 import algoliasearch.ingestion.ListAuthenticationsResponse
 import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
@@ -578,6 +580,31 @@ class IngestionClient(
       .withPath(s"/1/tasks/${escape(taskID)}/enable")
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Generates code for the selected model based on the given prompt.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GenerateTransformationCodeResponse] = Future {
+    requireNotNull(
+      generateTransformationCodePayload,
+      "Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/models")
+      .withBody(generateTransformationCodePayload)
+      .build()
+    execute[GenerateTransformationCodeResponse](request, requestOptions)
   }
 
   /** Retrieves an authentication resource by its ID.
@@ -1134,7 +1161,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1/transformations/copilot")
+      .withPath(s"/1/transformations/models")
       .build()
     execute[TransformationModels](request, requestOptions)
   }

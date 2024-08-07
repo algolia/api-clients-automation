@@ -935,6 +935,25 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('generateTransformationCode')]
+    public function testGenerateTransformationCode()
+    {
+        $client = $this->getClient();
+        $client->generateTransformationCode(
+            ['id' => 'foo',
+                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/models',
+                'method' => 'POST',
+                'body' => json_decode('{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('getAuthentication')]
     public function testGetAuthentication()
     {
@@ -1216,7 +1235,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/transformations/copilot',
+                'path' => '/1/transformations/models',
                 'method' => 'GET',
                 'body' => null,
             ],

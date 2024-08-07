@@ -737,6 +737,25 @@ describe('enableTaskV1', () => {
   });
 });
 
+describe('generateTransformationCode', () => {
+  test('generateTransformationCode', async () => {
+    const req = (await client.generateTransformationCode({
+      id: 'foo',
+      userPrompt:
+        'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/models');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      id: 'foo',
+      userPrompt:
+        'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getAuthentication', () => {
   test('getAuthentication', async () => {
     const req = (await client.getAuthentication({
@@ -959,7 +978,7 @@ describe('listTransformationModels', () => {
     const req =
       (await client.listTransformationModels()) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/transformations/copilot');
+    expect(req.path).toEqual('/1/transformations/models');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
