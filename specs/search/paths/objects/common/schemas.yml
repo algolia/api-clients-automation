@@ -17,10 +17,6 @@ builtInOperationValue:
     - type: integer
       description: A number to add, remove, or append, depending on the operation.
 
-attribute:
-  type: string
-  description: Value of the attribute to update.
-
 builtInOperation:
   type: object
   description: Update to perform on the attribute.
@@ -36,8 +32,19 @@ builtInOperation:
 
 attributeToUpdate:
   oneOf:
-    - $ref: '#/attribute'
     - $ref: '#/builtInOperation'
+    - type: string
+      description: The new value of a string attribute.
+    - type: boolean
+      description: The new value of a boolean attribute.
+    - type: number
+      description: The new value of a numerical attribute.
+    - type: object
+      additionalProperties: true
+      description: The new value of an object attribute.
+    - type: array
+      items: {}
+      description: The new value of an array attribute.
 
 batchResponse:
   type: object
