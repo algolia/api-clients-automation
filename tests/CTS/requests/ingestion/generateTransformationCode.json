@@ -6,7 +6,11 @@
     },
     "request": {
       "path": "/1/transformations/copilot",
-      "method": "POST"
+      "method": "POST",
+      "body": {
+        "selectedLLMID": "foo",
+        "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      }
     }
   }
 ]
