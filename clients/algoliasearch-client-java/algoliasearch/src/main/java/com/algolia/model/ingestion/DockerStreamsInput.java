@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** The selected streams of a singer or airbyte connector. */
@@ -12,16 +14,21 @@ import java.util.Objects;
 public class DockerStreamsInput implements TaskInput {
 
   @JsonProperty("streams")
-  private Object streams;
+  private List<DockerStreams> streams = new ArrayList<>();
 
-  public DockerStreamsInput setStreams(Object streams) {
+  public DockerStreamsInput setStreams(List<DockerStreams> streams) {
     this.streams = streams;
+    return this;
+  }
+
+  public DockerStreamsInput addStreams(DockerStreams streamsItem) {
+    this.streams.add(streamsItem);
     return this;
   }
 
   /** Get streams */
   @javax.annotation.Nonnull
-  public Object getStreams() {
+  public List<DockerStreams> getStreams() {
     return streams;
   }
 

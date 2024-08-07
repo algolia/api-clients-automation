@@ -199,6 +199,42 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "task shopify")]
+  public async Task CreateTaskTest2()
+  {
+    await client.CreateTaskAsync(
+      new TaskCreate
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              }
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "createTaskOnDemand")]
   public async Task CreateTaskV1Test()
   {
@@ -273,6 +309,44 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "task shopify")]
+  public async Task CreateTaskV1Test3()
+  {
+    await client.CreateTaskV1Async(
+      new TaskCreateV1
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Trigger = new TaskCreateTrigger(
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+        ),
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              }
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1365,10 +1439,10 @@ public class IngestionClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "tryTransformations")]
-  public async Task TryTransformationsTest()
+  [Fact(DisplayName = "tryTransformation")]
+  public async Task TryTransformationTest()
   {
-    await client.TryTransformationsAsync(
+    await client.TryTransformationAsync(
       new TransformationTry
       {
         Code = "foo",

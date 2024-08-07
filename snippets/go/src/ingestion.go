@@ -1363,14 +1363,14 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForTryTransformationsOfIngestion() {
+func SnippetForTryTransformationOfIngestion() {
 	/*
-	   Snippet for the tryTransformations method.
+	   Snippet for the tryTransformation method.
 
-	   tryTransformations
+	   tryTransformation
 	*/
 
-	// >SEPARATOR tryTransformations default
+	// >SEPARATOR tryTransformation default
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -1379,7 +1379,7 @@ func SnippetForTryTransformationsOfIngestion() {
 	}
 
 	// Call the API
-	response, err := client.TryTransformations(client.NewApiTryTransformationsRequest(
+	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
 		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
 	))

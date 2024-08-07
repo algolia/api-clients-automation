@@ -1440,10 +1440,10 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     */
-  def tryTransformations(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
+  def tryTransformation(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TransformationTryResponse] = Future {
-    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.")
+    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.")
 
     val request = HttpRequest
       .builder()

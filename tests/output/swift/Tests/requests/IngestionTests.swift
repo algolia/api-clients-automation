@@ -258,6 +258,45 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// task shopify
+    func testCreateTaskTest2() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            action: ActionType.replace,
+            cron: "* * * * *",
+            input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                name: "foo",
+                syncMode: DockerStreamsSyncMode.incremental
+            )]))
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// createTaskOnDemand
     func testCreateTaskV1Test() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -355,6 +394,45 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let expectedBodyData =
             "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// task shopify
+    func testCreateTaskV1Test3() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1(
+            sourceID: "search",
+            destinationID: "destinationName",
+            trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
+            action: ActionType.replace,
+            input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                name: "foo",
+                syncMode: DockerStreamsSyncMode.incremental
+            )]))
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2090,8 +2168,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// tryTransformations
-    func testTryTransformationsTest() async throws {
+    /// tryTransformation
+    func testTryTransformationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -2100,7 +2178,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.tryTransformationsWithHTTPInfo(transformationTry: TransformationTry(
+        let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
             code: "foo",
             sampleRecord: ["bar": "baz"]
         ))

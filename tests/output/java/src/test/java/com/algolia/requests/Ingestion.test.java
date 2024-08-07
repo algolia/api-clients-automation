@@ -203,6 +203,34 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("task shopify")
+  void createTaskTest2() {
+    assertDoesNotThrow(() -> {
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput().setStreams(List.of(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("createTaskOnDemand")
   void createTaskV1Test() {
     assertDoesNotThrow(() -> {
@@ -269,6 +297,33 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("task shopify")
+  void createTaskV1Test3() {
+    assertDoesNotThrow(() -> {
+      client.createTaskV1(
+        new TaskCreateV1()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput().setStreams(List.of(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1370,10 +1425,10 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("tryTransformations")
-  void tryTransformationsTest() {
+  @DisplayName("tryTransformation")
+  void tryTransformationTest() {
     assertDoesNotThrow(() -> {
-      client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+      client.tryTransformation(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations/try", req.path);

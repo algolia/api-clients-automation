@@ -1006,17 +1006,17 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the tryTransformations method.
+  /** Snippet for the tryTransformation method.
     *
-    * tryTransformations
+    * tryTransformation
     */
-  def snippetForIngestionClientTryTransformations(): Unit = {
-    // >SEPARATOR tryTransformations default
+  def snippetForIngestionClientTryTransformation(): Unit = {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val response = client.tryTransformations(
+    val response = client.tryTransformation(
       transformationTry = TransformationTry(
         code = "foo",
         sampleRecord = JObject(List(JField("bar", JString("baz"))))

@@ -11212,7 +11212,7 @@ paths:
         - transformations
       summary: Try a transformation
       description: Try a transformation.
-      operationId: tryTransformations
+      operationId: tryTransformation
       x-acl:
         - addObject
         - deleteIndex
@@ -11242,7 +11242,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.TryTransformationsAsync(
+            var response = await client.TryTransformationAsync(
               new TransformationTry
               {
                 Code = "foo",
@@ -11267,7 +11267,7 @@ paths:
             // Call the API
 
             response, err :=
-            client.TryTransformations(client.NewApiTryTransformationsRequest(
+            client.TryTransformation(client.NewApiTryTransformationRequest(
 
               ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
             ))
@@ -11292,7 +11292,7 @@ paths:
 
             // Call the API
 
-            client.tryTransformations(new
+            client.tryTransformation(new
             TransformationTry().setCode("foo").setSampleRecord(Map.of("bar",
             "baz")));
         - lang: javascript
@@ -11306,7 +11306,7 @@ paths:
             );
 
             // Call the API
-            const response = await client.tryTransformations({
+            const response = await client.tryTransformation({
               code: 'foo',
               sampleRecord: { bar: 'baz' },
             });
@@ -11324,7 +11324,7 @@ paths:
 
             // Call the API
 
-            var response = client.tryTransformations(
+            var response = client.tryTransformation(
               transformationTry = TransformationTry(
                 code = "foo",
                 sampleRecord = buildJsonObject {
@@ -11351,7 +11351,7 @@ paths:
 
             // Call the API
 
-            $response = $client->tryTransformations(
+            $response = $client->tryTransformation(
                 ['code' => 'foo',
                     'sampleRecord' => ['bar' => 'baz',
                     ],
@@ -11373,7 +11373,7 @@ paths:
 
             # Call the API
 
-            response = await _client.try_transformations(
+            response = await _client.try_transformation(
                 transformation_try={
                     "code": "foo",
                     "sampleRecord": {
@@ -11402,7 +11402,7 @@ paths:
 
             # Call the API
 
-            response = client.try_transformations(TransformationTry.new(code:
+            response = client.try_transformation(TransformationTry.new(code:
             "foo", sample_record: {bar: "baz"}))
 
 
@@ -11425,7 +11425,7 @@ paths:
 
             // Call the API
 
-            val response = client.tryTransformations(
+            val response = client.tryTransformation(
               transformationTry = TransformationTry(
                 code = "foo",
                 sampleRecord = JObject(List(JField("bar", JString("baz"))))
@@ -11447,8 +11447,8 @@ paths:
 
             // Call the API
 
-            let response = try await
-            client.tryTransformations(transformationTry: TransformationTry(
+            let response = try await client.tryTransformation(transformationTry:
+            TransformationTry(
                 code: "foo",
                 sampleRecord: ["bar": "baz"]
             ))
@@ -15197,12 +15197,36 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    DockerStreamsSyncMode:
+      type: string
+      description: The strategy to use to fetch the data.
+      enum:
+        - incremental
+        - fullTable
+    DockerStreams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the stream to fetch the data from (e.g. table name).
+        properties:
+          type: array
+          description: The properties of the stream to select (e.g. column).
+          items:
+            type: string
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
+      required:
+        - name
+        - syncMode
     DockerStreamsInput:
       description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/DockerStreams'
       required:
         - streams
     ShopifyMetafield:

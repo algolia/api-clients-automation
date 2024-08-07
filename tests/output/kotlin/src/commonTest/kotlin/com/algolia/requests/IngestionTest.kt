@@ -187,6 +187,35 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `task shopify2`() = runTest {
+    client.runTest(
+      call = {
+        createTask(
+          taskCreate = TaskCreate(
+            sourceID = "search",
+            destinationID = "destinationName",
+            cron = "* * * * *",
+            action = ActionType.entries.first { it.value == "replace" },
+            input = DockerStreamsInput(
+              streams = listOf(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
+      },
+    )
+  }
+
   // createTaskV1
 
   @Test
@@ -255,6 +284,37 @@ class IngestionTest {
         assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `task shopify3`() = runTest {
+    client.runTest(
+      call = {
+        createTaskV1(
+          taskCreate = TaskCreateV1(
+            sourceID = "search",
+            destinationID = "destinationName",
+            trigger = OnDemandTriggerInput(
+              type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
+            ),
+            action = ActionType.entries.first { it.value == "replace" },
+            input = DockerStreamsInput(
+              streams = listOf(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
       },
     )
   }
@@ -1466,13 +1526,13 @@ class IngestionTest {
     )
   }
 
-  // tryTransformations
+  // tryTransformation
 
   @Test
-  fun `tryTransformations`() = runTest {
+  fun `tryTransformation`() = runTest {
     client.runTest(
       call = {
-        tryTransformations(
+        tryTransformation(
           transformationTry = TransformationTry(
             code = "foo",
             sampleRecord = buildJsonObject {

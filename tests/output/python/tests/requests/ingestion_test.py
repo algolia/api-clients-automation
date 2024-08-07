@@ -177,6 +177,35 @@ class TestIngestionClient:
             """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}"""
         )
 
+    async def test_create_task_2(self):
+        """
+        task shopify
+        """
+        _req = await self._client.create_task_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "cron": "* * * * *",
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+        )
+
     async def test_create_task_v1_(self):
         """
         createTaskOnDemand
@@ -245,6 +274,37 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}"""
+        )
+
+    async def test_create_task_v1_3(self):
+        """
+        task shopify
+        """
+        _req = await self._client.create_task_v1_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "trigger": {
+                    "type": "onDemand",
+                },
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
         )
 
     async def test_create_transformation_(self):
@@ -1279,11 +1339,11 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_try_transformations_(self):
+    async def test_try_transformation_(self):
         """
-        tryTransformations
+        tryTransformation
         """
-        _req = await self._client.try_transformations_with_http_info(
+        _req = await self._client.try_transformation_with_http_info(
             transformation_try={
                 "code": "foo",
                 "sampleRecord": {

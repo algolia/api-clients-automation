@@ -192,6 +192,33 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('task shopify')]
+    public function testCreateTask2()
+    {
+        $client = $this->getClient();
+        $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createTaskOnDemand')]
     public function testCreateTaskV1()
     {
@@ -255,6 +282,34 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/tasks',
                 'method' => 'POST',
                 'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('task shopify')]
+    public function testCreateTaskV13()
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'onDemand',
+                ],
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
             ],
         ]);
     }
@@ -1432,11 +1487,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('tryTransformations')]
-    public function testTryTransformations()
+    #[TestDox('tryTransformation')]
+    public function testTryTransformation()
     {
         $client = $this->getClient();
-        $client->tryTransformations(
+        $client->tryTransformation(
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
                 ],

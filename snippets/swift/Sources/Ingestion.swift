@@ -702,16 +702,16 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the tryTransformations method.
+    /// Snippet for the tryTransformation method.
     ///
-    /// tryTransformations
-    func snippetForTryTransformations() async throws {
-        // >SEPARATOR tryTransformations default
+    /// tryTransformation
+    func snippetForTryTransformation() async throws {
+        // >SEPARATOR tryTransformation default
         // Initialize the client
         let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.tryTransformations(transformationTry: TransformationTry(
+        let response = try await client.tryTransformation(transformationTry: TransformationTry(
             code: "foo",
             sampleRecord: ["bar": "baz"]
         ))

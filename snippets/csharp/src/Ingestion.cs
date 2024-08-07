@@ -1023,20 +1023,20 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the TryTransformations method.
+  /// Snippet for the TryTransformation method.
   ///
-  /// tryTransformations
+  /// tryTransformation
   /// </summary>
-  public async Task SnippetForIngestionClientTryTransformations()
+  public async Task SnippetForIngestionClientTryTransformation()
   {
-    // >SEPARATOR tryTransformations default
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
     );
 
     // Call the API
-    var response = await client.TryTransformationsAsync(
+    var response = await client.TryTransformationAsync(
       new TransformationTry
       {
         Code = "foo",
