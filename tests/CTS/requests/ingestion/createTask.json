@@ -52,7 +52,7 @@
       }
     },
     "request": {
-      "path": "/1/tasks",
+      "path": "/2/tasks",
       "method": "POST",
       "body": {
         "sourceID": "search",
