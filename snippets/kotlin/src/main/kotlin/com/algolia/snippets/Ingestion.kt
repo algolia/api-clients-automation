@@ -898,13 +898,13 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForTryTransformations() {
-    // >SEPARATOR tryTransformations default
+  suspend fun snippetForTryTransformation() {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.tryTransformations(
+    var response = client.tryTransformation(
       transformationTry = TransformationTry(
         code = "foo",
         sampleRecord = buildJsonObject {

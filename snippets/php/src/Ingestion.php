@@ -1101,18 +1101,18 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the TryTransformations method.
+     * Snippet for the TryTransformation method.
      *
-     * tryTransformations
+     * tryTransformation
      */
-    public function snippetForTryTransformations()
+    public function snippetForTryTransformation()
     {
-        // >SEPARATOR tryTransformations default
+        // >SEPARATOR tryTransformation default
         // Initialize the client
         $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
-        $response = $client->tryTransformations(
+        $response = $client->tryTransformation(
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
                 ],

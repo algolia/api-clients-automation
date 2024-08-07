@@ -202,6 +202,39 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("task shopify2") {
+    val (client, echo) = testClient()
+    val future = client.createTask(
+      taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        cron = Some("* * * * *"),
+        action = ActionType.withName("replace"),
+        input = Some(
+          DockerStreamsInput(
+            streams = Seq(
+              DockerStreams(
+                name = "foo",
+                syncMode = DockerStreamsSyncMode.withName("incremental")
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("createTaskOnDemand") {
     val (client, echo) = testClient()
     val future = client.createTaskV1(
@@ -273,6 +306,41 @@ class IngestionTest extends AnyFunSuite {
     assert(res.method == "POST")
     val expectedBody = parse(
       """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("task shopify3") {
+    val (client, echo) = testClient()
+    val future = client.createTaskV1(
+      taskCreate = TaskCreateV1(
+        sourceID = "search",
+        destinationID = "destinationName",
+        trigger = OnDemandTriggerInput(
+          `type` = OnDemandTriggerType.withName("onDemand")
+        ),
+        action = ActionType.withName("replace"),
+        input = Some(
+          DockerStreamsInput(
+            streams = Seq(
+              DockerStreams(
+                name = "foo",
+                syncMode = DockerStreamsSyncMode.withName("incremental")
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1409,9 +1477,9 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("tryTransformations") {
+  test("tryTransformation") {
     val (client, echo) = testClient()
-    val future = client.tryTransformations(
+    val future = client.tryTransformation(
       transformationTry = TransformationTry(
         code = "foo",
         sampleRecord = JObject(List(JField("bar", JString("baz"))))

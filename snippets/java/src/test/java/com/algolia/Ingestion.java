@@ -698,16 +698,16 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the tryTransformations method.
+  // Snippet for the tryTransformation method.
   //
-  // tryTransformations
-  void snippetForTryTransformations() {
-    // >SEPARATOR tryTransformations default
+  // tryTransformation
+  void snippetForTryTransformation() {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+    client.tryTransformation(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
     // SEPARATOR<
   }
 

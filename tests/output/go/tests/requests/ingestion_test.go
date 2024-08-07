@@ -153,6 +153,21 @@ func TestIngestion_CreateTask(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}`)
 	})
+	t.Run("task shopify", func(t *testing.T) {
+		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
+
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))}))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
+	})
 }
 
 func TestIngestion_CreateTaskV1(t *testing.T) {
@@ -200,6 +215,22 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+	})
+	t.Run("task shopify", func(t *testing.T) {
+		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))}))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -1252,12 +1283,12 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 	})
 }
 
-func TestIngestion_TryTransformations(t *testing.T) {
+func TestIngestion_TryTransformation(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("tryTransformations", func(t *testing.T) {
-		_, err := client.TryTransformations(client.NewApiTryTransformationsRequest(
+	t.Run("tryTransformation", func(t *testing.T) {
+		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
 			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
 		))

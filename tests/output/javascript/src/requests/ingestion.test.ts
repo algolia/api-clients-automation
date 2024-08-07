@@ -161,6 +161,27 @@ describe('createTask', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('task shopify', async () => {
+    const req = (await client.createTask({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('createTaskV1', () => {
@@ -217,6 +238,27 @@ describe('createTaskV1', () => {
       destinationID: 'destinationName',
       trigger: { type: 'onDemand' },
       action: 'replace',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('task shopify', async () => {
+    const req = (await client.createTaskV1({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      trigger: { type: 'onDemand' },
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      trigger: { type: 'onDemand' },
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1162,9 +1204,9 @@ describe('triggerDockerSourceDiscover', () => {
   });
 });
 
-describe('tryTransformations', () => {
-  test('tryTransformations', async () => {
-    const req = (await client.tryTransformations({
+describe('tryTransformation', () => {
+  test('tryTransformation', async () => {
+    const req = (await client.tryTransformation({
       code: 'foo',
       sampleRecord: { bar: 'baz' },
     })) as unknown as EchoResponse;

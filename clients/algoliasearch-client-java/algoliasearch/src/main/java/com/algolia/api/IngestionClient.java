@@ -3653,9 +3653,9 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TransformationTryResponse tryTransformations(@Nonnull TransformationTry transformationTry, RequestOptions requestOptions)
+  public TransformationTryResponse tryTransformation(@Nonnull TransformationTry transformationTry, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(tryTransformationsAsync(transformationTry, requestOptions));
+    return LaunderThrowable.await(tryTransformationAsync(transformationTry, requestOptions));
   }
 
   /**
@@ -3664,8 +3664,8 @@ public class IngestionClient extends ApiClient {
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TransformationTryResponse tryTransformations(@Nonnull TransformationTry transformationTry) throws AlgoliaRuntimeException {
-    return this.tryTransformations(transformationTry, null);
+  public TransformationTryResponse tryTransformation(@Nonnull TransformationTry transformationTry) throws AlgoliaRuntimeException {
+    return this.tryTransformation(transformationTry, null);
   }
 
   /**
@@ -3676,11 +3676,11 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TransformationTryResponse> tryTransformationsAsync(
+  public CompletableFuture<TransformationTryResponse> tryTransformationAsync(
     @Nonnull TransformationTry transformationTry,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.");
+    Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/try").setMethod("POST").setBody(transformationTry).build();
     return executeAsync(request, requestOptions, new TypeReference<TransformationTryResponse>() {});
@@ -3692,9 +3692,9 @@ public class IngestionClient extends ApiClient {
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TransformationTryResponse> tryTransformationsAsync(@Nonnull TransformationTry transformationTry)
+  public CompletableFuture<TransformationTryResponse> tryTransformationAsync(@Nonnull TransformationTry transformationTry)
     throws AlgoliaRuntimeException {
-    return this.tryTransformationsAsync(transformationTry, null);
+    return this.tryTransformationAsync(transformationTry, null);
   }
 
   /**

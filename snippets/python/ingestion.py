@@ -1199,18 +1199,18 @@ async def snippet_for_trigger_docker_source_discover():
     # SEPARATOR<
 
 
-async def snippet_for_try_transformations():
+async def snippet_for_try_transformation():
     """
-    Snippet for the tryTransformations method.
+    Snippet for the tryTransformation method.
 
-    tryTransformations
+    tryTransformation
     """
-    # >SEPARATOR tryTransformations default
+    # >SEPARATOR tryTransformation default
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
     # Call the API
-    response = await _client.try_transformations(
+    response = await _client.try_transformation(
         transformation_try={
             "code": "foo",
             "sampleRecord": {

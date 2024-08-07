@@ -165,6 +165,30 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # task shopify
+  def test_create_task2
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        cron: "* * * * *",
+        action: "replace",
+        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # createTaskOnDemand
   def test_create_task_v1
     req = @client.create_task_v1_with_http_info(
@@ -229,6 +253,30 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # task shopify
+  def test_create_task_v13
+    req = @client.create_task_v1_with_http_info(
+      TaskCreateV1.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        trigger: OnDemandTriggerInput.new(type: "onDemand"),
+        action: "replace",
+        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
       ),
       JSON.parse(req.body)
     )
@@ -1063,9 +1111,9 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # tryTransformations
-  def test_try_transformations
-    req = @client.try_transformations_with_http_info(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+  # tryTransformation
+  def test_try_transformation
+    req = @client.try_transformation_with_http_info(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations/try", req.path)

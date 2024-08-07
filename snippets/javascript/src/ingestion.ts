@@ -1094,11 +1094,11 @@ export async function snippetForTriggerDockerSourceDiscover(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the tryTransformations method.
+// Snippet for the tryTransformation method.
 //
-// tryTransformations
-export async function snippetForTryTransformations(): Promise<void> {
-  // >SEPARATOR tryTransformations default
+// tryTransformation
+export async function snippetForTryTransformation(): Promise<void> {
+  // >SEPARATOR tryTransformation default
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -1107,7 +1107,7 @@ export async function snippetForTryTransformations(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.tryTransformations({
+  const response = await client.tryTransformation({
     code: 'foo',
     sampleRecord: { bar: 'baz' },
   });

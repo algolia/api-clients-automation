@@ -999,16 +999,16 @@ def snippet_for_trigger_docker_source_discover
   # SEPARATOR<
 end
 
-# Snippet for the tryTransformations method.
+# Snippet for the tryTransformation method.
 #
-# tryTransformations
-def snippet_for_try_transformations
-  # >SEPARATOR tryTransformations default
+# tryTransformation
+def snippet_for_try_transformation
+  # >SEPARATOR tryTransformation default
   # Initialize the client
   client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.try_transformations(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+  response = client.try_transformation(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
 
   # use the class directly
   puts(response)
