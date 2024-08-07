@@ -461,7 +461,8 @@ DockerStreamsInput:
   properties:
     streams:
       type: array
-      items: '#/DockerStreams'
+      items: 
+        $ref: '#/DockerStreams'
   required:
     - streams
 

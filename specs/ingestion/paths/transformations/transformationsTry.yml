@@ -3,7 +3,7 @@ post:
     - transformations
   summary: Try a transformation
   description: Try a transformation.
-  operationId: tryTransformations
+  operationId: tryTransformation
   x-acl:
     - addObject
     - deleteIndex
