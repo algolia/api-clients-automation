@@ -46,14 +46,14 @@ post:
           type: object
           additionalProperties: false
           properties:
-            selectedLLMID:
+            id:
               type: string
             systemPrompt:
               type: string
             userPrompt:
               type: string
           required:
-            - selectedLLMID
+            - id
             - userPrompt
     required: true
   responses:
