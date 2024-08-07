@@ -1064,7 +1064,7 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->searchTransformations(
-            ['transformationsIDs' => [
+            ['transformationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',

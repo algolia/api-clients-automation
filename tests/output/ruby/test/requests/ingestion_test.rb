@@ -1033,7 +1033,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_search_transformations
     req = @client.search_transformations_with_http_info(
       TransformationSearch.new(
-        transformations_ids: [
+        transformation_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
           "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -1047,7 +1047,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+        "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
       ),
       JSON.parse(req.body)
     )

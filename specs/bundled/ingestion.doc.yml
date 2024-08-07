@@ -11494,7 +11494,7 @@ paths:
             var response = await client.SearchTransformationsAsync(
               new TransformationSearch
               {
-                TransformationsIDs = new List<string>
+                TransformationIDs = new List<string>
                 {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -11522,7 +11522,7 @@ paths:
             response, err :=
             client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
-              ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(
+              ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
                 []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
             ))
 
@@ -11548,7 +11548,7 @@ paths:
 
             client.searchTransformations(
               new TransformationSearch()
-                .setTransformationsIDs(
+                .setTransformationIDs(
                   List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
                 )
             );
@@ -11564,7 +11564,7 @@ paths:
 
             // Call the API
             const response = await client.searchTransformations({
-              transformationsIDs: [
+              transformationIDs: [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
                 '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
@@ -11586,7 +11586,7 @@ paths:
 
             var response = client.searchTransformations(
               transformationSearch = TransformationSearch(
-                transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+                transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
               ),
             )
 
@@ -11606,7 +11606,7 @@ paths:
             // Call the API
 
             $response = $client->searchTransformations(
-                ['transformationsIDs' => [
+                ['transformationIDs' => [
                     '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                     '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -11633,7 +11633,7 @@ paths:
 
             response = await _client.search_transformations(
                 transformation_search={
-                    "transformationsIDs": [
+                    "transformationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                         "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -11663,7 +11663,7 @@ paths:
 
             response = client.search_transformations(
               TransformationSearch.new(
-                transformations_ids: [
+                transformation_ids: [
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -11693,10 +11693,12 @@ paths:
 
             val response = client.searchTransformations(
               transformationSearch = TransformationSearch(
-                transformationsIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                transformationIDs = Some(
+                  Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
               )
             )
@@ -11717,7 +11719,7 @@ paths:
             // Call the API
 
             let response = try await client
-                .searchTransformations(transformationSearch: TransformationSearch(transformationsIDs: [
+                .searchTransformations(transformationSearch: TransformationSearch(transformationIDs: [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                     "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -15679,7 +15681,7 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'

@@ -12,23 +12,26 @@ import java.util.Objects;
 /** TransformationSearch */
 public class TransformationSearch {
 
-  @JsonProperty("transformationsIDs")
-  private List<String> transformationsIDs = new ArrayList<>();
+  @JsonProperty("transformationIDs")
+  private List<String> transformationIDs;
 
-  public TransformationSearch setTransformationsIDs(List<String> transformationsIDs) {
-    this.transformationsIDs = transformationsIDs;
+  public TransformationSearch setTransformationIDs(List<String> transformationIDs) {
+    this.transformationIDs = transformationIDs;
     return this;
   }
 
-  public TransformationSearch addTransformationsIDs(String transformationsIDsItem) {
-    this.transformationsIDs.add(transformationsIDsItem);
+  public TransformationSearch addTransformationIDs(String transformationIDsItem) {
+    if (this.transformationIDs == null) {
+      this.transformationIDs = new ArrayList<>();
+    }
+    this.transformationIDs.add(transformationIDsItem);
     return this;
   }
 
-  /** Get transformationsIDs */
-  @javax.annotation.Nonnull
-  public List<String> getTransformationsIDs() {
-    return transformationsIDs;
+  /** Get transformationIDs */
+  @javax.annotation.Nullable
+  public List<String> getTransformationIDs() {
+    return transformationIDs;
   }
 
   @Override
@@ -40,19 +43,19 @@ public class TransformationSearch {
       return false;
     }
     TransformationSearch transformationSearch = (TransformationSearch) o;
-    return Objects.equals(this.transformationsIDs, transformationSearch.transformationsIDs);
+    return Objects.equals(this.transformationIDs, transformationSearch.transformationIDs);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(transformationsIDs);
+    return Objects.hash(transformationIDs);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TransformationSearch {\n");
-    sb.append("    transformationsIDs: ").append(toIndentedString(transformationsIDs)).append("\n");
+    sb.append("    transformationIDs: ").append(toIndentedString(transformationIDs)).append("\n");
     sb.append("}");
     return sb.toString();
   }
