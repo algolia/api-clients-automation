@@ -3900,7 +3900,7 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'

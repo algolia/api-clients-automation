@@ -2041,7 +2041,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .searchTransformationsWithHTTPInfo(transformationSearch: TransformationSearch(transformationsIDs: [
+            .searchTransformationsWithHTTPInfo(transformationSearch: TransformationSearch(transformationIDs: [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -2053,7 +2053,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+            "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

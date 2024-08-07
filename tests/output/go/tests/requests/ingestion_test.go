@@ -1222,7 +1222,7 @@ func TestIngestion_SearchTransformations(t *testing.T) {
 	t.Run("searchTransformations", func(t *testing.T) {
 		_, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
-			ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(
+			ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
 				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
 		))
 		require.NoError(t, err)
@@ -1231,7 +1231,7 @@ func TestIngestion_SearchTransformations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		ja.Assertf(*echo.Body, `{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
 	})
 }
 
