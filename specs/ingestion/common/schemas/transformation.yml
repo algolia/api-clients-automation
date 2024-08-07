@@ -77,7 +77,7 @@ TransformationSearch:
   type: object
   additionalProperties: false
   properties:
-    transformationsIDs:
+    transformationIDs:
       type: array
       items:
         $ref: './common.yml#/transformationID'
