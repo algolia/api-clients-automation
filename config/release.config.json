@@ -24,6 +24,12 @@
   },
   "sla": {
     "csharp": {
+      "6.12.1": {
+        "releaseDate": "2022-02-14",
+        "supportStart": "2022-08-31",
+        "supportEnd": "2024-08-31",
+        "supportStatus": "maintenance"
+      },
       "6.13.0": {
         "releaseDate": "2022-08-31",
         "supportStart": "2022-11-08",
@@ -313,7 +319,6 @@
       },
       "3.31.2": {
         "releaseDate": "2024-06-25",
-        "supportEnd": "2024-06-25",
         "supportStatus": "active"
       }
     },
@@ -540,6 +545,12 @@
       }
     },
     "ruby": {
+      "2.2.5": {
+        "releaseDate": "2022-05-24",
+        "supportStart": "2022-09-26",
+        "supportEnd": "2024-09-26",
+        "supportStatus": "maintenance"
+      },
       "2.3.0": {
         "releaseDate": "2022-09-26",
         "supportEnd": "2022-10-21",

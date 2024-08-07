@@ -71,11 +71,18 @@ describe('generateLanguageSLA', () => {
 
     it('ignores versions older than 2 years', () => {
       generateLanguageSLA([
+        "v1.0.9 Thu Dec 28 15:48:25 2011 +0000",
         "v1.1.4 Thu Dec 28 15:48:25 2021 +0000",
         "v1.4.7 Tue Jan 2 14:17:11 2024 +0000",
       ], 'php', {current: "1.4.7", next: null, releaseType: null})
 
       expect(fullReleaseConfig.sla.php).toEqual({
+        "1.1.4": {
+          "releaseDate": "2021-12-28",
+          "supportEnd": "2026-01-02",
+          "supportStart": "2024-01-02",
+          "supportStatus": "maintenance",
+        },
         "1.4.7": {
           "releaseDate": "2024-01-02",
           "supportStatus": "active",
