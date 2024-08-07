@@ -34,5 +34,40 @@
         "action": "replace"
       }
     }
+  },
+  {
+    "testName": "task shopify",
+    "parameters": {
+      "sourceID": "search",
+      "destinationID": "destinationName",
+      "cron": "* * * * *",
+      "action": "replace",
+      "input": {
+        "streams": [
+          {
+            "name": "foo",
+            "syncMode": "incremental"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/2/tasks",
+      "method": "POST",
+      "body": {
+        "sourceID": "search",
+        "destinationID": "destinationName",
+        "cron": "* * * * *",
+        "action": "replace",
+        "input": {
+          "streams": [
+            {
+              "name": "foo",
+              "syncMode": "incremental"
+            }
+          ]
+        }
+      }
+    }
   }
 ]
