@@ -1460,7 +1460,7 @@ class IngestionClient(
     execute[SourceWatchResponse](request, requestOptions)
   }
 
-  /** Try a transformation.
+  /** Try a transformation before creating it.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1476,6 +1476,39 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/try")
+      .withBody(transformationTry)
+      .build()
+    execute[TransformationTryResponse](request, requestOptions)
+  }
+
+  /** Try a transformation before updating it.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def tryTransformationBeforeUpdate(
+      transformationID: String,
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationTryResponse] = Future {
+    requireNotNull(
+      transformationID,
+      "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
+    )
+    requireNotNull(
+      transformationTry,
+      "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/${escape(transformationID)}/try")
       .withBody(transformationTry)
       .build()
     execute[TransformationTryResponse](request, requestOptions)

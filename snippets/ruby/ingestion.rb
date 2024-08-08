@@ -1042,6 +1042,28 @@ def snippet_for_try_transformation
   # SEPARATOR<
 end
 
+# Snippet for the tryTransformationBeforeUpdate method.
+#
+# tryTransformationBeforeUpdate
+def snippet_for_try_transformation_before_update
+  # >SEPARATOR tryTransformationBeforeUpdate default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.try_transformation_before_update(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the updateAuthentication method.
 #
 # updateAuthentication

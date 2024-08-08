@@ -1379,6 +1379,97 @@ class TestIngestionClient:
             """{"code":"foo","sampleRecord":{"bar":"baz"}}"""
         )
 
+    async def test_try_transformation_1(self):
+        """
+        with authentications
+        """
+        _req = await self._client.try_transformation_with_http_info(
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+                "authentications": [
+                    {
+                        "type": "oauth",
+                        "name": "authName",
+                        "input": {
+                            "url": "http://test.oauth",
+                            "client_id": "myID",
+                            "client_secret": "mySecret",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/transformations/try"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+        )
+
+    async def test_try_transformation_before_update_(self):
+        """
+        tryTransformationBeforeUpdate
+        """
+        _req = await self._client.try_transformation_before_update_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"}}"""
+        )
+
+    async def test_try_transformation_before_update_1(self):
+        """
+        existing with authentications
+        """
+        _req = await self._client.try_transformation_before_update_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+                "authentications": [
+                    {
+                        "type": "oauth",
+                        "name": "authName",
+                        "input": {
+                            "url": "http://test.oauth",
+                            "client_id": "myID",
+                            "client_secret": "mySecret",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert (
+            _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+        )
+
     async def test_update_authentication_(self):
         """
         updateAuthentication

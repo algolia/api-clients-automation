@@ -3710,7 +3710,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Try a transformation.
+   * Try a transformation before creating it.
    *
    * @param transformationTry (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3723,7 +3723,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Try a transformation.
+   * Try a transformation before creating it.
    *
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3733,7 +3733,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Try a transformation.
+   * (asynchronously) Try a transformation before creating it.
    *
    * @param transformationTry (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3751,7 +3751,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Try a transformation.
+   * (asynchronously) Try a transformation before creating it.
    *
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3759,6 +3759,77 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TransformationTryResponse> tryTransformationAsync(@Nonnull TransformationTry transformationTry)
     throws AlgoliaRuntimeException {
     return this.tryTransformationAsync(transformationTry, null);
+  }
+
+  /**
+   * Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TransformationTryResponse tryTransformationBeforeUpdate(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(tryTransformationBeforeUpdateAsync(transformationID, transformationTry, requestOptions));
+  }
+
+  /**
+   * Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TransformationTryResponse tryTransformationBeforeUpdate(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry
+  ) throws AlgoliaRuntimeException {
+    return this.tryTransformationBeforeUpdate(transformationID, transformationTry, null);
+  }
+
+  /**
+   * (asynchronously) Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TransformationTryResponse> tryTransformationBeforeUpdateAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+
+    Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations/{transformationID}/try", transformationID)
+      .setMethod("POST")
+      .setBody(transformationTry)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TransformationTryResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TransformationTryResponse> tryTransformationBeforeUpdateAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry
+  ) throws AlgoliaRuntimeException {
+    return this.tryTransformationBeforeUpdateAsync(transformationID, transformationTry, null);
   }
 
   /**

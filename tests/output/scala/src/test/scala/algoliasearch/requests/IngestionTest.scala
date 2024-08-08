@@ -1518,6 +1518,95 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("with authentications1") {
+    val (client, echo) = testClient()
+    val future = client.tryTransformation(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz")))),
+        authentications = Some(
+          Seq(
+            AuthenticationCreate(
+              `type` = AuthenticationType.withName("oauth"),
+              name = "authName",
+              input = AuthOAuth(
+                url = "http://test.oauth",
+                client_id = "myID",
+                client_secret = "mySecret"
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/try")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("tryTransformationBeforeUpdate") {
+    val (client, echo) = testClient()
+    val future = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz"))))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"code":"foo","sampleRecord":{"bar":"baz"}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("existing with authentications1") {
+    val (client, echo) = testClient()
+    val future = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz")))),
+        authentications = Some(
+          Seq(
+            AuthenticationCreate(
+              `type` = AuthenticationType.withName("oauth"),
+              name = "authName",
+              input = AuthOAuth(
+                url = "http://test.oauth",
+                client_id = "myID",
+                client_secret = "mySecret"
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("updateAuthentication") {
     val (client, echo) = testClient()
     val future = client.updateAuthentication(

@@ -31,9 +31,12 @@ package algoliasearch.ingestion
   *   The uniquely identified name of your transformation.
   * @param description
   *   A descriptive name for your transformation of what it does.
+  * @param authenticationIDs
+  *   The authentications associated for the current transformation.
   */
 case class TransformationCreate(
     code: String,
     name: String,
-    description: Option[String] = scala.None
+    description: Option[String] = scala.None,
+    authenticationIDs: Option[Seq[String]] = scala.None
 )

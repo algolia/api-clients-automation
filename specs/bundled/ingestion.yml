@@ -1431,7 +1431,7 @@ paths:
       tags:
         - ingestion
       summary: Try a transformation
-      description: Try a transformation.
+      description: Try a transformation before creating it.
       operationId: tryTransformation
       x-acl:
         - addObject
@@ -1613,6 +1613,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - ingestion
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/runs:
@@ -3872,6 +3900,11 @@ components:
         - type
         - updatedAt
         - createdAt
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -3887,6 +3920,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -3913,6 +3948,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -3937,6 +3974,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord

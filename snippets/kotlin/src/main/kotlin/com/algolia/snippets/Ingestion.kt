@@ -943,6 +943,32 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForTryTransformationBeforeUpdate() {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = buildJsonObject {
+          put(
+            "bar",
+            JsonPrimitive("baz"),
+          )
+        },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForUpdateAuthentication() {
     // >SEPARATOR updateAuthentication default
     // Initialize the client

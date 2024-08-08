@@ -11211,7 +11211,7 @@ paths:
       tags:
         - transformations
       summary: Try a transformation
-      description: Try a transformation.
+      description: Try a transformation before creating it.
       operationId: tryTransformation
       x-acl:
         - addObject
@@ -12863,6 +12863,261 @@ paths:
             let response = try await
             client.deleteTransformation(transformationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - transformations
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.TryTransformationBeforeUpdateAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationTry
+              {
+                Code = "foo",
+                SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.tryTransformationBeforeUpdate(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.tryTransformationBeforeUpdate({
+              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.tryTransformationBeforeUpdate(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationTry = TransformationTry(
+                code = "foo",
+                sampleRecord = buildJsonObject {
+                  put(
+                    "bar",
+                    JsonPrimitive("baz"),
+                  )
+                },
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->tryTransformationBeforeUpdate(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['code' => 'foo',
+                    'sampleRecord' => ['bar' => 'baz',
+                    ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.try_transformation_before_update(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformation_try={
+                    "code": "foo",
+                    "sampleRecord": {
+                        "bar": "baz",
+                    },
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.try_transformation_before_update(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.tryTransformationBeforeUpdate(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationTry = TransformationTry(
+                code = "foo",
+                sampleRecord = JObject(List(JField("bar", JString("baz"))))
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.tryTransformationBeforeUpdate(
+                transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+            )
   /1/runs:
     get:
       tags:
@@ -15874,6 +16129,11 @@ components:
         - type
         - updatedAt
         - createdAt
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -15889,6 +16149,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -15915,6 +16177,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -15939,6 +16203,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord

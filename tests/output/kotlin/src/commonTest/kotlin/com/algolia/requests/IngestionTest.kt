@@ -1573,6 +1573,104 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `with authentications1`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformation(
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+            authentications = listOf(
+              AuthenticationCreate(
+                type = AuthenticationType.entries.first { it.value == "oauth" },
+                name = "authName",
+                input = AuthOAuth(
+                  url = "http://test.oauth",
+                  clientId = "myID",
+                  clientSecret = "mySecret",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+      },
+    )
+  }
+
+  // tryTransformationBeforeUpdate
+
+  @Test
+  fun `tryTransformationBeforeUpdate`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformationBeforeUpdate(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `existing with authentications1`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformationBeforeUpdate(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+            authentications = listOf(
+              AuthenticationCreate(
+                type = AuthenticationType.entries.first { it.value == "oauth" },
+                name = "authName",
+                input = AuthOAuth(
+                  url = "http://test.oauth",
+                  clientId = "myID",
+                  clientSecret = "mySecret",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+      },
+    )
+  }
+
   // updateAuthentication
 
   @Test

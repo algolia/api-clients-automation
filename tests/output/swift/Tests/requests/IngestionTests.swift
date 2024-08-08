@@ -2235,6 +2235,124 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// with authentications
+    func testTryTransformationTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
+            code: "foo",
+            sampleRecord: ["bar": "baz"],
+            authentications: [AuthenticationCreate(
+                type: AuthenticationType.oauth,
+                name: "authName",
+                input: AuthInput.authOAuth(AuthOAuth(
+                    url: "http://test.oauth",
+                    clientId: "myID",
+                    clientSecret: "mySecret"
+                ))
+            )]
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// tryTransformationBeforeUpdate
+    func testTryTransformationBeforeUpdateTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// existing with authentications
+    func testTryTransformationBeforeUpdateTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(
+                code: "foo",
+                sampleRecord: ["bar": "baz"],
+                authentications: [AuthenticationCreate(
+                    type: AuthenticationType.oauth,
+                    name: "authName",
+                    input: AuthInput.authOAuth(AuthOAuth(
+                        url: "http://test.oauth",
+                        clientId: "myID",
+                        clientSecret: "mySecret"
+                    ))
+                )]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// updateAuthentication
     func testUpdateAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(

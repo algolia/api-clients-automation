@@ -153,6 +153,9 @@
     "tryTransformation": {
       "default": "var response = await client.TryTransformationAsync(\n  new TransformationTry\n  {\n    Code = \"foo\",\n    SampleRecord = new Dictionary<string, string> { { \"bar\", \"baz\" } },\n  }\n);"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "var response = await client.TryTransformationBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry\n  {\n    Code = \"foo\",\n    SampleRecord = new Dictionary<string, string> { { \"bar\", \"baz\" } },\n  }\n);"
+    },
     "updateAuthentication": {
       "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\", }\n);"
     },
@@ -363,6 +366,9 @@
     "tryTransformation": {
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.TryTransformation(client.NewApiTryTransformationRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
     "updateAuthentication": {
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyAuthenticationUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
@@ -554,6 +560,9 @@
     },
     "tryTransformation": {
       "default": "client.tryTransformation(new TransformationTry().setCode(\"foo\").setSampleRecord(Map.of(\"bar\", \"baz\")));"
+    },
+    "tryTransformationBeforeUpdate": {
+      "default": "client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry().setCode(\"foo\").setSampleRecord(Map.of(\"bar\", \"baz\"))\n);"
     },
     "updateAuthentication": {
       "default": "client.updateAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new AuthenticationUpdate().setName(\"newName\"));"
@@ -750,6 +759,9 @@
     "tryTransformation": {
       "default": "const response = await client.tryTransformation({\n  code: 'foo',\n  sampleRecord: { bar: 'baz' },\n});\n\n// use typed response\nconsole.log(response);"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "const response = await client.tryTransformationBeforeUpdate({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },\n});\n\n// use typed response\nconsole.log(response);"
+    },
     "updateAuthentication": {
       "default": "const response = await client.updateAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  authenticationUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
     },
@@ -944,6 +956,9 @@
     },
     "tryTransformation": {
       "default": "var response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "tryTransformationBeforeUpdate": {
+      "default": "var response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "updateAuthentication": {
       "default": "var response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = \"newName\",\n  ),\n)\n\n// Use the response\nprintln(response)"
@@ -1140,6 +1155,9 @@
     "tryTransformation": {
       "default": "$response = $client->tryTransformation(\n    ['code' => 'foo',\n        'sampleRecord' => ['bar' => 'baz',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "$response = $client->tryTransformationBeforeUpdate(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['code' => 'foo',\n        'sampleRecord' => ['bar' => 'baz',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
     "updateAuthentication": {
       "default": "$response = $client->updateAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
@@ -1334,6 +1352,9 @@
     },
     "tryTransformation": {
       "default": "response = await _client.try_transformation(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "tryTransformationBeforeUpdate": {
+      "default": "response = await _client.try_transformation_before_update(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "updateAuthentication": {
       "default": "response = await _client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -1530,6 +1551,9 @@
     "tryTransformation": {
       "default": "response = client.try_transformation(TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"}))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "response = client.try_transformation_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"})\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
     "updateAuthentication": {
       "default": "response = client.update_authentication(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  AuthenticationUpdate.new(name: \"newName\")\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
@@ -1725,6 +1749,9 @@
     "tryTransformation": {
       "default": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
+    "tryTransformationBeforeUpdate": {
+      "default": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
     "updateAuthentication": {
       "default": "val response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = Some(\"newName\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
@@ -1919,6 +1946,9 @@
     },
     "tryTransformation": {
       "default": "let response = try await client.tryTransformation(transformationTry: TransformationTry(\n    code: \"foo\",\n    sampleRecord: [\"bar\": \"baz\"]\n))"
+    },
+    "tryTransformationBeforeUpdate": {
+      "default": "let response = try await client.tryTransformationBeforeUpdate(\n    transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationTry: TransformationTry(code: \"foo\", sampleRecord: [\"bar\": \"baz\"])\n)"
     },
     "updateAuthentication": {
       "default": "let response = try await client.updateAuthentication(\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authenticationUpdate: AuthenticationUpdate(name: \"newName\")\n)"

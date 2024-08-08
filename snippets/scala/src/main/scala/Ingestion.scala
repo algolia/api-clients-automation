@@ -1051,6 +1051,29 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the tryTransformationBeforeUpdate method.
+    *
+    * tryTransformationBeforeUpdate
+    */
+  def snippetForIngestionClientTryTransformationBeforeUpdate(): Unit = {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz"))))
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the updateAuthentication method.
     *
     * updateAuthentication

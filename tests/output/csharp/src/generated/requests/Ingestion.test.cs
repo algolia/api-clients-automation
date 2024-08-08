@@ -1482,6 +1482,103 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "with authentications")]
+  public async Task TryTransformationTest1()
+  {
+    await client.TryTransformationAsync(
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+        Authentications = new List<AuthenticationCreate>
+        {
+          new AuthenticationCreate
+          {
+            Type = Enum.Parse<AuthenticationType>("Oauth"),
+            Name = "authName",
+            Input = new AuthInput(
+              new AuthOAuth
+              {
+                Url = "http://test.oauth",
+                ClientId = "myID",
+                ClientSecret = "mySecret",
+              }
+            ),
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "tryTransformationBeforeUpdate")]
+  public async Task TryTransformationBeforeUpdateTest()
+  {
+    await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "existing with authentications")]
+  public async Task TryTransformationBeforeUpdateTest1()
+  {
+    await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+        Authentications = new List<AuthenticationCreate>
+        {
+          new AuthenticationCreate
+          {
+            Type = Enum.Parse<AuthenticationType>("Oauth"),
+            Name = "authName",
+            Input = new AuthInput(
+              new AuthOAuth
+              {
+                Url = "http://test.oauth",
+                ClientId = "myID",
+                ClientSecret = "mySecret",
+              }
+            ),
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "updateAuthentication")]
   public async Task UpdateAuthenticationTest()
   {
