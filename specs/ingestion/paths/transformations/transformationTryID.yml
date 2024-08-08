@@ -2,12 +2,14 @@ post:
   tags:
     - transformations
   summary: Try a transformation
-  description: Try a transformation before creating it.
-  operationId: tryTransformation
+  description: Try a transformation before updating it.
+  operationId: tryTransformationBeforeUpdate
   x-acl:
     - addObject
     - deleteIndex
     - editSettings
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathTransformationID'
   requestBody:
     content:
       application/json:

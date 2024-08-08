@@ -179,6 +179,8 @@ paths:
     $ref: 'paths/transformations/transformationsModels.yml'
   /1/transformations/{transformationID}:
     $ref: 'paths/transformations/transformationID.yml'
+  /1/transformations/{transformationID}/try:
+    $ref: 'paths/transformations/transformationTryID.yml'
 
   # observability API.
   /1/runs:
