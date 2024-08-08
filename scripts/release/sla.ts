@@ -151,7 +151,7 @@ export function generateLanguageSLA(tags: string[], lang: Language, version: Ver
   }
 
   // if there's no release planned, or if the release is a pre-release, then the latest tagged version is the active one
-  if (!version?.next || isPreRelease(version?.next)) {
+  if (!version?.next || isPreRelease(version?.next) || version?.next === prevTagVersion) {
     fullReleaseConfig.sla[lang][prevTagVersion].supportStatus = 'active';
 
     return;
