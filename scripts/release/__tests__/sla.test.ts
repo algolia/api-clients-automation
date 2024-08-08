@@ -119,6 +119,19 @@ describe('generateLanguageSLA', () => {
     const end = new Date(start);
     end.setFullYear(start.getFullYear() + 2);
 
+    it('same version as active version', () => {
+      generateLanguageSLA([
+        "1.2.4 Thu Dec 28 15:48:25 2023 +0000",
+      ], 'dart', {next: "1.2.4", current: "1.2.4", releaseType: "minor"})
+
+      expect(fullReleaseConfig.sla.dart).toEqual({
+        "1.2.4": {
+          "releaseDate": "2023-12-28",
+          "supportStatus":"active",
+        }
+      })
+    });
+
     it('new major: sets the new release as active, sets the last tag as maintenance', () => {
       generateLanguageSLA([
         "1.2.4 Thu Dec 28 15:48:25 2023 +0000",
