@@ -16,5 +16,46 @@
         }
       }
     }
+  },
+  {
+    "testName": "with authentications",
+    "parameters": {
+      "code": "foo",
+      "sampleRecord": {
+        "bar": "baz"
+      },
+      "authentications": [
+        {
+          "type": "oauth",
+          "name": "authName",
+          "input": {
+            "url": "http://test.oauth",
+            "client_id": "myID",
+            "client_secret": "mySecret"
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/transformations/try",
+      "method": "POST",
+      "body": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        },
+        "authentications": [
+          {
+            "type": "oauth",
+            "name": "authName",
+            "input": {
+              "url": "http://test.oauth",
+              "client_id": "myID",
+              "client_secret": "mySecret"
+            }
+          }
+        ]
+      }
+    }
   }
 ]
