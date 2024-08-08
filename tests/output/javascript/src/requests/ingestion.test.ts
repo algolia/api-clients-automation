@@ -1235,6 +1235,101 @@ describe('tryTransformation', () => {
     expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('with authentications', async () => {
+    const req = (await client.tryTransformation({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: {
+            url: 'http://test.oauth',
+            client_id: 'myID',
+            client_secret: 'mySecret',
+          },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/try');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: {
+            url: 'http://test.oauth',
+            client_id: 'myID',
+            client_secret: 'mySecret',
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('tryTransformationBeforeUpdate', () => {
+  test('tryTransformationBeforeUpdate', async () => {
+    const req = (await client.tryTransformationBeforeUpdate({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('existing with authentications', async () => {
+    const req = (await client.tryTransformationBeforeUpdate({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      transformationTry: {
+        code: 'foo',
+        sampleRecord: { bar: 'baz' },
+        authentications: [
+          {
+            type: 'oauth',
+            name: 'authName',
+            input: {
+              url: 'http://test.oauth',
+              client_id: 'myID',
+              client_secret: 'mySecret',
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: {
+            url: 'http://test.oauth',
+            client_id: 'myID',
+            client_secret: 'mySecret',
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('updateAuthentication', () => {

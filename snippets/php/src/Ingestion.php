@@ -1148,6 +1148,31 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the TryTransformationBeforeUpdate method.
+     *
+     * tryTransformationBeforeUpdate
+     */
+    public function snippetForTryTransformationBeforeUpdate()
+    {
+        // >SEPARATOR tryTransformationBeforeUpdate default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the UpdateAuthentication method.
      *
      * updateAuthentication

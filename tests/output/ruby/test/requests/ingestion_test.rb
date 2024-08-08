@@ -1143,6 +1143,77 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
   end
 
+  # with authentications
+  def test_try_transformation1
+    req = @client.try_transformation_with_http_info(
+      TransformationTry.new(
+        code: "foo",
+        sample_record: {bar: "baz"},
+        authentications: [
+          AuthenticationCreate.new(
+            type: "oauth",
+            name: "authName",
+            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # tryTransformationBeforeUpdate
+  def test_try_transformation_before_update
+    req = @client.try_transformation_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
+  end
+
+  # existing with authentications
+  def test_try_transformation_before_update1
+    req = @client.try_transformation_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TransformationTry.new(
+        code: "foo",
+        sample_record: {bar: "baz"},
+        authentications: [
+          AuthenticationCreate.new(
+            type: "oauth",
+            name: "authName",
+            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # updateAuthentication
   def test_update_authentication
     req = @client.update_authentication_with_http_info(

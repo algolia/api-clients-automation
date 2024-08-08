@@ -1462,6 +1462,84 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("with authentications")
+  void tryTransformationTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformation(
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(Map.of("bar", "baz"))
+          .setAuthentications(
+            List.of(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("tryTransformationBeforeUpdate")
+  void tryTransformationBeforeUpdateTest() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("existing with authentications")
+  void tryTransformationBeforeUpdateTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(Map.of("bar", "baz"))
+          .setAuthentications(
+            List.of(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("updateAuthentication")
   void updateAuthenticationTest() {
     assertDoesNotThrow(() -> {

@@ -1,0 +1,67 @@
+[
+  {
+    "parameters": {
+      "transformationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "transformationTry": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
+      "method": "POST",
+      "body": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        }
+      }
+    }
+  },
+  {
+    "testName": "existing with authentications",
+    "parameters": {
+      "transformationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "transformationTry": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        },
+        "authentications": [
+          {
+            "type": "oauth",
+            "name": "authName",
+            "input": {
+              "url": "http://test.oauth",
+              "client_id": "myID",
+              "client_secret": "mySecret"
+            }
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
+      "method": "POST",
+      "body": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        },
+        "authentications": [
+          {
+            "type": "oauth",
+            "name": "authName",
+            "input": {
+              "url": "http://test.oauth",
+              "client_id": "myID",
+              "client_secret": "mySecret"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

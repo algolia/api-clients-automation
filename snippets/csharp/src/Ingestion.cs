@@ -1072,6 +1072,31 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the TryTransformationBeforeUpdate method.
+  ///
+  /// tryTransformationBeforeUpdate
+  /// </summary>
+  public async Task SnippetForIngestionClientTryTransformationBeforeUpdate()
+  {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the UpdateAuthentication method.
   ///
   /// updateAuthentication

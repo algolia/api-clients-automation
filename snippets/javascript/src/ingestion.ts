@@ -1141,6 +1141,29 @@ export async function snippetForTryTransformation(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the tryTransformationBeforeUpdate method.
+//
+// tryTransformationBeforeUpdate
+export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
+  // >SEPARATOR tryTransformationBeforeUpdate default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.tryTransformationBeforeUpdate({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the updateAuthentication method.
 //
 // updateAuthentication

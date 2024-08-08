@@ -735,6 +735,22 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the tryTransformationBeforeUpdate method.
+    ///
+    /// tryTransformationBeforeUpdate
+    func snippetForTryTransformationBeforeUpdate() async throws {
+        // >SEPARATOR tryTransformationBeforeUpdate default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.tryTransformationBeforeUpdate(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+        )
+        // SEPARATOR<
+    }
+
     /// Snippet for the updateAuthentication method.
     ///
     /// updateAuthentication

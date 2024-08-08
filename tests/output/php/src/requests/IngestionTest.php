@@ -1526,6 +1526,86 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('with authentications')]
+    public function testTryTransformation1()
+    {
+        $client = $this->getClient();
+        $client->tryTransformation(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('tryTransformationBeforeUpdate')]
+    public function testTryTransformationBeforeUpdate()
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('existing with authentications')]
+    public function testTryTransformationBeforeUpdate1()
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('updateAuthentication')]
     public function testUpdateAuthentication()
     {

@@ -1253,6 +1253,35 @@ async def snippet_for_try_transformation():
     # SEPARATOR<
 
 
+async def snippet_for_try_transformation_before_update():
+    """
+    Snippet for the tryTransformationBeforeUpdate method.
+
+    tryTransformationBeforeUpdate
+    """
+    # >SEPARATOR tryTransformationBeforeUpdate default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.try_transformation_before_update(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        transformation_try={
+            "code": "foo",
+            "sampleRecord": {
+                "bar": "baz",
+            },
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_update_authentication():
     """
     Snippet for the updateAuthentication method.
