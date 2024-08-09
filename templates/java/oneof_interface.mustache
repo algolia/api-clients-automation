@@ -33,7 +33,20 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{/composedSchemas.oneOf}}
     {{/vendorExtensions.x-is-multi-array}}
 
-    {{^vendorExtensions.x-is-multi-array}}
+    {{#vendorExtensions.x-is-multi-map}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    // {{classname}} as {{{datatypeWithEnum}}} wrapper.
+    static {{classname}} of{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}({{{datatypeWithEnum}}} value) {
+        return new {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Wrapper(value);
+    }
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-map}}
+
+    {{^vendorExtensions.x-is-multi-array}}{{^vendorExtensions.x-is-multi-map}}
     {{#composedSchemas.oneOf}}
     {{^isModel}}
     {{^isEnumRef}}
@@ -44,7 +57,7 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{/isEnumRef}}
     {{/isModel}}
     {{/composedSchemas.oneOf}}
-    {{/vendorExtensions.x-is-multi-array}}
+    {{/vendorExtensions.x-is-multi-map}}{{/vendorExtensions.x-is-multi-array}}
 
     {{#composedSchemas.oneOf}}
     {{^isModel}}
