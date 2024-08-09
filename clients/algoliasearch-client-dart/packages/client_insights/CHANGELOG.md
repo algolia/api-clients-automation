@@ -1,3 +1,7 @@
+## [1.22.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.21.0...1.22.0)
+
+- [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.21.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.20.0...1.21.0)
 
 - [ac0cadb8a](https://github.com/algolia/api-clients-automation/commit/ac0cadb8a) feat(specs): add transformation copilot to ingestion ([#3479](https://github.com/algolia/api-clients-automation/pull/3479)) by [@Fluf22](https://github.com/Fluf22/)
