@@ -228,6 +228,12 @@
       },
       "1.21.0": {
         "releaseDate": "2024-08-06",
+        "supportStart": "2024-08-09",
+        "supportEnd": "2026-08-09",
+        "supportStatus": "maintenance"
+      },
+      "1.22.0": {
+        "releaseDate": "2024-08-09",
         "supportStatus": "active"
       }
     },
