@@ -50,6 +50,7 @@ object FacetFilters {
   def apply(value: String): FacetFilters = {
     FacetFilters.StringValue(value)
   }
+
 }
 
 object FacetFiltersSerializer extends Serializer[FacetFilters] {

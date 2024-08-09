@@ -39,6 +39,7 @@ object Languages {
   def apply(value: Boolean): Languages = {
     Languages.BooleanValue(value)
   }
+
 }
 
 object LanguagesSerializer extends Serializer[Languages] {

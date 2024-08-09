@@ -43,17 +43,33 @@ sealed trait HighlightResult
 
 trait HighlightResultTrait extends HighlightResult
 
+trait HighlightResultEvidence
+
+object HighlightResultEvidence {
+  implicit object MapOfStringHighlightResultEvidence extends HighlightResultEvidence
+  implicit object MapOfStringHighlightResultOptionEvidence extends HighlightResultEvidence
+}
+
 object HighlightResult {
 
+  case class MapOfStringHighlightResult(value: Map[String, HighlightResult]) extends HighlightResult
   case class MapOfStringHighlightResultOption(value: Map[String, HighlightResultOption]) extends HighlightResult
   case class SeqOfHighlightResultOption(value: Seq[HighlightResultOption]) extends HighlightResult
 
-  def apply(value: Map[String, HighlightResultOption]): HighlightResult = {
+  def apply(
+      value: Map[String, HighlightResult]
+  )(implicit ev: HighlightResultEvidence.MapOfStringHighlightResultEvidence.type): HighlightResult = {
+    HighlightResult.MapOfStringHighlightResult(value)
+  }
+  def apply(
+      value: Map[String, HighlightResultOption]
+  )(implicit ev: HighlightResultEvidence.MapOfStringHighlightResultOptionEvidence.type): HighlightResult = {
     HighlightResult.MapOfStringHighlightResultOption(value)
   }
   def apply(value: Seq[HighlightResultOption]): HighlightResult = {
     HighlightResult.SeqOfHighlightResultOption(value)
   }
+
 }
 
 object HighlightResultSerializer extends Serializer[HighlightResult] {
@@ -61,6 +77,7 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[HighlightResult] =>
       json match {
+        case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResult]](value))
         case value: JObject => Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>

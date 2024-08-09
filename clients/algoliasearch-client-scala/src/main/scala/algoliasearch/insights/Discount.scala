@@ -43,6 +43,7 @@ object Discount {
   def apply(value: String): Discount = {
     Discount.StringValue(value)
   }
+
 }
 
 object DiscountSerializer extends Serializer[Discount] {

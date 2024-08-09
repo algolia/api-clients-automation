@@ -43,17 +43,33 @@ sealed trait SnippetResult
 
 trait SnippetResultTrait extends SnippetResult
 
+trait SnippetResultEvidence
+
+object SnippetResultEvidence {
+  implicit object MapOfStringSnippetResultEvidence extends SnippetResultEvidence
+  implicit object MapOfStringSnippetResultOptionEvidence extends SnippetResultEvidence
+}
+
 object SnippetResult {
 
+  case class MapOfStringSnippetResult(value: Map[String, SnippetResult]) extends SnippetResult
   case class MapOfStringSnippetResultOption(value: Map[String, SnippetResultOption]) extends SnippetResult
   case class SeqOfSnippetResultOption(value: Seq[SnippetResultOption]) extends SnippetResult
 
-  def apply(value: Map[String, SnippetResultOption]): SnippetResult = {
+  def apply(
+      value: Map[String, SnippetResult]
+  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultEvidence.type): SnippetResult = {
+    SnippetResult.MapOfStringSnippetResult(value)
+  }
+  def apply(
+      value: Map[String, SnippetResultOption]
+  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultOptionEvidence.type): SnippetResult = {
     SnippetResult.MapOfStringSnippetResultOption(value)
   }
   def apply(value: Seq[SnippetResultOption]): SnippetResult = {
     SnippetResult.SeqOfSnippetResultOption(value)
   }
+
 }
 
 object SnippetResultSerializer extends Serializer[SnippetResult] {
@@ -61,6 +77,7 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SnippetResult] =>
       json match {
+        case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResult]](value))
         case value: JObject => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>

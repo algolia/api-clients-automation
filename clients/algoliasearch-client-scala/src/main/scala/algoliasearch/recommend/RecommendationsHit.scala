@@ -44,6 +44,7 @@ object RecommendationsHit {
   def apply(value: RecommendHit): RecommendationsHit = {
     RecommendationsHit.RecommendHitValue(value)
   }
+
 }
 
 object RecommendationsHitSerializer extends Serializer[RecommendationsHit] {

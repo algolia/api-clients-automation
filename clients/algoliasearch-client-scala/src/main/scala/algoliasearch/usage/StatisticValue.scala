@@ -32,6 +32,7 @@ object StatisticValue {
   def apply(value: Map[String, Int]): StatisticValue = {
     StatisticValue.MapOfStringInt(value)
   }
+
 }
 
 object StatisticValueSerializer extends Serializer[StatisticValue] {
