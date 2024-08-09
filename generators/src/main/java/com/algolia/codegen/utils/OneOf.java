@@ -137,6 +137,7 @@ public class OneOf {
       var model = modelContainer.getModels().get(0).getModel();
       var oneOfs = getCodegenProperties(model);
       if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
+      if (isMultiMapOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-map", true);
       if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
       markOneOfModels(oneOfs);
       sortOneOfs(oneOfs);
@@ -149,6 +150,15 @@ public class OneOf {
     var oneOfs = schemas.getOneOf();
     if (oneOfs == null || oneOfs.isEmpty()) return Collections.emptyList();
     return oneOfs;
+  }
+
+  /** Get true if a composed type has more than a one array-subtype */
+  private static boolean isMultiMapOneOfs(List<CodegenProperty> oneOfs) {
+    var map = 0;
+    for (var prop : oneOfs) {
+      if (prop.isMap) map++;
+    }
+    return map > 1;
   }
 
   /** Get true if a composed type has more than a one array-subtype */

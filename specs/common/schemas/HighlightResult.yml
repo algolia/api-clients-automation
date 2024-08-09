@@ -46,6 +46,7 @@ highlightResultOptionArray:
 
 highlightResult:
   oneOf:
+    - $ref: '#/highlightResultMap'
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultOptionMap'
     - $ref: '#/highlightResultOptionArray'

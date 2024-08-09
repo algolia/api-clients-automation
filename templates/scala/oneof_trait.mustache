@@ -23,6 +23,18 @@ object {{classname}}Evidence {
 }
 {{/vendorExtensions.x-is-multi-array}}
 
+{{#vendorExtensions.x-is-multi-map}}
+trait {{classname}}Evidence 
+
+object {{classname}}Evidence {
+{{#composedSchemas.oneOf}}
+{{#isMap}}
+    implicit object {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence extends {{classname}}Evidence
+{{/isMap}}
+{{/composedSchemas.oneOf}}
+}
+{{/vendorExtensions.x-is-multi-map}}
+
 object {{classname}} {
 
   {{#composedSchemas.oneOf}}
@@ -44,8 +56,20 @@ object {{classname}} {
   {{/isModel}}
   {{/composedSchemas.oneOf}}
   {{/vendorExtensions.x-is-multi-array}}
+
+  {{#vendorExtensions.x-is-multi-map}}
+  {{#composedSchemas.oneOf}}
+  {{^isModel}}
+  {{^isEnumRef}}
+  def apply(value: {{{datatypeWithEnum}}}){{#isMap}}(implicit ev: {{classname}}Evidence.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Evidence.type){{/isMap}}: {{classname}} = {
+      {{classname}}.{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value)
+  }
+  {{/isEnumRef}}
+  {{/isModel}}
+  {{/composedSchemas.oneOf}}
+  {{/vendorExtensions.x-is-multi-map}}
   
-  {{^vendorExtensions.x-is-multi-array}}
+  {{^vendorExtensions.x-is-multi-array}}{{^vendorExtensions.x-is-multi-map}}
   {{#composedSchemas.oneOf}}
   {{^isModel}}
   {{^isEnumRef}}
@@ -55,7 +79,7 @@ object {{classname}} {
   {{/isEnumRef}}
   {{/isModel}}
   {{/composedSchemas.oneOf}}
-  {{/vendorExtensions.x-is-multi-array}}
+  {{/vendorExtensions.x-is-multi-map}}{{/vendorExtensions.x-is-multi-array}}
 }
 
 object {{classname}}Serializer extends Serializer[{{classname}}] {
