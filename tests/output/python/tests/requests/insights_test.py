@@ -461,7 +461,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1723161600000,
+                        "timestamp": 1723420800000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -474,7 +474,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1723161600000,
+                        "timestamp": 1723420800000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -489,7 +489,7 @@ class TestInsightsClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1723161600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1723161600000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1723420800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1723420800000,"objectIDs":["9780545139700","9780439784542"]}]}"""
         )
 
     async def test_push_events_2(self):
