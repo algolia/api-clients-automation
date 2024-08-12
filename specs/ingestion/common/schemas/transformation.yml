@@ -92,7 +92,7 @@ TransformationSearch:
       items:
         $ref: './common.yml#/transformationID'
   required:
-    - transformationsIDs
+    - transformationIDs
 
 TransformationTry:
   type: object
