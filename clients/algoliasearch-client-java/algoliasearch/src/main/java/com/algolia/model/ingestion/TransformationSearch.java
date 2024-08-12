@@ -13,7 +13,7 @@ import java.util.Objects;
 public class TransformationSearch {
 
   @JsonProperty("transformationIDs")
-  private List<String> transformationIDs;
+  private List<String> transformationIDs = new ArrayList<>();
 
   public TransformationSearch setTransformationIDs(List<String> transformationIDs) {
     this.transformationIDs = transformationIDs;
@@ -21,15 +21,12 @@ public class TransformationSearch {
   }
 
   public TransformationSearch addTransformationIDs(String transformationIDsItem) {
-    if (this.transformationIDs == null) {
-      this.transformationIDs = new ArrayList<>();
-    }
     this.transformationIDs.add(transformationIDsItem);
     return this;
   }
 
   /** Get transformationIDs */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public List<String> getTransformationIDs() {
     return transformationIDs;
   }

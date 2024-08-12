@@ -26,5 +26,5 @@ package algoliasearch.ingestion
 /** TransformationSearch
   */
 case class TransformationSearch(
-    transformationIDs: Option[Seq[String]] = scala.None
+    transformationIDs: Seq[String]
 )

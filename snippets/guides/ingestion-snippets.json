@@ -1741,7 +1741,7 @@
       "default": "val response = client.searchTasksV1(\n  taskSearch = TaskSearch(\n    taskIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "searchTransformations": {
-      "default": "val response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationIDs = Some(\n      Seq(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "triggerDockerSourceDiscover": {
       "default": "val response = client.triggerDockerSourceDiscover(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"

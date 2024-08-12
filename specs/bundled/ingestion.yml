@@ -4012,7 +4012,7 @@ components:
           items:
             $ref: '#/components/schemas/transformationID'
       required:
-        - transformationsIDs
+        - transformationIDs
     Model:
       type: object
       additionalProperties: false
