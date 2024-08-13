@@ -56,6 +56,12 @@
       },
       "6.17.0": {
         "releaseDate": "2024-02-26",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "7.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -325,6 +331,12 @@
       },
       "3.31.2": {
         "releaseDate": "2024-06-25",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "4.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -341,6 +353,12 @@
       },
       "3.16.9": {
         "releaseDate": "2024-02-08",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "4.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -447,6 +465,12 @@
       },
       "4.24.0": {
         "releaseDate": "2024-06-25",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "5.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -518,6 +542,12 @@
       },
       "2.1.14": {
         "releaseDate": "2024-08-06",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "3.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -535,6 +565,12 @@
       },
       "3.4.1": {
         "releaseDate": "2023-08-28",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "4.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -547,6 +583,12 @@
       },
       "3.0.0": {
         "releaseDate": "2023-02-27",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "4.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -579,6 +621,12 @@
       },
       "2.3.4": {
         "releaseDate": "2023-11-27",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "3.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -590,6 +638,12 @@
       },
       "1.45.2": {
         "releaseDate": "2024-05-16",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "2.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     },
@@ -641,6 +695,12 @@
       },
       "8.20.1": {
         "releaseDate": "2024-03-04",
+        "supportStart": "2024-08-13",
+        "supportEnd": "2026-08-13",
+        "supportStatus": "maintenance"
+      },
+      "9.0.0": {
+        "releaseDate": "2024-08-13",
         "supportStatus": "active"
       }
     }
