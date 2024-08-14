@@ -5,17 +5,17 @@
   "repo": "api-clients-automation",
   "teamSlug": "api-clients-automation",
   "targetBranch": {
-    "csharp": "next",
+    "csharp": "main",
     "dart": "main",
-    "go": "next",
-    "java": "next",
-    "javascript": "next",
-    "kotlin": "next",
-    "php": "next",
-    "python": "next",
-    "ruby": "next",
-    "scala": "next",
-    "swift": "next"
+    "go": "main",
+    "java": "main",
+    "javascript": "main",
+    "kotlin": "main",
+    "php": "main",
+    "python": "main",
+    "ruby": "main",
+    "scala": "main",
+    "swift": "main"
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {
