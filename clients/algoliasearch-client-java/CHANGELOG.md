@@ -1,5 +1,7 @@
 ## [4.0.0](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.47...4.0.0)
 
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/java)
+
 - [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
 
 ## [4.0.0-beta.47](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.46...4.0.0-beta.47)

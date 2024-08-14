@@ -1,5 +1,7 @@
 ## [4.0.0](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.15...4.0.0)
 
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/php)
+
 - [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
 
 ## [4.0.0-beta.15](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.14...4.0.0-beta.15)
