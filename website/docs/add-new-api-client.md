@@ -113,7 +113,7 @@ It also improves the readability of the specs.
         description: The single quotes are required.
   ```
 
-For information about documenting properties and parameters, see [Properties and parameters](/docs/contributing/docs#properties-and-parameter-descriptions).
+For information about documenting properties and parameters, see [Properties and parameters](/docs/docs#properties-and-parameter-descriptions).
 
 ### Troubleshooting
 

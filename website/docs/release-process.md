@@ -17,7 +17,7 @@ GITHUB_TOKEN=<YOUR-PERSONAL-ACCESS-TOKEN>
 Once setup, you can run:
 
 :::info
-See [Use CLI release commands](/docs/contributing/CLI/release-commands) for the detailed release commands
+See [Use CLI release commands](/docs/CLI/release-commands) for the detailed release commands
 :::
 
 ```bash
