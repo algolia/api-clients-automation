@@ -11211,8 +11211,8 @@ paths:
       tags:
         - transformations
       summary: Try a transformation
-      description: Try a transformation.
-      operationId: tryTransformations
+      description: Try a transformation before creating it.
+      operationId: tryTransformation
       x-acl:
         - addObject
         - deleteIndex
@@ -11242,7 +11242,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.TryTransformationsAsync(
+            var response = await client.TryTransformationAsync(
               new TransformationTry
               {
                 Code = "foo",
@@ -11267,7 +11267,7 @@ paths:
             // Call the API
 
             response, err :=
-            client.TryTransformations(client.NewApiTryTransformationsRequest(
+            client.TryTransformation(client.NewApiTryTransformationRequest(
 
               ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
             ))
@@ -11292,7 +11292,7 @@ paths:
 
             // Call the API
 
-            client.tryTransformations(new
+            client.tryTransformation(new
             TransformationTry().setCode("foo").setSampleRecord(Map.of("bar",
             "baz")));
         - lang: javascript
@@ -11306,7 +11306,7 @@ paths:
             );
 
             // Call the API
-            const response = await client.tryTransformations({
+            const response = await client.tryTransformation({
               code: 'foo',
               sampleRecord: { bar: 'baz' },
             });
@@ -11324,7 +11324,7 @@ paths:
 
             // Call the API
 
-            var response = client.tryTransformations(
+            var response = client.tryTransformation(
               transformationTry = TransformationTry(
                 code = "foo",
                 sampleRecord = buildJsonObject {
@@ -11351,7 +11351,7 @@ paths:
 
             // Call the API
 
-            $response = $client->tryTransformations(
+            $response = $client->tryTransformation(
                 ['code' => 'foo',
                     'sampleRecord' => ['bar' => 'baz',
                     ],
@@ -11373,7 +11373,7 @@ paths:
 
             # Call the API
 
-            response = await _client.try_transformations(
+            response = await _client.try_transformation(
                 transformation_try={
                     "code": "foo",
                     "sampleRecord": {
@@ -11402,7 +11402,7 @@ paths:
 
             # Call the API
 
-            response = client.try_transformations(TransformationTry.new(code:
+            response = client.try_transformation(TransformationTry.new(code:
             "foo", sample_record: {bar: "baz"}))
 
 
@@ -11425,7 +11425,7 @@ paths:
 
             // Call the API
 
-            val response = client.tryTransformations(
+            val response = client.tryTransformation(
               transformationTry = TransformationTry(
                 code = "foo",
                 sampleRecord = JObject(List(JField("bar", JString("baz"))))
@@ -11447,8 +11447,8 @@ paths:
 
             // Call the API
 
-            let response = try await
-            client.tryTransformations(transformationTry: TransformationTry(
+            let response = try await client.tryTransformation(transformationTry:
+            TransformationTry(
                 code: "foo",
                 sampleRecord: ["bar": "baz"]
             ))
@@ -11494,7 +11494,7 @@ paths:
             var response = await client.SearchTransformationsAsync(
               new TransformationSearch
               {
-                TransformationsIDs = new List<string>
+                TransformationIDs = new List<string>
                 {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -11522,7 +11522,7 @@ paths:
             response, err :=
             client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
-              ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(
+              ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
                 []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
             ))
 
@@ -11548,7 +11548,7 @@ paths:
 
             client.searchTransformations(
               new TransformationSearch()
-                .setTransformationsIDs(
+                .setTransformationIDs(
                   List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
                 )
             );
@@ -11564,7 +11564,7 @@ paths:
 
             // Call the API
             const response = await client.searchTransformations({
-              transformationsIDs: [
+              transformationIDs: [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
                 '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
@@ -11586,7 +11586,7 @@ paths:
 
             var response = client.searchTransformations(
               transformationSearch = TransformationSearch(
-                transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+                transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
               ),
             )
 
@@ -11606,7 +11606,7 @@ paths:
             // Call the API
 
             $response = $client->searchTransformations(
-                ['transformationsIDs' => [
+                ['transformationIDs' => [
                     '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                     '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -11633,7 +11633,7 @@ paths:
 
             response = await _client.search_transformations(
                 transformation_search={
-                    "transformationsIDs": [
+                    "transformationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                         "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -11663,7 +11663,7 @@ paths:
 
             response = client.search_transformations(
               TransformationSearch.new(
-                transformations_ids: [
+                transformation_ids: [
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -11693,7 +11693,7 @@ paths:
 
             val response = client.searchTransformations(
               transformationSearch = TransformationSearch(
-                transformationsIDs = Seq(
+                transformationIDs = Seq(
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -11717,12 +11717,12 @@ paths:
             // Call the API
 
             let response = try await client
-                .searchTransformations(transformationSearch: TransformationSearch(transformationsIDs: [
+                .searchTransformations(transformationSearch: TransformationSearch(transformationIDs: [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                     "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
                 ]))
-  /1/transformations/copilot:
+  /1/transformations/models:
     get:
       tags:
         - transformations
@@ -11927,6 +11927,269 @@ paths:
             // Call the API
 
             let response = try await client.listTransformationModels()
+    post:
+      tags:
+        - transformations
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GenerateTransformationCodeAsync(
+              new GenerateTransformationCodePayload
+              {
+                Id = "foo",
+                UserPrompt =
+                  "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
+
+              ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.generateTransformationCode(
+              new GenerateTransformationCodePayload()
+                .setId("foo")
+                .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.generateTransformationCode({
+              id: 'foo',
+              userPrompt:
+                'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.generateTransformationCode(
+              generateTransformationCodePayload = GenerateTransformationCodePayload(
+                id = "foo",
+                userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->generateTransformationCode(
+                ['id' => 'foo',
+                    'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.generate_transformation_code(
+                generate_transformation_code_payload={
+                    "id": "foo",
+                    "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.generate_transformation_code(
+              GenerateTransformationCodePayload.new(
+                id: "foo",
+                user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+              )
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.generateTransformationCode(
+              generateTransformationCodePayload = GenerateTransformationCodePayload(
+                id = "foo",
+                userPrompt =
+                  "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client
+                .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(
+                    id: "foo",
+                    userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+                ))
   /1/transformations/{transformationID}:
     get:
       tags:
@@ -12598,6 +12861,261 @@ paths:
             let response = try await
             client.deleteTransformation(transformationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - transformations
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.TryTransformationBeforeUpdateAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationTry
+              {
+                Code = "foo",
+                SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.tryTransformationBeforeUpdate(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.tryTransformationBeforeUpdate({
+              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.tryTransformationBeforeUpdate(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationTry = TransformationTry(
+                code = "foo",
+                sampleRecord = buildJsonObject {
+                  put(
+                    "bar",
+                    JsonPrimitive("baz"),
+                  )
+                },
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->tryTransformationBeforeUpdate(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['code' => 'foo',
+                    'sampleRecord' => ['bar' => 'baz',
+                    ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.try_transformation_before_update(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformation_try={
+                    "code": "foo",
+                    "sampleRecord": {
+                        "bar": "baz",
+                    },
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.try_transformation_before_update(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+            )
+
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.tryTransformationBeforeUpdate(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationTry = TransformationTry(
+                code = "foo",
+                sampleRecord = JObject(List(JField("bar", JString("baz"))))
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.tryTransformationBeforeUpdate(
+                transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+            )
   /1/runs:
     get:
       tags:
@@ -15195,12 +15713,36 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    DockerStreamsSyncMode:
+      type: string
+      description: The strategy to use to fetch the data.
+      enum:
+        - incremental
+        - fullTable
+    DockerStreams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the stream to fetch the data from (e.g. table name).
+        properties:
+          type: array
+          description: The properties of the stream to select (e.g. column).
+          items:
+            type: string
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
+      required:
+        - name
+        - syncMode
     DockerStreamsInput:
       description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/DockerStreams'
       required:
         - streams
     ShopifyMetafield:
@@ -15585,6 +16127,11 @@ components:
         - type
         - updatedAt
         - createdAt
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -15600,6 +16147,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -15626,6 +16175,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -15650,6 +16201,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord
@@ -15679,12 +16234,12 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'
       required:
-        - transformationsIDs
+        - transformationIDs
     Model:
       type: object
       additionalProperties: false

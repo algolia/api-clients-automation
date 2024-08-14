@@ -17,14 +17,42 @@ import java.util.logging.Logger;
 /** HighlightResult */
 @JsonDeserialize(using = HighlightResult.Deserializer.class)
 public interface HighlightResult {
+  // HighlightResult as Map<String, HighlightResult> wrapper.
+  static HighlightResult ofMapOfStringHighlightResult(Map<String, HighlightResult> value) {
+    return new MapOfStringHighlightResultWrapper(value);
+  }
+
   // HighlightResult as Map<String, HighlightResultOption> wrapper.
-  static HighlightResult of(Map<String, HighlightResultOption> value) {
+  static HighlightResult ofMapOfStringHighlightResultOption(Map<String, HighlightResultOption> value) {
     return new MapOfStringHighlightResultOptionWrapper(value);
   }
 
   // HighlightResult as List<HighlightResultOption> wrapper.
   static HighlightResult of(List<HighlightResultOption> value) {
     return new ListOfHighlightResultOptionWrapper(value);
+  }
+
+  // HighlightResult as Map<String, HighlightResult> wrapper.
+  @JsonSerialize(using = MapOfStringHighlightResultWrapper.Serializer.class)
+  class MapOfStringHighlightResultWrapper implements HighlightResult {
+
+    private final Map<String, HighlightResult> value;
+
+    MapOfStringHighlightResultWrapper(Map<String, HighlightResult> value) {
+      this.value = value;
+    }
+
+    public Map<String, HighlightResult> getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<MapOfStringHighlightResultWrapper> {
+
+      @Override
+      public void serialize(MapOfStringHighlightResultWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
   }
 
   // HighlightResult as Map<String, HighlightResultOption> wrapper.
@@ -81,6 +109,18 @@ public interface HighlightResult {
     @Override
     public HighlightResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize Map<String, HighlightResult>
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Map<String, HighlightResult> value = parser.readValueAs(new TypeReference<Map<String, HighlightResult>>() {});
+          return new HighlightResult.MapOfStringHighlightResultWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf Map<String, HighlightResult> (error: " + e.getMessage() + ") (type: Map<String, HighlightResult>)"
+          );
+        }
+      }
       // deserialize HighlightResultOption
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

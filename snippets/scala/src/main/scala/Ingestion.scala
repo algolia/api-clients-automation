@@ -436,6 +436,29 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the generateTransformationCode method.
+    *
+    * generateTransformationCode
+    */
+  def snippetForIngestionClientGenerateTransformationCode(): Unit = {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.generateTransformationCode(
+      generateTransformationCodePayload = GenerateTransformationCodePayload(
+        id = "foo",
+        userPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the getAuthentication method.
     *
     * getAuthentication
@@ -972,7 +995,7 @@ class SnippetIngestionClient {
     // Call the API
     val response = client.searchTransformations(
       transformationSearch = TransformationSearch(
-        transformationsIDs = Seq(
+        transformationIDs = Seq(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
           "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -1004,17 +1027,40 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the tryTransformations method.
+  /** Snippet for the tryTransformation method.
     *
-    * tryTransformations
+    * tryTransformation
     */
-  def snippetForIngestionClientTryTransformations(): Unit = {
-    // >SEPARATOR tryTransformations default
+  def snippetForIngestionClientTryTransformation(): Unit = {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val response = client.tryTransformations(
+    val response = client.tryTransformation(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz"))))
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the tryTransformationBeforeUpdate method.
+    *
+    * tryTransformationBeforeUpdate
+    */
+  def snippetForIngestionClientTryTransformationBeforeUpdate(): Unit = {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
         code = "foo",
         sampleRecord = JObject(List(JField("bar", JString("baz"))))

@@ -1,0 +1,27 @@
+post:
+  tags:
+    - transformations
+  summary: Try a transformation
+  description: Try a transformation before updating it.
+  operationId: tryTransformationBeforeUpdate
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathTransformationID'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/transformation.yml#/TransformationTry'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/transformation.yml#/TransformationTryResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'

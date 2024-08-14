@@ -431,6 +431,31 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the GenerateTransformationCode method.
+  ///
+  /// generateTransformationCode
+  /// </summary>
+  public async Task SnippetForIngestionClientGenerateTransformationCode()
+  {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GenerateTransformationCodeAsync(
+      new GenerateTransformationCodePayload
+      {
+        Id = "foo",
+        UserPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetAuthentication method.
   ///
   /// getAuthentication
@@ -991,7 +1016,7 @@ public class SnippetIngestionClient
     var response = await client.SearchTransformationsAsync(
       new TransformationSearch
       {
-        TransformationsIDs = new List<string>
+        TransformationIDs = new List<string>
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1023,20 +1048,45 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the TryTransformations method.
+  /// Snippet for the TryTransformation method.
   ///
-  /// tryTransformations
+  /// tryTransformation
   /// </summary>
-  public async Task SnippetForIngestionClientTryTransformations()
+  public async Task SnippetForIngestionClientTryTransformation()
   {
-    // >SEPARATOR tryTransformations default
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
     );
 
     // Call the API
-    var response = await client.TryTransformationsAsync(
+    var response = await client.TryTransformationAsync(
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the TryTransformationBeforeUpdate method.
+  ///
+  /// tryTransformationBeforeUpdate
+  /// </summary>
+  public async Task SnippetForIngestionClientTryTransformationBeforeUpdate()
+  {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry
       {
         Code = "foo",

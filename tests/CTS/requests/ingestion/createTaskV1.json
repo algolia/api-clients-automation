@@ -69,5 +69,44 @@
         "action": "replace"
       }
     }
+  },
+  {
+    "testName": "task shopify",
+    "parameters": {
+      "sourceID": "search",
+      "destinationID": "destinationName",
+      "trigger": {
+        "type": "onDemand"
+      },
+      "action": "replace",
+      "input": {
+        "streams": [
+          {
+            "name": "foo",
+            "syncMode": "incremental"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/tasks",
+      "method": "POST",
+      "body": {
+        "sourceID": "search",
+        "destinationID": "destinationName",
+        "trigger": {
+          "type": "onDemand"
+        },
+        "action": "replace",
+        "input": {
+          "streams": [
+            {
+              "name": "foo",
+              "syncMode": "incremental"
+            }
+          ]
+        }
+      }
+    }
   }
 ]

@@ -418,6 +418,30 @@ def snippet_for_enable_task_v1
   # SEPARATOR<
 end
 
+# Snippet for the generateTransformationCode method.
+#
+# generateTransformationCode
+def snippet_for_generate_transformation_code
+  # >SEPARATOR generateTransformationCode default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.generate_transformation_code(
+    GenerateTransformationCodePayload.new(
+      id: "foo",
+      user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getAuthentication method.
 #
 # getAuthentication
@@ -964,7 +988,7 @@ def snippet_for_search_transformations
   # Call the API
   response = client.search_transformations(
     TransformationSearch.new(
-      transformations_ids: [
+      transformation_ids: [
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -999,16 +1023,38 @@ def snippet_for_trigger_docker_source_discover
   # SEPARATOR<
 end
 
-# Snippet for the tryTransformations method.
+# Snippet for the tryTransformation method.
 #
-# tryTransformations
-def snippet_for_try_transformations
-  # >SEPARATOR tryTransformations default
+# tryTransformation
+def snippet_for_try_transformation
+  # >SEPARATOR tryTransformation default
   # Initialize the client
   client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.try_transformations(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+  response = client.try_transformation(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the tryTransformationBeforeUpdate method.
+#
+# tryTransformationBeforeUpdate
+def snippet_for_try_transformation_before_update
+  # >SEPARATOR tryTransformationBeforeUpdate default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.try_transformation_before_update(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+  )
 
   # use the class directly
   puts(response)

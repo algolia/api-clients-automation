@@ -27,6 +27,8 @@ import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
+import algoliasearch.ingestion.GenerateTransformationCodePayload
+import algoliasearch.ingestion.GenerateTransformationCodeResponse
 import algoliasearch.ingestion.ListAuthenticationsResponse
 import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
@@ -578,6 +580,31 @@ class IngestionClient(
       .withPath(s"/1/tasks/${escape(taskID)}/enable")
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Generates code for the selected model based on the given prompt.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GenerateTransformationCodeResponse] = Future {
+    requireNotNull(
+      generateTransformationCodePayload,
+      "Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/models")
+      .withBody(generateTransformationCodePayload)
+      .build()
+    execute[GenerateTransformationCodeResponse](request, requestOptions)
   }
 
   /** Retrieves an authentication resource by its ID.
@@ -1134,7 +1161,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1/transformations/copilot")
+      .withPath(s"/1/transformations/models")
       .build()
     execute[TransformationModels](request, requestOptions)
   }
@@ -1433,22 +1460,55 @@ class IngestionClient(
     execute[SourceWatchResponse](request, requestOptions)
   }
 
-  /** Try a transformation.
+  /** Try a transformation before creating it.
     *
     * Required API Key ACLs:
     *   - addObject
     *   - deleteIndex
     *   - editSettings
     */
-  def tryTransformations(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
+  def tryTransformation(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TransformationTryResponse] = Future {
-    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.")
+    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/try")
+      .withBody(transformationTry)
+      .build()
+    execute[TransformationTryResponse](request, requestOptions)
+  }
+
+  /** Try a transformation before updating it.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def tryTransformationBeforeUpdate(
+      transformationID: String,
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationTryResponse] = Future {
+    requireNotNull(
+      transformationID,
+      "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
+    )
+    requireNotNull(
+      transformationTry,
+      "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/${escape(transformationID)}/try")
       .withBody(transformationTry)
       .build()
     execute[TransformationTryResponse](request, requestOptions)

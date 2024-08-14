@@ -187,6 +187,35 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `task shopify2`() = runTest {
+    client.runTest(
+      call = {
+        createTask(
+          taskCreate = TaskCreate(
+            sourceID = "search",
+            destinationID = "destinationName",
+            cron = "* * * * *",
+            action = ActionType.entries.first { it.value == "replace" },
+            input = DockerStreamsInput(
+              streams = listOf(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
+      },
+    )
+  }
+
   // createTaskV1
 
   @Test
@@ -255,6 +284,37 @@ class IngestionTest {
         assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `task shopify3`() = runTest {
+    client.runTest(
+      call = {
+        createTaskV1(
+          taskCreate = TaskCreateV1(
+            sourceID = "search",
+            destinationID = "destinationName",
+            trigger = OnDemandTriggerInput(
+              type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
+            ),
+            action = ActionType.entries.first { it.value == "replace" },
+            input = DockerStreamsInput(
+              streams = listOf(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/tasks".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
       },
     )
   }
@@ -908,6 +968,27 @@ class IngestionTest {
     )
   }
 
+  // generateTransformationCode
+
+  @Test
+  fun `generateTransformationCode`() = runTest {
+    client.runTest(
+      call = {
+        generateTransformationCode(
+          generateTransformationCodePayload = GenerateTransformationCodePayload(
+            id = "foo",
+            userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}""", it.body)
+      },
+    )
+  }
+
   // getAuthentication
 
   @Test
@@ -1198,7 +1279,7 @@ class IngestionTest {
         listTransformationModels()
       },
       intercept = {
-        assertEquals("/1/transformations/copilot".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/transformations/models".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -1436,14 +1517,14 @@ class IngestionTest {
       call = {
         searchTransformations(
           transformationSearch = TransformationSearch(
-            transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+            transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
           ),
         )
       },
       intercept = {
         assertEquals("/1/transformations/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}""", it.body)
+        assertJsonBody("""{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}""", it.body)
       },
     )
   }
@@ -1466,13 +1547,13 @@ class IngestionTest {
     )
   }
 
-  // tryTransformations
+  // tryTransformation
 
   @Test
-  fun `tryTransformations`() = runTest {
+  fun `tryTransformation`() = runTest {
     client.runTest(
       call = {
-        tryTransformations(
+        tryTransformation(
           transformationTry = TransformationTry(
             code = "foo",
             sampleRecord = buildJsonObject {
@@ -1488,6 +1569,104 @@ class IngestionTest {
         assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `with authentications1`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformation(
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+            authentications = listOf(
+              AuthenticationCreate(
+                type = AuthenticationType.entries.first { it.value == "oauth" },
+                name = "authName",
+                input = AuthOAuth(
+                  url = "http://test.oauth",
+                  clientId = "myID",
+                  clientSecret = "mySecret",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+      },
+    )
+  }
+
+  // tryTransformationBeforeUpdate
+
+  @Test
+  fun `tryTransformationBeforeUpdate`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformationBeforeUpdate(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `existing with authentications1`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformationBeforeUpdate(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+            authentications = listOf(
+              AuthenticationCreate(
+                type = AuthenticationType.entries.first { it.value == "oauth" },
+                name = "authName",
+                input = AuthOAuth(
+                  url = "http://test.oauth",
+                  clientId = "myID",
+                  clientSecret = "mySecret",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
       },
     )
   }

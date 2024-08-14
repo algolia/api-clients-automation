@@ -1,3 +1,23 @@
+## [7.0.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.16...7.0.0)
+
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/csharp)
+
+- [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.0.0-beta.16](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.15...7.0.0-beta.16)
+
+- [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.0.0-beta.15](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.14...7.0.0-beta.15)
+
+- [7d2ab99ce](https://github.com/algolia/api-clients-automation/commit/7d2ab99ce) feat(specs): add authentications to ingestion transformations ([#3494](https://github.com/algolia/api-clients-automation/pull/3494)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.0.0-beta.14](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.13...7.0.0-beta.14)
+
+- [2c6147ee7](https://github.com/algolia/api-clients-automation/commit/2c6147ee7) feat(specs): add generate code endpoint to ingestion specs ([#3489](https://github.com/algolia/api-clients-automation/pull/3489)) by [@shortcuts](https://github.com/shortcuts/)
+- [6c62a81a7](https://github.com/algolia/api-clients-automation/commit/6c62a81a7) fix(specs): ingestion docker task input ([#3488](https://github.com/algolia/api-clients-automation/pull/3488)) by [@shortcuts](https://github.com/shortcuts/)
+- [eab2887f8](https://github.com/algolia/api-clients-automation/commit/eab2887f8) fix(specs): ingestion search endpoint ([#3487](https://github.com/algolia/api-clients-automation/pull/3487)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [7.0.0-beta.13](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.12...7.0.0-beta.13)
 
 - [ac0cadb8a](https://github.com/algolia/api-clients-automation/commit/ac0cadb8a) feat(specs): add transformation copilot to ingestion ([#3479](https://github.com/algolia/api-clients-automation/pull/3479)) by [@Fluf22](https://github.com/Fluf22/)

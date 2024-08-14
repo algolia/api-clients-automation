@@ -390,6 +390,26 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGenerateTransformationCode() {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.generateTransformationCode(
+      generateTransformationCodePayload = GenerateTransformationCodePayload(
+        id = "foo",
+        userPrompt = "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetAuthentication() {
     // >SEPARATOR getAuthentication default
     // Initialize the client
@@ -870,7 +890,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.searchTransformations(
       transformationSearch = TransformationSearch(
-        transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+        transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
       ),
     )
 
@@ -898,13 +918,39 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForTryTransformations() {
-    // >SEPARATOR tryTransformations default
+  suspend fun snippetForTryTransformation() {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.tryTransformations(
+    var response = client.tryTransformation(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = buildJsonObject {
+          put(
+            "bar",
+            JsonPrimitive("baz"),
+          )
+        },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForTryTransformationBeforeUpdate() {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
         code = "foo",
         sampleRecord = buildJsonObject {

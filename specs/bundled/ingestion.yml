@@ -1431,8 +1431,8 @@ paths:
       tags:
         - ingestion
       summary: Try a transformation
-      description: Try a transformation.
-      operationId: tryTransformations
+      description: Try a transformation before creating it.
+      operationId: tryTransformation
       x-acl:
         - addObject
         - deleteIndex
@@ -1481,7 +1481,7 @@ paths:
                   $ref: '#/components/schemas/Transformation'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/transformations/copilot:
+  /1/transformations/models:
     get:
       tags:
         - ingestion
@@ -1509,6 +1509,48 @@ paths:
                       $ref: '#/components/schemas/Model'
                 required:
                   - llms
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/transformations/{transformationID}:
@@ -1571,6 +1613,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - ingestion
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/runs:
@@ -3416,12 +3486,36 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    DockerStreamsSyncMode:
+      type: string
+      description: The strategy to use to fetch the data.
+      enum:
+        - incremental
+        - fullTable
+    DockerStreams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the stream to fetch the data from (e.g. table name).
+        properties:
+          type: array
+          description: The properties of the stream to select (e.g. column).
+          items:
+            type: string
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
+      required:
+        - name
+        - syncMode
     DockerStreamsInput:
       description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/DockerStreams'
       required:
         - streams
     ShopifyMetafield:
@@ -3806,6 +3900,11 @@ components:
         - type
         - updatedAt
         - createdAt
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -3821,6 +3920,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -3847,6 +3948,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -3871,6 +3974,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord
@@ -3900,12 +4007,12 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'
       required:
-        - transformationsIDs
+        - transformationIDs
     Model:
       type: object
       additionalProperties: false

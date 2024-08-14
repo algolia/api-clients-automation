@@ -27,6 +27,8 @@ package algoliasearch.ingestion
   *
   * @param transformationID
   *   Universally unique identifier (UUID) of a transformation.
+  * @param authenticationIDs
+  *   The authentications associated for the current transformation.
   * @param code
   *   The source code of the transformation.
   * @param name
@@ -40,6 +42,7 @@ package algoliasearch.ingestion
   */
 case class Transformation(
     transformationID: String,
+    authenticationIDs: Option[Seq[String]] = scala.None,
     code: String,
     name: String,
     description: Option[String] = scala.None,

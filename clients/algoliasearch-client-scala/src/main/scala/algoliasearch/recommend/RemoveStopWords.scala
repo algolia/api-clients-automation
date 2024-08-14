@@ -50,6 +50,7 @@ object RemoveStopWords {
   def apply(value: Boolean): RemoveStopWords = {
     RemoveStopWords.BooleanValue(value)
   }
+
 }
 
 object RemoveStopWordsSerializer extends Serializer[RemoveStopWords] {

@@ -49,6 +49,7 @@ object ConsequenceQuery {
   def apply(value: String): ConsequenceQuery = {
     ConsequenceQuery.StringValue(value)
   }
+
 }
 
 object ConsequenceQuerySerializer extends Serializer[ConsequenceQuery] {

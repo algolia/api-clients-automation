@@ -461,6 +461,30 @@ export async function snippetForEnableTaskV1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the generateTransformationCode method.
+//
+// generateTransformationCode
+export async function snippetForGenerateTransformationCode(): Promise<void> {
+  // >SEPARATOR generateTransformationCode default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.generateTransformationCode({
+    id: 'foo',
+    userPrompt:
+      'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getAuthentication method.
 //
 // getAuthentication
@@ -1060,7 +1084,7 @@ export async function snippetForSearchTransformations(): Promise<void> {
 
   // Call the API
   const response = await client.searchTransformations({
-    transformationsIDs: [
+    transformationIDs: [
       '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
       '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
@@ -1094,11 +1118,11 @@ export async function snippetForTriggerDockerSourceDiscover(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the tryTransformations method.
+// Snippet for the tryTransformation method.
 //
-// tryTransformations
-export async function snippetForTryTransformations(): Promise<void> {
-  // >SEPARATOR tryTransformations default
+// tryTransformation
+export async function snippetForTryTransformation(): Promise<void> {
+  // >SEPARATOR tryTransformation default
   // Initialize the client
   const client = ingestionClient(
     'YOUR_APP_ID',
@@ -1107,9 +1131,32 @@ export async function snippetForTryTransformations(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.tryTransformations({
+  const response = await client.tryTransformation({
     code: 'foo',
     sampleRecord: { bar: 'baz' },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the tryTransformationBeforeUpdate method.
+//
+// tryTransformationBeforeUpdate
+export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
+  // >SEPARATOR tryTransformationBeforeUpdate default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.tryTransformationBeforeUpdate({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
   });
 
   // use typed response

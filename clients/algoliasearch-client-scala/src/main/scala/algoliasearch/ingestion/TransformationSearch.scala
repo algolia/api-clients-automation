@@ -26,5 +26,5 @@ package algoliasearch.ingestion
 /** TransformationSearch
   */
 case class TransformationSearch(
-    transformationsIDs: Seq[String]
+    transformationIDs: Seq[String]
 )

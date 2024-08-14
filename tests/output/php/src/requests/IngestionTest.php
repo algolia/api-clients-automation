@@ -192,6 +192,33 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('task shopify')]
+    public function testCreateTask2()
+    {
+        $client = $this->getClient();
+        $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createTaskOnDemand')]
     public function testCreateTaskV1()
     {
@@ -255,6 +282,34 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/tasks',
                 'method' => 'POST',
                 'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('task shopify')]
+    public function testCreateTaskV13()
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'onDemand',
+                ],
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
             ],
         ]);
     }
@@ -880,6 +935,25 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('generateTransformationCode')]
+    public function testGenerateTransformationCode()
+    {
+        $client = $this->getClient();
+        $client->generateTransformationCode(
+            ['id' => 'foo',
+                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/models',
+                'method' => 'POST',
+                'body' => json_decode('{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('getAuthentication')]
     public function testGetAuthentication()
     {
@@ -1161,7 +1235,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/transformations/copilot',
+                'path' => '/1/transformations/models',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -1396,7 +1470,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->searchTransformations(
-            ['transformationsIDs' => [
+            ['transformationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -1410,7 +1484,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/search',
                 'method' => 'POST',
-                'body' => json_decode('{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
+                'body' => json_decode('{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
             ],
         ]);
     }
@@ -1432,11 +1506,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('tryTransformations')]
-    public function testTryTransformations()
+    #[TestDox('tryTransformation')]
+    public function testTryTransformation()
     {
         $client = $this->getClient();
-        $client->tryTransformations(
+        $client->tryTransformation(
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
                 ],
@@ -1448,6 +1522,86 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/transformations/try',
                 'method' => 'POST',
                 'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('with authentications')]
+    public function testTryTransformation1()
+    {
+        $client = $this->getClient();
+        $client->tryTransformation(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('tryTransformationBeforeUpdate')]
+    public function testTryTransformationBeforeUpdate()
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('existing with authentications')]
+    public function testTryTransformationBeforeUpdate1()
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
             ],
         ]);
     }

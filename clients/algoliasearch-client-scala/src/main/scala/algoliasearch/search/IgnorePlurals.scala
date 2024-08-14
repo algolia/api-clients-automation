@@ -53,6 +53,7 @@ object IgnorePlurals {
   def apply(value: Boolean): IgnorePlurals = {
     IgnorePlurals.BooleanValue(value)
   }
+
 }
 
 object IgnorePluralsSerializer extends Serializer[IgnorePlurals] {

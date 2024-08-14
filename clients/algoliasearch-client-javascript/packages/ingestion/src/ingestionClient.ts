@@ -55,6 +55,7 @@ import type {
   RunTaskProps,
   RunTaskV1Props,
   TriggerDockerSourceDiscoverProps,
+  TryTransformationBeforeUpdateProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
   UpdateSourceProps,
@@ -70,6 +71,8 @@ import type { DestinationCreateResponse } from '../model/destinationCreateRespon
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
 import type { Event } from '../model/event';
+import type { GenerateTransformationCodePayload } from '../model/generateTransformationCodePayload';
+import type { GenerateTransformationCodeResponse } from '../model/generateTransformationCodeResponse';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
@@ -108,7 +111,7 @@ import type { TransformationTryResponse } from '../model/transformationTryRespon
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.0.0-beta.14';
+export const apiClientVersion = '1.0.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -1024,6 +1027,53 @@ export function createIngestionClient({
     },
 
     /**
+     * Generates code for the selected model based on the given prompt.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param generateTransformationCodePayload - The generateTransformationCodePayload object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions?: RequestOptions
+    ): Promise<GenerateTransformationCodeResponse> {
+      if (!generateTransformationCodePayload) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.'
+        );
+      }
+
+      if (!generateTransformationCodePayload.id) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload.id` is required when calling `generateTransformationCode`.'
+        );
+      }
+      if (!generateTransformationCodePayload.userPrompt) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload.userPrompt` is required when calling `generateTransformationCode`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/models';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: generateTransformationCodePayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
@@ -1885,7 +1935,7 @@ export function createIngestionClient({
     listTransformationModels(
       requestOptions?: RequestOptions
     ): Promise<TransformationModels> {
-      const requestPath = '/1/transformations/copilot';
+      const requestPath = '/1/transformations/models';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2351,9 +2401,9 @@ export function createIngestionClient({
         );
       }
 
-      if (!transformationSearch.transformationsIDs) {
+      if (!transformationSearch.transformationIDs) {
         throw new Error(
-          'Parameter `transformationSearch.transformationsIDs` is required when calling `searchTransformations`.'
+          'Parameter `transformationSearch.transformationIDs` is required when calling `searchTransformations`.'
         );
       }
 
@@ -2412,7 +2462,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Try a transformation.
+     * Try a transformation before creating it.
      *
      * Required API Key ACLs:
      * - addObject
@@ -2422,28 +2472,89 @@ export function createIngestionClient({
      * @param transformationTry - The transformationTry object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    tryTransformations(
+    tryTransformation(
       transformationTry: TransformationTry,
       requestOptions?: RequestOptions
     ): Promise<TransformationTryResponse> {
       if (!transformationTry) {
         throw new Error(
-          'Parameter `transformationTry` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry` is required when calling `tryTransformation`.'
         );
       }
 
       if (!transformationTry.code) {
         throw new Error(
-          'Parameter `transformationTry.code` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry.code` is required when calling `tryTransformation`.'
         );
       }
       if (!transformationTry.sampleRecord) {
         throw new Error(
-          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformation`.'
         );
       }
 
       const requestPath = '/1/transformations/try';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationTry,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Try a transformation before updating it.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param tryTransformationBeforeUpdate - The tryTransformationBeforeUpdate object.
+     * @param tryTransformationBeforeUpdate.transformationID - Unique identifier of a transformation.
+     * @param tryTransformationBeforeUpdate.transformationTry - The transformationTry object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    tryTransformationBeforeUpdate(
+      {
+        transformationID,
+        transformationTry,
+      }: TryTransformationBeforeUpdateProps,
+      requestOptions?: RequestOptions
+    ): Promise<TransformationTryResponse> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      if (!transformationTry) {
+        throw new Error(
+          'Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      if (!transformationTry.code) {
+        throw new Error(
+          'Parameter `transformationTry.code` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+      if (!transformationTry.sampleRecord) {
+        throw new Error(
+          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}/try'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
+      );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 

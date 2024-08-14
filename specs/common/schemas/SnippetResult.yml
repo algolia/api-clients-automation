@@ -26,6 +26,7 @@ snippetResultOptionArray:
 
 snippetResult:
   oneOf:
+    - $ref: '#/snippetResultMap'
     - $ref: '#/snippetResultOption'
     - $ref: '#/snippetResultOptionMap'
     - $ref: '#/snippetResultOptionArray'

@@ -177,6 +177,35 @@ class TestIngestionClient:
             """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}"""
         )
 
+    async def test_create_task_2(self):
+        """
+        task shopify
+        """
+        _req = await self._client.create_task_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "cron": "* * * * *",
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+        )
+
     async def test_create_task_v1_(self):
         """
         createTaskOnDemand
@@ -245,6 +274,37 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}"""
+        )
+
+    async def test_create_task_v1_3(self):
+        """
+        task shopify
+        """
+        _req = await self._client.create_task_v1_with_http_info(
+            task_create={
+                "sourceID": "search",
+                "destinationID": "destinationName",
+                "trigger": {
+                    "type": "onDemand",
+                },
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/tasks"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
         )
 
     async def test_create_transformation_(self):
@@ -790,6 +850,25 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
+    async def test_generate_transformation_code_(self):
+        """
+        generateTransformationCode
+        """
+        _req = await self._client.generate_transformation_code_with_http_info(
+            generate_transformation_code_payload={
+                "id": "foo",
+                "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+            },
+        )
+
+        assert _req.path == "/1/transformations/models"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}"""
+        )
+
     async def test_get_authentication_(self):
         """
         getAuthentication
@@ -1032,7 +1111,7 @@ class TestIngestionClient:
         """
         _req = await self._client.list_transformation_models_with_http_info()
 
-        assert _req.path == "/1/transformations/copilot"
+        assert _req.path == "/1/transformations/models"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -1250,7 +1329,7 @@ class TestIngestionClient:
         """
         _req = await self._client.search_transformations_with_http_info(
             transformation_search={
-                "transformationsIDs": [
+                "transformationIDs": [
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                     "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -1263,7 +1342,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+            """{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
         )
 
     async def test_trigger_docker_source_discover_(self):
@@ -1279,11 +1358,11 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_try_transformations_(self):
+    async def test_try_transformation_(self):
         """
-        tryTransformations
+        tryTransformation
         """
-        _req = await self._client.try_transformations_with_http_info(
+        _req = await self._client.try_transformation_with_http_info(
             transformation_try={
                 "code": "foo",
                 "sampleRecord": {
@@ -1298,6 +1377,97 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"code":"foo","sampleRecord":{"bar":"baz"}}"""
+        )
+
+    async def test_try_transformation_1(self):
+        """
+        with authentications
+        """
+        _req = await self._client.try_transformation_with_http_info(
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+                "authentications": [
+                    {
+                        "type": "oauth",
+                        "name": "authName",
+                        "input": {
+                            "url": "http://test.oauth",
+                            "client_id": "myID",
+                            "client_secret": "mySecret",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/transformations/try"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+        )
+
+    async def test_try_transformation_before_update_(self):
+        """
+        tryTransformationBeforeUpdate
+        """
+        _req = await self._client.try_transformation_before_update_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"}}"""
+        )
+
+    async def test_try_transformation_before_update_1(self):
+        """
+        existing with authentications
+        """
+        _req = await self._client.try_transformation_before_update_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+                "authentications": [
+                    {
+                        "type": "oauth",
+                        "name": "authName",
+                        "input": {
+                            "url": "http://test.oauth",
+                            "client_id": "myID",
+                            "client_secret": "mySecret",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert (
+            _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
         )
 
     async def test_update_authentication_(self):

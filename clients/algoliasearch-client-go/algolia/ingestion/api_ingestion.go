@@ -2682,6 +2682,139 @@ func (c *APIClient) EnableTaskV1(r ApiEnableTaskV1Request, opts ...RequestOption
 	return returnValue, nil
 }
 
+func (r *ApiGenerateTransformationCodeRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["generateTransformationCodePayload"]; ok {
+		err = json.Unmarshal(v, &r.generateTransformationCodePayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.generateTransformationCodePayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal generateTransformationCodePayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.generateTransformationCodePayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter generateTransformationCodePayload: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiGenerateTransformationCodeRequest represents the request with all the parameters for the API call.
+type ApiGenerateTransformationCodeRequest struct {
+	generateTransformationCodePayload *GenerateTransformationCodePayload
+}
+
+// NewApiGenerateTransformationCodeRequest creates an instance of the ApiGenerateTransformationCodeRequest to be used for the API call.
+func (c *APIClient) NewApiGenerateTransformationCodeRequest(generateTransformationCodePayload *GenerateTransformationCodePayload) ApiGenerateTransformationCodeRequest {
+	return ApiGenerateTransformationCodeRequest{
+		generateTransformationCodePayload: generateTransformationCodePayload,
+	}
+}
+
+/*
+GenerateTransformationCode calls the API and returns the raw response from it.
+
+	  Generates code for the selected model based on the given prompt.
+
+	    Required API Key ACLs:
+	    - addObject
+	    - deleteIndex
+	    - editSettings
+
+	Request can be constructed by NewApiGenerateTransformationCodeRequest with parameters below.
+	  @param generateTransformationCodePayload GenerateTransformationCodePayload
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) GenerateTransformationCodeWithHTTPInfo(r ApiGenerateTransformationCodeRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/1/transformations/models"
+
+	if r.generateTransformationCodePayload == nil {
+		return nil, nil, reportError("Parameter `generateTransformationCodePayload` is required when calling `GenerateTransformationCode`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.generateTransformationCodePayload
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false)
+}
+
+/*
+GenerateTransformationCode casts the HTTP response body to a defined struct.
+
+Generates code for the selected model based on the given prompt.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiGenerateTransformationCodeRequest with parameters below.
+
+	@param generateTransformationCodePayload GenerateTransformationCodePayload
+	@return GenerateTransformationCodeResponse
+*/
+func (c *APIClient) GenerateTransformationCode(r ApiGenerateTransformationCodeRequest, opts ...RequestOption) (*GenerateTransformationCodeResponse, error) {
+	var returnValue *GenerateTransformationCodeResponse
+
+	res, resBody, err := c.GenerateTransformationCodeWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiGetAuthenticationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -5606,7 +5739,7 @@ ListTransformationModels calls the API and returns the raw response from it.
 	@return error - An error if the API call fails
 */
 func (c *APIClient) ListTransformationModelsWithHTTPInfo(opts ...RequestOption) (*http.Response, []byte, error) {
-	requestPath := "/1/transformations/copilot"
+	requestPath := "/1/transformations/models"
 
 	conf := config{
 		context:      context.Background(),
@@ -7355,7 +7488,7 @@ func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscover
 	return returnValue, nil
 }
 
-func (r *ApiTryTransformationsRequest) UnmarshalJSON(b []byte) error {
+func (r *ApiTryTransformationRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
 	if err != nil {
@@ -7379,40 +7512,40 @@ func (r *ApiTryTransformationsRequest) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ApiTryTransformationsRequest represents the request with all the parameters for the API call.
-type ApiTryTransformationsRequest struct {
+// ApiTryTransformationRequest represents the request with all the parameters for the API call.
+type ApiTryTransformationRequest struct {
 	transformationTry *TransformationTry
 }
 
-// NewApiTryTransformationsRequest creates an instance of the ApiTryTransformationsRequest to be used for the API call.
-func (c *APIClient) NewApiTryTransformationsRequest(transformationTry *TransformationTry) ApiTryTransformationsRequest {
-	return ApiTryTransformationsRequest{
+// NewApiTryTransformationRequest creates an instance of the ApiTryTransformationRequest to be used for the API call.
+func (c *APIClient) NewApiTryTransformationRequest(transformationTry *TransformationTry) ApiTryTransformationRequest {
+	return ApiTryTransformationRequest{
 		transformationTry: transformationTry,
 	}
 }
 
 /*
-TryTransformations calls the API and returns the raw response from it.
+TryTransformation calls the API and returns the raw response from it.
 
-	  Try a transformation.
+	  Try a transformation before creating it.
 
 	    Required API Key ACLs:
 	    - addObject
 	    - deleteIndex
 	    - editSettings
 
-	Request can be constructed by NewApiTryTransformationsRequest with parameters below.
+	Request can be constructed by NewApiTryTransformationRequest with parameters below.
 	  @param transformationTry TransformationTry
 	@param opts ...RequestOption - Optional parameters for the API call
 	@return *http.Response - The raw response from the API
 	@return []byte - The raw response body from the API
 	@return error - An error if the API call fails
 */
-func (c *APIClient) TryTransformationsWithHTTPInfo(r ApiTryTransformationsRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+func (c *APIClient) TryTransformationWithHTTPInfo(r ApiTryTransformationRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/transformations/try"
 
 	if r.transformationTry == nil {
-		return nil, nil, reportError("Parameter `transformationTry` is required when calling `TryTransformations`.")
+		return nil, nil, reportError("Parameter `transformationTry` is required when calling `TryTransformation`.")
 	}
 
 	conf := config{
@@ -7439,24 +7572,175 @@ func (c *APIClient) TryTransformationsWithHTTPInfo(r ApiTryTransformationsReques
 }
 
 /*
-TryTransformations casts the HTTP response body to a defined struct.
+TryTransformation casts the HTTP response body to a defined struct.
 
-Try a transformation.
+Try a transformation before creating it.
 
 Required API Key ACLs:
   - addObject
   - deleteIndex
   - editSettings
 
-Request can be constructed by NewApiTryTransformationsRequest with parameters below.
+Request can be constructed by NewApiTryTransformationRequest with parameters below.
 
 	@param transformationTry TransformationTry
 	@return TransformationTryResponse
 */
-func (c *APIClient) TryTransformations(r ApiTryTransformationsRequest, opts ...RequestOption) (*TransformationTryResponse, error) {
+func (c *APIClient) TryTransformation(r ApiTryTransformationRequest, opts ...RequestOption) (*TransformationTryResponse, error) {
 	var returnValue *TransformationTryResponse
 
-	res, resBody, err := c.TryTransformationsWithHTTPInfo(r, opts...)
+	res, resBody, err := c.TryTransformationWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiTryTransformationBeforeUpdateRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationID"]; ok {
+		err = json.Unmarshal(v, &r.transformationID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationID: %w", err)
+			}
+		}
+	}
+	if v, ok := req["transformationTry"]; ok {
+		err = json.Unmarshal(v, &r.transformationTry)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationTry)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationTry: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.transformationTry)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter transformationTry: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiTryTransformationBeforeUpdateRequest represents the request with all the parameters for the API call.
+type ApiTryTransformationBeforeUpdateRequest struct {
+	transformationID  string
+	transformationTry *TransformationTry
+}
+
+// NewApiTryTransformationBeforeUpdateRequest creates an instance of the ApiTryTransformationBeforeUpdateRequest to be used for the API call.
+func (c *APIClient) NewApiTryTransformationBeforeUpdateRequest(transformationID string, transformationTry *TransformationTry) ApiTryTransformationBeforeUpdateRequest {
+	return ApiTryTransformationBeforeUpdateRequest{
+		transformationID:  transformationID,
+		transformationTry: transformationTry,
+	}
+}
+
+/*
+TryTransformationBeforeUpdate calls the API and returns the raw response from it.
+
+	  Try a transformation before updating it.
+
+	    Required API Key ACLs:
+	    - addObject
+	    - deleteIndex
+	    - editSettings
+
+	Request can be constructed by NewApiTryTransformationBeforeUpdateRequest with parameters below.
+	  @param transformationID string - Unique identifier of a transformation.
+	  @param transformationTry TransformationTry
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) TryTransformationBeforeUpdateWithHTTPInfo(r ApiTryTransformationBeforeUpdateRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/1/transformations/{transformationID}/try"
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(utils.ParameterToString(r.transformationID)))
+
+	if r.transformationID == "" {
+		return nil, nil, reportError("Parameter `transformationID` is required when calling `TryTransformationBeforeUpdate`.")
+	}
+
+	if r.transformationTry == nil {
+		return nil, nil, reportError("Parameter `transformationTry` is required when calling `TryTransformationBeforeUpdate`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.transformationTry
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false)
+}
+
+/*
+TryTransformationBeforeUpdate casts the HTTP response body to a defined struct.
+
+Try a transformation before updating it.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiTryTransformationBeforeUpdateRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@param transformationTry TransformationTry
+	@return TransformationTryResponse
+*/
+func (c *APIClient) TryTransformationBeforeUpdate(r ApiTryTransformationBeforeUpdateRequest, opts ...RequestOption) (*TransformationTryResponse, error) {
+	var returnValue *TransformationTryResponse
+
+	res, resBody, err := c.TryTransformationBeforeUpdateWithHTTPInfo(r, opts...)
 	if err != nil {
 		return returnValue, err
 	}

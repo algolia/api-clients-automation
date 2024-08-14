@@ -14,7 +14,9 @@ function getMajorMinor(lang: Language, version: string): { major: number; minor:
   const matches = version.match(/(\d+)\.(\d+)/);
 
   if (!matches || matches.length < 3) {
-    throw new Error(`unable to parse version '${version}' for language '${lang}'`);
+    console.warn(`unable to parse version '${version}' for language '${lang}'`);
+
+    return { major: 0, minor: 0 };
   }
 
   return { major: parseInt(matches[1], 10), minor: parseInt(matches[2], 10) };
@@ -83,12 +85,15 @@ async function getTags(lang: Language): Promise<string[]> {
  */
 export function generateLanguageSLA(tags: string[], lang: Language, version: Version): void {
   const start = new Date();
+  const old = new Date(start);
+  old.setFullYear(start.getFullYear() - 2);
   const end = new Date(start);
   end.setFullYear(start.getFullYear() + 2);
 
   // @ts-expect-error -- force reset our sla policy to remove outdated ones
   fullReleaseConfig.sla[lang] = {};
 
+  let prevTagRelease = start;
   let prevTagMajor = 0;
   let prevTagMinor = 0;
   let prevTagVersion = '';
@@ -107,37 +112,46 @@ export function generateLanguageSLA(tags: string[], lang: Language, version: Ver
       continue;
     }
 
-    const releaseDate = new Date(tagReleaseDate);
-    const deadline = new Date(releaseDate);
-    deadline.setFullYear(releaseDate.getFullYear() + 2);
+    const { major: tagMajor, minor: tagMinor } = getMajorMinor(lang, tagVersion);
 
-    if (start.getTime() > deadline.getTime()) {
+    if (tagMajor === 0 && tagMinor === 0) {
       continue;
     }
 
-    const { major: tagMajor, minor: tagMinor } = getMajorMinor(lang, tagVersion);
-
-    fullReleaseConfig.sla[lang][tagVersion] = {
-      releaseDate: releaseDate.toISOString().split('T')[0],
-    };
+    const releaseDate = new Date(tagReleaseDate);
+    const deadline = new Date(releaseDate);
+    deadline.setFullYear(releaseDate.getFullYear() + 2);
 
     // the current tag version defines the maintenance policy of the previous one
     if (prevTagVersion !== '') {
       // if the previous tag is on the same major.minor version, we don't support it
       if (tagMajor === prevTagMajor && tagMinor === prevTagMinor) {
         setInactive(lang, prevTagVersion, releaseDate);
+
+        if (prevTagRelease.getTime() < old.getTime()) {
+          delete fullReleaseConfig.sla[lang][prevTagVersion];
+        }
       } else {
         setMaintenance(lang, prevTagVersion, releaseDate, deadline);
+
+        if (start.getTime() > deadline.getTime()) {
+          delete fullReleaseConfig.sla[lang][prevTagVersion];
+        }
       }
     }
 
+    fullReleaseConfig.sla[lang][tagVersion] = {
+      releaseDate: releaseDate.toISOString().split('T')[0],
+    };
+
+    prevTagRelease = releaseDate;
     prevTagMajor = tagMajor;
     prevTagMinor = tagMinor;
     prevTagVersion = tagVersion;
   }
 
   // if there's no release planned, or if the release is a pre-release, then the latest tagged version is the active one
-  if (!version?.next || isPreRelease(version?.next)) {
+  if (!version?.next || isPreRelease(version?.next) || version?.next === prevTagVersion) {
     fullReleaseConfig.sla[lang][prevTagVersion].supportStatus = 'active';
 
     return;

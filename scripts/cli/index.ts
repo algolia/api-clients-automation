@@ -10,6 +10,7 @@ import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
+import { generateSLA } from '../release/sla.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
@@ -244,8 +245,15 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun }) => {
+  .option('-sla, --sla-only', 'only generates the sla policy', false)
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, slaOnly }) => {
     setVerbose(Boolean(verbose));
+
+    if (slaOnly) {
+      await generateSLA({});
+
+      return;
+    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];

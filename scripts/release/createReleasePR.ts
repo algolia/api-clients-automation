@@ -419,7 +419,10 @@ export async function createReleasePR({
     releaseType,
   });
 
-  await generateSLA(versions);
+  // skip anything sla related for now
+  if (process.env.SLA) {
+    await generateSLA(versions);
+  }
 
   const versionChanges = getVersionChangesText(versions);
 
