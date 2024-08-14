@@ -37,17 +37,17 @@ To get started, you first need to install algoliasearch (or any other available 
 All of our clients comes with type definition, and are available for both browser and node environments.
 
 ```bash
-yarn add algoliasearch@beta
+yarn add algoliasearch
 # or
-npm install algoliasearch@beta
+npm install algoliasearch
 ```
 
 Or use a specific package:
 
 ```bash
-yarn add @algolia/client-search@beta
+yarn add @algolia/client-search
 # or
-npm install @algolia/client-search@beta
+npm install @algolia/client-search
 ```
 
 Without a package manager
@@ -55,7 +55,7 @@ Without a package manager
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch@beta/dist/algoliasearch.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch.umd.min.js"></script>
 ```
 
 You can now import the Algolia API client in your project and play with it.
