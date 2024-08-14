@@ -326,7 +326,7 @@ package object extension {
       * settings, synonyms and query rules and indexes all passed objects. Finally, the temporary one replaces the
       * existing index.
       *
-      * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation
+      * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
       * details.
       *
       * @param indexName

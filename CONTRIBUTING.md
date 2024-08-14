@@ -2,7 +2,7 @@
 
 Welcome to the contributing guide for the api-clients-automation repository!
 
-Please read [our contributing guides](https://api-clients-automation.netlify.app/docs/contributing/introduction/) for advanced usage.
+Please read [our contributing guides](https://api-clients-automation.netlify.app/docs/introduction/) for advanced usage.
 
 If you can't find what you are looking for, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new/choose).
 

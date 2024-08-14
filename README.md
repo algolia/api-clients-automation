@@ -25,7 +25,7 @@ You can read `getting started` guides and how to use the API clients on [our doc
 
 ## ✨ Contributing
 
-> Looking to add a new client, or fix a bug? Make sure to take a look at [our contribution guides](https://api-clients-automation.netlify.app/docs/contributing/introduction).
+> Looking to add a new client, or fix a bug? Make sure to take a look at [our contribution guides](https://api-clients-automation.netlify.app/docs/introduction).
 
 ### Setup repository tooling
 
@@ -41,31 +41,31 @@ nvm use && yarn
 yarn docker:setup
 ```
 
-[Read more on our documentation](https://api-clients-automation.netlify.app/docs/contributing/setup-repository)
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/setup-repository)
 
 ### CLI
 
 The CLI allows you to make changes locally and run commands through the docker container.
 
-- [Specs CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/specs-commands)
-- [Clients CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/clients-commands)
-- [CTS CLI commands](https://api-clients-automation.netlify.app/docs/contributing/CLI/cts-commands)
+- [Specs CLI commands](https://api-clients-automation.netlify.app/docs/CLI/specs-commands)
+- [Clients CLI commands](https://api-clients-automation.netlify.app/docs/CLI/clients-commands)
+- [CTS CLI commands](https://api-clients-automation.netlify.app/docs/CLI/cts-commands)
 
 ### Guides and requirements
 
 Read the guides and requirements to:
 
-- [Add a new client](https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client)
-- [Add a new language](https://api-clients-automation.netlify.app/docs/contributing/add-new-api-language)
+- [Add a new client](https://api-clients-automation.netlify.app/docs/add-new-api-client)
+- [Add a new language](https://api-clients-automation.netlify.app/docs/add-new-api-language)
 
 ### Tests
 
 Test the generated clients by running:
 
-- The [`playground`](./playground) (see [documentation](https://api-clients-automation.netlify.app/docs/contributing/testing/playground))
-- The [`Common Test Suite`](./tests/) (see [documentation](https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite)).
+- The [`playground`](./playground) (see [documentation](https://api-clients-automation.netlify.app/docs/testing/playground))
+- The [`Common Test Suite`](./tests/) (see [documentation](https://api-clients-automation.netlify.app/docs/testing/common-test-suite)).
 
-For full documentation, visit the **[online documentation](https://api-clients-automation.netlify.app/docs/contributing/introduction)**.
+For full documentation, visit the **[online documentation](https://api-clients-automation.netlify.app/docs/introduction)**.
 
 ## ❓ Troubleshooting
 
