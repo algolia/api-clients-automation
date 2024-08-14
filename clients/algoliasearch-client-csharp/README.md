@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://api-clients-automation.netlify.app/docs/clients/csharp/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/csharp/v7/" target="_blank">Documentation</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-csharp/issues" target="_blank">Report a bug</a>  •
