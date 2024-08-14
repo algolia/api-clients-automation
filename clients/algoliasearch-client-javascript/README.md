@@ -53,7 +53,7 @@ Add the following JavaScript snippet to the <head> of your website:
 You can now import the Algolia API client in your project and play with it.
 
 ```js
-import { liteClient } from 'algoliasearch';
+import { algoliasearch } from 'algoliasearch';
 
 const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
