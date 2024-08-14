@@ -70,11 +70,6 @@ export async function transformBundle({
 
   if (docs) {
     const snippets = transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)));
-    // the JS file will be removed once algolia/doc leverages the JSON one
-    await fsp.writeFile(
-      toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
-      `export const snippets = ${snippets}`,
-    );
     await fsp.writeFile(toAbsolutePath(`snippets/guides/${clientName}-snippets.json`), snippets);
   }
 
