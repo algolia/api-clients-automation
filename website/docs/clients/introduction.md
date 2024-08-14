@@ -12,17 +12,17 @@ If you wish to contribute, please see [the contributing page](/docs/contributing
 
 Generated code in production can be find on repository of the clients.
 
-- [C#](https://github.com/algolia/algoliasearch-client-csharp/tree/next)
+- [C#](https://github.com/algolia/algoliasearch-client-csharp/tree/main)
 - [Dart](https://github.com/algolia/algoliasearch-client-dart/)
-- [Go](https://github.com/algolia/algoliasearch-client-go/tree/next/)
-- [JavaScript](https://github.com/algolia/algoliasearch-client-javascript/tree/next/)
-- [Java](https://github.com/algolia/algoliasearch-client-java/tree/next/)
-- [Kotlin](https://github.com/algolia/algoliasearch-client-kotlin/tree/next/)
-- [PHP](https://github.com/algolia/algoliasearch-client-php/tree/next/)
-- [Python](https://github.com/algolia/algoliasearch-client-python/tree/next)
-- [Ruby](https://github.com/algolia/algoliasearch-client-ruby/tree/next)
-- [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/next)
-- [Swift](https://github.com/algolia/algoliasearch-client-swift/tree/next)
+- [Go](https://github.com/algolia/algoliasearch-client-go/tree/main/)
+- [JavaScript](https://github.com/algolia/algoliasearch-client-javascript/tree/main/)
+- [Java](https://github.com/algolia/algoliasearch-client-java/tree/main/)
+- [Kotlin](https://github.com/algolia/algoliasearch-client-kotlin/tree/main/)
+- [PHP](https://github.com/algolia/algoliasearch-client-php/tree/main/)
+- [Python](https://github.com/algolia/algoliasearch-client-python/tree/main)
+- [Ruby](https://github.com/algolia/algoliasearch-client-ruby/tree/main)
+- [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/main)
+- [Swift](https://github.com/algolia/algoliasearch-client-swift/tree/main)
 
 ## Usage
 

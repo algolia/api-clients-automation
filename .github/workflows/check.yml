@@ -626,7 +626,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push generation to algolia documentation
+      - name: Push generation to the Algolia docs
         run: yarn workspace scripts pushToAlgoliaDoc
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
