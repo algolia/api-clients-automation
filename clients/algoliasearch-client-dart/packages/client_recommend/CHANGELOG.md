@@ -1,3 +1,7 @@
+## [1.22.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.22.0...1.22.1)
+
+- [40c5d47bd](https://github.com/algolia/api-clients-automation/commit/40c5d47bd) fix(specs): delete user token processing time ([#3525](https://github.com/algolia/api-clients-automation/pull/3525)) by [@kai687](https://github.com/kai687/)
+
 ## [1.22.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.21.0...1.22.0)
 
 - [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
