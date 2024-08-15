@@ -24,7 +24,7 @@ function getHelperSnippet(
   helperName: keyof typeof helperSnippets,
   language: string,
 ): Record<string, string> | string {
-  if (Object.entries(helperSnippets[helperName][language]).length === 1) {
+  if (typeof helperSnippets[helperName][language] === 'string') {
     return {
       default: helperSnippets[helperName][language],
     };
