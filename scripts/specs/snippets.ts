@@ -3,7 +3,8 @@ import fsp from 'fs/promises';
 import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
-import { waitForTask, waitForAppTask, waitForApiKey } from './helper-snippets.js';
+/* eslint import/namespace: ['error', { allowComputed: true }]*/
+import * as helperSnippets from './helper-snippets.js';
 import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
 
 export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
@@ -17,6 +18,19 @@ export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
     default:
       return capitalize(language) as CodeSamples['label'];
   }
+}
+
+function getHelperSnippet(
+  helperName: keyof typeof helperSnippets,
+  language: string,
+): Record<string, string> | string {
+  if (Object.entries(helperSnippets[helperName][language]).length === 1) {
+    return {
+      default: helperSnippets[helperName][language],
+    };
+  }
+
+  return helperSnippets[helperName][language];
 }
 
 // Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
@@ -49,17 +63,9 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
     }
 
     // add specific helper snippets to the current language
-    snippetSamples[language].waitForAppTask = {
-      default: waitForAppTask[language],
-    };
-
-    snippetSamples[language].waitForApiKey = {
-      default: waitForApiKey[language],
-    };
-
-    snippetSamples[language].waitForTask = {
-      default: waitForTask[language],
-    };
+    snippetSamples[language].waitForAppTask = getHelperSnippet('waitForAppTask', language);
+    snippetSamples[language].waitForApiKey = getHelperSnippet('waitForApiKey', language);
+    snippetSamples[language].waitForTask = getHelperSnippet('waitForTask', language);
   }
 
   return JSON.stringify(snippetSamples, null, 2);
