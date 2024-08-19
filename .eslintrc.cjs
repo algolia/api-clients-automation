@@ -112,6 +112,19 @@ module.exports = {
         '@typescript-eslint/prefer-enum-initializers': 0,
         '@typescript-eslint/no-namespace': 0,
         'import/dynamic-import-chunkname': 0,
+        '@stylistic/indent': 0,
+
+        '@stylistic/max-len': [0, { code: 100, ignoreComments: true }],
+        '@stylistic/comma-dangle': [0, "always"],
+        'prettier/prettier': [
+          'error',
+          {
+            "printWidth": 100,
+            "trailingComma": "all",
+            "singleQuote": true,
+            "tabWidth":2
+          },
+        ],
 
         'unused-imports/no-unused-imports-ts': 2,
         '@typescript-eslint/no-unused-vars': 2,
@@ -144,33 +157,36 @@ module.exports = {
           },
         ],
       },
-    },
-    // JS client rules
-    {
-      files: ['clients/algoliasearch-client-javascript/packages/**/*.ts'],
 
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        project: './clients/algoliasearch-client-javascript/tsconfig.json',
-      },
+      overrides: [
+        // JS client rules
+        {
+          files: ['clients/algoliasearch-client-javascript/packages/**/*.ts'],
 
-      rules: {
-        // For a wider browser support (IE>=11), we forbid those two
-        'no-restricted-syntax': [
-          'error',
-          {
-            selector: "LogicalExpression[operator='??']",
-            message:
-              'For wider browser support, nullish coalescing operator is not allowed.',
+          parserOptions: {
+            tsconfigRootDir: __dirname,
+            project: './clients/algoliasearch-client-javascript/tsconfig.json',
           },
-          {
-            selector: 'ChainExpression',
-            message:
-              'For wider browser support, optional chaining is not allowed.',
+
+          rules: {
+            // For a wider browser support (IE>=11), we forbid those two
+            'no-restricted-syntax': [
+              'error',
+              {
+                selector: "LogicalExpression[operator='??']",
+                message:
+                  'For wider browser support, nullish coalescing operator is not allowed.',
+              },
+              {
+                selector: 'ChainExpression',
+                message:
+                  'For wider browser support, optional chaining is not allowed.',
+              },
+            ],
+            '@typescript-eslint/prefer-optional-chain': 0,
           },
-        ],
-        '@typescript-eslint/prefer-optional-chain': 0,
-      },
+        },
+      ]
     },
     {
       files: ['*.json'],

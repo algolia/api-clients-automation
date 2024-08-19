@@ -1,7 +1,7 @@
 module.exports = {
   ignorePatterns: ['*.test.ts', '**.yml', 'tsconfig.json'],
 
-  parser: '@typescript-eslint/parser',
+  extends: "../.eslintrc.cjs",
 
   parserOptions: {
     ecmaVersion: 'latest',
@@ -22,15 +22,6 @@ module.exports = {
   },
 
   rules: {
-    '@stylistic/max-len': [0, { code: 100, ignoreComments: true }],
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        printWidth: 100,
-        trailingComma: 'all',
-      },
-    ],
     'import/extensions': [
       2,
       'ignorePackages',
