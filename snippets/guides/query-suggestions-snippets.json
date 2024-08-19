@@ -43,11 +43,9 @@
       "default": "await client.WaitForAppTaskAsync(response.TaskID);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
-        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
-        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
-      }
+      "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
+      "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
+      "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
     },
     "waitForTask": {
       "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
@@ -58,11 +56,9 @@
       "default": "await client.waitAppTask(response.taskID);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "await client.waitTask('<<indexName>>', response.taskID);"
@@ -109,11 +105,9 @@
       "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
-        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
-        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
-      }
+      "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
+      "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
+      "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
     },
     "waitForTask": {
       "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
@@ -163,11 +157,9 @@
       "default": "client.waitForAppTask(response.getTaskID());"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
-        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
-        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
-      }
+      "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
+      "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
+      "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
     },
     "waitForTask": {
       "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
@@ -217,11 +209,9 @@
       "default": "await client.waitForAppTask({ taskID: response.taskID });"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
-        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
-        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
-      }
+      "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
+      "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
+      "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
     },
     "waitForTask": {
       "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
@@ -271,11 +261,9 @@
       "default": "client.waitAppTask(response.taskID)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
@@ -325,11 +313,9 @@
       "default": "$client->waitForAppTask($response['taskID']);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
-        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
-        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
-      }
+      "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
+      "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
+      "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
     },
     "waitForTask": {
       "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
@@ -379,11 +365,9 @@
       "default": "await client.wait_for_app_task(task_id=response.task_id)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
+      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
+      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
     },
     "waitForTask": {
       "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
@@ -433,11 +417,9 @@
       "default": "client.wait_for_app_task(response.task_id)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
+      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
+      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
     },
     "waitForTask": {
       "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
@@ -487,11 +469,9 @@
       "default": "client.waitAppTask(response.getTaskID())"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
@@ -541,11 +521,9 @@
       "default": "try await client.waitForAppTask(with: response.taskID)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
-        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
-        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
-      }
+      "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
+      "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
+      "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
     },
     "waitForTask": {
       "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
