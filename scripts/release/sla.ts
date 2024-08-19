@@ -22,7 +22,7 @@ function getMajorMinor(lang: Language, version: string): { major: number; minor:
   return { major: parseInt(matches[1], 10), minor: parseInt(matches[2], 10) };
 }
 
-function isPreRelease(version: string): boolean {
+export function isPreRelease(version: string): boolean {
   return (
     version.match(preReleaseRegExp) !== null ||
     semver.prerelease(version) !== null ||
