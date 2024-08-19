@@ -6,6 +6,7 @@
     "build": "yarn build:cli & yarn build:actions",
     "build:actions": "cd ci/actions/restore-artifacts && esbuild --bundle --format=cjs --minify --platform=node --outfile=builddir/index.cjs --log-level=error src/index.ts",
     "build:cli": "esbuild --bundle --format=esm --sourcemap --platform=node --packages=external --outdir=dist --log-level=error cli/index.ts ci/codegen/*.ts ci/githubActions/*.ts",
+    "createGitHubReleases": "yarn runScript dist/ci/codegen/createGitHubReleases.js",
     "createMatrix": "yarn runScript dist/ci/githubActions/createMatrix.js",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
     "lint:deadcode": "knip",
