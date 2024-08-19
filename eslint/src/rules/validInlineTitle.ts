@@ -36,15 +36,10 @@ export const validInlineTitle: Rule.RuleModule = {
         }
 
         // make sure title starts with a lowercase
-        const title = node.parent.pairs.find((pair) =>
-          isPairWithKey(pair, 'title')
-        );
+        const title = node.parent.pairs.find((pair) => isPairWithKey(pair, 'title'));
         const titleNode = title?.value;
         const titleValue = (titleNode as any)?.value as string;
-        if (
-          titleNode &&
-          (titleNode.type !== 'YAMLScalar' || !/^[a-z]/.test(titleValue))
-        ) {
+        if (titleNode && (titleNode.type !== 'YAMLScalar' || !/^[a-z]/.test(titleValue))) {
           context.report({
             node: title,
             messageId: 'lowercaseTitle',
@@ -60,9 +55,7 @@ export const validInlineTitle: Rule.RuleModule = {
         }
 
         // if there are no properties, we don't need a title
-        const properties = node.parent.pairs.find((pair) =>
-          isPairWithKey(pair, 'properties')
-        );
+        const properties = node.parent.pairs.find((pair) => isPairWithKey(pair, 'properties'));
         if (!properties) {
           return;
         }

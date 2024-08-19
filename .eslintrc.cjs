@@ -8,7 +8,6 @@ module.exports = {
     '**/dist',
     '**/target',
     '**/.yarn',
-    'website/specs',
     '**/project.packagespec.json',
   ],
 

@@ -50,10 +50,7 @@ export const endWithDot: Rule.RuleModule = {
           node: node as any,
           messageId: 'endWithDot',
           fix(fixer) {
-            return fixer.insertTextAfterRange(
-              [0, value.range[1] - toTrim],
-              '.'
-            );
+            return fixer.insertTextAfterRange([0, value.range[1] - toTrim], '.');
           },
         });
       },

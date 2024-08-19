@@ -40,7 +40,7 @@ export function createOutOfLineRule({
           if (
             isPairWithKey(
               node.parent.parent.parent.parent?.parent?.parent?.parent ?? null,
-              'servers'
+              'servers',
             )
           ) {
             return;

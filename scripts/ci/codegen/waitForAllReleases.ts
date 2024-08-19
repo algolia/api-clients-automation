@@ -58,14 +58,12 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
 
   const runs: Run[] = (
     await Promise.all(
-      languagesReleased.map(async (lang) => {
-        return {
-          lang,
-          available: await exists(
-            toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`),
-          ),
-        };
-      }),
+      languagesReleased.map(async (lang) => ({
+        lang,
+        available: await exists(
+          toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`),
+        ),
+      })),
     )
   )
     .filter((lang) => lang.available)
