@@ -127,7 +127,7 @@ module.exports = {
             ],
           },
         ],
-        '@typescript-eslint/ban-types': [
+        '@typescript-eslint/no-restricted-types': [
           'error',
           {
             types: {
