@@ -63,7 +63,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "facetfilters",
     "facetordering",
     "facets",
-    "facetsstats",
+    "facetstats",
     "forbidden",
     "highlightresult",
     "highlightresultoption",
