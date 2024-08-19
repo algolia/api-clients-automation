@@ -86,7 +86,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:8.1.0"
     "@typescript-eslint/parser": "npm:8.1.0"
     eslint: "npm:8.57.0"
-    eslint-config-algolia: "npm:23.0.0"
+    eslint-config-algolia: "npm:23.1.0"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-algolia: "npm:2.0.0"
     eslint-plugin-automation-custom: "npm:1.0.0"
@@ -7094,13 +7094,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-algolia@npm:23.0.0":
-  version: 23.0.0
-  resolution: "eslint-config-algolia@npm:23.0.0"
+"eslint-config-algolia@npm:23.1.0":
+  version: 23.1.0
+  resolution: "eslint-config-algolia@npm:23.1.0"
   peerDependencies:
     eslint: ^5.16.0 || ^6.8.0 || ^7.2.0 || ^8.0.0
     prettier: ^3.0.0
-  checksum: 10/5239537246022159ebffa27bd4393e09e4cf829761681d2a2e808730859774be28120040a3bc60d556c63d38712261826109fc027a3c51235a9e4c8c19644c01
+  checksum: 10/cfa5cee5691c64fb6b961d04548b150744ed23899e1e06c8d9a5f6fe70aeb900da08937b9546a73c6b0972ef4e6881eb12e8ccc044f9fb5500f65ffa4d609997
   languageName: node
   linkType: hard
 
