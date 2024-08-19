@@ -67,7 +67,9 @@ async function getTags(lang: Language): Promise<string[]> {
   const tags = (
     await run(
       "git for-each-ref --sort=creatordate --format '%(refname:short) %(creatordate)' refs/tags",
-      { cwd: tempGitDir },
+      {
+        cwd: tempGitDir,
+      },
     )
   ).split('\n');
 

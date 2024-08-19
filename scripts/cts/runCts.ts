@@ -74,7 +74,9 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     case 'java':
       await run(
         `./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
-        { language },
+        {
+          language,
+        },
       );
       break;
     case 'javascript':
@@ -88,7 +90,9 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     case 'kotlin':
       await run(
         `./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
-        { language },
+        {
+          language,
+        },
       );
       break;
     case 'php':

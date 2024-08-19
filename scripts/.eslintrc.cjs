@@ -1,5 +1,5 @@
 module.exports = {
-  ignorePatterns: ['*.test.ts'],
+  ignorePatterns: ['*.test.ts', '**.yml', 'tsconfig.json'],
 
   parser: '@typescript-eslint/parser',
 
