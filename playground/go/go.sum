@@ -1,3 +1,5 @@
+github.com/algolia/algoliasearch-client-go/v4 v4.0.1 h1:ZrKBB7kvd8vpdhMthj3Jp6SSGSkVSUZluIOiCYlR7E4=
+github.com/algolia/algoliasearch-client-go/v4 v4.0.1/go.mod h1:To7CLzL9F7aKR3uYJ/XF+DuTx8GXZ5oL6tnZNo9J2ME=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
