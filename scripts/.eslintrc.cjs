@@ -11,9 +11,9 @@ module.exports = {
   },
 
   settings: {
-    'import/extensions': ['.js', '.ts', '.mjs'],
+    'import/extensions': ['.js', '.ts', '.mjs', '.cjs'],
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.js', '.mjs'],
+      '@typescript-eslint/parser': ['.ts', '.js', '.mjs', '.cjs'],
     },
     'import/ignore': ['node_modules'],
     'import/resolver': {
