@@ -136,7 +136,7 @@ public class TestsRequest extends TestsGenerator {
           operationId +
           ".json'.\n" +
           "You can read more on the documentation:" +
-          " https://api-clients-automation.netlify.app/docs/contributing/testing/common-test-suite"
+          " https://api-clients-automation.netlify.app/docs/testing/common-test-suite"
         );
       }
       Request[] op = cts.get(operationId);

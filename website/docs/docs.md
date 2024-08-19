@@ -85,21 +85,21 @@ For APIs with clients that implement the retry strategy,
 the documentation must mention that to be covered by Algolia's SLA,
 users must use the API clients.
 
-**Example:** [Search API](/specs/search#section/Client-libraries)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Client-libraries)
 
 ### Base URLs
 
 All APIs must list the base URLs for making requests.
 If there are multiple base URLs, help users choose by providing guidance and explanations.
 
-**Example:** [Search API](/specs/search#section/Base-URLs)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Base-URLs)
 
 ### Retry strategy
 
 For APIs with clients that implement the retry strategy,
 the documentation must explain the retry strategy.
 
-**Example:** [Search API](/specs/search#section/Base-URLs)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Base-URLs)
 
 ### Availability and authentication
 
@@ -109,7 +109,7 @@ include an _Availability and authentication_ section.
 
 For APIs that are available to every Algolia subscription, see [Authentication](#authentication).
 
-**Example:** [Analytics API](/specs/analytics#section/Availability-and-authentication)
+**Example:** [Analytics API](https://www.algolia.com/doc/rest-api/analytics#section/Availability-and-authentication)
 
 ### Authentication
 
@@ -118,7 +118,7 @@ describe the authentication method and where to find the credentials.
 
 For APIs that require a specific Algolia plan, see [Availability and authentication](#availability-and-authentication).
 
-**Example:** [Search API](/specs/search#section/Authentication)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Authentication)
 
 ### Rate limits
 
@@ -126,7 +126,7 @@ For APIs with rate limits per request,
 describe what the rate limits are and how to check the current rate limits,
 usually with response headers.
 
-**Example:** [Analytics API](/specs/analytics#section/Rate-limits)
+**Example:** [Analytics API](https://www.algolia.com/doc/rest-api/analytics#section/Rate-limits)
 
 ### Request format
 
@@ -134,7 +134,7 @@ If the API has `POST`, `PUT`, or `PATCH` requests that require request bodies,
 explain what the expected format is.
 Omit this section if the API only has `GET` or `DELETE` requests.
 
-**Example:** [Search API](/specs/search#section/Request-format)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Request-format)
 
 ### Parameters
 
@@ -142,7 +142,7 @@ If the API accepts query or path parameters,
 explain what their expected format is.
 Omit this section if the API doesn't use query or path parameters.
 
-**Example:** [Search API](/specs/search#section/Parameters)
+**Example:** [Search API](https://www.algolia.com/doc/rest-api/search#section/Parameters)
 
 ### Response status and errors
 
