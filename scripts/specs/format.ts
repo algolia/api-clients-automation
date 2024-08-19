@@ -29,7 +29,7 @@ export async function lintCommon(useCache: boolean): Promise<void> {
     return;
   }
 
-  await run(`yarn specs:lint common`);
+  await run('yarn specs:lint common');
 
   if (useCache) {
     spinner.text = 'storing common spec cache';

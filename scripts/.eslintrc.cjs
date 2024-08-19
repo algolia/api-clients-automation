@@ -22,7 +22,7 @@ module.exports = {
   },
 
   rules: {
-    'max-len': [0, { code: 100, ignoreComments: true }],
+    '@stylistic/max-len': [0, { code: 100, ignoreComments: true }],
     'prettier/prettier': [
       'error',
       {

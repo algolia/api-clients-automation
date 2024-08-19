@@ -16,10 +16,10 @@ async function download(
 ): Promise<DownloadArtifactResponse> {
   try {
     return await client.downloadArtifact(artifactID, options);
-  } catch (e1) {
+  } catch {
     try {
       return await client.downloadArtifact(artifactID, options);
-    } catch (e2) {
+    } catch {
       return await client.downloadArtifact(artifactID, options);
     }
   }

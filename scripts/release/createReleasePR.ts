@@ -266,9 +266,7 @@ export async function decideReleaseStrategy({
       const msg =
         commitsPerLang.length === 0
           ? 'no commits found'
-          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${
-              commitsPerLang.length
-            }' commits`;
+          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${commitsPerLang.length}' commits`;
 
       console.log(`    > Skipping, ${msg}`);
 
@@ -353,7 +351,7 @@ async function getCommits(force?: boolean): Promise<{
   if (!force && validCommits.length === 0) {
     console.log(
       chalk.black.bgYellow('[INFO]'),
-      `Skipping release because no valid commit has been added since \`released\` tag.`,
+      'Skipping release because no valid commit has been added since `released` tag.',
     );
     // eslint-disable-next-line no-process-exit
     process.exit(0);
@@ -483,7 +481,7 @@ export async function createReleasePR({
   await run(`CI=true git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
-  await run(`git checkout .`);
+  await run('git checkout .');
 
   await run(`git push origin ${headBranch}`);
   await run(`git checkout ${MAIN_BRANCH}`);

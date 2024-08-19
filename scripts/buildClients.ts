@@ -35,12 +35,12 @@ async function buildLanguage(
       await run('poetry build', { cwd, language });
       break;
     case 'scala':
-      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
+      await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });
       break;
     case 'swift':
       // make this work in the playground
       if (!playground) {
-        await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+        await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
       }
       break;
     default:

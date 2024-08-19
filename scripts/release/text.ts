@@ -1,13 +1,14 @@
 export default {
-  header: `## Summary`,
+  header: '## Summary',
   summary:
     'This PR has been created using the `apic release` script. Once merged, the clients will try to release their new version if their version has changed.',
 
-  versionChangeHeader: `## Version Changes`,
-  skippedCommitsHeader: `### Skipped Commits`,
-  skippedCommitsDesc: `It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.`,
-  noCommit: `no commit`,
-  currentVersionNotFound: `current version not found`,
+  versionChangeHeader: '## Version Changes',
+  skippedCommitsHeader: '### Skipped Commits',
+  skippedCommitsDesc:
+    "It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.",
+  noCommit: 'no commit',
+  currentVersionNotFound: 'current version not found',
   indenpendentVersioning: `
   <details>
     <summary>
@@ -25,7 +26,7 @@ export default {
     * @algolia/requester-browser-xhr@0.0.5 -> 0.0.6.
   </details>
   `,
-  descriptionForSkippedLang: `  - No \`feat\` or \`fix\` commit, thus unchecked by default.`,
+  descriptionForSkippedLang: '  - No `feat` or `fix` commit, thus unchecked by default.',
 
-  changelogHeader: `## CHANGELOG`,
+  changelogHeader: '## CHANGELOG',
 };
