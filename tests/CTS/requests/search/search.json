@@ -195,67 +195,71 @@
           {
             "hits": [
               {
-                "name": "nvim",
-                "type": "cooler",
-                "objectID": "12dc6c86ba0269_dashboard_generated_id",
+                "editor": {
+                  "name": "vim",
+                  "type": "beforeneovim"
+                },
+                "names": [
+                  "vim",
+                  ":q"
+                ],
                 "_snippetResult": {
-                  "name": {
-                    "value": "<em>nvim</em>",
-                    "matchLevel": "full"
+                  "editor": {
+                    "name": {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full"
+                    },
+                    "type": {
+                      "value": "beforeneovim",
+                      "matchLevel": "none"
+                    }
                   },
-                  "type": {
-                    "value": "cooler",
-                    "matchLevel": "none"
-                  }
+                  "names": [
+                    {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full"
+                    },
+                    {
+                      "value": ":q",
+                      "matchLevel": "none"
+                    }
+                  ]
                 },
                 "_highlightResult": {
-                  "name": {
-                    "value": "<em>nvim</em>",
-                    "matchLevel": "full",
-                    "fullyHighlighted": true,
-                    "matchedWords": [
-                      "nvim"
-                    ]
+                  "editor": {
+                    "name": {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full",
+                      "fullyHighlighted": true,
+                      "matchedWords": [
+                        "vim"
+                      ]
+                    },
+                    "type": {
+                      "value": "beforeneovim",
+                      "matchLevel": "none",
+                      "matchedWords": []
+                    }
                   },
-                  "type": {
-                    "value": "cooler",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                  }
-                }
-              },
-              {
-                "name": "vim",
-                "type": "cool",
-                "objectID": "587a7f2f98f73_dashboard_generated_id",
-                "_snippetResult": {
-                  "name": {
-                    "value": "<em>vim</em>",
-                    "matchLevel": "full"
-                  },
-                  "type": {
-                    "value": "cool",
-                    "matchLevel": "none"
-                  }
-                },
-                "_highlightResult": {
-                  "name": {
-                    "value": "<em>vim</em>",
-                    "matchLevel": "full",
-                    "fullyHighlighted": true,
-                    "matchedWords": [
-                      "nvim"
-                    ]
-                  },
-                  "type": {
-                    "value": "cool",
-                    "matchLevel": "none",
-                    "matchedWords": []
-                  }
+                  "names": [
+                    {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full",
+                      "fullyHighlighted": true,
+                      "matchedWords": [
+                        "vim"
+                      ]
+                    },
+                    {
+                      "value": ":q",
+                      "matchLevel": "none",
+                      "matchedWords": []
+                    }
+                  ]
                 }
               }
             ],
-            "nbHits": 2,
+            "nbHits": 1,
             "page": 0,
             "nbPages": 1,
             "hitsPerPage": 20,
