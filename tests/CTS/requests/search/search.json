@@ -149,6 +149,132 @@
     }
   },
   {
+    "testName": "search with highlight and snippet results",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "cts_e2e_highlight_snippet_results",
+          "query": "nvim",
+          "attributesToSnippet": [
+            "*:20"
+          ],
+          "attributesToHighlight": [
+            "*"
+          ],
+          "attributesToRetrieve": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "cts_e2e_highlight_snippet_results",
+            "query": "nvim",
+            "attributesToSnippet": [
+              "*:20"
+            ],
+            "attributesToHighlight": [
+              "*"
+            ],
+            "attributesToRetrieve": [
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "hits": [
+              {
+                "name": "nvim",
+                "type": "cooler",
+                "objectID": "12dc6c86ba0269_dashboard_generated_id",
+                "_snippetResult": {
+                  "name": {
+                    "value": "<em>nvim</em>",
+                    "matchLevel": "full"
+                  },
+                  "type": {
+                    "value": "cooler",
+                    "matchLevel": "none"
+                  }
+                },
+                "_highlightResult": {
+                  "name": {
+                    "value": "<em>nvim</em>",
+                    "matchLevel": "full",
+                    "fullyHighlighted": true,
+                    "matchedWords": [
+                      "nvim"
+                    ]
+                  },
+                  "type": {
+                    "value": "cooler",
+                    "matchLevel": "none",
+                    "matchedWords": []
+                  }
+                }
+              },
+              {
+                "name": "vim",
+                "type": "cool",
+                "objectID": "587a7f2f98f73_dashboard_generated_id",
+                "_snippetResult": {
+                  "name": {
+                    "value": "<em>vim</em>",
+                    "matchLevel": "full"
+                  },
+                  "type": {
+                    "value": "cool",
+                    "matchLevel": "none"
+                  }
+                },
+                "_highlightResult": {
+                  "name": {
+                    "value": "<em>vim</em>",
+                    "matchLevel": "full",
+                    "fullyHighlighted": true,
+                    "matchedWords": [
+                      "nvim"
+                    ]
+                  },
+                  "type": {
+                    "value": "cool",
+                    "matchLevel": "none",
+                    "matchedWords": []
+                  }
+                }
+              }
+            ],
+            "nbHits": 2,
+            "page": 0,
+            "nbPages": 1,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "exhaustive": {
+              "nbHits": true,
+              "typo": true
+            },
+            "query": "nvim",
+            "params": "query=nvim&attributesToSnippet=%5B%22*%3A20%22%5D&attributesToHighlight=%5B%22*%22%5D&attributesToRetrieve=%5B%22*%22%5D",
+            "index": "cts_e2e_highlight_snippet_results",
+            "renderingContent": {}
+          }
+        ]
+      }
+    }
+  },
+  {
     "testName": "retrieveFacets",
     "isSnippet": true,
     "parameters": {
