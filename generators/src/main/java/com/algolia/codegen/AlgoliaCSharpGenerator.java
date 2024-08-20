@@ -122,7 +122,9 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     supportingFiles.add(new SupportingFile("globaljson.mustache", "../", "global.json"));
     supportingFiles.add(new SupportingFile("netcore_project.mustache", "Algolia.Search.csproj"));
     supportingFiles.add(new SupportingFile("Configuration.mustache", "Clients", packageName + "Configuration.cs"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../.github/workflows", "issue.yml"));
 
     reservedWords.removeIf(word -> word.equals("Configuration"));
   }

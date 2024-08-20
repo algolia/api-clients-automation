@@ -52,6 +52,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));
 
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
 
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("configClassname", getClientName(client) + "Config");
