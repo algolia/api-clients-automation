@@ -189,6 +189,39 @@ class SnippetAbtestingClient
     }
 
     /**
+     * Snippet for the ScheduleABTest method.
+     *
+     * scheduleABTest with minimal parameters
+     */
+    public function snippetForScheduleABTest()
+    {
+        // >SEPARATOR scheduleABTest default
+        // Initialize the client
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->scheduleABTest(
+            ['endAt' => '2022-12-31T00:00:00.000Z',
+                'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                'name' => 'myABTest',
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 30,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the StopABTest method.
      *
      * stopABTest

@@ -199,6 +199,43 @@ async def snippet_for_list_ab_tests():
     # SEPARATOR<
 
 
+async def snippet_for_schedule_ab_test():
+    """
+    Snippet for the scheduleABTest method.
+
+    scheduleABTest with minimal parameters
+    """
+    # >SEPARATOR scheduleABTest default
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.schedule_ab_test(
+        schedule_ab_tests_request={
+            "endAt": "2022-12-31T00:00:00.000Z",
+            "scheduledAt": "2022-11-31T00:00:00.000Z",
+            "name": "myABTest",
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 30,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_stop_ab_test():
     """
     Snippet for the stopABTest method.
