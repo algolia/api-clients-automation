@@ -30,52 +30,10 @@ class {{clientPrefix}}Test {
     fun `{{#lambda.replaceBacktick}}{{{testName}}}{{testIndex}}{{/lambda.replaceBacktick}}`() = runTest {
         client.runTest(
             call = {
-                {{method}}(
-                    {{#parametersWithDataType}}
-                    {{> tests/request_param}}
-                    {{/parametersWithDataType}}
-                    {{#hasRequestOptions}}
-                    requestOptions = RequestOptions(
-                        {{#requestOptions.queryParameters}}
-                        urlParameters = buildMap {
-                            {{#parametersWithDataType}}
-                            put("{{{key}}}", {{> tests/param_value}})
-                            {{/parametersWithDataType}}
-                        },
-                        {{/requestOptions.queryParameters}}
-                        {{#requestOptions.headers}}
-                        headers = buildMap { 
-                        {{#parametersWithDataType}}
-                            put("{{{key}}}", {{> tests/param_value}})    
-                        {{/parametersWithDataType}}
-                        },
-                        {{/requestOptions.headers}}
-                    )
-                    {{/hasRequestOptions}}
-                )
+                {{> tests/method}}
             },
             intercept = {
-                {{#request}}
-                assertEquals("{{{path}}}".toPathSegments(), it.url.pathSegments)
-                assertEquals(HttpMethod.parse("{{method}}"), it.method)
-                {{#headers}}
-                assertContainsAll("""{{{.}}}""", it.headers)
-                {{/headers}}
-                {{#queryParameters}}
-                assertQueryParams("""{{{.}}}""", it.url.encodedParameters)
-                {{/queryParameters}}
-                {{#body}}
-                assertJsonBody("""{{{.}}}""", it.body)
-                {{/body}}
-                {{^body}}
-                {{#assertNullBody}}
-                assertNoBody(it.body)
-                {{/assertNullBody}}
-                {{^assertNullBody}}
-                assertEmptyBody(it.body)
-                {{/assertNullBody}}
-                {{/body}}
-                {{/request}}
+                {{> tests/intercept}}
             },
         )
     }
