@@ -413,7 +413,7 @@ class ApiKey extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      *
      * @return bool
      */
-    public function offsetExists($offset): bool
+    public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
     }
@@ -425,7 +425,7 @@ class ApiKey extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      *
      * @return null|mixed
      */
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return $this->container[$offset] ?? null;
     }
@@ -436,7 +436,7 @@ class ApiKey extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -450,7 +450,7 @@ class ApiKey extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }

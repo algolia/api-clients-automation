@@ -187,7 +187,7 @@ class DeleteSourceResponse extends AbstractModel implements ModelInterface, \Arr
      *
      * @return bool
      */
-    public function offsetExists($offset): bool
+    public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
     }
@@ -199,7 +199,7 @@ class DeleteSourceResponse extends AbstractModel implements ModelInterface, \Arr
      *
      * @return null|mixed
      */
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return $this->container[$offset] ?? null;
     }
@@ -210,7 +210,7 @@ class DeleteSourceResponse extends AbstractModel implements ModelInterface, \Arr
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -224,7 +224,7 @@ class DeleteSourceResponse extends AbstractModel implements ModelInterface, \Arr
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }
