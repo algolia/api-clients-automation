@@ -100,7 +100,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     supportingFiles.add(new SupportingFile("version.mustache", srcFolder, "version.dart"));
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../client_core/", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));

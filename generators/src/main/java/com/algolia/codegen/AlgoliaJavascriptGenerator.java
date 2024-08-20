@@ -58,7 +58,10 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // root export files
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
+
     supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
     // `client` related files, `algoliasearch` have it's own logic below

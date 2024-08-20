@@ -53,7 +53,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../../", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));
