@@ -3287,7 +3287,7 @@ paths:
         operation](#tag/Search/operation/browse),
 
         and then delete the records using the [`batch`
-        operation](tag/Records/operation/batch).
+        operation](#tag/Records/operation/batch).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
