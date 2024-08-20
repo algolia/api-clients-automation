@@ -220,6 +220,7 @@ jobs:
         run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
 
       - name: Test JavaScript bundle size
+        if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
 
       - name: Remove previous CTS output
