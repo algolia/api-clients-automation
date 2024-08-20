@@ -13,8 +13,6 @@ abstract class AbstractModel
 {
     /**
      * Gets the string presentation of the object.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -39,8 +37,6 @@ abstract class AbstractModel
 
     /**
      * Gets a header-safe presentation of the object.
-     *
-     * @return string
      */
     public function toHeaderValue(): string
     {
