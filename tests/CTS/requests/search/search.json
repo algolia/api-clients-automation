@@ -266,7 +266,6 @@
               "typo": true
             },
             "query": "nvim",
-            "params": "query=nvim&attributesToSnippet=%5B%22*%3A20%22%5D&attributesToHighlight=%5B%22*%22%5D&attributesToRetrieve=%5B%22*%22%5D",
             "index": "cts_e2e_highlight_snippet_results",
             "renderingContent": {}
           }
