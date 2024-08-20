@@ -1481,7 +1481,7 @@ public class SearchClient extends ApiClient {
   /**
    * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
    * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
-   * records using the [`batch` operation](tag/Records/operation/batch).
+   * records using the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1497,7 +1497,7 @@ public class SearchClient extends ApiClient {
   /**
    * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
    * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
-   * records using the [`batch` operation](tag/Records/operation/batch).
+   * records using the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1510,7 +1510,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
    * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
-   * delete the records using the [`batch` operation](tag/Records/operation/batch).
+   * delete the records using the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1538,7 +1538,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
    * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
-   * delete the records using the [`batch` operation](tag/Records/operation/batch).
+   * delete the records using the [`batch` operation](#tag/Records/operation/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
