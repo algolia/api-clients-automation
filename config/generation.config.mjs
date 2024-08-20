@@ -92,6 +92,7 @@ export const patterns = [
   '!clients/algoliasearch-client-php/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
+  '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
   'clients/algoliasearch-client-php/lib/Configuration/*',
   'clients/algoliasearch-client-php/lib/ApiException.php',
   'clients/algoliasearch-client-php/lib/ObjectSerializer.php',
