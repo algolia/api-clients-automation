@@ -154,7 +154,7 @@
       "requests": [
         {
           "indexName": "cts_e2e_highlight_snippet_results",
-          "query": "nvim",
+          "query": "vim",
           "attributesToSnippet": [
             "*:20"
           ],
@@ -174,7 +174,7 @@
         "requests": [
           {
             "indexName": "cts_e2e_highlight_snippet_results",
-            "query": "nvim",
+            "query": "vim",
             "attributesToSnippet": [
               "*:20"
             ],
@@ -269,7 +269,7 @@
               "nbHits": true,
               "typo": true
             },
-            "query": "nvim",
+            "query": "vim",
             "index": "cts_e2e_highlight_snippet_results",
             "renderingContent": {}
           }
