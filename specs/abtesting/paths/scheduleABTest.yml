@@ -47,7 +47,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/ScheduledABTestResponse.yml#/ScheduledABTestResponse'
+            $ref: '../common/schemas/ScheduleABTestResponse.yml#/ScheduleABTestResponse'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':
