@@ -47,15 +47,8 @@ Install the Kotlin client by adding the following dependency to your `gradle.bui
   ```
 Also, choose and add to your dependencies one of [Ktor http client engines](https://ktor.io/docs/http-client-engines.html).
 Alternatively, you can use [algoliasearch-client-kotlin-bom](/client-bom).  
+
 For full documentation, visit the **[Algolia Kotlin API Client](https://www.algolia.com/doc/libraries/kotlin/)**.
-
-### Guides
-
-- [Getting started](https://github.com/algolia/algoliasearch-client-kotlin/tree/master/docs/GettingStarted.md)
-- [DSL](https://github.com/algolia/algoliasearch-client-kotlin/tree/master/docs/DSL.md)
-- [Serialization](https://github.com/algolia/algoliasearch-client-kotlin/tree/master/docs/Serialization.md)
-- [ExceptionHandling](https://github.com/algolia/algoliasearch-client-kotlin/tree/master/docs/ExceptionHandling.md)
-- [Configure the HTTP client](https://github.com/algolia/algoliasearch-client-kotlin/tree/master/docs/HTTPClient.md)
 
 ## ❓ Troubleshooting
 
