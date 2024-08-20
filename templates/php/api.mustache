@@ -448,9 +448,8 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
-    * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     */
-    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [], $waitForTasks = true)
+    public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
     {
         $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
@@ -464,7 +463,7 @@ use {{invokerPackage}}\Support\Helpers;
             $requestOptions
         );
 
-        $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+        $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
 
         $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
 
