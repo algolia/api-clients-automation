@@ -2207,7 +2207,35 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("retrieveFacets5") {
+  test("search with highlight and snippet results5") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_highlight_snippet_results",
+            query = Some("vim"),
+            attributesToSnippet = Some(Seq("*:20")),
+            attributesToHighlight = Some(Seq("*")),
+            attributesToRetrieve = Some(Seq("*"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("retrieveFacets6") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2232,7 +2260,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("retrieveFacetsWildcard6") {
+  test("retrieveFacetsWildcard7") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2257,7 +2285,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for a single facet request with minimal parameters7") {
+  test("search for a single facet request with minimal parameters8") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2284,7 +2312,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for a single hits request with all parameters8") {
+  test("search for a single hits request with all parameters9") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2310,7 +2338,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for a single facet request with all parameters9") {
+  test("search for a single facet request with all parameters10") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2340,7 +2368,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for multiple mixed requests in multiple indices with minimal parameters10") {
+  test("search for multiple mixed requests in multiple indices with minimal parameters11") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2374,7 +2402,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for multiple mixed requests in multiple indices with all parameters11") {
+  test("search for multiple mixed requests in multiple indices with all parameters12") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2410,7 +2438,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search filters accept all of the possible shapes12") {
+  test("search filters accept all of the possible shapes13") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2472,7 +2500,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search filters end to end13") {
+  test("search filters end to end14") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2521,7 +2549,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search with all search parameters14") {
+  test("search with all search parameters15") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(

@@ -1983,6 +1983,38 @@ class TestSearchClient:
 
     async def test_search_5(self):
         """
+        search with highlight and snippet results
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}"""
+        )
+
+    async def test_search_6(self):
+        """
         retrieveFacets
         """
         _req = await self._client.search_with_http_info(
@@ -2008,7 +2040,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}"""
         )
 
-    async def test_search_6(self):
+    async def test_search_7(self):
         """
         retrieveFacetsWildcard
         """
@@ -2034,7 +2066,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}"""
         )
 
-    async def test_search_7(self):
+    async def test_search_8(self):
         """
         search for a single facet request with minimal parameters
         """
@@ -2059,7 +2091,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_8(self):
+    async def test_search_9(self):
         """
         search for a single hits request with all parameters
         """
@@ -2084,7 +2116,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}"""
         )
 
-    async def test_search_9(self):
+    async def test_search_10(self):
         """
         search for a single facet request with all parameters
         """
@@ -2112,7 +2144,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_10(self):
+    async def test_search_11(self):
         """
         search for multiple mixed requests in multiple indices with minimal parameters
         """
@@ -2144,7 +2176,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_11(self):
+    async def test_search_12(self):
         """
         search for multiple mixed requests in multiple indices with all parameters
         """
@@ -2178,7 +2210,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_12(self):
+    async def test_search_13(self):
         """
         search filters accept all of the possible shapes
         """
@@ -2241,7 +2273,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
         )
 
-    async def test_search_13(self):
+    async def test_search_14(self):
         """
         search filters end to end
         """
@@ -2292,7 +2324,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}"""
         )
 
-    async def test_search_14(self):
+    async def test_search_15(self):
         """
         search with all search parameters
         """

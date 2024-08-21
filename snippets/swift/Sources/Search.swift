@@ -1076,7 +1076,7 @@ final class SearchClientSnippet {
     /// Snippet for the search method.
     ///
     /// retrieveFacets
-    func snippetForSearch5() async throws {
+    func snippetForSearch6() async throws {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
@@ -1094,7 +1094,7 @@ final class SearchClientSnippet {
     /// Snippet for the search method.
     ///
     /// retrieveFacetsWildcard
-    func snippetForSearch6() async throws {
+    func snippetForSearch7() async throws {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")

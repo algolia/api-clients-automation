@@ -2861,6 +2861,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -2895,6 +2898,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object

@@ -2874,14 +2874,9 @@ components:
         - noResultCount
         - index
         - description
-        - conversionRate
         - conversionCount
-        - clickThroughRate
         - clickCount
-        - averageClickPosition
-        - addToCartRate
         - addToCartCount
-        - purchaseRate
         - purchaseCount
     variants:
       type: array
@@ -3053,11 +3048,6 @@ components:
         - createdAt
         - endAt
         - updatedAt
-        - conversionSignificance
-        - clickSignificance
-        - purchaseSignificance
-        - addToCartSignificance
-        - revenueSignificance
         - abTestID
         - variants
     ABTests:
@@ -3094,6 +3084,8 @@ components:
         customSearchParameters:
           type: object
       required:
+        - customSearchParameters
+      x-discriminator-fields:
         - customSearchParameters
     abTestsVariantSearchParams:
       allOf:

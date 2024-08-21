@@ -1453,7 +1453,7 @@ public class SnippetSearchClient
   ///
   /// retrieveFacets
   /// </summary>
-  public async Task SnippetForSearchClientSearch5()
+  public async Task SnippetForSearchClientSearch6()
   {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
@@ -1484,7 +1484,7 @@ public class SnippetSearchClient
   ///
   /// retrieveFacetsWildcard
   /// </summary>
-  public async Task SnippetForSearchClientSearch6()
+  public async Task SnippetForSearchClientSearch7()
   {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client

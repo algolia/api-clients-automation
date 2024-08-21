@@ -1689,6 +1689,24 @@ func TestSearch_Search(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
 	})
+	t.Run("search with highlight and snippet results", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_highlight_snippet_results").SetQuery("vim").SetAttributesToSnippet(
+						[]string{"*:20"}).SetAttributesToHighlight(
+						[]string{"*"}).SetAttributesToRetrieve(
+						[]string{"*"}))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}`)
+	})
 	t.Run("retrieveFacets", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
 

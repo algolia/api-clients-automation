@@ -1292,7 +1292,7 @@ void snippetForsearch3() async {
 // Snippet for the search method.
 //
 // retrieveFacets
-void snippetForsearch5() async {
+void snippetForsearch6() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
@@ -1318,7 +1318,7 @@ void snippetForsearch5() async {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-void snippetForsearch6() async {
+void snippetForsearch7() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');

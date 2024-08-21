@@ -1411,7 +1411,7 @@ end
 # Snippet for the search method.
 #
 # retrieveFacets
-def snippet_for_search5
+def snippet_for_search6
   # >SEPARATOR search retrieveFacets
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1434,7 +1434,7 @@ end
 # Snippet for the search method.
 #
 # retrieveFacetsWildcard
-def snippet_for_search6
+def snippet_for_search7
   # >SEPARATOR search retrieveFacetsWildcard
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")

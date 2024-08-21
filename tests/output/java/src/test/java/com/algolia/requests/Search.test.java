@@ -2061,8 +2061,39 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("retrieveFacets")
+  @DisplayName("search with highlight and snippet results")
   void searchTest5() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(
+            List.of(
+              new SearchForHits()
+                .setIndexName("cts_e2e_highlight_snippet_results")
+                .setQuery("vim")
+                .setAttributesToSnippet(List.of("*:20"))
+                .setAttributesToHighlight(List.of("*"))
+                .setAttributesToRetrieve(List.of("*"))
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("retrieveFacets")
+  void searchTest6() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2086,7 +2117,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("retrieveFacetsWildcard")
-  void searchTest6() {
+  void searchTest7() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2108,7 +2139,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for a single facet request with minimal parameters")
-  void searchTest7() {
+  void searchTest8() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2133,7 +2164,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for a single hits request with all parameters")
-  void searchTest8() {
+  void searchTest9() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2159,7 +2190,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for a single facet request with all parameters")
-  void searchTest9() {
+  void searchTest10() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2192,7 +2223,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for multiple mixed requests in multiple indices with minimal parameters")
-  void searchTest10() {
+  void searchTest11() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2221,7 +2252,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for multiple mixed requests in multiple indices with all parameters")
-  void searchTest11() {
+  void searchTest12() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2255,7 +2286,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search filters accept all of the possible shapes")
-  void searchTest12() {
+  void searchTest13() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2320,7 +2351,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search filters end to end")
-  void searchTest13() {
+  void searchTest14() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2371,7 +2402,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search with all search parameters")
-  void searchTest14() {
+  void searchTest15() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()

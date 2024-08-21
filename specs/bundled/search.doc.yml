@@ -17751,6 +17751,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -17785,6 +17788,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object
@@ -19187,6 +19192,8 @@ components:
       required:
         - position
         - objectIDs
+      x-discriminator-fields:
+        - objectIDs
     promoteObjectID:
       title: objectID
       description: Record to promote.
@@ -19199,6 +19206,8 @@ components:
           $ref: '#/components/schemas/promotePosition'
       required:
         - position
+        - objectID
+      x-discriminator-fields:
         - objectID
     promote:
       oneOf:

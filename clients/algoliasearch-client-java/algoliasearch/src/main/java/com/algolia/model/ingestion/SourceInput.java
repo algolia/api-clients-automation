@@ -21,6 +21,26 @@ public interface SourceInput {
     @Override
     public SourceInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize SourceDocker
+      if (tree.isObject() && tree.has("registry") && tree.has("image") && tree.has("imageType") && tree.has("configuration")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceDocker.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceDocker (error: " + e.getMessage() + ") (type: SourceDocker)");
+        }
+      }
+      // deserialize SourceGA4BigQueryExport
+      if (tree.isObject() && tree.has("projectID") && tree.has("datasetID") && tree.has("tablePrefix")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceGA4BigQueryExport.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf SourceGA4BigQueryExport (error: " + e.getMessage() + ") (type: SourceGA4BigQueryExport)"
+          );
+        }
+      }
       // deserialize SourceCommercetools
       if (tree.isObject() && tree.has("projectKey")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -48,15 +68,13 @@ public interface SourceInput {
           LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
         }
       }
-      // deserialize SourceGA4BigQueryExport
-      if (tree.isObject() && tree.has("projectID") && tree.has("datasetID") && tree.has("tablePrefix")) {
+      // deserialize SourceShopify
+      if (tree.isObject() && tree.has("shopURL")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceGA4BigQueryExport.class);
+          return parser.readValueAs(SourceShopify.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf SourceGA4BigQueryExport (error: " + e.getMessage() + ") (type: SourceGA4BigQueryExport)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf SourceShopify (error: " + e.getMessage() + ") (type: SourceShopify)");
         }
       }
       // deserialize SourceJSON
@@ -75,24 +93,6 @@ public interface SourceInput {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SourceCSV (error: " + e.getMessage() + ") (type: SourceCSV)");
-        }
-      }
-      // deserialize SourceDocker
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceDocker.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceDocker (error: " + e.getMessage() + ") (type: SourceDocker)");
-        }
-      }
-      // deserialize SourceShopify
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceShopify.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceShopify (error: " + e.getMessage() + ") (type: SourceShopify)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

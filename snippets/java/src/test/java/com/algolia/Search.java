@@ -1040,7 +1040,7 @@ class SnippetSearchClient {
   // Snippet for the search method.
   //
   // retrieveFacets
-  void snippetForSearch5() {
+  void snippetForSearch6() {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
@@ -1059,7 +1059,7 @@ class SnippetSearchClient {
   // Snippet for the search method.
   //
   // retrieveFacetsWildcard
-  void snippetForSearch6() {
+  void snippetForSearch7() {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
