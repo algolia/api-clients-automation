@@ -29,8 +29,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       // We will check if dependencies have changed for each clients of each languages:
       //   - language specific dependencies
       //   - common dependencies of every clients
-      //   - output of the client
       //   - specs that generated the client
+      //   - output of the client
       const dependenciesChanged = await isBaseChanged(baseBranch, {
         ...languageDependencies,
         output: [output],
