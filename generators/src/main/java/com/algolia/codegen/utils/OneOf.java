@@ -100,7 +100,7 @@ public class OneOf {
       oneOfModel.put("x-discriminator-fields", values);
       // find the matching composed schema and assign the discriminator
       for (var m : model.getComposedSchemas().getOneOf()) {
-        if (m.openApiType.equals(compoundModel.name)) {
+        if (m.openApiType.equals(compoundModel.classname)) {
           m.vendorExtensions.put("x-discriminator-fields", values);
         }
       }
