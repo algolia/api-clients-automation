@@ -650,7 +650,7 @@ paths:
 
 
         To update _some_ attributes of a record, use the [`partial`
-        operation](#tag/Records/operation/partial).
+        operation](#tag/Records/operation/partialUpdateObject).
 
         To add, update, or replace multiple records, use the [`batch`
         operation](#tag/Records/operation/batch).
