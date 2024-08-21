@@ -75,7 +75,6 @@ public class OneOf {
       markCompounds(models, oneOf, oneOfModel, model);
       oneOfList.add(oneOfModel);
     }
-    oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
     model.vendorExtensions.put("x-one-of-list", oneOfList);
   }
 
@@ -121,29 +120,6 @@ public class OneOf {
     return typeName.equals("Int") || typeName.equals("Double") || typeName.equals("Long");
   }
 
-  public static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
-    boolean hasDiscriminatorA = mapA.containsKey("discriminators");
-    boolean hasDiscriminatorB = mapB.containsKey("discriminators");
-    // Maps with "discriminators" come first
-    if (hasDiscriminatorA && !hasDiscriminatorB) {
-      return -1;
-    } else if (!hasDiscriminatorA && hasDiscriminatorB) {
-      return 1;
-    } else {
-      // If both maps have or don't have "discriminators," compare their list lengths
-      if (hasDiscriminatorA && hasDiscriminatorB) {
-        List<?> discriminatorsA = (List<?>) mapA.get("discriminators");
-        List<?> discriminatorsB = (List<?>) mapB.get("discriminators");
-
-        // Compare the lengths of the lists
-        return discriminatorsB.size() - discriminatorsA.size();
-      }
-
-      // If the lengths are the same or both maps don't have "discriminators," return 0
-      return 0;
-    }
-  };
-
   /**
    * Add metadata about oneOfs models (e.g., if it has at least one model, if it has more than one
    * array-subtype, etc.)
@@ -156,6 +132,7 @@ public class OneOf {
       if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
       if (isMultiMapOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-map", true);
       if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
+      if (hasDiscriminators(oneOfs)) model.vendorExtensions.put("x-has-discriminator", true);
       markOneOfModels(oneOfs);
       sortOneOfs(oneOfs);
     }
@@ -195,6 +172,14 @@ public class OneOf {
     return false;
   }
 
+  /** Return true if at least one oneOf has discriminators */
+  private static boolean hasDiscriminators(List<CodegenProperty> oneOfs) {
+    for (var prop : oneOfs) {
+      if (prop.vendorExtensions.containsKey("x-discriminator-fields")) return true;
+    }
+    return false;
+  }
+
   /** Mark oneOf models */
   private static void markOneOfModels(List<CodegenProperty> oneOfs) {
     for (var prop : oneOfs) {
@@ -218,7 +203,7 @@ public class OneOf {
       return 1;
     } else if (hasDiscriminatorA && hasDiscriminatorB) {
       List<?> discriminatorsA = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
-      List<?> discriminatorsB = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
+      List<?> discriminatorsB = (List<?>) propB.vendorExtensions.get("x-discriminator-fields");
       return discriminatorsB.size() - discriminatorsA.size();
     } else {
       return 0;
