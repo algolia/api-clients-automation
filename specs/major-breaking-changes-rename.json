@@ -77,7 +77,7 @@
     "index.saveSynonym": "client.saveSynonym",
     "index.saveSynonyms": "client.saveSynonyms",
     "index.search": "client.searchSingleIndex",
-    "index.searchForFacetValues": "client.searchForFacetValues",
+    "index.searchForFacetValues": "client.searchForFacets",
     "index.searchRules": "client.searchRules",
     "index.searchSynonyms": "client.searchSynonyms",
     "index.setSettings": "client.setSettings",
