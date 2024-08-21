@@ -1,0 +1,234 @@
+linting common spec
+job skipped, cache found for 'common' spec
+starting 'ingestion' spec
+checking cache for 'ingestion'
+job skipped, cache found for 'ingestion'
+building custom generators
+
+> Task :compileJava
+
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jar
+> Task :assemble
+
+BUILD SUCCESSFUL in 836ms
+3 actionable tasks: 2 executed, 1 up-to-date
+storing custom generators cache
+generating client for kotlin-ingestion
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: algolia-kotlin (client)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - Generator 'algolia-kotlin' is considered stable.
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.c.l.AbstractKotlinCodegen - Environment variable KOTLIN_POST_PROCESS_FILE not defined so the Kotlin code may not be properly formatted. To define it, try 'export KOTLIN_POST_PROCESS_FILE="/usr/local/bin/ktlint -F"' (Linux/Mac)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.c.l.AbstractKotlinCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - Model AttributesToExclude not generated since it's an alias to array (without property) and `generateAliasAsModel` is set to false (default)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - Model transformationIDs not generated since it's an alias to array (without property) and `generateAliasAsModel` is set to false (default)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectKey not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectKey not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var storeHash not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var storeHash not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var url not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var datasetID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var datasetID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var datasetID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var datasetID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var projectID not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var tablePrefix not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var tablePrefix not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var configuration not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var configuration not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var image not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var image not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var imageType not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var imageType not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var registry not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] ERROR o.o.codegen.DefaultCodegen - Required var registry not in properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.DefaultGenerator - Model AuthenticationIDs not generated since it's an alias to array (without property) and `generateAliasAsModel` is set to false (default)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Action.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ActionType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAPIKey.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAPIKeyPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAlgolia.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAlgoliaInsights.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAlgoliaInsightsPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthAlgoliaPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthBasic.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthBasicPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthGoogleServiceAccount.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthGoogleServiceAccountPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthInputPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthOAuth.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthOAuthPartial.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Authentication.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationCreate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationCreateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationSearch.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationUpdate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/AuthenticationUpdateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/BatchRequest.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/BatchWriteParams.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/BigCommerceChannel.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/BigCommerceMetafield.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/BigQueryDataType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/CommercetoolsCustomFields.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DeleteResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Destination.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationCreate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationCreateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationIndexName.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationSearch.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationUpdate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DestinationUpdateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DockerImageType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DockerRegistry.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DockerStreams.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DockerStreamsInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/DockerStreamsSyncMode.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/EntityType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ErrorBase.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Event.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/EventSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/EventStatus.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/EventType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/GenerateTransformationCodePayload.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/GenerateTransformationCodeResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListAuthenticationsResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListDestinationsResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListEventsResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListSourcesResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListTasksResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListTasksResponseV1.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ListTransformationsResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MappingFieldDirective.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MappingFormatSchema.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MappingInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MappingKitAction.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MappingTypeCSV.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/MethodType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Model.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/OnDemandTrigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/OnDemandTriggerInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/OnDemandTriggerType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/OrderKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Pagination.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Platform.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/PlatformNone.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/PlatformWithNone.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RecordType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Run.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunListResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunOutcome.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunProgress.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunReasonCode.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunSourcePayload.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunSourceResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunStatus.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/RunType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ScheduleTrigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ScheduleTriggerInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ScheduleTriggerType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ShopifyInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ShopifyMarket.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/ShopifyMetafield.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Source.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceBigCommerce.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceBigQuery.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceCSV.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceCommercetools.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceCreate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceCreateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceDocker.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceGA4BigQueryExport.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceJSON.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceSearch.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceShopify.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceShopifyBase.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdateCommercetools.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdateDocker.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdateInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceUpdateShopify.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SourceWatchResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/StreamingInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/StreamingTrigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/StreamingTriggerType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SubscriptionTrigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/SubscriptionTriggerType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Task.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskCreate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskCreateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskCreateTrigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskCreateV1.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskSearch.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskSortKeys.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskUpdate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskUpdateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskUpdateV1.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TaskV1.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Transformation.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationCreate.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationCreateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationError.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationModels.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationSearch.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationTry.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationTryResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TransformationUpdateResponse.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Trigger.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TriggerType.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/TriggerUpdateInput.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/ingestion/Window.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/IngestionClient.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/BuildConfig.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/ApiClient.kt
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/gradle.properties
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/client-bom/README.md
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/LICENSE
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/.github/workflows/issue.yml
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - Skipped /app/clients/algoliasearch-client-kotlin/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/.openapi-generator/VERSION
+[[kotlin-ingestion] specs/bundled/ingestion.yml] [main] INFO  o.o.codegen.TemplateManager - writing file /app/clients/algoliasearch-client-kotlin/.openapi-generator/FILES
+[[kotlin-ingestion] specs/bundled/ingestion.yml] ################################################################################
+[[kotlin-ingestion] specs/bundled/ingestion.yml] # Thanks for using OpenAPI Generator.                                          #
+[[kotlin-ingestion] specs/bundled/ingestion.yml] # Please consider donation to help us maintain this project ?                 #
+[[kotlin-ingestion] specs/bundled/ingestion.yml] # https://opencollective.com/openapi_generator/donate                          #
+[[kotlin-ingestion] specs/bundled/ingestion.yml] #                                                                              #
+[[kotlin-ingestion] specs/bundled/ingestion.yml] # This generator's contributed by Jim Schubert (https://github.com/jimschubert)#
+[[kotlin-ingestion] specs/bundled/ingestion.yml] # Please support his work directly via https://patreon.com/jimschubert ?      #
+[[kotlin-ingestion] specs/bundled/ingestion.yml] ################################################################################
+[[kotlin-ingestion] specs/bundled/ingestion.yml] java -cp "/app/node_modules/@openapitools/openapi-generator-cli/versions/7.7.0.jar:generators/build/libs/algolia-java-openapi-generator-1.0.0.jar" org.openapitools.codegen.OpenAPIGenerator generate --input-spec="/app/specs/bundled/ingestion.yml" --config="/app/openapitools.json" --git-host="github.com" --git-user-id="algolia" --git-repo-id="algoliasearch-client-kotlin" --template-dir="/app/templates/kotlin/" --generator-name="algolia-kotlin" --output="/app/clients/algoliasearch-client-kotlin" --additional-properties="language=kotlin,client=ingestion,mode=client" exited with code 0
+[kotlin-ingestion] specs/bundled/ingestion.yml
+running formatter for 'kotlin' in 'clients/algoliasearch-client-kotlin'
+Type-safe project accessors is an incubating feature.
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :client:spotlessKotlin
+> Task :client:spotlessKotlinApply
+> Task :client:spotlessApply
+> Task :client-bom:spotlessKotlin UP-TO-DATE
+> Task :client-bom:spotlessKotlinApply UP-TO-DATE
+> Task :client-bom:spotlessApply UP-TO-DATE
+
+BUILD SUCCESSFUL in 2s
+5 actionable tasks: 2 executed, 3 up-to-date

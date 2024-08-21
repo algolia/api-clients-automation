@@ -27,7 +27,7 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
 	{{/isNullable}}
   {{#vendorExtensions.x-one-of-list}}
     {{#-first}}
-    {{#discriminators}}
+    {{#x-discriminator-fields}}
       {{#-first}}
         // use discriminator value to speed up the lookup
         var jsonDict map[string]any
@@ -40,13 +40,13 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
         validSchemaForModel := true
       {{/-first}}
 
-    {{/discriminators}}
+    {{/x-discriminator-fields}}
     {{/-first}}
-	{{#discriminators}}
+	{{#x-discriminator-fields}}
   // If the model wasn't discriminated yet, continue checking for other discriminating properties
   if validSchemaForModel {
-    // Check if the model holds a property '{{field}}'
-    if _, ok := jsonDict["{{field}}"]; !ok {
+    // Check if the model holds a property '{{.}}'
+    if _, ok := jsonDict["{{.}}"]; !ok {
       validSchemaForModel = false
     }
   }
@@ -67,17 +67,17 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
       }
     }
   {{/-last}}
-	{{/discriminators}}
+	{{/x-discriminator-fields}}
   {{^-last}}
-    {{#discriminators}}
+    {{#x-discriminator-fields}}
 
       {{#-first}}
     // Reset the schema validity for the next class check
     validSchemaForModel = true
       {{/-first}}
-    {{/discriminators}}
+    {{/x-discriminator-fields}}
   {{/-last}}
-    {{^discriminators}}
+    {{^x-discriminator-fields}}
       // try to unmarshal data into {{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}
       err = newStrictDecoder(data).Decode(&dst.{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}})
       if err == nil && validateStruct(dst.{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}}) == nil {
@@ -91,7 +91,7 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
         dst.{{#lambda.type-to-name}}{{{name}}}{{/lambda.type-to-name}} = nil
       }
 
-    {{/discriminators}}
+    {{/x-discriminator-fields}}
     {{#-last}}
       return fmt.Errorf("Data failed to match schemas in oneOf({{classname}})")
     {{/-last}}

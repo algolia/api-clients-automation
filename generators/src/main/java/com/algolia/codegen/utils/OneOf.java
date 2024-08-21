@@ -12,6 +12,18 @@ public class OneOf {
   }
 
   public static void updateModelsOneOf(Map<String, ModelsMap> models, String modelPackage) {
+    // first, propagate the discriminator of allOf to the parent
+    for (ModelsMap modelContainer : models.values()) {
+      var model = modelContainer.getModels().get(0).getModel();
+      if (model.getComposedSchemas() != null && model.getComposedSchemas().getAllOf() != null) {
+        for (CodegenProperty prop : model.getComposedSchemas().getAllOf()) {
+          if (prop.vendorExtensions.containsKey("x-discriminator-fields")) {
+            model.vendorExtensions.put("x-discriminator-fields", prop.vendorExtensions.get("x-discriminator-fields"));
+          }
+        }
+      }
+    }
+
     for (ModelsMap modelContainer : models.values()) {
       // modelContainers always have 1 and only 1 model in our specs
       var model = modelContainer.getModels().get(0).getModel();
@@ -86,8 +98,13 @@ public class OneOf {
     //noinspection unchecked
     var values = (List<String>) compoundModel.vendorExtensions.get("x-discriminator-fields");
     if (values != null) {
-      List<Map<String, String>> newValues = values.stream().map(value -> Collections.singletonMap("field", value)).toList();
-      oneOfModel.put("discriminators", newValues);
+      oneOfModel.put("x-discriminator-fields", values);
+      // find the matching composed schema and assign the discriminator
+      for (var m : model.getComposedSchemas().getOneOf()) {
+        if (m.openApiType.equals(compoundModel.name)) {
+          m.vendorExtensions.put("x-discriminator-fields", values);
+        }
+      }
     }
   }
 
