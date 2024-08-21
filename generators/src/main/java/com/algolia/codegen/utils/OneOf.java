@@ -12,6 +12,18 @@ public class OneOf {
   }
 
   public static void updateModelsOneOf(Map<String, ModelsMap> models, String modelPackage) {
+    // first, propagate the discriminator of allOf to the parent
+    for (ModelsMap modelContainer : models.values()) {
+      var model = modelContainer.getModels().get(0).getModel();
+      if (model.getComposedSchemas() != null && model.getComposedSchemas().getAllOf() != null) {
+        for (CodegenProperty prop : model.getComposedSchemas().getAllOf()) {
+          if (prop.vendorExtensions.containsKey("x-discriminator-fields")) {
+            model.vendorExtensions.put("x-discriminator-fields", prop.vendorExtensions.get("x-discriminator-fields"));
+          }
+        }
+      }
+    }
+
     for (ModelsMap modelContainer : models.values()) {
       // modelContainers always have 1 and only 1 model in our specs
       var model = modelContainer.getModels().get(0).getModel();
@@ -63,7 +75,6 @@ public class OneOf {
       markCompounds(models, oneOf, oneOfModel, model);
       oneOfList.add(oneOfModel);
     }
-    oneOfList.sort(comparator); // have fields with "discriminators" in the start of the list
     model.vendorExtensions.put("x-one-of-list", oneOfList);
   }
 
@@ -86,8 +97,13 @@ public class OneOf {
     //noinspection unchecked
     var values = (List<String>) compoundModel.vendorExtensions.get("x-discriminator-fields");
     if (values != null) {
-      List<Map<String, String>> newValues = values.stream().map(value -> Collections.singletonMap("field", value)).toList();
-      oneOfModel.put("discriminators", newValues);
+      oneOfModel.put("x-discriminator-fields", values);
+      // find the matching composed schema and assign the discriminator
+      for (var m : model.getComposedSchemas().getOneOf()) {
+        if (m.openApiType.equals(compoundModel.classname)) {
+          m.vendorExtensions.put("x-discriminator-fields", values);
+        }
+      }
     }
   }
 
@@ -104,29 +120,6 @@ public class OneOf {
     return typeName.equals("Int") || typeName.equals("Double") || typeName.equals("Long");
   }
 
-  public static final Comparator<Map<String, Object>> comparator = (mapA, mapB) -> {
-    boolean hasDiscriminatorA = mapA.containsKey("discriminators");
-    boolean hasDiscriminatorB = mapB.containsKey("discriminators");
-    // Maps with "discriminators" come first
-    if (hasDiscriminatorA && !hasDiscriminatorB) {
-      return -1;
-    } else if (!hasDiscriminatorA && hasDiscriminatorB) {
-      return 1;
-    } else {
-      // If both maps have or don't have "discriminators," compare their list lengths
-      if (hasDiscriminatorA && hasDiscriminatorB) {
-        List<?> discriminatorsA = (List<?>) mapA.get("discriminators");
-        List<?> discriminatorsB = (List<?>) mapB.get("discriminators");
-
-        // Compare the lengths of the lists
-        return discriminatorsB.size() - discriminatorsA.size();
-      }
-
-      // If the lengths are the same or both maps don't have "discriminators," return 0
-      return 0;
-    }
-  };
-
   /**
    * Add metadata about oneOfs models (e.g., if it has at least one model, if it has more than one
    * array-subtype, etc.)
@@ -139,6 +132,7 @@ public class OneOf {
       if (isMultiArrayOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-array", true);
       if (isMultiMapOneOfs(oneOfs)) model.vendorExtensions.put("x-is-multi-map", true);
       if (hasAtModelOrEnum(oneOfs)) model.vendorExtensions.put("x-has-model", true);
+      if (hasDiscriminators(oneOfs)) model.vendorExtensions.put("x-has-discriminator", true);
       markOneOfModels(oneOfs);
       sortOneOfs(oneOfs);
     }
@@ -178,6 +172,14 @@ public class OneOf {
     return false;
   }
 
+  /** Return true if at least one oneOf has discriminators */
+  private static boolean hasDiscriminators(List<CodegenProperty> oneOfs) {
+    for (var prop : oneOfs) {
+      if (prop.vendorExtensions.containsKey("x-discriminator-fields")) return true;
+    }
+    return false;
+  }
+
   /** Mark oneOf models */
   private static void markOneOfModels(List<CodegenProperty> oneOfs) {
     for (var prop : oneOfs) {
@@ -201,7 +203,7 @@ public class OneOf {
       return 1;
     } else if (hasDiscriminatorA && hasDiscriminatorB) {
       List<?> discriminatorsA = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
-      List<?> discriminatorsB = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
+      List<?> discriminatorsB = (List<?>) propB.vendorExtensions.get("x-discriminator-fields");
       return discriminatorsB.size() - discriminatorsA.size();
     } else {
       return 0;

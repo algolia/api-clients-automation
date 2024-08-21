@@ -108,6 +108,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOf.addOneOfMetadata(models);
 
     for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
       String modelName = entry.getKey();

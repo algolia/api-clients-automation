@@ -3,8 +3,9 @@ package com.algolia.utils
 import io.ktor.client.utils.*
 import io.ktor.http.content.*
 import io.ktor.util.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
@@ -37,9 +38,7 @@ fun assertContainsAll(json: String, builder: StringValuesBuilder) {
  * @param json The expected JSON string to compare against the actual JSON content in [queryParams].
  */
 fun assertQueryParams(json: String, queryParams: StringValuesBuilder) {
-  val actual = Json.parseToJsonElement("{${queryParams.build().entries().joinToString { "\"${it.key}\":\"${it.value.joinToString(",")}\"" } }}")
-  val expected = Json.decodeFromString<JsonElement>(json)
-  if (!areJsonElementsEqual(actual, expected)) error("Expected $expected, but got $actual")
+  JSONAssert.assertEquals(json, "{${queryParams.build().entries().joinToString { "\"${it.key}\":\"${it.value.joinToString(",")}\"" } }}", JSONCompareMode.STRICT)
 }
 
 /**
@@ -51,36 +50,7 @@ fun assertQueryParams(json: String, queryParams: StringValuesBuilder) {
  */
 fun assertJsonBody(json: String, body: Any) {
   val bodyJson = body as? TextContent ?: error("json body expected, but not found!")
-  val actual = Json.decodeFromString<JsonElement>(bodyJson.text)
-  val expected = Json.decodeFromString<JsonElement>(json)
-  if (!areJsonElementsEqual(actual, expected)) error("Expected $expected, but got $actual")
-}
-
-/**
- * Compares two [JsonElement] instances for structural equality without considering the order of elements.
- */
-public fun areJsonElementsEqual(elem1: JsonElement?, elem2: JsonElement?): Boolean {
-  return when {
-    elem1 == null && elem2 == null -> true
-    elem1 is JsonObject && elem2 is JsonObject -> {
-      if (elem1.size != elem2.size) return false
-      elem1.keys.all { key -> areJsonElementsEqual(elem1[key], elem2[key]) }
-    }
-    elem1 is JsonArray && elem2 is JsonArray -> {
-      if (elem1.size != elem2.size) return false
-      elem1.zip(elem2).all { (value1, value2) -> areJsonElementsEqual(value1, value2) }
-    }
-    elem1 is JsonPrimitive && elem2 is JsonPrimitive -> {
-      val num1 = elem1.contentOrNull?.toDoubleOrNull()
-      val num2 = elem2.contentOrNull?.toDoubleOrNull()
-      if (num1 != null && num2 != null) {
-        num1 == num2
-      } else {
-        elem1 == elem2
-      }
-    }
-    else -> elem1 == elem2
-  }
+  JSONAssert.assertEquals(json, bodyJson.text, JSONCompareMode.STRICT)
 }
 
 fun assertNoBody(body: Any) {

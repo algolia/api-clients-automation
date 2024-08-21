@@ -302,6 +302,8 @@ ScheduleTriggerInput:
   required:
     - type
     - cron
+  x-discriminator-fields:
+    - cron
 
 ScheduleTrigger:
   type: object
@@ -444,6 +446,9 @@ MappingInput:
   required:
     - format
     - actions
+  x-discriminator-fields:
+    - format
+    - actions
 
 StreamingInput:
   type: object
@@ -453,6 +458,8 @@ StreamingInput:
     mapping:
       $ref: '#/MappingInput'
   required:
+    - mapping
+  x-discriminator-fields:
     - mapping
 
 DockerStreamsInput:
@@ -464,6 +471,8 @@ DockerStreamsInput:
       items: 
         $ref: '#/DockerStreams'
   required:
+    - streams
+  x-discriminator-fields:
     - streams
 
 DockerStreams:
