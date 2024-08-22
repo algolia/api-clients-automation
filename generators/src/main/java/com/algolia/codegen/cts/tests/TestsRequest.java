@@ -14,15 +14,13 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
-  private final boolean withSnippets;
   private List<SupportingFile> supportingFiles;
 
-  public TestsRequest(String language, String client, boolean withSnippets) {
+  public TestsRequest(String language, String client) {
     super(language, client);
-    this.withSnippets = withSnippets;
   }
 
-  protected Map<String, Request[]> loadRequestCTS() throws Exception {
+  private Map<String, Request[]> loadRequestCTS() throws Exception {
     String clientName = client;
     // This special case allow us to read the `search` CTS to generated the tests for the
     // `lite` client, which is only available in Javascript
@@ -30,12 +28,12 @@ public class TestsRequest extends TestsGenerator {
       clientName = "search";
     }
 
-    Map<String, Request[]> baseCTS = super.loadCTS("requests", clientName, Request[].class);
+    Map<String, Request[]> baseCTS = loadCTS("requests", clientName, Request[].class);
 
     // The algoliasearch client bundles many client and therefore should provide tests for all the
     // subsequent specs
     if (client.equals("algoliasearch")) {
-      Map<String, Request[]> recommendCTS = super.loadCTS("requests", "recommend", Request[].class);
+      Map<String, Request[]> recommendCTS = loadCTS("requests", "recommend", Request[].class);
       for (Map.Entry<String, Request[]> entry : recommendCTS.entrySet()) {
         String operation = entry.getKey();
         // custom methods are common to every clients, we don't want duplicate tests
@@ -148,16 +146,13 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i == 0 ? "" : i);
-        test.put("isSnippet", req.isSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));
         }
 
         try {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
-          if (Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
-            test.put("isCustomRequest", true);
-          }
+          test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
 
           if (req.request != null && !isHelper) {
             // We check on the spec if body parameters should be present in the CTS
@@ -223,21 +218,6 @@ public class TestsRequest extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
-
-      if (withSnippets) {
-        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("isSnippet", false)).toList();
-        if (snippets.size() == 0) {
-          Map<String, Object> snippet = tests.get(0);
-          snippet.put("description", snippet.get("testName"));
-          snippet.put("testName", "default");
-          snippets = List.of(snippet);
-        } else {
-          for (Map<String, Object> snippet : snippets) {
-            snippet.put("description", snippet.get("testName"));
-          }
-        }
-        testObj.put("snippets", snippets);
-      }
 
       blocks.add(testObj);
 

@@ -1,7 +1,5 @@
 package com.algolia.codegen.cts.tests;
 
-import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
-
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import io.swagger.util.Json;
@@ -121,10 +119,8 @@ public class TestsClient extends TestsGenerator {
             }
 
             stepOut.put("method", step.method);
+            stepOut.put("isCustomRequest", step.method != null && Helpers.CUSTOM_METHODS.contains(step.method));
 
-            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
-              stepOut.put("isCustomRequest", true);
-            }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
             // Swift is strongly-typed and compiled language,
