@@ -466,7 +466,7 @@ public class SearchForHits implements SearchQuery {
     return this;
   }
 
-  /** Number of hits to retrieve (used in combination with `offset`). minimum: 1 maximum: 1000 */
+  /** Number of hits to retrieve (used in combination with `offset`). minimum: 0 maximum: 1000 */
   @javax.annotation.Nullable
   public Integer getLength() {
     return length;
