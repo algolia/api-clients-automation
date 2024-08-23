@@ -123,7 +123,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       break;
     case 'swift':
       await run(
-        `swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter ${f}.*`)}`,
+        `swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter "${f}.*"`)}`,
         {
           cwd,
           language,

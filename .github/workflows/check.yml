@@ -11,7 +11,7 @@ on:
 
 concurrency:
   group: ${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ !contains(github.event.head_commit.message, 'prepare release')}}
 
 # Uncomment the line below to enable artifacts debugging
 # env:
@@ -492,6 +492,10 @@ jobs:
       - name: Read benchmark results
         id: benchmark
         run: |
+          if [[ $(find tests/output -name benchmarkResult.json | wc -l) -eq 0 ]]; then
+            echo "No benchmark results found"
+            exit 0
+          fi
           # merge all benchmark results into a single json, and remove the files
           results=$(jq -s 'add' -c tests/output/**/benchmarkResult.json)
           {
@@ -501,8 +505,8 @@ jobs:
             echo "" # empty line is required to make the table work
             echo "Benchmarks performed on the `search` method using a mock server, the results might not reflect the real-world performance."
             # format the json to a markdown table with column "Language" and "rate"
-            echo "| Language | Rate |"
-            echo "| :------- | ---: |"
+            echo "| Language | Req/s |"
+            echo "| :------- | ----: |"
             echo "$results" | jq -r 'to_entries | map([.key, .value.rate]) | sort_by(.[1]) | reverse | .[] | @tsv' | awk -F'\t' '{printf "| %-10s | %10d |\n", $1, $2}'
             echo "</details>"
             echo 'EOF'
@@ -621,7 +625,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push specs to algolia documentation
+      - name: Create GitHub release
+        run: yarn workspace scripts createGitHubReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push generation to the Algolia docs
         run: yarn workspace scripts pushToAlgoliaDoc
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

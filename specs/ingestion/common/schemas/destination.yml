@@ -17,6 +17,8 @@ Destination:
       $ref: './common.yml#/updatedAt'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
   required:
     - destinationID
     - type
@@ -37,6 +39,8 @@ DestinationCreate:
       $ref: '#/DestinationInput'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
   required:
     - type
     - name
@@ -71,6 +75,8 @@ DestinationUpdate:
       $ref: '#/DestinationInput'
     authenticationID:
       $ref: './common.yml#/authenticationID'
+    transformationIDs:
+      $ref: './common.yml#/transformationIDs'
 
 DestinationUpdateResponse:
   type: object
@@ -112,16 +118,6 @@ DestinationType:
       Data is recorded as user events in the Insights API.
   enum: [search, insights]
 
-DestinationIndexPrefix:
-  type: object
-  additionalProperties: false
-  properties:
-    indexPrefix:
-      type: string
-      description: String added to the beginning of all indices created by this destination.
-  required:
-    - indexPrefix
-
 DestinationIndexName:
   type: object
   additionalProperties: false
@@ -158,5 +154,4 @@ AttributesToExclude:
 
 DestinationInput:
   oneOf:
-    - $ref: '#/DestinationIndexPrefix'
     - $ref: '#/DestinationIndexName'

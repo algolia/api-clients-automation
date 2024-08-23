@@ -56,8 +56,44 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # search with highlight and snippet results
+  def test_search5
+    res = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_highlight_snippet_results",
+            query: "vim",
+            attributes_to_snippet: ["*:20"],
+            attributes_to_highlight: ["*"],
+            attributes_to_retrieve: ["*"]
+          )
+        ]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @client.search(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_highlight_snippet_results",
+            query: "vim",
+            attributes_to_snippet: ["*:20"],
+            attributes_to_highlight: ["*"],
+            attributes_to_retrieve: ["*"]
+          )
+        ]
+      )
+    )
+    expected_body = JSON.parse(
+      "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}"
+    )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # search for a single facet request with minimal parameters
-  def test_search7
+  def test_search8
     res = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
@@ -79,7 +115,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
   end
 
   # search filters end to end
-  def test_search13
+  def test_search14
     res = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [

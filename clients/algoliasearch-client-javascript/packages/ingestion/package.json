@@ -1,6 +1,6 @@
 {
   "name": "@algolia/ingestion",
-  "version": "1.0.0-beta.13",
+  "version": "1.1.1",
   "description": "JavaScript client for ingestion",
   "repository": {
     "type": "git",
@@ -15,13 +15,15 @@
         "import": "./dist/ingestion.esm.node.js",
         "module": "./dist/ingestion.esm.node.js",
         "require": "./dist/ingestion.cjs",
-        "default": "./dist/ingestion.cjs"
+        "default": "./dist/ingestion.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/ingestion.umd.js",
         "module": "./dist/ingestion.esm.browser.js",
         "import": "./dist/ingestion.esm.browser.js",
-        "default": "./dist/ingestion.umd.js"
+        "default": "./dist/ingestion.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",
@@ -42,13 +44,13 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.14",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.14",
-    "@algolia/requester-node-http": "5.0.0-beta.14"
+    "@algolia/client-common": "5.1.1",
+    "@algolia/requester-browser-xhr": "5.1.1",
+    "@algolia/requester-node-http": "5.1.1"
   },
   "devDependencies": {
-    "@types/node": "20.14.11",
-    "rollup": "4.19.1",
+    "@types/node": "22.2.0",
+    "rollup": "4.20.0",
     "typescript": "5.5.4"
   },
   "engines": {

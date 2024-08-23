@@ -1,0 +1,21 @@
+                {{#request}}
+                assertEquals("{{{path}}}".toPathSegments(), it.url.pathSegments)
+                assertEquals(HttpMethod.parse("{{method}}"), it.method)
+                {{#headers}}
+                assertContainsAll("""{{{.}}}""", it.headers)
+                {{/headers}}
+                {{#queryParameters}}
+                assertQueryParams("""{{{.}}}""", it.url.encodedParameters)
+                {{/queryParameters}}
+                {{#body}}
+                assertJsonBody("""{{{.}}}""", it.body)
+                {{/body}}
+                {{^body}}
+                {{#assertNullBody}}
+                assertNoBody(it.body)
+                {{/assertNullBody}}
+                {{^assertNullBody}}
+                assertEmptyBody(it.body)
+                {{/assertNullBody}}
+                {{/body}}
+                {{/request}}

@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** Transformation */
@@ -12,6 +14,9 @@ public class Transformation {
 
   @JsonProperty("transformationID")
   private String transformationID;
+
+  @JsonProperty("authenticationIDs")
+  private List<String> authenticationIDs;
 
   @JsonProperty("code")
   private String code;
@@ -37,6 +42,25 @@ public class Transformation {
   @javax.annotation.Nonnull
   public String getTransformationID() {
     return transformationID;
+  }
+
+  public Transformation setAuthenticationIDs(List<String> authenticationIDs) {
+    this.authenticationIDs = authenticationIDs;
+    return this;
+  }
+
+  public Transformation addAuthenticationIDs(String authenticationIDsItem) {
+    if (this.authenticationIDs == null) {
+      this.authenticationIDs = new ArrayList<>();
+    }
+    this.authenticationIDs.add(authenticationIDsItem);
+    return this;
+  }
+
+  /** The authentications associated for the current transformation. */
+  @javax.annotation.Nullable
+  public List<String> getAuthenticationIDs() {
+    return authenticationIDs;
   }
 
   public Transformation setCode(String code) {
@@ -105,6 +129,7 @@ public class Transformation {
     Transformation transformation = (Transformation) o;
     return (
       Objects.equals(this.transformationID, transformation.transformationID) &&
+      Objects.equals(this.authenticationIDs, transformation.authenticationIDs) &&
       Objects.equals(this.code, transformation.code) &&
       Objects.equals(this.name, transformation.name) &&
       Objects.equals(this.description, transformation.description) &&
@@ -115,7 +140,7 @@ public class Transformation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(transformationID, code, name, description, createdAt, updatedAt);
+    return Objects.hash(transformationID, authenticationIDs, code, name, description, createdAt, updatedAt);
   }
 
   @Override
@@ -123,6 +148,7 @@ public class Transformation {
     StringBuilder sb = new StringBuilder();
     sb.append("class Transformation {\n");
     sb.append("    transformationID: ").append(toIndentedString(transformationID)).append("\n");
+    sb.append("    authenticationIDs: ").append(toIndentedString(authenticationIDs)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

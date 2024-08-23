@@ -165,6 +165,35 @@ def snippet_for_list_ab_tests
   # SEPARATOR<
 end
 
+# Snippet for the scheduleABTest method.
+#
+# scheduleABTest with minimal parameters
+def snippet_for_schedule_ab_test
+  # >SEPARATOR scheduleABTest default
+  # Initialize the client
+  client = Algolia::AbtestingClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  response = client.schedule_ab_test(
+    ScheduleABTestsRequest.new(
+      end_at: "2022-12-31T00:00:00.000Z",
+      scheduled_at: "2022-11-31T00:00:00.000Z",
+      name: "myABTest",
+      variants: [
+        AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+        AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+      ]
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the stopABTest method.
 #
 # stopABTest

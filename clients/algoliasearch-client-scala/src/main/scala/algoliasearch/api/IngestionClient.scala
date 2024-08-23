@@ -27,6 +27,8 @@ import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
+import algoliasearch.ingestion.GenerateTransformationCodePayload
+import algoliasearch.ingestion.GenerateTransformationCodeResponse
 import algoliasearch.ingestion.ListAuthenticationsResponse
 import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
@@ -66,6 +68,7 @@ import algoliasearch.ingestion.TaskV1
 import algoliasearch.ingestion.Transformation
 import algoliasearch.ingestion.TransformationCreate
 import algoliasearch.ingestion.TransformationCreateResponse
+import algoliasearch.ingestion.TransformationModels
 import algoliasearch.ingestion.TransformationSearch
 import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
@@ -577,6 +580,31 @@ class IngestionClient(
       .withPath(s"/1/tasks/${escape(taskID)}/enable")
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Generates code for the selected model based on the given prompt.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GenerateTransformationCodeResponse] = Future {
+    requireNotNull(
+      generateTransformationCodePayload,
+      "Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/models")
+      .withBody(generateTransformationCodePayload)
+      .build()
+    execute[GenerateTransformationCodeResponse](request, requestOptions)
   }
 
   /** Retrieves an authentication resource by its ID.
@@ -1119,6 +1147,25 @@ class IngestionClient(
     execute[ListTasksResponseV1](request, requestOptions)
   }
 
+  /** Retrieves a list of existing LLM transformation helpers.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def listTransformationModels(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationModels] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/transformations/models")
+      .build()
+    execute[TransformationModels](request, requestOptions)
+  }
+
   /** Retrieves a list of transformations.
     *
     * Required API Key ACLs:
@@ -1126,12 +1173,18 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     *
+    * @param itemsPerPage
+    *   Number of items per page.
+    * @param page
+    *   Page number of the paginated API response.
     * @param sort
     *   Property by which to sort the list.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
   def listTransformations(
+      itemsPerPage: Option[Int] = None,
+      page: Option[Int] = None,
       sort: Option[SortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -1141,6 +1194,8 @@ class IngestionClient(
       .builder()
       .withMethod("GET")
       .withPath(s"/1/transformations")
+      .withQueryParameter("itemsPerPage", itemsPerPage)
+      .withQueryParameter("page", page)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
@@ -1405,22 +1460,55 @@ class IngestionClient(
     execute[SourceWatchResponse](request, requestOptions)
   }
 
-  /** Try a transformation.
+  /** Try a transformation before creating it.
     *
     * Required API Key ACLs:
     *   - addObject
     *   - deleteIndex
     *   - editSettings
     */
-  def tryTransformations(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
+  def tryTransformation(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TransformationTryResponse] = Future {
-    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.")
+    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/try")
+      .withBody(transformationTry)
+      .build()
+    execute[TransformationTryResponse](request, requestOptions)
+  }
+
+  /** Try a transformation before updating it.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def tryTransformationBeforeUpdate(
+      transformationID: String,
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationTryResponse] = Future {
+    requireNotNull(
+      transformationID,
+      "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
+    )
+    requireNotNull(
+      transformationTry,
+      "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/${escape(transformationID)}/try")
       .withBody(transformationTry)
       .build()
     execute[TransformationTryResponse](request, requestOptions)

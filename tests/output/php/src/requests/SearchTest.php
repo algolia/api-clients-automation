@@ -2115,8 +2115,39 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('retrieveFacets')]
+    #[TestDox('search with highlight and snippet results')]
     public function testSearch5()
+    {
+        $client = $this->getClient();
+        $client->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_highlight_snippet_results',
+                    'query' => 'vim',
+                    'attributesToSnippet' => [
+                        '*:20',
+                    ],
+                    'attributesToHighlight' => [
+                        '*',
+                    ],
+                    'attributesToRetrieve' => [
+                        '*',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/*/queries',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('retrieveFacets')]
+    public function testSearch6()
     {
         $client = $this->getClient();
         $client->search(
@@ -2143,7 +2174,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('retrieveFacetsWildcard')]
-    public function testSearch6()
+    public function testSearch7()
     {
         $client = $this->getClient();
         $client->search(
@@ -2168,7 +2199,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single facet request with minimal parameters')]
-    public function testSearch7()
+    public function testSearch8()
     {
         $client = $this->getClient();
         $client->search(
@@ -2192,7 +2223,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single hits request with all parameters')]
-    public function testSearch8()
+    public function testSearch9()
     {
         $client = $this->getClient();
         $client->search(
@@ -2216,7 +2247,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single facet request with all parameters')]
-    public function testSearch9()
+    public function testSearch10()
     {
         $client = $this->getClient();
         $client->search(
@@ -2243,7 +2274,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for multiple mixed requests in multiple indices with minimal parameters')]
-    public function testSearch10()
+    public function testSearch11()
     {
         $client = $this->getClient();
         $client->search(
@@ -2274,7 +2305,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for multiple mixed requests in multiple indices with all parameters')]
-    public function testSearch11()
+    public function testSearch12()
     {
         $client = $this->getClient();
         $client->search(
@@ -2307,7 +2338,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search filters accept all of the possible shapes')]
-    public function testSearch12()
+    public function testSearch13()
     {
         $client = $this->getClient();
         $client->search(
@@ -2375,7 +2406,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search filters end to end')]
-    public function testSearch13()
+    public function testSearch14()
     {
         $client = $this->getClient();
         $client->search(
@@ -2429,7 +2460,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search with all search parameters')]
-    public function testSearch14()
+    public function testSearch15()
     {
         $client = $this->getClient();
         $client->search(

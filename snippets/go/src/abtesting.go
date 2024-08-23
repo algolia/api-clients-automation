@@ -232,6 +232,38 @@ func SnippetForListABTestsOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForScheduleABTestOfAbtesting() {
+	/*
+	   Snippet for the scheduleABTest method.
+
+	   scheduleABTest with minimal parameters
+	*/
+
+	// >SEPARATOR scheduleABTest default
+	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
+	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
+
+		abtesting.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetVariants(
+			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForStopABTestOfAbtesting() {
 	/*
 	   Snippet for the stopABTest method.

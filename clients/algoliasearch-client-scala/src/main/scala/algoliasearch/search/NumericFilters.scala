@@ -53,6 +53,7 @@ object NumericFilters {
   def apply(value: String): NumericFilters = {
     NumericFilters.StringValue(value)
   }
+
 }
 
 object NumericFiltersSerializer extends Serializer[NumericFilters] {

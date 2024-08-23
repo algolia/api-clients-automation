@@ -20,6 +20,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      */
     protected static $modelTypes = [
         'transformationID' => 'string',
+        'authenticationIDs' => 'string[]',
         'code' => 'string',
         'name' => 'string',
         'description' => 'string',
@@ -34,6 +35,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      */
     protected static $modelFormats = [
         'transformationID' => null,
+        'authenticationIDs' => null,
         'code' => null,
         'name' => null,
         'description' => null,
@@ -49,6 +51,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      */
     protected static $attributeMap = [
         'transformationID' => 'transformationID',
+        'authenticationIDs' => 'authenticationIDs',
         'code' => 'code',
         'name' => 'name',
         'description' => 'description',
@@ -63,6 +66,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      */
     protected static $setters = [
         'transformationID' => 'setTransformationID',
+        'authenticationIDs' => 'setAuthenticationIDs',
         'code' => 'setCode',
         'name' => 'setName',
         'description' => 'setDescription',
@@ -77,6 +81,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      */
     protected static $getters = [
         'transformationID' => 'getTransformationID',
+        'authenticationIDs' => 'getAuthenticationIDs',
         'code' => 'getCode',
         'name' => 'getName',
         'description' => 'getDescription',
@@ -100,6 +105,9 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
     {
         if (isset($data['transformationID'])) {
             $this->container['transformationID'] = $data['transformationID'];
+        }
+        if (isset($data['authenticationIDs'])) {
+            $this->container['authenticationIDs'] = $data['authenticationIDs'];
         }
         if (isset($data['code'])) {
             $this->container['code'] = $data['code'];
@@ -230,6 +238,30 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
     }
 
     /**
+     * Gets authenticationIDs.
+     *
+     * @return null|string[]
+     */
+    public function getAuthenticationIDs()
+    {
+        return $this->container['authenticationIDs'] ?? null;
+    }
+
+    /**
+     * Sets authenticationIDs.
+     *
+     * @param null|string[] $authenticationIDs the authentications associated for the current transformation
+     *
+     * @return self
+     */
+    public function setAuthenticationIDs($authenticationIDs)
+    {
+        $this->container['authenticationIDs'] = $authenticationIDs;
+
+        return $this;
+    }
+
+    /**
      * Gets code.
      *
      * @return string
@@ -353,10 +385,8 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -368,7 +398,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -379,7 +409,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -393,7 +423,7 @@ class Transformation extends AbstractModel implements ModelInterface, \ArrayAcce
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

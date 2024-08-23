@@ -1,3 +1,34 @@
+## [1.22.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.22.2...1.22.3)
+
+- [4cbbce55c](https://github.com/algolia/api-clients-automation/commit/4cbbce55c) fix(clients): highlight and snippet results e2e ([#3567](https://github.com/algolia/api-clients-automation/pull/3567)) by [@shortcuts](https://github.com/shortcuts/)
+- [7c7de04ab](https://github.com/algolia/api-clients-automation/commit/7c7de04ab) fix(specs): another wrong link ([#3570](https://github.com/algolia/api-clients-automation/pull/3570)) by [@kai687](https://github.com/kai687/)
+- [f38a9ef12](https://github.com/algolia/api-clients-automation/commit/f38a9ef12) chore(specs): breaking change method names mapping table ([#3568](https://github.com/algolia/api-clients-automation/pull/3568)) by [@shortcuts](https://github.com/shortcuts/)
+- [9dedfc90f](https://github.com/algolia/api-clients-automation/commit/9dedfc90f) fix(clients): mention `main` branch instead of `master` ([#3566](https://github.com/algolia/api-clients-automation/pull/3566)) by [@shortcuts](https://github.com/shortcuts/)
+- [0e5ffb1e8](https://github.com/algolia/api-clients-automation/commit/0e5ffb1e8) fix(specs): broken link ([#3559](https://github.com/algolia/api-clients-automation/pull/3559)) by [@kai687](https://github.com/kai687/)
+
+## [1.22.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.22.1...1.22.2)
+
+- [6cfc2d479](https://github.com/algolia/api-clients-automation/commit/6cfc2d479) chore(specs): update rendered title for search params ([#3553](https://github.com/algolia/api-clients-automation/pull/3553)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [1.22.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.22.0...1.22.1)
+
+- [40c5d47bd](https://github.com/algolia/api-clients-automation/commit/40c5d47bd) fix(specs): delete user token processing time ([#3525](https://github.com/algolia/api-clients-automation/pull/3525)) by [@kai687](https://github.com/kai687/)
+
+## [1.22.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.21.0...1.22.0)
+
+- [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [1.21.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.20.0...1.21.0)
+
+- [ac0cadb8a](https://github.com/algolia/api-clients-automation/commit/ac0cadb8a) feat(specs): add transformation copilot to ingestion ([#3479](https://github.com/algolia/api-clients-automation/pull/3479)) by [@Fluf22](https://github.com/Fluf22/)
+- [08a04dec8](https://github.com/algolia/api-clients-automation/commit/08a04dec8) fix(specs): ingestion destination reject indexPrefix ([#3478](https://github.com/algolia/api-clients-automation/pull/3478)) by [@shortcuts](https://github.com/shortcuts/)
+- [cdd673d33](https://github.com/algolia/api-clients-automation/commit/cdd673d33) fix(specs): ingestion destinations and transformations ([#3477](https://github.com/algolia/api-clients-automation/pull/3477)) by [@shortcuts](https://github.com/shortcuts/)
+- [b4742be76](https://github.com/algolia/api-clients-automation/commit/b4742be76) fix(clients): move the license to the root ([#3457](https://github.com/algolia/api-clients-automation/pull/3457)) by [@millotp](https://github.com/millotp/)
+- [e5d14171c](https://github.com/algolia/api-clients-automation/commit/e5d14171c) fix(specs): dictionary entry for stopwords has type property ([#3456](https://github.com/algolia/api-clients-automation/pull/3456)) by [@kai687](https://github.com/kai687/)
+- [7af1e75e9](https://github.com/algolia/api-clients-automation/commit/7af1e75e9) fix(specs): body is not required in multiple batch request ([#3454](https://github.com/algolia/api-clients-automation/pull/3454)) by [@kai687](https://github.com/kai687/)
+- [b90bef261](https://github.com/algolia/api-clients-automation/commit/b90bef261) feat(specs): add runSource endpoint ([#3453](https://github.com/algolia/api-clients-automation/pull/3453)) by [@millotp](https://github.com/millotp/)
+- [27679b7fd](https://github.com/algolia/api-clients-automation/commit/27679b7fd) chore(clients): remove mention of GA ([#3452](https://github.com/algolia/api-clients-automation/pull/3452)) by [@millotp](https://github.com/millotp/)
+
 ## [1.20.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.19.0...1.20.0)
 
 - [e982ddf0a](https://github.com/algolia/api-clients-automation/commit/e982ddf0a) fix(specs): built-in ops accept also int ([#3450](https://github.com/algolia/api-clients-automation/pull/3450)) by [@kai687](https://github.com/kai687/)

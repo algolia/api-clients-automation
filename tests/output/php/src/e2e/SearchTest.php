@@ -67,8 +67,35 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('search with highlight and snippet results')]
+    public function testSearch5()
+    {
+        $client = $this->getClient();
+        $resp = $client->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_highlight_snippet_results',
+                    'query' => 'vim',
+                    'attributesToSnippet' => [
+                        '*:20',
+                    ],
+                    'attributesToHighlight' => [
+                        '*',
+                    ],
+                    'attributesToRetrieve' => [
+                        '*',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $expected = json_decode('{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('search for a single facet request with minimal parameters')]
-    public function testSearch7()
+    public function testSearch8()
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -88,7 +115,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search filters end to end')]
-    public function testSearch13()
+    public function testSearch14()
     {
         $client = $this->getClient();
         $resp = $client->search(

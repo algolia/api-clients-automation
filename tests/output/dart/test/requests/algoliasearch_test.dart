@@ -779,6 +779,43 @@ void main() {
 
   // search
   test(
+    'search with highlight and snippet results',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "cts_e2e_highlight_snippet_results",
+              query: "vim",
+              attributesToSnippet: [
+                "*:20",
+              ],
+              attributesToHighlight: [
+                "*",
+              ],
+              attributesToRetrieve: [
+                "*",
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
     'retrieveFacets',
     () => runTest(
       builder: (requester) => SearchClient(

@@ -47,6 +47,7 @@ object ReRankingApplyFilter {
   def apply(value: String): ReRankingApplyFilter = {
     ReRankingApplyFilter.StringValue(value)
   }
+
 }
 
 object ReRankingApplyFilterSerializer extends Serializer[ReRankingApplyFilter] {

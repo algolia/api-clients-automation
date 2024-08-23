@@ -175,8 +175,8 @@ async function buildCustomGenerators(): Promise<void> {
   spinner.succeed();
 }
 
-export async function gitBranchExists(branchName: string): Promise<boolean> {
-  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
+export async function gitBranchExists(branchName: string, cwd?: string): Promise<boolean> {
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`, { cwd }));
 }
 
 export async function emptyDirExceptForDotGit(dir: string): Promise<void> {

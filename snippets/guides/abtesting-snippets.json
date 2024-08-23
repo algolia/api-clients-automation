@@ -27,6 +27,9 @@
     "listABTests": {
       "default": "var response = await client.ListABTestsAsync();"
     },
+    "scheduleABTest": {
+      "default": "var response = await client.ScheduleABTestAsync(\n  new ScheduleABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    ScheduledAt = \"2022-11-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(\n        new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30, }\n      ),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50, })\n    },\n  }\n);"
+    },
     "stopABTest": {
       "default": "var response = await client.StopABTestAsync(42);"
     },
@@ -37,11 +40,9 @@
       "default": "await client.WaitForAppTaskAsync(response.TaskID);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
-        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
-        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
-      }
+      "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
+      "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
+      "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
     },
     "waitForTask": {
       "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
@@ -52,11 +53,9 @@
       "default": "await client.waitAppTask(response.taskID);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "await client.waitTask('<<indexName>>', response.taskID);"
@@ -90,6 +89,9 @@
     "listABTests": {
       "default": "// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION\nclient, err := abtesting.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
+    "scheduleABTest": {
+      "default": "// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION\nclient, err := abtesting.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n\n  abtesting.NewEmptyScheduleABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetScheduledAt(\"2022-11-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
     "stopABTest": {
       "default": "// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION\nclient, err := abtesting.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
@@ -97,11 +99,9 @@
       "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
-        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
-        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
-      }
+      "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
+      "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
+      "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
     },
     "waitForTask": {
       "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
@@ -135,6 +135,9 @@
     "listABTests": {
       "default": "client.listABTests();"
     },
+    "scheduleABTest": {
+      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      List.of(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+    },
     "stopABTest": {
       "default": "client.stopABTest(42);"
     },
@@ -145,11 +148,9 @@
       "default": "client.waitForAppTask(response.getTaskID());"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
-        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
-        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
-      }
+      "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
+      "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
+      "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
     },
     "waitForTask": {
       "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
@@ -183,6 +184,9 @@
     "listABTests": {
       "default": "const response = await client.listABTests();\n\n// use typed response\nconsole.log(response);"
     },
+    "scheduleABTest": {
+      "default": "const response = await client.scheduleABTest({\n  endAt: '2022-12-31T00:00:00.000Z',\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
     "stopABTest": {
       "default": "const response = await client.stopABTest({ id: 42 });\n\n// use typed response\nconsole.log(response);"
     },
@@ -193,11 +197,9 @@
       "default": "await client.waitForAppTask({ taskID: response.taskID });"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
-        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
-        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
-      }
+      "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
+      "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
+      "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
     },
     "waitForTask": {
       "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
@@ -231,6 +233,9 @@
     "listABTests": {
       "default": "var response = client.listABTests()\n\n// Use the response\nprintln(response)"
     },
+    "scheduleABTest": {
+      "default": "var response = client.scheduleABTest(\n  scheduleABTestsRequest = ScheduleABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    scheduledAt = \"2022-11-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
     "stopABTest": {
       "default": "var response = client.stopABTest(\n  id = 42,\n)\n\n// Use the response\nprintln(response)"
     },
@@ -241,11 +246,9 @@
       "default": "client.waitAppTask(response.taskID)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
@@ -279,6 +282,9 @@
     "listABTests": {
       "default": "$response = $client->listABTests();\n\n// play with the response\nvar_dump($response);"
     },
+    "scheduleABTest": {
+      "default": "$response = $client->scheduleABTest(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'scheduledAt' => '2022-11-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
     "stopABTest": {
       "default": "$response = $client->stopABTest(\n    42,\n);\n\n// play with the response\nvar_dump($response);"
     },
@@ -289,11 +295,9 @@
       "default": "$client->waitForAppTask($response['taskID']);"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
-        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
-        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
-      }
+      "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
+      "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
+      "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
     },
     "waitForTask": {
       "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
@@ -327,6 +331,9 @@
     "listABTests": {
       "default": "response = await _client.list_ab_tests()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
+    "scheduleABTest": {
+      "default": "response = await _client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
     "stopABTest": {
       "default": "response = await _client.stop_ab_test(\n    id=42,\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
@@ -337,11 +344,9 @@
       "default": "await client.wait_for_app_task(task_id=response.task_id)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
+      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
+      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
     },
     "waitForTask": {
       "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
@@ -375,6 +380,9 @@
     "listABTests": {
       "default": "response = client.list_ab_tests\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
+    "scheduleABTest": {
+      "default": "response = client.schedule_ab_test(\n  ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
     "stopABTest": {
       "default": "response = client.stop_ab_test(42)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
@@ -385,11 +393,9 @@
       "default": "client.wait_for_app_task(response.task_id)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
+      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
+      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
     },
     "waitForTask": {
       "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
@@ -423,6 +429,9 @@
     "listABTests": {
       "default": "val response = client.listABTests(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
+    "scheduleABTest": {
+      "default": "val response = client.scheduleABTest(\n  scheduleABTestsRequest = ScheduleABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    scheduledAt = \"2022-11-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    variants = Seq(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
     "stopABTest": {
       "default": "val response = client.stopABTest(\n  id = 42\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
@@ -433,11 +442,9 @@
       "default": "client.waitAppTask(response.getTaskID())"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
+      "add": "",
+      "update": "",
+      "delete": ""
     },
     "waitForTask": {
       "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
@@ -471,6 +478,9 @@
     "listABTests": {
       "default": "let response = try await client.listABTests()"
     },
+    "scheduleABTest": {
+      "default": "let response = try await client.scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_1\", trafficPercentage: 30)),\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_2\", trafficPercentage: 50)),\n    ],\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+    },
     "stopABTest": {
       "default": "let response = try await client.stopABTest(id: 42)"
     },
@@ -481,11 +491,9 @@
       "default": "try await client.waitForAppTask(with: response.taskID)"
     },
     "waitForApiKey": {
-      "default": {
-        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
-        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
-        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
-      }
+      "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
+      "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
+      "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
     },
     "waitForTask": {
       "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"

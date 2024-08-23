@@ -20,6 +20,9 @@ highlightResultOption:
     - value
     - matchLevel
     - matchedWords
+  x-discriminator-fields:
+    - matchLevel
+    - matchedWords
 
 highlightedValue:
   type: string
@@ -46,6 +49,7 @@ highlightResultOptionArray:
 
 highlightResult:
   oneOf:
+    - $ref: '#/highlightResultMap'
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultOptionMap'
     - $ref: '#/highlightResultOptionArray'

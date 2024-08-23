@@ -21,6 +21,15 @@ public interface TaskCreateTrigger {
     @Override
     public TaskCreateTrigger deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize ScheduleTriggerInput
+      if (tree.isObject() && tree.has("cron")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ScheduleTriggerInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf ScheduleTriggerInput (error: " + e.getMessage() + ") (type: ScheduleTriggerInput)");
+        }
+      }
       // deserialize OnDemandTriggerInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -28,15 +37,6 @@ public interface TaskCreateTrigger {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf OnDemandTriggerInput (error: " + e.getMessage() + ") (type: OnDemandTriggerInput)");
-        }
-      }
-      // deserialize ScheduleTriggerInput
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ScheduleTriggerInput.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf ScheduleTriggerInput (error: " + e.getMessage() + ") (type: ScheduleTriggerInput)");
         }
       }
       // deserialize SubscriptionTrigger

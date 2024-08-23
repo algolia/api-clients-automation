@@ -39,7 +39,7 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
+        .setInput(new DestinationIndexName().setIndexName("full_name______"))
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // SEPARATOR<
@@ -297,6 +297,23 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the generateTransformationCode method.
+  //
+  // generateTransformationCode
+  void snippetForGenerateTransformationCode() {
+    // >SEPARATOR generateTransformationCode default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.generateTransformationCode(
+      new GenerateTransformationCodePayload()
+        .setId("foo")
+        .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the getAuthentication method.
   //
   // getAuthentication
@@ -442,7 +459,7 @@ class SnippetIngestionClient {
 
   // Snippet for the listRuns method.
   //
-  // getRuns
+  // listRuns
   void snippetForListRuns() {
     // >SEPARATOR listRuns default
     // Initialize the client
@@ -455,7 +472,7 @@ class SnippetIngestionClient {
 
   // Snippet for the listSources method.
   //
-  // getSources
+  // listSources
   void snippetForListSources() {
     // >SEPARATOR listSources default
     // Initialize the client
@@ -492,9 +509,22 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the listTransformationModels method.
+  //
+  // listTransformationModels
+  void snippetForListTransformationModels() {
+    // >SEPARATOR listTransformationModels default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.listTransformationModels();
+    // SEPARATOR<
+  }
+
   // Snippet for the listTransformations method.
   //
-  // getTransformations
+  // listTransformations
   void snippetForListTransformations() {
     // >SEPARATOR listTransformations default
     // Initialize the client
@@ -665,7 +695,7 @@ class SnippetIngestionClient {
     // Call the API
     client.searchTransformations(
       new TransformationSearch()
-        .setTransformationsIDs(
+        .setTransformationIDs(
           List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         )
     );
@@ -685,16 +715,32 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the tryTransformations method.
+  // Snippet for the tryTransformation method.
   //
-  // tryTransformations
-  void snippetForTryTransformations() {
-    // >SEPARATOR tryTransformations default
+  // tryTransformation
+  void snippetForTryTransformation() {
+    // >SEPARATOR tryTransformation default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+    client.tryTransformation(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+    // SEPARATOR<
+  }
+
+  // Snippet for the tryTransformationBeforeUpdate method.
+  //
+  // tryTransformationBeforeUpdate
+  void snippetForTryTransformationBeforeUpdate() {
+    // >SEPARATOR tryTransformationBeforeUpdate default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.tryTransformationBeforeUpdate(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+    );
     // SEPARATOR<
   }
 

@@ -94,11 +94,6 @@ ABTest:
     - createdAt
     - endAt
     - updatedAt
-    - conversionSignificance
-    - clickSignificance
-    - purchaseSignificance
-    - addToCartSignificance
-    - revenueSignificance
     - abTestID
     - variants
 

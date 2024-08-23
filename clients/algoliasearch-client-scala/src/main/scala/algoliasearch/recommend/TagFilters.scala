@@ -49,6 +49,7 @@ object TagFilters {
   def apply(value: String): TagFilters = {
     TagFilters.StringValue(value)
   }
+
 }
 
 object TagFiltersSerializer extends Serializer[TagFilters] {

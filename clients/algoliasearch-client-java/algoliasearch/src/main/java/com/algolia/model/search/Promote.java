@@ -22,7 +22,7 @@ public interface Promote {
     public Promote deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize PromoteObjectIDs
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("objectIDs")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(PromoteObjectIDs.class);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public interface Promote {
         }
       }
       // deserialize PromoteObjectID
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("objectID")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(PromoteObjectID.class);
         } catch (Exception e) {

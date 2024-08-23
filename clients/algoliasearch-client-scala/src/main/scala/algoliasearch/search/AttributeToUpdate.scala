@@ -50,6 +50,7 @@ object AttributeToUpdate {
   def apply(value: String): AttributeToUpdate = {
     AttributeToUpdate.StringValue(value)
   }
+
 }
 
 object AttributeToUpdateSerializer extends Serializer[AttributeToUpdate] {

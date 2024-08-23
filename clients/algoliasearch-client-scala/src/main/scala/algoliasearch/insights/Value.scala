@@ -43,6 +43,7 @@ object Value {
   def apply(value: String): Value = {
     Value.StringValue(value)
   }
+
 }
 
 object ValueSerializer extends Serializer[Value] {

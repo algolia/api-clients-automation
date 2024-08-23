@@ -50,6 +50,7 @@ object TypoTolerance {
   def apply(value: Boolean): TypoTolerance = {
     TypoTolerance.BooleanValue(value)
   }
+
 }
 
 object TypoToleranceSerializer extends Serializer[TypoTolerance] {

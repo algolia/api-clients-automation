@@ -7,6 +7,7 @@ export const patterns = [
   'snippets/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
+  'clients/**/.github/workflows/issue.yml',
 
   // C#
   '!snippets/csharp/**',
@@ -14,7 +15,6 @@ export const patterns = [
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   'clients/algoliasearch-client-csharp/global.json',
-  '!clients/algoliasearch-client-javascript/.github/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
@@ -41,7 +41,6 @@ export const patterns = [
 
   // GO
   'clients/algoliasearch-client-go/algolia/**',
-  '!clients/algoliasearch-client-go/.github/**',
   '!clients/algoliasearch-client-go/*',
   '!clients/algoliasearch-client-go/algolia/transport/**',
   '!clients/algoliasearch-client-go/algolia/errs/**',
@@ -65,7 +64,6 @@ export const patterns = [
   // JavaScript
   '!snippets/javascript/*.json',
   '!clients/algoliasearch-client-javascript/*',
-  '!clients/algoliasearch-client-javascript/.github/**',
   '!clients/algoliasearch-client-javascript/.yarn/**',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
@@ -94,6 +92,7 @@ export const patterns = [
   '!clients/algoliasearch-client-php/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
+  '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
   'clients/algoliasearch-client-php/lib/Configuration/*',
   'clients/algoliasearch-client-php/lib/ApiException.php',
   'clients/algoliasearch-client-php/lib/ObjectSerializer.php',

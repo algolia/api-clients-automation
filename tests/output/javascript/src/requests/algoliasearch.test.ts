@@ -577,6 +577,35 @@ describe('search', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('search with highlight and snippet results', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_highlight_snippet_results',
+          query: 'vim',
+          attributesToSnippet: ['*:20'],
+          attributesToHighlight: ['*'],
+          attributesToRetrieve: ['*'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'cts_e2e_highlight_snippet_results',
+          query: 'vim',
+          attributesToSnippet: ['*:20'],
+          attributesToHighlight: ['*'],
+          attributesToRetrieve: ['*'],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('retrieveFacets', async () => {
     const req = (await client.search({
       requests: [

@@ -1,0 +1,23 @@
+                {{method}}(
+                {{#parametersWithDataType}}
+                {{> tests/request_param}}
+                {{/parametersWithDataType}}
+                {{#hasRequestOptions}}
+                requestOptions = RequestOptions(
+                    {{#requestOptions.queryParameters}}
+                    urlParameters = buildMap {
+                        {{#parametersWithDataType}}
+                        put("{{{key}}}", {{> tests/param_value}})
+                        {{/parametersWithDataType}}
+                    },
+                    {{/requestOptions.queryParameters}}
+                    {{#requestOptions.headers}}
+                    headers = buildMap { 
+                    {{#parametersWithDataType}}
+                        put("{{{key}}}", {{> tests/param_value}})    
+                    {{/parametersWithDataType}}
+                    },
+                    {{/requestOptions.headers}}
+                )
+                {{/hasRequestOptions}}
+            )

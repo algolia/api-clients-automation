@@ -48,7 +48,19 @@ public sealed interface {{classname}} {
     {{/composedSchemas.oneOf}}
     {{/vendorExtensions.x-is-multi-array}}
 
-    {{^vendorExtensions.x-is-multi-array}}
+    {{#vendorExtensions.x-is-multi-map}}
+    {{#composedSchemas.oneOf}}
+    {{^isModel}}
+    {{^isEnumRef}}
+    public fun of{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}(value: {{{datatypeWithEnum}}}): {{classname}} {
+        return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
+    }
+    {{/isEnumRef}}
+    {{/isModel}}
+    {{/composedSchemas.oneOf}}
+    {{/vendorExtensions.x-is-multi-map}}
+
+    {{^vendorExtensions.x-is-multi-array}}{{^vendorExtensions.x-is-multi-map}}
     {{#composedSchemas.oneOf}}
     {{^isModel}}
     {{^isEnumRef}}
@@ -58,7 +70,7 @@ public sealed interface {{classname}} {
     {{/isEnumRef}}
     {{/isModel}}
     {{/composedSchemas.oneOf}}
-    {{/vendorExtensions.x-is-multi-array}}
+    {{/vendorExtensions.x-is-multi-map}}{{/vendorExtensions.x-is-multi-array}}
     }
 }
 

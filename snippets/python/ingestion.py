@@ -51,7 +51,7 @@ async def snippet_for_create_destination():
             "type": "search",
             "name": "destinationName",
             "input": {
-                "indexPrefix": "prefix_",
+                "indexName": "full_name______",
             },
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
@@ -508,6 +508,32 @@ async def snippet_for_enable_task_v1():
     # SEPARATOR<
 
 
+async def snippet_for_generate_transformation_code():
+    """
+    Snippet for the generateTransformationCode method.
+
+    generateTransformationCode
+    """
+    # >SEPARATOR generateTransformationCode default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.generate_transformation_code(
+        generate_transformation_code_payload={
+            "id": "foo",
+            "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_get_authentication():
     """
     Snippet for the getAuthentication method.
@@ -762,7 +788,7 @@ async def snippet_for_list_runs():
     """
     Snippet for the listRuns method.
 
-    getRuns
+    listRuns
     """
     # >SEPARATOR listRuns default
     # Initialize the client
@@ -783,7 +809,7 @@ async def snippet_for_list_sources():
     """
     Snippet for the listSources method.
 
-    getSources
+    listSources
     """
     # >SEPARATOR listSources default
     # Initialize the client
@@ -842,11 +868,32 @@ async def snippet_for_list_tasks_v1():
     # SEPARATOR<
 
 
+async def snippet_for_list_transformation_models():
+    """
+    Snippet for the listTransformationModels method.
+
+    listTransformationModels
+    """
+    # >SEPARATOR listTransformationModels default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.list_transformation_models()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_list_transformations():
     """
     Snippet for the listTransformations method.
 
-    getTransformations
+    listTransformations
     """
     # >SEPARATOR listTransformations default
     # Initialize the client
@@ -1139,7 +1186,7 @@ async def snippet_for_search_transformations():
     # Call the API
     response = await _client.search_transformations(
         transformation_search={
-            "transformationsIDs": [
+            "transformationIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -1178,18 +1225,47 @@ async def snippet_for_trigger_docker_source_discover():
     # SEPARATOR<
 
 
-async def snippet_for_try_transformations():
+async def snippet_for_try_transformation():
     """
-    Snippet for the tryTransformations method.
+    Snippet for the tryTransformation method.
 
-    tryTransformations
+    tryTransformation
     """
-    # >SEPARATOR tryTransformations default
+    # >SEPARATOR tryTransformation default
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
     # Call the API
-    response = await _client.try_transformations(
+    response = await _client.try_transformation(
+        transformation_try={
+            "code": "foo",
+            "sampleRecord": {
+                "bar": "baz",
+            },
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_try_transformation_before_update():
+    """
+    Snippet for the tryTransformationBeforeUpdate method.
+
+    tryTransformationBeforeUpdate
+    """
+    # >SEPARATOR tryTransformationBeforeUpdate default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.try_transformation_before_update(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
             "code": "foo",
             "sampleRecord": {

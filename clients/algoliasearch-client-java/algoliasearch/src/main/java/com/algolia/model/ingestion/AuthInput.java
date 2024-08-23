@@ -21,8 +21,17 @@ public interface AuthInput {
     @Override
     public AuthInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize AuthOAuth
+      if (tree.isObject() && tree.has("url") && tree.has("client_id") && tree.has("client_secret")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AuthOAuth.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf AuthOAuth (error: " + e.getMessage() + ") (type: AuthOAuth)");
+        }
+      }
       // deserialize AuthGoogleServiceAccount
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("clientEmail") && tree.has("privateKey")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthGoogleServiceAccount.class);
         } catch (Exception e) {
@@ -33,7 +42,7 @@ public interface AuthInput {
         }
       }
       // deserialize AuthBasic
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("username") && tree.has("password")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthBasic.class);
         } catch (Exception e) {
@@ -42,21 +51,12 @@ public interface AuthInput {
         }
       }
       // deserialize AuthAPIKey
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("key")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthAPIKey.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf AuthAPIKey (error: " + e.getMessage() + ") (type: AuthAPIKey)");
-        }
-      }
-      // deserialize AuthOAuth
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AuthOAuth.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf AuthOAuth (error: " + e.getMessage() + ") (type: AuthOAuth)");
         }
       }
       // deserialize AuthAlgolia

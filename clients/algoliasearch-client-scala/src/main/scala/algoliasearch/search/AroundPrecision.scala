@@ -51,6 +51,7 @@ object AroundPrecision {
   def apply(value: Seq[Range]): AroundPrecision = {
     AroundPrecision.SeqOfRange(value)
   }
+
 }
 
 object AroundPrecisionSerializer extends Serializer[AroundPrecision] {

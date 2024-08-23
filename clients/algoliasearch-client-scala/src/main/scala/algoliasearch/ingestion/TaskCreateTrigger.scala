@@ -40,18 +40,18 @@ object TaskCreateTriggerSerializer extends Serializer[TaskCreateTrigger] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TaskCreateTrigger] =>
       json match {
-        case value: JObject => Extraction.extract[OnDemandTriggerInput](value)
-        case value: JObject => Extraction.extract[ScheduleTriggerInput](value)
-        case value: JObject => Extraction.extract[SubscriptionTrigger](value)
-        case value: JObject => Extraction.extract[StreamingTrigger](value)
-        case _              => throw new MappingException("Can't convert " + json + " to TaskCreateTrigger")
+        case value: JObject if value.obj.exists(_._1 == "cron") => Extraction.extract[ScheduleTriggerInput](value)
+        case value: JObject                                     => Extraction.extract[OnDemandTriggerInput](value)
+        case value: JObject                                     => Extraction.extract[SubscriptionTrigger](value)
+        case value: JObject                                     => Extraction.extract[StreamingTrigger](value)
+        case _ => throw new MappingException("Can't convert " + json + " to TaskCreateTrigger")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TaskCreateTrigger =>
     value match {
-      case value: OnDemandTriggerInput => Extraction.decompose(value)(format - this)
       case value: ScheduleTriggerInput => Extraction.decompose(value)(format - this)
+      case value: OnDemandTriggerInput => Extraction.decompose(value)(format - this)
       case value: SubscriptionTrigger  => Extraction.decompose(value)(format - this)
       case value: StreamingTrigger     => Extraction.decompose(value)(format - this)
     }

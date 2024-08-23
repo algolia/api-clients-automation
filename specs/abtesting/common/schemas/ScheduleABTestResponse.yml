@@ -1,0 +1,8 @@
+ScheduleABTestResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    abTestScheduleID:
+      $ref: '../parameters.yml#/abTestScheduleID'
+  required:
+    - abTestScheduleID

@@ -73,8 +73,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 	t.Run("createDestination", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexPrefixAsDestinationInput(
-				ingestion.NewEmptyDestinationIndexPrefix().SetIndexPrefix("prefix_"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
+				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
 		))
 		require.NoError(t, err)
 
@@ -82,7 +82,22 @@ func TestIngestion_CreateDestination(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexPrefix":"prefix_"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+	})
+	t.Run("with transformationIDs", func(t *testing.T) {
+		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
+
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
+				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetTransformationIDs(
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/destinations", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`)
 	})
 }
 
@@ -138,6 +153,21 @@ func TestIngestion_CreateTask(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace"}`)
 	})
+	t.Run("task shopify", func(t *testing.T) {
+		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
+
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))}))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
+	})
 }
 
 func TestIngestion_CreateTaskV1(t *testing.T) {
@@ -185,6 +215,22 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+	})
+	t.Run("task shopify", func(t *testing.T) {
+		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+
+			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))}))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -735,6 +781,25 @@ func TestIngestion_EnableTaskV1(t *testing.T) {
 	})
 }
 
+func TestIngestion_GenerateTransformationCode(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("generateTransformationCode", func(t *testing.T) {
+		_, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
+
+			ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/models", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}`)
+	})
+}
+
 func TestIngestion_GetAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -939,7 +1004,7 @@ func TestIngestion_ListRuns(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getRuns", func(t *testing.T) {
+	t.Run("listRuns", func(t *testing.T) {
 		_, err := client.ListRuns(client.NewApiListRunsRequest())
 		require.NoError(t, err)
 
@@ -954,7 +1019,7 @@ func TestIngestion_ListSources(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getSources", func(t *testing.T) {
+	t.Run("listSources", func(t *testing.T) {
 		_, err := client.ListSources(client.NewApiListSourcesRequest())
 		require.NoError(t, err)
 
@@ -995,11 +1060,26 @@ func TestIngestion_ListTasksV1(t *testing.T) {
 	})
 }
 
+func TestIngestion_ListTransformationModels(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("listTransformationModels", func(t *testing.T) {
+		_, err := client.ListTransformationModels()
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/models", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestIngestion_ListTransformations(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("getTransformations", func(t *testing.T) {
+	t.Run("listTransformations", func(t *testing.T) {
 		_, err := client.ListTransformations(client.NewApiListTransformationsRequest())
 		require.NoError(t, err)
 
@@ -1192,7 +1272,7 @@ func TestIngestion_SearchTransformations(t *testing.T) {
 	t.Run("searchTransformations", func(t *testing.T) {
 		_, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
-			ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(
+			ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
 				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
 		))
 		require.NoError(t, err)
@@ -1201,7 +1281,7 @@ func TestIngestion_SearchTransformations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		ja.Assertf(*echo.Body, `{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
 	})
 }
 
@@ -1222,12 +1302,12 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 	})
 }
 
-func TestIngestion_TryTransformations(t *testing.T) {
+func TestIngestion_TryTransformation(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 
-	t.Run("tryTransformations", func(t *testing.T) {
-		_, err := client.TryTransformations(client.NewApiTryTransformationsRequest(
+	t.Run("tryTransformation", func(t *testing.T) {
+		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
 			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
 		))
@@ -1238,6 +1318,55 @@ func TestIngestion_TryTransformations(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
+	})
+	t.Run("with authentications", func(t *testing.T) {
+		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
+
+			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/try", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
+	})
+}
+
+func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("tryTransformationBeforeUpdate", func(t *testing.T) {
+		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
+	})
+	t.Run("existing with authentications", func(t *testing.T) {
+		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
 	})
 }
 

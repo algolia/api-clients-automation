@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** TransformationTry */
@@ -15,6 +17,9 @@ public class TransformationTry {
 
   @JsonProperty("sampleRecord")
   private Object sampleRecord;
+
+  @JsonProperty("authentications")
+  private List<AuthenticationCreate> authentications;
 
   public TransformationTry setCode(String code) {
     this.code = code;
@@ -38,6 +43,25 @@ public class TransformationTry {
     return sampleRecord;
   }
 
+  public TransformationTry setAuthentications(List<AuthenticationCreate> authentications) {
+    this.authentications = authentications;
+    return this;
+  }
+
+  public TransformationTry addAuthentications(AuthenticationCreate authenticationsItem) {
+    if (this.authentications == null) {
+      this.authentications = new ArrayList<>();
+    }
+    this.authentications.add(authenticationsItem);
+    return this;
+  }
+
+  /** Get authentications */
+  @javax.annotation.Nullable
+  public List<AuthenticationCreate> getAuthentications() {
+    return authentications;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -47,12 +71,16 @@ public class TransformationTry {
       return false;
     }
     TransformationTry transformationTry = (TransformationTry) o;
-    return Objects.equals(this.code, transformationTry.code) && Objects.equals(this.sampleRecord, transformationTry.sampleRecord);
+    return (
+      Objects.equals(this.code, transformationTry.code) &&
+      Objects.equals(this.sampleRecord, transformationTry.sampleRecord) &&
+      Objects.equals(this.authentications, transformationTry.authentications)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, sampleRecord);
+    return Objects.hash(code, sampleRecord, authentications);
   }
 
   @Override
@@ -61,6 +89,7 @@ public class TransformationTry {
     sb.append("class TransformationTry {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    sampleRecord: ").append(toIndentedString(sampleRecord)).append("\n");
+    sb.append("    authentications: ").append(toIndentedString(authentications)).append("\n");
     sb.append("}");
     return sb.toString();
   }

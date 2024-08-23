@@ -1,6 +1,5 @@
 [
   {
-    "testName": "getSources",
     "parameters": {},
     "request": {
       "path": "/1/sources",

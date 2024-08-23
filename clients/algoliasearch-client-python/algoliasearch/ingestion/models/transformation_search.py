@@ -17,7 +17,7 @@ class TransformationSearch(BaseModel):
     TransformationSearch
     """
 
-    transformations_ids: List[StrictStr] = Field(alias="transformationsIDs")
+    transformation_ids: List[StrictStr] = Field(alias="transformationIDs")
 
     model_config = ConfigDict(
         use_enum_values=True, populate_by_name=True, validate_assignment=True
@@ -57,5 +57,5 @@ class TransformationSearch(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"transformationsIDs": obj.get("transformationsIDs")})
+        _obj = cls.model_validate({"transformationIDs": obj.get("transformationIDs")})
         return _obj

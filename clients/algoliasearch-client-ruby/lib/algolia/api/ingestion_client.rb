@@ -953,6 +953,60 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
+    # Generates code for the selected model based on the given prompt.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param generate_transformation_code_payload [GenerateTransformationCodePayload]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def generate_transformation_code_with_http_info(generate_transformation_code_payload, request_options = {})
+      # verify the required parameter 'generate_transformation_code_payload' is set
+      if @api_client.config.client_side_validation && generate_transformation_code_payload.nil?
+        raise(
+          ArgumentError,
+          "Parameter `generate_transformation_code_payload` is required when calling `generate_transformation_code`."
+        )
+      end
+
+      path = "/1/transformations/models"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(generate_transformation_code_payload)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.generate_transformation_code",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Generates code for the selected model based on the given prompt.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param generate_transformation_code_payload [GenerateTransformationCodePayload]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GenerateTransformationCodeResponse]
+    def generate_transformation_code(generate_transformation_code_payload, request_options = {})
+      response = generate_transformation_code_with_http_info(generate_transformation_code_payload, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::GenerateTransformationCodeResponse"
+      )
+    end
+
     # Retrieves an authentication resource by its ID.
     #
     # Required API Key ACLs:
@@ -2163,19 +2217,91 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponseV1")
     end
 
+    # Retrieves a list of existing LLM transformation helpers.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_transformation_models_with_http_info(request_options = {})
+      path = "/1/transformations/models"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_transformation_models",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of existing LLM transformation helpers.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TransformationModels]
+    def list_transformation_models(request_options = {})
+      response = list_transformation_models_with_http_info(request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TransformationModels")
+    end
+
     # Retrieves a list of transformations.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
     # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def list_transformations_with_http_info(sort = nil, order = nil, request_options = {})
+    def list_transformations_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
+        )
+      end
+
       path = "/1/transformations"
       query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2201,12 +2327,14 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
     # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]
-    def list_transformations(sort = nil, order = nil, request_options = {})
-      response = list_transformations_with_http_info(sort, order, request_options)
+    def list_transformations(items_per_page = nil, page = nil, sort = nil, order = nil, request_options = {})
+      response = list_transformations_with_http_info(items_per_page, page, sort, order, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::ListTransformationsResponse"
@@ -2749,7 +2877,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
     end
 
-    # Try a transformation.
+    # Try a transformation before creating it.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2758,10 +2886,10 @@ module Algolia
     # @param transformation_try [TransformationTry]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def try_transformations_with_http_info(transformation_try, request_options = {})
+    def try_transformation_with_http_info(transformation_try, request_options = {})
       # verify the required parameter 'transformation_try' is set
       if @api_client.config.client_side_validation && transformation_try.nil?
-        raise ArgumentError, "Parameter `transformation_try` is required when calling `try_transformations`."
+        raise ArgumentError, "Parameter `transformation_try` is required when calling `try_transformation`."
       end
 
       path = "/1/transformations/try"
@@ -2773,7 +2901,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_try)
 
       new_options = request_options.merge(
-        :operation => :"IngestionClient.try_transformations",
+        :operation => :"IngestionClient.try_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2783,7 +2911,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Try a transformation.
+    # Try a transformation before creating it.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2792,8 +2920,74 @@ module Algolia
     # @param transformation_try [TransformationTry]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TransformationTryResponse]
-    def try_transformations(transformation_try, request_options = {})
-      response = try_transformations_with_http_info(transformation_try, request_options)
+    def try_transformation(transformation_try, request_options = {})
+      response = try_transformation_with_http_info(transformation_try, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"
+      )
+    end
+
+    # Try a transformation before updating it.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param transformation_id [String] Unique identifier of a transformation. (required)
+    # @param transformation_try [TransformationTry]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def try_transformation_before_update_with_http_info(transformation_id, transformation_try, request_options = {})
+      # verify the required parameter 'transformation_id' is set
+      if @api_client.config.client_side_validation && transformation_id.nil?
+        raise(
+          ArgumentError,
+          "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
+        )
+      end
+      # verify the required parameter 'transformation_try' is set
+      if @api_client.config.client_side_validation && transformation_try.nil?
+        raise(
+          ArgumentError,
+          "Parameter `transformation_try` is required when calling `try_transformation_before_update`."
+        )
+      end
+
+      path = "/1/transformations/{transformationID}/try".sub(
+        "{" + "transformationID" + "}",
+        Transport.encode_uri(transformation_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_try)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.try_transformation_before_update",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Try a transformation before updating it.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param transformation_id [String] Unique identifier of a transformation. (required)
+    # @param transformation_try [TransformationTry]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TransformationTryResponse]
+    def try_transformation_before_update(transformation_id, transformation_try, request_options = {})
+      response = try_transformation_before_update_with_http_info(transformation_id, transformation_try, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"

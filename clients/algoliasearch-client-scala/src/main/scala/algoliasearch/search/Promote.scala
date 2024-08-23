@@ -48,9 +48,9 @@ object PromoteSerializer extends Serializer[Promote] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[Promote] =>
       json match {
-        case value: JObject => Extraction.extract[PromoteObjectIDs](value)
-        case value: JObject => Extraction.extract[PromoteObjectID](value)
-        case _              => throw new MappingException("Can't convert " + json + " to Promote")
+        case value: JObject if value.obj.exists(_._1 == "objectIDs") => Extraction.extract[PromoteObjectIDs](value)
+        case value: JObject if value.obj.exists(_._1 == "objectID")  => Extraction.extract[PromoteObjectID](value)
+        case _ => throw new MappingException("Can't convert " + json + " to Promote")
       }
   }
 

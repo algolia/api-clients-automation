@@ -94,7 +94,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
+          .setInput(new DestinationIndexName().setIndexName("full_name______"))
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       );
     });
@@ -103,7 +103,31 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexPrefix\":\"prefix_\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("with transformationIDs")
+  void createDestinationTest1() {
+    assertDoesNotThrow(() -> {
+      client.createDestination(
+        new DestinationCreate()
+          .setType(DestinationType.SEARCH)
+          .setName("destinationName")
+          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setTransformationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/destinations", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -179,6 +203,34 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("task shopify")
+  void createTaskTest2() {
+    assertDoesNotThrow(() -> {
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput().setStreams(List.of(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("createTaskOnDemand")
   void createTaskV1Test() {
     assertDoesNotThrow(() -> {
@@ -245,6 +297,33 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("task shopify")
+  void createTaskV1Test3() {
+    assertDoesNotThrow(() -> {
+      client.createTaskV1(
+        new TaskCreateV1()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput().setStreams(List.of(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -891,6 +970,29 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("generateTransformationCode")
+  void generateTransformationCodeTest() {
+    assertDoesNotThrow(() -> {
+      client.generateTransformationCode(
+        new GenerateTransformationCodePayload()
+          .setId("foo")
+          .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH" + " LINE of code is doing")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/models", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of" +
+        " comments that describe what EACH LINE of code is doing\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getAuthentication")
   void getAuthenticationTest() {
     assertDoesNotThrow(() -> {
@@ -1057,7 +1159,7 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRuns")
+  @DisplayName("listRuns")
   void listRunsTest() {
     assertDoesNotThrow(() -> {
       client.listRuns();
@@ -1069,7 +1171,7 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSources")
+  @DisplayName("listSources")
   void listSourcesTest() {
     assertDoesNotThrow(() -> {
       client.listSources();
@@ -1105,7 +1207,19 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTransformations")
+  @DisplayName("listTransformationModels")
+  void listTransformationModelsTest() {
+    assertDoesNotThrow(() -> {
+      client.listTransformationModels();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/models", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("listTransformations")
   void listTransformationsTest() {
     assertDoesNotThrow(() -> {
       client.listTransformations();
@@ -1304,7 +1418,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchTransformations(
         new TransformationSearch()
-          .setTransformationsIDs(
+          .setTransformationIDs(
             List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
           )
       );
@@ -1314,7 +1428,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+        "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1334,16 +1448,94 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("tryTransformations")
-  void tryTransformationsTest() {
+  @DisplayName("tryTransformation")
+  void tryTransformationTest() {
     assertDoesNotThrow(() -> {
-      client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+      client.tryTransformation(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations/try", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("with authentications")
+  void tryTransformationTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformation(
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(Map.of("bar", "baz"))
+          .setAuthentications(
+            List.of(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("tryTransformationBeforeUpdate")
+  void tryTransformationBeforeUpdateTest() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("existing with authentications")
+  void tryTransformationBeforeUpdateTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(Map.of("bar", "baz"))
+          .setAuthentications(
+            List.of(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 

@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.0.0-beta.12';
+    public const VERSION = '4.2.0';
 
     /**
      * @var ApiWrapperInterface
@@ -257,7 +257,7 @@ class InsightsClient
     }
 
     /**
-     * Deletes all events related to the specified user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+     * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
      *
      * @param string $userToken      User token for which to delete all associated events. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions

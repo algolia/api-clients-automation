@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/api-client/getting-started/install/php/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/php/" target="_blank">Documentation</a>  •
   <a href="https://github.com/algolia/scout-extended" target="_blank">Laravel</a>  •
   <a href="https://github.com/algolia/search-bundle" target="_blank">Symfony</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
@@ -34,7 +34,7 @@
 First, install Algolia PHP API Client via the [composer](https://getcomposer.org/) package manager:
 
 ```bash
-composer require algolia/algoliasearch-client-php "^4.0@beta"
+composer require algolia/algoliasearch-client-php "^4.0"
 ```
 
 You can now import the Algolia API client in your project and play with it.
@@ -73,7 +73,7 @@ $response = $client->search(
 var_dump($response);
 ```
 
-For full documentation, visit the **[Algolia PHP API Client](https://www.algolia.com/doc/api-client/getting-started/install/php/)**.
+For full documentation, visit the **[Algolia PHP API Client](https://www.algolia.com/doc/libraries/php/)**.
 
 ## ❓ Troubleshooting
 
@@ -81,7 +81,7 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 
 ## Contributing
 
-This repository hosts the code of the generated Algolia API client for PHP, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
+This repository hosts the code of the generated Algolia API client for PHP, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/introduction).
 
 ## 📄 License
 
