@@ -36,5 +36,6 @@ case class DestinationUpdate(
     `type`: Option[DestinationType] = scala.None,
     name: Option[String] = scala.None,
     input: Option[DestinationInput] = scala.None,
-    authenticationID: Option[String] = scala.None
+    authenticationID: Option[String] = scala.None,
+    transformationIDs: Option[Seq[String]] = scala.None
 )

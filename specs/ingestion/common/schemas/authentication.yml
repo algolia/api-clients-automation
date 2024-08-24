@@ -127,6 +127,8 @@ AuthGoogleServiceAccountPartial:
     privateKey:
       type: string
       description: Private key of the Google service account. This field is `null` in the API response.
+  x-discriminator-fields:
+    - clientEmail
 
 AuthBasicPartial:
   type: object
@@ -139,6 +141,8 @@ AuthBasicPartial:
     password:
       type: string
       description: Password. This field is `null` in the API response.
+  x-discriminator-fields:
+    - username
 
 AuthAPIKeyPartial:
   type: object
@@ -148,6 +152,8 @@ AuthAPIKeyPartial:
     key:
       type: string
       description: API key. This field is `null` in the API response.
+  x-discriminator-fields:
+    - key
 
 AuthOAuthPartial:
   type: object
@@ -167,6 +173,8 @@ AuthOAuthPartial:
       type: string
       default: ''
       description: OAuth scope.
+  x-discriminator-fields:
+    - url
 
 AuthAlgoliaPartial:
   type: object
@@ -211,6 +219,9 @@ AuthGoogleServiceAccount:
   required:
     - clientEmail
     - privateKey
+  x-discriminator-fields:
+    - clientEmail
+    - privateKey
 
 AuthBasic:
   type: object
@@ -226,6 +237,9 @@ AuthBasic:
   required:
     - username
     - password
+  x-discriminator-fields:
+    - username
+    - password
 
 AuthAPIKey:
   type: object
@@ -236,6 +250,8 @@ AuthAPIKey:
       type: string
       description: API key. This field is `null` in the API response.
   required:
+    - key
+  x-discriminator-fields:
     - key
 
 AuthOAuth:
@@ -257,6 +273,10 @@ AuthOAuth:
       default: ''
       description: OAuth scope.
   required:
+    - url
+    - client_id
+    - client_secret
+  x-discriminator-fields:
     - url
     - client_id
     - client_secret

@@ -52,6 +52,12 @@ from algoliasearch.ingestion.models.event import Event
 from algoliasearch.ingestion.models.event_sort_keys import EventSortKeys
 from algoliasearch.ingestion.models.event_status import EventStatus
 from algoliasearch.ingestion.models.event_type import EventType
+from algoliasearch.ingestion.models.generate_transformation_code_payload import (
+    GenerateTransformationCodePayload,
+)
+from algoliasearch.ingestion.models.generate_transformation_code_response import (
+    GenerateTransformationCodeResponse,
+)
 from algoliasearch.ingestion.models.list_authentications_response import (
     ListAuthenticationsResponse,
 )
@@ -99,6 +105,7 @@ from algoliasearch.ingestion.models.transformation_create import TransformationC
 from algoliasearch.ingestion.models.transformation_create_response import (
     TransformationCreateResponse,
 )
+from algoliasearch.ingestion.models.transformation_models import TransformationModels
 from algoliasearch.ingestion.models.transformation_search import TransformationSearch
 from algoliasearch.ingestion.models.transformation_try import TransformationTry
 from algoliasearch.ingestion.models.transformation_try_response import (
@@ -1475,6 +1482,68 @@ class IngestionClient:
         return (
             await self.enable_task_v1_with_http_info(task_id, request_options)
         ).deserialize(TaskUpdateResponse)
+
+    async def generate_transformation_code_with_http_info(
+        self,
+        generate_transformation_code_payload: GenerateTransformationCodePayload,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Generates code for the selected model based on the given prompt.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param generate_transformation_code_payload: (required)
+        :type generate_transformation_code_payload: GenerateTransformationCodePayload
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if generate_transformation_code_payload is None:
+            raise ValueError(
+                "Parameter `generate_transformation_code_payload` is required when calling `generate_transformation_code`."
+            )
+
+        _data = {}
+        if generate_transformation_code_payload is not None:
+            _data = generate_transformation_code_payload
+
+        return await self._transporter.request(
+            verb=Verb.POST,
+            path="/1/transformations/models",
+            request_options=self._request_options.merge(
+                data=dumps(bodySerializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def generate_transformation_code(
+        self,
+        generate_transformation_code_payload: GenerateTransformationCodePayload,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> GenerateTransformationCodeResponse:
+        """
+        Generates code for the selected model based on the given prompt.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param generate_transformation_code_payload: (required)
+        :type generate_transformation_code_payload: GenerateTransformationCodePayload
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'GenerateTransformationCodeResponse' result object.
+        """
+        return (
+            await self.generate_transformation_code_with_http_info(
+                generate_transformation_code_payload, request_options
+            )
+        ).deserialize(GenerateTransformationCodeResponse)
 
     async def get_authentication_with_http_info(
         self,
@@ -3149,8 +3218,58 @@ class IngestionClient:
             )
         ).deserialize(ListTasksResponseV1)
 
+    async def list_transformation_models_with_http_info(
+        self, request_options: Optional[Union[dict, RequestOptions]] = None
+    ) -> ApiResponse[str]:
+        """
+        Retrieves a list of existing LLM transformation helpers.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        return await self._transporter.request(
+            verb=Verb.GET,
+            path="/1/transformations/models",
+            request_options=self._request_options.merge(
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def list_transformation_models(
+        self, request_options: Optional[Union[dict, RequestOptions]] = None
+    ) -> TransformationModels:
+        """
+        Retrieves a list of existing LLM transformation helpers.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'TransformationModels' result object.
+        """
+        return (
+            await self.list_transformation_models_with_http_info(request_options)
+        ).deserialize(TransformationModels)
+
     async def list_transformations_with_http_info(
         self,
+        items_per_page: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
+            Field(description="Number of items per page."),
+        ] = None,
+        page: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Page number of the paginated API response."),
+        ] = None,
         sort: Annotated[
             Optional[SortKeys], Field(description="Property by which to sort the list.")
         ] = None,
@@ -3168,6 +3287,10 @@ class IngestionClient:
                   - deleteIndex
                   - editSettings
 
+        :param items_per_page: Number of items per page.
+        :type items_per_page: int
+        :param page: Page number of the paginated API response.
+        :type page: int
         :param sort: Property by which to sort the list.
         :type sort: SortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -3178,6 +3301,10 @@ class IngestionClient:
 
         _query_parameters: List[Tuple[str, str]] = []
 
+        if items_per_page is not None:
+            _query_parameters.append(("itemsPerPage", items_per_page))
+        if page is not None:
+            _query_parameters.append(("page", page))
         if sort is not None:
             _query_parameters.append(("sort", sort))
         if order is not None:
@@ -3195,6 +3322,14 @@ class IngestionClient:
 
     async def list_transformations(
         self,
+        items_per_page: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
+            Field(description="Number of items per page."),
+        ] = None,
+        page: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Page number of the paginated API response."),
+        ] = None,
         sort: Annotated[
             Optional[SortKeys], Field(description="Property by which to sort the list.")
         ] = None,
@@ -3212,6 +3347,10 @@ class IngestionClient:
                   - deleteIndex
                   - editSettings
 
+        :param items_per_page: Number of items per page.
+        :type items_per_page: int
+        :param page: Page number of the paginated API response.
+        :type page: int
         :param sort: Property by which to sort the list.
         :type sort: SortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -3220,7 +3359,9 @@ class IngestionClient:
         :return: Returns the deserialized response in a 'ListTransformationsResponse' result object.
         """
         return (
-            await self.list_transformations_with_http_info(sort, order, request_options)
+            await self.list_transformations_with_http_info(
+                items_per_page, page, sort, order, request_options
+            )
         ).deserialize(ListTransformationsResponse)
 
     async def push_task_with_http_info(
@@ -3935,13 +4076,13 @@ class IngestionClient:
             )
         ).deserialize(SourceWatchResponse)
 
-    async def try_transformations_with_http_info(
+    async def try_transformation_with_http_info(
         self,
         transformation_try: TransformationTry,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Try a transformation.
+        Try a transformation before creating it.
 
         Required API Key ACLs:
           - addObject
@@ -3956,7 +4097,7 @@ class IngestionClient:
 
         if transformation_try is None:
             raise ValueError(
-                "Parameter `transformation_try` is required when calling `try_transformations`."
+                "Parameter `transformation_try` is required when calling `try_transformation`."
             )
 
         _data = {}
@@ -3973,13 +4114,13 @@ class IngestionClient:
             use_read_transporter=False,
         )
 
-    async def try_transformations(
+    async def try_transformation(
         self,
         transformation_try: TransformationTry,
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> TransformationTryResponse:
         """
-        Try a transformation.
+        Try a transformation before creating it.
 
         Required API Key ACLs:
           - addObject
@@ -3992,8 +4133,87 @@ class IngestionClient:
         :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
         """
         return (
-            await self.try_transformations_with_http_info(
+            await self.try_transformation_with_http_info(
                 transformation_try, request_options
+            )
+        ).deserialize(TransformationTryResponse)
+
+    async def try_transformation_before_update_with_http_info(
+        self,
+        transformation_id: Annotated[
+            StrictStr, Field(description="Unique identifier of a transformation.")
+        ],
+        transformation_try: TransformationTry,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Try a transformation before updating it.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param transformation_id: Unique identifier of a transformation. (required)
+        :type transformation_id: str
+        :param transformation_try: (required)
+        :type transformation_try: TransformationTry
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if transformation_id is None:
+            raise ValueError(
+                "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
+            )
+
+        if transformation_try is None:
+            raise ValueError(
+                "Parameter `transformation_try` is required when calling `try_transformation_before_update`."
+            )
+
+        _data = {}
+        if transformation_try is not None:
+            _data = transformation_try
+
+        return await self._transporter.request(
+            verb=Verb.POST,
+            path="/1/transformations/{transformationID}/try".replace(
+                "{transformationID}", quote(str(transformation_id), safe="")
+            ),
+            request_options=self._request_options.merge(
+                data=dumps(bodySerializer(_data)),
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def try_transformation_before_update(
+        self,
+        transformation_id: Annotated[
+            StrictStr, Field(description="Unique identifier of a transformation.")
+        ],
+        transformation_try: TransformationTry,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> TransformationTryResponse:
+        """
+        Try a transformation before updating it.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param transformation_id: Unique identifier of a transformation. (required)
+        :type transformation_id: str
+        :param transformation_try: (required)
+        :type transformation_try: TransformationTry
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'TransformationTryResponse' result object.
+        """
+        return (
+            await self.try_transformation_before_update_with_http_info(
+                transformation_id, transformation_try, request_options
             )
         ).deserialize(TransformationTryResponse)
 

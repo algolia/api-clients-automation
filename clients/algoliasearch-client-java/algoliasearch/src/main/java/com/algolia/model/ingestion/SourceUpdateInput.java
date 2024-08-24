@@ -21,15 +21,6 @@ public interface SourceUpdateInput {
     @Override
     public SourceUpdateInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize SourceBigQuery
-      if (tree.isObject() && tree.has("projectID")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceBigQuery.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
-        }
-      }
       // deserialize SourceGA4BigQueryExport
       if (tree.isObject() && tree.has("projectID") && tree.has("datasetID") && tree.has("tablePrefix")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -39,6 +30,24 @@ public interface SourceUpdateInput {
           LOGGER.finest(
             "Failed to deserialize oneOf SourceGA4BigQueryExport (error: " + e.getMessage() + ") (type: SourceGA4BigQueryExport)"
           );
+        }
+      }
+      // deserialize SourceBigQuery
+      if (tree.isObject() && tree.has("projectID")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceBigQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
+        }
+      }
+      // deserialize SourceUpdateDocker
+      if (tree.isObject() && tree.has("configuration")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceUpdateDocker.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceUpdateDocker (error: " + e.getMessage() + ") (type: SourceUpdateDocker)");
         }
       }
       // deserialize SourceUpdateCommercetools
@@ -68,15 +77,6 @@ public interface SourceUpdateInput {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SourceCSV (error: " + e.getMessage() + ") (type: SourceCSV)");
-        }
-      }
-      // deserialize SourceUpdateDocker
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SourceUpdateDocker.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SourceUpdateDocker (error: " + e.getMessage() + ") (type: SourceUpdateDocker)");
         }
       }
       // deserialize SourceUpdateShopify

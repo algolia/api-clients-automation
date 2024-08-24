@@ -5,190 +5,21 @@
   "repo": "api-clients-automation",
   "teamSlug": "api-clients-automation",
   "targetBranch": {
-    "csharp": "next",
+    "csharp": "main",
     "dart": "main",
-    "go": "next",
-    "java": "next",
-    "javascript": "next",
-    "kotlin": "next",
-    "php": "next",
-    "python": "next",
-    "ruby": "next",
-    "scala": "next",
-    "swift": "next"
+    "go": "main",
+    "java": "main",
+    "javascript": "main",
+    "kotlin": "main",
+    "php": "main",
+    "python": "main",
+    "ruby": "main",
+    "scala": "main",
+    "swift": "main"
   },
   "defaultTargetBranch": "next",
   "gitAuthor": {
     "name": "algolia-bot",
     "email": "accounts+algolia-api-client-bot@algolia.com"
-  },
-  "sla": {
-    "csharp": {
-      "6.1.17": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "7.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "dart": {
-      "1.12.0": {
-        "start": "2024-06-21",
-        "end": "2026-06-13",
-        "status": "maintenance"
-      },
-      "1.13.0": {
-        "start": "2024-06-24",
-        "end": "2026-06-21",
-        "status": "maintenance"
-      },
-      "1.14.0": {
-        "start": "2024-06-26",
-        "end": "2026-06-24",
-        "status": "maintenance"
-      },
-      "1.15.1": {
-        "start": "2024-07-01",
-        "end": "2026-06-27",
-        "status": "maintenance"
-      },
-      "1.16.0": {
-        "start": "2024-07-08",
-        "end": "2026-07-01",
-        "status": "maintenance"
-      },
-      "1.17.1": {
-        "start": "2024-07-19",
-        "status": "maintenance",
-        "end": "2026-07-12"
-      },
-      "1.18.0": {
-        "start": "2024-07-26",
-        "status": "maintenance",
-        "end": "2026-07-19"
-      },
-      "1.19.0": {
-        "start": "2024-08-01",
-        "status": "maintenance",
-        "end": "2026-07-26"
-      },
-      "1.20.0": {
-        "start": "2024-08-01",
-        "status": "active",
-        "end": "2026-08-01"
-      }
-    },
-    "go": {
-      "3.31.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "4.0.0-beta.26": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "java": {
-      "3.16.9": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "4.0.0-beta.43": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "javascript": {
-      "4.23.3": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "5.0.0-beta.14": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "kotlin": {
-      "2.1.12": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "3.0.0-beta.38": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "php": {
-      "3.4.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "4.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "python": {
-      "3.0.0": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "4.0.0b27": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "ruby": {
-      "2.3.4": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "3.0.0.beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "scala": {
-      "1.45.2": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "2.0.0-beta.12": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    },
-    "swift": {
-      "8.20.1": {
-        "start": "2024-01-01",
-        "end": "2026-07-16",
-        "status": "active"
-      },
-      "9.0.0-beta.13": {
-        "start": "2024-08-01",
-        "status": "prerelease",
-        "end": "2026-08-01"
-      }
-    }
   }
 }

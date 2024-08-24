@@ -58,6 +58,11 @@ import type {
   import type { BatchRequest } from '../model/batchRequest';
 {{/isSearchClient}}
 
+{{#isAlgoliasearchClient}}
+  import type { SearchResponse } from '../model/searchResponse';
+  import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
+{{/isAlgoliasearchClient}}
+
 {{#isIngestionClient}}
   import type { OnDemandTrigger } from '../model/onDemandTrigger';
   import type { ScheduleTrigger } from '../model/scheduleTrigger';

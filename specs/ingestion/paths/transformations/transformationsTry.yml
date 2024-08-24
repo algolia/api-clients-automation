@@ -2,8 +2,8 @@ post:
   tags:
     - transformations
   summary: Try a transformation
-  description: Try a transformation.
-  operationId: tryTransformations
+  description: Try a transformation before creating it.
+  operationId: tryTransformation
   x-acl:
     - addObject
     - deleteIndex

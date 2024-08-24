@@ -149,6 +149,135 @@
     }
   },
   {
+    "testName": "search with highlight and snippet results",
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "cts_e2e_highlight_snippet_results",
+          "query": "vim",
+          "attributesToSnippet": [
+            "*:20"
+          ],
+          "attributesToHighlight": [
+            "*"
+          ],
+          "attributesToRetrieve": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "cts_e2e_highlight_snippet_results",
+            "query": "vim",
+            "attributesToSnippet": [
+              "*:20"
+            ],
+            "attributesToHighlight": [
+              "*"
+            ],
+            "attributesToRetrieve": [
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "results": [
+          {
+            "hits": [
+              {
+                "editor": {
+                  "name": "vim",
+                  "type": "beforeneovim"
+                },
+                "names": [
+                  "vim",
+                  ":q"
+                ],
+                "_snippetResult": {
+                  "editor": {
+                    "name": {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full"
+                    },
+                    "type": {
+                      "value": "beforeneovim",
+                      "matchLevel": "none"
+                    }
+                  },
+                  "names": [
+                    {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full"
+                    },
+                    {
+                      "value": ":q",
+                      "matchLevel": "none"
+                    }
+                  ]
+                },
+                "_highlightResult": {
+                  "editor": {
+                    "name": {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full",
+                      "fullyHighlighted": true,
+                      "matchedWords": [
+                        "vim"
+                      ]
+                    },
+                    "type": {
+                      "value": "beforeneovim",
+                      "matchLevel": "none",
+                      "matchedWords": []
+                    }
+                  },
+                  "names": [
+                    {
+                      "value": "<em>vim</em>",
+                      "matchLevel": "full",
+                      "fullyHighlighted": true,
+                      "matchedWords": [
+                        "vim"
+                      ]
+                    },
+                    {
+                      "value": ":q",
+                      "matchLevel": "none",
+                      "matchedWords": []
+                    }
+                  ]
+                }
+              }
+            ],
+            "nbHits": 1,
+            "page": 0,
+            "nbPages": 1,
+            "hitsPerPage": 20,
+            "exhaustiveNbHits": true,
+            "exhaustiveTypo": true,
+            "exhaustive": {
+              "nbHits": true,
+              "typo": true
+            },
+            "query": "vim",
+            "index": "cts_e2e_highlight_snippet_results",
+            "renderingContent": {}
+          }
+        ]
+      }
+    }
+  },
+  {
     "testName": "retrieveFacets",
     "isSnippet": true,
     "parameters": {

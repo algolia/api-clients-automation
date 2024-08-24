@@ -36,7 +36,7 @@ final class IngestionClientSnippet {
         let response = try await client.createDestination(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexPrefix(DestinationIndexPrefix(indexPrefix: "prefix_")),
+            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // SEPARATOR<
@@ -299,6 +299,23 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the generateTransformationCode method.
+    ///
+    /// generateTransformationCode
+    func snippetForGenerateTransformationCode() async throws {
+        // >SEPARATOR generateTransformationCode default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client
+            .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(
+                id: "foo",
+                userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+            ))
+        // SEPARATOR<
+    }
+
     /// Snippet for the getAuthentication method.
     ///
     /// getAuthentication
@@ -447,7 +464,7 @@ final class IngestionClientSnippet {
 
     /// Snippet for the listRuns method.
     ///
-    /// getRuns
+    /// listRuns
     func snippetForListRuns() async throws {
         // >SEPARATOR listRuns default
         // Initialize the client
@@ -460,7 +477,7 @@ final class IngestionClientSnippet {
 
     /// Snippet for the listSources method.
     ///
-    /// getSources
+    /// listSources
     func snippetForListSources() async throws {
         // >SEPARATOR listSources default
         // Initialize the client
@@ -497,9 +514,22 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the listTransformationModels method.
+    ///
+    /// listTransformationModels
+    func snippetForListTransformationModels() async throws {
+        // >SEPARATOR listTransformationModels default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.listTransformationModels()
+        // SEPARATOR<
+    }
+
     /// Snippet for the listTransformations method.
     ///
-    /// getTransformations
+    /// listTransformations
     func snippetForListTransformations() async throws {
         // >SEPARATOR listTransformations default
         // Initialize the client
@@ -668,7 +698,7 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client
-            .searchTransformations(transformationSearch: TransformationSearch(transformationsIDs: [
+            .searchTransformations(transformationSearch: TransformationSearch(transformationIDs: [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -689,19 +719,35 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the tryTransformations method.
+    /// Snippet for the tryTransformation method.
     ///
-    /// tryTransformations
-    func snippetForTryTransformations() async throws {
-        // >SEPARATOR tryTransformations default
+    /// tryTransformation
+    func snippetForTryTransformation() async throws {
+        // >SEPARATOR tryTransformation default
         // Initialize the client
         let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.tryTransformations(transformationTry: TransformationTry(
+        let response = try await client.tryTransformation(transformationTry: TransformationTry(
             code: "foo",
             sampleRecord: ["bar": "baz"]
         ))
+        // SEPARATOR<
+    }
+
+    /// Snippet for the tryTransformationBeforeUpdate method.
+    ///
+    /// tryTransformationBeforeUpdate
+    func snippetForTryTransformationBeforeUpdate() async throws {
+        // >SEPARATOR tryTransformationBeforeUpdate default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.tryTransformationBeforeUpdate(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+        )
         // SEPARATOR<
     }
 

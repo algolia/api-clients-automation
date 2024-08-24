@@ -32,5 +32,6 @@ package algoliasearch.ingestion
   */
 case class TransformationTry(
     code: String,
-    sampleRecord: Any
+    sampleRecord: Any,
+    authentications: Option[Seq[AuthenticationCreate]] = scala.None
 )

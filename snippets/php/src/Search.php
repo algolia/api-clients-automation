@@ -1647,7 +1647,7 @@ class SnippetSearchClient
      *
      * retrieveFacets
      */
-    public function snippetForSearch5()
+    public function snippetForSearch6()
     {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
@@ -1678,7 +1678,7 @@ class SnippetSearchClient
      *
      * retrieveFacetsWildcard
      */
-    public function snippetForSearch6()
+    public function snippetForSearch7()
     {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client

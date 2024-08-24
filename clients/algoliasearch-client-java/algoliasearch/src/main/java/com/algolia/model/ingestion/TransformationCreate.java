@@ -5,6 +5,8 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** API request body for creating a transformation. */
@@ -18,6 +20,9 @@ public class TransformationCreate {
 
   @JsonProperty("description")
   private String description;
+
+  @JsonProperty("authenticationIDs")
+  private List<String> authenticationIDs;
 
   public TransformationCreate setCode(String code) {
     this.code = code;
@@ -52,6 +57,25 @@ public class TransformationCreate {
     return description;
   }
 
+  public TransformationCreate setAuthenticationIDs(List<String> authenticationIDs) {
+    this.authenticationIDs = authenticationIDs;
+    return this;
+  }
+
+  public TransformationCreate addAuthenticationIDs(String authenticationIDsItem) {
+    if (this.authenticationIDs == null) {
+      this.authenticationIDs = new ArrayList<>();
+    }
+    this.authenticationIDs.add(authenticationIDsItem);
+    return this;
+  }
+
+  /** The authentications associated for the current transformation. */
+  @javax.annotation.Nullable
+  public List<String> getAuthenticationIDs() {
+    return authenticationIDs;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,13 +88,14 @@ public class TransformationCreate {
     return (
       Objects.equals(this.code, transformationCreate.code) &&
       Objects.equals(this.name, transformationCreate.name) &&
-      Objects.equals(this.description, transformationCreate.description)
+      Objects.equals(this.description, transformationCreate.description) &&
+      Objects.equals(this.authenticationIDs, transformationCreate.authenticationIDs)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, name, description);
+    return Objects.hash(code, name, description, authenticationIDs);
   }
 
   @Override
@@ -80,6 +105,7 @@ public class TransformationCreate {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    authenticationIDs: ").append(toIndentedString(authenticationIDs)).append("\n");
     sb.append("}");
     return sb.toString();
   }

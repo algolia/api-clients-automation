@@ -53,3 +53,5 @@ pubspec.lock
 *.DotSettings.user
 
 swiftformat
+
+foo

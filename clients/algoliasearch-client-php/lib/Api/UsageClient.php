@@ -19,7 +19,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class UsageClient
 {
-    public const VERSION = '4.0.0-beta.12';
+    public const VERSION = '4.2.0';
 
     /**
      * @var ApiWrapperInterface

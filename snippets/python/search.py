@@ -1818,7 +1818,7 @@ async def snippet_for_search3():
     # SEPARATOR<
 
 
-async def snippet_for_search5():
+async def snippet_for_search6():
     """
     Snippet for the search method.
 
@@ -1852,7 +1852,7 @@ async def snippet_for_search5():
     # SEPARATOR<
 
 
-async def snippet_for_search6():
+async def snippet_for_search7():
     """
     Snippet for the search method.
 

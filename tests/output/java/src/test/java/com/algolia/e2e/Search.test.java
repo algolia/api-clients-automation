@@ -80,8 +80,34 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
+  @DisplayName("search with highlight and snippet results")
+  void searchTest5() {
+    var res = client.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(
+            new SearchForHits()
+              .setIndexName("cts_e2e_highlight_snippet_results")
+              .setQuery("vim")
+              .setAttributesToSnippet(List.of("*:20"))
+              .setAttributesToHighlight(List.of("*"))
+              .setAttributesToRetrieve(List.of("*"))
+          )
+        ),
+      Hit.class
+    );
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("search for a single facet request with minimal parameters")
-  void searchTest7() {
+  void searchTest8() {
     var res = client.search(
       new SearchMethodParams()
         .setRequests(List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor")))
@@ -101,7 +127,7 @@ class SearchClientRequestsTestsE2E {
 
   @Test
   @DisplayName("search filters end to end")
-  void searchTest13() {
+  void searchTest14() {
     var res = client.search(
       new SearchMethodParams()
         .setRequests(

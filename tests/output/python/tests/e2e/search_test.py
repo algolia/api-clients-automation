@@ -89,7 +89,58 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_7(self):
+    async def test_search_5(self):
+        """
+        search with highlight and snippet results
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    async def test_search_8(self):
         """
         search for a single facet request with minimal parameters
         """
@@ -126,7 +177,7 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_13(self):
+    async def test_search_14(self):
         """
         search filters end to end
         """

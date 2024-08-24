@@ -8,6 +8,7 @@ import Foundation
 
 public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable {
     case recommendHighlightResultOption(RecommendHighlightResultOption)
+    case dictionaryOfStringToRecommendHighlightResult([String: RecommendHighlightResult])
     case dictionaryOfStringToRecommendHighlightResultOption([String: RecommendHighlightResultOption])
     case arrayOfRecommendHighlightResultOption([RecommendHighlightResultOption])
 
@@ -15,6 +16,8 @@ public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable 
         var container = encoder.singleValueContainer()
         switch self {
         case let .recommendHighlightResultOption(value):
+            try container.encode(value)
+        case let .dictionaryOfStringToRecommendHighlightResult(value):
             try container.encode(value)
         case let .dictionaryOfStringToRecommendHighlightResultOption(value):
             try container.encode(value)
@@ -27,6 +30,8 @@ public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable 
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(RecommendHighlightResultOption.self) {
             self = .recommendHighlightResultOption(value)
+        } else if let value = try? container.decode([String: RecommendHighlightResult].self) {
+            self = .dictionaryOfStringToRecommendHighlightResult(value)
         } else if let value = try? container.decode([String: RecommendHighlightResultOption].self) {
             self = .dictionaryOfStringToRecommendHighlightResultOption(value)
         } else if let value = try? container.decode([RecommendHighlightResultOption].self) {
@@ -46,6 +51,8 @@ public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable 
         switch self {
         case let .recommendHighlightResultOption(value):
             value as RecommendHighlightResultOption
+        case let .dictionaryOfStringToRecommendHighlightResult(value):
+            value as [String: RecommendHighlightResult]
         case let .dictionaryOfStringToRecommendHighlightResultOption(value):
             value as [String: RecommendHighlightResultOption]
         case let .arrayOfRecommendHighlightResultOption(value):

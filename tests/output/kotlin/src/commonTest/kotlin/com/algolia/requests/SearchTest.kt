@@ -2220,7 +2220,33 @@ class SearchTest {
   }
 
   @Test
-  fun `retrieveFacets5`() = runTest {
+  fun `search with highlight and snippet results5`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "cts_e2e_highlight_snippet_results",
+                query = "vim",
+                attributesToSnippet = listOf("*:20"),
+                attributesToHighlight = listOf("*"),
+                attributesToRetrieve = listOf("*"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `retrieveFacets6`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2244,7 +2270,7 @@ class SearchTest {
   }
 
   @Test
-  fun `retrieveFacetsWildcard6`() = runTest {
+  fun `retrieveFacetsWildcard7`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2268,7 +2294,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with minimal parameters7`() = runTest {
+  fun `search for a single facet request with minimal parameters8`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2293,7 +2319,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single hits request with all parameters8`() = runTest {
+  fun `search for a single hits request with all parameters9`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2318,7 +2344,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with all parameters9`() = runTest {
+  fun `search for a single facet request with all parameters10`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2346,7 +2372,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with minimal parameters10`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with minimal parameters11`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2378,7 +2404,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with all parameters11`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with all parameters12`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2412,7 +2438,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters accept all of the possible shapes12`() = runTest {
+  fun `search filters accept all of the possible shapes13`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2447,7 +2473,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters end to end13`() = runTest {
+  fun `search filters end to end14`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2482,7 +2508,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search with all search parameters14`() = runTest {
+  fun `search with all search parameters15`() = runTest {
     client.runTest(
       call = {
         search(

@@ -13,6 +13,7 @@ use Algolia\AlgoliaSearch\Model\Ingestion\BatchWriteParams;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationSearch;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationUpdate;
+use Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodePayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\RunSourcePayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\SourceCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\SourceSearch;
@@ -29,6 +30,7 @@ use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use Algolia\AlgoliaSearch\Support\Helpers;
 use GuzzleHttp\Psr7\Query;
 
 /**
@@ -38,7 +40,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.0.0-beta.12';
+    public const VERSION = '4.2.0';
 
     /**
      * @var ApiWrapperInterface
@@ -166,6 +168,7 @@ class IngestionClient
      *                                 - $destinationCreate['name'] => (string) Descriptive name for the resource. (required)
      *                                 - $destinationCreate['input'] => (array)  (required)
      *                                 - $destinationCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     *                                 - $destinationCreate['transformationIDs'] => (array)
      *
      * @see DestinationCreate
      *
@@ -306,6 +309,7 @@ class IngestionClient
      *                                    - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                    - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                    - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                    - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
      *
      * @see TransformationCreate
      *
@@ -863,6 +867,42 @@ class IngestionClient
         }
 
         return $this->sendRequest('PUT', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Generates code for the selected model based on the given prompt.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $generateTransformationCodePayload generateTransformationCodePayload (required)
+     *                                                 - $generateTransformationCodePayload['id'] => (string)  (required)
+     *                                                 - $generateTransformationCodePayload['systemPrompt'] => (string)
+     *                                                 - $generateTransformationCodePayload['userPrompt'] => (string)  (required)
+     *
+     * @see GenerateTransformationCodePayload
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodeResponse|array<string, mixed>
+     */
+    public function generateTransformationCode($generateTransformationCodePayload, $requestOptions = [])
+    {
+        // verify the required parameter 'generateTransformationCodePayload' is set
+        if (!isset($generateTransformationCodePayload)) {
+            throw new \InvalidArgumentException(
+                'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/models';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $generateTransformationCodePayload;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
 
     /**
@@ -1743,6 +1783,28 @@ class IngestionClient
     }
 
     /**
+     * Retrieves a list of existing LLM transformation helpers.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationModels|array<string, mixed>
+     */
+    public function listTransformationModels($requestOptions = [])
+    {
+        $resourcePath = '/1/transformations/models';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        return $this->sendRequest('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Retrieves a list of transformations.
      *
      * Required API Key ACLs:
@@ -1750,18 +1812,39 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
+     * @param int   $itemsPerPage   Number of items per page. (optional, default to 10)
+     * @param int   $page           Page number of the paginated API response. (optional)
      * @param array $sort           Property by which to sort the list. (optional)
      * @param array $order          Sort order of the response, ascending or descending. (optional)
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\ListTransformationsResponse|array<string, mixed>
      */
-    public function listTransformations($sort = null, $order = null, $requestOptions = [])
+    public function listTransformations($itemsPerPage = null, $page = null, $sort = null, $order = null, $requestOptions = [])
     {
+        if (null !== $itemsPerPage && $itemsPerPage > 100) {
+            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTransformations, must be smaller than or equal to 100.');
+        }
+        if (null !== $itemsPerPage && $itemsPerPage < 1) {
+            throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listTransformations, must be bigger than or equal to 1.');
+        }
+
+        if (null !== $page && $page < 1) {
+            throw new \InvalidArgumentException('invalid value for "$page" when calling IngestionClient.listTransformations, must be bigger than or equal to 1.');
+        }
+
         $resourcePath = '/1/transformations';
         $queryParameters = [];
         $headers = [];
         $httpBody = null;
+
+        if (null !== $itemsPerPage) {
+            $queryParameters['itemsPerPage'] = $itemsPerPage;
+        }
+
+        if (null !== $page) {
+            $queryParameters['page'] = $page;
+        }
 
         if (null !== $sort) {
             $queryParameters['sort'] = $sort;
@@ -2128,7 +2211,7 @@ class IngestionClient
      *  - editSettings
      *
      * @param array $transformationSearch transformationSearch (required)
-     *                                    - $transformationSearch['transformationsIDs'] => (array)  (required)
+     *                                    - $transformationSearch['transformationIDs'] => (array)  (required)
      *
      * @see TransformationSearch
      *
@@ -2193,7 +2276,7 @@ class IngestionClient
     }
 
     /**
-     * Try a transformation.
+     * Try a transformation before creating it.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2203,6 +2286,7 @@ class IngestionClient
      * @param array $transformationTry transformationTry (required)
      *                                 - $transformationTry['code'] => (string) The source code of the transformation. (required)
      *                                 - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                 - $transformationTry['authentications'] => (array)
      *
      * @see TransformationTry
      *
@@ -2210,12 +2294,12 @@ class IngestionClient
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTryResponse|array<string, mixed>
      */
-    public function tryTransformations($transformationTry, $requestOptions = [])
+    public function tryTransformation($transformationTry, $requestOptions = [])
     {
         // verify the required parameter 'transformationTry' is set
         if (!isset($transformationTry)) {
             throw new \InvalidArgumentException(
-                'Parameter `transformationTry` is required when calling `tryTransformations`.'
+                'Parameter `transformationTry` is required when calling `tryTransformation`.'
             );
         }
 
@@ -2223,6 +2307,58 @@ class IngestionClient
         $queryParameters = [];
         $headers = [];
         $httpBody = $transformationTry;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Try a transformation before updating it.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param string $transformationID  Unique identifier of a transformation. (required)
+     * @param array  $transformationTry transformationTry (required)
+     *                                  - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                  - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                  - $transformationTry['authentications'] => (array)
+     *
+     * @see TransformationTry
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTryResponse|array<string, mixed>
+     */
+    public function tryTransformationBeforeUpdate($transformationID, $transformationTry, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationID' is set
+        if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
+            );
+        }
+        // verify the required parameter 'transformationTry' is set
+        if (!isset($transformationTry)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/{transformationID}/try';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationTry;
+
+        // path params
+        if (null !== $transformationID) {
+            $resourcePath = str_replace(
+                '{transformationID}',
+                ObjectSerializer::toPathValue($transformationID),
+                $resourcePath
+            );
+        }
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
@@ -2294,6 +2430,7 @@ class IngestionClient
      *                                  - $destinationUpdate['name'] => (string) Descriptive name for the resource.
      *                                  - $destinationUpdate['input'] => (array)
      *                                  - $destinationUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     *                                  - $destinationUpdate['transformationIDs'] => (array)
      *
      * @see DestinationUpdate
      *
@@ -2491,6 +2628,7 @@ class IngestionClient
      *                                     - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                     - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                     - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                     - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
      *
      * @see TransformationCreate
      *

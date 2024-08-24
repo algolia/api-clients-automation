@@ -101,6 +101,79 @@ describe('search', () => {
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
+  test('search with highlight and snippet results', async () => {
+    const resp = await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_highlight_snippet_results',
+          query: 'vim',
+          attributesToSnippet: ['*:20'],
+          attributesToHighlight: ['*'],
+          attributesToRetrieve: ['*'],
+        },
+      ],
+    });
+
+    const expectedBody = {
+      results: [
+        {
+          hits: [
+            {
+              editor: { name: 'vim', type: 'beforeneovim' },
+              names: ['vim', ':q'],
+              _snippetResult: {
+                editor: {
+                  name: { value: '<em>vim</em>', matchLevel: 'full' },
+                  type: { value: 'beforeneovim', matchLevel: 'none' },
+                },
+                names: [
+                  { value: '<em>vim</em>', matchLevel: 'full' },
+                  { value: ':q', matchLevel: 'none' },
+                ],
+              },
+              _highlightResult: {
+                editor: {
+                  name: {
+                    value: '<em>vim</em>',
+                    matchLevel: 'full',
+                    fullyHighlighted: true,
+                    matchedWords: ['vim'],
+                  },
+                  type: {
+                    value: 'beforeneovim',
+                    matchLevel: 'none',
+                    matchedWords: [],
+                  },
+                },
+                names: [
+                  {
+                    value: '<em>vim</em>',
+                    matchLevel: 'full',
+                    fullyHighlighted: true,
+                    matchedWords: ['vim'],
+                  },
+                  { value: ':q', matchLevel: 'none', matchedWords: [] },
+                ],
+              },
+            },
+          ],
+          nbHits: 1,
+          page: 0,
+          nbPages: 1,
+          hitsPerPage: 20,
+          exhaustiveNbHits: true,
+          exhaustiveTypo: true,
+          exhaustive: { nbHits: true, typo: true },
+          query: 'vim',
+          index: 'cts_e2e_highlight_snippet_results',
+          renderingContent: {},
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+
   test('search for a single facet request with minimal parameters', async () => {
     const resp = await client.search({
       requests: [

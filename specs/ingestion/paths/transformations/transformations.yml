@@ -9,6 +9,8 @@ get:
     - deleteIndex
     - editSettings
   parameters:
+    - $ref: '../../common/parameters.yml#/itemsPerPage'
+    - $ref: '../../common/parameters.yml#/page'
     - $ref: '../../common/parameters.yml#/sort'
     - $ref: '../../common/parameters.yml#/order'
   responses:

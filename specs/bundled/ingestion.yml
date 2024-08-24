@@ -1378,6 +1378,8 @@ paths:
         - deleteIndex
         - editSettings
       parameters:
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/parameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
@@ -1429,8 +1431,8 @@ paths:
       tags:
         - ingestion
       summary: Try a transformation
-      description: Try a transformation.
-      operationId: tryTransformations
+      description: Try a transformation before creating it.
+      operationId: tryTransformation
       x-acl:
         - addObject
         - deleteIndex
@@ -1477,6 +1479,78 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Transformation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/models:
+    get:
+      tags:
+        - ingestion
+      summary: Retrieve existing LLM transformation helpers
+      description: Retrieves a list of existing LLM transformation helpers.
+      operationId: listTransformationModels
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: transformationModels
+                type: object
+                description: List of available AI models for transformation purposes.
+                additionalProperties: false
+                properties:
+                  llms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Model'
+                required:
+                  - llms
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/transformations/{transformationID}:
@@ -1539,6 +1613,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - ingestion
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/runs:
@@ -2092,6 +2194,8 @@ components:
           description: >-
             Private key of the Google service account. This field is `null` in
             the API response.
+      x-discriminator-fields:
+        - clientEmail
     AuthBasicPartial:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2103,6 +2207,8 @@ components:
         password:
           type: string
           description: Password. This field is `null` in the API response.
+      x-discriminator-fields:
+        - username
     AuthAPIKeyPartial:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2111,6 +2217,8 @@ components:
         key:
           type: string
           description: API key. This field is `null` in the API response.
+      x-discriminator-fields:
+        - key
     AuthOAuthPartial:
       type: object
       description: Credentials for authenticating with OAuth 2.0.
@@ -2129,6 +2237,8 @@ components:
           type: string
           default: ''
           description: OAuth scope.
+      x-discriminator-fields:
+        - url
     AuthAlgoliaPartial:
       type: object
       description: Credentials for authenticating with Algolia.
@@ -2239,6 +2349,9 @@ components:
       required:
         - clientEmail
         - privateKey
+      x-discriminator-fields:
+        - clientEmail
+        - privateKey
     AuthBasic:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2253,6 +2366,9 @@ components:
       required:
         - username
         - password
+      x-discriminator-fields:
+        - username
+        - password
     AuthAPIKey:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2262,6 +2378,8 @@ components:
           type: string
           description: API key. This field is `null` in the API response.
       required:
+        - key
+      x-discriminator-fields:
         - key
     AuthOAuth:
       type: object
@@ -2282,6 +2400,10 @@ components:
           default: ''
           description: OAuth scope.
       required:
+        - url
+        - client_id
+        - client_secret
+      x-discriminator-fields:
         - url
         - client_id
         - client_secret
@@ -2432,17 +2554,6 @@ components:
       type: string
       description: Universally unique identifier (UUID) of a destination resource.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    DestinationIndexPrefix:
-      type: object
-      additionalProperties: false
-      properties:
-        indexPrefix:
-          type: string
-          description: >-
-            String added to the beginning of all indices created by this
-            destination.
-      required:
-        - indexPrefix
     RecordType:
       type: string
       description: Record type for ecommerce sources.
@@ -2486,8 +2597,15 @@ components:
         - indexName
     DestinationInput:
       oneOf:
-        - $ref: '#/components/schemas/DestinationIndexPrefix'
         - $ref: '#/components/schemas/DestinationIndexName'
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    transformationIDs:
+      type: array
+      items:
+        $ref: '#/components/schemas/transformationID'
     Destination:
       type: object
       description: Destinations are Algolia resources like indices or event streams.
@@ -2507,6 +2625,8 @@ components:
           $ref: '#/components/schemas/updatedAt'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
       required:
         - destinationID
         - type
@@ -2526,6 +2646,8 @@ components:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
       required:
         - type
         - name
@@ -2569,6 +2691,8 @@ components:
           $ref: '#/components/schemas/DestinationInput'
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
+        transformationIDs:
+          $ref: '#/components/schemas/transformationIDs'
     DestinationUpdateResponse:
       type: object
       additionalProperties: false
@@ -2886,6 +3010,11 @@ components:
         - image
         - imageType
         - configuration
+      x-discriminator-fields:
+        - registry
+        - image
+        - imageType
+        - configuration
     SourceUpdateShopify:
       type: object
       additionalProperties: false
@@ -3119,6 +3248,8 @@ components:
           type: object
           description: Configuration of the spec.
       required:
+        - configuration
+      x-discriminator-fields:
         - configuration
     SourceUpdateInput:
       oneOf:
@@ -3371,6 +3502,9 @@ components:
       required:
         - format
         - actions
+      x-discriminator-fields:
+        - format
+        - actions
     StreamingInput:
       type: object
       additionalProperties: false
@@ -3382,13 +3516,41 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+      x-discriminator-fields:
+        - mapping
+    DockerStreamsSyncMode:
+      type: string
+      description: The strategy to use to fetch the data.
+      enum:
+        - incremental
+        - fullTable
+    DockerStreams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the stream to fetch the data from (e.g. table name).
+        properties:
+          type: array
+          description: The properties of the stream to select (e.g. column).
+          items:
+            type: string
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
+      required:
+        - name
+        - syncMode
     DockerStreamsInput:
       description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/DockerStreams'
       required:
+        - streams
+      x-discriminator-fields:
         - streams
     ShopifyMetafield:
       type: object
@@ -3518,6 +3680,8 @@ components:
           $ref: '#/components/schemas/Cron'
       required:
         - type
+        - cron
+      x-discriminator-fields:
         - cron
     TaskCreateTrigger:
       oneOf:
@@ -3772,10 +3936,11 @@ components:
         - type
         - updatedAt
         - createdAt
-    transformationID:
-      type: string
-      description: Universally unique identifier (UUID) of a transformation.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -3791,6 +3956,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -3817,6 +3984,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -3841,6 +4010,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord
@@ -3870,12 +4043,32 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'
       required:
-        - transformationsIDs
+        - transformationIDs
+    Model:
+      type: object
+      additionalProperties: false
+      properties:
+        fullname:
+          type: string
+        modelName:
+          type: string
+        systemPrompt:
+          type: string
+        id:
+          type: string
+        provider:
+          type: string
+      required:
+        - fullname
+        - modelName
+        - systemPrompt
+        - id
+        - provider
     TransformationUpdateResponse:
       type: object
       description: API response for updating a transformation.

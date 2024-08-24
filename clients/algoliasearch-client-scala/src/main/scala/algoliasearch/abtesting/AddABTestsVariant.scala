@@ -38,16 +38,17 @@ object AddABTestsVariantSerializer extends Serializer[AddABTestsVariant] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AddABTestsVariant] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "customSearchParameters") =>
+          Extraction.extract[AbTestsVariantSearchParams](value)
         case value: JObject => Extraction.extract[AbTestsVariant](value)
-        case value: JObject => Extraction.extract[AbTestsVariantSearchParams](value)
         case _              => throw new MappingException("Can't convert " + json + " to AddABTestsVariant")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AddABTestsVariant =>
     value match {
-      case value: AbTestsVariant             => Extraction.decompose(value)(format - this)
       case value: AbTestsVariantSearchParams => Extraction.decompose(value)(format - this)
+      case value: AbTestsVariant             => Extraction.decompose(value)(format - this)
     }
   }
 }

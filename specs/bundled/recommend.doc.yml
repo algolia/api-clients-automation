@@ -2972,7 +2972,7 @@ components:
         length:
           type: integer
           description: Number of hits to retrieve (used in combination with `offset`).
-          minimum: 1
+          minimum: 0
           maximum: 1000
           x-categories:
             - Pagination
@@ -4650,6 +4650,12 @@ components:
         - nbHits
         - nbPages
         - hitsPerPage
+    highlightResultMap:
+      type: object
+      description: Surround words that match the query with HTML tags for highlighting.
+      additionalProperties:
+        x-additionalPropertiesName: attribute
+        $ref: '#/components/schemas/highlightResult'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -4684,6 +4690,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -4697,15 +4706,16 @@ components:
         $ref: '#/components/schemas/highlightResultOption'
     highlightResult:
       oneOf:
+        - $ref: '#/components/schemas/highlightResultMap'
         - $ref: '#/components/schemas/highlightResultOption'
         - $ref: '#/components/schemas/highlightResultOptionMap'
         - $ref: '#/components/schemas/highlightResultOptionArray'
-    highlightResultMap:
+    snippetResultMap:
       type: object
-      description: Surround words that match the query with HTML tags for highlighting.
+      description: Snippets that show the context around a matching search query.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
+        $ref: '#/components/schemas/snippetResult'
     snippetResultOption:
       type: object
       description: Snippets that show the context around a matching search query.
@@ -4717,6 +4727,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object
@@ -4731,15 +4743,10 @@ components:
         $ref: '#/components/schemas/snippetResultOption'
     snippetResult:
       oneOf:
+        - $ref: '#/components/schemas/snippetResultMap'
         - $ref: '#/components/schemas/snippetResultOption'
         - $ref: '#/components/schemas/snippetResultOptionMap'
         - $ref: '#/components/schemas/snippetResultOptionArray'
-    snippetResultMap:
-      type: object
-      description: Snippets that show the context around a matching search query.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
     matchedGeoLocation:
       type: object
       properties:

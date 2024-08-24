@@ -25,6 +25,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'name' => 'string',
         'input' => '\Algolia\AlgoliaSearch\Model\Ingestion\DestinationInput',
         'authenticationID' => 'string',
+        'transformationIDs' => 'string[]',
     ];
 
     /**
@@ -37,6 +38,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'name' => null,
         'input' => null,
         'authenticationID' => null,
+        'transformationIDs' => null,
     ];
 
     /**
@@ -50,6 +52,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'name' => 'name',
         'input' => 'input',
         'authenticationID' => 'authenticationID',
+        'transformationIDs' => 'transformationIDs',
     ];
 
     /**
@@ -62,6 +65,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'name' => 'setName',
         'input' => 'setInput',
         'authenticationID' => 'setAuthenticationID',
+        'transformationIDs' => 'setTransformationIDs',
     ];
 
     /**
@@ -74,6 +78,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'name' => 'getName',
         'input' => 'getInput',
         'authenticationID' => 'getAuthenticationID',
+        'transformationIDs' => 'getTransformationIDs',
     ];
 
     /**
@@ -101,6 +106,9 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
         }
         if (isset($data['authenticationID'])) {
             $this->container['authenticationID'] = $data['authenticationID'];
+        }
+        if (isset($data['transformationIDs'])) {
+            $this->container['transformationIDs'] = $data['transformationIDs'];
         }
     }
 
@@ -273,13 +281,35 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
     }
 
     /**
+     * Gets transformationIDs.
+     *
+     * @return null|string[]
+     */
+    public function getTransformationIDs()
+    {
+        return $this->container['transformationIDs'] ?? null;
+    }
+
+    /**
+     * Sets transformationIDs.
+     *
+     * @param null|string[] $transformationIDs transformationIDs
+     *
+     * @return self
+     */
+    public function setTransformationIDs($transformationIDs)
+    {
+        $this->container['transformationIDs'] = $transformationIDs;
+
+        return $this;
+    }
+
+    /**
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -291,7 +321,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -302,7 +332,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -316,7 +346,7 @@ class DestinationUpdate extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

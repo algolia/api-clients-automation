@@ -23,15 +23,8 @@ function Hero() {
       id="hero"
       cta={[
         <Button
-          key="get-started"
-          href="/docs/clients/introduction"
-          color="grey"
-        >
-          Get started
-        </Button>,
-        <Button
           key="contribute"
-          href="/docs/contributing/introduction"
+          href="/docs/introduction"
           background="blue"
           color="white"
         >
@@ -50,29 +43,10 @@ function Hero() {
   );
 }
 
-function MigrationNotice() {
-  return (
-    <div id="notice" className="uil-ta-center">
-      <Heading3 className="uil-m-0 uil-fw-bold">
-        Coming from{' '}
-        <InlineLink target="_blank" href="https://www.algolia.com/doc/">
-          the current API clients
-        </InlineLink>{' '}
-        ? Check out our{' '}
-        <InlineLink href="/docs/clients/migration-guides/">
-          migration guide
-        </InlineLink>
-        .
-      </Heading3>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
     <Layout description="API Clients Automation by Algolia">
       <Hero />
-      <MigrationNotice />
     </Layout>
   );
 }

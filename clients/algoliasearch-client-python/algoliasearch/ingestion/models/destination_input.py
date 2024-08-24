@@ -12,9 +12,6 @@ from typing import Dict, Optional, Self, Union
 from pydantic import BaseModel, ValidationError, model_serializer
 
 from algoliasearch.ingestion.models.destination_index_name import DestinationIndexName
-from algoliasearch.ingestion.models.destination_index_prefix import (
-    DestinationIndexPrefix,
-)
 
 
 class DestinationInput(BaseModel):
@@ -22,11 +19,8 @@ class DestinationInput(BaseModel):
     DestinationInput
     """
 
-    oneof_schema_1_validator: Optional[DestinationIndexPrefix] = None
-    oneof_schema_2_validator: Optional[DestinationIndexName] = None
-    actual_instance: Optional[Union[DestinationIndexName, DestinationIndexPrefix]] = (
-        None
-    )
+    oneof_schema_1_validator: Optional[DestinationIndexName] = None
+    actual_instance: Optional[Union[DestinationIndexName]] = None
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -43,13 +37,11 @@ class DestinationInput(BaseModel):
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(
-        self,
-    ) -> Optional[Union[DestinationIndexName, DestinationIndexPrefix]]:
+    def unwrap_actual_instance(self) -> Optional[Union[DestinationIndexName]]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
-        return self.actual_instance
+        return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
     def from_dict(cls, obj: dict) -> Self:
@@ -62,12 +54,6 @@ class DestinationInput(BaseModel):
         error_messages = []
 
         try:
-            instance.actual_instance = DestinationIndexPrefix.from_json(json_str)
-
-            return instance
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        try:
             instance.actual_instance = DestinationIndexName.from_json(json_str)
 
             return instance
@@ -75,7 +61,7 @@ class DestinationInput(BaseModel):
             error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into DestinationInput with oneOf schemas: DestinationIndexName, DestinationIndexPrefix. Details: "
+            "No match found when deserializing the JSON string into DestinationInput with oneOf schemas: DestinationIndexName. Details: "
             + ", ".join(error_messages)
         )
 
@@ -84,8 +70,7 @@ class DestinationInput(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
+        if hasattr(self.actual_instance, "to_json"):
             return self.actual_instance.to_json()
         else:
             return dumps(self.actual_instance)
@@ -95,8 +80,7 @@ class DestinationInput(BaseModel):
         if self.actual_instance is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
+        if hasattr(self.actual_instance, "to_dict"):
             return self.actual_instance.to_dict()
         else:
             return self.actual_instance

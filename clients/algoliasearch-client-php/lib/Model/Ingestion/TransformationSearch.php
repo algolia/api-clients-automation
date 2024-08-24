@@ -19,7 +19,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $modelTypes = [
-        'transformationsIDs' => 'string[]',
+        'transformationIDs' => 'string[]',
     ];
 
     /**
@@ -28,7 +28,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $modelFormats = [
-        'transformationsIDs' => null,
+        'transformationIDs' => null,
     ];
 
     /**
@@ -38,7 +38,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $attributeMap = [
-        'transformationsIDs' => 'transformationsIDs',
+        'transformationIDs' => 'transformationIDs',
     ];
 
     /**
@@ -47,7 +47,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $setters = [
-        'transformationsIDs' => 'setTransformationsIDs',
+        'transformationIDs' => 'setTransformationIDs',
     ];
 
     /**
@@ -56,7 +56,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $getters = [
-        'transformationsIDs' => 'getTransformationsIDs',
+        'transformationIDs' => 'getTransformationIDs',
     ];
 
     /**
@@ -73,8 +73,8 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      */
     public function __construct(?array $data = null)
     {
-        if (isset($data['transformationsIDs'])) {
-            $this->container['transformationsIDs'] = $data['transformationsIDs'];
+        if (isset($data['transformationIDs'])) {
+            $this->container['transformationIDs'] = $data['transformationIDs'];
         }
     }
 
@@ -138,8 +138,8 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
     {
         $invalidProperties = [];
 
-        if (!isset($this->container['transformationsIDs']) || null === $this->container['transformationsIDs']) {
-            $invalidProperties[] = "'transformationsIDs' can't be null";
+        if (!isset($this->container['transformationIDs']) || null === $this->container['transformationIDs']) {
+            $invalidProperties[] = "'transformationIDs' can't be null";
         }
 
         return $invalidProperties;
@@ -157,25 +157,25 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
     }
 
     /**
-     * Gets transformationsIDs.
+     * Gets transformationIDs.
      *
      * @return string[]
      */
-    public function getTransformationsIDs()
+    public function getTransformationIDs()
     {
-        return $this->container['transformationsIDs'] ?? null;
+        return $this->container['transformationIDs'] ?? null;
     }
 
     /**
-     * Sets transformationsIDs.
+     * Sets transformationIDs.
      *
-     * @param string[] $transformationsIDs transformationsIDs
+     * @param string[] $transformationIDs transformationIDs
      *
      * @return self
      */
-    public function setTransformationsIDs($transformationsIDs)
+    public function setTransformationIDs($transformationIDs)
     {
-        $this->container['transformationsIDs'] = $transformationsIDs;
+        $this->container['transformationIDs'] = $transformationIDs;
 
         return $this;
     }
@@ -184,10 +184,8 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -199,7 +197,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -210,7 +208,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -224,7 +222,7 @@ class TransformationSearch extends AbstractModel implements ModelInterface, \Arr
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

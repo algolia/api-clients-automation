@@ -50,6 +50,7 @@ object Distinct {
   def apply(value: Int): Distinct = {
     Distinct.IntValue(value)
   }
+
 }
 
 object DistinctSerializer extends Serializer[Distinct] {

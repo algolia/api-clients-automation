@@ -1475,8 +1475,36 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}"), JSON.parse(req.body))
   end
 
-  # retrieveFacets
+  # search with highlight and snippet results
   def test_search5
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_highlight_snippet_results",
+            query: "vim",
+            attributes_to_snippet: ["*:20"],
+            attributes_to_highlight: ["*"],
+            attributes_to_retrieve: ["*"]
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/*/queries", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # retrieveFacets
+  def test_search6
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1498,7 +1526,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # retrieveFacetsWildcard
-  def test_search6
+  def test_search7
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])]
@@ -1516,7 +1544,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single facet request with minimal parameters
-  def test_search7
+  def test_search8
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
@@ -1537,7 +1565,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single hits request with all parameters
-  def test_search8
+  def test_search9
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(index_name: "theIndexName", query: "myQuery", hits_per_page: 50, type: "default")]
@@ -1557,7 +1585,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single facet request with all parameters
-  def test_search9
+  def test_search10
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1587,7 +1615,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with minimal parameters
-  def test_search10
+  def test_search11
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1612,7 +1640,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with all parameters
-  def test_search11
+  def test_search12
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1643,7 +1671,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters accept all of the possible shapes
-  def test_search12
+  def test_search13
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1680,7 +1708,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters end to end
-  def test_search13
+  def test_search14
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1714,7 +1742,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search with all search parameters
-  def test_search14
+  def test_search15
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [

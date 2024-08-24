@@ -366,6 +366,11 @@ SourceDocker:
     - image
     - imageType
     - configuration
+  x-discriminator-fields:
+    - registry
+    - image
+    - imageType
+    - configuration
 
 SourceUpdateDocker:
   type: object
@@ -386,6 +391,8 @@ SourceUpdateDocker:
       type: object
       description: Configuration of the spec.
   required:
+    - configuration
+  x-discriminator-fields:
     - configuration
 
 DockerRegistry:

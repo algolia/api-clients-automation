@@ -21,7 +21,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
      * @var string[]
      */
     protected static $modelTypes = [
-        'streams' => 'object',
+        'streams' => '\Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[]',
     ];
 
     /**
@@ -161,7 +161,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
     /**
      * Gets streams.
      *
-     * @return object
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[]
      */
     public function getStreams()
     {
@@ -171,7 +171,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
     /**
      * Sets streams.
      *
-     * @param object $streams streams
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[] $streams streams
      *
      * @return self
      */
@@ -186,10 +186,8 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -201,7 +199,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -212,7 +210,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -226,7 +224,7 @@ class DockerStreamsInput extends AbstractModel implements ModelInterface, \Array
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

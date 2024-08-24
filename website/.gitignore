@@ -23,7 +23,5 @@ yarn-error.log*
 !.yarn/releases
 !.yarn/plugins
 
-specs
-
 src/generated/*.js
 src/generated/*.json

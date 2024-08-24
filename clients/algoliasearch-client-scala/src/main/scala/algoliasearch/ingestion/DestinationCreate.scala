@@ -36,5 +36,6 @@ case class DestinationCreate(
     `type`: DestinationType,
     name: String,
     input: DestinationInput,
-    authenticationID: Option[String] = scala.None
+    authenticationID: Option[String] = scala.None,
+    transformationIDs: Option[Seq[String]] = scala.None
 )

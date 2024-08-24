@@ -54,8 +54,8 @@ func SnippetForCreateDestinationOfIngestion() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexPrefixAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexPrefix().SetIndexPrefix("prefix_"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
+			ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -578,6 +578,35 @@ func SnippetForEnableTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGenerateTransformationCodeOfIngestion() {
+	/*
+	   Snippet for the generateTransformationCode method.
+
+	   generateTransformationCode
+	*/
+
+	// >SEPARATOR generateTransformationCode default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
+
+		ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetAuthenticationOfIngestion() {
 	/*
 	   Snippet for the getAuthentication method.
@@ -886,7 +915,7 @@ func SnippetForListRunsOfIngestion() {
 	/*
 	   Snippet for the listRuns method.
 
-	   getRuns
+	   listRuns
 	*/
 
 	// >SEPARATOR listRuns default
@@ -912,7 +941,7 @@ func SnippetForListSourcesOfIngestion() {
 	/*
 	   Snippet for the listSources method.
 
-	   getSources
+	   listSources
 	*/
 
 	// >SEPARATOR listSources default
@@ -986,11 +1015,37 @@ func SnippetForListTasksV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForListTransformationModelsOfIngestion() {
+	/*
+	   Snippet for the listTransformationModels method.
+
+	   listTransformationModels
+	*/
+
+	// >SEPARATOR listTransformationModels default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListTransformationModels()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForListTransformationsOfIngestion() {
 	/*
 	   Snippet for the listTransformations method.
 
-	   getTransformations
+	   listTransformations
 	*/
 
 	// >SEPARATOR listTransformations default
@@ -1297,7 +1352,7 @@ func SnippetForSearchTransformationsOfIngestion() {
 	// Call the API
 	response, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
-		ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(
+		ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
 			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
 	))
 	if err != nil {
@@ -1337,14 +1392,14 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForTryTransformationsOfIngestion() {
+func SnippetForTryTransformationOfIngestion() {
 	/*
-	   Snippet for the tryTransformations method.
+	   Snippet for the tryTransformation method.
 
-	   tryTransformations
+	   tryTransformation
 	*/
 
-	// >SEPARATOR tryTransformations default
+	// >SEPARATOR tryTransformation default
 	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
 	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
 	if err != nil {
@@ -1353,8 +1408,37 @@ func SnippetForTryTransformationsOfIngestion() {
 	}
 
 	// Call the API
-	response, err := client.TryTransformations(client.NewApiTryTransformationsRequest(
+	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
+		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForTryTransformationBeforeUpdateOfIngestion() {
+	/*
+	   Snippet for the tryTransformationBeforeUpdate method.
+
+	   tryTransformationBeforeUpdate
+	*/
+
+	// >SEPARATOR tryTransformationBeforeUpdate default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
 	))
 	if err != nil {

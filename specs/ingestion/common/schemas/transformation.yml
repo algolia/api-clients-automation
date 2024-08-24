@@ -4,6 +4,8 @@ Transformation:
   properties:
     transformationID:
       $ref: './common.yml#/transformationID'
+    authenticationIDs:
+      $ref: '#/AuthenticationIDs'
     code:
       $ref: '#/Code'
     name:
@@ -32,6 +34,12 @@ Description:
   type: string
   description: A descriptive name for your transformation of what it does.
 
+AuthenticationIDs:
+  description: The authentications associated for the current transformation.
+  type: array
+  items:
+    $ref: './common.yml#/authenticationID'
+
 TransformationCreate:
   type: object
   additionalProperties: false
@@ -43,6 +51,8 @@ TransformationCreate:
       $ref: '#/Name'
     description:
       $ref: '#/Description'
+    authenticationIDs:
+      $ref: '#/AuthenticationIDs'
   required:
     - code
     - name
@@ -77,12 +87,12 @@ TransformationSearch:
   type: object
   additionalProperties: false
   properties:
-    transformationsIDs:
+    transformationIDs:
       type: array
       items:
         $ref: './common.yml#/transformationID'
   required:
-    - transformationsIDs
+    - transformationIDs
 
 TransformationTry:
   type: object
@@ -93,6 +103,10 @@ TransformationTry:
     sampleRecord:
       description: The record to apply the given code to.
       type: object
+    authentications:
+      type: array
+      items:
+        $ref: './authentication.yml#/AuthenticationCreate'
   required:
     - code
     - sampleRecord
@@ -119,3 +133,24 @@ TransformationTryResponse:
           type: string
   required:
     - payloads
+
+Model:
+  type: object
+  additionalProperties: false
+  properties:
+    fullname:
+      type: string
+    modelName:
+      type: string
+    systemPrompt:
+      type: string
+    id:
+      type: string
+    provider:
+      type: string
+  required:
+    - fullname
+    - modelName
+    - systemPrompt
+    - id
+    - provider

@@ -26,5 +26,5 @@ package algoliasearch.ingestion
 /** The selected streams of a singer or airbyte connector.
   */
 case class DockerStreamsInput(
-    streams: Any
+    streams: Seq[DockerStreams]
 ) extends TaskInputTrait

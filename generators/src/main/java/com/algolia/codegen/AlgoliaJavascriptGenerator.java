@@ -58,7 +58,11 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // root export files
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
+
+    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
     // `client` related files, `algoliasearch` have it's own logic below
     if (!isAlgoliasearchClient) {
@@ -72,6 +76,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     }
     // `algoliasearch` related files
     else {
+      supportingFiles.add(new SupportingFile("README.mustache", "", "../../README.md"));
+
       // `algoliasearch` builds
       supportingFiles.add(new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
@@ -142,11 +148,12 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
-    additionalProperties.put("isSearchClient", CLIENT.equals("search"));
+    additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
+    additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
     additionalProperties.put("nodeSearchHelpers", CLIENT.equals("search") || isAlgoliasearchClient);
 
     if (isAlgoliasearchClient) {
