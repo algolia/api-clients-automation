@@ -276,6 +276,7 @@ export function buildConfigs(pkg) {
           }),
           nodeResolve({
             preferBuiltins: true,
+            browser: isUmdBuild || isEsmBrowserBuild,
           }),
           ts({
             check: checkForTypes,
