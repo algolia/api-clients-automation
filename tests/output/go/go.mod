@@ -5,7 +5,7 @@ go 1.21
 replace github.com/algolia/algoliasearch-client-go/v4 v4.0.0 => ../../../clients/algoliasearch-client-go
 
 require (
-	github.com/algolia/algoliasearch-client-go/v4 v4.0.1
+	github.com/algolia/algoliasearch-client-go/v4 v4.1.1
 	github.com/joho/godotenv v1.5.1
 	github.com/kinbiko/jsonassert v1.1.1
 	github.com/stretchr/testify v1.9.0
