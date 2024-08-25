@@ -23,13 +23,11 @@
         "default": "./dist/{{packageName}}.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
-        "umd": "./dist/{{packageName}}.umd.js",
-        "module": "./dist/{{packageName}}.esm.browser.js",
-        "import": "./dist/{{packageName}}.esm.browser.js",
-        "default": "./dist/{{packageName}}.umd.js",
-        "types": "./dist/builds/browser.d.ts"
-      }
+      "umd": "./dist/{{packageName}}.umd.js",
+      "module": "./dist/{{packageName}}.esm.browser.js",
+      "import": "./dist/{{packageName}}.esm.browser.js",
+      "default": "./dist/{{packageName}}.umd.js",
+      "types": "./dist/builds/browser.d.ts"
     },
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
@@ -66,7 +64,6 @@
   },
   "exports": {
     ".": {
-      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -74,16 +71,13 @@
         "default": "./dist/algoliasearch.cjs",
         "types": "./dist/algoliasearch/builds/node.d.ts"
       },
-      "default": {
-        "umd": "./dist/algoliasearch.umd.js",
-        "module": "./dist/algoliasearch.esm.browser.js",
-        "import": "./dist/algoliasearch.esm.browser.js",
-        "default": "./dist/algoliasearch.umd.js",
-        "types": "./dist/algoliasearch/builds/browser.d.ts"
-      }
+      "umd": "./dist/algoliasearch.umd.js",
+      "module": "./dist/algoliasearch.esm.browser.js",
+      "import": "./dist/algoliasearch.esm.browser.js",
+      "default": "./dist/algoliasearch.umd.js",
+      "types": "./dist/algoliasearch/builds/browser.d.ts"
     },
     "./lite": {
-      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -91,13 +85,11 @@
         "default": "./dist/lite/lite.cjs",
         "types": "./dist/lite/builds/node.d.ts"
       },
-      "default": {
-        "umd": "./dist/lite/lite.umd.js",
-        "module": "./dist/lite/lite.esm.browser.js",
-        "import": "./dist/lite/lite.esm.browser.js",
-        "default": "./dist/lite/lite.umd.js",
-        "types": "./dist/lite/builds/browser.d.ts"
-      }
+      "umd": "./dist/lite/lite.umd.js",
+      "module": "./dist/lite/lite.esm.browser.js",
+      "import": "./dist/lite/lite.esm.browser.js",
+      "default": "./dist/lite/lite.umd.js",
+      "types": "./dist/lite/builds/browser.d.ts"
     }
   },
   "files": [
