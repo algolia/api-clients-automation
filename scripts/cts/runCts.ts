@@ -14,21 +14,15 @@ import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
 
 export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 
-async function buildFilter(
-  language: Language,
-  suites: Record<CTSType, boolean>,
-): Promise<CTSType[]> {
+async function buildFilter(language: Language, suites: Record<CTSType, boolean>): Promise<CTSType[]> {
   const folders: CTSType[] = [];
   for (const [suite, include] of Object.entries(suites)) {
     // check if the folder has files in it
-    const folder = toAbsolutePath(
-      `tests/output/${language}/${getTestOutputFolder(language)}/${suite}`,
-    );
+    const folder = toAbsolutePath(`tests/output/${language}/${getTestOutputFolder(language)}/${suite}`);
     if (
       include &&
       (await exists(folder)) &&
-      (await fsp.readdir(folder)).filter((f) => f !== '__init__.py' && f !== '__pycache__').length >
-        0
+      (await fsp.readdir(folder)).filter((f) => f !== '__init__.py' && f !== '__pycache__').length > 0
     ) {
       folders.push(suite as CTSType);
     }
@@ -63,33 +57,25 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'go':
-      await run(
-        `go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
+      await run(`go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`, {
+        cwd,
+        language,
+      });
       break;
     case 'java':
-      await run(
-        `./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
-        { language },
-      );
+      await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
+        language,
+      });
       break;
     case 'javascript':
-      await run(
-        `YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `dist/${f}`)}`,
-        {
-          cwd,
-        },
-      );
+      await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `dist/${f}`)}`, {
+        cwd,
+      });
       break;
     case 'kotlin':
-      await run(
-        `./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
-        { language },
-      );
+      await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
+        language,
+      });
       break;
     case 'php':
       await runComposerInstall();
@@ -122,13 +108,10 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'swift':
-      await run(
-        `swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter "${f}.*"`)}`,
-        {
-          cwd,
-          language,
-        },
-      );
+      await run(`swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter "${f}.*"`)}`, {
+        cwd,
+        language,
+      });
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
@@ -143,8 +126,7 @@ export async function runCts(
   clients: string[],
   suites: Record<CTSType, boolean>,
 ): Promise<void> {
-  const withBenchmarkServer =
-    suites.benchmark && (clients.includes('search') || clients.includes('all'));
+  const withBenchmarkServer = suites.benchmark && (clients.includes('search') || clients.includes('all'));
   const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
   const closeTestServer = await startTestServer({
     ...suites,

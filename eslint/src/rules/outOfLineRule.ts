@@ -37,12 +37,7 @@ export function createOutOfLineRule({
             return;
           }
           // accept anything in servers
-          if (
-            isPairWithKey(
-              node.parent.parent.parent.parent?.parent?.parent?.parent ?? null,
-              'servers'
-            )
-          ) {
+          if (isPairWithKey(node.parent.parent.parent.parent?.parent?.parent?.parent ?? null, 'servers')) {
             return;
           }
           // allow oneOf with `type: 'null'` because OpenAPI 3.1 is weird

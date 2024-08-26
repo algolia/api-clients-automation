@@ -87,9 +87,7 @@ function addRoutes(app: Express): void {
   });
 
   app.post('/1/indexes/:indexName/batch', (req, res) => {
-    const lang = req.params.indexName.match(
-      /^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/,
-    )?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/)?.[1] as string;
     expect(raoState).to.include.keys(lang);
     expect(req.body.requests.every((r) => r.action === 'addObject')).to.equal(true);
 
@@ -102,9 +100,7 @@ function addRoutes(app: Express): void {
   });
 
   app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {
-    const lang = req.params.indexName.match(
-      /^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/,
-    )?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/)?.[1] as string;
     expect(raoState).to.include.keys(lang);
 
     raoState[lang].waitTaskCount++;

@@ -1,13 +1,7 @@
 import type { AllLanguage } from './cli/utils.js';
 import { createClientName, run, runComposerInstall } from './common.js';
 
-export async function playground({
-  language,
-  client,
-}: {
-  language: AllLanguage;
-  client: string;
-}): Promise<void> {
+export async function playground({ language, client }: { language: AllLanguage; client: string }): Promise<void> {
   switch (language) {
     case 'go':
       await run(`go run . --client ${client}`, { cwd: 'playground/go', language });
