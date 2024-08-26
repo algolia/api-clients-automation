@@ -8,11 +8,7 @@ import type { Generator } from '../types.js';
 /**
  * Remove `model` folder for the current language and client.
  */
-export async function removeExistingCodegen({
-  language,
-  client,
-  output,
-}: Generator): Promise<void> {
+export async function removeExistingCodegen({ language, client, output }: Generator): Promise<void> {
   let folder = getLanguageFolder(language);
   let baseModelFolder = getLanguageModelFolder(language);
   let baseApiFolder = getLanguageApiFolder(language);

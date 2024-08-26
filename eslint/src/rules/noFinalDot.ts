@@ -28,10 +28,7 @@ export const noFinalDot: Rule.RuleModule = {
         }
 
         const value = node.value;
-        if (
-          typeof value.value !== 'string' ||
-          !value.value.trim().endsWith('.')
-        ) {
+        if (typeof value.value !== 'string' || !value.value.trim().endsWith('.')) {
           // The rule is respected if:
           // the summary is not a string
           // or it doesn't end with a dot.

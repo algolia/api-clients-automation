@@ -1,13 +1,6 @@
 /* eslint-disable no-console */
 
-import {
-  ensureGitHubToken,
-  getOctokit,
-  OWNER,
-  run,
-  setVerbose,
-  toAbsolutePath,
-} from '../../common';
+import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common';
 import { isPreRelease } from '../../release/sla';
 import type { Language } from '../../types';
 import { cloneRepository } from '../utils';
@@ -27,9 +20,9 @@ async function createGitHubRelease(lang: Language): Promise<void> {
   });
   await run('git fetch --all --tags', { cwd: tempGitDir });
 
-  let tags = (
-    await run('git describe --abbrev=0 --tags $(git rev-list --tags) --always', { cwd: tempGitDir })
-  ).split('\n');
+  let tags = (await run('git describe --abbrev=0 --tags $(git rev-list --tags) --always', { cwd: tempGitDir })).split(
+    '\n',
+  );
 
   if (tags.length === 0) {
     throw new Error(`unable to find tags for language ${lang}`);
@@ -68,9 +61,7 @@ New ${isMajor ? '**major** ' : ''}version released!
     console.log(`release for ${lang} created: ${repositoryLink}/releases/tag/${newVersion}`);
   } catch (e: any) {
     if (e.status === 422) {
-      console.log(
-        `release for ${lang} already exist: ${repositoryLink}/releases/tag/${newVersion}`,
-      );
+      console.log(`release for ${lang} already exist: ${repositoryLink}/releases/tag/${newVersion}`);
     } else {
       throw new Error(e);
     }

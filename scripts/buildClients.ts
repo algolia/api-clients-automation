@@ -6,11 +6,7 @@ import type { Generator, Language } from './types.js';
 /**
  * Build code for a specific language.
  */
-async function buildLanguage(
-  language: Language,
-  gens: Generator[],
-  playground: boolean,
-): Promise<void> {
+async function buildLanguage(language: Language, gens: Generator[], playground: boolean): Promise<void> {
   const cwd = playground ? `playground/${language}` : getLanguageFolder(language);
   const spinner = createSpinner(`building ${playground ? 'playground' : 'client'} '${language}'`);
   switch (language) {
@@ -35,12 +31,12 @@ async function buildLanguage(
       await run('poetry build', { cwd, language });
       break;
     case 'scala':
-      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
+      await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });
       break;
     case 'swift':
       // make this work in the playground
       if (!playground) {
-        await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+        await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
       }
       break;
     default:

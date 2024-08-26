@@ -14,9 +14,7 @@ import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
 import { waitForApiKeyServer } from './waitForApiKey';
 
-export async function startTestServer(
-  suites: Record<CTSType, boolean>,
-): Promise<() => Promise<void>> {
+export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];
   if (suites.client) {
     toStart.push(
@@ -49,11 +47,7 @@ export async function startTestServer(
   };
 }
 
-export async function setupServer(
-  name: string,
-  port: number,
-  addRoutes: (app: Express) => void,
-): Promise<Server> {
+export async function setupServer(name: string, port: number, addRoutes: (app: Express) => void): Promise<Server> {
   const spinner = createSpinner(`starting ${name} test server`);
   const app = express();
 

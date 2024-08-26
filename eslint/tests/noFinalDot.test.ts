@@ -7,12 +7,12 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('no-final-dot', noFinalDot, {
-  valid: [`summary: Valid summary`],
+  valid: ['summary: Valid summary'],
   invalid: [
     {
-      code: `summary: Has final dot.`,
+      code: 'summary: Has final dot.',
       errors: [{ messageId: 'noFinalDot' }],
-      output: `summary: Has final dot`,
+      output: 'summary: Has final dot',
     },
     {
       code: `summary: With dot and newline.

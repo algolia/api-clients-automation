@@ -108,9 +108,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
           return client === 'algoliasearch' ? packageName : `@algolia/${packageName}`;
         });
 
-        buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(
-          ',',
-        )},}'`;
+        buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(',')},}'`;
 
         testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
         break;

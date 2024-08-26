@@ -21,9 +21,7 @@ export async function pushGeneratedCode(): Promise<void> {
 
   const baseBranch = await run('git branch --show-current');
   const isMainBranch = baseBranch === MAIN_BRANCH;
-  const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(
-    commitStartPrepareRelease,
-  );
+  const IS_RELEASE_COMMIT = (await run('git log -1 --format="%s"')).startsWith(commitStartPrepareRelease);
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
@@ -57,9 +55,7 @@ export async function pushGeneratedCode(): Promise<void> {
   }
 
   const skipCi = isMainBranch ? '[skip ci]' : '';
-  let message = await run(
-    `git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`,
-  );
+  let message = await run(`git show -s ${baseBranch} --format="%s ${text.commitEndMessage} ${skipCi}"`);
   const authors = await run(
     `git show -s ${baseBranch} --format="
 
