@@ -191,7 +191,7 @@
       "default": "const response = await client.stopABTest({ id: 42 });\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = abtestingClient("
+      "default": "const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

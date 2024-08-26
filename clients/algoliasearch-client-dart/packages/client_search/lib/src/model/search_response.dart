@@ -4,7 +4,7 @@ import 'package:algolia_client_search/src/model/hit.dart';
 import 'package:algolia_client_search/src/model/exhaustive.dart';
 import 'package:algolia_client_search/src/model/rendering_content.dart';
 import 'package:algolia_client_search/src/model/redirect.dart';
-import 'package:algolia_client_search/src/model/facets_stats.dart';
+import 'package:algolia_client_search/src/model/facet_stats.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -88,7 +88,7 @@ final class SearchResponse {
 
   /// Statistics for numerical facets.
   @JsonKey(name: r'facets_stats')
-  final Map<String, FacetsStats>? facetsStats;
+  final Map<String, FacetStats>? facetsStats;
 
   /// Index name used for the query.
   @JsonKey(name: r'index')

@@ -13,24 +13,24 @@ import java.util.Objects;
 public class DailyRevenue {
 
   @JsonProperty("currencies")
-  private Map<String, CurrenciesValue> currencies = new HashMap<>();
+  private Map<String, CurrencyCode> currencies = new HashMap<>();
 
   @JsonProperty("date")
   private String date;
 
-  public DailyRevenue setCurrencies(Map<String, CurrenciesValue> currencies) {
+  public DailyRevenue setCurrencies(Map<String, CurrencyCode> currencies) {
     this.currencies = currencies;
     return this;
   }
 
-  public DailyRevenue putCurrencies(String key, CurrenciesValue currenciesItem) {
+  public DailyRevenue putCurrencies(String key, CurrencyCode currenciesItem) {
     this.currencies.put(key, currenciesItem);
     return this;
   }
 
   /** Revenue associated with this search, broken-down by currencies. */
   @javax.annotation.Nonnull
-  public Map<String, CurrenciesValue> getCurrencies() {
+  public Map<String, CurrencyCode> getCurrencies() {
     return currencies;
   }
 

@@ -11,11 +11,7 @@ import { personalizationClient } from '@algolia/client-personalization';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -31,11 +27,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -51,11 +43,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -71,11 +59,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -91,11 +75,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteUserProfile(): Promise<void> {
   // >SEPARATOR deleteUserProfile default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.deleteUserProfile({ userToken: 'UserToken' });
@@ -111,11 +91,7 @@ export async function snippetForDeleteUserProfile(): Promise<void> {
 export async function snippetForGetPersonalizationStrategy(): Promise<void> {
   // >SEPARATOR getPersonalizationStrategy default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getPersonalizationStrategy();
@@ -131,11 +107,7 @@ export async function snippetForGetPersonalizationStrategy(): Promise<void> {
 export async function snippetForGetUserTokenProfile(): Promise<void> {
   // >SEPARATOR getUserTokenProfile default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getUserTokenProfile({ userToken: 'UserToken' });
@@ -151,11 +123,7 @@ export async function snippetForGetUserTokenProfile(): Promise<void> {
 export async function snippetForSetPersonalizationStrategy(): Promise<void> {
   // >SEPARATOR setPersonalizationStrategy default
   // Initialize the client
-  const client = personalizationClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.setPersonalizationStrategy({

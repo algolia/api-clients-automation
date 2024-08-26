@@ -167,7 +167,7 @@
       "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = personalizationClient("
+      "default": "const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

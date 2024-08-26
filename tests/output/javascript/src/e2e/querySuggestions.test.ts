@@ -7,28 +7,18 @@ import { union } from '../helpers';
 dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
-  throw new Error(
-    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');
 }
 
 if (!process.env.ALGOLIA_ADMIN_KEY) {
-  throw new Error(
-    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests');
 }
 
-const client = querySuggestionsClient(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_ADMIN_KEY,
-  'us'
-);
+const client = querySuggestionsClient(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, 'us');
 
 describe('getConfig', () => {
   test('Retrieve QS config e2e', async () => {
-    const resp = await client.getConfig({
-      indexName: 'cts_e2e_browse_query_suggestions',
-    });
+    const resp = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });
 
     const expectedBody = {
       appID: 'T8JK9S7I7X',

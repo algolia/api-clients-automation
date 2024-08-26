@@ -1826,7 +1826,6 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     currencies:
-      title: currenciesValue
       type: object
       description: Revenue associated with this search, broken-down by currencies.
       default: {}

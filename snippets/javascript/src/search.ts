@@ -56,10 +56,7 @@ export async function snippetForAppendSource(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.appendSource({
-    source: 'theSource',
-    description: 'theDescription',
-  });
+  const response = await client.appendSource({ source: 'theSource', description: 'theDescription' });
 
   // use typed response
   console.log(response);
@@ -120,9 +117,7 @@ export async function snippetForBatch1(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [{ action: 'clear', body: { key: 'value' } }],
-    },
+    batchWriteParams: { requests: [{ action: 'clear', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -141,9 +136,7 @@ export async function snippetForBatch2(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [{ action: 'delete', body: { key: 'value' } }],
-    },
+    batchWriteParams: { requests: [{ action: 'delete', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -162,9 +155,7 @@ export async function snippetForBatch3(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [{ action: 'deleteObject', body: { key: 'value' } }],
-    },
+    batchWriteParams: { requests: [{ action: 'deleteObject', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -183,9 +174,7 @@ export async function snippetForBatch4(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],
-    },
+    batchWriteParams: { requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -204,11 +193,7 @@ export async function snippetForBatch5(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [
-        { action: 'partialUpdateObjectNoCreate', body: { key: 'value' } },
-      ],
-    },
+    batchWriteParams: { requests: [{ action: 'partialUpdateObjectNoCreate', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -227,9 +212,7 @@ export async function snippetForBatch6(): Promise<void> {
   // Call the API
   const response = await client.batch({
     indexName: '<YOUR_INDEX_NAME>',
-    batchWriteParams: {
-      requests: [{ action: 'updateObject', body: { key: 'value' } }],
-    },
+    batchWriteParams: { requests: [{ action: 'updateObject', body: { key: 'value' } }] },
   });
 
   // use typed response
@@ -248,10 +231,7 @@ export async function snippetForBatchAssignUserIds(): Promise<void> {
   // Call the API
   const response = await client.batchAssignUserIds({
     xAlgoliaUserID: 'userID',
-    batchAssignUserIdsParams: {
-      cluster: 'theCluster',
-      users: ['user1', 'user2'],
-    },
+    batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },
   });
 
   // use typed response
@@ -327,12 +307,7 @@ export async function snippetForBatchDictionaryEntries2(): Promise<void> {
   const response = await client.batchDictionaryEntries({
     dictionaryName: 'stopwords',
     batchDictionaryEntriesParams: {
-      requests: [
-        {
-          action: 'addEntry',
-          body: { objectID: '1', language: 'en', additional: 'try me' },
-        },
-      ],
+      requests: [{ action: 'addEntry', body: { objectID: '1', language: 'en', additional: 'try me' } }],
     },
   });
 
@@ -494,10 +469,7 @@ export async function snippetForDeleteBy(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.deleteBy({
-    indexName: 'theIndexName',
-    deleteByParams: { filters: 'brand:brandName' },
-  });
+  const response = await client.deleteBy({ indexName: 'theIndexName', deleteByParams: { filters: 'brand:brandName' } });
 
   // use typed response
   console.log(response);
@@ -529,10 +501,7 @@ export async function snippetForDeleteObject(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.deleteObject({
-    indexName: '<YOUR_INDEX_NAME>',
-    objectID: 'uniqueID',
-  });
+  const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
 
   // use typed response
   console.log(response);
@@ -548,10 +517,7 @@ export async function snippetForDeleteRule(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.deleteRule({
-    indexName: 'indexName',
-    objectID: 'id1',
-  });
+  const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });
 
   // use typed response
   console.log(response);
@@ -583,10 +549,7 @@ export async function snippetForDeleteSynonym(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.deleteSynonym({
-    indexName: 'indexName',
-    objectID: 'id1',
-  });
+  const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });
 
   // use typed response
   console.log(response);
@@ -703,13 +666,7 @@ export async function snippetForGetObjects(): Promise<void> {
 
   // Call the API
   const response = await client.getObjects({
-    requests: [
-      {
-        attributesToRetrieve: ['attr1', 'attr2'],
-        objectID: 'uniqueID',
-        indexName: 'theIndexName',
-      },
-    ],
+    requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
   });
 
   // use typed response
@@ -726,10 +683,7 @@ export async function snippetForGetRule(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getRule({
-    indexName: 'indexName',
-    objectID: 'id1',
-  });
+  const response = await client.getRule({ indexName: 'indexName', objectID: 'id1' });
 
   // use typed response
   console.log(response);
@@ -777,10 +731,7 @@ export async function snippetForGetSynonym(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getSynonym({
-    indexName: 'indexName',
-    objectID: 'id1',
-  });
+  const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });
 
   // use typed response
   console.log(response);
@@ -796,10 +747,7 @@ export async function snippetForGetTask(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getTask({
-    indexName: 'theIndexName',
-    taskID: 123,
-  });
+  const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });
 
   // use typed response
   console.log(response);
@@ -928,13 +876,7 @@ export async function snippetForMultipleBatch(): Promise<void> {
 
   // Call the API
   const response = await client.multipleBatch({
-    requests: [
-      {
-        action: 'addObject',
-        body: { key: 'value' },
-        indexName: 'theIndexName',
-      },
-    ],
+    requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
   });
 
   // use typed response
@@ -953,11 +895,7 @@ export async function snippetForOperationIndex(): Promise<void> {
   // Call the API
   const response = await client.operationIndex({
     indexName: '<SOURCE_INDEX_NAME>',
-    operationIndexParams: {
-      operation: 'move',
-      destination: '<DESTINATION_INDEX_NAME>',
-      scope: ['rules', 'settings'],
-    },
+    operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>', scope: ['rules', 'settings'] },
   });
 
   // use typed response
@@ -976,10 +914,7 @@ export async function snippetForOperationIndex1(): Promise<void> {
   // Call the API
   const response = await client.operationIndex({
     indexName: '<SOURCE_INDEX_NAME>',
-    operationIndexParams: {
-      operation: 'copy',
-      destination: '<DESTINATION_INDEX_NAME>',
-    },
+    operationIndexParams: { operation: 'copy', destination: '<DESTINATION_INDEX_NAME>' },
   });
 
   // use typed response
@@ -998,10 +933,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
   // Call the API
   const response = await client.operationIndex({
     indexName: '<SOURCE_INDEX_NAME>',
-    operationIndexParams: {
-      operation: 'move',
-      destination: '<DESTINATION_INDEX_NAME>',
-    },
+    operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>' },
   });
 
   // use typed response
@@ -1021,10 +953,7 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   const response = await client.partialUpdateObject({
     indexName: 'theIndexName',
     objectID: 'uniqueID',
-    attributesToUpdate: {
-      id1: 'test',
-      id2: { _operation: 'AddUnique', value: 'test2' },
-    },
+    attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
     createIfNotExists: true,
   });
 
@@ -1058,9 +987,7 @@ export async function snippetForReplaceSources(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.replaceSources({
-    source: [{ source: 'theSource', description: 'theDescription' }],
-  });
+  const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });
 
   // use typed response
   console.log(response);
@@ -1092,10 +1019,7 @@ export async function snippetForSaveObject(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.saveObject({
-    indexName: '<YOUR_INDEX_NAME>',
-    body: { objectID: 'id', test: 'val' },
-  });
+  const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
 
   // use typed response
   console.log(response);
@@ -1114,10 +1038,7 @@ export async function snippetForSaveRule(): Promise<void> {
   const response = await client.saveRule({
     indexName: 'indexName',
     objectID: 'id1',
-    rule: {
-      objectID: 'id1',
-      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-    },
+    rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
   });
 
   // use typed response
@@ -1137,14 +1058,8 @@ export async function snippetForSaveRules(): Promise<void> {
   const response = await client.saveRules({
     indexName: '<YOUR_INDEX_NAME>',
     rules: [
-      {
-        objectID: 'a-rule-id',
-        conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
-      },
-      {
-        objectID: 'a-second-rule-id',
-        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-      },
+      { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
+      { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
     ],
     forwardToReplicas: false,
     clearExistingRules: true,
@@ -1167,11 +1082,7 @@ export async function snippetForSaveSynonym(): Promise<void> {
   const response = await client.saveSynonym({
     indexName: 'indexName',
     objectID: 'id1',
-    synonymHit: {
-      objectID: 'id1',
-      type: 'synonym',
-      synonyms: ['car', 'vehicule', 'auto'],
-    },
+    synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
     forwardToReplicas: true,
   });
 
@@ -1192,17 +1103,8 @@ export async function snippetForSaveSynonyms(): Promise<void> {
   const response = await client.saveSynonyms({
     indexName: '<YOUR_INDEX_NAME>',
     synonymHit: [
-      {
-        objectID: 'id1',
-        type: 'synonym',
-        synonyms: ['car', 'vehicule', 'auto'],
-      },
-      {
-        objectID: 'id2',
-        type: 'onewaysynonym',
-        input: 'iphone',
-        synonyms: ['ephone', 'aphone', 'yphone'],
-      },
+      { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
+      { objectID: 'id2', type: 'onewaysynonym', input: 'iphone', synonyms: ['ephone', 'aphone', 'yphone'] },
     ],
     forwardToReplicas: true,
     replaceExistingSynonyms: true,
@@ -1223,13 +1125,7 @@ export async function snippetForSearch(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        hitsPerPage: 50,
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
   });
 
   // use typed response
@@ -1247,13 +1143,7 @@ export async function snippetForSearch1(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        filters: 'actor:Scarlett Johansson',
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
   });
 
   // use typed response
@@ -1295,13 +1185,7 @@ export async function snippetForSearch3(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        filters: 'NOT actor:Nicolas Cage',
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
   });
 
   // use typed response
@@ -1319,13 +1203,7 @@ export async function snippetForSearch6(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        facets: ['author', 'genre'],
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
   });
 
   // use typed response
@@ -1343,9 +1221,7 @@ export async function snippetForSearch7(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      { indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
   });
 
   // use typed response
@@ -1381,10 +1257,7 @@ export async function snippetForSearchForFacetValues(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchForFacetValues({
-    indexName: 'indexName',
-    facetName: 'facetName',
-  });
+  const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });
 
   // use typed response
   console.log(response);
@@ -1400,10 +1273,7 @@ export async function snippetForSearchRules(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchRules({
-    indexName: 'indexName',
-    searchRulesParams: { query: 'something' },
-  });
+  const response = await client.searchRules({ indexName: 'indexName', searchRulesParams: { query: 'something' } });
 
   // use typed response
   console.log(response);
@@ -1492,13 +1362,7 @@ export async function snippetForSetSettings(): Promise<void> {
   // Call the API
   const response = await client.setSettings({
     indexName: '<YOUR_INDEX_NAME>',
-    indexSettings: {
-      attributesForFaceting: [
-        'actor',
-        'filterOnly(category)',
-        'searchable(publisher)',
-      ],
-    },
+    indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
   });
 
   // use typed response
@@ -1517,12 +1381,7 @@ export async function snippetForUpdateApiKey(): Promise<void> {
   // Call the API
   const response = await client.updateApiKey({
     key: 'myApiKey',
-    apiKey: {
-      acl: ['search', 'addObject'],
-      validity: 300,
-      maxQueriesPerIPPerHour: 100,
-      maxHitsPerQuery: 20,
-    },
+    apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
   });
 
   // use typed response
