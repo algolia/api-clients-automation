@@ -19,13 +19,13 @@ You can pick a default template on the [openapi-generator's "generators" page](h
 ### Extract the template locally
 
 ```bash
-docker exec apic_base bash -c "yarn openapi-generator-cli author template -g <templateName> -o templates/<languageName>"
+apic exec java "yarn openapi-generator-cli author template -g <templateName> -o templates/<languageName>"
 ```
 
 Example for the `JavaScript` client with the `typescript-node` template:
 
 ```bash
-docker exec apic_base bash -c "yarn openapi-generator-cli author template -g typescript-node -o templates/javascript/"
+apic exec java "yarn openapi-generator-cli author template -g typescript-node -o templates/javascript/"
 ```
 
 ## Update the generator config
