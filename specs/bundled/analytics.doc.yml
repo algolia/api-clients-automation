@@ -203,18 +203,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -414,18 +416,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -625,18 +629,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -834,11 +840,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1063,18 +1066,20 @@ paths:
             client.getTopSearches("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopSearches({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1312,18 +1317,20 @@ paths:
             client.getSearchesCount("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getSearchesCount({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1560,11 +1567,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1816,11 +1820,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2080,18 +2081,20 @@ paths:
             client.getNoResultsRate("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getNoResultsRate({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2341,18 +2344,20 @@ paths:
             client.getNoClickRate("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getNoClickRate({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2565,18 +2570,20 @@ paths:
             client.getTopHits("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopHits({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2829,18 +2836,20 @@ paths:
             client.getUsersCount("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getUsersCount({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3060,11 +3069,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3298,21 +3304,21 @@ paths:
             client.getTopFilterForAttribute("myAttribute", "index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getTopFilterForAttribute({
-              attribute: 'myAttribute',
-              index: 'index',
-            });
+
+            const response = await client.getTopFilterForAttribute({ attribute:
+            'myAttribute', index: 'index' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3540,11 +3546,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3788,18 +3791,20 @@ paths:
             client.getTopCountries("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopCountries({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4052,11 +4057,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4289,18 +4291,20 @@ paths:
             client.getClickPositions("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getClickPositions({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4553,11 +4557,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4817,18 +4818,20 @@ paths:
             client.getConversionRate("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getConversionRate({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5078,18 +5081,20 @@ paths:
             client.getAddToCartRate("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getAddToCartRate({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5339,18 +5344,20 @@ paths:
             client.getPurchaseRate("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getPurchaseRate({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5582,18 +5589,20 @@ paths:
             client.getRevenue("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getRevenue({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5803,18 +5812,20 @@ paths:
             client.getStatus("index");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getStatus({ index: 'index' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6286,7 +6297,6 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     currencies:
-      title: currenciesValue
       type: object
       description: Revenue associated with this search, broken-down by currencies.
       default: {}

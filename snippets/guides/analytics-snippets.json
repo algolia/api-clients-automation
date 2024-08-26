@@ -344,7 +344,7 @@
       "default": "const response = await client.getTopFilterAttributes({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTopFilterForAttribute": {
-      "default": "const response = await client.getTopFilterForAttribute({\n  attribute: 'myAttribute',\n  index: 'index',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getTopFilterForAttribute({ attribute: 'myAttribute', index: 'index' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTopFiltersNoResults": {
       "default": "const response = await client.getTopFiltersNoResults({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
@@ -359,7 +359,7 @@
       "default": "const response = await client.getUsersCount({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = analyticsClient("
+      "default": "const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

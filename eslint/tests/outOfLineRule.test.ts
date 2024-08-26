@@ -67,18 +67,15 @@ useIt:
 });
 
 // oneOf should allow `type: 'null'`
-ruleTester.run(
-  'out-of-line-oneOf-null',
-  createOutOfLineRule({ property: 'oneOf' }),
-  {
-    valid: [
-      `
+ruleTester.run('out-of-line-oneOf-null', createOutOfLineRule({ property: 'oneOf' }), {
+  valid: [
+    `
 simple:
   oneOf:
     - type: string
     - type: 'null'
 `,
-      `
+    `
 obj:
   type: object
   properties:
@@ -87,10 +84,10 @@ obj:
         - type: string
         - type: 'null'
 `,
-    ],
-    invalid: [
-      {
-        code: `
+  ],
+  invalid: [
+    {
+      code: `
 simple:
   type: object
   properties:
@@ -99,26 +96,21 @@ simple:
         - type: string
         - type: null
       `,
-        errors: [{ messageId: 'oneOfNotOutOfLine' }],
-      },
-    ],
-  }
-);
+      errors: [{ messageId: 'oneOfNotOutOfLine' }],
+    },
+  ],
+});
 
 // allow enum to be nullable
-ruleTester.run(
-  'out-of-line-enum-null',
-  createOutOfLineRule({ property: 'enum' }),
-  {
-    valid: [
-      `
+ruleTester.run('out-of-line-enum-null', createOutOfLineRule({ property: 'enum' }), {
+  valid: [
+    `
 simple:
   oneOf:
     - type: string
       enum: [bla, blabla]
     - type: 'null'
 `,
-    ],
-    invalid: [],
-  }
-);
+  ],
+  invalid: [],
+});

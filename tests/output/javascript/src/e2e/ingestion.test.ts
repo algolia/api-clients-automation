@@ -7,28 +7,18 @@ import { union } from '../helpers';
 dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
-  throw new Error(
-    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');
 }
 
 if (!process.env.ALGOLIA_ADMIN_KEY) {
-  throw new Error(
-    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests');
 }
 
-const client = ingestionClient(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_ADMIN_KEY,
-  'us'
-);
+const client = ingestionClient(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, 'us');
 
 describe('enableTask', () => {
   test('enableTask', async () => {
-    const resp = await client.enableTask({
-      taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-    });
+    const resp = await client.enableTask({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
     const expectedBody = { taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' };
 
@@ -38,9 +28,7 @@ describe('enableTask', () => {
 
 describe('enableTaskV1', () => {
   test('enableTaskV1', async () => {
-    const resp = await client.enableTaskV1({
-      taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-    });
+    const resp = await client.enableTaskV1({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
     const expectedBody = { taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' };
 
@@ -50,17 +38,13 @@ describe('enableTaskV1', () => {
 
 describe('getSource', () => {
   test('getSource', async () => {
-    const resp = await client.getSource({
-      sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
-    });
+    const resp = await client.getSource({ sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac' });
 
     const expectedBody = {
       sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
       name: 'cts_e2e_browse',
       type: 'json',
-      input: {
-        url: 'https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json',
-      },
+      input: { url: 'https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json' },
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));

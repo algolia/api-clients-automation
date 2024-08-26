@@ -43,7 +43,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   private Map<String, Map<String, Integer>> facets;
 
   @JsonProperty("facets_stats")
-  private Map<String, FacetsStats> facetsStats;
+  private Map<String, FacetStats> facetsStats;
 
   @JsonProperty("index")
   private String index;
@@ -248,12 +248,12 @@ public class SearchResponse<T> implements SearchResult<T> {
     return facets;
   }
 
-  public SearchResponse<T> setFacetsStats(Map<String, FacetsStats> facetsStats) {
+  public SearchResponse<T> setFacetsStats(Map<String, FacetStats> facetsStats) {
     this.facetsStats = facetsStats;
     return this;
   }
 
-  public SearchResponse<T> putFacetsStats(String key, FacetsStats facetsStatsItem) {
+  public SearchResponse<T> putFacetsStats(String key, FacetStats facetsStatsItem) {
     if (this.facetsStats == null) {
       this.facetsStats = new HashMap<>();
     }
@@ -263,7 +263,7 @@ public class SearchResponse<T> implements SearchResult<T> {
 
   /** Statistics for numerical facets. */
   @javax.annotation.Nullable
-  public Map<String, FacetsStats> getFacetsStats() {
+  public Map<String, FacetStats> getFacetsStats() {
     return facetsStats;
   }
 

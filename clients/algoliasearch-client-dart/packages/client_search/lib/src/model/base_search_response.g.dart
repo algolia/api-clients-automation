@@ -37,7 +37,7 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
               'facets_stats',
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(
-                        k, FacetsStats.fromJson(e as Map<String, dynamic>)),
+                        k, FacetStats.fromJson(e as Map<String, dynamic>)),
                   )),
           index: $checkedConvert('index', (v) => v as String?),
           indexUsed: $checkedConvert('indexUsed', (v) => v as String?),

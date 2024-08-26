@@ -11,11 +11,7 @@ import { abtestingClient } from '@algolia/client-abtesting';
 export async function snippetForAddABTests(): Promise<void> {
   // >SEPARATOR addABTests default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.addABTests({
@@ -38,11 +34,7 @@ export async function snippetForAddABTests(): Promise<void> {
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -58,11 +50,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -78,11 +66,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -98,11 +82,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -118,11 +98,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteABTest(): Promise<void> {
   // >SEPARATOR deleteABTest default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.deleteABTest({ id: 42 });
@@ -138,11 +114,7 @@ export async function snippetForDeleteABTest(): Promise<void> {
 export async function snippetForGetABTest(): Promise<void> {
   // >SEPARATOR getABTest default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getABTest({ id: 42 });
@@ -158,11 +130,7 @@ export async function snippetForGetABTest(): Promise<void> {
 export async function snippetForListABTests(): Promise<void> {
   // >SEPARATOR listABTests default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.listABTests();
@@ -178,11 +146,7 @@ export async function snippetForListABTests(): Promise<void> {
 export async function snippetForScheduleABTest(): Promise<void> {
   // >SEPARATOR scheduleABTest default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.scheduleABTest({
@@ -206,11 +170,7 @@ export async function snippetForScheduleABTest(): Promise<void> {
 export async function snippetForStopABTest(): Promise<void> {
   // >SEPARATOR stopABTest default
   // Initialize the client
-  const client = abtestingClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.stopABTest({ id: 42 });

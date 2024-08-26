@@ -15,25 +15,17 @@ function createClient(): SearchClient {
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      requester: echoRequester(),
-    });
+    const client = searchClient('test-app-id', 'test-api-key', { requester: echoRequester() });
 
-    const result = (await client.customGet({
-      path: 'test',
-    })) as unknown as EchoResponse;
+    const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      requester: echoRequester(),
-    });
+    const client = searchClient('test-app-id', 'test-api-key', { requester: echoRequester() });
 
-    const result = (await client.customPost({
-      path: 'test',
-    })) as unknown as EchoResponse;
+    const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id.algolia.net');
   }, 15000);
@@ -54,9 +46,7 @@ describe('api', () => {
 
   test('tests the retry strategy error', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' }],
     });
 
     try {
@@ -64,7 +54,7 @@ describe('api', () => {
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
-        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.'
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.',
       );
     }
   }, 15000);
@@ -74,37 +64,27 @@ describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
     const client = createClient();
 
-    const result = (await client.customPost({
-      path: '1/test',
-    })) as unknown as EchoResponse;
+    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
-      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
   }, 15000);
 
   test('calls api with default read timeouts', async () => {
     const client = createClient();
 
-    const result = (await client.customGet({
-      path: '1/test',
-    })) as unknown as EchoResponse;
+    const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(result).toEqual(
-      expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
-    );
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 }));
   }, 15000);
 
   test('calls api with default write timeouts', async () => {
     const client = createClient();
 
-    const result = (await client.customPost({
-      path: '1/test',
-    })) as unknown as EchoResponse;
+    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(result).toEqual(
-      expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
-    );
+    expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
   }, 15000);
 });
 
@@ -118,7 +98,7 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual(
-      'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
+      'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
     );
   }, 15000);
 
@@ -145,15 +125,13 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual(
-      'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
+      'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
     );
   }, 15000);
 
   test('call replaceAllObjects without error', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' }],
     });
 
     const result = await client.replaceAllObjects({
@@ -174,28 +152,20 @@ describe('helpers', () => {
     });
 
     expect(result).toEqual({
-      copyOperationResponse: {
-        taskID: 125,
-        updatedAt: '2021-01-01T00:00:00.000Z',
-      },
+      copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
       batchResponses: [
         { taskID: 127, objectIDs: ['1', '2', '3'] },
         { taskID: 130, objectIDs: ['4', '5', '6'] },
         { taskID: 133, objectIDs: ['7', '8', '9'] },
         { taskID: 134, objectIDs: ['10'] },
       ],
-      moveOperationResponse: {
-        taskID: 777,
-        updatedAt: '2021-01-01T00:00:00.000Z',
-      },
+      moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
     });
   }, 15000);
 
   test('call saveObjects without error', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
     const result = await client.saveObjects({
@@ -211,9 +181,7 @@ describe('helpers', () => {
 
   test('saveObjects should report errors', async () => {
     const client = searchClient('test-app-id', 'wrong-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
     try {
@@ -232,9 +200,7 @@ describe('helpers', () => {
 
   test('call partialUpdateObjects with createIfNotExists=true', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
     const result = await client.partialUpdateObjects({
@@ -251,9 +217,7 @@ describe('helpers', () => {
 
   test('call partialUpdateObjects with createIfNotExists=false', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
     const result = await client.partialUpdateObjects({
@@ -270,30 +234,20 @@ describe('helpers', () => {
 
   test('call deleteObjects without error', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
     });
 
-    const result = await client.deleteObjects({
-      indexName: 'cts_e2e_deleteObjects_javascript',
-      objectIDs: ['1', '2'],
-    });
+    const result = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
 
     expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
   }, 15000);
 
   test('wait for api key helper - add', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
-    const result = await client.waitForApiKey({
-      key: 'api-key-add-operation-test-javascript',
-      operation: 'add',
-    });
+    const result = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
 
     expect(result).toEqual({
       value: 'api-key-add-operation-test-javascript',
@@ -308,9 +262,7 @@ describe('helpers', () => {
 
   test('wait for api key - update', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
     const result = await client.waitForApiKey({
@@ -342,15 +294,10 @@ describe('helpers', () => {
 
   test('wait for api key - delete', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
     });
 
-    const result = await client.waitForApiKey({
-      key: 'api-key-delete-operation-test-javascript',
-      operation: 'delete',
-    });
+    const result = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
 
     expect(result).toBeUndefined();
   }, 15000);
@@ -365,17 +312,13 @@ describe('parameters', () => {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('', 'my-api-key', {
-        requester: echoRequester(),
-      });
+      const client = searchClient('', 'my-api-key', { requester: echoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('my-app-id', '', {
-        requester: echoRequester(),
-      });
+      const client = searchClient('my-app-id', '', { requester: echoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
@@ -389,9 +332,7 @@ describe('parameters', () => {
       const result = (await client.addApiKey(null)) as unknown as EchoResponse;
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect((e as Error).message).toMatch(
-        'Parameter `apiKey` is required when calling `addApiKey`.'
-      );
+      expect((e as Error).message).toMatch('Parameter `apiKey` is required when calling `addApiKey`.');
     }
   }, 15000);
 
@@ -405,9 +346,7 @@ describe('parameters', () => {
       })) as unknown as EchoResponse;
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect((e as Error).message).toMatch(
-        'Parameter `indexName` is required when calling `addOrUpdateObject`.'
-      );
+      expect((e as Error).message).toMatch('Parameter `indexName` is required when calling `addOrUpdateObject`.');
     }
     try {
       const result = (await client.addOrUpdateObject({
@@ -416,9 +355,7 @@ describe('parameters', () => {
       })) as unknown as EchoResponse;
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect((e as Error).message).toMatch(
-        'Parameter `objectID` is required when calling `addOrUpdateObject`.'
-      );
+      expect((e as Error).message).toMatch('Parameter `objectID` is required when calling `addOrUpdateObject`.');
     }
     try {
       const result = (await client.addOrUpdateObject({
@@ -427,9 +364,7 @@ describe('parameters', () => {
       })) as unknown as EchoResponse;
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect((e as Error).message).toMatch(
-        'Parameter `body` is required when calling `addOrUpdateObject`.'
-      );
+      expect((e as Error).message).toMatch('Parameter `body` is required when calling `addOrUpdateObject`.');
     }
   }, 15000);
 });

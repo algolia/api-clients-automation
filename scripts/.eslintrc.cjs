@@ -1,7 +1,7 @@
 module.exports = {
-  ignorePatterns: ['*.test.ts'],
+  ignorePatterns: ['*.test.ts', '**.yml', 'tsconfig.json'],
 
-  parser: '@typescript-eslint/parser',
+  extends: "../.eslintrc.cjs",
 
   parserOptions: {
     ecmaVersion: 'latest',
@@ -11,9 +11,9 @@ module.exports = {
   },
 
   settings: {
-    'import/extensions': ['.js', '.ts', '.mjs'],
+    'import/extensions': ['.js', '.ts', '.mjs', '.cjs'],
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.js', '.mjs'],
+      '@typescript-eslint/parser': ['.ts', '.js', '.mjs', '.cjs'],
     },
     'import/ignore': ['node_modules'],
     'import/resolver': {
@@ -22,15 +22,6 @@ module.exports = {
   },
 
   rules: {
-    'max-len': [0, { code: 100, ignoreComments: true }],
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        printWidth: 100,
-        trailingComma: 'all',
-      },
-    ],
     'import/extensions': [
       2,
       'ignorePackages',

@@ -2402,17 +2402,20 @@ paths:
             client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.getMetrics({
-              metric: 'avg_build_time',
-              period: 'minute',
-            });
+
+            const response = await client.getMetrics({ metric: 'avg_build_time',
+            period: 'minute' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin

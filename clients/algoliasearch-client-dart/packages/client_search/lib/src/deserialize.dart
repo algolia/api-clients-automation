@@ -51,8 +51,8 @@ import 'package:algolia_client_search/src/model/exact_on_single_word_query.dart'
 import 'package:algolia_client_search/src/model/exhaustive.dart';
 import 'package:algolia_client_search/src/model/facet_hits.dart';
 import 'package:algolia_client_search/src/model/facet_ordering.dart';
+import 'package:algolia_client_search/src/model/facet_stats.dart';
 import 'package:algolia_client_search/src/model/facets.dart';
-import 'package:algolia_client_search/src/model/facets_stats.dart';
 import 'package:algolia_client_search/src/model/fetched_index.dart';
 import 'package:algolia_client_search/src/model/get_api_key_response.dart';
 import 'package:algolia_client_search/src/model/get_dictionary_settings_response.dart';
@@ -304,10 +304,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FacetOrdering':
       return FacetOrdering.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'FacetStats':
+      return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Facets':
       return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'FacetsStats':
-      return FacetsStats.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FetchedIndex':
       return FetchedIndex.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'GetApiKeyResponse':

@@ -170,7 +170,7 @@
       "default": "import { querySuggestionsClient } from '@algolia/client-query-suggestions';"
     },
     "createConfig": {
-      "default": "const response = await client.createConfig({\n  indexName: 'theIndexName',\n  sourceIndices: [\n    {\n      indexName: 'testIndex',\n      facets: [{ attribute: 'test' }],\n      generate: [['facetA', 'facetB'], ['facetC']],\n    },\n  ],\n  languages: ['french'],\n  exclude: ['test'],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.createConfig({\n  indexName: 'theIndexName',\n  sourceIndices: [\n    { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n  ],\n  languages: ['french'],\n  exclude: ['test'],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
@@ -191,7 +191,7 @@
       "default": "const response = await client.getAllConfigs();\n\n// use typed response\nconsole.log(response);"
     },
     "getConfig": {
-      "default": "const response = await client.getConfig({\n  indexName: 'cts_e2e_browse_query_suggestions',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });\n\n// use typed response\nconsole.log(response);"
     },
     "getConfigStatus": {
       "default": "const response = await client.getConfigStatus({ indexName: 'theIndexName' });\n\n// use typed response\nconsole.log(response);"
@@ -200,10 +200,10 @@
       "default": "const response = await client.getLogFile({ indexName: 'theIndexName' });\n\n// use typed response\nconsole.log(response);"
     },
     "updateConfig": {
-      "default": "const response = await client.updateConfig({\n  indexName: 'theIndexName',\n  configuration: {\n    sourceIndices: [\n      {\n        indexName: 'testIndex',\n        facets: [{ attribute: 'test' }],\n        generate: [['facetA', 'facetB'], ['facetC']],\n      },\n    ],\n    languages: ['french'],\n    exclude: ['test'],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.updateConfig({\n  indexName: 'theIndexName',\n  configuration: {\n    sourceIndices: [\n      { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n    ],\n    languages: ['french'],\n    exclude: ['test'],\n  },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = querySuggestionsClient("
+      "default": "const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

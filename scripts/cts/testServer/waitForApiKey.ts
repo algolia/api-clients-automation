@@ -38,7 +38,7 @@ function addRoutes(app: Express): void {
     const retry = retryCount[lang];
     if (req.params.key === `api-key-add-operation-test-${lang}`) {
       if (retry.add < 3) {
-        res.status(404).json({ message: `API key doesn't exist` });
+        res.status(404).json({ message: "API key doesn't exist" });
       } else if (retry.add === 3) {
         res.status(200).json({
           value: req.params.key,
@@ -100,7 +100,7 @@ function addRoutes(app: Express): void {
           createdAt: 1720094400,
         });
       } else if (retry.delete === 3) {
-        res.status(404).json({ message: `API key doesn't exist` });
+        res.status(404).json({ message: "API key doesn't exist" });
 
         retry.delete = -1;
       } else {

@@ -1,9 +1,4 @@
-import type {
-  Artifact,
-  DownloadArtifactOptions,
-  DownloadArtifactResponse,
-  FindOptions,
-} from '@actions/artifact';
+import type { Artifact, DownloadArtifactOptions, DownloadArtifactResponse, FindOptions } from '@actions/artifact';
 import { DefaultArtifactClient } from '@actions/artifact';
 import * as core from '@actions/core';
 import { exec } from '@actions/exec';
@@ -16,10 +11,10 @@ async function download(
 ): Promise<DownloadArtifactResponse> {
   try {
     return await client.downloadArtifact(artifactID, options);
-  } catch (e1) {
+  } catch {
     try {
       return await client.downloadArtifact(artifactID, options);
-    } catch (e2) {
+    } catch {
       return await client.downloadArtifact(artifactID, options);
     }
   }

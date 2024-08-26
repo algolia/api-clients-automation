@@ -4,16 +4,7 @@ import dotenv from 'dotenv';
 import yaml from 'js-yaml';
 
 import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import {
-  ROOT_ENV_PATH,
-  toAbsolutePath,
-  run,
-  exists,
-  GENERATORS,
-  LANGUAGES,
-  CI,
-  setVerbose,
-} from '../common.js';
+import { ROOT_ENV_PATH, toAbsolutePath, run, exists, GENERATORS, LANGUAGES, CI, setVerbose } from '../common.js';
 import { getGitHubUrl, getLanguageFolder } from '../config.js';
 import type { Language } from '../types.js';
 
@@ -55,25 +46,21 @@ async function updateChangelog(
 export function getVersionsToRelease(versions: Versions): VersionsToRelease {
   const versionsToRelease: VersionsToRelease = {};
 
-  Object.entries(versions).forEach(
-    ([lang, { noCommit, current, skipRelease, releaseType, next }]) => {
-      if (noCommit || skipRelease || !current || !next) {
-        return;
-      }
+  Object.entries(versions).forEach(([lang, { noCommit, current, skipRelease, releaseType, next }]) => {
+    if (noCommit || skipRelease || !current || !next) {
+      return;
+    }
 
-      if (!releaseType || !['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
-        throw new Error(
-          `\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`,
-        );
-      }
+    if (!releaseType || !['major', 'minor', 'patch', 'prerelease'].includes(releaseType)) {
+      throw new Error(`\`${releaseType}\` is unknown release type. Allowed: major, minor, patch, prerelease`);
+    }
 
-      versionsToRelease[lang] = {
-        current,
-        releaseType,
-        next,
-      };
-    },
-  );
+    versionsToRelease[lang] = {
+      current,
+      releaseType,
+      next,
+    };
+  });
 
   return versionsToRelease;
 }
@@ -133,13 +120,7 @@ async function updateDartPackages(changelog: string, nextVersion: string): Promi
       currentVersion = '0.0.1';
     }
 
-    await updateChangelog(
-      'dart',
-      changelog,
-      currentVersion,
-      nextVersion,
-      toAbsolutePath(`${gen.output}/CHANGELOG.md`),
-    );
+    await updateChangelog('dart', changelog, currentVersion, nextVersion, toAbsolutePath(`${gen.output}/CHANGELOG.md`));
   }
 
   // Version is sync'd on every clients so we set it once.

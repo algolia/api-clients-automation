@@ -30,8 +30,12 @@ _list_clients_for_language() {
   if [[ $1 == "all" ]]; then
     _list_clients
   else
-    echo "all $(cat $ROOT/config/clients.config.json | jq -r --arg lang "$1" 'with_entries(select(.key == $lang)) | .[].clients | if (.[0] | type == "object") then .[].name else .[] end')"
+    echo "$(cat $ROOT/config/clients.config.json | jq -r --arg lang "$1" 'with_entries(select(.key == $lang)) | .[].clients | if (.[0] | type == "object") then .[].name else .[] end')"
   fi
+}
+
+_list_clients_for_language_all() {
+  echo "all $(_list_clients_for_language $1)"
 }
 
 _list_clients() {
@@ -41,8 +45,17 @@ _list_clients() {
 _apic_lang_client_complete() {
   if [[ COMP_CWORD -eq $1 ]]; then
     COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
-  elif [[ COMP_CWORD -eq ($1 + 1) ]]; then
-    COMPREPLY=($(compgen -W "$(_list_clients_for_language $prev)" -- "$cur"))
+  elif [[ COMP_CWORD -ge ($1 + 1) ]]; then
+    lang="${COMP_WORDS[$1]}"
+    COMPREPLY=($(compgen -W "$(_list_clients_for_language_all $lang)" -- "$cur"))
+  fi
+}
+
+_apic_playground_complete() {
+  if [[ COMP_CWORD -eq 2 ]]; then
+    COMPREPLY=($(compgen -W "$(_list_languages)" -- "$cur"))
+  elif [[ COMP_CWORD -eq 3 ]]; then
+    COMPREPLY=($(compgen -W "$(_list_clients_for_language $lang)" -- "$cur"))
   fi
 }
 
@@ -58,7 +71,7 @@ _apic_cts_complete() {
 }
 
 _apic_build_specs_complete() {
-  if [[ COMP_CWORD -eq 3 ]]; then
+  if [[ COMP_CWORD -ge 3 ]]; then
     COMPREPLY=($(compgen -W "algoliasearch $(_list_clients)" -- "$cur"))
   fi
 }
@@ -72,7 +85,7 @@ _apic_build_complete() {
       _apic_lang_client_complete 3
     elif [[ $second == "specs" ]]; then
       _apic_build_specs_complete
-    elif [[ $second == "playground" ]]; then
+    elif [[ $second == "playground" && COMP_CWORD -eq 3 ]]; then
       COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
     fi
   fi
@@ -88,21 +101,25 @@ _apic_format_complete() {
 
 _apic_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  lang="${COMP_WORDS[COMP_CWORD-1]}" # initial guess, but it might be before in some commands
   if [[ COMP_CWORD -eq 1 ]]; then
-    COMPREPLY=($(compgen -W "build cts format generate playground release snippets" -- "$cur"))
+    COMPREPLY=($(compgen -W "build cts exec format generate playground release snippets" -- "$cur"))
   else
     first="${COMP_WORDS[1]}"
-    if [[ $first == "generate" || $first == "playground" || $first == "snippets" ]]; then
+    if [[ $first == "generate" || $first == "snippets" ]]; then
       _apic_lang_client_complete 2
+    elif [[ $first == "playground" ]]; then
+      _apic_playground_complete
     elif [[ $first == "format" ]]; then
       _apic_format_complete
     elif [[ $first == "build" ]]; then
       _apic_build_complete
     elif [[ $first == "cts" ]]; then
       _apic_cts_complete
-    elif [[ $first == "release" ]]; then
+    elif [[ $first == "release" && COMP_CWORD -eq 2 ]]; then
       COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
+    elif [[ $first == "exec" && COMP_CWORD -eq 2 ]]; then
+      COMPREPLY=($(compgen -W "$(_list_languages)" -- "$cur"))
     fi
   fi
 }

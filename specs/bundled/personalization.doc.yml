@@ -179,18 +179,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -391,18 +393,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -603,18 +607,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -813,11 +819,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1054,11 +1057,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1293,11 +1293,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1503,18 +1500,20 @@ paths:
             client.getPersonalizationStrategy();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getPersonalizationStrategy();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1746,22 +1745,24 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = personalizationClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.setPersonalizationStrategy({
               eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
               facetScoring: [{ score: 42, facetName: 'Event' }],
               personalizationImpact: 42,
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin

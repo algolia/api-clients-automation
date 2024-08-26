@@ -42,11 +42,7 @@ export const refCommon: Rule.RuleModule = {
         }
 
         let ref = node.value.value;
-        if (
-          typeof ref !== 'string' ||
-          ref.trim().startsWith('#/') ||
-          ref.startsWith('./')
-        ) {
+        if (typeof ref !== 'string' || ref.trim().startsWith('#/') || ref.startsWith('./')) {
           return;
         }
 
@@ -54,12 +50,10 @@ export const refCommon: Rule.RuleModule = {
         if (!spec) {
           return;
         }
-        while (ref.startsWith(`../`)) {
+        while (ref.startsWith('../')) {
           ref = ref.slice(3);
         }
-        if (
-          allSpecs.filter((s) => s !== spec).every((s) => !ref.startsWith(s))
-        ) {
+        if (allSpecs.filter((s) => s !== spec).every((s) => !ref.startsWith(s))) {
           return;
         }
 
