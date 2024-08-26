@@ -12,7 +12,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -25,7 +25,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -53,7 +53,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -66,7 +66,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -79,7 +79,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -92,7 +92,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -105,7 +105,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.4.1"
     rollup: "npm:4.21.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -118,7 +118,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -131,7 +131,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.4.1"
     rollup: "npm:4.21.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -144,7 +144,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -3194,6 +3194,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:22.2.0":
+  version: 22.2.0
+  resolution: "@types/node@npm:22.2.0"
+  dependencies:
+    undici-types: "npm:~6.13.0"
+  checksum: 10/2957c5c81f1a07a1210f28382adae65c11070c301e395fa819448516f1a2a710054b29e0ec7d8e28624afbcd90dae810403a497109545dea835b554fc76edf6c
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:22.4.1":
+  version: 22.4.1
+  resolution: "@types/node@npm:22.4.1"
+  dependencies:
+    undici-types: "npm:~6.19.2"
+  checksum: 10/cce9221aea24688bccc3d7c25afd26d95c1bdab73a32ee5c43bb456e070116abf6ba537a9ff19c728bc06fe054e69a2c7ec8e5d818e34a3bf9567eae2cb20059
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -3424,7 +3442,7 @@ __metadata:
     "@babel/preset-env": "npm:7.25.3"
     "@babel/preset-typescript": "npm:7.24.7"
     "@types/jest": "npm:29.5.12"
-    "@types/node": "npm:22.5.0"
+    "@types/node": "npm:22.2.0"
     jest: "npm:29.7.0"
     rollup: "npm:4.20.0"
     typescript: "npm:5.5.4"
@@ -10095,6 +10113,13 @@ __metadata:
   bin:
     uglifyjs: bin/uglifyjs
   checksum: 10/8b0af1fa5260e7f8bc3e9a1e08ae05023b7c96eeb8965e27f29724597389d4e703d4aa6f66e6cd87a14a84e431df73a358ee58c0afce6b615b40cc95fcbf4ec6
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.13.0":
+  version: 6.13.0
+  resolution: "undici-types@npm:6.13.0"
+  checksum: 10/da52e37cbc6da3a75da86fa08dd795ca8924430deb91005eb884b840e46e19013ccd4c1c289f70018e8cf0c338add24a500e7c3acfcd49b1ffb27ff9f91e38b9
   languageName: node
   linkType: hard
 
