@@ -37,6 +37,12 @@
         "openapi-generator"
       ],
       "groupName": "openapi-generator"
+    },
+    {
+      "matchPackagePrefixes": [
+        "github.com/algolia/algoliasearch-client-go/v4"
+      ],
+      "allowedVersions": "4.0.0"
     }
   ],
   "regexManagers": [
