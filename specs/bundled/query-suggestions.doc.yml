@@ -179,18 +179,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -385,18 +387,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -591,18 +595,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -795,11 +801,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -996,18 +999,20 @@ paths:
             client.getAllConfigs();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getAllConfigs();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1250,29 +1255,27 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.createConfig({
               indexName: 'theIndexName',
               sourceIndices: [
-                {
-                  indexName: 'testIndex',
-                  facets: [{ attribute: 'test' }],
-                  generate: [['facetA', 'facetB'], ['facetC']],
-                },
+                { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },
               ],
               languages: ['french'],
               exclude: ['test'],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1575,20 +1578,21 @@ paths:
             client.getConfig("cts_e2e_browse_query_suggestions");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getConfig({
-              indexName: 'cts_e2e_browse_query_suggestions',
-            });
+
+            const response = await client.getConfig({ indexName:
+            'cts_e2e_browse_query_suggestions' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1833,31 +1837,29 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateConfig({
               indexName: 'theIndexName',
               configuration: {
                 sourceIndices: [
-                  {
-                    indexName: 'testIndex',
-                    facets: [{ attribute: 'test' }],
-                    generate: [['facetA', 'facetB'], ['facetC']],
-                  },
+                  { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },
                 ],
                 languages: ['french'],
                 exclude: ['test'],
               },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2173,11 +2175,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2408,11 +2407,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2641,11 +2637,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = querySuggestionsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API

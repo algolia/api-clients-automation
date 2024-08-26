@@ -218,7 +218,7 @@
       "default": "const response = await client.getLatency({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
     },
     "getMetrics": {
-      "default": "const response = await client.getMetrics({\n  metric: 'avg_build_time',\n  period: 'minute',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getMetrics({ metric: 'avg_build_time', period: 'minute' });\n\n// use typed response\nconsole.log(response);"
     },
     "getReachability": {
       "default": "const response = await client.getReachability({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"

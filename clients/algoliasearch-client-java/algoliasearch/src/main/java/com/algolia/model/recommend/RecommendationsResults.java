@@ -42,7 +42,7 @@ public class RecommendationsResults {
   private Map<String, Map<String, Integer>> facets;
 
   @JsonProperty("facets_stats")
-  private Map<String, FacetsStats> facetsStats;
+  private Map<String, FacetStats> facetsStats;
 
   @JsonProperty("index")
   private String index;
@@ -228,12 +228,12 @@ public class RecommendationsResults {
     return facets;
   }
 
-  public RecommendationsResults setFacetsStats(Map<String, FacetsStats> facetsStats) {
+  public RecommendationsResults setFacetsStats(Map<String, FacetStats> facetsStats) {
     this.facetsStats = facetsStats;
     return this;
   }
 
-  public RecommendationsResults putFacetsStats(String key, FacetsStats facetsStatsItem) {
+  public RecommendationsResults putFacetsStats(String key, FacetStats facetsStatsItem) {
     if (this.facetsStats == null) {
       this.facetsStats = new HashMap<>();
     }
@@ -243,7 +243,7 @@ public class RecommendationsResults {
 
   /** Statistics for numerical facets. */
   @javax.annotation.Nullable
-  public Map<String, FacetsStats> getFacetsStats() {
+  public Map<String, FacetStats> getFacetsStats() {
     return facetsStats;
   }
 

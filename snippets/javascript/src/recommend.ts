@@ -139,14 +139,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
 
   // Call the API
   const response = await client.getRecommendations({
-    requests: [
-      {
-        indexName: 'indexName',
-        objectID: 'objectID',
-        model: 'related-products',
-        threshold: 42.1,
-      },
-    ],
+    requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
   });
 
   // use typed response
@@ -163,10 +156,7 @@ export async function snippetForSearchRecommendRules(): Promise<void> {
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchRecommendRules({
-    indexName: 'indexName',
-    model: 'related-products',
-  });
+  const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });
 
   // use typed response
   console.log(response);

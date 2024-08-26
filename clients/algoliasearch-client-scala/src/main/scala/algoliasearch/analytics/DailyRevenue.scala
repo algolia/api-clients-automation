@@ -31,6 +31,6 @@ package algoliasearch.analytics
   *   Date in the format YYYY-MM-DD.
   */
 case class DailyRevenue(
-    currencies: Map[String, CurrenciesValue],
+    currencies: Map[String, CurrencyCode],
     date: String
 )
