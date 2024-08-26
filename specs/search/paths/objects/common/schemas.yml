@@ -30,21 +30,15 @@ builtInOperation:
     - _operation
     - value
 
+freeFormAttribute:
+  type: object
+  description: A free form data type of the attributeToUpdate.
+  additionalProperties: true
+
 attributeToUpdate:
   oneOf:
     - $ref: '#/builtInOperation'
-    - type: string
-      description: The new value of a string attribute.
-    - type: boolean
-      description: The new value of a boolean attribute.
-    - type: number
-      description: The new value of a numerical attribute.
-    - type: object
-      additionalProperties: true
-      description: The new value of an object attribute.
-    - type: array
-      items: {}
-      description: The new value of an array attribute.
+    - $ref: '#/freeFormAttribute'
 
 batchResponse:
   type: object
