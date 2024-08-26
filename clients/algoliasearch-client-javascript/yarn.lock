@@ -105,7 +105,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.4.1"
+    "@types/node": "npm:22.5.0"
     rollup: "npm:4.21.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -131,7 +131,7 @@ __metadata:
     "@algolia/client-common": "npm:5.1.1"
     "@algolia/requester-browser-xhr": "npm:5.1.1"
     "@algolia/requester-node-http": "npm:5.1.1"
-    "@types/node": "npm:22.4.1"
+    "@types/node": "npm:22.5.0"
     rollup: "npm:4.21.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -3195,7 +3195,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:22.5.0":
   version: 22.5.0
   resolution: "@types/node@npm:22.5.0"
   dependencies:
@@ -3219,15 +3219,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.13.0"
   checksum: 10/2957c5c81f1a07a1210f28382adae65c11070c301e395fa819448516f1a2a710054b29e0ec7d8e28624afbcd90dae810403a497109545dea835b554fc76edf6c
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:22.4.1":
-  version: 22.4.1
-  resolution: "@types/node@npm:22.4.1"
-  dependencies:
-    undici-types: "npm:~6.19.2"
-  checksum: 10/cce9221aea24688bccc3d7c25afd26d95c1bdab73a32ee5c43bb456e070116abf6ba537a9ff19c728bc06fe054e69a2c7ec8e5d818e34a3bf9567eae2cb20059
   languageName: node
   linkType: hard
 
