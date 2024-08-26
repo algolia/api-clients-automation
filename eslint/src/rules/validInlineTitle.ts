@@ -5,8 +5,7 @@ import { isNullable, isPairWithKey } from '../utils';
 export const validInlineTitle: Rule.RuleModule = {
   meta: {
     docs: {
-      description:
-        'title must be set in inline models, should be the first property and start with a lowercase',
+      description: 'title must be set in inline models, should be the first property and start with a lowercase',
     },
     messages: {
       inlineTitleExists: 'title must be set in inline models',
@@ -22,11 +21,7 @@ export const validInlineTitle: Rule.RuleModule = {
 
     return {
       YAMLPair(node): void {
-        if (
-          !isPairWithKey(node, 'type') ||
-          node.value?.type !== 'YAMLScalar' ||
-          node.value.value !== 'object'
-        ) {
+        if (!isPairWithKey(node, 'type') || node.value?.type !== 'YAMLScalar' || node.value.value !== 'object') {
           return;
         }
 
@@ -61,10 +56,7 @@ export const validInlineTitle: Rule.RuleModule = {
         }
 
         // allow it on nullable objects
-        if (
-          isPairWithKey(node.parent.parent.parent, 'oneOf') &&
-          isNullable(node.parent.parent.parent.value)
-        ) {
+        if (isPairWithKey(node.parent.parent.parent, 'oneOf') && isNullable(node.parent.parent.parent.value)) {
           return;
         }
 

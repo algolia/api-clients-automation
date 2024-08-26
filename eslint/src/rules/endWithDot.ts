@@ -28,11 +28,7 @@ export const endWithDot: Rule.RuleModule = {
         }
 
         const value = node.value;
-        if (
-          typeof value.value !== 'string' ||
-          value.value.trim().endsWith('.') ||
-          !value.value.trim().includes(' ')
-        ) {
+        if (typeof value.value !== 'string' || value.value.trim().endsWith('.') || !value.value.trim().includes(' ')) {
           // The rule is respected if:
           // the description is not a string
           // or it ends with a dot
