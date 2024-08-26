@@ -47,6 +47,7 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
 {{/operations}}
 
 {{#isSearchClient}}
+{{^isAlgoliasearchClient}}
 /**
  * The `browseObjects`, `browseRules`, `browseSynonyms` options.
  */
@@ -175,6 +176,7 @@ export type ReplaceAllObjectsOptions = {
    */
   batchSize?: number;
 }
+{{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 
 {{/apiInfo.apis.0}}

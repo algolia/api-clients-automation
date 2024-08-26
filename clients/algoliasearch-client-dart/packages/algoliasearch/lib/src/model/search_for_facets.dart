@@ -167,7 +167,7 @@ final class SearchForFacets {
   final int? offset;
 
   /// Number of hits to retrieve (used in combination with `offset`).
-  // minimum: 1
+  // minimum: 0
   // maximum: 1000
   @JsonKey(name: r'length')
   final int? length;

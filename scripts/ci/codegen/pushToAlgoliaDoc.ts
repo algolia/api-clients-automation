@@ -51,9 +51,12 @@ async function pushToAlgoliaDoc(): Promise<void> {
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/app_data/api/specs`);
   await run(`rm -rf ${pathToSpecs}/* || true`);
   await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
+  await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/release.config.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('snippets/guides/*.json')} ${pathToSpecs}`);
+  // add block extension ban words like `analytics` so we use a different file name just so the doc dans render it
+  await run(`mv ${pathToSpecs}/analytics.doc.yml ${pathToSpecs}/searchstats.doc.yml`);
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
     console.log(`❎ Skipping push docs because there is no change.`);

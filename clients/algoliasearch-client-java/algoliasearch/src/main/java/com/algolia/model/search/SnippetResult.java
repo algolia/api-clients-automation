@@ -109,6 +109,15 @@ public interface SnippetResult {
     @Override
     public SnippetResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize SnippetResultOption
+      if (tree.isObject() && tree.has("matchLevel")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SnippetResultOption.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SnippetResultOption (error: " + e.getMessage() + ") (type: SnippetResultOption)");
+        }
+      }
       // deserialize Map<String, SnippetResult>
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -119,15 +128,6 @@ public interface SnippetResult {
           LOGGER.finest(
             "Failed to deserialize oneOf Map<String, SnippetResult> (error: " + e.getMessage() + ") (type: Map<String, SnippetResult>)"
           );
-        }
-      }
-      // deserialize SnippetResultOption
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(SnippetResultOption.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf SnippetResultOption (error: " + e.getMessage() + ") (type: SnippetResultOption)");
         }
       }
       // deserialize Map<String, SnippetResultOption>

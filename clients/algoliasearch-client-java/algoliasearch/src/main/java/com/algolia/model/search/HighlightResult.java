@@ -109,6 +109,15 @@ public interface HighlightResult {
     @Override
     public HighlightResult deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize HighlightResultOption
+      if (tree.isObject() && tree.has("matchLevel") && tree.has("matchedWords")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(HighlightResultOption.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf HighlightResultOption (error: " + e.getMessage() + ") (type: HighlightResultOption)");
+        }
+      }
       // deserialize Map<String, HighlightResult>
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -119,15 +128,6 @@ public interface HighlightResult {
           LOGGER.finest(
             "Failed to deserialize oneOf Map<String, HighlightResult> (error: " + e.getMessage() + ") (type: Map<String, HighlightResult>)"
           );
-        }
-      }
-      // deserialize HighlightResultOption
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(HighlightResultOption.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf HighlightResultOption (error: " + e.getMessage() + ") (type: HighlightResultOption)");
         }
       }
       // deserialize Map<String, HighlightResultOption>

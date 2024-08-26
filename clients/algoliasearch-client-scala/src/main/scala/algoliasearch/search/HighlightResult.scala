@@ -77,8 +77,9 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[HighlightResult] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "matchLevel") && value.obj.exists(_._1 == "matchedWords") =>
+          Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResult]](value))
-        case value: JObject => Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
           HighlightResult.SeqOfHighlightResultOption(value.map(_.extract))

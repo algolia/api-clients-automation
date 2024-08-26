@@ -10,6 +10,8 @@ snippetResultOption:
   required:
     - value
     - matchLevel
+  x-discriminator-fields:
+    - matchLevel
 
 snippetResultOptionMap:
   type: object

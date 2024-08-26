@@ -21,17 +21,8 @@ public interface AddABTestsVariant {
     @Override
     public AddABTestsVariant deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize AbTestsVariant
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AbTestsVariant.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf AbTestsVariant (error: " + e.getMessage() + ") (type: AbTestsVariant)");
-        }
-      }
       // deserialize AbTestsVariantSearchParams
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("customSearchParameters")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AbTestsVariantSearchParams.class);
         } catch (Exception e) {
@@ -39,6 +30,15 @@ public interface AddABTestsVariant {
           LOGGER.finest(
             "Failed to deserialize oneOf AbTestsVariantSearchParams (error: " + e.getMessage() + ") (type: AbTestsVariantSearchParams)"
           );
+        }
+      }
+      // deserialize AbTestsVariant
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AbTestsVariant.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf AbTestsVariant (error: " + e.getMessage() + ") (type: AbTestsVariant)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

@@ -11,6 +11,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 
 class SearchTest {
@@ -313,9 +315,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -355,9 +355,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""[{"taskID":333,"objectIDs":["1","2"]}]""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""[{"taskID":333,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -430,9 +428,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""[{"taskID":444,"objectIDs":["1","2"]}]""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""[{"taskID":444,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -473,9 +469,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""[{"taskID":555,"objectIDs":["3","4"]}]""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""[{"taskID":555,"objectIDs":["3","4"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -494,9 +488,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""[{"taskID":666,"objectIDs":["1","2"]}]""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""[{"taskID":666,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -515,9 +507,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -545,9 +535,7 @@ class SearchTest {
 
       response = {
         assertNotNull(it)
-        val expected = Json.parseToJsonElement("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""")
-        val actual = Json.encodeToJsonElement(it)
-        areJsonElementsEqual(expected, actual)
+        JSONAssert.assertEquals("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )

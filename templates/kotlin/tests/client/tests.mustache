@@ -45,9 +45,7 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
             {{#isHelper}}response = {
             {{#matchIsJSON}}
               assertNotNull(it)
-              val expected = Json.parseToJsonElement("""{{{match.parameters}}}""")
-              val actual = Json.encodeToJsonElement(it)
-              areJsonElementsEqual(expected, actual)
+              JSONAssert.assertEquals("""{{{match.parameters}}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
             {{/matchIsJSON}}
             {{^matchIsJSON}}
               {{#matchIsNull}}

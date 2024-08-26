@@ -2194,6 +2194,8 @@ components:
           description: >-
             Private key of the Google service account. This field is `null` in
             the API response.
+      x-discriminator-fields:
+        - clientEmail
     AuthBasicPartial:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2205,6 +2207,8 @@ components:
         password:
           type: string
           description: Password. This field is `null` in the API response.
+      x-discriminator-fields:
+        - username
     AuthAPIKeyPartial:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2213,6 +2217,8 @@ components:
         key:
           type: string
           description: API key. This field is `null` in the API response.
+      x-discriminator-fields:
+        - key
     AuthOAuthPartial:
       type: object
       description: Credentials for authenticating with OAuth 2.0.
@@ -2231,6 +2237,8 @@ components:
           type: string
           default: ''
           description: OAuth scope.
+      x-discriminator-fields:
+        - url
     AuthAlgoliaPartial:
       type: object
       description: Credentials for authenticating with Algolia.
@@ -2341,6 +2349,9 @@ components:
       required:
         - clientEmail
         - privateKey
+      x-discriminator-fields:
+        - clientEmail
+        - privateKey
     AuthBasic:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2355,6 +2366,9 @@ components:
       required:
         - username
         - password
+      x-discriminator-fields:
+        - username
+        - password
     AuthAPIKey:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2364,6 +2378,8 @@ components:
           type: string
           description: API key. This field is `null` in the API response.
       required:
+        - key
+      x-discriminator-fields:
         - key
     AuthOAuth:
       type: object
@@ -2384,6 +2400,10 @@ components:
           default: ''
           description: OAuth scope.
       required:
+        - url
+        - client_id
+        - client_secret
+      x-discriminator-fields:
         - url
         - client_id
         - client_secret
@@ -2990,6 +3010,11 @@ components:
         - image
         - imageType
         - configuration
+      x-discriminator-fields:
+        - registry
+        - image
+        - imageType
+        - configuration
     SourceUpdateShopify:
       type: object
       additionalProperties: false
@@ -3223,6 +3248,8 @@ components:
           type: object
           description: Configuration of the spec.
       required:
+        - configuration
+      x-discriminator-fields:
         - configuration
     SourceUpdateInput:
       oneOf:
@@ -3475,6 +3502,9 @@ components:
       required:
         - format
         - actions
+      x-discriminator-fields:
+        - format
+        - actions
     StreamingInput:
       type: object
       additionalProperties: false
@@ -3485,6 +3515,8 @@ components:
         mapping:
           $ref: '#/components/schemas/MappingInput'
       required:
+        - mapping
+      x-discriminator-fields:
         - mapping
     DockerStreamsSyncMode:
       type: string
@@ -3517,6 +3549,8 @@ components:
           items:
             $ref: '#/components/schemas/DockerStreams'
       required:
+        - streams
+      x-discriminator-fields:
         - streams
     ShopifyMetafield:
       type: object
@@ -3646,6 +3680,8 @@ components:
           $ref: '#/components/schemas/Cron'
       required:
         - type
+        - cron
+      x-discriminator-fields:
         - cron
     TaskCreateTrigger:
       oneOf:

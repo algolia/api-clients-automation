@@ -2972,7 +2972,7 @@ components:
         length:
           type: integer
           description: Number of hits to retrieve (used in combination with `offset`).
-          minimum: 1
+          minimum: 0
           maximum: 1000
           x-categories:
             - Pagination
@@ -4690,6 +4690,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -4724,6 +4727,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object

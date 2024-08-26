@@ -2,71 +2,16 @@
 /* eslint-disable import/no-commonjs */
 const remarkSmartypants = require('remark-smartypants');
 
-const fs = require('fs');
-const path = require('path');
-
-function getSpecFiles() {
-  const bundledSpecsPath = path.resolve(process.cwd(), '../specs/bundled');
-  const specs = [];
-
-  fs.readdirSync(bundledSpecsPath).forEach((file) => {
-    if (file.endsWith('.doc.yml')) {
-      const fileName = file.replace('.doc.yml', '');
-
-      specs.push({
-        fileName,
-        path: `${bundledSpecsPath}/${file}`,
-        route: `/specs/${fileName}`,
-      });
-    }
-  });
-
-  if (specs.length === 0) {
-    throw new Error('Unable to find spec files');
-  }
-
-  return specs;
-}
-
-function getSpecsForPlugin() {
-  return getSpecFiles().map((specFile) => {
-    return {
-      id: specFile.fileName,
-      spec: specFile.path,
-      route: specFile.route,
-    };
-  });
-}
-
-function getSpecsForNavBar() {
-  return getSpecFiles().map((specFile) => {
-    /** @type {import('@docusaurus/theme-common').NavbarItem} */
-    return {
-      label: getLabel(specFile.fileName),
-      href: specFile.route,
-      className: 'header-restapi',
-    };
-  });
-}
-
-function getLabel(str) {
-  const dict = {
-    abtesting: 'A/B Testing',
-    'query-suggestions': 'Query Suggestions',
-  };
-  return dict[str] || str;
-}
-
 /** @type {import('@docusaurus/types').Config} */
 (
   module.exports = {
-    title: 'Algolia API',
-    tagline: 'Documentation for the Algolia API and Clients.',
+    title: 'Algolia API clients automation',
+    tagline: 'Documentation for the API clients automation repository',
     url: 'https://api-clients-automation.netlify.app/',
     baseUrl: '/',
     favicon: 'img/logo-small.svg',
     organizationName: 'Algolia',
-    projectName: 'Algolia API and Clients',
+    projectName: 'Algolia API clients automation',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'throw',
 
@@ -90,62 +35,26 @@ function getLabel(str) {
           },
         }),
       ],
-      [
-        'redocusaurus',
-        {
-          specs: getSpecsForPlugin(),
-          theme: {
-            primaryColor: '#003DFF',
-          },
-        },
-      ],
     ],
 
     themeConfig:
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
-        prism: {
-          // scala is required to make java work
-          additionalLanguages: [
-            'php',
-            'java',
-            'scala',
-            'dart',
-            'go',
-            'groovy',
-            'csharp',
-            'python',
-            'ruby',
-          ],
-        },
         navbar: {
-          title: 'Algolia API',
+          title: 'Algolia API clients Automation',
           logo: {
             alt: 'Algolia',
             src: 'img/logo-small.svg',
             srcDark: 'img/logo-small.svg',
           },
           items: [
-            // left
-            {
-              label: 'Clients',
-              to: 'docs/clients/introduction',
-              position: 'left',
-            },
-            {
-              label: 'HTTP API',
-              position: 'left',
-              type: 'dropdown',
-              items: getSpecsForNavBar(),
-            },
-            // right
             {
               label: 'Contributing',
-              to: 'docs/contributing/introduction',
-              position: 'right',
+              to: 'docs/introduction',
+              position: 'left',
             },
             {
-              label: 'Algolia documentation',
+              label: 'Algolia API clients documentation',
               href: 'https://www.algolia.com/doc/',
               position: 'right',
             },
@@ -180,6 +89,10 @@ function getLabel(str) {
             {
               label: 'Algolia Website',
               to: 'https://algolia.com/',
+            },
+            {
+              label: 'Algolia Documentation',
+              to: 'https://algolia.com/doc',
             },
             {
               label: 'Algolia Blog',

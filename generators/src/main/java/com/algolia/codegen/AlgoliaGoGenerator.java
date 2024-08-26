@@ -53,7 +53,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../../", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));
@@ -106,6 +108,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOf.addOneOfMetadata(models);
 
     for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
       String modelName = entry.getKey();

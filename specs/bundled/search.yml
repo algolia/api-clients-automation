@@ -650,7 +650,7 @@ paths:
 
 
         To update _some_ attributes of a record, use the [`partial`
-        operation](#tag/Records/operation/partial).
+        operation](#tag/Records/operation/partialUpdateObject).
 
         To add, update, or replace multiple records, use the [`batch`
         operation](#tag/Records/operation/batch).
@@ -875,7 +875,7 @@ paths:
         operation](#tag/Search/operation/browse),
 
         and then delete the records using the [`batch`
-        operation](tag/Records/operation/batch).
+        operation](#tag/Records/operation/batch).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -3644,6 +3644,7 @@ components:
       default: ''
     searchParamsString:
       type: object
+      title: Search parameters as query string.
       description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
@@ -4207,7 +4208,7 @@ components:
         length:
           type: integer
           description: Number of hits to retrieve (used in combination with `offset`).
-          minimum: 1
+          minimum: 0
           maximum: 1000
           x-categories:
             - Pagination
@@ -5703,6 +5704,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -5737,6 +5741,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object
@@ -7139,6 +7145,8 @@ components:
       required:
         - position
         - objectIDs
+      x-discriminator-fields:
+        - objectIDs
     promoteObjectID:
       title: objectID
       description: Record to promote.
@@ -7151,6 +7159,8 @@ components:
           $ref: '#/components/schemas/promotePosition'
       required:
         - position
+        - objectID
+      x-discriminator-fields:
         - objectID
     promote:
       oneOf:

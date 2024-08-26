@@ -47,7 +47,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.0.1';
+    public const VERSION = '4.2.0';
 
     /**
      * @var ApiWrapperInterface
@@ -800,7 +800,7 @@ class SearchClient
     }
 
     /**
-     * This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+     * This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      *  - deleteIndex
@@ -2001,7 +2001,7 @@ class SearchClient
     }
 
     /**
-     * Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+     * Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2895,7 +2895,7 @@ class SearchClient
 
     /**
      * Helper: Replace all objects in an index using a temporary one.
-     * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+     * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
      *
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
@@ -2956,10 +2956,11 @@ class SearchClient
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param array  $requestOptions Request options
+     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function saveObjects($indexName, $objects, $requestOptions = [])
+    public function saveObjects($indexName, $objects, $requestOptions = [], $waitForTasks = false)
     {
-        return $this->chunkedBatch($indexName, $objects, 'addObject', false, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -2968,8 +2969,9 @@ class SearchClient
      * @param string $indexName      the `indexName` to delete `objectIDs` from
      * @param array  $objectIDs      the `objectIDs` to delete
      * @param array  $requestOptions Request options
+     * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function deleteObjects($indexName, $objectIDs, $requestOptions = [])
+    public function deleteObjects($indexName, $objectIDs, $requestOptions = [], $waitForTasks = false)
     {
         $objects = [];
 
@@ -2977,7 +2979,7 @@ class SearchClient
             $objects[] = ['objectID' => $id];
         }
 
-        return $this->chunkedBatch($indexName, $objects, 'deleteObject', false, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -2987,10 +2989,11 @@ class SearchClient
      * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
      * @param bool   $createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
      * @param array  $requestOptions    Request options
+     * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = [])
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = [], $waitForTasks = false)
     {
-        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -2999,7 +3002,7 @@ class SearchClient
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
      * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
-     * @param array  $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param bool   $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions Request options
      */

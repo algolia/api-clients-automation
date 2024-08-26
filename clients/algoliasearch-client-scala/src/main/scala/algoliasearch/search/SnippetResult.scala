@@ -77,8 +77,8 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[SnippetResult] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "matchLevel") => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResult]](value))
-        case value: JObject => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
           SnippetResult.SeqOfSnippetResultOption(value.map(_.extract))
