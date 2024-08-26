@@ -112,9 +112,6 @@ module.exports = {
         '@typescript-eslint/prefer-enum-initializers': 0,
         '@typescript-eslint/no-namespace': 0,
         'import/dynamic-import-chunkname': 0,
-        '@stylistic/indent': 0,
-
-        '@stylistic/max-len': [0, { code: 100, ignoreComments: true }],
         '@stylistic/comma-dangle': [0, "always"],
         'prettier/prettier': [
           'error',
@@ -122,7 +119,7 @@ module.exports = {
             "printWidth": 100,
             "trailingComma": "all",
             "singleQuote": true,
-            "tabWidth":2
+            "tabWidth": 2
           },
         ],
 
