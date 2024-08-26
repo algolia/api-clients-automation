@@ -119,13 +119,11 @@
       "path": "/1/indexes/theIndexName/uniqueID/partial",
       "method": "POST",
       "body": {
-        "attributeId": {
-          "attributeId": [
-            "one",
-            "two",
-            "three"
-          ]
-        }
+        "attributeId": [
+          "one",
+          "two",
+          "three"
+        ]
       }
     }
   }
