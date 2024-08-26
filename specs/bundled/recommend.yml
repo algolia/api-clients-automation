@@ -2707,7 +2707,6 @@ components:
               food: 1
               tech: 42
         facets_stats:
-          title: facetsStats
           type: object
           description: Statistics for numerical facets.
           additionalProperties:

@@ -7,34 +7,20 @@ import { union } from '../helpers';
 dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
-  throw new Error(
-    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');
 }
 
 if (!process.env.ALGOLIA_ADMIN_KEY) {
-  throw new Error(
-    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests');
 }
 
-const client = searchClient(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_ADMIN_KEY
-);
+const client = searchClient(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY);
 
 describe('browse', () => {
   test('browse with minimal parameters', async () => {
     const resp = await client.browse({ indexName: 'cts_e2e_browse' });
 
-    const expectedBody = {
-      page: 0,
-      nbHits: 33191,
-      nbPages: 34,
-      hitsPerPage: 1000,
-      query: '',
-      params: '',
-    };
+    const expectedBody = { page: 0, nbHits: 33191, nbPages: 34, hitsPerPage: 1000, query: '', params: '' };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });
@@ -51,16 +37,7 @@ describe('getSettings', () => {
       maxValuesPerFacet: 100,
       paginationLimitedTo: 10,
       exactOnSingleWordQuery: 'attribute',
-      ranking: [
-        'typo',
-        'geo',
-        'words',
-        'filters',
-        'proximity',
-        'attribute',
-        'exact',
-        'custom',
-      ],
+      ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
       separatorsToIndex: '',
       removeWordsIfNoResults: 'none',
       queryType: 'prefixLast',
@@ -75,9 +52,7 @@ describe('getSettings', () => {
 
 describe('search', () => {
   test('search for a single hits request with minimal parameters', async () => {
-    const resp = await client.search({
-      requests: [{ indexName: 'cts_e2e_search_empty_index' }],
-    });
+    const resp = await client.search({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
 
     const expectedBody = {
       results: [
@@ -133,25 +108,11 @@ describe('search', () => {
               },
               _highlightResult: {
                 editor: {
-                  name: {
-                    value: '<em>vim</em>',
-                    matchLevel: 'full',
-                    fullyHighlighted: true,
-                    matchedWords: ['vim'],
-                  },
-                  type: {
-                    value: 'beforeneovim',
-                    matchLevel: 'none',
-                    matchedWords: [],
-                  },
+                  name: { value: '<em>vim</em>', matchLevel: 'full', fullyHighlighted: true, matchedWords: ['vim'] },
+                  type: { value: 'beforeneovim', matchLevel: 'none', matchedWords: [] },
                 },
                 names: [
-                  {
-                    value: '<em>vim</em>',
-                    matchLevel: 'full',
-                    fullyHighlighted: true,
-                    matchedWords: ['vim'],
-                  },
+                  { value: '<em>vim</em>', matchLevel: 'full', fullyHighlighted: true, matchedWords: ['vim'] },
                   { value: ':q', matchLevel: 'none', matchedWords: [] },
                 ],
               },
@@ -176,9 +137,7 @@ describe('search', () => {
 
   test('search for a single facet request with minimal parameters', async () => {
     const resp = await client.search({
-      requests: [
-        { indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' },
-      ],
+      requests: [{ indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' }],
       strategy: 'stopIfEnoughMatches',
     });
 
@@ -202,24 +161,12 @@ describe('search', () => {
   test('search filters end to end', async () => {
     const resp = await client.search({
       requests: [
+        { indexName: 'cts_e2e_search_facet', filters: "editor:'visual studio' OR editor:neovim" },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", 'editor:neovim'] },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", ['editor:neovim']] },
         {
           indexName: 'cts_e2e_search_facet',
-          filters: "editor:'visual studio' OR editor:neovim",
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: [
-            "editor:'visual studio'",
-            ['editor:neovim', ['editor:goland']],
-          ],
+          facetFilters: ["editor:'visual studio'", ['editor:neovim', ['editor:goland']]],
         },
       ],
     });
@@ -233,18 +180,8 @@ describe('search', () => {
           nbPages: 1,
           page: 0,
           hits: [
-            {
-              editor: 'visual studio',
-              _highlightResult: {
-                editor: { value: 'visual studio', matchLevel: 'none' },
-              },
-            },
-            {
-              editor: 'neovim',
-              _highlightResult: {
-                editor: { value: 'neovim', matchLevel: 'none' },
-              },
-            },
+            { editor: 'visual studio', _highlightResult: { editor: { value: 'visual studio', matchLevel: 'none' } } },
+            { editor: 'neovim', _highlightResult: { editor: { value: 'neovim', matchLevel: 'none' } } },
           ],
           query: '',
           params: 'filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim',
@@ -257,8 +194,7 @@ describe('search', () => {
           page: 0,
           hits: [],
           query: '',
-          params:
-            'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D',
+          params: 'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D',
         },
         {
           hitsPerPage: 20,
@@ -268,8 +204,7 @@ describe('search', () => {
           page: 0,
           hits: [],
           query: '',
-          params:
-            'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D',
+          params: 'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D',
         },
         {
           hitsPerPage: 20,
@@ -297,13 +232,7 @@ describe('searchDictionaryEntries', () => {
     });
 
     const expectedBody = {
-      hits: [
-        {
-          objectID: '86ef58032f47d976ca7130a896086783',
-          language: 'en',
-          word: 'about',
-        },
-      ],
+      hits: [{ objectID: '86ef58032f47d976ca7130a896086783', language: 'en', word: 'about' }],
       page: 0,
       nbHits: 1,
       nbPages: 1,

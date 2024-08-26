@@ -36,10 +36,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
 
   const targetBranch = 'feat/automated-update-from-api-clients-automation-repository';
   const githubURL = `https://${githubToken}:${githubToken}@github.com/${OWNER}/${repository}`;
-  const tempGitDir = resolve(
-    process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'),
-    repository,
-  );
+  const tempGitDir = resolve(process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'), repository);
   await fsp.rm(tempGitDir, { force: true, recursive: true });
   await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
   if (await gitBranchExists(targetBranch, tempGitDir)) {
@@ -59,7 +56,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await run(`mv ${pathToSpecs}/analytics.doc.yml ${pathToSpecs}/searchstats.doc.yml`);
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
-    console.log(`❎ Skipping push docs because there is no change.`);
+    console.log('❎ Skipping push docs because there is no change.');
 
     return;
   }

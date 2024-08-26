@@ -2,9 +2,9 @@
 // ignore_for_file: unused_element
 import 'package:algoliasearch/src/model/redirect.dart';
 import 'package:algoliasearch/src/model/hit.dart';
-import 'package:algoliasearch/src/model/facets_stats.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/exhaustive.dart';
+import 'package:algoliasearch/src/model/facet_stats.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -89,7 +89,7 @@ final class BrowseResponse {
 
   /// Statistics for numerical facets.
   @JsonKey(name: r'facets_stats')
-  final Map<String, FacetsStats>? facetsStats;
+  final Map<String, FacetStats>? facetsStats;
 
   /// Index name used for the query.
   @JsonKey(name: r'index')

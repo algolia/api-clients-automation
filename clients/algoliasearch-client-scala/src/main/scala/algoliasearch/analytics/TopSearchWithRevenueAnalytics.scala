@@ -72,7 +72,7 @@ case class TopSearchWithRevenueAnalytics(
     clickCount: Int,
     conversionCount: Int,
     nbHits: Int,
-    currencies: Map[String, CurrenciesValue],
+    currencies: Map[String, CurrencyCode],
     addToCartRate: Option[Double] = scala.None,
     addToCartCount: Int,
     purchaseRate: Option[Double] = scala.None,

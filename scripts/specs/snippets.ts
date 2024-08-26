@@ -20,10 +20,7 @@ export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   }
 }
 
-function getHelperSnippet(
-  helperName: keyof typeof helperSnippets,
-  language: string,
-): Record<string, string> | string {
+function getHelperSnippet(helperName: keyof typeof helperSnippets, language: string): Record<string, string> | string {
   if (typeof helperSnippets[helperName][language] === 'string') {
     return {
       default: helperSnippets[helperName][language],
@@ -42,9 +39,7 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
       }
 
       for (const [sampleName, sample] of Object.entries(samples)) {
-        const sampleMatch = sample.match(
-          /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
-        );
+        const sampleMatch = sample.match(/.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/);
         if (!sampleMatch) {
           continue;
         }
@@ -99,9 +94,7 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
     }
 
     // iterate over every matches (operationId) and store it in the hashmap for later use
-    for (const match of snippetFileContent.matchAll(
-      />SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g,
-    )) {
+    for (const match of snippetFileContent.matchAll(/>SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g)) {
       const lines: string[] = match[0].split('\n').slice(1, -1);
       if (!lines.length) {
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);

@@ -25,9 +25,9 @@ export const validACL: Rule.RuleModule = {
       description: 'x-acl enum must contains valid Algolia ACLs',
     },
     messages: {
-      validString: `is not a string`,
+      validString: 'is not a string',
       validACL: `{{entry}} is not a valid Algolia ACL, must be one of: ${ACLs.join(', ')}.`,
-      validArray: `is not an array of string`,
+      validArray: 'is not an array of string',
     },
   },
   create(context) {

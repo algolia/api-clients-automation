@@ -22,9 +22,7 @@ type Args = {
 export function getClientChoices(language?: LangArg, clientList = PROMPT_CLIENTS): string[] {
   const withoutAlgoliaSearch = clientList.filter((client) => client !== 'algoliasearch');
 
-  return language === ALL || language === 'javascript' || language === 'dart'
-    ? clientList
-    : withoutAlgoliaSearch;
+  return language === ALL || language === 'javascript' || language === 'dart' ? clientList : withoutAlgoliaSearch;
 }
 
 export function generatorList({
@@ -39,9 +37,7 @@ export function generatorList({
   const langsTodo = language === ALL ? LANGUAGES : [language];
   const clientsTodo = client[0] === ALL ? clientList : client;
 
-  return langsTodo
-    .flatMap((lang) => clientsTodo.map((cli) => GENERATORS[`${lang}-${cli}`]))
-    .filter(Boolean);
+  return langsTodo.flatMap((lang) => clientsTodo.map((cli) => GENERATORS[`${lang}-${cli}`])).filter(Boolean);
 }
 
 export function transformSelection({ langArg, clientArg }: Args): Selection {

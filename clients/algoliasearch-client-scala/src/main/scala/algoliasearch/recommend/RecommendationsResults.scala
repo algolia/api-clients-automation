@@ -95,7 +95,7 @@ case class RecommendationsResults(
     exhaustiveNbHits: Option[Boolean] = scala.None,
     exhaustiveTypo: Option[Boolean] = scala.None,
     facets: Option[Map[String, Map[String, Int]]] = scala.None,
-    facetsStats: Option[Map[String, FacetsStats]] = scala.None,
+    facetsStats: Option[Map[String, FacetStats]] = scala.None,
     index: Option[String] = scala.None,
     indexUsed: Option[String] = scala.None,
     message: Option[String] = scala.None,

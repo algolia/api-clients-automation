@@ -158,10 +158,7 @@ export async function snippetForGetMetrics(): Promise<void> {
   const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getMetrics({
-    metric: 'avg_build_time',
-    period: 'minute',
-  });
+  const response = await client.getMetrics({ metric: 'avg_build_time', period: 'minute' });
 
   // use typed response
   console.log(response);

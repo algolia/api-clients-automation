@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { execaCommand } from 'execa';
 import micromatch from 'micromatch';
 
-import clientConfig from '../../config/clients.config.json' assert { type: 'json' };
+import clientConfig from '../../config/clients.config.json' with { type: 'json' };
 import { patterns } from '../../config/generation.config.mjs';
 
 async function run(command) {

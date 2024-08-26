@@ -602,22 +602,22 @@
       "default": "import { ingestionClient } from '@algolia/ingestion';"
     },
     "createAuthentication": {
-      "default": "const response = await client.createAuthentication({\n  type: 'oauth',\n  name: 'authName',\n  input: {\n    url: 'http://test.oauth',\n    client_id: 'myID',\n    client_secret: 'mySecret',\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.createAuthentication({\n  type: 'oauth',\n  name: 'authName',\n  input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "createDestination": {
       "default": "const response = await client.createDestination({\n  type: 'search',\n  name: 'destinationName',\n  input: { indexName: 'full_name______' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "createSource": {
-      "default": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "createTask": {
-      "default": "const response = await client.createTask({\n  sourceID: 'search',\n  destinationID: 'destinationName',\n  action: 'replace',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.createTask({ sourceID: 'search', destinationID: 'destinationName', action: 'replace' });\n\n// use typed response\nconsole.log(response);"
     },
     "createTaskV1": {
       "default": "const response = await client.createTaskV1({\n  sourceID: 'search',\n  destinationID: 'destinationName',\n  trigger: { type: 'onDemand' },\n  action: 'replace',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "createTransformation": {
-      "default": "const response = await client.createTransformation({\n  code: 'foo',\n  name: 'bar',\n  description: 'baz',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.createTransformation({ code: 'foo', name: 'bar', description: 'baz' });\n\n// use typed response\nconsole.log(response);"
     },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
@@ -632,61 +632,61 @@
       "default": "const response = await client.customPut({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteAuthentication": {
-      "default": "const response = await client.deleteAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteDestination": {
-      "default": "const response = await client.deleteDestination({\n  destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteDestination({ destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteSource": {
-      "default": "const response = await client.deleteSource({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteSource({ sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteTask": {
-      "default": "const response = await client.deleteTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteTaskV1": {
-      "default": "const response = await client.deleteTaskV1({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteTransformation": {
-      "default": "const response = await client.deleteTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteTransformation({ transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "disableTask": {
-      "default": "const response = await client.disableTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.disableTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "disableTaskV1": {
-      "default": "const response = await client.disableTaskV1({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.disableTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "enableTask": {
-      "default": "const response = await client.enableTask({\n  taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.enableTask({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });\n\n// use typed response\nconsole.log(response);"
     },
     "enableTaskV1": {
-      "default": "const response = await client.enableTaskV1({\n  taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.enableTaskV1({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });\n\n// use typed response\nconsole.log(response);"
     },
     "generateTransformationCode": {
-      "default": "const response = await client.generateTransformationCode({\n  id: 'foo',\n  userPrompt:\n    'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.generateTransformationCode({\n  id: 'foo',\n  userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getAuthentication": {
-      "default": "const response = await client.getAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "getDestination": {
-      "default": "const response = await client.getDestination({\n  destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getDestination({ destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "getEvent": {
       "default": "const response = await client.getEvent({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  eventID: '6c02aeb1-775e-418e-870b-1faccd4b2c0c',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getRun": {
-      "default": "const response = await client.getRun({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getRun({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "getSource": {
-      "default": "const response = await client.getSource({\n  sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getSource({ sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTask": {
-      "default": "const response = await client.getTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTaskV1": {
-      "default": "const response = await client.getTaskV1({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTransformation": {
-      "default": "const response = await client.getTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getTransformation({ transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "listAuthentications": {
       "default": "const response = await client.listAuthentications();\n\n// use typed response\nconsole.log(response);"
@@ -695,7 +695,7 @@
       "default": "const response = await client.listDestinations();\n\n// use typed response\nconsole.log(response);"
     },
     "listEvents": {
-      "default": "const response = await client.listEvents({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.listEvents({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "listRuns": {
       "default": "const response = await client.listRuns();\n\n// use typed response\nconsole.log(response);"
@@ -722,19 +722,19 @@
       "default": "const response = await client.runSource({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  runSourcePayload: {\n    indexToInclude: ['products_us', 'products eu'],\n    entityIDs: ['1234', '5678'],\n    entityType: 'product',\n  },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "runTask": {
-      "default": "const response = await client.runTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.runTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "runTaskV1": {
-      "default": "const response = await client.runTaskV1({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.runTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "searchAuthentications": {
-      "default": "const response = await client.searchAuthentications({\n  authenticationIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchAuthentications({\n  authenticationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchDestinations": {
-      "default": "const response = await client.searchDestinations({\n  destinationIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchDestinations({\n  destinationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchSources": {
-      "default": "const response = await client.searchSources({\n  sourceIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchSources({\n  sourceIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchTasks": {
       "default": "const response = await client.searchTasks({\n  taskIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
@@ -746,10 +746,10 @@
       "default": "const response = await client.searchTransformations({\n  transformationIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "triggerDockerSourceDiscover": {
-      "default": "const response = await client.triggerDockerSourceDiscover({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.triggerDockerSourceDiscover({ sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });\n\n// use typed response\nconsole.log(response);"
     },
     "tryTransformation": {
-      "default": "const response = await client.tryTransformation({\n  code: 'foo',\n  sampleRecord: { bar: 'baz' },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.tryTransformation({ code: 'foo', sampleRecord: { bar: 'baz' } });\n\n// use typed response\nconsole.log(response);"
     },
     "tryTransformationBeforeUpdate": {
       "default": "const response = await client.tryTransformationBeforeUpdate({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },\n});\n\n// use typed response\nconsole.log(response);"
@@ -773,13 +773,13 @@
       "default": "const response = await client.updateTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "validateSource": {
-      "default": "const response = await client.validateSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.validateSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
     },
     "validateSourceBeforeUpdate": {
       "default": "const response = await client.validateSourceBeforeUpdate({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  sourceUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = ingestionClient("
+      "default": "const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

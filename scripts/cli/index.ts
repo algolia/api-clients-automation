@@ -16,14 +16,7 @@ import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
-import {
-  ALL,
-  getClientChoices,
-  generatorList,
-  transformSelection,
-  PROMPT_CLIENTS,
-  PROMPT_LANGUAGES,
-} from './utils.js';
+import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.js';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
@@ -148,11 +141,7 @@ ctsCommand
   .option('-r, --no-requests', 'run the requests tests')
   .option('-b, --benchmark', 'run the benchmarks')
   .action(
-    async (
-      langArg: LangArg,
-      clientArg: string[],
-      { verbose, e2e, client: includeClient, requests, benchmark },
-    ) => {
+    async (langArg: LangArg, clientArg: string[], { verbose, e2e, client: includeClient, requests, benchmark }) => {
       const { language, client } = transformSelection({
         langArg,
         clientArg,

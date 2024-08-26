@@ -890,27 +890,27 @@
       "default": "const response = await client.addOrUpdateObject({\n  indexName: 'indexName',\n  objectID: 'uniqueID',\n  body: { key: 'value' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "appendSource": {
-      "default": "const response = await client.appendSource({\n  source: 'theSource',\n  description: 'theDescription',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.appendSource({ source: 'theSource', description: 'theDescription' });\n\n// use typed response\nconsole.log(response);"
     },
     "assignUserId": {
       "default": "const response = await client.assignUserId({\n  xAlgoliaUserID: 'userID',\n  assignUserIdParams: { cluster: 'theCluster' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "batch": {
       "addObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [\n      { action: 'addObject', body: { key: 'bar', foo: '1' } },\n      { action: 'addObject', body: { key: 'baz', foo: '2' } },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "clear": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [{ action: 'clear', body: { key: 'value' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "delete": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [{ action: 'delete', body: { key: 'value' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "deleteObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [{ action: 'deleteObject', body: { key: 'value' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "partialUpdateObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "partialUpdateObjectNoCreate": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [\n      { action: 'partialUpdateObjectNoCreate', body: { key: 'value' } },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "updateObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: {\n    requests: [{ action: 'updateObject', body: { key: 'value' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "clear": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'clear', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);",
+      "delete": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'delete', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);",
+      "deleteObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'deleteObject', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);",
+      "partialUpdateObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);",
+      "partialUpdateObjectNoCreate": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'partialUpdateObjectNoCreate', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);",
+      "updateObject": "const response = await client.batch({\n  indexName: '<YOUR_INDEX_NAME>',\n  batchWriteParams: { requests: [{ action: 'updateObject', body: { key: 'value' } }] },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "batchAssignUserIds": {
-      "default": "const response = await client.batchAssignUserIds({\n  xAlgoliaUserID: 'userID',\n  batchAssignUserIdsParams: {\n    cluster: 'theCluster',\n    users: ['user1', 'user2'],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.batchAssignUserIds({\n  xAlgoliaUserID: 'userID',\n  batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "batchDictionaryEntries": {
       "replace": "const response = await client.batchDictionaryEntries({\n  dictionaryName: 'plurals',\n  batchDictionaryEntriesParams: {\n    clearExistingDictionaryEntries: true,\n    requests: [\n      {\n        action: 'addEntry',\n        body: {\n          objectID: '1',\n          language: 'en',\n          word: 'fancy',\n          words: ['believe', 'algolia'],\n          decomposition: ['trust', 'algolia'],\n          state: 'enabled',\n        },\n      },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);",
       "delete": "const response = await client.batchDictionaryEntries({\n  dictionaryName: 'plurals',\n  batchDictionaryEntriesParams: {\n    clearExistingDictionaryEntries: true,\n    requests: [{ action: 'deleteEntry', body: { objectID: '1' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "append": "const response = await client.batchDictionaryEntries({\n  dictionaryName: 'stopwords',\n  batchDictionaryEntriesParams: {\n    requests: [\n      {\n        action: 'addEntry',\n        body: { objectID: '1', language: 'en', additional: 'try me' },\n      },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "append": "const response = await client.batchDictionaryEntries({\n  dictionaryName: 'stopwords',\n  batchDictionaryEntriesParams: {\n    requests: [{ action: 'addEntry', body: { objectID: '1', language: 'en', additional: 'try me' } }],\n  },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "browse": {
       "default": "const response = await client.browse({ indexName: 'cts_e2e_browse' });\n\n// use typed response\nconsole.log(response);"
@@ -940,22 +940,22 @@
       "default": "const response = await client.deleteApiKey({ key: 'myTestApiKey' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteBy": {
-      "default": "const response = await client.deleteBy({\n  indexName: 'theIndexName',\n  deleteByParams: { filters: 'brand:brandName' },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteBy({ indexName: 'theIndexName', deleteByParams: { filters: 'brand:brandName' } });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteIndex": {
       "default": "const response = await client.deleteIndex({ indexName: 'theIndexName' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteObject": {
-      "default": "const response = await client.deleteObject({\n  indexName: '<YOUR_INDEX_NAME>',\n  objectID: 'uniqueID',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteRule": {
-      "default": "const response = await client.deleteRule({\n  indexName: 'indexName',\n  objectID: 'id1',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteSource": {
       "default": "const response = await client.deleteSource({ source: 'theSource' });\n\n// use typed response\nconsole.log(response);"
     },
     "deleteSynonym": {
-      "default": "const response = await client.deleteSynonym({\n  indexName: 'indexName',\n  objectID: 'id1',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });\n\n// use typed response\nconsole.log(response);"
     },
     "getApiKey": {
       "default": "const response = await client.getApiKey({ key: 'myTestApiKey' });\n\n// use typed response\nconsole.log(response);"
@@ -976,10 +976,10 @@
       "default": "const response = await client.getObject({\n  indexName: 'theIndexName',\n  objectID: 'uniqueID',\n  attributesToRetrieve: ['attr1', 'attr2'],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getObjects": {
-      "default": "const response = await client.getObjects({\n  requests: [\n    {\n      attributesToRetrieve: ['attr1', 'attr2'],\n      objectID: 'uniqueID',\n      indexName: 'theIndexName',\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getObjects({\n  requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getRule": {
-      "default": "const response = await client.getRule({\n  indexName: 'indexName',\n  objectID: 'id1',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getRule({ indexName: 'indexName', objectID: 'id1' });\n\n// use typed response\nconsole.log(response);"
     },
     "getSettings": {
       "default": "const response = await client.getSettings({ indexName: 'cts_e2e_settings' });\n\n// use typed response\nconsole.log(response);"
@@ -988,10 +988,10 @@
       "default": "const response = await client.getSources();\n\n// use typed response\nconsole.log(response);"
     },
     "getSynonym": {
-      "default": "const response = await client.getSynonym({\n  indexName: 'indexName',\n  objectID: 'id1',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });\n\n// use typed response\nconsole.log(response);"
     },
     "getTask": {
-      "default": "const response = await client.getTask({\n  indexName: 'theIndexName',\n  taskID: 123,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });\n\n// use typed response\nconsole.log(response);"
     },
     "getTopUserIds": {
       "default": "const response = await client.getTopUserIds();\n\n// use typed response\nconsole.log(response);"
@@ -1015,56 +1015,56 @@
       "default": "const response = await client.listUserIds();\n\n// use typed response\nconsole.log(response);"
     },
     "multipleBatch": {
-      "default": "const response = await client.multipleBatch({\n  requests: [\n    {\n      action: 'addObject',\n      body: { key: 'value' },\n      indexName: 'theIndexName',\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.multipleBatch({\n  requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "operationIndex": {
-      "scopes": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: {\n    operation: 'move',\n    destination: '<DESTINATION_INDEX_NAME>',\n    scope: ['rules', 'settings'],\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "copy": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: {\n    operation: 'copy',\n    destination: '<DESTINATION_INDEX_NAME>',\n  },\n});\n\n// use typed response\nconsole.log(response);",
-      "move": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: {\n    operation: 'move',\n    destination: '<DESTINATION_INDEX_NAME>',\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "scopes": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>', scope: ['rules', 'settings'] },\n});\n\n// use typed response\nconsole.log(response);",
+      "copy": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: { operation: 'copy', destination: '<DESTINATION_INDEX_NAME>' },\n});\n\n// use typed response\nconsole.log(response);",
+      "move": "const response = await client.operationIndex({\n  indexName: '<SOURCE_INDEX_NAME>',\n  operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "partialUpdateObject": {
-      "default": "const response = await client.partialUpdateObject({\n  indexName: 'theIndexName',\n  objectID: 'uniqueID',\n  attributesToUpdate: {\n    id1: 'test',\n    id2: { _operation: 'AddUnique', value: 'test2' },\n  },\n  createIfNotExists: true,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.partialUpdateObject({\n  indexName: 'theIndexName',\n  objectID: 'uniqueID',\n  attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },\n  createIfNotExists: true,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "removeUserId": {
       "default": "const response = await client.removeUserId({ userID: 'uniqueID' });\n\n// use typed response\nconsole.log(response);"
     },
     "replaceSources": {
-      "default": "const response = await client.replaceSources({\n  source: [{ source: 'theSource', description: 'theDescription' }],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });\n\n// use typed response\nconsole.log(response);"
     },
     "restoreApiKey": {
       "default": "const response = await client.restoreApiKey({ key: 'myApiKey' });\n\n// use typed response\nconsole.log(response);"
     },
     "saveObject": {
-      "default": "const response = await client.saveObject({\n  indexName: '<YOUR_INDEX_NAME>',\n  body: { objectID: 'id', test: 'val' },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });\n\n// use typed response\nconsole.log(response);"
     },
     "saveRule": {
-      "default": "const response = await client.saveRule({\n  indexName: 'indexName',\n  objectID: 'id1',\n  rule: {\n    objectID: 'id1',\n    conditions: [{ pattern: 'apple', anchoring: 'contains' }],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.saveRule({\n  indexName: 'indexName',\n  objectID: 'id1',\n  rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "saveRules": {
-      "default": "const response = await client.saveRules({\n  indexName: '<YOUR_INDEX_NAME>',\n  rules: [\n    {\n      objectID: 'a-rule-id',\n      conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],\n    },\n    {\n      objectID: 'a-second-rule-id',\n      conditions: [{ pattern: 'apple', anchoring: 'contains' }],\n    },\n  ],\n  forwardToReplicas: false,\n  clearExistingRules: true,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.saveRules({\n  indexName: '<YOUR_INDEX_NAME>',\n  rules: [\n    { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },\n    { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },\n  ],\n  forwardToReplicas: false,\n  clearExistingRules: true,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "saveSynonym": {
-      "default": "const response = await client.saveSynonym({\n  indexName: 'indexName',\n  objectID: 'id1',\n  synonymHit: {\n    objectID: 'id1',\n    type: 'synonym',\n    synonyms: ['car', 'vehicule', 'auto'],\n  },\n  forwardToReplicas: true,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.saveSynonym({\n  indexName: 'indexName',\n  objectID: 'id1',\n  synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },\n  forwardToReplicas: true,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "saveSynonyms": {
-      "default": "const response = await client.saveSynonyms({\n  indexName: '<YOUR_INDEX_NAME>',\n  synonymHit: [\n    {\n      objectID: 'id1',\n      type: 'synonym',\n      synonyms: ['car', 'vehicule', 'auto'],\n    },\n    {\n      objectID: 'id2',\n      type: 'onewaysynonym',\n      input: 'iphone',\n      synonyms: ['ephone', 'aphone', 'yphone'],\n    },\n  ],\n  forwardToReplicas: true,\n  replaceExistingSynonyms: true,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.saveSynonyms({\n  indexName: '<YOUR_INDEX_NAME>',\n  synonymHit: [\n    { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },\n    { objectID: 'id2', type: 'onewaysynonym', input: 'iphone', synonyms: ['ephone', 'aphone', 'yphone'] },\n  ],\n  forwardToReplicas: true,\n  replaceExistingSynonyms: true,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "search": {
-      "withHitsPerPage": "const response = await client.search({\n  requests: [\n    {\n      indexName: '<YOUR_INDEX_NAME>',\n      query: '<YOUR_QUERY>',\n      hitsPerPage: 50,\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);",
-      "filterOnly": "const response = await client.search({\n  requests: [\n    {\n      indexName: '<YOUR_INDEX_NAME>',\n      query: '<YOUR_QUERY>',\n      filters: 'actor:Scarlett Johansson',\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);",
+      "withHitsPerPage": "const response = await client.search({\n  requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],\n});\n\n// use typed response\nconsole.log(response);",
+      "filterOnly": "const response = await client.search({\n  requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],\n});\n\n// use typed response\nconsole.log(response);",
       "filterOr": "const response = await client.search({\n  requests: [\n    {\n      indexName: '<YOUR_INDEX_NAME>',\n      query: '<YOUR_QUERY>',\n      filters: 'actor:Tom Cruise OR actor:Scarlett Johansson',\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);",
-      "filterNot": "const response = await client.search({\n  requests: [\n    {\n      indexName: '<YOUR_INDEX_NAME>',\n      query: '<YOUR_QUERY>',\n      filters: 'NOT actor:Nicolas Cage',\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);",
-      "retrieveFacets": "const response = await client.search({\n  requests: [\n    {\n      indexName: '<YOUR_INDEX_NAME>',\n      query: '<YOUR_QUERY>',\n      facets: ['author', 'genre'],\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);",
-      "retrieveFacetsWildcard": "const response = await client.search({\n  requests: [\n    { indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "filterNot": "const response = await client.search({\n  requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],\n});\n\n// use typed response\nconsole.log(response);",
+      "retrieveFacets": "const response = await client.search({\n  requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],\n});\n\n// use typed response\nconsole.log(response);",
+      "retrieveFacetsWildcard": "const response = await client.search({\n  requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchDictionaryEntries": {
       "default": "const response = await client.searchDictionaryEntries({\n  dictionaryName: 'stopwords',\n  searchDictionaryEntriesParams: { query: 'about' },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchForFacetValues": {
-      "default": "const response = await client.searchForFacetValues({\n  indexName: 'indexName',\n  facetName: 'facetName',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });\n\n// use typed response\nconsole.log(response);"
     },
     "searchRules": {
-      "default": "const response = await client.searchRules({\n  indexName: 'indexName',\n  searchRulesParams: { query: 'something' },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchRules({ indexName: 'indexName', searchRulesParams: { query: 'something' } });\n\n// use typed response\nconsole.log(response);"
     },
     "searchSingleIndex": {
       "default": "const response = await client.searchSingleIndex({ indexName: 'indexName' });\n\n// use typed response\nconsole.log(response);"
@@ -1079,10 +1079,10 @@
       "default": "const response = await client.setDictionarySettings({\n  disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "setSettings": {
-      "setSettingsAttributesForFaceting": "const response = await client.setSettings({\n  indexName: '<YOUR_INDEX_NAME>',\n  indexSettings: {\n    attributesForFaceting: [\n      'actor',\n      'filterOnly(category)',\n      'searchable(publisher)',\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "setSettingsAttributesForFaceting": "const response = await client.setSettings({\n  indexName: '<YOUR_INDEX_NAME>',\n  indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "updateApiKey": {
-      "default": "const response = await client.updateApiKey({\n  key: 'myApiKey',\n  apiKey: {\n    acl: ['search', 'addObject'],\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.updateApiKey({\n  key: 'myApiKey',\n  apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
       "default": "const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');"

@@ -8,7 +8,7 @@ export function getLastReleasedTag(): Promise<string> {
 }
 
 export async function getNewReleasedTag(): Promise<string> {
-  const lastCommitHash = await run(`git rev-parse --short HEAD`);
+  const lastCommitHash = await run('git rev-parse --short HEAD');
   const now = new Date().toISOString().split('T')[0];
 
   return `${config.releasedTag}-${now}-${lastCommitHash}`;

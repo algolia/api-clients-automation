@@ -209,10 +209,10 @@
       "default": "const response = await client.getRecommendStatus({\n  indexName: 'indexName',\n  model: 'related-products',\n  taskID: 12345,\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getRecommendations": {
-      "default": "const response = await client.getRecommendations({\n  requests: [\n    {\n      indexName: 'indexName',\n      objectID: 'objectID',\n      model: 'related-products',\n      threshold: 42.1,\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getRecommendations({\n  requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "searchRecommendRules": {
-      "default": "const response = await client.searchRecommendRules({\n  indexName: 'indexName',\n  model: 'related-products',\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
       "default": "const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');"
