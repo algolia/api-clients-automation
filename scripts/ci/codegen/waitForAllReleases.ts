@@ -35,10 +35,7 @@ async function fetchAllRuns(runs: Run[]): Promise<void> {
         }
 
         // check that the run was created less than 10 minutes ago
-        if (
-          Date.now() - Date.parse(workflowRun.data.workflow_runs[0].created_at) >
-          15 * 60 * 1000
-        ) {
+        if (Date.now() - Date.parse(workflowRun.data.workflow_runs[0].created_at) > 15 * 60 * 1000) {
           return;
         }
 
@@ -60,9 +57,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
     await Promise.all(
       languagesReleased.map(async (lang) => ({
         lang,
-        available: await exists(
-          toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`),
-        ),
+        available: await exists(toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`)),
       })),
     )
   )
@@ -91,9 +86,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
 
       if (ciRun.run.status === 'completed') {
         const success = ciRun.run.conclusion === 'success';
-        console.log(
-          `${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`,
-        );
+        console.log(`${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`);
         if (!success) {
           failures.push(ciRun.language);
         }

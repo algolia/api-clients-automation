@@ -36,10 +36,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
 
   const targetBranch = 'feat/automated-update-from-api-clients-automation-repository';
   const githubURL = `https://${githubToken}:${githubToken}@github.com/${OWNER}/${repository}`;
-  const tempGitDir = resolve(
-    process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'),
-    repository,
-  );
+  const tempGitDir = resolve(process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'), repository);
   await fsp.rm(tempGitDir, { force: true, recursive: true });
   await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
   if (await gitBranchExists(targetBranch, tempGitDir)) {

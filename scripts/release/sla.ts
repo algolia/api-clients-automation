@@ -38,12 +38,7 @@ function setInactive(lang: Language, version: string, supportEnd: Date): void {
   fullReleaseConfig.sla[lang][version].supportStatus = 'inactive';
 }
 
-function setMaintenance(
-  lang: Language,
-  version: string,
-  supportStart: Date,
-  supportEnd: Date,
-): void {
+function setMaintenance(lang: Language, version: string, supportStart: Date, supportEnd: Date): void {
   fullReleaseConfig.sla[lang][version] = {
     ...fullReleaseConfig.sla[lang][version],
     supportStart: supportStart.toISOString().split('T')[0],
@@ -65,12 +60,9 @@ async function getTags(lang: Language): Promise<string[]> {
   await run('git fetch --all --tags', { cwd: tempGitDir });
 
   const tags = (
-    await run(
-      "git for-each-ref --sort=creatordate --format '%(refname:short) %(creatordate)' refs/tags",
-      {
-        cwd: tempGitDir,
-      },
-    )
+    await run("git for-each-ref --sort=creatordate --format '%(refname:short) %(creatordate)' refs/tags", {
+      cwd: tempGitDir,
+    })
   ).split('\n');
 
   if (tags.length === 0) {
@@ -186,8 +178,5 @@ export async function generateSLA(versions: Versions): Promise<void> {
     }),
   );
 
-  await fsp.writeFile(
-    toAbsolutePath('config/release.config.json'),
-    JSON.stringify(fullReleaseConfig, null, 2),
-  );
+  await fsp.writeFile(toAbsolutePath('config/release.config.json'), JSON.stringify(fullReleaseConfig, null, 2));
 }

@@ -112,7 +112,6 @@ module.exports = {
         '@typescript-eslint/prefer-enum-initializers': 0,
         '@typescript-eslint/no-namespace': 0,
         'import/dynamic-import-chunkname': 0,
-        '@stylistic/comma-dangle': [0, "always"],
 
         'unused-imports/no-unused-imports-ts': 2,
         '@typescript-eslint/no-unused-vars': 2,

@@ -6,11 +6,7 @@ import type { Generator, Language } from './types.js';
 /**
  * Build code for a specific language.
  */
-async function buildLanguage(
-  language: Language,
-  gens: Generator[],
-  playground: boolean,
-): Promise<void> {
+async function buildLanguage(language: Language, gens: Generator[], playground: boolean): Promise<void> {
   const cwd = playground ? `playground/${language}` : getLanguageFolder(language);
   const spinner = createSpinner(`building ${playground ? 'playground' : 'client'} '${language}'`);
   switch (language) {

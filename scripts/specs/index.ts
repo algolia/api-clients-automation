@@ -51,9 +51,7 @@ async function buildLiteSpec({
   await fsp.writeFile(bundledPath, yaml.dump(lite));
 
   // remove unused components for the outputted light spec
-  await run(
-    `yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`,
-  );
+  await run(`yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`);
 
   await transformBundle({
     bundledPath,
@@ -108,9 +106,7 @@ async function buildSpec({
 
   // Then bundle the file
   const bundledPath = `specs/bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`;
-  await run(
-    `yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`,
-  );
+  await run(`yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`);
 
   // Add the correct tags to be able to generate the proper client
   if (!isAlgoliasearch) {
@@ -158,7 +154,5 @@ export async function buildSpecs({
     clients = clients.filter((client) => client !== 'recommend');
   }
 
-  await Promise.all(
-    clients.map((client) => buildSpec({ spec: client, outputFormat, docs, useCache })),
-  );
+  await Promise.all(clients.map((client) => buildSpec({ spec: client, outputFormat, docs, useCache })));
 }

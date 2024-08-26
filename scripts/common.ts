@@ -60,9 +60,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       // guess the package name for js from the output folder variable
       if (language === 'javascript') {
-        current[key].additionalProperties.packageName = output.substring(
-          output.lastIndexOf('/') + 1,
-        );
+        current[key].additionalProperties.packageName = output.substring(output.lastIndexOf('/') + 1);
       }
     }
 
@@ -75,10 +73,7 @@ export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.
 
 export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
 
-export async function run(
-  command: string,
-  { errorMessage, cwd, language }: RunOptions = {},
-): Promise<string> {
+export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
   const dockerImage = getDockerImage(language);
   let wrappedCmd = command;

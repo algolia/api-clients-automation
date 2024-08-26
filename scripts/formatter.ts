@@ -33,7 +33,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
     case 'java':
       await run(
         'find . -path ./.gradle -prune -o -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED -jar /tmp/java-formatter.jar -r && yarn prettier --no-error-on-unmatched-pattern --write **/*.java',
-        { cwd, language }
+        { cwd, language },
       );
       break;
     case 'javascript':
@@ -46,13 +46,13 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await runComposerInstall();
       await run(
         `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
-        { language }
+        { language },
       );
       break;
     case 'python':
       await run(
         'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix && poetry run ruff format',
-        { cwd, language }
+        { cwd, language },
       );
       break;
     case 'ruby':

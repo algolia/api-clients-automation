@@ -7,11 +7,7 @@ import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Spec } from '../types.js';
 
-import {
-  getCodeSampleLabel,
-  transformSnippetsToCodeSamples,
-  transformCodeSamplesToGuideMethods,
-} from './snippets.js';
+import { getCodeSampleLabel, transformSnippetsToCodeSamples, transformCodeSamplesToGuideMethods } from './snippets.js';
 import type { SnippetSamples } from './types.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
@@ -64,9 +60,7 @@ export async function transformBundle({
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const tagsDefinitions = bundledSpec.tags;
-  const snippetSamples = docs
-    ? await transformSnippetsToCodeSamples(clientName)
-    : ({} as SnippetSamples);
+  const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : ({} as SnippetSamples);
 
   if (docs) {
     const snippets = transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)));

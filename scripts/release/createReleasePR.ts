@@ -26,14 +26,7 @@ import type { Language } from '../types.js';
 import { getLastReleasedTag } from './common.js';
 import { generateSLA } from './sla.js';
 import TEXT from './text.js';
-import type {
-  Versions,
-  VersionsBeforeBump,
-  PassedCommit,
-  Commit,
-  Scope,
-  Changelog,
-} from './types.js';
+import type { Versions, VersionsBeforeBump, PassedCommit, Commit, Scope, Changelog } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -49,9 +42,7 @@ export const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta
 const fetchedUsers: Record<string, string> = {};
 
 export function readVersions(): VersionsBeforeBump {
-  return Object.fromEntries(
-    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]),
-  );
+  return Object.fromEntries(LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]));
 }
 
 export function getVersionChangesText(versions: Versions): string {
@@ -237,9 +228,7 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    const commitsPerLang = commits.filter(
-      (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
-    );
+    const commitsPerLang = commits.filter((commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope));
 
     let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
@@ -320,9 +309,7 @@ async function getCommits(force?: boolean): Promise<{
   skippedCommits: string;
 }> {
   // Reading commits since last release
-  const latestCommits = (
-    await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
-  )
+  const latestCommits = (await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`))
     .split('\n')
     .filter(Boolean);
 
