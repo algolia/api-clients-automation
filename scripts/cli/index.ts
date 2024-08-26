@@ -2,7 +2,7 @@ import { Argument, program } from 'commander';
 import semver from 'semver';
 
 import { buildClients, buildPlaygrounds } from '../buildClients.js';
-import { LANGUAGES, setVerbose } from '../common.js';
+import { CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
@@ -27,9 +27,11 @@ import {
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
+  requiredLanguage: new Argument('language', 'The language').choices(LANGUAGES),
   languages: new Argument('[language...]', 'The language').choices(PROMPT_LANGUAGES),
   clients: new Argument('[client...]', 'The client').choices(getClientChoices('all')),
   client: new Argument('[client]', 'The client').choices(PROMPT_CLIENTS),
+  requiredClient: new Argument('client', 'The client').choices(CLIENTS),
 };
 
 const flags = {
@@ -183,8 +185,8 @@ ctsCommand
 program
   .command('playground')
   .description('Run the playground')
-  .addArgument(args.language)
-  .addArgument(args.client)
+  .addArgument(args.requiredLanguage)
+  .addArgument(args.requiredClient)
   .action(async (langArg: LangArg, cliClient: string) => {
     const { language, client } = transformSelection({
       langArg,
@@ -202,7 +204,7 @@ program
 program
   .command('format')
   .description('Format the specified folder for a specific language')
-  .addArgument(args.language)
+  .addArgument(args.requiredLanguage)
   .argument('folder', 'The folder to format')
   .option(flags.verbose.flag, flags.verbose.description)
   .action(async (language: string, folder: string, { verbose }) => {
@@ -264,6 +266,16 @@ program
       releaseType,
       dryRun,
     });
+  });
+
+program
+  .command('exec')
+  .description('Executes a command inside the correct docker image')
+  .addArgument(args.requiredLanguage)
+  .argument('command...', 'The command to execute')
+  .action(async (language: Language, command: string[]) => {
+    setVerbose(true);
+    await run(command.join(' '), { language });
   });
 
 program.parse();
