@@ -113,15 +113,6 @@ module.exports = {
         '@typescript-eslint/no-namespace': 0,
         'import/dynamic-import-chunkname': 0,
         '@stylistic/comma-dangle': [0, "always"],
-        'prettier/prettier': [
-          'error',
-          {
-            "printWidth": 100,
-            "trailingComma": "all",
-            "singleQuote": true,
-            "tabWidth": 2
-          },
-        ],
 
         'unused-imports/no-unused-imports-ts': 2,
         '@typescript-eslint/no-unused-vars': 2,
