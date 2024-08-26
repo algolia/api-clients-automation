@@ -642,28 +642,16 @@ public class ParametersWithDataType {
       }
       return bestOneOf;
     }
-    if (param instanceof List) {
-      CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
 
-      if (composedSchemas != null) {
-        List<CodegenProperty> oneOf = composedSchemas.getOneOf();
-
-        // Somehow this is not yet enough
-        if (oneOf != null && !oneOf.isEmpty()) {
-          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).baseName + " (this won't stay correct forever)");
-          return oneOf.get(0);
-        }
+    for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
+      // find the correct list
+      if (param instanceof List && prop.getIsArray()) {
+        return prop;
       }
 
-      return null;
-    }
-
-    // find the correct enum
-    if (param instanceof String) {
-      for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
-        if (prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
-          return prop;
-        }
+      // find the correct enum
+      if (param instanceof String && prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
+        return prop;
       }
     }
 
@@ -693,7 +681,8 @@ public class ParametersWithDataType {
         return oneOf;
       }
     }
-    return null;
+
+    return maybeMatch;
   }
 
   // If the model is an enum and contains a valid list of allowed values,

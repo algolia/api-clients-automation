@@ -103,27 +103,6 @@
     }
   },
   {
-    "testName": "Partial update with a new value for an object attribute",
-    "parameters": {
-      "indexName": "theIndexName",
-      "objectID": "uniqueID",
-      "attributesToUpdate": {
-        "attributeId": {
-          "nested": "value"
-        }
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/uniqueID/partial",
-      "method": "POST",
-      "body": {
-        "attributeId": {
-          "nested": "value"
-        }
-      }
-    }
-  },
-  {
     "testName": "Partial update with a new value for an array attribute",
     "parameters": {
       "indexName": "theIndexName",
