@@ -178,7 +178,7 @@ __metadata:
     "@types/node": "npm:22.5.0"
     cross-fetch: "npm:4.0.0"
     jest: "npm:29.7.0"
-    nock: "npm:13.5.4"
+    nock: "npm:13.5.5"
     ts-jest: "npm:29.2.5"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -194,7 +194,7 @@ __metadata:
     "@types/jest": "npm:29.5.12"
     "@types/node": "npm:22.5.0"
     jest: "npm:29.7.0"
-    nock: "npm:13.5.4"
+    nock: "npm:13.5.5"
     ts-jest: "npm:29.2.5"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -7694,14 +7694,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:13.5.4":
-  version: 13.5.4
-  resolution: "nock@npm:13.5.4"
+"nock@npm:13.5.5":
+  version: 13.5.5
+  resolution: "nock@npm:13.5.5"
   dependencies:
     debug: "npm:^4.1.0"
     json-stringify-safe: "npm:^5.0.1"
     propagate: "npm:^2.0.0"
-  checksum: 10/75bad391bae4efb81b742734af5f2d87309cd93d3ca6b78372fd37946d78ccb254d79104676619866915e6734abfc1b00fee2aa42073a4843ca3c746aad35a4d
+  checksum: 10/c19d7bf9654db056357a22b00127bb5606c1bbdff188a5b6c469825e580e31cd0cb0701bce8dd8b4876dbbd36a145fdb681fd69fd59308d6db4923ce8ab2439e
   languageName: node
   linkType: hard
 
