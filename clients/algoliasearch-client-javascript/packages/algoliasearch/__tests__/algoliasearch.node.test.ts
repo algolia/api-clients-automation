@@ -28,7 +28,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(req.algoliaAgent).toMatchInlineSnapshot(
-      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`
+      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`,
     );
   });
 
@@ -47,7 +47,7 @@ describe('api', () => {
   describe('_ua', () => {
     it('provides a backward compatible `_ua` variable at the root of the client', () => {
       expect(client._ua).toEqual(
-        expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`)
+        expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`),
       );
     });
 
@@ -164,19 +164,19 @@ describe('api', () => {
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
       expect(res2.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
       expect(res3.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
     });
 
@@ -209,19 +209,19 @@ describe('api', () => {
         expect.objectContaining({
           'x-algolia-application-id': 'appId1',
           'x-algolia-api-key': 'apiKey1',
-        })
+        }),
       );
       expect(res2.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId2',
           'x-algolia-api-key': 'apiKey2',
-        })
+        }),
       );
       expect(res3.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId3',
           'x-algolia-api-key': 'apiKey3',
-        })
+        }),
       );
     });
   });
