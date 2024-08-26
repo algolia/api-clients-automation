@@ -122,6 +122,30 @@ class SnippetAbtestingClient {
     // SEPARATOR<
   }
 
+  // Snippet for the scheduleABTest method.
+  //
+  // scheduleABTest with minimal parameters
+  void snippetForScheduleABTest() {
+    // >SEPARATOR scheduleABTest default
+    // Initialize the client
+    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.scheduleABTest(
+      new ScheduleABTestsRequest()
+        .setEndAt("2022-12-31T00:00:00.000Z")
+        .setScheduledAt("2022-11-31T00:00:00.000Z")
+        .setName("myABTest")
+        .setVariants(
+          List.of(
+            new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+            new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+          )
+        )
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the stopABTest method.
   //
   // stopABTest

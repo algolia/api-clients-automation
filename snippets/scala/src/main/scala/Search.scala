@@ -1528,7 +1528,7 @@ class SnippetSearchClient {
     *
     * retrieveFacets
     */
-  def snippetForSearchClientSearch5(): Unit = {
+  def snippetForSearchClientSearch6(): Unit = {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1555,7 +1555,7 @@ class SnippetSearchClient {
     *
     * retrieveFacetsWildcard
     */
-  def snippetForSearchClientSearch6(): Unit = {
+  def snippetForSearchClientSearch7(): Unit = {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")

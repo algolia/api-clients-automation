@@ -128,7 +128,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.2';
+export const apiClientVersion = '5.1.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -506,40 +506,6 @@ export function createSearchClient({
     },
 
     /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `hits`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForHits<T>(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: Array<SearchResponse<T>> }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: Array<SearchResponse<T>>;
-      }>;
-    },
-
-    /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `facets`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForFacets(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: SearchForFacetValuesResponse[];
-      }>;
-    },
-
-    /**
      * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      *
      * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
@@ -724,6 +690,40 @@ export function createSearchClient({
       });
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `hits`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForHits<T>(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions
+    ): Promise<{ results: Array<SearchResponse<T>> }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{
+        results: Array<SearchResponse<T>>;
+      }>;
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `facets`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForFacets(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions
+    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{
+        results: SearchForFacetValuesResponse[];
+      }>;
     },
     /**
      * Creates a new API key with specific permissions and restrictions.
@@ -1397,7 +1397,7 @@ export function createSearchClient({
     },
 
     /**
-     * This operation doesn\'t accept empty queries or filters.  It\'s more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+     * This operation doesn\'t accept empty queries or filters.  It\'s more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      * - deleteIndex.
@@ -2581,7 +2581,7 @@ export function createSearchClient({
     },
 
     /**
-     * Adds a record to an index or replace it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+     * Adds a record to an index or replace it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      * - addObject.

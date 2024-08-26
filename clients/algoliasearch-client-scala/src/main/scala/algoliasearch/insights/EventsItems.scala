@@ -45,10 +45,6 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[EventsItems] =>
       json match {
         case value: JObject
-            if value.obj.exists(_._1 == "positions") && value.obj
-              .exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
-          Extraction.extract[ClickedObjectIDsAfterSearch](value)
-        case value: JObject
             if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "eventSubtype") && value.obj.exists(
               _._1 == "queryID"
             ) && value.obj.exists(_._1 == "objectIDs") =>
@@ -58,10 +54,10 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
               _._1 == "objectIDs"
             ) && value.obj.exists(_._1 == "objectData") =>
           Extraction.extract[PurchasedObjectIDsAfterSearch](value)
-        case value: JObject if value.obj.exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
-          Extraction.extract[ConvertedObjectIDsAfterSearch](value)
-        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
-          Extraction.extract[ClickedObjectIDs](value)
+        case value: JObject
+            if value.obj.exists(_._1 == "positions") && value.obj
+              .exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
+          Extraction.extract[ClickedObjectIDsAfterSearch](value)
         case value: JObject
             if value.obj.exists(_._1 == "eventType") && value.obj
               .exists(_._1 == "eventSubtype") && value.obj.exists(_._1 == "objectIDs") =>
@@ -70,6 +66,10 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
             if value.obj.exists(_._1 == "eventType") && value.obj
               .exists(_._1 == "eventSubtype") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[AddedToCartObjectIDs](value)
+        case value: JObject if value.obj.exists(_._1 == "queryID") && value.obj.exists(_._1 == "eventType") =>
+          Extraction.extract[ConvertedObjectIDsAfterSearch](value)
+        case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
+          Extraction.extract[ClickedObjectIDs](value)
         case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "objectIDs") =>
           Extraction.extract[ConvertedObjectIDs](value)
         case value: JObject if value.obj.exists(_._1 == "eventType") && value.obj.exists(_._1 == "filters") =>
@@ -86,13 +86,13 @@ object EventsItemsSerializer extends Serializer[EventsItems] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: EventsItems =>
     value match {
-      case value: ClickedObjectIDsAfterSearch     => Extraction.decompose(value)(format - this)
       case value: AddedToCartObjectIDsAfterSearch => Extraction.decompose(value)(format - this)
       case value: PurchasedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
-      case value: ConvertedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
-      case value: ClickedObjectIDs                => Extraction.decompose(value)(format - this)
+      case value: ClickedObjectIDsAfterSearch     => Extraction.decompose(value)(format - this)
       case value: PurchasedObjectIDs              => Extraction.decompose(value)(format - this)
       case value: AddedToCartObjectIDs            => Extraction.decompose(value)(format - this)
+      case value: ConvertedObjectIDsAfterSearch   => Extraction.decompose(value)(format - this)
+      case value: ClickedObjectIDs                => Extraction.decompose(value)(format - this)
       case value: ConvertedObjectIDs              => Extraction.decompose(value)(format - this)
       case value: ClickedFilters                  => Extraction.decompose(value)(format - this)
       case value: ConvertedFilters                => Extraction.decompose(value)(format - this)

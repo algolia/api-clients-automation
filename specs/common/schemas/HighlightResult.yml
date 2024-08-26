@@ -20,6 +20,9 @@ highlightResultOption:
     - value
     - matchLevel
     - matchedWords
+  x-discriminator-fields:
+    - matchLevel
+    - matchedWords
 
 highlightedValue:
   type: string

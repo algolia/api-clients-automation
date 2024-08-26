@@ -38,22 +38,27 @@ object AuthInputSerializer extends Serializer[AuthInput] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AuthInput] =>
       json match {
-        case value: JObject => Extraction.extract[AuthGoogleServiceAccount](value)
-        case value: JObject => Extraction.extract[AuthBasic](value)
-        case value: JObject => Extraction.extract[AuthAPIKey](value)
-        case value: JObject => Extraction.extract[AuthOAuth](value)
-        case value: JObject => Extraction.extract[AuthAlgolia](value)
-        case value: JObject => Extraction.extract[AuthAlgoliaInsights](value)
-        case _              => throw new MappingException("Can't convert " + json + " to AuthInput")
+        case value: JObject
+            if value.obj.exists(_._1 == "url") && value.obj
+              .exists(_._1 == "client_id") && value.obj.exists(_._1 == "client_secret") =>
+          Extraction.extract[AuthOAuth](value)
+        case value: JObject if value.obj.exists(_._1 == "clientEmail") && value.obj.exists(_._1 == "privateKey") =>
+          Extraction.extract[AuthGoogleServiceAccount](value)
+        case value: JObject if value.obj.exists(_._1 == "username") && value.obj.exists(_._1 == "password") =>
+          Extraction.extract[AuthBasic](value)
+        case value: JObject if value.obj.exists(_._1 == "key") => Extraction.extract[AuthAPIKey](value)
+        case value: JObject                                    => Extraction.extract[AuthAlgolia](value)
+        case value: JObject                                    => Extraction.extract[AuthAlgoliaInsights](value)
+        case _ => throw new MappingException("Can't convert " + json + " to AuthInput")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AuthInput =>
     value match {
+      case value: AuthOAuth                => Extraction.decompose(value)(format - this)
       case value: AuthGoogleServiceAccount => Extraction.decompose(value)(format - this)
       case value: AuthBasic                => Extraction.decompose(value)(format - this)
       case value: AuthAPIKey               => Extraction.decompose(value)(format - this)
-      case value: AuthOAuth                => Extraction.decompose(value)(format - this)
       case value: AuthAlgolia              => Extraction.decompose(value)(format - this)
       case value: AuthAlgoliaInsights      => Extraction.decompose(value)(format - this)
     }

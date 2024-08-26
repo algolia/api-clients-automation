@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend",
-  "version": "5.0.2",
+  "version": "5.1.1",
   "description": "JavaScript client for recommend",
   "repository": {
     "type": "git",
@@ -15,13 +15,15 @@
         "import": "./dist/recommend.esm.node.js",
         "module": "./dist/recommend.esm.node.js",
         "require": "./dist/recommend.cjs",
-        "default": "./dist/recommend.cjs"
+        "default": "./dist/recommend.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/recommend.umd.js",
         "module": "./dist/recommend.esm.browser.js",
         "import": "./dist/recommend.esm.browser.js",
-        "default": "./dist/recommend.umd.js"
+        "default": "./dist/recommend.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",
@@ -42,9 +44,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.2",
-    "@algolia/requester-browser-xhr": "5.0.2",
-    "@algolia/requester-node-http": "5.0.2"
+    "@algolia/client-common": "5.1.1",
+    "@algolia/requester-browser-xhr": "5.1.1",
+    "@algolia/requester-node-http": "5.1.1"
   },
   "devDependencies": {
     "@types/node": "22.2.0",

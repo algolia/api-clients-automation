@@ -22,7 +22,7 @@ public interface TaskInput {
     public TaskInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize StreamingInput
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("mapping")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(StreamingInput.class);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public interface TaskInput {
         }
       }
       // deserialize DockerStreamsInput
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("streams")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(DockerStreamsInput.class);
         } catch (Exception e) {

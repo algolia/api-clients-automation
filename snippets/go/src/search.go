@@ -1900,7 +1900,7 @@ func SnippetForSearchOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchOfSearch5() {
+func SnippetForSearchOfSearch6() {
 	/*
 	   Snippet for the search method.
 
@@ -1932,7 +1932,7 @@ func SnippetForSearchOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchOfSearch6() {
+func SnippetForSearchOfSearch7() {
 	/*
 	   Snippet for the search method.
 

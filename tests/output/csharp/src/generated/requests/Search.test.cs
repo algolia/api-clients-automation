@@ -2202,8 +2202,40 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "retrieveFacets")]
+  [Fact(DisplayName = "search with highlight and snippet results")]
   public async Task SearchTest5()
+  {
+    await client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_highlight_snippet_results",
+              Query = "vim",
+              AttributesToSnippet = new List<string> { "*:20" },
+              AttributesToHighlight = new List<string> { "*" },
+              AttributesToRetrieve = new List<string> { "*" },
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retrieveFacets")]
+  public async Task SearchTest6()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2233,7 +2265,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "retrieveFacetsWildcard")]
-  public async Task SearchTest6()
+  public async Task SearchTest7()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2263,7 +2295,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
-  public async Task SearchTest7()
+  public async Task SearchTest8()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2294,7 +2326,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single hits request with all parameters")]
-  public async Task SearchTest8()
+  public async Task SearchTest9()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2325,7 +2357,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single facet request with all parameters")]
-  public async Task SearchTest9()
+  public async Task SearchTest10()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2361,7 +2393,7 @@ public class SearchClientRequestTests
   [Fact(
     DisplayName = "search for multiple mixed requests in multiple indices with minimal parameters"
   )]
-  public async Task SearchTest10()
+  public async Task SearchTest11()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2400,7 +2432,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for multiple mixed requests in multiple indices with all parameters")]
-  public async Task SearchTest11()
+  public async Task SearchTest12()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2443,7 +2475,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters accept all of the possible shapes")]
-  public async Task SearchTest12()
+  public async Task SearchTest13()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2531,7 +2563,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters end to end")]
-  public async Task SearchTest13()
+  public async Task SearchTest14()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2605,7 +2637,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search with all search parameters")]
-  public async Task SearchTest14()
+  public async Task SearchTest15()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams

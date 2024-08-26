@@ -119,8 +119,40 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// search with highlight and snippet results
+    func testSearchTest5() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "vim",
+                        attributesToRetrieve: ["*"],
+                        attributesToHighlight: ["*"],
+                        attributesToSnippet: ["*:20"],
+                        indexName: "cts_e2e_highlight_snippet_results"
+                    )),
+            ]))
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// search for a single facet request with minimal parameters
-    func testSearchTest7() async throws {
+    func testSearchTest8() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return
@@ -150,7 +182,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
     }
 
     /// search filters end to end
-    func testSearchTest13() async throws {
+    func testSearchTest14() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return
