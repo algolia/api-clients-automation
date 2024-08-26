@@ -134,6 +134,10 @@ module.exports = {
                 message: 'Use Record instead',
                 fixWith: 'Record<string, any>',
               },
+              String: {
+                message: 'Use string instead of String',
+                fixWith: 'string',
+              },
             },
           },
         ],
