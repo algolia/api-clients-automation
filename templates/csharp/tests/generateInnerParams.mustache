@@ -31,7 +31,7 @@
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}
-    new Dictionary<string, string> { {{#value}}{ {{#entrySet}}"{{{key}}}", "{{{value}}}" }{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }
+    new Dictionary<string, object> { {{#value}}{ {{#entrySet}}"{{{key}}}", "{{{value}}}" }{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }
   {{/isAnyType}}
   {{^isAnyType}}
     new Dictionary{{> tests/forceMapGenerics}}{ {{#value}}{"{{{key}}}", {{> tests/generateParams}} }{{^-last}},{{/-last}}{{/value}} }

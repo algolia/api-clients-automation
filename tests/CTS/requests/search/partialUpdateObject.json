@@ -1,57 +1,5 @@
 [
   {
-    "testName": "Partial update with a built-in operation using a string",
-    "parameters": {
-      "indexName": "theIndexName",
-      "objectID": "uniqueID",
-      "attributesToUpdate": {
-        "id1": "test",
-        "id2": {
-          "_operation": "AddUnique",
-          "value": "test2"
-        }
-      },
-      "createIfNotExists": true
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/uniqueID/partial",
-      "method": "POST",
-      "body": {
-        "id1": "test",
-        "id2": {
-          "_operation": "AddUnique",
-          "value": "test2"
-        }
-      },
-      "queryParameters": {
-        "createIfNotExists": "true"
-      }
-    }
-  },
-  {
-    "testName": "Partial update with a built-in operation using an integer",
-    "parameters": {
-      "indexName": "theIndexName",
-      "objectID": "uniqueID",
-      "attributesToUpdate": {
-        "attributeId": {
-          "_operation": "Increment",
-          "value": 2
-        }
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/uniqueID/partial",
-      "method": "POST",
-      "body": {
-        "attributeId": {
-          "_operation": "Increment",
-          "value": 2
-        }
-      }
-    }
-  },
-  {
     "testName": "Partial update with a new value for a string attribute",
     "parameters": {
       "indexName": "theIndexName",

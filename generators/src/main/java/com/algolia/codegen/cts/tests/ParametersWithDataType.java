@@ -191,8 +191,6 @@ public class ParametersWithDataType {
 
   private String getFinalParamName(String paramName) {
     switch (language) {
-      case "java":
-        return paramName.startsWith("_") ? paramName.substring(1) : paramName;
       case "go":
         return paramName.equals("type") ? "type_" : paramName;
     }
