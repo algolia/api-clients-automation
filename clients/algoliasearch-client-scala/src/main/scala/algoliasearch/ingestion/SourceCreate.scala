@@ -35,6 +35,6 @@ import algoliasearch.ingestion.SourceType._
 case class SourceCreate(
     `type`: SourceType,
     name: String,
-    input: SourceInput,
+    input: Option[SourceInput] = scala.None,
     authenticationID: Option[String] = scala.None
 )

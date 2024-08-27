@@ -45,7 +45,7 @@ public class TopSearchWithRevenueAnalytics {
   private Integer nbHits;
 
   @JsonProperty("currencies")
-  private Map<String, CurrenciesValue> currencies = new HashMap<>();
+  private Map<String, CurrencyCode> currencies = new HashMap<>();
 
   @JsonProperty("addToCartRate")
   private Double addToCartRate;
@@ -188,19 +188,19 @@ public class TopSearchWithRevenueAnalytics {
     return nbHits;
   }
 
-  public TopSearchWithRevenueAnalytics setCurrencies(Map<String, CurrenciesValue> currencies) {
+  public TopSearchWithRevenueAnalytics setCurrencies(Map<String, CurrencyCode> currencies) {
     this.currencies = currencies;
     return this;
   }
 
-  public TopSearchWithRevenueAnalytics putCurrencies(String key, CurrenciesValue currenciesItem) {
+  public TopSearchWithRevenueAnalytics putCurrencies(String key, CurrencyCode currenciesItem) {
     this.currencies.put(key, currenciesItem);
     return this;
   }
 
   /** Revenue associated with this search, broken-down by currencies. */
   @javax.annotation.Nonnull
-  public Map<String, CurrenciesValue> getCurrencies() {
+  public Map<String, CurrencyCode> getCurrencies() {
     return currencies;
   }
 

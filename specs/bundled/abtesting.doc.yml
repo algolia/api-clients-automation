@@ -190,18 +190,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -401,18 +403,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -612,18 +616,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -821,11 +827,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1089,15 +1092,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.addABTests({
               endAt: '2022-12-31T00:00:00.000Z',
               name: 'myABTest',
@@ -1107,7 +1110,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1411,18 +1416,20 @@ paths:
             client.listABTests();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listABTests();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1621,18 +1628,20 @@ paths:
             client.getABTest(42);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getABTest({ id: 42 });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1837,18 +1846,20 @@ paths:
             client.deleteABTest(42);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.deleteABTest({ id: 42 });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2056,18 +2067,20 @@ paths:
             client.stopABTest(42);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.stopABTest({ id: 42 });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2328,15 +2341,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.scheduleABTest({
               endAt: '2022-12-31T00:00:00.000Z',
               scheduledAt: '2022-11-31T00:00:00.000Z',
@@ -2347,7 +2360,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin

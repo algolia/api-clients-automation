@@ -6,14 +6,12 @@ export function isScalar(node: AST.YAMLNode | null): node is AST.YAMLScalar {
 }
 
 export function isBlockScalar(
-  node: AST.YAMLNode | null
+  node: AST.YAMLNode | null,
 ): node is AST.YAMLBlockFoldedScalar | AST.YAMLBlockLiteralScalar {
   return isScalar(node) && 'chomping' in node;
 }
 
-export function isSequence(
-  node: AST.YAMLNode | null
-): node is AST.YAMLSequence {
+export function isSequence(node: AST.YAMLNode | null): node is AST.YAMLSequence {
   return node !== null && node.type === 'YAMLSequence';
 }
 
@@ -21,12 +19,10 @@ export function isMapping(node: AST.YAMLNode | null): node is AST.YAMLMapping {
   return node !== null && node.type === 'YAMLMapping';
 }
 
-export function isPairWithKey(
-  node: AST.YAMLNode | null,
-  key: string
-): node is AST.YAMLPair {
-  if (node === null || node.type !== 'YAMLPair' || node.key === null)
+export function isPairWithKey(node: AST.YAMLNode | null, key: string): node is AST.YAMLPair {
+  if (node === null || node.type !== 'YAMLPair' || node.key === null) {
     return false;
+  }
   return isScalar(node.key) && node.key.value === key;
 }
 
@@ -39,7 +35,7 @@ export function isNullable(node: AST.YAMLNode | null): boolean {
         isPairWithKey(entry.pairs[0], 'type') &&
         isScalar(entry.pairs[0].value) &&
         !isBlockScalar(entry.pairs[0].value) &&
-        entry.pairs[0].value.raw === "'null'"
+        entry.pairs[0].value.raw === "'null'",
     )
   );
 }

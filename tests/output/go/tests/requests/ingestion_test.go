@@ -121,6 +121,19 @@ func TestIngestion_CreateSource(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
+	t.Run("push", func(t *testing.T) {
+		_, err := client.CreateSource(client.NewApiCreateSourceRequest(
+
+			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("push")).SetName("pushezpourentrer"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/sources", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"type":"push","name":"pushezpourentrer"}`)
+	})
 }
 
 func TestIngestion_CreateTask(t *testing.T) {

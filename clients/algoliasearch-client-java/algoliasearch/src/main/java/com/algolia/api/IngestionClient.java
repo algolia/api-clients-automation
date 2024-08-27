@@ -2232,6 +2232,7 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
@@ -2247,6 +2248,7 @@ public class IngestionClient extends ApiClient {
     Integer itemsPerPage,
     Integer page,
     List<RunStatus> status,
+    List<RunType> type,
     String taskID,
     RunSortKeys sort,
     OrderKeys order,
@@ -2254,7 +2256,7 @@ public class IngestionClient extends ApiClient {
     String endDate,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(listRunsAsync(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, requestOptions));
   }
 
   /**
@@ -2263,6 +2265,7 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
@@ -2276,13 +2279,14 @@ public class IngestionClient extends ApiClient {
     Integer itemsPerPage,
     Integer page,
     List<RunStatus> status,
+    List<RunType> type,
     String taskID,
     RunSortKeys sort,
     OrderKeys order,
     String startDate,
     String endDate
   ) throws AlgoliaRuntimeException {
-    return this.listRuns(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
+    return this.listRuns(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, null);
   }
 
   /**
@@ -2293,7 +2297,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listRuns(null, null, null, null, null, null, null, null, requestOptions);
+    return this.listRuns(null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2302,7 +2306,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns() throws AlgoliaRuntimeException {
-    return this.listRuns(null, null, null, null, null, null, null, null, null);
+    return this.listRuns(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2311,6 +2315,7 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
@@ -2326,6 +2331,7 @@ public class IngestionClient extends ApiClient {
     Integer itemsPerPage,
     Integer page,
     List<RunStatus> status,
+    List<RunType> type,
     String taskID,
     RunSortKeys sort,
     OrderKeys order,
@@ -2339,6 +2345,7 @@ public class IngestionClient extends ApiClient {
       .addQueryParameter("itemsPerPage", itemsPerPage)
       .addQueryParameter("page", page)
       .addQueryParameter("status", status)
+      .addQueryParameter("type", type)
       .addQueryParameter("taskID", taskID)
       .addQueryParameter("sort", sort)
       .addQueryParameter("order", order)
@@ -2354,6 +2361,7 @@ public class IngestionClient extends ApiClient {
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
    * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
@@ -2367,13 +2375,14 @@ public class IngestionClient extends ApiClient {
     Integer itemsPerPage,
     Integer page,
     List<RunStatus> status,
+    List<RunType> type,
     String taskID,
     RunSortKeys sort,
     OrderKeys order,
     String startDate,
     String endDate
   ) throws AlgoliaRuntimeException {
-    return this.listRunsAsync(itemsPerPage, page, status, taskID, sort, order, startDate, endDate, null);
+    return this.listRunsAsync(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, null);
   }
 
   /**
@@ -2384,7 +2393,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listRunsAsync(null, null, null, null, null, null, null, null, requestOptions);
+    return this.listRunsAsync(null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2393,7 +2402,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync() throws AlgoliaRuntimeException {
-    return this.listRunsAsync(null, null, null, null, null, null, null, null, null);
+    return this.listRunsAsync(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**

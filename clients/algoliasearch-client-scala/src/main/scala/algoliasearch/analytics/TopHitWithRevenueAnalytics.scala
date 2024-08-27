@@ -66,5 +66,5 @@ case class TopHitWithRevenueAnalytics(
     addToCartCount: Int,
     purchaseRate: Option[Double] = scala.None,
     purchaseCount: Int,
-    currencies: Map[String, CurrenciesValue]
+    currencies: Map[String, CurrencyCode]
 )

@@ -14,9 +14,7 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
   const generators = {};
   for (const { key, client, language, ...rest } of gens) {
     const templateDir =
-      language === 'javascript'
-        ? `#{cwd}/templates/${language}/clients`
-        : `#{cwd}/templates/${language}/`;
+      language === 'javascript' ? `#{cwd}/templates/${language}/clients` : `#{cwd}/templates/${language}/`;
 
     generators[key] = {
       config: '#{cwd}/openapitools.json',
@@ -40,7 +38,7 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
     JSON.stringify(
       {
         'generator-cli': {
-          version: '7.7.0',
+          version: '7.8.0',
           generators,
         },
       },

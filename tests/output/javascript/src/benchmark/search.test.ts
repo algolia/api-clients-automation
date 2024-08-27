@@ -14,19 +14,13 @@ function createClient(): SearchClient {
 describe('benchmark', () => {
   test('benchmark the search method', async () => {
     const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [
-        { url: 'localhost', port: 6682, accept: 'readWrite', protocol: 'http' },
-      ],
+      hosts: [{ url: 'localhost', port: 6682, accept: 'readWrite', protocol: 'http' }],
     });
 
     for (let i = 0; i < 1000; i++) {
       const result = await client.search({
         requests: [
-          {
-            indexName: 'cts_e2e_benchmark_search_javascript',
-            query: 'iphone 15 pro max 512gb',
-            hitsPerPage: 50,
-          },
+          { indexName: 'cts_e2e_benchmark_search_javascript', query: 'iphone 15 pro max 512gb', hitsPerPage: 50 },
         ],
       });
     }

@@ -31,6 +31,6 @@ package algoliasearch.analytics
   *   Daily revenue.
   */
 case class GetRevenue(
-    currencies: Map[String, CurrenciesValue],
+    currencies: Map[String, CurrencyCode],
     dates: Seq[DailyRevenue]
 )

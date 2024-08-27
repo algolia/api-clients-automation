@@ -154,6 +154,23 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "push")]
+  public async Task CreateSourceTest1()
+  {
+    await client.CreateSourceAsync(
+      new SourceCreate { Type = Enum.Parse<SourceType>("Push"), Name = "pushezpourentrer", }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"type\":\"push\",\"name\":\"pushezpourentrer\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "task without cron")]
   public async Task CreateTaskTest()
   {

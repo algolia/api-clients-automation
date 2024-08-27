@@ -24,7 +24,9 @@ public enum SourceType {
 
   SHOPIFY("shopify"),
 
-  SFCC("sfcc");
+  SFCC("sfcc"),
+
+  PUSH("push");
 
   private final String value;
 

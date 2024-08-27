@@ -1141,14 +1141,7 @@ paths:
 
             // Call the API
             const response = await client.getRecommendations({
-              requests: [
-                {
-                  indexName: 'indexName',
-                  objectID: 'objectID',
-                  model: 'related-products',
-                  threshold: 42.1,
-                },
-              ],
+              requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
             });
 
             // use typed response
@@ -2217,17 +2210,20 @@ paths:
             RecommendModels.RELATED_PRODUCTS);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.searchRecommendRules({
-              indexName: 'indexName',
-              model: 'related-products',
-            });
+
+            const response = await client.searchRecommendRules({ indexName:
+            'indexName', model: 'related-products' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4536,7 +4532,6 @@ components:
               food: 1
               tech: 42
         facets_stats:
-          title: facetsStats
           type: object
           description: Statistics for numerical facets.
           additionalProperties:

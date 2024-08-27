@@ -211,18 +211,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -435,18 +437,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -659,18 +663,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -881,11 +887,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1584,15 +1587,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.pushEvents({
               events: [
                 {
@@ -1609,7 +1612,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1936,11 +1941,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API

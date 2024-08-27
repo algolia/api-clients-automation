@@ -40,7 +40,7 @@ case class Source(
     sourceID: String,
     `type`: SourceType,
     name: String,
-    input: SourceInput,
+    input: Option[SourceInput] = scala.None,
     authenticationID: Option[String] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None

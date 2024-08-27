@@ -189,6 +189,37 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// push
+    func testCreateSourceTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createSourceWithHTTPInfo(sourceCreate: SourceCreate(
+            type: SourceType.push,
+            name: "pushezpourentrer"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"type\":\"push\",\"name\":\"pushezpourentrer\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/sources")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// task without cron
     func testCreateTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(

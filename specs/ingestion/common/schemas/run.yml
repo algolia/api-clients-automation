@@ -87,7 +87,7 @@ RunOutcome:
 RunType:
   type: string
   description: Task run type.
-  enum: [reindex, update, discover]
+  enum: [reindex, update, discover, validate, push]
 
 RunReasonCode:
   type: string
