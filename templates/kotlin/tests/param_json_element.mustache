@@ -19,9 +19,6 @@ JsonPrimitive({{{value}}}),
 {{#isEnum}}
 JsonPrimitive("{{{value}}}"),
 {{/isEnum}}
-{{#isArray}}
-{{> tests/param_json_element}},
-{{/isArray}}
 {{#isFreeFormObject}}
 buildJsonObject {
 {{#value}}
