@@ -82,6 +82,9 @@ components:
       $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
+  schemas:
+    builtInOperation:
+      $ref: 'paths/objects/common/schemas.yml#/builtInOperation'
 servers:
   - url: https://{appId}.algolia.net
     variables:

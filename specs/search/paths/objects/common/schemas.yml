@@ -20,6 +20,7 @@ builtInOperationValue:
 builtInOperation:
   type: object
   description: Update to perform on the attribute.
+  x-keep-model: true
   additionalProperties: false
   properties:
     _operation:
@@ -29,22 +30,6 @@ builtInOperation:
   required:
     - _operation
     - value
-
-freeFormAttributeToUpdate:
-  oneOf:
-    - type: object
-      additionalProperties: true
-    - type: string
-    - type: integer
-    - type: boolean
-
-attributeToUpdate:
-  oneOf:
-    - $ref: '#/builtInOperation'
-    - $ref: '#/freeFormAttributeToUpdate'
-    - type: array
-      items:
-        $ref: '#/freeFormAttributeToUpdate'
 
 batchResponse:
   type: object
