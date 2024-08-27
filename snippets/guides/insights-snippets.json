@@ -167,7 +167,7 @@
       "default": "const response = await client.pushEvents({\n  events: [\n    {\n      eventType: 'click',\n      eventName: 'Product Clicked',\n      index: 'products',\n      userToken: 'user-123456',\n      authenticatedUserToken: 'user-123456',\n      timestamp: 1641290601962,\n      objectIDs: ['9780545139700', '9780439784542'],\n      queryID: '43b15df305339e827f0ac0bdc5ebcaa7',\n      positions: [7, 6],\n    },\n  ],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "init": {
-      "default": "const client = insightsClient("
+      "default": "const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     },
     "waitForAppTask": {
       "default": "await client.waitForAppTask({ taskID: response.taskID });"

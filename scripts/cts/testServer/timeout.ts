@@ -5,8 +5,7 @@ import type express from 'express';
 
 import { setupServer } from '.';
 
-const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> =
-  {};
+const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> = {};
 
 export function assertValidTimeouts(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out

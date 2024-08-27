@@ -26,14 +26,7 @@ import type { Language } from '../types.js';
 import { getLastReleasedTag } from './common.js';
 import { generateSLA } from './sla.js';
 import TEXT from './text.js';
-import type {
-  Versions,
-  VersionsBeforeBump,
-  PassedCommit,
-  Commit,
-  Scope,
-  Changelog,
-} from './types.js';
+import type { Versions, VersionsBeforeBump, PassedCommit, Commit, Scope, Changelog } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -49,9 +42,7 @@ export const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta
 const fetchedUsers: Record<string, string> = {};
 
 export function readVersions(): VersionsBeforeBump {
-  return Object.fromEntries(
-    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]),
-  );
+  return Object.fromEntries(LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]));
 }
 
 export function getVersionChangesText(versions: Versions): string {
@@ -237,9 +228,7 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    const commitsPerLang = commits.filter(
-      (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
-    );
+    const commitsPerLang = commits.filter((commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope));
 
     let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
@@ -266,9 +255,7 @@ export async function decideReleaseStrategy({
       const msg =
         commitsPerLang.length === 0
           ? 'no commits found'
-          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${
-              commitsPerLang.length
-            }' commits`;
+          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${commitsPerLang.length}' commits`;
 
       console.log(`    > Skipping, ${msg}`);
 
@@ -322,9 +309,7 @@ async function getCommits(force?: boolean): Promise<{
   skippedCommits: string;
 }> {
   // Reading commits since last release
-  const latestCommits = (
-    await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
-  )
+  const latestCommits = (await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`))
     .split('\n')
     .filter(Boolean);
 
@@ -353,7 +338,7 @@ async function getCommits(force?: boolean): Promise<{
   if (!force && validCommits.length === 0) {
     console.log(
       chalk.black.bgYellow('[INFO]'),
-      `Skipping release because no valid commit has been added since \`released\` tag.`,
+      'Skipping release because no valid commit has been added since `released` tag.',
     );
     // eslint-disable-next-line no-process-exit
     process.exit(0);
@@ -483,7 +468,7 @@ export async function createReleasePR({
   await run(`CI=true git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
-  await run(`git checkout .`);
+  await run('git checkout .');
 
   await run(`git push origin ${headBranch}`);
   await run(`git checkout ${MAIN_BRANCH}`);

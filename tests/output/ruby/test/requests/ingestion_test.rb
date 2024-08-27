@@ -131,6 +131,17 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # push
+  def test_create_source1
+    req = @client.create_source_with_http_info(SourceCreate.new(type: "push", name: "pushezpourentrer"))
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/sources", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}"), JSON.parse(req.body))
+  end
+
   # task without cron
   def test_create_task
     req = @client.create_task_with_http_info(

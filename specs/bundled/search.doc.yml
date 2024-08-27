@@ -1426,13 +1426,7 @@ paths:
 
             // Call the API
             const response = await client.search({
-              requests: [
-                {
-                  indexName: '<YOUR_INDEX_NAME>',
-                  query: '<YOUR_QUERY>',
-                  hitsPerPage: 50,
-                },
-              ],
+              requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
             });
 
             // use typed response
@@ -1701,17 +1695,20 @@ paths:
             client.searchForFacetValues("indexName", "facetName");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.searchForFacetValues({
-              indexName: 'indexName',
-              facetName: 'facetName',
-            });
+
+            const response = await client.searchForFacetValues({ indexName:
+            'indexName', facetName: 'facetName' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2199,17 +2196,20 @@ paths:
             "test", "val"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.saveObject({
-              indexName: '<YOUR_INDEX_NAME>',
-              body: { objectID: 'id', test: 'val' },
-            });
+
+            const response = await client.saveObject({ indexName:
+            '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3161,17 +3161,20 @@ paths:
             client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.deleteObject({
-              indexName: '<YOUR_INDEX_NAME>',
-              objectID: 'uniqueID',
-            });
+
+            const response = await client.deleteObject({ indexName:
+            '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3377,17 +3380,20 @@ paths:
             DeleteByParams().setFilters("brand:brandName"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.deleteBy({
-              indexName: 'theIndexName',
-              deleteByParams: { filters: 'brand:brandName' },
-            });
+
+            const response = await client.deleteBy({ indexName: 'theIndexName',
+            deleteByParams: { filters: 'brand:brandName' } });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3870,10 +3876,7 @@ paths:
             const response = await client.partialUpdateObject({
               indexName: 'theIndexName',
               objectID: 'uniqueID',
-              attributesToUpdate: {
-                id1: 'test',
-                id2: { _operation: 'AddUnique', value: 'test2' },
-              },
+              attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
               createIfNotExists: true,
             });
 
@@ -4567,13 +4570,7 @@ paths:
 
             // Call the API
             const response = await client.multipleBatch({
-              requests: [
-                {
-                  action: 'addObject',
-                  body: { key: 'value' },
-                  indexName: 'theIndexName',
-                },
-              ],
+              requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
             });
 
             // use typed response
@@ -4907,13 +4904,7 @@ paths:
 
             // Call the API
             const response = await client.getObjects({
-              requests: [
-                {
-                  attributesToRetrieve: ['attr1', 'attr2'],
-                  objectID: 'uniqueID',
-                  indexName: 'theIndexName',
-                },
-              ],
+              requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
             });
 
             // use typed response
@@ -5390,13 +5381,7 @@ paths:
             // Call the API
             const response = await client.setSettings({
               indexName: '<YOUR_INDEX_NAME>',
-              indexSettings: {
-                attributesForFaceting: [
-                  'actor',
-                  'filterOnly(category)',
-                  'searchable(publisher)',
-                ],
-              },
+              indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
             });
 
             // use typed response
@@ -5618,17 +5603,20 @@ paths:
             client.getSynonym("indexName", "id1");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.getSynonym({
-              indexName: 'indexName',
-              objectID: 'id1',
-            });
+
+            const response = await client.getSynonym({ indexName: 'indexName',
+            objectID: 'id1' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5879,11 +5867,7 @@ paths:
             const response = await client.saveSynonym({
               indexName: 'indexName',
               objectID: 'id1',
-              synonymHit: {
-                objectID: 'id1',
-                type: 'synonym',
-                synonyms: ['car', 'vehicule', 'auto'],
-              },
+              synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
               forwardToReplicas: true,
             });
 
@@ -6127,17 +6111,20 @@ paths:
             client.deleteSynonym("indexName", "id1");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.deleteSynonym({
-              indexName: 'indexName',
-              objectID: 'id1',
-            });
+
+            const response = await client.deleteSynonym({ indexName:
+            'indexName', objectID: 'id1' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6405,17 +6392,8 @@ paths:
             const response = await client.saveSynonyms({
               indexName: '<YOUR_INDEX_NAME>',
               synonymHit: [
-                {
-                  objectID: 'id1',
-                  type: 'synonym',
-                  synonyms: ['car', 'vehicule', 'auto'],
-                },
-                {
-                  objectID: 'id2',
-                  type: 'onewaysynonym',
-                  input: 'iphone',
-                  synonyms: ['ephone', 'aphone', 'yphone'],
-                },
+                { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
+                { objectID: 'id2', type: 'onewaysynonym', input: 'iphone', synonyms: ['ephone', 'aphone', 'yphone'] },
               ],
               forwardToReplicas: true,
               replaceExistingSynonyms: true,
@@ -7842,12 +7820,7 @@ paths:
             // Call the API
             const response = await client.updateApiKey({
               key: 'myApiKey',
-              apiKey: {
-                acl: ['search', 'addObject'],
-                validity: 300,
-                maxQueriesPerIPPerHour: 100,
-                maxHitsPerQuery: 20,
-              },
+              apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
             });
 
             // use typed response
@@ -8492,17 +8465,20 @@ paths:
             client.getRule("indexName", "id1");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.getRule({
-              indexName: 'indexName',
-              objectID: 'id1',
-            });
+
+            const response = await client.getRule({ indexName: 'indexName',
+            objectID: 'id1' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8739,10 +8715,7 @@ paths:
             const response = await client.saveRule({
               indexName: 'indexName',
               objectID: 'id1',
-              rule: {
-                objectID: 'id1',
-                conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-              },
+              rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
             });
 
             // use typed response
@@ -8980,17 +8953,20 @@ paths:
             client.deleteRule("indexName", "id1");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.deleteRule({
-              indexName: 'indexName',
-              objectID: 'id1',
-            });
+
+            const response = await client.deleteRule({ indexName: 'indexName',
+            objectID: 'id1' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -9261,14 +9237,8 @@ paths:
             const response = await client.saveRules({
               indexName: '<YOUR_INDEX_NAME>',
               rules: [
-                {
-                  objectID: 'a-rule-id',
-                  conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
-                },
-                {
-                  objectID: 'a-second-rule-id',
-                  conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-                },
+                { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
+                { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
               ],
               forwardToReplicas: false,
               clearExistingRules: true,
@@ -9823,17 +9793,20 @@ paths:
             SearchRulesParams().setQuery("something"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.searchRules({
-              indexName: 'indexName',
-              searchRulesParams: { query: 'something' },
-            });
+
+            const response = await client.searchRules({ indexName: 'indexName',
+            searchRulesParams: { query: 'something' } });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -11868,10 +11841,7 @@ paths:
             // Call the API
             const response = await client.batchAssignUserIds({
               xAlgoliaUserID: 'userID',
-              batchAssignUserIdsParams: {
-                cluster: 'theCluster',
-                users: ['user1', 'user2'],
-              },
+              batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },
             });
 
             // use typed response
@@ -13639,16 +13609,20 @@ paths:
             Source().setSource("theSource").setDescription("theDescription")));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.replaceSources({
-              source: [{ source: 'theSource', description: 'theDescription' }],
-            });
+
+            const response = await client.replaceSources({ source: [{ source:
+            'theSource', description: 'theDescription' }] });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -13878,17 +13852,20 @@ paths:
             Source().setSource("theSource").setDescription("theDescription"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.appendSource({
-              source: 'theSource',
-              description: 'theDescription',
-            });
+
+            const response = await client.appendSource({ source: 'theSource',
+            description: 'theDescription' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -14897,17 +14874,20 @@ paths:
             client.getTask("theIndexName", 123L);
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
+
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
+
             // Call the API
-            const response = await client.getTask({
-              indexName: 'theIndexName',
-              taskID: 123,
-            });
+
+            const response = await client.getTask({ indexName: 'theIndexName',
+            taskID: 123 });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -15206,11 +15186,7 @@ paths:
             // Call the API
             const response = await client.operationIndex({
               indexName: '<SOURCE_INDEX_NAME>',
-              operationIndexParams: {
-                operation: 'move',
-                destination: '<DESTINATION_INDEX_NAME>',
-                scope: ['rules', 'settings'],
-              },
+              operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>', scope: ['rules', 'settings'] },
             });
 
             // use typed response
@@ -17593,7 +17569,6 @@ components:
               food: 1
               tech: 42
         facets_stats:
-          title: facetsStats
           type: object
           description: Statistics for numerical facets.
           additionalProperties:

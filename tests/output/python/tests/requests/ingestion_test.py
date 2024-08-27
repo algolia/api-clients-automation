@@ -136,6 +136,25 @@ class TestIngestionClient:
             """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
         )
 
+    async def test_create_source_1(self):
+        """
+        push
+        """
+        _req = await self._client.create_source_with_http_info(
+            source_create={
+                "type": "push",
+                "name": "pushezpourentrer",
+            },
+        )
+
+        assert _req.path == "/1/sources"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"type":"push","name":"pushezpourentrer"}"""
+        )
+
     async def test_create_task_(self):
         """
         task without cron

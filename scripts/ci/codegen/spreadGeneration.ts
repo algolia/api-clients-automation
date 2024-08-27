@@ -31,9 +31,7 @@ export function cleanUpCommitMessage(commitMessage: string, version: string): st
     return commitMessage;
   }
 
-  return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join(
-    '\n\n',
-  );
+  return [`${prCommit[1]} ${text.commitEndMessage}`, `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {
@@ -104,9 +102,7 @@ async function spreadGeneration(): Promise<void> {
         // Go needs a 'v' prefix for tags.
         const tagVersion = lang === 'go' ? `v${version}` : version;
 
-        console.log(
-          `Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`,
-        );
+        console.log(`Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`);
 
         // we always want to delete the tag in case it exists
         await run(`git tag -d ${tagVersion} || true`, { cwd: tempGitDir });

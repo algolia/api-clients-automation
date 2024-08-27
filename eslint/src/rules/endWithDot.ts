@@ -28,11 +28,7 @@ export const endWithDot: Rule.RuleModule = {
         }
 
         const value = node.value;
-        if (
-          typeof value.value !== 'string' ||
-          value.value.trim().endsWith('.') ||
-          !value.value.trim().includes(' ')
-        ) {
+        if (typeof value.value !== 'string' || value.value.trim().endsWith('.') || !value.value.trim().includes(' ')) {
           // The rule is respected if:
           // the description is not a string
           // or it ends with a dot
@@ -50,10 +46,7 @@ export const endWithDot: Rule.RuleModule = {
           node: node as any,
           messageId: 'endWithDot',
           fix(fixer) {
-            return fixer.insertTextAfterRange(
-              [0, value.range[1] - toTrim],
-              '.'
-            );
+            return fixer.insertTextAfterRange([0, value.range[1] - toTrim], '.');
           },
         });
       },

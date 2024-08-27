@@ -83,11 +83,13 @@ class SnippetIngestionClient {
       sourceCreate = SourceCreate(
         `type` = SourceType.withName("commercetools"),
         name = "sourceName",
-        input = SourceCommercetools(
-          storeKeys = Some(Seq("myStore")),
-          locales = Some(Seq("de")),
-          url = "http://commercetools.com",
-          projectKey = "keyID"
+        input = Some(
+          SourceCommercetools(
+            storeKeys = Some(Seq("myStore")),
+            locales = Some(Seq("de")),
+            url = "http://commercetools.com",
+            projectKey = "keyID"
+          )
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       )
@@ -1222,11 +1224,13 @@ class SnippetIngestionClient {
         SourceCreate(
           `type` = SourceType.withName("commercetools"),
           name = "sourceName",
-          input = SourceCommercetools(
-            storeKeys = Some(Seq("myStore")),
-            locales = Some(Seq("de")),
-            url = "http://commercetools.com",
-            projectKey = "keyID"
+          input = Some(
+            SourceCommercetools(
+              storeKeys = Some(Seq("myStore")),
+              locales = Some(Seq("de")),
+              url = "http://commercetools.com",
+              projectKey = "keyID"
+            )
           ),
           authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         )

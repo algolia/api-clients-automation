@@ -213,18 +213,20 @@ paths:
             client.customGet("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -424,18 +426,20 @@ paths:
             client.customPost("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -635,18 +639,20 @@ paths:
             client.customPut("test/minimal");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -844,11 +850,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1068,18 +1071,20 @@ paths:
             client.listAuthentications();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listAuthentications();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1293,26 +1298,24 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.createAuthentication({
               type: 'oauth',
               name: 'authName',
-              input: {
-                url: 'http://test.oauth',
-                client_id: 'myID',
-                client_secret: 'mySecret',
-              },
+              input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1570,23 +1573,22 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchAuthentications({
-              authenticationIDs: [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-              ],
+              authenticationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1807,20 +1809,21 @@ paths:
             client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getAuthentication({
-              authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getAuthentication({ authenticationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2027,21 +2030,23 @@ paths:
             new AuthenticationUpdate().setName("newName"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateAuthentication({
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               authenticationUpdate: { name: 'newName' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2258,20 +2263,21 @@ paths:
             client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.deleteAuthentication({
-              authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+            authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2484,18 +2490,20 @@ paths:
             client.listDestinations();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listDestinations();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2704,15 +2712,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.createDestination({
               type: 'search',
               name: 'destinationName',
@@ -2720,7 +2728,9 @@ paths:
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2974,23 +2984,22 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchDestinations({
-              destinationIDs: [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-              ],
+              destinationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3212,20 +3221,21 @@ paths:
             client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getDestination({
-              destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getDestination({ destinationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3432,21 +3442,23 @@ paths:
             DestinationUpdate().setName("newName"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateDestination({
               destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               destinationUpdate: { name: 'newName' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3662,20 +3674,21 @@ paths:
             client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.deleteDestination({
-              destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.deleteDestination({ destinationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3887,18 +3900,20 @@ paths:
             client.listSources();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listSources();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4123,28 +4138,25 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.createSource({
               type: 'commercetools',
               name: 'sourceName',
-              input: {
-                storeKeys: ['myStore'],
-                locales: ['de'],
-                url: 'http://commercetools.com',
-                projectKey: 'keyID',
-              },
+              input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4293,11 +4305,13 @@ paths:
               sourceCreate = SourceCreate(
                 `type` = SourceType.withName("commercetools"),
                 name = "sourceName",
-                input = SourceCommercetools(
-                  storeKeys = Some(Seq("myStore")),
-                  locales = Some(Seq("de")),
-                  url = "http://commercetools.com",
-                  projectKey = "keyID"
+                input = Some(
+                  SourceCommercetools(
+                    storeKeys = Some(Seq("myStore")),
+                    locales = Some(Seq("de")),
+                    url = "http://commercetools.com",
+                    projectKey = "keyID"
+                  )
                 ),
                 authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
               )
@@ -4443,28 +4457,25 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.validateSource({
               type: 'commercetools',
               name: 'sourceName',
-              input: {
-                storeKeys: ['myStore'],
-                locales: ['de'],
-                url: 'http://commercetools.com',
-                projectKey: 'keyID',
-              },
+              input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4614,11 +4625,13 @@ paths:
                 SourceCreate(
                   `type` = SourceType.withName("commercetools"),
                   name = "sourceName",
-                  input = SourceCommercetools(
-                    storeKeys = Some(Seq("myStore")),
-                    locales = Some(Seq("de")),
-                    url = "http://commercetools.com",
-                    projectKey = "keyID"
+                  input = Some(
+                    SourceCommercetools(
+                      storeKeys = Some(Seq("myStore")),
+                      locales = Some(Seq("de")),
+                      url = "http://commercetools.com",
+                      projectKey = "keyID"
+                    )
                   ),
                   authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
                 )
@@ -4750,23 +4763,22 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchSources({
-              sourceIDs: [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-              ],
+              sourceIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4984,20 +4996,21 @@ paths:
             client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getSource({
-              sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
-            });
+
+            const response = await client.getSource({ sourceID:
+            '75eeb306-51d3-4e5e-a279-3c92bd8893ac' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5203,21 +5216,23 @@ paths:
             SourceUpdate().setName("newName"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateSource({
               sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               sourceUpdate: { name: 'newName' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5433,20 +5448,21 @@ paths:
             client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.deleteSource({
-              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.deleteSource({ sourceID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5656,21 +5672,23 @@ paths:
             new SourceUpdate().setName("newName"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.validateSourceBeforeUpdate({
               sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               sourceUpdate: { name: 'newName' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5888,20 +5906,21 @@ paths:
             client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.triggerDockerSourceDiscover({
-              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+            sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6136,15 +6155,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.runSource({
               sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               runSourcePayload: {
@@ -6154,7 +6173,9 @@ paths:
               },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6419,18 +6440,20 @@ paths:
             client.listTasksV1();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listTasksV1();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6640,15 +6663,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.createTaskV1({
               sourceID: 'search',
               destinationID: 'destinationName',
@@ -6656,7 +6679,9 @@ paths:
               action: 'replace',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -6916,15 +6941,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchTasksV1({
               taskIDs: [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -6933,7 +6958,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -7167,20 +7194,21 @@ paths:
             client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getTaskV1({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -7386,21 +7414,23 @@ paths:
             TaskUpdateV1().setEnabled(false));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateTaskV1({
               taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               taskUpdate: { enabled: false },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -7612,20 +7642,21 @@ paths:
             client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.deleteTaskV1({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.deleteTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -7827,20 +7858,21 @@ paths:
             client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.runTaskV1({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.runTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8041,20 +8073,21 @@ paths:
             client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.enableTaskV1({
-              taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-            });
+
+            const response = await client.enableTaskV1({ taskID:
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8256,20 +8289,21 @@ paths:
             client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.disableTaskV1({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.disableTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8484,18 +8518,20 @@ paths:
             client.listTasks();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listTasks();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8692,22 +8728,21 @@ paths:
             TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.createTask({
-              sourceID: 'search',
-              destinationID: 'destinationName',
-              action: 'replace',
-            });
+
+            const response = await client.createTask({ sourceID: 'search',
+            destinationID: 'destinationName', action: 'replace' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -8946,15 +8981,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchTasks({
               taskIDs: [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -8963,7 +8998,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -9195,20 +9232,21 @@ paths:
             client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getTask({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -9409,21 +9447,23 @@ paths:
             TaskUpdate().setEnabled(false).setCron("* * * * *"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateTask({
               taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               taskUpdate: { enabled: false, cron: '* * * * *' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -9637,20 +9677,21 @@ paths:
             client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.deleteTask({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.deleteTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -9852,20 +9893,21 @@ paths:
             client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.runTask({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.runTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -10100,15 +10142,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.pushTask({
               taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               batchWriteParams: {
@@ -10119,7 +10161,9 @@ paths:
               },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -10405,20 +10449,21 @@ paths:
             client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.enableTask({
-              taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-            });
+
+            const response = await client.enableTask({ taskID:
+            '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -10618,20 +10663,21 @@ paths:
             client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.disableTask({
-              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.disableTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -10842,18 +10888,20 @@ paths:
             client.listTransformations();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listTransformations();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -11051,22 +11099,21 @@ paths:
             TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.createTransformation({
-              code: 'foo',
-              name: 'bar',
-              description: 'baz',
-            });
+
+            const response = await client.createTransformation({ code: 'foo',
+            name: 'bar', description: 'baz' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -11297,21 +11344,21 @@ paths:
             "baz")));
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.tryTransformation({
-              code: 'foo',
-              sampleRecord: { bar: 'baz' },
-            });
+
+            const response = await client.tryTransformation({ code: 'foo',
+            sampleRecord: { bar: 'baz' } });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -11554,15 +11601,15 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.searchTransformations({
               transformationIDs: [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -11571,7 +11618,9 @@ paths:
               ],
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -11805,18 +11854,20 @@ paths:
             client.listTransformationModels();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listTransformationModels();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -12037,22 +12088,23 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.generateTransformationCode({
               id: 'foo',
-              userPrompt:
-                'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+              userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -12272,20 +12324,21 @@ paths:
             client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getTransformation({
-              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getTransformation({ transformationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -12495,21 +12548,23 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.updateTransformation({
               transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -12728,20 +12783,21 @@ paths:
             client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.deleteTransformation({
-              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+            transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -12956,21 +13012,23 @@ paths:
             );
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.tryTransformationBeforeUpdate({
               transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -13131,6 +13189,7 @@ paths:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/runType'
         - $ref: '#/components/parameters/taskID'
         - $ref: '#/components/parameters/runSort'
         - $ref: '#/components/parameters/order'
@@ -13210,18 +13269,20 @@ paths:
             client.listRuns();
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listRuns();
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -13413,20 +13474,21 @@ paths:
             client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getRun({
-              runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.getRun({ runID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -13660,20 +13722,21 @@ paths:
             client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.listEvents({
-              runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
+
+            const response = await client.listEvents({ runID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -13874,21 +13937,23 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getEvent({
               runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
               eventID: '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
             });
 
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -14277,6 +14342,14 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/RunStatus'
+    runType:
+      name: type
+      in: query
+      description: Run type for filtering the list of task runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunType'
     taskID:
       name: taskID
       in: query
@@ -14947,6 +15020,7 @@ components:
         - json
         - shopify
         - sfcc
+        - push
     sourceSortKeys:
       type: string
       description: Property by which to sort the list of sources.
@@ -15297,7 +15371,6 @@ components:
         - sourceID
         - type
         - name
-        - input
         - createdAt
     SourceCreate:
       type: object
@@ -15315,7 +15388,6 @@ components:
       required:
         - type
         - name
-        - input
     SourceCreateResponse:
       type: object
       additionalProperties: false
@@ -16317,6 +16389,15 @@ components:
         - idled
         - finished
         - skipped
+    RunType:
+      type: string
+      description: Task run type.
+      enum:
+        - reindex
+        - update
+        - discover
+        - validate
+        - push
     runSortKeys:
       type: string
       description: Property by which to sort the list of task runs.
@@ -16345,13 +16426,6 @@ components:
         - ok
         - discarded
         - blocking
-    RunType:
-      type: string
-      description: Task run type.
-      enum:
-        - reindex
-        - update
-        - discover
     startedAt:
       type: string
       description: Date of start in RFC 3339 format.

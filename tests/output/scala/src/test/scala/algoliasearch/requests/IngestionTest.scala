@@ -138,11 +138,13 @@ class IngestionTest extends AnyFunSuite {
       sourceCreate = SourceCreate(
         `type` = SourceType.withName("commercetools"),
         name = "sourceName",
-        input = SourceCommercetools(
-          storeKeys = Some(Seq("myStore")),
-          locales = Some(Seq("de")),
-          url = "http://commercetools.com",
-          projectKey = "keyID"
+        input = Some(
+          SourceCommercetools(
+            storeKeys = Some(Seq("myStore")),
+            locales = Some(Seq("de")),
+            url = "http://commercetools.com",
+            projectKey = "keyID"
+          )
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       )
@@ -156,6 +158,25 @@ class IngestionTest extends AnyFunSuite {
     val expectedBody = parse(
       """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
     )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("push1") {
+    val (client, echo) = testClient()
+    val future = client.createSource(
+      sourceCreate = SourceCreate(
+        `type` = SourceType.withName("push"),
+        name = "pushezpourentrer"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"type":"push","name":"pushezpourentrer"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1729,11 +1750,13 @@ class IngestionTest extends AnyFunSuite {
         SourceCreate(
           `type` = SourceType.withName("commercetools"),
           name = "sourceName",
-          input = SourceCommercetools(
-            storeKeys = Some(Seq("myStore")),
-            locales = Some(Seq("de")),
-            url = "http://commercetools.com",
-            projectKey = "keyID"
+          input = Some(
+            SourceCommercetools(
+              storeKeys = Some(Seq("myStore")),
+              locales = Some(Seq("de")),
+              url = "http://commercetools.com",
+              projectKey = "keyID"
+            )
           ),
           authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         )
