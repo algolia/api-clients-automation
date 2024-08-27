@@ -4305,11 +4305,13 @@ paths:
               sourceCreate = SourceCreate(
                 `type` = SourceType.withName("commercetools"),
                 name = "sourceName",
-                input = SourceCommercetools(
-                  storeKeys = Some(Seq("myStore")),
-                  locales = Some(Seq("de")),
-                  url = "http://commercetools.com",
-                  projectKey = "keyID"
+                input = Some(
+                  SourceCommercetools(
+                    storeKeys = Some(Seq("myStore")),
+                    locales = Some(Seq("de")),
+                    url = "http://commercetools.com",
+                    projectKey = "keyID"
+                  )
                 ),
                 authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
               )
@@ -4623,11 +4625,13 @@ paths:
                 SourceCreate(
                   `type` = SourceType.withName("commercetools"),
                   name = "sourceName",
-                  input = SourceCommercetools(
-                    storeKeys = Some(Seq("myStore")),
-                    locales = Some(Seq("de")),
-                    url = "http://commercetools.com",
-                    projectKey = "keyID"
+                  input = Some(
+                    SourceCommercetools(
+                      storeKeys = Some(Seq("myStore")),
+                      locales = Some(Seq("de")),
+                      url = "http://commercetools.com",
+                      projectKey = "keyID"
+                    )
                   ),
                   authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
                 )
@@ -15016,6 +15020,7 @@ components:
         - json
         - shopify
         - sfcc
+        - push
     sourceSortKeys:
       type: string
       description: Property by which to sort the list of sources.
@@ -15366,7 +15371,6 @@ components:
         - sourceID
         - type
         - name
-        - input
         - createdAt
     SourceCreate:
       type: object
@@ -15384,7 +15388,6 @@ components:
       required:
         - type
         - name
-        - input
     SourceCreateResponse:
       type: object
       additionalProperties: false

@@ -2729,6 +2729,7 @@ components:
         - json
         - shopify
         - sfcc
+        - push
     sourceSortKeys:
       type: string
       description: Property by which to sort the list of sources.
@@ -3079,7 +3080,6 @@ components:
         - sourceID
         - type
         - name
-        - input
         - createdAt
     SourceCreate:
       type: object
@@ -3097,7 +3097,6 @@ components:
       required:
         - type
         - name
-        - input
     SourceCreateResponse:
       type: object
       additionalProperties: false

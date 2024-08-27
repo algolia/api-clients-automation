@@ -70,7 +70,7 @@ public class Source {
   }
 
   /** Get input */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public SourceInput getInput() {
     return input;
   }

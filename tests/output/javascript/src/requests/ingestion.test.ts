@@ -103,6 +103,15 @@ describe('createSource', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('push', async () => {
+    const req = (await client.createSource({ type: 'push', name: 'pushezpourentrer' })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/sources');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ type: 'push', name: 'pushezpourentrer' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('createTask', () => {

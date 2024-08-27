@@ -144,6 +144,25 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `push1`() = runTest {
+    client.runTest(
+      call = {
+        createSource(
+          sourceCreate = SourceCreate(
+            type = SourceType.entries.first { it.value == "push" },
+            name = "pushezpourentrer",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/sources".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"type":"push","name":"pushezpourentrer"}""", it.body)
+      },
+    )
+  }
+
   // createTask
 
   @Test
