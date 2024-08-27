@@ -45,6 +45,7 @@ import algoliasearch.ingestion.RunSortKeys._
 import algoliasearch.ingestion.RunSourcePayload
 import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
+import algoliasearch.ingestion.RunType._
 import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
@@ -951,6 +952,8 @@ class IngestionClient(
     *   Page number of the paginated API response.
     * @param status
     *   Run status for filtering the list of task runs.
+    * @param `type`
+    *   Run type for filtering the list of task runs.
     * @param taskID
     *   Task ID for filtering the list of task runs.
     * @param sort
@@ -966,6 +969,7 @@ class IngestionClient(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       status: Option[Seq[RunStatus]] = None,
+      `type`: Option[Seq[RunType]] = None,
       taskID: Option[String] = None,
       sort: Option[RunSortKeys] = None,
       order: Option[OrderKeys] = None,
@@ -981,6 +985,7 @@ class IngestionClient(
       .withQueryParameter("itemsPerPage", itemsPerPage)
       .withQueryParameter("page", page)
       .withQueryParameter("status", status)
+      .withQueryParameter("type", `type`)
       .withQueryParameter("taskID", taskID)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)

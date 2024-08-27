@@ -25,6 +25,15 @@ runStatus:
     items:
       $ref: './schemas/run.yml#/RunStatus'
 
+runType:
+  name: type
+  in: query
+  description: Run type for filtering the list of task runs.
+  schema:
+    type: array
+    items:
+      $ref: './schemas/run.yml#/RunType'
+
 taskID:
   name: taskID
   in: query

@@ -151,6 +151,25 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('push')]
+    public function testCreateSource1()
+    {
+        $client = $this->getClient();
+        $client->createSource(
+            ['type' => 'push',
+                'name' => 'pushezpourentrer',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources',
+                'method' => 'POST',
+                'body' => json_decode('{"type":"push","name":"pushezpourentrer"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('task without cron')]
     public function testCreateTask()
     {

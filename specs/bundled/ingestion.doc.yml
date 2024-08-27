@@ -4305,11 +4305,13 @@ paths:
               sourceCreate = SourceCreate(
                 `type` = SourceType.withName("commercetools"),
                 name = "sourceName",
-                input = SourceCommercetools(
-                  storeKeys = Some(Seq("myStore")),
-                  locales = Some(Seq("de")),
-                  url = "http://commercetools.com",
-                  projectKey = "keyID"
+                input = Some(
+                  SourceCommercetools(
+                    storeKeys = Some(Seq("myStore")),
+                    locales = Some(Seq("de")),
+                    url = "http://commercetools.com",
+                    projectKey = "keyID"
+                  )
                 ),
                 authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
               )
@@ -4623,11 +4625,13 @@ paths:
                 SourceCreate(
                   `type` = SourceType.withName("commercetools"),
                   name = "sourceName",
-                  input = SourceCommercetools(
-                    storeKeys = Some(Seq("myStore")),
-                    locales = Some(Seq("de")),
-                    url = "http://commercetools.com",
-                    projectKey = "keyID"
+                  input = Some(
+                    SourceCommercetools(
+                      storeKeys = Some(Seq("myStore")),
+                      locales = Some(Seq("de")),
+                      url = "http://commercetools.com",
+                      projectKey = "keyID"
+                    )
                   ),
                   authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
                 )
@@ -13185,6 +13189,7 @@ paths:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/runType'
         - $ref: '#/components/parameters/taskID'
         - $ref: '#/components/parameters/runSort'
         - $ref: '#/components/parameters/order'
@@ -14337,6 +14342,14 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/RunStatus'
+    runType:
+      name: type
+      in: query
+      description: Run type for filtering the list of task runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunType'
     taskID:
       name: taskID
       in: query
@@ -15007,6 +15020,7 @@ components:
         - json
         - shopify
         - sfcc
+        - push
     sourceSortKeys:
       type: string
       description: Property by which to sort the list of sources.
@@ -15357,7 +15371,6 @@ components:
         - sourceID
         - type
         - name
-        - input
         - createdAt
     SourceCreate:
       type: object
@@ -15375,7 +15388,6 @@ components:
       required:
         - type
         - name
-        - input
     SourceCreateResponse:
       type: object
       additionalProperties: false
@@ -16377,6 +16389,15 @@ components:
         - idled
         - finished
         - skipped
+    RunType:
+      type: string
+      description: Task run type.
+      enum:
+        - reindex
+        - update
+        - discover
+        - validate
+        - push
     runSortKeys:
       type: string
       description: Property by which to sort the list of task runs.
@@ -16405,13 +16426,6 @@ components:
         - ok
         - discarded
         - blocking
-    RunType:
-      type: string
-      description: Task run type.
-      enum:
-        - reindex
-        - update
-        - discover
     startedAt:
       type: string
       description: Date of start in RFC 3339 format.
