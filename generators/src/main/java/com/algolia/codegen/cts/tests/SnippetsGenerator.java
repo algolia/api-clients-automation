@@ -47,41 +47,16 @@ public class SnippetsGenerator extends TestsGenerator {
     );
   }
 
-  private Map<String, Snippet[]> loadSnippets() throws Exception {
+  @Override
+  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the tests for the
+    // This special case allow us to read the `search` CTS to generated the blocks for the
     // `lite` client, which is only available in Javascript
     if (client.equals("algoliasearch")) {
       clientName = "search";
     }
 
-    Map<String, Snippet[]> baseSnippets = loadCTS("requests", clientName, Snippet[].class);
-
-    // The algoliasearch client bundles many client and therefore should provide snippets for all
-    // the subsequent specs
-    if (client.equals("algoliasearch")) {
-      Map<String, Snippet[]> recommendSnippets = loadCTS("requests", "recommend", Snippet[].class);
-      for (Map.Entry<String, Snippet[]> entry : recommendSnippets.entrySet()) {
-        String operation = entry.getKey();
-        // custom methods are common to every clients, we don't want duplicate snippets
-        if (operation.startsWith("custom")) {
-          continue;
-        }
-
-        if (baseSnippets.containsKey(operation)) {
-          baseSnippets.put(operation, ArrayUtils.addAll(baseSnippets.get(operation), entry.getValue()));
-        } else {
-          baseSnippets.put(operation, entry.getValue());
-        }
-      }
-    }
-
-    return baseSnippets;
-  }
-
-  @Override
-  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, Snippet[]> snippets = loadSnippets();
+    Map<String, Snippet[]> snippets = loadCTS("requests", clientName, Snippet[].class);
 
     // also include helpers
     Map<String, ClientTestData[]> clientsTests = loadCTS("client", client, ClientTestData[].class);

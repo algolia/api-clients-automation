@@ -6,7 +6,6 @@ import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
 import java.util.*;
-import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenResponse;
@@ -18,38 +17,6 @@ public class TestsRequest extends TestsGenerator {
 
   public TestsRequest(String language, String client) {
     super(language, client);
-  }
-
-  private Map<String, Request[]> loadRequestCTS() throws Exception {
-    String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the tests for the
-    // `lite` client, which is only available in Javascript
-    if (client.equals("algoliasearch")) {
-      clientName = "search";
-    }
-
-    Map<String, Request[]> baseCTS = loadCTS("requests", clientName, Request[].class);
-
-    // The algoliasearch client bundles many client and therefore should provide tests for all the
-    // subsequent specs
-    if (client.equals("algoliasearch")) {
-      Map<String, Request[]> recommendCTS = loadCTS("requests", "recommend", Request[].class);
-      for (Map.Entry<String, Request[]> entry : recommendCTS.entrySet()) {
-        String operation = entry.getKey();
-        // custom methods are common to every clients, we don't want duplicate tests
-        if (operation.startsWith("custom")) {
-          continue;
-        }
-
-        if (baseCTS.containsKey(operation)) {
-          baseCTS.put(operation, ArrayUtils.addAll(baseCTS.get(operation), entry.getValue()));
-        } else {
-          baseCTS.put(operation, entry.getValue());
-        }
-      }
-    }
-
-    return baseCTS;
   }
 
   @Override
@@ -101,7 +68,14 @@ public class TestsRequest extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, Request[]> cts = loadRequestCTS();
+    String clientName = client;
+    // This special case allow us to read the `search` CTS to generated the blocks for the
+    // `lite` client, which is only available in Javascript
+    if (client.equals("algoliasearch")) {
+      clientName = "search";
+    }
+
+    Map<String, Request[]> cts = loadCTS("requests", clientName, Request[].class);
 
     if (this.client.equals("search")) {
       bundle.put("isSearchClient", true);
