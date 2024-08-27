@@ -131,15 +131,15 @@ export function createTransporter({
         throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
-      timeouts = {...timeouts, ...requestOptions.timeouts}
+      const timeout = { ...timeouts, ...requestOptions.timeouts };
 
       const payload: EndRequest = {
         data,
         headers,
         method: request.method,
         url: serializeUrl(host, request.path, queryParameters),
-        connectTimeout: getTimeout(timeoutsCount, timeouts.connect),
-        responseTimeout: getTimeout(timeoutsCount, isRead ? timeouts.read : timeouts.write),
+        connectTimeout: getTimeout(timeoutsCount, timeout.connect),
+        responseTimeout: getTimeout(timeoutsCount, isRead ? timeout.read : timeout.write),
       };
 
       /**
