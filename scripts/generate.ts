@@ -20,7 +20,7 @@ export async function generate(generators: Generator[]): Promise<void> {
     // We have scoped output folder for JavaScript which allow us to
     // avoid linting the whole client, only the part that changed
     if (lang === 'javascript') {
-      const base = "clients/algoliasearch-client-javascript/packages"
+      const base = 'clients/algoliasearch-client-javascript/packages';
       folder = generators.reduce((folders, gen) => {
         if (gen.language === 'javascript') {
           return `${folders} ${gen.output}`;
