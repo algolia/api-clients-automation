@@ -1,3 +1,9 @@
+## [9.1.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.1.1...9.1.2)
+
+- [536fdef01](https://github.com/algolia/api-clients-automation/commit/536fdef01) fix(specs): filter run list by type ([#3577](https://github.com/algolia/api-clients-automation/pull/3577)) by [@millotp](https://github.com/millotp/)
+- [7d08d1e35](https://github.com/algolia/api-clients-automation/commit/7d08d1e35) fix(swift): accept any type during json encoding ([#3576](https://github.com/algolia/api-clients-automation/pull/3576)) by [@Fluf22](https://github.com/Fluf22/)
+- [9b6dc0b70](https://github.com/algolia/api-clients-automation/commit/9b6dc0b70) docs(specs): update api's length minimum value ([#3574](https://github.com/algolia/api-clients-automation/pull/3574)) by [@Jerska](https://github.com/Jerska/)
+
 ## [9.1.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.1.0...9.1.1)
 
 - [4cbbce55c](https://github.com/algolia/api-clients-automation/commit/4cbbce55c) fix(clients): highlight and snippet results e2e ([#3567](https://github.com/algolia/api-clients-automation/pull/3567)) by [@shortcuts](https://github.com/shortcuts/)
