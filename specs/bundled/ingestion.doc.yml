@@ -13185,6 +13185,7 @@ paths:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/runType'
         - $ref: '#/components/parameters/taskID'
         - $ref: '#/components/parameters/runSort'
         - $ref: '#/components/parameters/order'
@@ -14337,6 +14338,14 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/RunStatus'
+    runType:
+      name: type
+      in: query
+      description: Run type for filtering the list of task runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunType'
     taskID:
       name: taskID
       in: query
@@ -16377,6 +16386,15 @@ components:
         - idled
         - finished
         - skipped
+    RunType:
+      type: string
+      description: Task run type.
+      enum:
+        - reindex
+        - update
+        - discover
+        - validate
+        - push
     runSortKeys:
       type: string
       description: Property by which to sort the list of task runs.
@@ -16405,13 +16423,6 @@ components:
         - ok
         - discarded
         - blocking
-    RunType:
-      type: string
-      description: Task run type.
-      enum:
-        - reindex
-        - update
-        - discover
     startedAt:
       type: string
       description: Date of start in RFC 3339 format.
