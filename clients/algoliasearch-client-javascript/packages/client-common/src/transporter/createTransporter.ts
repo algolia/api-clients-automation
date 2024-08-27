@@ -131,17 +131,15 @@ export function createTransporter({
         throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
-      const responseTimeout = isRead
-        ? requestOptions.timeouts?.read || timeouts.read
-        : requestOptions.timeouts?.write || timeouts.write;
+      timeouts = {...timeouts, ...requestOptions.timeouts}
 
       const payload: EndRequest = {
         data,
         headers,
         method: request.method,
         url: serializeUrl(host, request.path, queryParameters),
-        connectTimeout: getTimeout(timeoutsCount, requestOptions.timeouts?.connect || timeouts.connect),
-        responseTimeout: getTimeout(timeoutsCount, responseTimeout),
+        connectTimeout: getTimeout(timeoutsCount, timeouts.connect),
+        responseTimeout: getTimeout(timeoutsCount, isRead ? timeouts.read : timeouts.write),
       };
 
       /**
