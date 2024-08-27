@@ -68,7 +68,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`;
+    let testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
+    if (language !== 'swift') {
+      // Swift requires the benchmark folder to have files in it
+      testsToDelete += ` ${testsOutputBase}/benchmark`;
+    }
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
