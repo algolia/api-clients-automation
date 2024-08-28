@@ -1909,7 +1909,7 @@ void main() {
 
   // partialUpdateObject
   test(
-    'Partial update with string value',
+    'Partial update with a new value for a string attribute',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1920,28 +1920,20 @@ void main() {
         indexName: "theIndexName",
         objectID: "uniqueID",
         attributesToUpdate: {
-          'id1': "test",
-          'id2': BuiltInOperation(
-            operation: BuiltInOperationType.fromJson("AddUnique"),
-            value: "test2",
-          ),
+          'attributeId': "new value",
         },
-        createIfNotExists: true,
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
         expect(request.method, 'post');
-        expectParams(
-            request.queryParameters, """{"createIfNotExists":"true"}""");
-        expectBody(request.body,
-            """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""");
+        expectBody(request.body, """{"attributeId":"new value"}""");
       },
     ),
   );
 
   // partialUpdateObject
   test(
-    'Partial update with integer value',
+    'Partial update with a new value for an integer attribute',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1952,17 +1944,91 @@ void main() {
         indexName: "theIndexName",
         objectID: "uniqueID",
         attributesToUpdate: {
-          'attributeId': BuiltInOperation(
-            operation: BuiltInOperationType.fromJson("Increment"),
-            value: 2,
-          ),
+          'attributeId': 1,
         },
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
         expect(request.method, 'post');
-        expectBody(request.body,
-            """{"attributeId":{"_operation":"Increment","value":2}}""");
+        expectBody(request.body, """{"attributeId":1}""");
+      },
+    ),
+  );
+
+  // partialUpdateObject
+  test(
+    'Partial update with a new value for a boolean attribute',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "uniqueID",
+        attributesToUpdate: {
+          'attributeId': true,
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"attributeId":true}""");
+      },
+    ),
+  );
+
+  // partialUpdateObject
+  test(
+    'Partial update with a new value for an array attribute',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "uniqueID",
+        attributesToUpdate: {
+          'attributeId': [
+            "one",
+            "two",
+            "three",
+          ],
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"attributeId":["one","two","three"]}""");
+      },
+    ),
+  );
+
+  // partialUpdateObject
+  test(
+    'Partial update with a new value for an object attribute',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.partialUpdateObject(
+        indexName: "theIndexName",
+        objectID: "uniqueID",
+        attributesToUpdate: {
+          'attributeId': {
+            'nested': "value",
+          },
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/uniqueID/partial');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"attributeId":{"nested":"value"}}""");
       },
     ),
   );

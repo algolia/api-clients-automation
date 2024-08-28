@@ -1556,7 +1556,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+  /// Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
   ///
   /// Required API Key ACLs:
   ///   - addObject
@@ -1564,13 +1564,13 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
   /// * [objectID] Unique record identifier.
-  /// * [attributesToUpdate] Attributes with their values. - one of types: [BuiltInOperation], [String],
+  /// * [attributesToUpdate] Attributes with their values.
   /// * [createIfNotExists] Whether to create a new record if it doesn't exist.
   /// * [requestOptions] additional request configuration.
   Future<UpdatedAtWithObjectIdResponse> partialUpdateObject({
     required String indexName,
     required String objectID,
-    required Map<String, dynamic> attributesToUpdate,
+    required Object attributesToUpdate,
     bool? createIfNotExists,
     RequestOptions? requestOptions,
   }) async {
@@ -1582,6 +1582,18 @@ final class SearchClient implements ApiClient {
       objectID.isNotEmpty,
       'Parameter `objectID` is required when calling `partialUpdateObject`.',
     );
+    if (attributesToUpdate is Map) {
+      assert(
+        attributesToUpdate.isNotEmpty,
+        'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.',
+      );
+    }
+    if (attributesToUpdate is Map) {
+      assert(
+        attributesToUpdate.isNotEmpty,
+        'Parameter `attributesToUpdate ` is required when calling `partialUpdateObject`.',
+      );
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/{objectID}/partial'

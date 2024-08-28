@@ -829,7 +829,7 @@ final class SearchClientSnippet {
 
     /// Snippet for the partialUpdateObject method.
     ///
-    /// Partial update with string value
+    /// Partial update with a new value for a string attribute
     func snippetForPartialUpdateObject() async throws {
         // >SEPARATOR partialUpdateObject default
         // Initialize the client
@@ -839,15 +839,7 @@ final class SearchClientSnippet {
         let response = try await client.partialUpdateObject(
             indexName: "theIndexName",
             objectID: "uniqueID",
-            attributesToUpdate: [
-                "id1": AttributeToUpdate.string("test"),
-                "id2": AttributeToUpdate
-                    .builtInOperation(BuiltInOperation(
-                        operation: BuiltInOperationType.addUnique,
-                        value: BuiltInOperationValue.string("test2")
-                    )),
-            ],
-            createIfNotExists: true
+            attributesToUpdate: ["attributeId": "new value"]
         )
         // SEPARATOR<
     }

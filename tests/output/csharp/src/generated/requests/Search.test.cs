@@ -1568,69 +1568,66 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "Partial update with string value")]
+  [Fact(DisplayName = "Partial update with a new value for a string attribute")]
   public async Task PartialUpdateObjectTest()
   {
     await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
-      new Dictionary<string, AttributeToUpdate>
-      {
-        { "id1", new AttributeToUpdate("test") },
-        {
-          "id2",
-          new AttributeToUpdate(
-            new BuiltInOperation
-            {
-              Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-              Value = new BuiltInOperationValue("test2"),
-            }
-          )
-        }
-      },
-      true
+      new Dictionary<string, string> { { "attributeId", "new value" } }
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}",
+      "{\"attributeId\":\"new value\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"createIfNotExists\":\"true\"}"
-    );
-    Assert.NotNull(expectedQuery);
-
-    var actualQuery = req.QueryParameters;
-    Assert.Equal(expectedQuery.Count, actualQuery.Count);
-
-    foreach (var actual in actualQuery)
-    {
-      expectedQuery.TryGetValue(actual.Key, out var expected);
-      Assert.Equal(expected, actual.Value);
-    }
   }
 
-  [Fact(DisplayName = "Partial update with integer value")]
+  [Fact(DisplayName = "Partial update with a new value for an integer attribute")]
   public async Task PartialUpdateObjectTest1()
   {
     await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
-      new Dictionary<string, AttributeToUpdate>
+      new Dictionary<string, int> { { "attributeId", 1 } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"attributeId\":1}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for a boolean attribute")]
+  public async Task PartialUpdateObjectTest2()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, Boolean> { { "attributeId", true } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"attributeId\":true}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for an array attribute")]
+  public async Task PartialUpdateObjectTest3()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, List<string>>
       {
         {
           "attributeId",
-          new AttributeToUpdate(
-            new BuiltInOperation
-            {
-              Operation = Enum.Parse<BuiltInOperationType>("Increment"),
-              Value = new BuiltInOperationValue(2),
-            }
-          )
+          new List<string> { "one", "two", "three" }
         }
       }
     );
@@ -1639,7 +1636,32 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}",
+      "{\"attributeId\":[\"one\",\"two\",\"three\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for an object attribute")]
+  public async Task PartialUpdateObjectTest4()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, Object>
+      {
+        {
+          "attributeId",
+          new Dictionary<string, string> { { "nested", "value" } }
+        }
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeId\":{\"nested\":\"value\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1779,7 +1801,7 @@ public class SearchClientRequestTests
           },
           Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
           FilterPromotes = false,
-          UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
+          UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
           Promote = new List<Promote>
           {
             new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),
@@ -1925,7 +1947,7 @@ public class SearchClientRequestTests
             },
             Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
             FilterPromotes = false,
-            UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
+            UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
             Promote = new List<Promote>
             {
               new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),

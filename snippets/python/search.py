@@ -1407,7 +1407,7 @@ async def snippet_for_partial_update_object():
     """
     Snippet for the partialUpdateObject method.
 
-    Partial update with string value
+    Partial update with a new value for a string attribute
     """
     # >SEPARATOR partialUpdateObject default
     # Initialize the client
@@ -1418,13 +1418,8 @@ async def snippet_for_partial_update_object():
         index_name="theIndexName",
         object_id="uniqueID",
         attributes_to_update={
-            "id1": "test",
-            "id2": {
-                "_operation": "AddUnique",
-                "value": "test2",
-            },
+            "attributeId": "new value",
         },
-        create_if_not_exists=True,
     )
 
     # use the class directly

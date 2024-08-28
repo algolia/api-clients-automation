@@ -38,6 +38,7 @@ import algoliasearch.search.BuiltInOperationType._
 import org.json4s._
 
 /** AttributeToUpdate
+  * @deprecated
   */
 sealed trait AttributeToUpdate
 

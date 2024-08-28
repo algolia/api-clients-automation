@@ -1107,19 +1107,14 @@ end
 
 # Snippet for the partialUpdateObject method.
 #
-# Partial update with string value
+# Partial update with a new value for a string attribute
 def snippet_for_partial_update_object
   # >SEPARATOR partialUpdateObject default
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.partial_update_object(
-    "theIndexName",
-    "uniqueID",
-    {id1: "test", id2: BuiltInOperation.new(_operation: "AddUnique", value: "test2")},
-    true
-  )
+  response = client.partial_update_object("theIndexName", "uniqueID", {attributeId: "new value"})
 
   # use the class directly
   puts(response)

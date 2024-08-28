@@ -1539,64 +1539,63 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("Partial update with string value")
+  @DisplayName("Partial update with a new value for a string attribute")
   void partialUpdateObjectTest() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject(
-        "theIndexName",
-        "uniqueID",
-        Map.of(
-          "id1",
-          AttributeToUpdate.of("test"),
-          "id2",
-          new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
-        ),
-        true
-      );
+      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", "new value"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-
-    try {
-      Map<String, String> expectedQuery = json.readValue(
-        "{\"createIfNotExists\":\"true\"}",
-        new TypeReference<HashMap<String, String>>() {}
-      );
-      Map<String, Object> actualQuery = req.queryParameters;
-
-      assertEquals(expectedQuery.size(), actualQuery.size());
-      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
-        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
-      }
-    } catch (JsonProcessingException e) {
-      fail("failed to parse queryParameters json");
-    }
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeId\":\"new value\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
-  @DisplayName("Partial update with integer value")
+  @DisplayName("Partial update with a new value for an integer attribute")
   void partialUpdateObjectTest1() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject(
-        "theIndexName",
-        "uniqueID",
-        Map.of("attributeId", new BuiltInOperation().setOperation(BuiltInOperationType.INCREMENT).setValue(BuiltInOperationValue.of(2)))
-      );
+      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", 1));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}", req.body, JSONCompareMode.STRICT)
-    );
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeId\":1}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("Partial update with a new value for a boolean attribute")
+  void partialUpdateObjectTest2() {
+    assertDoesNotThrow(() -> {
+      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", true));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeId\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("Partial update with a new value for an array attribute")
+  void partialUpdateObjectTest3() {
+    assertDoesNotThrow(() -> {
+      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", List.of("one", "two", "three")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeId\":[\"one\",\"two\",\"three\"]}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("Partial update with a new value for an object attribute")
+  void partialUpdateObjectTest4() {
+    assertDoesNotThrow(() -> {
+      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", Map.of("nested", "value")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeId\":{\"nested\":\"value\"}}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

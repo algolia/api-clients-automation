@@ -800,24 +800,14 @@ class SnippetSearchClient {
 
   // Snippet for the partialUpdateObject method.
   //
-  // Partial update with string value
+  // Partial update with a new value for a string attribute
   void snippetForPartialUpdateObject() {
     // >SEPARATOR partialUpdateObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
-      "theIndexName",
-      "uniqueID",
-      Map.of(
-        "id1",
-        AttributeToUpdate.of("test"),
-        "id2",
-        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
-      ),
-      true
-    );
+    client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", "new value"));
     // SEPARATOR<
   }
 

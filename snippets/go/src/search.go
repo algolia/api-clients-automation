@@ -1516,7 +1516,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 	/*
 	   Snippet for the partialUpdateObject method.
 
-	   Partial update with string value
+	   Partial update with a new value for a string attribute
 	*/
 
 	// >SEPARATOR partialUpdateObject default
@@ -1529,9 +1529,8 @@ func SnippetForPartialUpdateObjectOfSearch() {
 
 	// Call the API
 	response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-		"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
-			search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue(search.StringAsBuiltInOperationValue("test2")))},
-	).WithCreateIfNotExists(true))
+		"theIndexName", "uniqueID", map[string]any{"attributeId": "new value"},
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
