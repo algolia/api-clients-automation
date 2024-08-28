@@ -15,11 +15,13 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsRequest extends TestsGenerator {
 
   private final boolean withSnippets;
+  private final boolean withSyncTests;
   private List<SupportingFile> supportingFiles;
 
   public TestsRequest(String language, String client, boolean withSnippets) {
     super(language, client);
     this.withSnippets = withSnippets;
+    this.withSyncTests = language.equals("python");
   }
 
   protected Map<String, Request[]> loadRequestCTS() throws Exception {
@@ -255,6 +257,35 @@ public class TestsRequest extends TestsGenerator {
       bundle.put("blocksE2E", blocksE2E);
     } else if (supportingFiles != null) {
       supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+    }
+
+    if (this.withSyncTests) {
+      List<Object> modes = new ArrayList<>();
+
+      if (!blocksE2E.isEmpty()) {
+        Map<String, Object> sync = new HashMap<>();
+        sync.put("isSync", true);
+        sync.put("blocksE2ESync", blocksE2E);
+
+        Map<String, Object> async = new HashMap<>();
+        sync.put("isSync", true);
+        sync.put("blocksE2E", blocksE2E);
+
+        modes.add(sync);
+        modes.add(async);
+      }
+
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSync", true);
+      sync.put("blocksRequestsSync", blocks);
+
+      Map<String, Object> async = new HashMap<>();
+      async.put("blocksRequests", blocks);
+
+      modes.add(sync);
+      modes.add(async);
+
+      bundle.put("modes", modes);
     }
   }
 }

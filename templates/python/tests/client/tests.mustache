@@ -1,5 +1,5 @@
     {{#tests}}
-    async def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
+    {{^isSync}}async {{/isSync}}def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
         """

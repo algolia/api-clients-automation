@@ -17,11 +17,13 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsClient extends TestsGenerator {
 
   private final boolean withBenchmark;
+  private final boolean withSyncTests;
   private final String testType;
 
   public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
     this.withBenchmark = withBenchmark;
+    this.withSyncTests = language.equals("python");
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
@@ -208,5 +210,20 @@ public class TestsClient extends TestsGenerator {
       blocks.add(testObj);
     }
     bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
+    if (this.withSyncTests) {
+      List<Object> modes = new ArrayList<>();
+
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSync", true);
+      sync.put(withBenchmark ? "blocksBenchmarkSync" : "blocksClientSync", blocks);
+
+      Map<String, Object> async = new HashMap<>();
+      async.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
+
+      modes.add(sync);
+      modes.add(async);
+
+      bundle.put("modes", modes);
+    }
   }
 }

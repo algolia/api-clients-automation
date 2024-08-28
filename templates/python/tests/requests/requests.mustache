@@ -4,22 +4,24 @@ from json import loads
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
 from algoliasearch.search.models.batch_response import BatchResponse
 from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
 from algoliasearch.search.models.get_task_response import GetTaskResponse
 
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
+{{#modes}}
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
     _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
-    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(config=_config, transporter=EchoTransporter(_config))
+    _client = {{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}.create_with_config(config=_config, transporter=EchoTransporter(_config))
 
     {{#blocksRequests}}
     {{#tests}}
-    async def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+    {{^isSync}}async {{/isSync}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
         """
-        _req = await self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _req = {{^isSync}}await {{/isSync}}self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
         {{#request}}
         assert _req.path == "{{{path}}}"
@@ -42,3 +44,4 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     {{#isSearchClient}}
     {{> tests/requests/helpers}}
     {{/isSearchClient}}
+{{/modes}}
