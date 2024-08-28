@@ -82,6 +82,9 @@ components:
       $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
+  schemas:
+    attributeToUpdate:
+      $ref: 'paths/objects/common/schemas.yml#/attributeToUpdate'
 servers:
   - url: https://{appId}.algolia.net
     variables:
