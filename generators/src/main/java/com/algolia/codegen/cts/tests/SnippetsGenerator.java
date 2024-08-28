@@ -49,17 +49,15 @@ public class SnippetsGenerator extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
+    Map<String, Snippet[]> snippets = loadFullCTS(Snippet[].class);
+
     String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the blocks for the
-    // `lite` client, which is only available in Javascript
     if (client.equals("algoliasearch")) {
       clientName = "search";
     }
 
-    Map<String, Snippet[]> snippets = loadCTS("requests", clientName, Snippet[].class);
-
     // also include helpers
-    Map<String, ClientTestData[]> clientsTests = loadCTS("client", client, ClientTestData[].class);
+    Map<String, ClientTestData[]> clientsTests = loadCTS("client", clientName, ClientTestData[].class);
     for (Map.Entry<String, ClientTestData[]> blockEntry : clientsTests.entrySet()) {
       for (ClientTestData test : blockEntry.getValue()) {
         for (var step : test.steps) {

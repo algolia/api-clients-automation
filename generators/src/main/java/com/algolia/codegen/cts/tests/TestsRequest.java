@@ -68,14 +68,7 @@ public class TestsRequest extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the blocks for the
-    // `lite` client, which is only available in Javascript
-    if (client.equals("algoliasearch")) {
-      clientName = "search";
-    }
-
-    Map<String, Request[]> cts = loadCTS("requests", clientName, Request[].class);
+    Map<String, Request[]> cts = loadFullCTS(Request[].class);
 
     if (this.client.equals("search")) {
       bundle.put("isSearchClient", true);
