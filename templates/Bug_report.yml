@@ -43,6 +43,13 @@ body:
         - Crawler
     validations:
       required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The version of the client you are using.
+      validations:
+        required: true
   - type: textarea
     id: logs
     attributes:
