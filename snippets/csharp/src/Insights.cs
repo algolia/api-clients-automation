@@ -94,7 +94,7 @@ public class SnippetInsightsClient
     );
 
     // Call the API
-    await client.DeleteUserTokenAsync("test-user-1");
+    var response = await client.DeleteUserTokenAsync("test-user-1");
     // SEPARATOR<
   }
 
