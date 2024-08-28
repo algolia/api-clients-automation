@@ -20,7 +20,6 @@ builtInOperationValue:
 builtInOperation:
   type: object
   description: Update to perform on the attribute.
-  x-keep-model: true
   additionalProperties: false
   properties:
     _operation:
@@ -30,6 +29,13 @@ builtInOperation:
   required:
     - _operation
     - value
+
+attributeToUpdate:
+  x-keep-model: true
+  deprecated: true
+  oneOf:
+    - type: string
+    - $ref: '#/builtInOperation'
 
 batchResponse:
   type: object
