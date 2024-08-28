@@ -23,7 +23,7 @@
         "default": "./dist/{{packageName}}.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/{{packageName}}.umd.js",
         "module": "./dist/{{packageName}}.esm.browser.js",
         "import": "./dist/{{packageName}}.esm.browser.js",
@@ -66,7 +66,6 @@
   },
   "exports": {
     ".": {
-      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -74,7 +73,7 @@
         "default": "./dist/algoliasearch.cjs",
         "types": "./dist/algoliasearch/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/algoliasearch.umd.js",
         "module": "./dist/algoliasearch.esm.browser.js",
         "import": "./dist/algoliasearch.esm.browser.js",
@@ -83,7 +82,6 @@
       }
     },
     "./lite": {
-      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -91,7 +89,7 @@
         "default": "./dist/lite/lite.cjs",
         "types": "./dist/lite/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/lite/lite.umd.js",
         "module": "./dist/lite/lite.esm.browser.js",
         "import": "./dist/lite/lite.esm.browser.js",
@@ -118,7 +116,6 @@
     "@algolia/client-analytics": "{{analyticsVersion}}",
     "@algolia/client-abtesting": "{{abtestingVersion}}",
     "@algolia/client-personalization": "{{personalizationVersion}}",
-    "@algolia/recommend": "{{recommendVersion}}",
     "@algolia/client-search": "{{searchVersion}}",
     "@algolia/client-common": "{{utilsPackageVersion}}",
     "@algolia/recommend": "{{recommendVersion}}",
