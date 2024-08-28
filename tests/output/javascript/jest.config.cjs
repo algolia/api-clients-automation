@@ -1,7 +1,7 @@
 /** @type {import('jest').Config.InitialOptions} */
 const baseConfig = {
   preset: 'ts-jest',
-  roots: ['__tests__'],
+  roots: ['src/__tests__'],
   moduleDirectories: ['../../node_modules'],
   transform: {
     "\\.[jt]sx?$": "babel-jest",
@@ -13,12 +13,12 @@ module.exports = {
     {
       ...baseConfig,
       testEnvironment: 'jsdom',
-      testPathIgnorePatterns: [ '__tests__/algoliasearch.node.test.ts' ],
+      testPathIgnorePatterns: [ '__tests__/algoliasearch.browser.test.ts' ],
     },
     {
       ...baseConfig,
       testEnvironment: 'node',
-      testPathIgnorePatterns: [ '__tests__/algoliasearch.browser.test.ts' ],
+      testPathIgnorePatterns: [ '__tests__/algoliasearch.node.test.ts' ],
     },
   ],
 };
