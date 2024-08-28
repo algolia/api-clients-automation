@@ -333,13 +333,16 @@ jobs:
         if: ${{ matrix.client.language == 'java' }}
         run: |
           cd ${{ matrix.client.path }}
-          ./gradlew :api:japicmp
+          exit_code=0
+          ./gradlew :api:japicmp || exit_code=$?
 
           FILE=./api/build/reports/japi.txt
 
           if [[ -f "$FILE" ]]; then
             cat $FILE
           fi
+
+          exit $exit_code
 
       - name: Remove previous CTS output
         run: rm -rf ${{ matrix.client.testsToDelete }} || true
