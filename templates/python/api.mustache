@@ -15,9 +15,10 @@ from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.
 {{/imports}}{{/operation}}{{/operations}}
 
 
+{{#modes}}
 {{#operations}}
-class {{classname}}:
-    """The Algolia '{{classname}}' class.
+class {{classname}}{{^isAsync}}Sync{{/isAsync}}:
+    """The Algolia '{{classname}}{{^isAsync}}Sync{{/isAsync}}' class.
 
     Args:
     app_id (str): The Algolia application ID to retrieve information from.
@@ -28,10 +29,10 @@ class {{classname}}:
     The initialized API client.
 
     Example:
-    _client = {{classname}}("YOUR_ALGOLIA_APP_ID", "YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
-    _client_with_named_args = {{classname}}(app_id="YOUR_ALGOLIA_APP_ID", api_key="YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
+    _client = {{classname}}{{^isAsync}}Sync{{/isAsync}}("YOUR_ALGOLIA_APP_ID", "YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
+    _client_with_named_args = {{classname}}{{^isAsync}}Sync{{/isAsync}}(app_id="YOUR_ALGOLIA_APP_ID", api_key="YOUR_ALGOLIA_API_KEY"{{#hasRegionalHost}}, region="{{#allowedRegions}}'{{.}}'{{^-last}} or {{/-last}}{{/allowedRegions}}"{{/hasRegionalHost}})
 
-    See `{{classname}}.create_with_config` for advanced configuration.
+    See `{{classname}}{{^isAsync}}Sync{{/isAsync}}.create_with_config` for advanced configuration.
     """
 
     _transporter: Transporter
@@ -62,24 +63,26 @@ class {{classname}}:
         The initialized API client.
 
         Example:
-        _client_with_custom_config = {{classname}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...))
-        _client_with_custom_config_and_transporter = {{classname}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...), transporter=Transporter(...))
+        _client_with_custom_config = {{classname}}{{^isAsync}}Sync{{/isAsync}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...))
+        _client_with_custom_config_and_transporter = {{classname}}{{^isAsync}}Sync{{/isAsync}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...), transporter=Transporter(...))
         """
         if transporter is None:
             transporter = Transporter(config)
 
-        return {{classname}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
+        return {{classname}}{{^isAsync}}Sync{{/isAsync}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
+    {{#isAsync}}
     async def __aenter__(self) -> None:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
         """Closes the underlying `transporter` of the API client."""
-        await self.close()
+        {{#isAsync}}await {{/isAsync}}self.close()
 
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
-        return await self._transporter.close()
+        return {{#isAsync}}await {{/isAsync}}self._transporter.close()
+    {{/isAsync}}
 
     {{#isSearchClient}}
 {{> search_helpers}}
@@ -87,7 +90,7 @@ class {{classname}}:
 
     {{#operation}}
 
-    async def {{operationId}}_with_http_info{{> partial_api_args}} -> ApiResponse[str]:
+    {{#isAsync}}async {{/isAsync}}def {{operationId}}_with_http_info{{> partial_api_args}} -> ApiResponse[str]:
         """
         {{#isDeprecated}}
         (Deprecated) {{operationId}}
@@ -148,7 +151,7 @@ class {{classname}}:
             _data = {{paramName}}
         {{/bodyParam}}
 
-        return await self._transporter.request(
+        return {{#isAsync}}await {{/isAsync}}self._transporter.request(
             verb=Verb.{{httpMethod}},
             path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
             request_options=self._request_options.merge(
@@ -162,7 +165,7 @@ class {{classname}}:
             {{/vendorExtensions}}
         )
 
-    async def {{operationId}}{{> partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+    {{#isAsync}}async {{/isAsync}}def {{operationId}}{{> partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """
         {{#isDeprecated}}
         (Deprecated) {{operationId}}
@@ -183,7 +186,8 @@ class {{classname}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-        return (await self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
+        return ({{#isAsync}}await {{/isAsync}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
 
 {{/operation}}
 {{/operations}}
+{{/modes}}

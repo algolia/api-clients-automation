@@ -134,6 +134,14 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
 
     operations.setImports(imports);
 
+    List<OperationsMap> modes = new ArrayList<>();
+    modes.add(operations);
+    OperationsMap operationsAsync = (OperationsMap) operations.clone();
+    operationsAsync.put("isAsync", true);
+    modes.add(operationsAsync);
+
+    additionalProperties.put("modes", modes);
+
     return operations;
   }
 
