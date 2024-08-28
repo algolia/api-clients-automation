@@ -23,11 +23,13 @@
         "default": "./dist/{{packageName}}.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "umd": "./dist/{{packageName}}.umd.js",
-      "module": "./dist/{{packageName}}.esm.browser.js",
-      "import": "./dist/{{packageName}}.esm.browser.js",
-      "default": "./dist/{{packageName}}.umd.js",
-      "types": "./dist/builds/browser.d.ts"
+      "browser": {
+        "umd": "./dist/{{packageName}}.umd.js",
+        "module": "./dist/{{packageName}}.esm.browser.js",
+        "import": "./dist/{{packageName}}.esm.browser.js",
+        "default": "./dist/{{packageName}}.umd.js",
+        "types": "./dist/builds/browser.d.ts"
+      }
     },
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
@@ -71,11 +73,13 @@
         "default": "./dist/algoliasearch.cjs",
         "types": "./dist/algoliasearch/builds/node.d.ts"
       },
-      "umd": "./dist/algoliasearch.umd.js",
-      "module": "./dist/algoliasearch.esm.browser.js",
-      "import": "./dist/algoliasearch.esm.browser.js",
-      "default": "./dist/algoliasearch.umd.js",
-      "types": "./dist/algoliasearch/builds/browser.d.ts"
+      "browser": {
+        "umd": "./dist/algoliasearch.umd.js",
+        "module": "./dist/algoliasearch.esm.browser.js",
+        "import": "./dist/algoliasearch.esm.browser.js",
+        "default": "./dist/algoliasearch.umd.js",
+        "types": "./dist/algoliasearch/builds/browser.d.ts"
+      }
     },
     "./lite": {
       "node": {
@@ -85,11 +89,13 @@
         "default": "./dist/lite/lite.cjs",
         "types": "./dist/lite/builds/node.d.ts"
       },
-      "umd": "./dist/lite/lite.umd.js",
-      "module": "./dist/lite/lite.esm.browser.js",
-      "import": "./dist/lite/lite.esm.browser.js",
-      "default": "./dist/lite/lite.umd.js",
-      "types": "./dist/lite/builds/browser.d.ts"
+      "browser": {
+        "umd": "./dist/lite/lite.umd.js",
+        "module": "./dist/lite/lite.esm.browser.js",
+        "import": "./dist/lite/lite.esm.browser.js",
+        "default": "./dist/lite/lite.umd.js",
+        "types": "./dist/lite/builds/browser.d.ts"
+      }
     }
   },
   "files": [
