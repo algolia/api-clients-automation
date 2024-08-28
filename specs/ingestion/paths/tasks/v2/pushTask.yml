@@ -25,7 +25,6 @@ post:
               items:
                 title: pushTaskRecords
                 type: object
-                x-is-generic: true
                 additionalProperties: true
                 required:
                   - objectID
