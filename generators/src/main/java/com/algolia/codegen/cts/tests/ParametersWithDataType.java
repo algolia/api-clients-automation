@@ -124,10 +124,8 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
-    String finalParamName = getFinalParamName(paramName);
-
-    testOutput.put("key", finalParamName);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("key", paramName);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
@@ -162,11 +160,9 @@ public class ParametersWithDataType {
 
   /** Same method but with inference only */
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int depth) throws CTSException {
-    String finalParamName = getFinalParamName(paramName);
-
     Map<String, Object> testOutput = createDefaultOutput();
-    testOutput.put("key", finalParamName);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("key", paramName);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     // try to infer the type
@@ -187,15 +183,6 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, null);
     }
     return testOutput;
-  }
-
-  private String getFinalParamName(String paramName) {
-    switch (language) {
-      case "go":
-        return paramName.equals("type") ? "type_" : paramName;
-    }
-
-    return paramName;
   }
 
   private Map<String, Object> createDefaultOutput() {

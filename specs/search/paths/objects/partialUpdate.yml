@@ -6,7 +6,7 @@ post:
     - addObject
   summary: Add or update attributes
   x-codegen-request-body-name: attributesToUpdate
-  description: >
+  description: |
     Adds new attributes to a record, or update existing ones.
 
     - If a record with the specified object ID doesn't exist,
