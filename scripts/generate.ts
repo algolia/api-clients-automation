@@ -27,7 +27,7 @@ export async function generate(generators: Generator[]): Promise<void> {
         }
 
         return folders;
-      }, `${base}/client-common ${base}/requester-browser-xhr ${base}/requester-node-http ${base}/requester-fetch`);
+      }, `${base}/client-common ${base}/requester-browser-xhr ${base}/requester-node-http ${base}/requester-fetch clients/algoliasearch-client-javascript/scripts clients/algoliasearch-client-javascript/tests`);
     }
 
     await formatter(lang, folder);
