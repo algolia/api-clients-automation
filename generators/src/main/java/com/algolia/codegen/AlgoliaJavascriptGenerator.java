@@ -60,6 +60,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     supportingFiles.add(new SupportingFile("index.d.mustache", "", "index.d.ts"));
 
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+    supportingFiles.add(new SupportingFile("LICENSE", "", "../../LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
 
     supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
