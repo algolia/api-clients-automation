@@ -27,7 +27,7 @@ import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions 
 {{/isSearchClient}}
 
 {{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
+import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
 /**
