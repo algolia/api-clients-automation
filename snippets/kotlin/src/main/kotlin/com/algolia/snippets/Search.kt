@@ -1117,14 +1117,12 @@ class SnippetSearchClient {
     var response = client.partialUpdateObject(
       indexName = "theIndexName",
       objectID = "uniqueID",
-      attributesToUpdate = mapOf(
-        "id1" to AttributeToUpdate.of("test"),
-        "id2" to BuiltInOperation(
-          operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-          value = BuiltInOperationValue.of("test2"),
-        ),
-      ),
-      createIfNotExists = true,
+      attributesToUpdate = buildJsonObject {
+        put(
+          "attributeId",
+          JsonPrimitive("new value"),
+        )
+      },
     )
 
     // Use the response

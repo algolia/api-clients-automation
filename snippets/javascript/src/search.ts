@@ -943,7 +943,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with string value
+// Partial update with a new value for a string attribute
 export async function snippetForPartialUpdateObject(): Promise<void> {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
@@ -953,8 +953,7 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   const response = await client.partialUpdateObject({
     indexName: 'theIndexName',
     objectID: 'uniqueID',
-    attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
-    createIfNotExists: true,
+    attributesToUpdate: { attributeId: 'new value' },
   });
 
   // use typed response

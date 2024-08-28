@@ -1093,7 +1093,7 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the PartialUpdateObject method.
   ///
-  /// Partial update with string value
+  /// Partial update with a new value for a string attribute
   /// </summary>
   public async Task SnippetForSearchClientPartialUpdateObject()
   {
@@ -1105,21 +1105,7 @@ public class SnippetSearchClient
     var response = await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
-      new Dictionary<string, AttributeToUpdate>
-      {
-        { "id1", new AttributeToUpdate("test") },
-        {
-          "id2",
-          new AttributeToUpdate(
-            new BuiltInOperation
-            {
-              Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-              Value = new BuiltInOperationValue("test2"),
-            }
-          )
-        }
-      },
-      true
+      new Dictionary<string, string> { { "attributeId", "new value" } }
     );
     // SEPARATOR<
   }

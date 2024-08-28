@@ -1172,7 +1172,7 @@ class SnippetSearchClient {
 
   /** Snippet for the partialUpdateObject method.
     *
-    * Partial update with string value
+    * Partial update with a new value for a string attribute
     */
   def snippetForSearchClientPartialUpdateObject(): Unit = {
     // >SEPARATOR partialUpdateObject default
@@ -1183,14 +1183,7 @@ class SnippetSearchClient {
     val response = client.partialUpdateObject(
       indexName = "theIndexName",
       objectID = "uniqueID",
-      attributesToUpdate = Map(
-        "id1" -> AttributeToUpdate("test"),
-        "id2" -> BuiltInOperation(
-          _operation = BuiltInOperationType.withName("AddUnique"),
-          value = BuiltInOperationValue("test2")
-        )
-      ),
-      createIfNotExists = Some(true)
+      attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
     )
 
     // Use the response

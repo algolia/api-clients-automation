@@ -3722,14 +3722,59 @@ paths:
         - addObject
       summary: Add or update attributes
       x-codegen-request-body-name: attributesToUpdate
-      description: |
+      description: >
         Adds new attributes to a record, or update existing ones.
+
 
         - If a record with the specified object ID doesn't exist,
           a new record is added to the index **if** `createIfNotExists` is true.
         - If the index doesn't exist yet, this method creates a new index.
+
         - You can use any first-level attribute but not nested attributes.
           If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+
+        To update an attribute without pushing the entire record, you can use
+        these built-in operations. These operations can be helpful if you don't
+        have access to your initial data.
+
+
+        - Increment: increment a numeric attribute
+
+        - Decrement: decrement a numeric attribute
+
+        - Add: append a number or string element to an array attribute
+
+        - Remove: remove all matching number or string elements from an array
+        attribute made of numbers or strings
+
+        - AddUnique: add a number or string element to an array attribute made
+        of numbers or strings only if it's not already present
+
+        - IncrementFrom: increment a numeric integer attribute only if the
+        provided value matches the current value, and otherwise ignore the whole
+        object update. For example, if you pass an IncrementFrom value of 2 for
+        the version attribute, but the current value of the attribute is 1, the
+        engine ignores the update. If the object doesn't exist, the engine only
+        creates it if you pass an IncrementFrom value of 0.
+
+        - IncrementSet: increment a numeric integer attribute only if the
+        provided value is greater than the current value, and otherwise ignore
+        the whole object update. For example, if you pass an IncrementSet value
+        of 2 for the version attribute, and the current value of the attribute
+        is 1, the engine updates the object. If the object doesn't exist yet,
+        the engine only creates it if you pass an IncrementSet value that's
+        greater than 0.
+
+
+        You can specify an operation by providing an object with the attribute
+        to update as the key and its value being an object with the following
+        properties:
+
+
+        - _operation: the operation to apply on the attribute
+
+        - value: the right-hand side argument to the operation, for example,
+        increment or decrement step, value to add or remove.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -3745,10 +3790,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               description: Attributes to update.
-              additionalProperties:
-                $ref: '#/components/schemas/attributeToUpdate'
+              type: object
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAtWithObjectId'
@@ -3775,21 +3818,7 @@ paths:
             var response = await client.PartialUpdateObjectAsync(
               "theIndexName",
               "uniqueID",
-              new Dictionary<string, AttributeToUpdate>
-              {
-                { "id1", new AttributeToUpdate("test") },
-                {
-                  "id2",
-                  new AttributeToUpdate(
-                    new BuiltInOperation
-                    {
-                      Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-                      Value = new BuiltInOperationValue("test2"),
-                    }
-                  )
-                }
-              },
-              true
+              new Dictionary<string, string> { { "attributeId", "new value" } }
             );
         - lang: dart
           label: Dart
@@ -3806,13 +3835,8 @@ paths:
               indexName: "theIndexName",
               objectID: "uniqueID",
               attributesToUpdate: {
-                'id1': "test",
-                'id2': BuiltInOperation(
-                  operation: BuiltInOperationType.fromJson("AddUnique"),
-                  value: "test2",
-                ),
+                'attributeId': "new value",
               },
-              createIfNotExists: true,
             );
         - lang: go
           label: Go
@@ -3831,9 +3855,8 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
-                search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue(search.StringAsBuiltInOperationValue("test2")))},
-            ).WithCreateIfNotExists(true))
+              "theIndexName", "uniqueID", map[string]any{"attributeId": "new value"},
+            ))
 
             if err != nil {
               // handle the eventual error
@@ -3855,17 +3878,8 @@ paths:
 
             // Call the API
 
-            client.partialUpdateObject(
-              "theIndexName",
-              "uniqueID",
-              Map.of(
-                "id1",
-                AttributeToUpdate.of("test"),
-                "id2",
-                new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
-              ),
-              true
-            );
+            client.partialUpdateObject("theIndexName", "uniqueID",
+            Map.of("attributeId", "new value"));
         - lang: javascript
           label: JavaScript
           source: |
@@ -3876,8 +3890,7 @@ paths:
             const response = await client.partialUpdateObject({
               indexName: 'theIndexName',
               objectID: 'uniqueID',
-              attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
-              createIfNotExists: true,
+              attributesToUpdate: { attributeId: 'new value' },
             });
 
             // use typed response
@@ -3896,14 +3909,12 @@ paths:
             var response = client.partialUpdateObject(
               indexName = "theIndexName",
               objectID = "uniqueID",
-              attributesToUpdate = mapOf(
-                "id1" to AttributeToUpdate.of("test"),
-                "id2" to BuiltInOperation(
-                  operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-                  value = BuiltInOperationValue.of("test2"),
-                ),
-              ),
-              createIfNotExists = true,
+              attributesToUpdate = buildJsonObject {
+                put(
+                  "attributeId",
+                  JsonPrimitive("new value"),
+                )
+              },
             )
 
 
@@ -3920,12 +3931,8 @@ paths:
             $response = $client->partialUpdateObject(
                 'theIndexName',
                 'uniqueID',
-                ['id1' => 'test',
-                    'id2' => ['_operation' => 'AddUnique',
-                        'value' => 'test2',
-                    ],
+                ['attributeId' => 'new value',
                 ],
-                true,
             );
 
             // play with the response
@@ -3941,13 +3948,8 @@ paths:
                 index_name="theIndexName",
                 object_id="uniqueID",
                 attributes_to_update={
-                    "id1": "test",
-                    "id2": {
-                        "_operation": "AddUnique",
-                        "value": "test2",
-                    },
+                    "attributeId": "new value",
                 },
-                create_if_not_exists=True,
             )
 
             # use the class directly
@@ -3957,22 +3959,25 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
+
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
+
             # Call the API
-            response = client.partial_update_object(
-              "theIndexName",
-              "uniqueID",
-              {id1: "test", id2: BuiltInOperation.new(_operation: "AddUnique", value: "test2")},
-              true
-            )
+
+            response = client.partial_update_object("theIndexName", "uniqueID",
+            {attributeId: "new value"})
+
 
             # use the class directly
+
             puts(response)
 
+
             # print the JSON response
+
             puts(response.to_json)
         - lang: scala
           label: Scala
@@ -3988,14 +3993,7 @@ paths:
             val response = client.partialUpdateObject(
               indexName = "theIndexName",
               objectID = "uniqueID",
-              attributesToUpdate = Map(
-                "id1" -> AttributeToUpdate("test"),
-                "id2" -> BuiltInOperation(
-                  _operation = BuiltInOperationType.withName("AddUnique"),
-                  value = BuiltInOperationValue("test2")
-                )
-              ),
-              createIfNotExists = Some(true)
+              attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
             )
 
 
@@ -4016,15 +4014,7 @@ paths:
             let response = try await client.partialUpdateObject(
                 indexName: "theIndexName",
                 objectID: "uniqueID",
-                attributesToUpdate: [
-                    "id1": AttributeToUpdate.string("test"),
-                    "id2": AttributeToUpdate
-                        .builtInOperation(BuiltInOperation(
-                            operation: BuiltInOperationType.addUnique,
-                            value: BuiltInOperationValue.string("test2")
-                        )),
-                ],
-                createIfNotExists: true
+                attributesToUpdate: ["attributeId": "new value"]
             )
   /1/indexes/{indexName}/batch:
     post:
@@ -15533,128 +15523,17 @@ components:
 
         The required ACL to make a request is listed in each endpoint's
         reference.
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    IndexName:
-      name: indexName
-      in: path
-      description: Name of the index on which to perform the operation.
-      required: true
-      schema:
-        type: string
-        example: YourIndexName
-    ObjectID:
-      name: objectID
-      in: path
-      description: Unique record identifier.
-      required: true
-      schema:
-        $ref: '#/components/schemas/objectID'
-    ForwardToReplicas:
-      in: query
-      name: forwardToReplicas
-      required: false
-      description: Whether changes are applied to replica indices.
-      schema:
-        type: boolean
-    parameters_ObjectID:
-      name: objectID
-      in: path
-      description: Unique identifier of a synonym object.
-      required: true
-      schema:
-        type: string
-        example: synonymID
-    ReplaceExistingSynonyms:
-      in: query
-      name: replaceExistingSynonyms
-      schema:
-        type: boolean
-      description: >-
-        Whether to replace all synonyms in the index with the ones sent with
-        this request.
-    KeyString:
-      in: path
-      name: key
-      required: true
-      schema:
-        type: string
-        example: YourAPIKey
-      description: API key.
-    ObjectIDRule:
-      in: path
-      name: objectID
-      description: Unique identifier of a rule object.
-      required: true
-      schema:
-        $ref: '#/components/schemas/ruleID'
-    ClearExistingRules:
-      in: query
-      name: clearExistingRules
-      required: false
-      schema:
-        type: boolean
-      description: Whether existing rules should be deleted before adding this batch.
-    DictionaryName:
-      in: path
-      name: dictionaryName
-      description: Dictionary type in which to search.
-      required: true
-      schema:
-        $ref: '#/components/schemas/dictionaryType'
-    Page:
-      in: query
-      name: page
-      description: |
-        Requested page of the API response.
-        If `null`, the API response is not paginated.
-      required: false
-      schema:
-        oneOf:
-          - type: integer
-            minimum: 0
-          - type: 'null'
-        default: null
-    HitsPerPage:
-      in: query
-      name: hitsPerPage
-      description: Number of hits per page.
-      required: false
-      schema:
-        type: integer
-        default: 100
-    UserIDInHeader:
-      name: X-Algolia-User-ID
-      description: Unique identifier of the user who makes the search request.
-      in: header
-      required: true
-      schema:
-        $ref: '#/components/schemas/userID'
-    UserIDInPath:
-      name: userID
-      description: Unique identifier of the user who makes the search request.
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/userID'
   schemas:
+    attributeToUpdate:
+      x-keep-model: true
+      deprecated: true
+      oneOf:
+        - type: string
+        - $ref: '#/components/schemas/builtInOperation'
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -18157,44 +18036,6 @@ components:
           $ref: '#/components/schemas/taskID'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
-    attribute:
-      type: string
-      description: Value of the attribute to update.
-    builtInOperationType:
-      type: string
-      enum:
-        - Increment
-        - Decrement
-        - Add
-        - Remove
-        - AddUnique
-        - IncrementFrom
-        - IncrementSet
-      description: How to change the attribute.
-    builtInOperationValue:
-      oneOf:
-        - type: string
-          description: >-
-            A string to append or remove for the `Add`, `Remove`, and
-            `AddUnique` operations.
-        - type: integer
-          description: A number to add, remove, or append, depending on the operation.
-    builtInOperation:
-      type: object
-      description: Update to perform on the attribute.
-      additionalProperties: false
-      properties:
-        _operation:
-          $ref: '#/components/schemas/builtInOperationType'
-        value:
-          $ref: '#/components/schemas/builtInOperationValue'
-      required:
-        - _operation
-        - value
-    attributeToUpdate:
-      oneOf:
-        - $ref: '#/components/schemas/attribute'
-        - $ref: '#/components/schemas/builtInOperation'
     action:
       type: string
       enum:
@@ -19746,6 +19587,155 @@ components:
         - copyOperationResponse
         - batchResponses
         - moveOperationResponse
+    builtInOperationType:
+      type: string
+      enum:
+        - Increment
+        - Decrement
+        - Add
+        - Remove
+        - AddUnique
+        - IncrementFrom
+        - IncrementSet
+      description: How to change the attribute.
+    builtInOperationValue:
+      oneOf:
+        - type: string
+          description: >-
+            A string to append or remove for the `Add`, `Remove`, and
+            `AddUnique` operations.
+        - type: integer
+          description: A number to add, remove, or append, depending on the operation.
+    builtInOperation:
+      type: object
+      description: Update to perform on the attribute.
+      additionalProperties: false
+      properties:
+        _operation:
+          $ref: '#/components/schemas/builtInOperationType'
+        value:
+          $ref: '#/components/schemas/builtInOperationValue'
+      required:
+        - _operation
+        - value
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    IndexName:
+      name: indexName
+      in: path
+      description: Name of the index on which to perform the operation.
+      required: true
+      schema:
+        type: string
+        example: YourIndexName
+    ObjectID:
+      name: objectID
+      in: path
+      description: Unique record identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/objectID'
+    ForwardToReplicas:
+      in: query
+      name: forwardToReplicas
+      required: false
+      description: Whether changes are applied to replica indices.
+      schema:
+        type: boolean
+    parameters_ObjectID:
+      name: objectID
+      in: path
+      description: Unique identifier of a synonym object.
+      required: true
+      schema:
+        type: string
+        example: synonymID
+    ReplaceExistingSynonyms:
+      in: query
+      name: replaceExistingSynonyms
+      schema:
+        type: boolean
+      description: >-
+        Whether to replace all synonyms in the index with the ones sent with
+        this request.
+    KeyString:
+      in: path
+      name: key
+      required: true
+      schema:
+        type: string
+        example: YourAPIKey
+      description: API key.
+    ObjectIDRule:
+      in: path
+      name: objectID
+      description: Unique identifier of a rule object.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ruleID'
+    ClearExistingRules:
+      in: query
+      name: clearExistingRules
+      required: false
+      schema:
+        type: boolean
+      description: Whether existing rules should be deleted before adding this batch.
+    DictionaryName:
+      in: path
+      name: dictionaryName
+      description: Dictionary type in which to search.
+      required: true
+      schema:
+        $ref: '#/components/schemas/dictionaryType'
+    Page:
+      in: query
+      name: page
+      description: |
+        Requested page of the API response.
+        If `null`, the API response is not paginated.
+      required: false
+      schema:
+        oneOf:
+          - type: integer
+            minimum: 0
+          - type: 'null'
+        default: null
+    HitsPerPage:
+      in: query
+      name: hitsPerPage
+      description: Number of hits per page.
+      required: false
+      schema:
+        type: integer
+        default: 100
+    UserIDInHeader:
+      name: X-Algolia-User-ID
+      description: Unique identifier of the user who makes the search request.
+      in: header
+      required: true
+      schema:
+        $ref: '#/components/schemas/userID'
+    UserIDInPath:
+      name: userID
+      description: Unique identifier of the user who makes the search request.
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/userID'
   responses:
     BadRequest:
       description: Bad request or request arguments.

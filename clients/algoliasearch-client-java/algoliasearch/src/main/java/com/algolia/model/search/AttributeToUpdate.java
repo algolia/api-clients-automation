@@ -11,7 +11,12 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** AttributeToUpdate */
+/**
+ * AttributeToUpdate
+ *
+ * @deprecated
+ */
+@Deprecated
 @JsonDeserialize(using = AttributeToUpdate.Deserializer.class)
 public interface AttributeToUpdate {
   // AttributeToUpdate as String wrapper.
