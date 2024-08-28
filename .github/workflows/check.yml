@@ -333,7 +333,7 @@ jobs:
         if: ${{ matrix.client.language == 'java' }}
         run: |
           cd ${{ matrix.client.path }}
-          ./gradlew :api:japicmp || exit 0
+          ./gradlew :api:japicmp
 
           FILE=${{ matrix.client.path }}/api/build/reports/japi.txt
 
