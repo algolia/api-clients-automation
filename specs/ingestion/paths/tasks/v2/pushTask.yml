@@ -15,7 +15,23 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../../common/schemas/Batch.yml#/batchWriteParams'
+          title: pushTaskPayload
+          type: object
+          properties:
+            action:
+              $ref: '../../../../common/schemas/Batch.yml#/action'
+            records:
+              type: array
+              items:
+                title: pushTaskRecords
+                type: object
+                x-is-generic: true
+                additionalProperties: true
+                required:
+                  - objectID
+                properties:
+                  objectID:
+                    $ref: '../../../../common/parameters.yml#/objectID'
     required: true
   responses:
     '200':
