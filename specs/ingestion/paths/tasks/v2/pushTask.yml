@@ -32,6 +32,9 @@ post:
                 properties:
                   objectID:
                     $ref: '../../../../common/parameters.yml#/objectID'
+          required:
+            - action
+            - records
     required: true
   responses:
     '200':
