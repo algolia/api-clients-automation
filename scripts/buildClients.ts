@@ -30,7 +30,10 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
       break;
     case 'python':
-      await run('poetry build', { cwd, language });
+      // there is no type checking for the playground or snippets
+      if (buildType === 'client') {
+        await run('poetry build', { cwd, language });
+      }
       break;
     case 'scala':
       await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });

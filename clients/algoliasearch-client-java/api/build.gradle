@@ -17,7 +17,7 @@ def baselineConfig = configurations.register('baseline')
 def latestConfig = configurations.register('latest')
 
 dependencies {
-  baseline('com.algolia:algoliasearch-client-java:4.+') {
+  baseline('com.algolia:algoliasearch:4.+') {
     transitive = false
   }
   latest(projects.algoliasearch)
