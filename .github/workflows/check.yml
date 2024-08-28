@@ -335,7 +335,7 @@ jobs:
           cd ${{ matrix.client.path }}
           ./gradlew :api:japicmp
 
-          FILE=${{ matrix.client.path }}/api/build/reports/japi.txt
+          FILE=./api/build/reports/japi.txt
 
           if [[ -f "$FILE" ]]; then
             cat $FILE
