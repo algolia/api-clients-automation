@@ -1,5 +1,56 @@
 [
   {
+    "testName": "Partial update with a new value for a string attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": "new value"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": "new value"
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for an integer attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": 1
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": 1
+      }
+    }
+  },
+  {
+    "testName": "Partial update with a new value for a boolean attribute",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "attributeId": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "attributeId": true
+      }
+    }
+  },
+  {
     "testName": "Partial update with a new value for an array attribute",
     "parameters": {
       "indexName": "theIndexName",
