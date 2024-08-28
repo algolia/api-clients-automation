@@ -1884,7 +1884,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.DeleteUserTokenAsync("test-user-1");
+            await client.DeleteUserTokenAsync("test-user-1");
         - lang: dart
           label: Dart
           source: |

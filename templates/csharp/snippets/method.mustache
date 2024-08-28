@@ -28,7 +28,7 @@ public class Snippet{{client}}
     var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));
 
     // Call the API
-    var response = {{> tests/method}};
+     {{#hasResponsePayload}}var response =  {{/hasResponsePayload}}{{> tests/method}};
     // SEPARATOR<
   }
 

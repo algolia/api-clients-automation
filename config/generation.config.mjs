@@ -10,8 +10,6 @@ export const patterns = [
   'clients/**/.github/workflows/issue.yml',
 
   // C#
-  '!snippets/csharp/**',
-  'snippets/csharp/src/**.cs',
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   'clients/algoliasearch-client-csharp/global.json',
@@ -22,7 +20,11 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
+
   'tests/output/csharp/global.json',
+  '!snippets/csharp/**',
+  'snippets/csharp/src/**.cs',
+  '!snippets/csharp/src/Program.cs',
 
   // Dart
   '!snippets/dart/**',
