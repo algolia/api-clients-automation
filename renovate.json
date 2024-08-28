@@ -6,17 +6,18 @@
     ":preserveSemverRanges"
   ],
   "enabledManagers": [
+    "bundler",
     "dockerfile",
     "github-actions",
+    "gomod",
+    "gradle-wrapper",
+    "gradle",
     "npm",
     "nvm",
-    "gradle",
-    "regex",
-    "pub",
-    "gomod",
     "pip_requirements",
-    "gradle-wrapper",
-    "bundler",
+    "poetry",
+    "pub",
+    "regex",
     "sbt"
   ],
   "baseBranches": [
@@ -58,7 +59,7 @@
       "datasourceTemplate": "maven"
     },
     {
-      "description": "Update poetry.toml mustache devDeps",
+      "description": "Update pyproject.toml mustache devDeps",
       "fileMatch": [
         "pyproject.mustache"
       ],
