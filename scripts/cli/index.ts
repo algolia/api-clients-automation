@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds } from '../buildClients.js';
+import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
 import { CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -85,6 +85,17 @@ buildCommand
     setVerbose(Boolean(verbose));
 
     await buildPlaygrounds(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
+  .command('snippets')
+  .description('Build a specified snippets')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
   });
 
 buildCommand

@@ -16,7 +16,7 @@
       "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
     },
     "deleteUserToken": {
-      "default": "var response = await client.DeleteUserTokenAsync(\"test-user-1\");"
+      "default": "await client.DeleteUserTokenAsync(\"test-user-1\");"
     },
     "pushEvents": {
       "default": "var response = await client.PushEventsAsync(\n  new InsightsEvents\n  {\n    Events = new List<EventsItems>\n    {\n      new EventsItems(\n        new ClickedObjectIDsAfterSearch\n        {\n          EventType = Enum.Parse<ClickEvent>(\"Click\"),\n          EventName = \"Product Clicked\",\n          Index = \"products\",\n          UserToken = \"user-123456\",\n          AuthenticatedUserToken = \"user-123456\",\n          Timestamp = 1641290601962L,\n          ObjectIDs = new List<string> { \"9780545139700\", \"9780439784542\" },\n          QueryID = \"43b15df305339e827f0ac0bdc5ebcaa7\",\n          Positions = new List<int> { 7, 6 },\n        }\n      )\n    },\n  }\n);"
