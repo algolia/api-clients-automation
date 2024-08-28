@@ -980,7 +980,7 @@ void snippetForoperationIndex2() async {
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with string value
+// Partial update with a new value for a string attribute
 void snippetForpartialUpdateObject() async {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
@@ -991,13 +991,8 @@ void snippetForpartialUpdateObject() async {
     indexName: "theIndexName",
     objectID: "uniqueID",
     attributesToUpdate: {
-      'id1': "test",
-      'id2': BuiltInOperation(
-        operation: BuiltInOperationType.fromJson("AddUnique"),
-        value: "test2",
-      ),
+      'attributeId': "new value",
     },
-    createIfNotExists: true,
   );
   // SEPARATOR<
 }

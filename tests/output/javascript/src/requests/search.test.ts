@@ -1001,30 +1001,68 @@ describe('operationIndex', () => {
 });
 
 describe('partialUpdateObject', () => {
-  test('Partial update with string value', async () => {
+  test('Partial update with a new value for a string attribute', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
-      createIfNotExists: true,
+      attributesToUpdate: { attributeId: 'new value' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } });
-    expect(req.searchParams).toStrictEqual({ createIfNotExists: 'true' });
+    expect(req.data).toEqual({ attributeId: 'new value' });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('Partial update with integer value', async () => {
+  test('Partial update with a new value for an integer attribute', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      attributesToUpdate: { attributeId: { _operation: 'Increment', value: 2 } },
+      attributesToUpdate: { attributeId: 1 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ attributeId: { _operation: 'Increment', value: 2 } });
+    expect(req.data).toEqual({ attributeId: 1 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for a boolean attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for an array attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: ['one', 'two', 'three'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: ['one', 'two', 'three'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for an object attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: { nested: 'value' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: { nested: 'value' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

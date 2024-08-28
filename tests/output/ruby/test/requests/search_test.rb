@@ -1112,38 +1112,63 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # Partial update with string value
+  # Partial update with a new value for a string attribute
   def test_partial_update_object
-    req = @client.partial_update_object_with_http_info(
-      "theIndexName",
-      "uniqueID",
-      {id1: "test", id2: BuiltInOperation.new(_operation: "AddUnique", value: "test2")},
-      true
-    )
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: "new value"})
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
-    assert_equal({:"createIfNotExists" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(
-      JSON.parse("{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}"),
-      JSON.parse(req.body)
-    )
+    assert_equal(JSON.parse("{\"attributeId\":\"new value\"}"), JSON.parse(req.body))
   end
 
-  # Partial update with integer value
+  # Partial update with a new value for an integer attribute
   def test_partial_update_object1
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: 1})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":1}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for a boolean attribute
+  def test_partial_update_object2
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: true})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":true}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for an array attribute
+  def test_partial_update_object3
     req = @client.partial_update_object_with_http_info(
       "theIndexName",
       "uniqueID",
-      {attributeId: BuiltInOperation.new(_operation: "Increment", value: 2)}
+      {attributeId: ["one", "two", "three"]}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"attributeId\":[\"one\",\"two\",\"three\"]}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for an object attribute
+  def test_partial_update_object4
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: {nested: "value"}})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":{\"nested\":\"value\"}}"), JSON.parse(req.body))
   end
 
   # removeUserId

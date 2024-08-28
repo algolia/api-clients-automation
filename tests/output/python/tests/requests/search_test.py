@@ -1452,40 +1452,90 @@ class TestSearchClient:
 
     async def test_partial_update_object_(self):
         """
-        Partial update with string value
+        Partial update with a new value for a string attribute
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
             object_id="uniqueID",
             attributes_to_update={
-                "id1": "test",
-                "id2": {
-                    "_operation": "AddUnique",
-                    "value": "test2",
-                },
+                "attributeId": "new value",
             },
-            create_if_not_exists=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {"createIfNotExists": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}"""
-        )
+        assert loads(_req.data) == loads("""{"attributeId":"new value"}""")
 
     async def test_partial_update_object_1(self):
         """
-        Partial update with integer value
+        Partial update with a new value for an integer attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": 1,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":1}""")
+
+    async def test_partial_update_object_2(self):
+        """
+        Partial update with a new value for a boolean attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":true}""")
+
+    async def test_partial_update_object_3(self):
+        """
+        Partial update with a new value for an array attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": [
+                    "one",
+                    "two",
+                    "three",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":["one","two","three"]}""")
+
+    async def test_partial_update_object_4(self):
+        """
+        Partial update with a new value for an object attribute
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
             object_id="uniqueID",
             attributes_to_update={
                 "attributeId": {
-                    "_operation": "Increment",
-                    "value": 2,
+                    "nested": "value",
                 },
             },
         )
@@ -1494,9 +1544,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"attributeId":{"_operation":"Increment","value":2}}"""
-        )
+        assert loads(_req.data) == loads("""{"attributeId":{"nested":"value"}}""")
 
     async def test_remove_user_id_(self):
         """

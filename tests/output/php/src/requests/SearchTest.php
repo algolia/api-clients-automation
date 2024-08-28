@@ -1596,40 +1596,79 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('Partial update with string value')]
+    #[TestDox('Partial update with a new value for a string attribute')]
     public function testPartialUpdateObject()
     {
         $client = $this->getClient();
         $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
-            ['id1' => 'test',
-                'id2' => ['_operation' => 'AddUnique',
-                    'value' => 'test2',
-                ],
+            ['attributeId' => 'new value',
             ],
-            true,
         );
 
         $this->assertRequests([
             [
                 'path' => '/1/indexes/theIndexName/uniqueID/partial',
                 'method' => 'POST',
-                'body' => json_decode('{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}'),
-                'queryParameters' => json_decode('{"createIfNotExists":"true"}', true),
+                'body' => json_decode('{"attributeId":"new value"}'),
             ],
         ]);
     }
 
-    #[TestDox('Partial update with integer value')]
+    #[TestDox('Partial update with a new value for an integer attribute')]
     public function testPartialUpdateObject1()
     {
         $client = $this->getClient();
         $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
-            ['attributeId' => ['_operation' => 'Increment',
-                'value' => 2,
+            ['attributeId' => 1,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":1}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for a boolean attribute')]
+    public function testPartialUpdateObject2()
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for an array attribute')]
+    public function testPartialUpdateObject3()
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => [
+                'one',
+
+                'two',
+
+                'three',
             ],
             ],
         );
@@ -1638,7 +1677,28 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/uniqueID/partial',
                 'method' => 'POST',
-                'body' => json_decode('{"attributeId":{"_operation":"Increment","value":2}}'),
+                'body' => json_decode('{"attributeId":["one","two","three"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for an object attribute')]
+    public function testPartialUpdateObject4()
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => ['nested' => 'value',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":{"nested":"value"}}'),
             ],
         ]);
     }

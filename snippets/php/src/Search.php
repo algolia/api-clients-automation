@@ -1269,7 +1269,7 @@ class SnippetSearchClient
     /**
      * Snippet for the PartialUpdateObject method.
      *
-     * Partial update with string value
+     * Partial update with a new value for a string attribute
      */
     public function snippetForPartialUpdateObject()
     {
@@ -1281,12 +1281,8 @@ class SnippetSearchClient
         $response = $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
-            ['id1' => 'test',
-                'id2' => ['_operation' => 'AddUnique',
-                    'value' => 'test2',
-                ],
+            ['attributeId' => 'new value',
             ],
-            true,
         );
 
         // play with the response
