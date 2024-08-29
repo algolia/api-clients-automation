@@ -27,7 +27,6 @@ from pydantic import (
   model_serializer,
 )
 from typing import (
-  Annotated,
   Any,
   Callable,
   ClassVar,
@@ -41,9 +40,9 @@ from typing import (
 )
 
 if version_info >= (3, 11):
-  from typing import Self
+  from typing import Self, Annotated
 else:
-  from typing_extensions import Self
+  from typing_extensions import Self, Annotated
 
 from algoliasearch.http.helpers import create_iterable, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
