@@ -129,11 +129,12 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         // we don't store js in the clientMatrix, it's an other ci job
         continue;
       case 'kotlin':
+        setOutput('KOTLIN_DATA', JSON.stringify(languageMatrix));
         setOutput('RUN_MACOS_KOTLIN_BUILD', true);
         break;
       case 'php':
         if (languageMatrix.version) {
-          languageMatrix.version = languageMatrix.version.split('.')[0];
+          languageMatrix.version = languageMatrix.version.split('.').splice(-1).join('.');
         }
         break;
       case 'python':

@@ -403,6 +403,7 @@ jobs:
       !contains(needs.*.result, 'failure')
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
+    name: client kotlin@${{ fromJSON(needs.setup.outputs.KOTLIN_DATA).version }} macos
     steps:
       - uses: actions/checkout@v4
 
@@ -443,6 +444,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
+    name: client swift@${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }} macos
     steps:
       - uses: actions/checkout@v4
 
