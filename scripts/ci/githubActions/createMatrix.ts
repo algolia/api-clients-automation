@@ -134,7 +134,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         break;
       case 'php':
         if (languageMatrix.version) {
-          languageMatrix.version = languageMatrix.version.split('.').splice(-1).join('.');
+          languageMatrix.version = languageMatrix.version.split('.').slice(0, -1).join('.');
         }
         break;
       case 'python':
