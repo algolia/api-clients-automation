@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import hmac
+from sys import version_info
 from warnings import warn
 from random import randint
 from time import time
@@ -39,6 +40,11 @@ from typing import (
   Tuple,
   Union,
 )
+
+if version_info >= (3, 11):
+  from typing import Self
+else
+  from typing_extensions import Self
 
 from algoliasearch.http.helpers import create_iterable, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
