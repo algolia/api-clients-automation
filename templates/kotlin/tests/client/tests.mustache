@@ -20,11 +20,7 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
     {{#isMethod}}
     client.runTest(
           call = {
-            {{method}}(
-                {{#parametersWithDataType}}
-                {{> tests/request_param}}
-                {{/parametersWithDataType}}
-            )
+            {{> tests/method}}
           },
           {{#match}}
           {{^testResponse}}

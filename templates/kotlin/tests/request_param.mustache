@@ -1,1 +1,1 @@
-{{^isAdditionalProperty}}{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} = {{> tests/param_value}}{{/isAdditionalProperty}}{{#isAdditionalProperty}}additionalProperties = mapOf("{{key}}" to {{> tests/param_json_element}}){{/isAdditionalProperty}}
+{{^hasAdditionalProperties}}{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} = {{> tests/param_value}}{{/hasAdditionalProperties}}{{#hasAdditionalProperties}}{{> tests/param_value}}{{/hasAdditionalProperties}}
