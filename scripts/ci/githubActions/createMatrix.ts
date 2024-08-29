@@ -152,8 +152,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         break;
     }
 
-    const supportedVersions: string[] = getClientsConfigField(language, 'supportedVersions');
-    if (supportedVersions.length > 0) {
+    const supportedVersions: string[] = getClientsConfigField(language, 'supportedVersions', false);
+    if (supportedVersions && supportedVersions.length > 0) {
       supportedVersions.forEach((supportedVersion, idx) => {
         languageMatrix.version = supportedVersion;
         languageMatrix.isMainVersion = idx === supportedVersions.length - 1;
