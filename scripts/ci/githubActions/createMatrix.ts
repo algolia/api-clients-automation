@@ -94,6 +94,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     if (await exists(versionFile)) {
       version = (await fsp.readFile(versionFile)).toString();
     }
+    const isMainVersion = true;
     // some clients have specific files required for testing
     switch (language) {
       case 'csharp':
@@ -145,6 +146,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToStore,
       snippetsToStore,
       version,
+      isMainVersion,
     });
   }
 
@@ -172,8 +174,12 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   const pythonData = clientMatrix.client.filter((c) => c.language === 'python');
   if (pythonData.length > 0) {
     const supportedPythonVersions: string[] = getClientsConfigField('python', 'supportedPythonVersions');
-    supportedPythonVersions.forEach((supportedPythonVersion) => {
-      clientMatrix.client.push({ ...pythonData[0], version: supportedPythonVersion });
+    supportedPythonVersions.forEach((supportedPythonVersion, idx) => {
+      clientMatrix.client.push({
+        ...pythonData[0],
+        version: supportedPythonVersion,
+        isMainVersion: idx === supportedPythonVersions.length - 1,
+      });
     });
   }
 
