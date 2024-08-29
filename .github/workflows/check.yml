@@ -183,7 +183,7 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
-    name: client javascript
+    name: client javascript@${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -331,7 +331,6 @@ jobs:
         run: ${{ matrix.client.buildCommand }}
 
       - name: Build the playground
-        if: ${{ matrix.client.isMainVersion }}
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
@@ -373,7 +372,6 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --benchmark --no-client --no-requests --no-e2e
 
       - name: Generate code snippets for documentation
-        if: ${{ matrix.client.isMainVersion }}
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Build the snippets to check validity

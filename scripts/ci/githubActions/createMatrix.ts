@@ -70,7 +70,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     const toRun = matrix[language].toRun.join(' ');
-    const versionFile = toAbsolutePath(`config/.${language}-version`);
+    const versionFile = toAbsolutePath(
+      language === 'javascript'
+        ? '.nvmrc'
+        : `config/.${language === 'kotlin' || language === 'scala' ? 'java' : language}-version`,
+    );
     let version: string | undefined = undefined;
     if (await exists(versionFile)) {
       version = (await fsp.readFile(versionFile)).toString();
@@ -82,6 +86,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       toRun,
       buildCommand: `yarn cli build clients ${language} ${toRun}`,
       testsRootFolder,
+      // We delete tests to ensure the CI only run tests against what changed.
       testsToDelete: `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`,
       testsToStore: matrix[language].toRun
         .map((client) => {
@@ -123,6 +128,14 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
         // we don't store js in the clientMatrix, it's an other ci job
         continue;
+      case 'kotlin':
+        setOutput('RUN_MACOS_KOTLIN_BUILD', true);
+        break;
+      case 'php':
+        if (languageMatrix.version) {
+          languageMatrix.version = languageMatrix.version.split('.')[0];
+        }
+        break;
       case 'python':
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/poetry.lock ${testsRootFolder}/requirements.txt`;
         break;
@@ -135,14 +148,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
         setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
         setOutput('RUN_MACOS_SWIFT_CTS', true);
-        break;
-      case 'kotlin':
-        setOutput('RUN_MACOS_KOTLIN_BUILD', true);
-        break;
-      case 'php':
-        if (languageMatrix.version) {
-          languageMatrix.version = languageMatrix.version.substring(0, languageMatrix.version.length - 3);
-        }
         break;
       default:
         break;
