@@ -11,7 +11,7 @@ from algoliasearch.http.base_config import BaseConfig
 
 
 class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
-    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
+    def __init__(self, app_id: str, api_key: str{{#hasRegionalHost}}, region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None{{/hasRegionalHost}}) -> None:
         super().__init__(app_id, api_key)
 
         user_agent = UserAgent().add("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}")
@@ -23,14 +23,15 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
             "content-type": "application/json",
         }
 
-        self.proxies = {
-            "http": environ.get("HTTP_PROXY"),
-            "https": environ.get("HTTPS_PROXY"),
-        }
-        if self.proxies["http"] is None:
-            del self.proxies["http"]
-        if self.proxies["https"] is None:
-            del self.proxies["https"]
+        http_proxy = environ.get("HTTP_PROXY")
+        https_proxy = environ.get("HTTPS_PROXY")
+
+        self.proxies = {}
+
+        if http_proxy is not None:
+            self.proxies["http"] = http_proxy
+        if https_proxy is not None:
+            self.proxies["https"] = https_proxy
 
         {{#hasRegionalHost}}
         self.region = region
