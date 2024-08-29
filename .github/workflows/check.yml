@@ -330,7 +330,7 @@ jobs:
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
-        if: ${{ matrix.client.language == 'java' }}
+        if: ${{ matrix.client.language == 'java' && !contains(github.event.pull_request.title, '[skip-bc]') }}
         run: |
           cd ${{ matrix.client.path }}
           exit_code=0
