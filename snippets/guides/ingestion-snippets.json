@@ -118,7 +118,7 @@
       "default": "var response = await client.ListTransformationsAsync();"
     },
     "pushTask": {
-      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"bar\" }, { \"foo\", \"1\" } },\n      },\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"baz\" }, { \"foo\", \"2\" } },\n      }\n    },\n  }\n);"
+      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        }\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        }\n      }\n    },\n  }\n);"
     },
     "runSource": {
       "default": "var response = await client.RunSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload\n  {\n    IndexToInclude = new List<string> { \"products_us\", \"products eu\" },\n    EntityIDs = new List<string> { \"1234\", \"5678\" },\n    EntityType = Enum.Parse<EntityType>(\"Product\"),\n  }\n);"
@@ -327,7 +327,7 @@
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "pushTask": {
-      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyBatchWriteParams().SetRequests(\n    []ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action(\"addObject\")).SetBody(map[string]any{\"key\": \"bar\", \"foo\": \"1\"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action(\"addObject\")).SetBody(map[string]any{\"key\": \"baz\", \"foo\": \"2\"})}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "runSource": {
       "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.RunSource(client.NewApiRunSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n).WithRunSourcePayload(\n  ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(\n    []string{\"products_us\", \"products eu\"}).SetEntityIDs(\n    []string{\"1234\", \"5678\"}).SetEntityType(ingestion.EntityType(\"product\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
@@ -520,7 +520,7 @@
       "default": "client.listTransformations();"
     },
     "pushTask": {
-      "default": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new BatchWriteParams()\n    .setRequests(\n      List.of(\n        new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of(\"key\", \"bar\", \"foo\", \"1\")),\n        new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of(\"key\", \"baz\", \"foo\", \"2\"))\n      )\n    )\n);"
+      "default": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      List.of(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);"
     },
     "runSource": {
       "default": "client.runSource(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload()\n    .setIndexToInclude(List.of(\"products_us\", \"products eu\"))\n    .setEntityIDs(List.of(\"1234\", \"5678\"))\n    .setEntityType(EntityType.PRODUCT)\n);"
@@ -716,7 +716,7 @@
       "default": "const response = await client.listTransformations();\n\n// use typed response\nconsole.log(response);"
     },
     "pushTask": {
-      "default": "const response = await client.pushTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  batchWriteParams: {\n    requests: [\n      { action: 'addObject', body: { key: 'bar', foo: '1' } },\n      { action: 'addObject', body: { key: 'baz', foo: '2' } },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.pushTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  pushTaskPayload: {\n    action: 'addObject',\n    records: [\n      { key: 'bar', foo: '1', objectID: 'o' },\n      { key: 'baz', foo: '2', objectID: 'k' },\n    ],\n  },\n});\n\n// use typed response\nconsole.log(response);"
     },
     "runSource": {
       "default": "const response = await client.runSource({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  runSourcePayload: {\n    indexToInclude: ['products_us', 'products eu'],\n    entityIDs: ['1234', '5678'],\n    entityType: 'product',\n  },\n});\n\n// use typed response\nconsole.log(response);"
@@ -912,7 +912,7 @@
       "default": "var response = client.listTransformations()\n\n// Use the response\nprintln(response)"
     },
     "pushTask": {
-      "default": "var response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  batchWriteParams = BatchWriteParams(\n    requests = listOf(\n      BatchRequest(\n        action = Action.entries.first { it.value == \"addObject\" },\n        body = buildJsonObject {\n          put(\n            \"key\",\n            JsonPrimitive(\"bar\"),\n          )\n          put(\n            \"foo\",\n            JsonPrimitive(\"1\"),\n          )\n        },\n      ),\n      BatchRequest(\n        action = Action.entries.first { it.value == \"addObject\" },\n        body = buildJsonObject {\n          put(\n            \"key\",\n            JsonPrimitive(\"baz\"),\n          )\n          put(\n            \"foo\",\n            JsonPrimitive(\"2\"),\n          )\n        },\n      ),\n    ),\n  ),\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.entries.first { it.value == \"addObject\" },\n    records = listOf(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"bar\"),\n          \"foo\" to JsonPrimitive(\"1\"),\n        ),\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"baz\"),\n          \"foo\" to JsonPrimitive(\"2\"),\n        ),\n      ),\n    ),\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "runSource": {
       "default": "var response = client.runSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  runSourcePayload = RunSourcePayload(\n    indexToInclude = listOf(\"products_us\", \"products eu\"),\n    entityIDs = listOf(\"1234\", \"5678\"),\n    entityType = EntityType.entries.first { it.value == \"product\" },\n  ),\n)\n\n// Use the response\nprintln(response)"
@@ -1108,7 +1108,7 @@
       "default": "$response = $client->listTransformations();\n\n// play with the response\nvar_dump($response);"
     },
     "pushTask": {
-      "default": "$response = $client->pushTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['requests' => [\n        ['action' => 'addObject',\n            'body' => ['key' => 'bar',\n                'foo' => '1',\n            ],\n        ],\n\n        ['action' => 'addObject',\n            'body' => ['key' => 'baz',\n                'foo' => '2',\n            ],\n        ],\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->pushTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['action' => 'addObject',\n        'records' => [\n            ['key' => 'bar',\n                'foo' => '1',\n                'objectID' => 'o',\n            ],\n\n            ['key' => 'baz',\n                'foo' => '2',\n                'objectID' => 'k',\n            ],\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
     "runSource": {
       "default": "$response = $client->runSource(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['indexToInclude' => [\n        'products_us',\n\n        'products eu',\n    ],\n        'entityIDs' => [\n            '1234',\n\n            '5678',\n        ],\n        'entityType' => 'product',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
@@ -1304,7 +1304,7 @@
       "default": "response = await _client.list_transformations()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "pushTask": {
-      "default": "response = await _client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"bar\",\n                    \"foo\": \"1\",\n                },\n            },\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"baz\",\n                    \"foo\": \"2\",\n                },\n            },\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.push_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "runSource": {
       "default": "response = await _client.run_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    run_source_payload={\n        \"indexToInclude\": [\n            \"products_us\",\n            \"products eu\",\n        ],\n        \"entityIDs\": [\n            \"1234\",\n            \"5678\",\n        ],\n        \"entityType\": \"product\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -1500,7 +1500,7 @@
       "default": "response = client.list_transformations\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "pushTask": {
-      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  BatchWriteParams.new(\n    requests: [\n      BatchRequest.new(action: \"addObject\", body: {key: \"bar\", foo: \"1\"}),\n      BatchRequest.new(action: \"addObject\", body: {key: \"baz\", foo: \"2\"})\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.push_task(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      PushTaskRecords.new(key: \"bar\", foo: \"1\", object_id: \"o\"),\n      PushTaskRecords.new(key: \"baz\", foo: \"2\", object_id: \"k\")\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "runSource": {
       "default": "response = client.run_source(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  RunSourcePayload.new(\n    index_to_include: [\"products_us\", \"products eu\"],\n    entity_ids: [\"1234\", \"5678\"],\n    entity_type: \"product\"\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
@@ -1696,7 +1696,7 @@
       "default": "val response = client.listTransformations(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "pushTask": {
-      "default": "val response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  batchWriteParams = BatchWriteParams(\n    requests = Seq(\n      BatchRequest(\n        action = Action.withName(\"addObject\"),\n        body = JObject(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n      ),\n      BatchRequest(\n        action = Action.withName(\"addObject\"),\n        body = JObject(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.withName(\"addObject\"),\n    records = Seq(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "runSource": {
       "default": "val response = client.runSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  runSourcePayload = Some(\n    RunSourcePayload(\n      indexToInclude = Some(Seq(\"products_us\", \"products eu\")),\n      entityIDs = Some(Seq(\"1234\", \"5678\")),\n      entityType = Some(EntityType.withName(\"product\"))\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
@@ -1892,7 +1892,7 @@
       "default": "let response = try await client.listTransformations()"
     },
     "pushTask": {
-      "default": "let response = try await client.pushTask(\n    taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    batchWriteParams: IngestionBatchWriteParams(requests: [\n        IngestionBatchRequest(action: IngestionAction.addObject, body: [\"key\": \"bar\", \"foo\": \"1\"]),\n        IngestionBatchRequest(action: IngestionAction.addObject, body: [\"key\": \"baz\", \"foo\": \"2\"]),\n    ])\n)"
+      "default": "let response = try await client.pushTask(\n    taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    pushTaskPayload: PushTaskPayload(\n        action: IngestionAction.addObject,\n        records: [\n            PushTaskRecords(from: [\n                \"objectID\": AnyCodable(\"o\"),\n                \"key\": AnyCodable(\"bar\"),\n                \"foo\": AnyCodable(\"1\"),\n            ]),\n            PushTaskRecords(from: [\n                \"objectID\": AnyCodable(\"k\"),\n                \"key\": AnyCodable(\"baz\"),\n                \"foo\": AnyCodable(\"2\"),\n            ]),\n        ]\n    )\n)"
     },
     "runSource": {
       "default": "let response = try await client.runSource(\n    sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    runSourcePayload: RunSourcePayload(\n        indexToInclude: [\"products_us\", \"products eu\"],\n        entityIDs: [\"1234\", \"5678\"],\n        entityType: EntityType.product\n    )\n)"

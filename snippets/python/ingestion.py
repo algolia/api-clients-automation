@@ -923,21 +923,18 @@ async def snippet_for_push_task():
     # Call the API
     response = await _client.push_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        batch_write_params={
-            "requests": [
+        push_task_payload={
+            "action": "addObject",
+            "records": [
                 {
-                    "action": "addObject",
-                    "body": {
-                        "key": "bar",
-                        "foo": "1",
-                    },
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
                 },
                 {
-                    "action": "addObject",
-                    "body": {
-                        "key": "baz",
-                        "foo": "2",
-                    },
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
                 },
             ],
         },

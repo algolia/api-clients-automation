@@ -5,18 +5,20 @@ package com.algolia.model.ingestion;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-/** BatchRequest */
-public class BatchRequest {
+/** PushTaskPayload */
+public class PushTaskPayload {
 
   @JsonProperty("action")
   private Action action;
 
-  @JsonProperty("body")
-  private Object body;
+  @JsonProperty("records")
+  private List<PushTaskRecords> records = new ArrayList<>();
 
-  public BatchRequest setAction(Action action) {
+  public PushTaskPayload setAction(Action action) {
     this.action = action;
     return this;
   }
@@ -27,15 +29,20 @@ public class BatchRequest {
     return action;
   }
 
-  public BatchRequest setBody(Object body) {
-    this.body = body;
+  public PushTaskPayload setRecords(List<PushTaskRecords> records) {
+    this.records = records;
     return this;
   }
 
-  /** Operation arguments (varies with specified `action`). */
+  public PushTaskPayload addRecords(PushTaskRecords recordsItem) {
+    this.records.add(recordsItem);
+    return this;
+  }
+
+  /** Get records */
   @javax.annotation.Nonnull
-  public Object getBody() {
-    return body;
+  public List<PushTaskRecords> getRecords() {
+    return records;
   }
 
   @Override
@@ -46,21 +53,21 @@ public class BatchRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchRequest batchRequest = (BatchRequest) o;
-    return Objects.equals(this.action, batchRequest.action) && Objects.equals(this.body, batchRequest.body);
+    PushTaskPayload pushTaskPayload = (PushTaskPayload) o;
+    return Objects.equals(this.action, pushTaskPayload.action) && Objects.equals(this.records, pushTaskPayload.records);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, body);
+    return Objects.hash(action, records);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BatchRequest {\n");
+    sb.append("class PushTaskPayload {\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
-    sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb.append("    records: ").append(toIndentedString(records)).append("\n");
     sb.append("}");
     return sb.toString();
   }

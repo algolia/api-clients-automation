@@ -546,11 +546,12 @@ class SnippetIngestionClient {
     // Call the API
     client.pushTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new BatchWriteParams()
-        .setRequests(
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
           List.of(
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
           )
         )
     );

@@ -1282,19 +1282,18 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->pushTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['requests' => [
-                ['action' => 'addObject',
-                    'body' => ['key' => 'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
                         'foo' => '1',
+                        'objectID' => 'o',
                     ],
-                ],
 
-                ['action' => 'addObject',
-                    'body' => ['key' => 'baz',
+                    ['key' => 'baz',
                         'foo' => '2',
+                        'objectID' => 'k',
                     ],
                 ],
-            ],
             ],
         );
 
@@ -1302,7 +1301,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}'),
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
             ],
         ]);
     }

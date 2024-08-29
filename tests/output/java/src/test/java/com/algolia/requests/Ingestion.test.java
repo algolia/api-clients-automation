@@ -1249,11 +1249,12 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.pushTask(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        new BatchWriteParams()
-          .setRequests(
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
             List.of(
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
             )
           )
       );
@@ -1263,7 +1264,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )

@@ -692,33 +692,22 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.pushTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      batchWriteParams = BatchWriteParams(
-        requests = listOf(
-          BatchRequest(
-            action = Action.entries.first { it.value == "addObject" },
-            body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("bar"),
-              )
-              put(
-                "foo",
-                JsonPrimitive("1"),
-              )
-            },
+      pushTaskPayload = PushTaskPayload(
+        action = Action.entries.first { it.value == "addObject" },
+        records = listOf(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("bar"),
+              "foo" to JsonPrimitive("1"),
+            ),
           ),
-          BatchRequest(
-            action = Action.entries.first { it.value == "addObject" },
-            body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("baz"),
-              )
-              put(
-                "foo",
-                JsonPrimitive("2"),
-              )
-            },
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("baz"),
+              "foo" to JsonPrimitive("2"),
+            ),
           ),
         ),
       ),

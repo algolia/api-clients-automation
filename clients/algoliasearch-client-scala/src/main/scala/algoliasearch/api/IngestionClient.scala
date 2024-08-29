@@ -12,7 +12,6 @@ import algoliasearch.ingestion.AuthenticationSortKeys._
 import algoliasearch.ingestion.AuthenticationType._
 import algoliasearch.ingestion.AuthenticationUpdate
 import algoliasearch.ingestion.AuthenticationUpdateResponse
-import algoliasearch.ingestion.BatchWriteParams
 import algoliasearch.ingestion.DeleteResponse
 import algoliasearch.ingestion.Destination
 import algoliasearch.ingestion.DestinationCreate
@@ -38,6 +37,7 @@ import algoliasearch.ingestion.ListTasksResponseV1
 import algoliasearch.ingestion.ListTransformationsResponse
 import algoliasearch.ingestion.OrderKeys._
 import algoliasearch.ingestion.PlatformWithNone
+import algoliasearch.ingestion.PushTaskPayload
 import algoliasearch.ingestion.Run
 import algoliasearch.ingestion.RunListResponse
 import algoliasearch.ingestion.RunResponse
@@ -1217,20 +1217,20 @@ class IngestionClient(
     *
     * @param taskID
     *   Unique identifier of a task.
-    * @param batchWriteParams
+    * @param pushTaskPayload
     *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
     */
-  def pushTask(taskID: String, batchWriteParams: BatchWriteParams, requestOptions: Option[RequestOptions] = None)(
-      implicit ec: ExecutionContext
+  def pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
   ): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
-    requireNotNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `pushTask`.")
+    requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
-      .withBody(batchWriteParams)
+      .withBody(pushTaskPayload)
       .build()
     execute[RunResponse](request, requestOptions)
   }

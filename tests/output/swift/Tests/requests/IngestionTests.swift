@@ -1897,10 +1897,21 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.pushTaskWithHTTPInfo(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            batchWriteParams: IngestionBatchWriteParams(requests: [
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
-            ])
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1909,7 +1920,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+            "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

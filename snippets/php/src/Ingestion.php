@@ -844,19 +844,18 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->pushTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['requests' => [
-                ['action' => 'addObject',
-                    'body' => ['key' => 'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
                         'foo' => '1',
+                        'objectID' => 'o',
                     ],
-                ],
 
-                ['action' => 'addObject',
-                    'body' => ['key' => 'baz',
+                    ['key' => 'baz',
                         'foo' => '2',
+                        'objectID' => 'k',
                     ],
                 ],
-            ],
             ],
         );
 
