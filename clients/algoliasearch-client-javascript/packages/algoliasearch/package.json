@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
     "type": "git",
@@ -11,7 +11,6 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -19,7 +18,7 @@
         "default": "./dist/algoliasearch.cjs",
         "types": "./dist/algoliasearch/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/algoliasearch.umd.js",
         "module": "./dist/algoliasearch.esm.browser.js",
         "import": "./dist/algoliasearch.esm.browser.js",
@@ -28,7 +27,6 @@
       }
     },
     "./lite": {
-      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -36,7 +34,7 @@
         "default": "./dist/lite/lite.cjs",
         "types": "./dist/lite/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/lite/lite.umd.js",
         "module": "./dist/lite/lite.esm.browser.js",
         "import": "./dist/lite/lite.esm.browser.js",
@@ -67,14 +65,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-abtesting": "5.2.1",
-    "@algolia/client-analytics": "5.2.1",
-    "@algolia/client-common": "5.2.1",
-    "@algolia/client-personalization": "5.2.1",
-    "@algolia/client-search": "5.2.1",
-    "@algolia/recommend": "5.2.1",
-    "@algolia/requester-browser-xhr": "5.2.1",
-    "@algolia/requester-node-http": "5.2.1"
+    "@algolia/client-abtesting": "5.2.2",
+    "@algolia/client-analytics": "5.2.2",
+    "@algolia/client-common": "5.2.2",
+    "@algolia/client-personalization": "5.2.2",
+    "@algolia/client-search": "5.2.2",
+    "@algolia/recommend": "5.2.2",
+    "@algolia/requester-browser-xhr": "5.2.2",
+    "@algolia/requester-node-http": "5.2.2"
   },
   "devDependencies": {
     "@babel/preset-env": "7.25.4",

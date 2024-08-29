@@ -1,5 +1,5 @@
 {{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
+import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
 
 import {
@@ -15,36 +15,17 @@ import {
   createNullCache,
   serializeQueryParameters,
 } from '@algolia/client-common';
-import type { AbtestingClient } from '@algolia/client-abtesting';
-import type { Region as AbtestingRegion } from '@algolia/client-abtesting/src/abtestingClient';
-import {
-  createAbtestingClient,
-  REGIONS as abtestingRegions,
-} from '@algolia/client-abtesting/src/abtestingClient';
-import type { AnalyticsClient } from '@algolia/client-analytics';
-import {
-  createAnalyticsClient,
-  REGIONS as analyticsRegions,
-} from '@algolia/client-analytics/src/analyticsClient';
-import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
-import type {
-  ClientOptions,
-  CreateClientOptions,
-} from '@algolia/client-common';
-import type { PersonalizationClient } from '@algolia/client-personalization';
-import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';
-import {
-  createPersonalizationClient,
-  REGIONS as personalizationRegions,
-} from '@algolia/client-personalization/src/personalizationClient';
-import {
-  createSearchClient,
-  apiClientVersion as searchClientVersion,
-} from '@algolia/client-search/src/searchClient';
-import type { RecommendClient } from '@algolia/recommend';
-import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
+
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
+
+import { AbtestingClient, Region as AbtestingRegion, abtestingClient } from '@algolia/client-abtesting';
+import { AnalyticsClient, Region as AnalyticsRegion, analyticsClient } from '@algolia/client-analytics';
+import { PersonalizationClient, Region as PersonalizationRegion, personalizationClient } from '@algolia/client-personalization';
+import { searchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search';
+import { RecommendClient, recommendClient } from '@algolia/recommend';
 
 import type {
   InitClientOptions,

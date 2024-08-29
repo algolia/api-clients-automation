@@ -1,6 +1,6 @@
 {
   "name": "@algolia/monitoring",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "JavaScript client for monitoring",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
         "default": "./dist/monitoring.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/monitoring.umd.js",
         "module": "./dist/monitoring.esm.browser.js",
         "import": "./dist/monitoring.esm.browser.js",
@@ -44,9 +44,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.2.1",
-    "@algolia/requester-browser-xhr": "5.2.1",
-    "@algolia/requester-node-http": "5.2.1"
+    "@algolia/client-common": "5.2.2",
+    "@algolia/requester-browser-xhr": "5.2.2",
+    "@algolia/requester-node-http": "5.2.2"
   },
   "devDependencies": {
     "@types/node": "22.5.0",

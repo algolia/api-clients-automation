@@ -3,32 +3,28 @@
 import type { InitClientOptions, InitClientRegion } from "./models"
 
 {{> algoliasearch/builds/definition}}
-  const commonOptions: CreateClientOptions = {
-    apiKey,
-    appId,
-    timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
-      read: DEFAULT_READ_TIMEOUT_BROWSER,
-      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
-    },
-    requester: createXhrRequester(),
-    algoliaAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
-    responsesCache: createMemoryCache(),
-    requestsCache: createMemoryCache({ serializable: false }),
-    hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
-    }),
-    ...options,
-  };
-
   {{> algoliasearch/builds/initClients}}
 
   return {
-    ...createSearchClient(commonOptions),
+    ...searchClient(appId, apiKey, {
+      timeouts: {
+        connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+        read: DEFAULT_READ_TIMEOUT_BROWSER,
+        write: DEFAULT_WRITE_TIMEOUT_BROWSER,
+      },
+      requester: createXhrRequester(),
+      algoliaAgents: [{ segment: 'Browser' }],
+      authMode: 'WithinQueryParameters',
+      responsesCache: createMemoryCache(),
+      requestsCache: createMemoryCache({ serializable: false }),
+      hostsCache: createFallbackableCache({
+        caches: [
+          createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+          createMemoryCache(),
+        ],
+      }),
+      ...options,
+      }),
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
