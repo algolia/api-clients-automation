@@ -375,10 +375,12 @@ async function prepareGitEnvironment(): Promise<void> {
     errorMessage: '`released` tag is missing in this repository.',
   });
 
-  console.log('Pulling from origin...');
-  await run('git fetch origin');
-  await run('git fetch --tags --force');
-  await run('git pull origin $(git branch --show-current)');
+  if (!process.env.FORCE) {
+    console.log('Pulling from origin...');
+    await run('git fetch origin');
+    await run('git fetch --tags --force');
+    await run('git pull origin $(git branch --show-current)');
+  }
 }
 
 export async function createReleasePR({
