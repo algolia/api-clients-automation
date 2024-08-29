@@ -253,7 +253,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(github.event.head_commit.message, '[skip-e2e]') }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
