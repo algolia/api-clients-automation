@@ -1,3 +1,7 @@
+## [4.2.2](https://github.com/algolia/algoliasearch-client-java/compare/4.2.1...4.2.2)
+
+- [fcb2fe541](https://github.com/algolia/api-clients-automation/commit/fcb2fe541) fix(java): make the japicmp mandatory ([#3603](https://github.com/algolia/api-clients-automation/pull/3603)) by [@millotp](https://github.com/millotp/)
+
 ## [4.2.1](https://github.com/algolia/algoliasearch-client-java/compare/4.2.0...4.2.1)
 
 - [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)

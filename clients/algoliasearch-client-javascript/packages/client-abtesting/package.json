@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-abtesting",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "JavaScript client for client-abtesting",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
         "default": "./dist/client-abtesting.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-abtesting.umd.js",
         "module": "./dist/client-abtesting.esm.browser.js",
         "import": "./dist/client-abtesting.esm.browser.js",
@@ -44,9 +44,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.2.1",
-    "@algolia/requester-browser-xhr": "5.2.1",
-    "@algolia/requester-node-http": "5.2.1"
+    "@algolia/client-common": "5.2.2",
+    "@algolia/requester-browser-xhr": "5.2.2",
+    "@algolia/requester-node-http": "5.2.2"
   },
   "devDependencies": {
     "@types/node": "22.5.0",
