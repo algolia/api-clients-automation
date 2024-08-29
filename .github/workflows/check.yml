@@ -118,6 +118,7 @@ jobs:
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
+      KOTLIN_DATA: ${{ steps.gen-matrix.outputs.KOTLIN_DATA }}
       RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
 
   scripts:
