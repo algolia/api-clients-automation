@@ -253,7 +253,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork && !contains(github.event.pull_request.title, '[skip-e2e]') }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -356,7 +356,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork && !contains(github.event.pull_request.title, '[skip-e2e]') }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -452,7 +452,7 @@ jobs:
           type: minimal
           language: swift
 
-      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v {{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
 
       - name: Set output
         id: setoutput
