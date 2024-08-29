@@ -1,3 +1,7 @@
+## [4.2.3](https://github.com/algolia/algoliasearch-client-java/compare/4.2.2...4.2.3)
+
+- [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.2.2](https://github.com/algolia/algoliasearch-client-java/compare/4.2.1...4.2.2)
 
 - [fcb2fe541](https://github.com/algolia/api-clients-automation/commit/fcb2fe541) fix(java): make the japicmp mandatory ([#3603](https://github.com/algolia/api-clients-automation/pull/3603)) by [@millotp](https://github.com/millotp/)
