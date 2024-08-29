@@ -43,6 +43,10 @@ export type ClientMatrix = {
      * The snippets output path to store in the artifact.
      */
     snippetsToStore: string;
+    /**
+     * The version of the language to run, used for the setup step.
+     */
+    version?: string;
   }>;
 };
 

@@ -203,6 +203,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           language: javascript
+          version: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version }}
 
       - name: Generate clients
         run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -307,6 +308,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           language: ${{ matrix.client.language }}
+          version: ${{ matrix.client.version }}
 
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
@@ -451,6 +453,7 @@ jobs:
         with:
           type: minimal
           language: swift
+          version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
 
       - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v
 

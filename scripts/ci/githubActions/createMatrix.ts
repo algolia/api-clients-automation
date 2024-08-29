@@ -1,8 +1,10 @@
 /* eslint-disable no-case-declarations */
+import fsp from 'fs/promises';
+
 import { setOutput } from '@actions/core';
 
-import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
-import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
+import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.js';
+import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.js';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
 import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
@@ -85,10 +87,13 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       .join(' ');
 
     const snippetsToStore = `snippets/${language}`;
-
     const toRun = matrix[language].toRun.join(' ');
     let buildCommand = `yarn cli build clients ${language} ${toRun}`;
-
+    const versionFile = toAbsolutePath(`config/.${language}-version`);
+    let version: string | undefined = undefined;
+    if (await exists(versionFile)) {
+      version = (await fsp.readFile(versionFile)).toString();
+    }
     // some clients have specific files required for testing
     switch (language) {
       case 'csharp':
@@ -121,6 +126,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       case 'swift':
         testsToStore = `${testsToStore} ${testsRootFolder}/Package.swift`;
         break;
+      case 'php':
+        if (version) {
+          version = version.substring(0, version.length - 2);
+        }
+        break;
       default:
         break;
     }
@@ -134,6 +144,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       testsToDelete,
       testsToStore,
       snippetsToStore,
+      version,
     });
   }
 
@@ -155,6 +166,15 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
     setOutput('RUN_GEN_JAVASCRIPT', true);
     clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
+  }
+
+  // if python is there on a release commit, we want that every supported version runs
+  const pythonData = clientMatrix.client.filter((c) => c.language === 'python');
+  if (pythonData.length > 0) {
+    const supportedPythonVersions: string[] = getClientsConfigField('python', 'supportedPythonVersions');
+    supportedPythonVersions.forEach((supportedPythonVersion) => {
+      clientMatrix.client.push({ ...pythonData[0], version: supportedPythonVersion });
+    });
   }
 
   const shouldRun = clientMatrix.client.length > 0;
