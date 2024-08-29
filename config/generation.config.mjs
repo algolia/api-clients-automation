@@ -7,7 +7,7 @@ export const patterns = [
   'snippets/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
-  'clients/**/.github/workflows/issue.yml',
+  'clients/**/.github/**',
 
   // C#
   'clients/algoliasearch-client-csharp/**',
