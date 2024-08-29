@@ -23,8 +23,47 @@
   */
 package algoliasearch.ingestion
 
-/** Batch parameters.
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
+
+/** PushTaskRecords
+  *
+  * @param objectID
+  *   Unique record identifier.
   */
-case class BatchWriteParams(
-    requests: Seq[BatchRequest]
+case class PushTaskRecords(
+    objectID: String,
+    additionalProperties: Option[List[JField]] = None
 )
+
+class PushTaskRecordsSerializer extends Serializer[PushTaskRecords] {
+
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), PushTaskRecords] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[PushTaskRecords] =>
+      json match {
+        case jobject: JObject =>
+          val formats = format - this
+          val mf = manifest[PushTaskRecords]
+          val obj = Extraction.extract[PushTaskRecords](jobject)(formats, mf)
+
+          val fields = Set("objectID")
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties.values match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as PushTaskRecords")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: PushTaskRecords =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    value.additionalProperties match {
+      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
+      case None         => Extraction.decompose(value)(formats)
+    }
+  }
+}

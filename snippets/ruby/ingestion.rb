@@ -776,10 +776,11 @@ def snippet_for_push_task
   # Call the API
   response = client.push_task(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    BatchWriteParams.new(
-      requests: [
-        BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-        BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+    PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+        PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
       ]
     )
   )

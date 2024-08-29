@@ -1085,8 +1085,8 @@ func SnippetForPushTaskOfIngestion() {
 	// Call the API
 	response, err := client.PushTask(client.NewApiPushTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyBatchWriteParams().SetRequests(
-			[]ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")}),
 	))
 	if err != nil {
 		// handle the eventual error

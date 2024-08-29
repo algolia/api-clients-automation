@@ -1247,19 +1247,28 @@ public class IngestionClientRequestTests
   {
     await client.PushTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new BatchWriteParams
+      new PushTaskPayload
       {
-        Requests = new List<BatchRequest>
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
         {
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            }
           },
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            }
           }
         },
       }
@@ -1269,7 +1278,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

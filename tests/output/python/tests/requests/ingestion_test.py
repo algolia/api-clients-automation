@@ -1154,21 +1154,18 @@ class TestIngestionClient:
         """
         _req = await self._client.push_task_with_http_info(
             task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            batch_write_params={
-                "requests": [
+            push_task_payload={
+                "action": "addObject",
+                "records": [
                     {
-                        "action": "addObject",
-                        "body": {
-                            "key": "bar",
-                            "foo": "1",
-                        },
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
                     },
                     {
-                        "action": "addObject",
-                        "body": {
-                            "key": "baz",
-                            "foo": "2",
-                        },
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
                     },
                 ],
             },
@@ -1179,7 +1176,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
         )
 
     async def test_run_source_(self):

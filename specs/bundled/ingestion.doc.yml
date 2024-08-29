@@ -10047,7 +10047,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/batchWriteParams'
+              title: pushTaskPayload
+              type: object
+              properties:
+                action:
+                  $ref: '#/components/schemas/action'
+                records:
+                  type: array
+                  items:
+                    title: pushTaskRecords
+                    type: object
+                    additionalProperties: true
+                    required:
+                      - objectID
+                    properties:
+                      objectID:
+                        $ref: '#/components/schemas/objectID'
+              required:
+                - action
+                - records
         required: true
       responses:
         '200':
@@ -10070,19 +10088,28 @@ paths:
             // Call the API
             var response = await client.PushTaskAsync(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              new BatchWriteParams
+              new PushTaskPayload
               {
-                Requests = new List<BatchRequest>
+                Action = Enum.Parse<Action>("AddObject"),
+                Records = new List<PushTaskRecords>
                 {
-                  new BatchRequest
+                  new PushTaskRecords
                   {
-                    Action = Enum.Parse<Action>("AddObject"),
-                    Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+                    ObjectID = "o",
+                    AdditionalProperties = new Dictionary<string, object>
+                    {
+                      { "key", "bar" },
+                      { "foo", "1" },
+                    }
                   },
-                  new BatchRequest
+                  new PushTaskRecords
                   {
-                    Action = Enum.Parse<Action>("AddObject"),
-                    Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+                    ObjectID = "k",
+                    AdditionalProperties = new Dictionary<string, object>
+                    {
+                      { "key", "baz" },
+                      { "foo", "2" },
+                    }
                   }
                 },
               }
@@ -10106,8 +10133,8 @@ paths:
 
             response, err := client.PushTask(client.NewApiPushTaskRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyBatchWriteParams().SetRequests(
-                []ingestion.BatchRequest{*ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *ingestion.NewEmptyBatchRequest().SetAction(ingestion.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
+              ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")}),
             ))
 
             if err != nil {
@@ -10132,11 +10159,12 @@ paths:
 
             client.pushTask(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              new BatchWriteParams()
-                .setRequests(
+              new PushTaskPayload()
+                .setAction(Action.ADD_OBJECT)
+                .setRecords(
                   List.of(
-                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+                    new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+                    new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
                   )
                 )
             );
@@ -10153,10 +10181,11 @@ paths:
 
             const response = await client.pushTask({
               taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-              batchWriteParams: {
-                requests: [
-                  { action: 'addObject', body: { key: 'bar', foo: '1' } },
-                  { action: 'addObject', body: { key: 'baz', foo: '2' } },
+              pushTaskPayload: {
+                action: 'addObject',
+                records: [
+                  { key: 'bar', foo: '1', objectID: 'o' },
+                  { key: 'baz', foo: '2', objectID: 'k' },
                 ],
               },
             });
@@ -10178,33 +10207,22 @@ paths:
 
             var response = client.pushTask(
               taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              batchWriteParams = BatchWriteParams(
-                requests = listOf(
-                  BatchRequest(
-                    action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject {
-                      put(
-                        "key",
-                        JsonPrimitive("bar"),
-                      )
-                      put(
-                        "foo",
-                        JsonPrimitive("1"),
-                      )
-                    },
+              pushTaskPayload = PushTaskPayload(
+                action = Action.entries.first { it.value == "addObject" },
+                records = listOf(
+                  PushTaskRecords(
+                    objectID = "o",
+                    additionalProperties = mapOf(
+                      "key" to JsonPrimitive("bar"),
+                      "foo" to JsonPrimitive("1"),
+                    ),
                   ),
-                  BatchRequest(
-                    action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject {
-                      put(
-                        "key",
-                        JsonPrimitive("baz"),
-                      )
-                      put(
-                        "foo",
-                        JsonPrimitive("2"),
-                      )
-                    },
+                  PushTaskRecords(
+                    objectID = "k",
+                    additionalProperties = mapOf(
+                      "key" to JsonPrimitive("baz"),
+                      "foo" to JsonPrimitive("2"),
+                    ),
                   ),
                 ),
               ),
@@ -10227,19 +10245,18 @@ paths:
 
             $response = $client->pushTask(
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                ['requests' => [
-                    ['action' => 'addObject',
-                        'body' => ['key' => 'bar',
+                ['action' => 'addObject',
+                    'records' => [
+                        ['key' => 'bar',
                             'foo' => '1',
+                            'objectID' => 'o',
                         ],
-                    ],
 
-                    ['action' => 'addObject',
-                        'body' => ['key' => 'baz',
+                        ['key' => 'baz',
                             'foo' => '2',
+                            'objectID' => 'k',
                         ],
                     ],
-                ],
                 ],
             );
 
@@ -10260,21 +10277,18 @@ paths:
 
             response = await _client.push_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                batch_write_params={
-                    "requests": [
+                push_task_payload={
+                    "action": "addObject",
+                    "records": [
                         {
-                            "action": "addObject",
-                            "body": {
-                                "key": "bar",
-                                "foo": "1",
-                            },
+                            "key": "bar",
+                            "foo": "1",
+                            "objectID": "o",
                         },
                         {
-                            "action": "addObject",
-                            "body": {
-                                "key": "baz",
-                                "foo": "2",
-                            },
+                            "key": "baz",
+                            "foo": "2",
+                            "objectID": "k",
                         },
                     ],
                 },
@@ -10302,10 +10316,11 @@ paths:
 
             response = client.push_task(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              BatchWriteParams.new(
-                requests: [
-                  BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-                  BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+              PushTaskPayload.new(
+                action: "addObject",
+                records: [
+                  PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+                  PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
                 ]
               )
             )
@@ -10332,15 +10347,16 @@ paths:
 
             val response = client.pushTask(
               taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              batchWriteParams = BatchWriteParams(
-                requests = Seq(
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+              pushTaskPayload = PushTaskPayload(
+                action = Action.withName("addObject"),
+                records = Seq(
+                  PushTaskRecords(
+                    objectID = "o",
+                    additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
                   ),
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                  PushTaskRecords(
+                    objectID = "k",
+                    additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
                   )
                 )
               )
@@ -10363,10 +10379,21 @@ paths:
 
             let response = try await client.pushTask(
                 taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                batchWriteParams: IngestionBatchWriteParams(requests: [
-                    IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
-                    IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
-                ])
+                pushTaskPayload: PushTaskPayload(
+                    action: IngestionAction.addObject,
+                    records: [
+                        PushTaskRecords(from: [
+                            "objectID": AnyCodable("o"),
+                            "key": AnyCodable("bar"),
+                            "foo": AnyCodable("1"),
+                        ]),
+                        PushTaskRecords(from: [
+                            "objectID": AnyCodable("k"),
+                            "key": AnyCodable("baz"),
+                            "foo": AnyCodable("2"),
+                        ]),
+                    ]
+                )
             )
   /2/tasks/{taskID}/enable:
     put:
@@ -16185,48 +16212,10 @@ components:
         - delete
         - clear
       description: Type of indexing operation.
-    batchWriteParams:
-      title: batchWriteParams
-      description: Batch parameters.
-      type: object
-      additionalProperties: false
-      properties:
-        requests:
-          type: array
-          items:
-            title: batchRequest
-            type: object
-            additionalProperties: false
-            properties:
-              action:
-                $ref: '#/components/schemas/action'
-              body:
-                type: object
-                description: Operation arguments (varies with specified `action`).
-                example:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-            required:
-              - action
-              - body
-      required:
-        - requests
-      example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
     sortKeys:
       type: string
       description: Property by which to sort the list.

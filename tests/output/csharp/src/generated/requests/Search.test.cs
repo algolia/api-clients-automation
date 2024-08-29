@@ -450,7 +450,7 @@ public class SearchClientRequestTests
             {
               ObjectID = "1",
               Language = Enum.Parse<SupportedLanguage>("En"),
-              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" } }
+              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" }, }
             },
           }
         },

@@ -25,12 +25,9 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.Action._
 
-/** BatchRequest
-  *
-  * @param body
-  *   Operation arguments (varies with specified `action`).
+/** PushTaskPayload
   */
-case class BatchRequest(
+case class PushTaskPayload(
     action: Action,
-    body: Any
+    records: Seq[PushTaskRecords]
 )

@@ -551,10 +551,21 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.pushTask(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            batchWriteParams: IngestionBatchWriteParams(requests: [
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
-            ])
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
         )
         // SEPARATOR<
     }

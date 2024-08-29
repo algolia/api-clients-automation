@@ -3074,15 +3074,15 @@ public class IngestionClient extends ApiClient {
    * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RunResponse pushTask(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams, RequestOptions requestOptions)
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(pushTaskAsync(taskID, batchWriteParams, requestOptions));
+    return LaunderThrowable.await(pushTaskAsync(taskID, pushTaskPayload, requestOptions));
   }
 
   /**
@@ -3090,12 +3090,12 @@ public class IngestionClient extends ApiClient {
    * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RunResponse pushTask(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams) throws AlgoliaRuntimeException {
-    return this.pushTask(taskID, batchWriteParams, null);
+  public RunResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.pushTask(taskID, pushTaskPayload, null);
   }
 
   /**
@@ -3103,7 +3103,7 @@ public class IngestionClient extends ApiClient {
    * of task pushes with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3111,17 +3111,17 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<RunResponse> pushTaskAsync(
     @Nonnull String taskID,
-    @Nonnull BatchWriteParams batchWriteParams,
+    @Nonnull PushTaskPayload pushTaskPayload,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
 
-    Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `pushTask`.");
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
 
     HttpRequest request = HttpRequest.builder()
       .setPath("/2/tasks/{taskID}/push", taskID)
       .setMethod("POST")
-      .setBody(batchWriteParams)
+      .setBody(pushTaskPayload)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
@@ -3131,13 +3131,13 @@ public class IngestionClient extends ApiClient {
    * of task pushes with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
    *     Connectors pipeline. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull BatchWriteParams batchWriteParams)
+  public CompletableFuture<RunResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
-    return this.pushTaskAsync(taskID, batchWriteParams, null);
+    return this.pushTaskAsync(taskID, pushTaskPayload, null);
   }
 
   /**
