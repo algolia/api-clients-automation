@@ -69,12 +69,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
-    // We delete tests to ensure the CI only run tests against what changed.
-    let testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
-    if (language !== 'swift') {
-      // Swift requires the benchmark folder to have files in it
-      testsToDelete += ` ${testsOutputBase}/benchmark`;
-    }
     const toRun = matrix[language].toRun.join(' ');
     const versionFile = toAbsolutePath(`config/.${language}-version`);
     let version: string | undefined = undefined;
@@ -88,7 +82,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       toRun,
       buildCommand: `yarn cli build clients ${language} ${toRun}`,
       testsRootFolder,
-      testsToDelete,
+      testsToDelete: `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`,
       testsToStore: matrix[language].toRun
         .map((client) => {
           const clientName = createClientName(client, language);
@@ -136,6 +130,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Gemfile.lock`;
         break;
       case 'swift':
+        // Swift requires the benchmark folder to have files in it
+        languageMatrix.testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
         setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
         setOutput('RUN_MACOS_SWIFT_CTS', true);
@@ -144,8 +140,8 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         setOutput('RUN_MACOS_KOTLIN_BUILD', true);
         break;
       case 'php':
-        if (version) {
-          version = version.substring(0, version.length - 3);
+        if (languageMatrix.version) {
+          languageMatrix.version = languageMatrix.version.substring(0, languageMatrix.version.length - 3);
         }
         break;
       default:
