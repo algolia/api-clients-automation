@@ -45,7 +45,7 @@ namespace Algolia.Search.Clients
     /// The admin API Key
     /// </summary>
     /// <returns></returns>
-    public string ApiKey { get; }
+    public string ApiKey { get; set; }
 
     /// <summary>
     /// Configurations hosts

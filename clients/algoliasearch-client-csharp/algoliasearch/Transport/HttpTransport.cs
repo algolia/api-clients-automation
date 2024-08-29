@@ -24,7 +24,7 @@ internal class HttpTransport
   private readonly IHttpRequester _httpClient;
   private readonly ISerializer _serializer;
   private readonly RetryStrategy _retryStrategy;
-  private readonly AlgoliaConfig _algoliaConfig;
+  internal AlgoliaConfig _algoliaConfig;
   private string _errorMessage;
   private readonly ILogger<HttpTransport> _logger;
 
@@ -289,5 +289,15 @@ internal class HttpTransport
       CallType.Write => _algoliaConfig.WriteTimeout ?? Defaults.WriteTimeout,
       _ => Defaults.WriteTimeout
     };
+  }
+
+  /// <summary>
+  /// Helper to switch the API key sent with each request
+  /// </summary>
+  /// <param name="apiKey">Your API Key</param>
+  /// <returns></returns>
+  public void SetApiKey(string apiKey)
+  {
+    _algoliaConfig.ApiKey = apiKey;
   }
 }
