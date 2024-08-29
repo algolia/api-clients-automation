@@ -1,5 +1,11 @@
 {{{objectName}}}(
 {{#value}}
-{{> tests/request_param}},
+{{^isAdditionalProperty}}
+{{#hasAdditionalProperties}}{{#lambda.scalaIdentifier}}{{{key}}}{{/lambda.scalaIdentifier}} = {{/hasAdditionalProperties}}{{> tests/request_param}},
+{{/isAdditionalProperty}}
 {{/value}}
+{{#hasAdditionalProperties}}
+additionalProperties = Some(List({{#value}}{{#isAdditionalProperty}}JField("{{key}}", {{> tests/param_json_element}}),
+{{/isAdditionalProperty}}{{/value}}))
+{{/hasAdditionalProperties}}
 )
