@@ -157,6 +157,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       supportedVersions.forEach((supportedVersion, idx) => {
         languageMatrix.version = supportedVersion;
         languageMatrix.isMainVersion = idx === supportedVersions.length - 1;
+        clientMatrix.client.push(languageMatrix);
       });
     } else {
       clientMatrix.client.push(languageMatrix);
