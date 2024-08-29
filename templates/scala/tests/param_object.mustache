@@ -5,7 +5,7 @@
 {{/isAdditionalProperty}}
 {{/value}}
 {{#hasAdditionalProperties}}
-additionalProperties = Some(List({{#value}}{{#isAdditionalProperty}}JField("{{key}}", {{> tests/param_json_element}}),
+additionalProperties = Some(List({{#value}}{{#isAdditionalProperty}}JField("{{key}}", {{> tests/request_param}}),
 {{/isAdditionalProperty}}{{/value}}))
 {{/hasAdditionalProperties}}
 )
