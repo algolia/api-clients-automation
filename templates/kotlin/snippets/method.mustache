@@ -3,9 +3,11 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.{{client}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{isSearchClient}}
 // IMPORT<
 import com.algolia.client.model.{{import}}.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 

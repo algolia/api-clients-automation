@@ -47,8 +47,7 @@ public class SnippetsGenerator extends TestsGenerator {
     );
   }
 
-  @Override
-  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
+  private Map<String, Snippet[]> loadSnippets(Map<String, CodegenOperation> operations) throws Exception {
     Map<String, Snippet[]> snippets = loadFullCTS(Snippet[].class);
 
     String clientName = client;
@@ -77,6 +76,13 @@ public class SnippetsGenerator extends TestsGenerator {
         }
       }
     }
+
+    return snippets;
+  }
+
+  @Override
+  public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
+    Map<String, Snippet[]> snippets = loadSnippets(operations);
 
     if (this.client.equals("search")) {
       bundle.put("isSearchClient", true);

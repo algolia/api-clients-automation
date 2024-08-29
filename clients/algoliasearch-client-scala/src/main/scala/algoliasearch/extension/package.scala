@@ -308,7 +308,7 @@ package object extension {
     def partialUpdateObjects(
         indexName: String,
         objects: Seq[Any],
-        createIfNotExists: Boolean,
+        createIfNotExists: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
