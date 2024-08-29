@@ -43,7 +43,7 @@ from typing import (
 
 if version_info >= (3, 11):
   from typing import Self
-else
+else:
   from typing_extensions import Self
 
 from algoliasearch.http.helpers import create_iterable, RetryTimeout
