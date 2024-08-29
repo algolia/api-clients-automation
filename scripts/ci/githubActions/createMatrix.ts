@@ -1,8 +1,10 @@
 /* eslint-disable no-case-declarations */
+import fsp from 'fs/promises';
+
 import { setOutput } from '@actions/core';
 
-import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
-import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
+import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.js';
+import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.js';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
 import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
@@ -67,38 +69,48 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
-    // We delete tests to ensure the CI only run tests against what changed.
-    let testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
-    if (language !== 'swift') {
-      // Swift requires the benchmark folder to have files in it
-      testsToDelete += ` ${testsOutputBase}/benchmark`;
+    const toRun = matrix[language].toRun.join(' ');
+    const versionFile = toAbsolutePath(
+      language === 'javascript'
+        ? '.nvmrc'
+        : `config/.${language === 'kotlin' || language === 'scala' ? 'java' : language}-version`,
+    );
+    let version: string | undefined = undefined;
+    if (await exists(versionFile)) {
+      version = (await fsp.readFile(versionFile)).toString();
     }
 
-    // We only store tests of clients that ran during this job, the rest stay as is
-    let testsToStore = matrix[language].toRun
-      .map((client) => {
-        const clientName = createClientName(client, language);
-        const extension = getTestExtension(language);
+    const languageMatrix = {
+      language,
+      path: matrix[language].path,
+      toRun,
+      buildCommand: `yarn cli build clients ${language} ${toRun}`,
+      testsRootFolder,
+      // We delete tests to ensure the CI only run tests against what changed.
+      testsToDelete: `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`,
+      testsToStore: matrix[language].toRun
+        .map((client) => {
+          const clientName = createClientName(client, language);
+          const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
-      })
-      .join(' ');
+          return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/e2e/${clientName}${extension} ${testsOutputBase}/benchmark/${clientName}${extension} ${testsRootFolder}/benchmarkResult.json`;
+        })
+        .join(' '),
+      snippetsToStore: `snippets/${language}`,
+      version,
+      isMainVersion: true,
+    };
 
-    const snippetsToStore = `snippets/${language}`;
-
-    const toRun = matrix[language].toRun.join(' ');
-    let buildCommand = `yarn cli build clients ${language} ${toRun}`;
-
-    // some clients have specific files required for testing
+    // language specific options
     switch (language) {
       case 'csharp':
-        testsToStore = `${testsToStore} ${testsRootFolder}/global.json`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/global.json`;
         break;
       case 'go':
-        testsToStore = `${testsToStore} ${testsOutputBase}/echo.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsOutputBase}/echo.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
         break;
       case 'java':
-        testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
         const packageNames = matrix[language].toRun.map((client) => {
@@ -108,53 +120,52 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
           return client === 'algoliasearch' ? packageName : `@algolia/${packageName}`;
         });
 
-        buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(',')},}'`;
+        languageMatrix.buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(',')},}'`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/package.json`;
 
-        testsToStore = `${testsToStore} ${testsRootFolder}/package.json`;
+        setOutput('JAVASCRIPT_DATA', JSON.stringify(languageMatrix));
+        setOutput('RUN_GEN_JAVASCRIPT', true);
+
+        // we don't store js in the clientMatrix, it's an other ci job
+        continue;
+      case 'kotlin':
+        setOutput('KOTLIN_DATA', JSON.stringify(languageMatrix));
+        setOutput('RUN_MACOS_KOTLIN_BUILD', true);
+        break;
+      case 'php':
+        if (languageMatrix.version) {
+          languageMatrix.version = languageMatrix.version.split('.').slice(0, -1).join('.');
+        }
         break;
       case 'python':
-        testsToStore = `${testsToStore} ${testsRootFolder}/poetry.lock ${testsRootFolder}/requirements.txt`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/poetry.lock ${testsRootFolder}/requirements.txt`;
         break;
       case 'ruby':
-        testsToStore = `${testsToStore} ${testsRootFolder}/Gemfile.lock`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Gemfile.lock`;
         break;
       case 'swift':
-        testsToStore = `${testsToStore} ${testsRootFolder}/Package.swift`;
+        // Swift requires the benchmark folder to have files in it
+        languageMatrix.testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
+        setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
+        setOutput('RUN_MACOS_SWIFT_CTS', true);
         break;
       default:
         break;
     }
 
-    clientMatrix.client.push({
-      language,
-      path: matrix[language].path,
-      toRun,
-      buildCommand,
-      testsRootFolder,
-      testsToDelete,
-      testsToStore,
-      snippetsToStore,
-    });
-  }
-
-  // If there are updates for the Swift client, we allow ourselves to run the CTS on macOS
-  const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
-  if (swiftData) {
-    setOutput('SWIFT_DATA', JSON.stringify(swiftData));
-    setOutput('RUN_MACOS_SWIFT_CTS', true);
-  }
-
-  // If there are updates for the Kotlin client, we allow ourselves to run the build step on macOS
-  const runKotlin = clientMatrix.client.find((c) => c.language === 'kotlin');
-  if (runKotlin) {
-    setOutput('RUN_MACOS_KOTLIN_BUILD', true);
-  }
-
-  const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
-  if (javascriptData) {
-    setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
-    setOutput('RUN_GEN_JAVASCRIPT', true);
-    clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
+    const supportedVersions: string[] = getClientsConfigField(language, 'supportedVersions', false);
+    if (supportedVersions && supportedVersions.length > 0) {
+      supportedVersions.forEach((supportedVersion, idx) => {
+        clientMatrix.client.push({
+          ...languageMatrix,
+          version: supportedVersion,
+          isMainVersion: idx === supportedVersions.length - 1,
+        });
+      });
+    } else {
+      clientMatrix.client.push(languageMatrix);
+    }
   }
 
   const shouldRun = clientMatrix.client.length > 0;

@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import hmac
+from sys import version_info
 from warnings import warn
 from random import randint
 from time import time
@@ -26,7 +27,6 @@ from pydantic import (
   model_serializer,
 )
 from typing import (
-  Annotated,
   Any,
   Callable,
   ClassVar,
@@ -35,10 +35,14 @@ from typing import (
   List,
   Literal,
   Optional,
-  Self,
   Tuple,
   Union,
 )
+
+if version_info >= (3, 11):
+  from typing import Self, Annotated
+else:
+  from typing_extensions import Self, Annotated
 
 from algoliasearch.http.helpers import create_iterable, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
