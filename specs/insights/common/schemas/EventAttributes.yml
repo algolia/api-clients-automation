@@ -9,7 +9,6 @@ eventName:
     Consider naming events consistently—for example, by adopting Segment's
     [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     framework.
-  example: Product Clicked
 
 index:
   type: string
