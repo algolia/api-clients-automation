@@ -79,7 +79,7 @@ object {{classname}} {
   private def hosts(): Seq[Host] = {
     List(
     {{#hostsWithoutVariables}}
-    Host("{{.}}", Set(CallType.Read, CallType.Write))
+    Host("{{.}}", Set(CallType.Read, CallType.Write)),
     {{/hostsWithoutVariables}}
     )
   }
