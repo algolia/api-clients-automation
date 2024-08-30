@@ -11,14 +11,10 @@ import com.algolia.model.usage.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 public class UsageClient extends ApiClient {
@@ -28,22 +24,14 @@ public class UsageClient extends ApiClient {
   }
 
   public UsageClient(String appId, String apiKey, ClientOptions options) {
-    super(appId, apiKey, "Usage", options, getDefaultHosts(appId));
+    super(appId, apiKey, "Usage", options, getDefaultHosts());
   }
 
-  private static List<Host> getDefaultHosts(String appId) {
+  private static List<Host> getDefaultHosts() {
     List<Host> hosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-dsn.algolia.net", EnumSet.of(CallType.READ)));
-    hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
-
-    List<Host> commonHosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-
-    Collections.shuffle(commonHosts, new Random());
-
-    return Stream.concat(hosts.stream(), commonHosts.stream()).collect(Collectors.toList());
+    hosts.add(new Host("usage.algolia.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    hosts.add(new Host("usage-dev.algolia.com", EnumSet.of(CallType.READ, CallType.WRITE)));
+    return hosts;
   }
 
   /**

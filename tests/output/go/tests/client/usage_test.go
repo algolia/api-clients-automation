@@ -51,7 +51,7 @@ func TestUsageapi0(t *testing.T) {
 		"test",
 	))
 	require.NoError(t, err)
-	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
+	require.Equal(t, "usage.algolia.com", echo.Host)
 }
 
 // calls api with correct write host
@@ -77,7 +77,7 @@ func TestUsageapi1(t *testing.T) {
 		"test",
 	))
 	require.NoError(t, err)
-	require.Equal(t, "test-app-id.algolia.net", echo.Host)
+	require.Equal(t, "usage.algolia.com", echo.Host)
 }
 
 // calls api with correct user agent

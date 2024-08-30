@@ -19,7 +19,7 @@ describe('api', () => {
 
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
-    expect(result.host).toEqual('test-app-id-dsn.algolia.net');
+    expect(result.host).toEqual('usage.algolia.com');
   }, 15000);
 
   test('calls api with correct write host', async () => {
@@ -27,7 +27,7 @@ describe('api', () => {
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
-    expect(result.host).toEqual('test-app-id.algolia.net');
+    expect(result.host).toEqual('usage.algolia.com');
   }, 15000);
 });
 
