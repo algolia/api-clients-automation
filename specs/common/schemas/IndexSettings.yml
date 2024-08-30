@@ -1173,5 +1173,5 @@ supportedLanguage:
 booleanString:
   type: string
   enum:
-    - true
-    - false
+    - 'true'
+    - 'false'
