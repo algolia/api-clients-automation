@@ -80,12 +80,11 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       self.hosts = hosts + commonHosts
   {{/hasRegionalHost}}{{/hostsWithoutVariables}}
   {{#hostsWithoutVariables.size}}
-    self.hosts = []
+    self.hosts = [
     {{#hostsWithoutVariables}}
-    self.hosts.append(.init(url: URL(string: "https://{{{.}}}") else {
-      throw AlgoliaError.runtimeError("Malformed URL")
-    }))
+    .init(url: URL(string: "https://{{{.}}}")!),
     {{/hostsWithoutVariables}}
+    ]
   {{/hostsWithoutVariables.size}}
   {{#uniqueHost}}
 
