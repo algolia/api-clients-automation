@@ -797,7 +797,7 @@ def snippet_for_get_rule
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_rule("indexName", "id1")
+  response = client.get_rule("cts_e2e_browse", "qr-1725004648916")
 
   # use the class directly
   puts(response)
@@ -1496,7 +1496,7 @@ def snippet_for_search_rules
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_rules("indexName", SearchRulesParams.new(query: "something"))
+  response = client.search_rules("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
 
   # use the class directly
   puts(response)

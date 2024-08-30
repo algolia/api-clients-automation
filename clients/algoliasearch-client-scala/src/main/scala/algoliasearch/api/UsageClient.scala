@@ -40,18 +40,11 @@ object UsageClient {
     clientOptions = clientOptions
   )
 
-  private def hosts(appId: String): Seq[Host] = {
-    val commonHosts = Random.shuffle(
-      List(
-        Host(appId + "-1.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-2.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-3.algolianet.net", Set(CallType.Read, CallType.Write))
-      )
-    )
+  private def hosts(): Seq[Host] = {
     List(
-      Host(appId + "-dsn.algolia.net", Set(CallType.Read)),
-      Host(appId + ".algolia.net", Set(CallType.Write))
-    ) ++ commonHosts
+      Host("usage.algolia.com", Set(CallType.Read, CallType.Write)),
+      Host("usage-dev.algolia.com", Set(CallType.Read, CallType.Write))
+    )
   }
 }
 
@@ -63,7 +56,7 @@ class UsageClient(
       appId = appId,
       apiKey = apiKey,
       clientName = "Usage",
-      defaultHosts = hosts(appId),
+      defaultHosts = hosts(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {

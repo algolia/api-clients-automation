@@ -1160,11 +1160,11 @@ class TestSearchClient:
         getRule
         """
         _req = await self._client.get_rule_with_http_info(
-            index_name="indexName",
-            object_id="id1",
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/id1"
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/qr-1725004648916"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -2640,17 +2640,17 @@ class TestSearchClient:
         searchRules
         """
         _req = await self._client.search_rules_with_http_info(
-            index_name="indexName",
+            index_name="cts_e2e_browse",
             search_rules_params={
-                "query": "something",
+                "query": "zorro",
             },
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/search"
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/search"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"query":"something"}""")
+        assert loads(_req.data) == loads("""{"query":"zorro"}""")
 
     async def test_search_single_index_(self):
         """

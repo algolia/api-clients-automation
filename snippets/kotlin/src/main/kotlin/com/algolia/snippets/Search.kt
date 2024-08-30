@@ -828,8 +828,8 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getRule(
-      indexName = "indexName",
-      objectID = "id1",
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916",
     )
 
     // Use the response
@@ -1532,9 +1532,9 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchRules(
-      indexName = "indexName",
+      indexName = "cts_e2e_browse",
       searchRulesParams = SearchRulesParams(
-        query = "something",
+        query = "zorro",
       ),
     )
 

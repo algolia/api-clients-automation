@@ -14,7 +14,7 @@ class TestClientUsageClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_get_with_http_info("test")
-    assert_equal("test-app-id-dsn.algolia.net", req.host.url)
+    assert_equal("usage.algolia.com", req.host.url)
   end
 
   # calls api with correct write host
@@ -27,7 +27,7 @@ class TestClientUsageClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("test")
-    assert_equal("test-app-id.algolia.net", req.host.url)
+    assert_equal("usage.algolia.com", req.host.url)
   end
 
   # calls api with correct user agent

@@ -45,6 +45,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "basesearchresponse",
     "batchrequest",
     "batchwriteparams",
+    "booleanstring",
     "condition",
     "configuration",
     "consequence",

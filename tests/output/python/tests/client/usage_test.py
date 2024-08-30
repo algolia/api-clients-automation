@@ -27,7 +27,7 @@ class TestUsageClient:
         _req = await self._client.custom_get_with_http_info(
             path="test",
         )
-        assert _req.host == "test-app-id-dsn.algolia.net"
+        assert _req.host == "usage.algolia.com"
 
     async def test_api_1(self):
         """
@@ -41,7 +41,7 @@ class TestUsageClient:
         _req = await self._client.custom_post_with_http_info(
             path="test",
         )
-        assert _req.host == "test-app-id.algolia.net"
+        assert _req.host == "usage.algolia.com"
 
     async def test_common_api_0(self):
         """

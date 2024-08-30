@@ -29,6 +29,7 @@
   */
 package algoliasearch.recommend
 
+import algoliasearch.recommend.BooleanString._
 import algoliasearch.recommend.SupportedLanguage._
 
 import org.json4s._
@@ -37,6 +38,8 @@ import org.json4s._
   * languages used in your index.
   */
 sealed trait IgnorePlurals
+
+trait IgnorePluralsTrait extends IgnorePlurals
 
 object IgnorePlurals {
 
@@ -59,14 +62,16 @@ object IgnorePluralsSerializer extends Serializer[IgnorePlurals] {
       json match {
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
           IgnorePlurals.SeqOfSupportedLanguage(value.map(_.extract))
-        case JBool(value) => IgnorePlurals.BooleanValue(value)
-        case _            => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
+        case value: JString => Extraction.extract[BooleanString](value)
+        case JBool(value)   => IgnorePlurals.BooleanValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: IgnorePlurals =>
     value match {
       case IgnorePlurals.SeqOfSupportedLanguage(value) => JArray(value.map(Extraction.decompose).toList)
+      case value: BooleanString                        => JString(value.toString)
       case IgnorePlurals.BooleanValue(value)           => JBool(value)
     }
   }

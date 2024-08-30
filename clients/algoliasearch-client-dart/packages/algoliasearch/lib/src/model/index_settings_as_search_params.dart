@@ -133,6 +133,7 @@ final class IndexSettingsAsSearchParams {
   final List<String>? disableTypoToleranceOnAttributes;
 
   /// One of types:
+  /// - [BooleanString]
   /// - [bool]
   /// - [List<SupportedLanguage>]
   @JsonKey(name: r'ignorePlurals')

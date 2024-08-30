@@ -20,7 +20,7 @@ final class UsageClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
+        XCTAssertEqual("usage.algolia.com", echoResponse.host)
     }
 
     /// calls api with correct write host
@@ -32,7 +32,7 @@ final class UsageClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        XCTAssertEqual("test-app-id.algolia.net", echoResponse.host)
+        XCTAssertEqual("usage.algolia.com", echoResponse.host)
     }
 
     /// calls api with correct user agent

@@ -196,8 +196,10 @@ module.exports = {
     },
     {
       files: ['*.json'],
-
-      plugins: ['json-format'],
+      parserOptions: {
+        extraFileExtensions: ['.json'],
+      },
+      extends: ["plugin:json/recommended-legacy"]
     },
     {
       files: ['templates/**/*.mustache'],

@@ -8404,7 +8404,8 @@ paths:
 
             // Call the API
 
-            var response = await client.GetRuleAsync("indexName", "id1");
+            var response = await client.GetRuleAsync("cts_e2e_browse",
+            "qr-1725004648916");
         - lang: dart
           label: Dart
           source: >
@@ -8417,8 +8418,8 @@ paths:
             // Call the API
 
             final response = await client.getRule(
-              indexName: "indexName",
-              objectID: "id1",
+              indexName: "cts_e2e_browse",
+              objectID: "qr-1725004648916",
             );
         - lang: go
           label: Go
@@ -8432,7 +8433,7 @@ paths:
 
             // Call the API
             response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "indexName", "id1",
+              "cts_e2e_browse", "qr-1725004648916",
             ))
             if err != nil {
               // handle the eventual error
@@ -8452,7 +8453,7 @@ paths:
 
             // Call the API
 
-            client.getRule("indexName", "id1");
+            client.getRule("cts_e2e_browse", "qr-1725004648916");
         - lang: javascript
           label: JavaScript
           source: >
@@ -8463,8 +8464,8 @@ paths:
 
             // Call the API
 
-            const response = await client.getRule({ indexName: 'indexName',
-            objectID: 'id1' });
+            const response = await client.getRule({ indexName: 'cts_e2e_browse',
+            objectID: 'qr-1725004648916' });
 
 
             // use typed response
@@ -8482,8 +8483,8 @@ paths:
             // Call the API
 
             var response = client.getRule(
-              indexName = "indexName",
-              objectID = "id1",
+              indexName = "cts_e2e_browse",
+              objectID = "qr-1725004648916",
             )
 
 
@@ -8498,8 +8499,8 @@ paths:
 
             // Call the API
             $response = $client->getRule(
-                'indexName',
-                'id1',
+                'cts_e2e_browse',
+                'qr-1725004648916',
             );
 
             // play with the response
@@ -8512,8 +8513,8 @@ paths:
 
             # Call the API
             response = await _client.get_rule(
-                index_name="indexName",
-                object_id="id1",
+                index_name="cts_e2e_browse",
+                object_id="qr-1725004648916",
             )
 
             # use the class directly
@@ -8528,7 +8529,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.get_rule("indexName", "id1")
+            response = client.get_rule("cts_e2e_browse", "qr-1725004648916")
 
             # use the class directly
             puts(response)
@@ -8547,8 +8548,8 @@ paths:
             // Call the API
 
             val response = client.getRule(
-              indexName = "indexName",
-              objectID = "id1"
+              indexName = "cts_e2e_browse",
+              objectID = "qr-1725004648916"
             )
 
 
@@ -8566,8 +8567,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.getRule(indexName: "indexName",
-            objectID: "id1")
+            let response = try await client.getRule(indexName: "cts_e2e_browse",
+            objectID: "qr-1725004648916")
     put:
       tags:
         - Rules
@@ -9726,8 +9727,8 @@ paths:
             // Call the API
 
             var response = await client.SearchRulesAsync(
-              "indexName",
-              new SearchRulesParams { Query = "something", }
+              "cts_e2e_browse",
+              new SearchRulesParams { Query = "zorro", }
             );
         - lang: dart
           label: Dart
@@ -9741,9 +9742,9 @@ paths:
             // Call the API
 
             final response = await client.searchRules(
-              indexName: "indexName",
+              indexName: "cts_e2e_browse",
               searchRulesParams: SearchRulesParams(
-                query: "something",
+                query: "zorro",
               ),
             );
         - lang: go
@@ -9758,9 +9759,9 @@ paths:
 
             // Call the API
             response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "indexName",
+              "cts_e2e_browse",
             ).WithSearchRulesParams(
-              search.NewEmptySearchRulesParams().SetQuery("something")))
+              search.NewEmptySearchRulesParams().SetQuery("zorro")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9779,8 +9780,8 @@ paths:
 
             // Call the API
 
-            client.searchRules("indexName", new
-            SearchRulesParams().setQuery("something"));
+            client.searchRules("cts_e2e_browse", new
+            SearchRulesParams().setQuery("zorro"));
         - lang: javascript
           label: JavaScript
           source: >
@@ -9791,8 +9792,8 @@ paths:
 
             // Call the API
 
-            const response = await client.searchRules({ indexName: 'indexName',
-            searchRulesParams: { query: 'something' } });
+            const response = await client.searchRules({ indexName:
+            'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
 
 
             // use typed response
@@ -9810,9 +9811,9 @@ paths:
             // Call the API
 
             var response = client.searchRules(
-              indexName = "indexName",
+              indexName = "cts_e2e_browse",
               searchRulesParams = SearchRulesParams(
-                query = "something",
+                query = "zorro",
               ),
             )
 
@@ -9828,8 +9829,8 @@ paths:
 
             // Call the API
             $response = $client->searchRules(
-                'indexName',
-                ['query' => 'something',
+                'cts_e2e_browse',
+                ['query' => 'zorro',
                 ],
             );
 
@@ -9843,9 +9844,9 @@ paths:
 
             # Call the API
             response = await _client.search_rules(
-                index_name="indexName",
+                index_name="cts_e2e_browse",
                 search_rules_params={
-                    "query": "something",
+                    "query": "zorro",
                 },
             )
 
@@ -9864,8 +9865,8 @@ paths:
 
             # Call the API
 
-            response = client.search_rules("indexName",
-            SearchRulesParams.new(query: "something"))
+            response = client.search_rules("cts_e2e_browse",
+            SearchRulesParams.new(query: "zorro"))
 
 
             # use the class directly
@@ -9888,10 +9889,10 @@ paths:
             // Call the API
 
             val response = client.searchRules(
-              indexName = "indexName",
+              indexName = "cts_e2e_browse",
               searchRulesParams = Some(
                 SearchRulesParams(
-                  query = Some("something")
+                  query = Some("zorro")
                 )
               )
             )
@@ -9912,8 +9913,8 @@ paths:
             // Call the API
 
             let response = try await client.searchRules(
-                indexName: "indexName",
-                searchRulesParams: SearchRulesParams(query: "something")
+                indexName: "cts_e2e_browse",
+                searchRulesParams: SearchRulesParams(query: "zorro")
             )
   /1/dictionaries/{dictionaryName}/batch:
     post:
@@ -16287,6 +16288,11 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    booleanString:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -16301,6 +16307,7 @@ components:
             This overrides languages you set with `queryLanguages`.
           items:
             $ref: '#/components/schemas/supportedLanguage'
+        - $ref: '#/components/schemas/booleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
