@@ -45,9 +45,11 @@ module {{moduleName}}
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
       {{/hostWithAppID}}
-      {{#uniqueHost}}
+      {{#hostsWithoutVariables.size}}
+      {{#hostsWithoutVariables}}
       hosts << Transport::StatefulHost.new('{{.}}', accept: CallType::READ | CallType::WRITE)
-      {{/uniqueHost}}
+      {{/hostsWithoutVariables}}
+      {{/hostsWithoutVariables.size}}
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}', opts)
       create_with_config(config)

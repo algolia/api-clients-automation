@@ -55,7 +55,7 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
 
     guard let hosts = hosts else {
-      {{^uniqueHost}}{{^hasRegionalHost}}
+      {{^hostsWithoutVariables}}{{^hasRegionalHost}}
       func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
         -> RetryableHost
       {
@@ -78,15 +78,16 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       ].map(buildHost).shuffled()
 
       self.hosts = hosts + commonHosts
-  {{/hasRegionalHost}}{{/uniqueHost}}
-  {{#uniqueHost}}
-    guard let url = URL(string: "https://{{{.}}}") else {
-      throw AlgoliaError.runtimeError("Malformed URL")
-    }
-
+  {{/hasRegionalHost}}{{/hostsWithoutVariables}}
+  {{#hostsWithoutVariables.size}}
     self.hosts = [
-      .init(url: url)
+    {{#hostsWithoutVariables}}
+    .init(url: URL(string: "https://{{{.}}}")!),
+    {{/hostsWithoutVariables}}
     ]
+  {{/hostsWithoutVariables.size}}
+  {{#uniqueHost}}
+
   {{/uniqueHost}}
   {{#hasRegionalHost}}
       guard {{#fallbackToAliasHost}}region == nil || {{/fallbackToAliasHost}}authorizedRegions.contains(region{{#fallbackToAliasHost}}!{{/fallbackToAliasHost}}) else {

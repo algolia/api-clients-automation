@@ -18,7 +18,7 @@
         },
         "expected": {
           "type": "host",
-          "match": "test-app-id-dsn.algolia.net"
+          "match": "usage.algolia.com"
         }
       }
     ]
@@ -42,7 +42,7 @@
         },
         "expected": {
           "type": "host",
-          "match": "test-app-id.algolia.net"
+          "match": "usage.algolia.com"
         }
       }
     ]
