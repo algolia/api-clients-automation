@@ -5,7 +5,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "package.json",
   ],
   "exclude": [
     "node_modules",

@@ -10,9 +10,7 @@
     },
     "response": {
       "status": 200,
-      "body": {
-        "description": "test_rule",
-        "enabled": true,
+      "body": { "description": "test_rule", "enabled": true,
         "objectID": "qr-1725004648916",
         "conditions": [
           {
