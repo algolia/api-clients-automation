@@ -140,6 +140,11 @@ func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase
 	return c.cfg
 }
 
+// Allow update of stored API key used to authenticate requests.
+func (c *APIClient) SetApiKey(apiKey string) {
+	c.cfg.ApiKey = apiKey
+}
+
 // prepareRequest build the request
 func (c *APIClient) prepareRequest(
 	ctx context.Context,
