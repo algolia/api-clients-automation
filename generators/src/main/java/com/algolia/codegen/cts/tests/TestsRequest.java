@@ -76,7 +76,7 @@ public class TestsRequest extends TestsGenerator {
 
     List<Object> blocks = new ArrayList<>();
     List<Object> blocksE2E = new ArrayList<>();
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
 

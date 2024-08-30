@@ -59,7 +59,7 @@ public class TestsClient extends TestsGenerator {
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     List<Object> blocks = new ArrayList<>();
     for (Map.Entry<String, ClientTestData[]> blockEntry : cts.entrySet()) {

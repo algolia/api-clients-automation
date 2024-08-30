@@ -89,7 +89,7 @@ public class SnippetsGenerator extends TestsGenerator {
     }
 
     List<Object> blocks = new ArrayList<>();
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, true);
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();

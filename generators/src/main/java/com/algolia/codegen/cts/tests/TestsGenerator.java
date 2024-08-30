@@ -61,7 +61,7 @@ public abstract class TestsGenerator {
   protected <T> Map<String, T[]> loadFullCTS(Class<T[]> jsonType) throws Exception {
     String clientName = client;
     // This special case allow us to read the `search` CTS to generated the tests for the
-    // `lite` client, which is only available in Javascript
+    // `lite` client, which is available in Javascript and Dart
     if (client.equals("algoliasearch")) {
       clientName = "search";
     }
