@@ -5,7 +5,6 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
-    example: Product Viewed
   eventType:
     $ref: './ViewEvent.yml'
   index:

@@ -10,7 +10,6 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
-    example: Product Clicked
   eventType:
     $ref: './ClickEvent.yml'
   index:

@@ -8,7 +8,6 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
-    example: Filter Viewed
   eventType:
     $ref: './ViewEvent.yml'
   index:
