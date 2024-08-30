@@ -782,9 +782,12 @@ describe('getObjects', () => {
 
 describe('getRule', () => {
   test('getRule', async () => {
-    const req = (await client.getRule({ indexName: 'indexName', objectID: 'id1' })) as unknown as EchoResponse;
+    const req = (await client.getRule({
+      indexName: 'cts_e2e_browse',
+      objectID: 'qr-1725004648916',
+    })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/rules/qr-1725004648916');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1889,13 +1892,13 @@ describe('searchForFacetValues', () => {
 describe('searchRules', () => {
   test('searchRules', async () => {
     const req = (await client.searchRules({
-      indexName: 'indexName',
-      searchRulesParams: { query: 'something' },
+      indexName: 'cts_e2e_browse',
+      searchRulesParams: { query: 'zorro' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/search');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/rules/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'something' });
+    expect(req.data).toEqual({ query: 'zorro' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

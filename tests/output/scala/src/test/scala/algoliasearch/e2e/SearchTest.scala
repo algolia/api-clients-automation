@@ -49,6 +49,21 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
+  test("getRule") {
+    val client = testClient()
+    val future = client.getRule(
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916"
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
   test("getSettings") {
     val client = testClient()
     val future = client.getSettings(
@@ -187,6 +202,25 @@ class SearchTestE2E extends AnyFunSuite {
     val response = Await.result(future, Duration.Inf)
     compareJSON(
       """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
+  test("searchRules") {
+    val client = testClient()
+    val future = client.searchRules(
+      indexName = "cts_e2e_browse",
+      searchRulesParams = Some(
+        SearchRulesParams(
+          query = Some("zorro")
+        )
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}""",
       write(response),
       JSONCompareMode.LENIENT
     )

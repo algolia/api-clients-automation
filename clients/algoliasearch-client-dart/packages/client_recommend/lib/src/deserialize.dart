@@ -6,6 +6,7 @@ import 'package:algolia_client_recommend/src/model/base_recommend_request.dart';
 import 'package:algolia_client_recommend/src/model/base_search_params.dart';
 import 'package:algolia_client_recommend/src/model/base_search_params_without_query.dart';
 import 'package:algolia_client_recommend/src/model/base_search_response.dart';
+import 'package:algolia_client_recommend/src/model/boolean_string.dart';
 import 'package:algolia_client_recommend/src/model/bought_together_query.dart';
 import 'package:algolia_client_recommend/src/model/condition.dart';
 import 'package:algolia_client_recommend/src/model/consequence.dart';
@@ -116,6 +117,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BaseSearchResponse':
       return BaseSearchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BooleanString':
+      return BooleanString.fromJson(value) as ReturnType;
     case 'BoughtTogetherQuery':
       return BoughtTogetherQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;

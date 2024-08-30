@@ -1808,13 +1808,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRuleWithHTTPInfo(indexName: "indexName", objectID: "id1")
+        let response = try await client.getRuleWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "qr-1725004648916")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/id1")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/rules/qr-1725004648916")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -3740,8 +3740,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.searchRulesWithHTTPInfo(
-            indexName: "indexName",
-            searchRulesParams: SearchRulesParams(query: "something")
+            indexName: "cts_e2e_browse",
+            searchRulesParams: SearchRulesParams(query: "zorro")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -3749,12 +3749,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"something\"}".data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"zorro\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/search")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/rules/search")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)

@@ -21,6 +21,7 @@ import 'package:algolia_client_search/src/model/batch_params.dart';
 import 'package:algolia_client_search/src/model/batch_request.dart';
 import 'package:algolia_client_search/src/model/batch_response.dart';
 import 'package:algolia_client_search/src/model/batch_write_params.dart';
+import 'package:algolia_client_search/src/model/boolean_string.dart';
 import 'package:algolia_client_search/src/model/browse_pagination.dart';
 import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
@@ -228,6 +229,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BatchWriteParams':
       return BatchWriteParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BooleanString':
+      return BooleanString.fromJson(value) as ReturnType;
     case 'BrowsePagination':
       return BrowsePagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;

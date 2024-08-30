@@ -582,7 +582,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRule("indexName", "id1");
+    client.getRule("cts_e2e_browse", "qr-1725004648916");
     // SEPARATOR<
   }
 
@@ -1098,7 +1098,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchRules("indexName", new SearchRulesParams().setQuery("something"));
+    client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
     // SEPARATOR<
   }
 

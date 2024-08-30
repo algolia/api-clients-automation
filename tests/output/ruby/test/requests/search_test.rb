@@ -861,10 +861,10 @@ class TestSearchClient < Test::Unit::TestCase
 
   # getRule
   def test_get_rule
-    req = @client.get_rule_with_http_info("indexName", "id1")
+    req = @client.get_rule_with_http_info("cts_e2e_browse", "qr-1725004648916")
 
     assert_equal(:get, req.method)
-    assert_equal("/1/indexes/indexName/rules/id1", req.path)
+    assert_equal("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -1934,13 +1934,13 @@ class TestSearchClient < Test::Unit::TestCase
 
   # searchRules
   def test_search_rules
-    req = @client.search_rules_with_http_info("indexName", SearchRulesParams.new(query: "something"))
+    req = @client.search_rules_with_http_info("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
 
     assert_equal(:post, req.method)
-    assert_equal("/1/indexes/indexName/rules/search", req.path)
+    assert_equal("/1/indexes/cts_e2e_browse/rules/search", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"query\":\"something\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"query\":\"zorro\"}"), JSON.parse(req.body))
   end
 
   # search with minimal parameters
