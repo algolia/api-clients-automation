@@ -1263,13 +1263,13 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->getRule(
-            'indexName',
-            'id1',
+            'cts_e2e_browse',
+            'qr-1725004648916',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/indexName/rules/id1',
+                'path' => '/1/indexes/cts_e2e_browse/rules/qr-1725004648916',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -2805,16 +2805,16 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->searchRules(
-            'indexName',
-            ['query' => 'something',
+            'cts_e2e_browse',
+            ['query' => 'zorro',
             ],
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/indexName/rules/search',
+                'path' => '/1/indexes/cts_e2e_browse/rules/search',
                 'method' => 'POST',
-                'body' => json_decode('{"query":"something"}'),
+                'body' => json_decode('{"query":"zorro"}'),
             ],
         ]);
     }

@@ -37,6 +37,20 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('getRule')]
+    public function testGetRule()
+    {
+        $client = $this->getClient();
+        $resp = $client->getRule(
+            'cts_e2e_browse',
+            'qr-1725004648916',
+        );
+
+        $expected = json_decode('{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('getSettings')]
     public function testGetSettings()
     {
@@ -175,6 +189,21 @@ class SearchTest extends TestCase
         );
 
         $expected = json_decode('{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
+    #[TestDox('searchRules')]
+    public function testSearchRules()
+    {
+        $client = $this->getClient();
+        $resp = $client->searchRules(
+            'cts_e2e_browse',
+            ['query' => 'zorro',
+            ],
+        );
+
+        $expected = json_decode('{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }

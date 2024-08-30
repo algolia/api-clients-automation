@@ -605,7 +605,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        let response = try await client.getRule(indexName: "indexName", objectID: "id1")
+        let response = try await client.getRule(indexName: "cts_e2e_browse", objectID: "qr-1725004648916")
         // SEPARATOR<
     }
 
@@ -1140,8 +1140,8 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.searchRules(
-            indexName: "indexName",
-            searchRulesParams: SearchRulesParams(query: "something")
+            indexName: "cts_e2e_browse",
+            searchRulesParams: SearchRulesParams(query: "zorro")
         )
         // SEPARATOR<
     }

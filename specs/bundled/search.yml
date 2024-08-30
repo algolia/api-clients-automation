@@ -4317,6 +4317,11 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    booleanString:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -4331,6 +4336,7 @@ components:
             This overrides languages you set with `queryLanguages`.
           items:
             $ref: '#/components/schemas/supportedLanguage'
+        - $ref: '#/components/schemas/booleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in

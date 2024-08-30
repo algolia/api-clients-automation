@@ -1239,10 +1239,10 @@ class SearchClientRequestsTests {
   @DisplayName("getRule")
   void getRuleTest() {
     assertDoesNotThrow(() -> {
-      client.getRule("indexName", "id1");
+      client.getRule("cts_e2e_browse", "qr-1725004648916");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/id1", req.path);
+    assertEquals("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
@@ -2576,12 +2576,12 @@ class SearchClientRequestsTests {
   @DisplayName("searchRules")
   void searchRulesTest() {
     assertDoesNotThrow(() -> {
-      client.searchRules("indexName", new SearchRulesParams().setQuery("something"));
+      client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/search", req.path);
+    assertEquals("/1/indexes/cts_e2e_browse/rules/search", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"something\"}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"zorro\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

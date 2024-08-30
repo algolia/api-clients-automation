@@ -24,7 +24,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }
@@ -39,7 +39,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }

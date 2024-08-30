@@ -44,7 +44,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct write host") {
@@ -57,7 +57,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct user agent") {

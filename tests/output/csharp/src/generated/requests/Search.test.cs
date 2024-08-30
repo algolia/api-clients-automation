@@ -1268,10 +1268,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getRule")]
   public async Task GetRuleTest()
   {
-    await client.GetRuleAsync("indexName", "id1");
+    await client.GetRuleAsync("cts_e2e_browse", "qr-1725004648916");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/id1", req.Path);
+    Assert.Equal("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -2879,16 +2879,12 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchRules")]
   public async Task SearchRulesTest()
   {
-    await client.SearchRulesAsync("indexName", new SearchRulesParams { Query = "something", });
+    await client.SearchRulesAsync("cts_e2e_browse", new SearchRulesParams { Query = "zorro", });
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/search", req.Path);
+    Assert.Equal("/1/indexes/cts_e2e_browse/rules/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"query\":\"something\"}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
+    JsonAssert.EqualOverrideDefault("{\"query\":\"zorro\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "search with minimal parameters")]

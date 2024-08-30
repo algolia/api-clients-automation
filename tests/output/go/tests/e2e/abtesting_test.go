@@ -50,7 +50,7 @@ func TestAbtestingE2E_ListABTests(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 

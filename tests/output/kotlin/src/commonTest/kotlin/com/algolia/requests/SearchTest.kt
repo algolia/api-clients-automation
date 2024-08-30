@@ -1331,12 +1331,12 @@ class SearchTest {
     client.runTest(
       call = {
         getRule(
-          indexName = "indexName",
-          objectID = "id1",
+          indexName = "cts_e2e_browse",
+          objectID = "qr-1725004648916",
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_browse/rules/qr-1725004648916".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -2783,16 +2783,16 @@ class SearchTest {
     client.runTest(
       call = {
         searchRules(
-          indexName = "indexName",
+          indexName = "cts_e2e_browse",
           searchRulesParams = SearchRulesParams(
-            query = "something",
+            query = "zorro",
           ),
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/search".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_browse/rules/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"query":"something"}""", it.body)
+        assertJsonBody("""{"query":"zorro"}""", it.body)
       },
     )
   }

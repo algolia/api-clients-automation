@@ -5,6 +5,7 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
+    example: Filter Clicked
   eventType:
     $ref: './ClickEvent.yml'
   index:
