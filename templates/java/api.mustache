@@ -120,15 +120,15 @@ public class {{classname}} extends ApiClient {
     }
     {{/hasRegionalHost}}
     
-    {{#hostsWithoutAppID.size}}
+    {{#hostsWithoutVariables.size}}
     private static List<Host> getDefaultHosts() {
       List<Host> hosts = new ArrayList<>();
-      {{#hostsWithoutAppID}}
+      {{#hostsWithoutVariables}}
       hosts.add(new Host("{{{.}}}", EnumSet.of(CallType.READ, CallType.WRITE)));
-      {{/hostsWithoutAppID}}
+      {{/hostsWithoutVariables}}
       return hosts;
     }
-    {{/hostsWithoutAppID.size}}
+    {{/hostsWithoutVariables.size}}
 
     {{#operation}}
     /**

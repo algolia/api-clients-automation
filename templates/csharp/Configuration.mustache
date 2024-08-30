@@ -116,12 +116,12 @@ private static List<StatefulHost> GetDefaultHosts(string region)
   return hosts;
 }
 {{/hasRegionalHost}}
-{{#hostsWithoutAppID.size}}
+{{#hostsWithoutVariables.size}}
 private static List<StatefulHost> GetDefaultHosts()
 {
   return new List<StatefulHost>
   {
-    {{#hostsWithoutAppID}}
+    {{#hostsWithoutVariables}}
     new()
     {
       Url = "{{{.}}}",
@@ -129,8 +129,8 @@ private static List<StatefulHost> GetDefaultHosts()
       LastUse = DateTime.UtcNow,
       Accept =  CallType.Read | CallType.Write
     },
-    {{/hostsWithoutAppID}}
+    {{/hostsWithoutVariables}}
   };
 }
-{{/hostsWithoutAppID.size}}
+{{/hostsWithoutVariables.size}}
 }

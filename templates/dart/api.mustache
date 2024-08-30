@@ -68,13 +68,13 @@ final class {{classname}} implements ApiClient {
             {{/hasRegionalHost}}
             {{#uniqueHost}}
             {{/uniqueHost}}
-            {{#hostsWithoutAppID.size}}
+            {{#hostsWithoutVariables.size}}
             defaultHosts: () => [
-              {{#hostsWithoutAppID}}
+              {{#hostsWithoutVariables}}
                 Host(url: '{{{.}}}'),
-              {{/hostsWithoutAppID}}
+              {{/hostsWithoutVariables}}
             ],
-            {{/hostsWithoutAppID.size}}
+            {{/hostsWithoutVariables.size}}
             ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');

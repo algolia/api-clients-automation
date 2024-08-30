@@ -5,13 +5,13 @@ export type Region = (typeof REGIONS)[number];
 
 {{^hasRegionalHost}}
 function getDefaultHosts({{#hostWithAppID}}appId: string{{/hostWithAppID}}): Host[] {
-  {{#hostsWithoutAppID.size}}
+  {{#hostsWithoutVariables.size}}
   return [
-    {{#hostsWithoutAppID}}
+    {{#hostsWithoutVariables}}
     {url: "{{{.}}}", accept: 'readWrite', protocol: 'https' },
-    {{/hostsWithoutAppID}}
+    {{/hostsWithoutVariables}}
   ];
-  {{/hostsWithoutAppID.size}}
+  {{/hostsWithoutVariables.size}}
   {{#uniqueHost}}
   {{/uniqueHost}}
   {{#hostWithAppID}}
