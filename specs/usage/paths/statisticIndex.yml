@@ -4,7 +4,7 @@ get:
   description: |
     Retrieves the selected usage statistics for one index.
   tags:
-    - usage
+    - statistics
   parameters:
     - $ref: '../common/parameters.yml#/statisticParameter'
     - $ref: '../../common/parameters.yml#/IndexName'
