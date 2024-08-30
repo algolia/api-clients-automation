@@ -100,11 +100,15 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 	return hosts
 }
 {{/hostWithAppID}}
-{{#uniqueHost}}
+{{#hostsWithoutAppID.size}}
 func getDefaultHosts() []transport.StatefulHost {
-  return []transport.StatefulHost{transport.NewStatefulHost("https", "{{{.}}}", call.IsReadWrite)}
+  return []transport.StatefulHost{
+    {{#hostsWithoutAppID}}
+    transport.NewStatefulHost("https", "{{{.}}}", call.IsReadWrite),
+    {{/hostsWithoutAppID}}
+  }
 }
-{{/uniqueHost}}
+{{/hostsWithoutAppID.size}}
 
 func getUserAgent() string {
   return fmt.Sprintf("Algolia for Go ({{{packageVersion}}}); Go (%s); {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}} ({{{packageVersion}}})", runtime.Version())
