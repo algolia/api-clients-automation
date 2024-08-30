@@ -128,14 +128,18 @@ use {{invokerPackage}}\Support\Helpers;
         }
         {{/hasRegionalHost}}
 
-        {{#uniqueHost}}
+        {{#hostsWithoutAppID.size}}
         if ($hosts = $config->getHosts()) {
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create('{{.}}');
+            $clusterHosts = ClusterHosts::create([
+            {{#hostsWithoutAppID}}
+            '{{.}}',
+            {{/hostsWithoutAppID}}
+            ]);
         }
-        {{/uniqueHost}}
+        {{/hostsWithoutAppID.size}}
 
         return $clusterHosts;
     }
