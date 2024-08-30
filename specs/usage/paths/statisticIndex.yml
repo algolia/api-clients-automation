@@ -3,6 +3,8 @@ get:
   summary: Retrieve usage information for one index
   description: |
     Retrieves the selected usage statistics for one index.
+  tags:
+    - usage
   parameters:
     - $ref: '../common/parameters.yml#/statisticParameter'
     - $ref: '../../common/parameters.yml#/IndexName'
