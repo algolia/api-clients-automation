@@ -33,7 +33,7 @@ public class UsageClientTests
     await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
-    Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
+    Assert.Equal("usage.algolia.com", result.Host);
   }
 
   [Fact(DisplayName = "calls api with correct write host")]
@@ -43,7 +43,7 @@ public class UsageClientTests
     await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
-    Assert.Equal("test-app-id.algolia.net", result.Host);
+    Assert.Equal("usage.algolia.com", result.Host);
   }
 
   [Fact(DisplayName = "calls api with correct user agent")]

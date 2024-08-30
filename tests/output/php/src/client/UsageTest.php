@@ -51,7 +51,7 @@ class UsageTest extends TestCase implements HttpClientInterface
             'test',
         );
         $this->assertEquals(
-            'test-app-id-dsn.algolia.net',
+            'usage.algolia.com',
             $this->recordedRequest['request']->getUri()->getHost()
         );
     }
@@ -69,7 +69,7 @@ class UsageTest extends TestCase implements HttpClientInterface
             'test',
         );
         $this->assertEquals(
-            'test-app-id.algolia.net',
+            'usage.algolia.com',
             $this->recordedRequest['request']->getUri()->getHost()
         );
     }
