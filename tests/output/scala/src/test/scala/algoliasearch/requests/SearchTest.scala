@@ -1284,14 +1284,14 @@ class SearchTest extends AnyFunSuite {
   test("getRule") {
     val (client, echo) = testClient()
     val future = client.getRule(
-      indexName = "indexName",
-      objectID = "id1"
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/id1")
+    assert(res.path == "/1/indexes/cts_e2e_browse/rules/qr-1725004648916")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
@@ -2793,10 +2793,10 @@ class SearchTest extends AnyFunSuite {
   test("searchRules") {
     val (client, echo) = testClient()
     val future = client.searchRules(
-      indexName = "indexName",
+      indexName = "cts_e2e_browse",
       searchRulesParams = Some(
         SearchRulesParams(
-          query = Some("something")
+          query = Some("zorro")
         )
       )
     )
@@ -2804,9 +2804,9 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/search")
+    assert(res.path == "/1/indexes/cts_e2e_browse/rules/search")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"something"}""")
+    val expectedBody = parse("""{"query":"zorro"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

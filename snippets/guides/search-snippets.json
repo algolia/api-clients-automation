@@ -99,7 +99,7 @@
       "default": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"theIndexName\",\n      }\n    },\n  }\n);"
     },
     "getRule": {
-      "default": "var response = await client.GetRuleAsync(\"indexName\", \"id1\");"
+      "default": "var response = await client.GetRuleAsync(\"cts_e2e_browse\", \"qr-1725004648916\");"
     },
     "getSettings": {
       "default": "var response = await client.GetSettingsAsync(\"cts_e2e_settings\");"
@@ -184,7 +184,7 @@
       "default": "var response = await client.SearchForFacetValuesAsync(\"indexName\", \"facetName\");"
     },
     "searchRules": {
-      "default": "var response = await client.SearchRulesAsync(\n  \"indexName\",\n  new SearchRulesParams { Query = \"something\", }\n);"
+      "default": "var response = await client.SearchRulesAsync(\n  \"cts_e2e_browse\",\n  new SearchRulesParams { Query = \"zorro\", }\n);"
     },
     "searchSingleIndex": {
       "default": "var response = await client.SearchSingleIndexAsync<Hit>(\"indexName\");"
@@ -319,7 +319,7 @@
       "default": "final response = await client.getObjects(\n  getObjectsParams: GetObjectsParams(\n    requests: [\n      GetObjectsRequest(\n        attributesToRetrieve: [\n          \"attr1\",\n          \"attr2\",\n        ],\n        objectID: \"uniqueID\",\n        indexName: \"theIndexName\",\n      ),\n    ],\n  ),\n);"
     },
     "getRule": {
-      "default": "final response = await client.getRule(\n  indexName: \"indexName\",\n  objectID: \"id1\",\n);"
+      "default": "final response = await client.getRule(\n  indexName: \"cts_e2e_browse\",\n  objectID: \"qr-1725004648916\",\n);"
     },
     "getSettings": {
       "default": "final response = await client.getSettings(\n  indexName: \"cts_e2e_settings\",\n);"
@@ -404,7 +404,7 @@
       "default": "final response = await client.searchForFacetValues(\n  indexName: \"indexName\",\n  facetName: \"facetName\",\n);"
     },
     "searchRules": {
-      "default": "final response = await client.searchRules(\n  indexName: \"indexName\",\n  searchRulesParams: SearchRulesParams(\n    query: \"something\",\n  ),\n);"
+      "default": "final response = await client.searchRules(\n  indexName: \"cts_e2e_browse\",\n  searchRulesParams: SearchRulesParams(\n    query: \"zorro\",\n  ),\n);"
     },
     "searchSingleIndex": {
       "default": "final response = await client.searchSingleIndex(\n  indexName: \"indexName\",\n);"
@@ -539,7 +539,7 @@
       "default": "response, err := client.GetObjects(client.NewApiGetObjectsRequest(\n\n  search.NewEmptyGetObjectsParams().SetRequests(\n    []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(\n      []string{\"attr1\", \"attr2\"}).SetObjectID(\"uniqueID\").SetIndexName(\"theIndexName\")}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "getRule": {
-      "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"indexName\", \"id1\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+      "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"cts_e2e_browse\", \"qr-1725004648916\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "getSettings": {
       "default": "response, err := client.GetSettings(client.NewApiGetSettingsRequest(\n  \"cts_e2e_settings\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
@@ -624,7 +624,7 @@
       "default": "response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(\n  \"indexName\", \"facetName\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "searchRules": {
-      "default": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"indexName\",\n).WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"something\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+      "default": "response, err := client.SearchRules(client.NewApiSearchRulesRequest(\n  \"cts_e2e_browse\",\n).WithSearchRulesParams(\n  search.NewEmptySearchRulesParams().SetQuery(\"zorro\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
     "searchSingleIndex": {
       "default": "response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(\n  \"indexName\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
@@ -759,7 +759,7 @@
       "default": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      List.of(\n        new GetObjectsRequest().setAttributesToRetrieve(List.of(\"attr1\", \"attr2\")).setObjectID(\"uniqueID\").setIndexName(\"theIndexName\")\n      )\n    ),\n  Hit.class\n);"
     },
     "getRule": {
-      "default": "client.getRule(\"indexName\", \"id1\");"
+      "default": "client.getRule(\"cts_e2e_browse\", \"qr-1725004648916\");"
     },
     "getSettings": {
       "default": "client.getSettings(\"cts_e2e_settings\");"
@@ -844,7 +844,7 @@
       "default": "client.searchForFacetValues(\"indexName\", \"facetName\");"
     },
     "searchRules": {
-      "default": "client.searchRules(\"indexName\", new SearchRulesParams().setQuery(\"something\"));"
+      "default": "client.searchRules(\"cts_e2e_browse\", new SearchRulesParams().setQuery(\"zorro\"));"
     },
     "searchSingleIndex": {
       "default": "client.searchSingleIndex(\"indexName\", Hit.class);"
@@ -979,7 +979,7 @@
       "default": "const response = await client.getObjects({\n  requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],\n});\n\n// use typed response\nconsole.log(response);"
     },
     "getRule": {
-      "default": "const response = await client.getRule({ indexName: 'indexName', objectID: 'id1' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });\n\n// use typed response\nconsole.log(response);"
     },
     "getSettings": {
       "default": "const response = await client.getSettings({ indexName: 'cts_e2e_settings' });\n\n// use typed response\nconsole.log(response);"
@@ -1064,7 +1064,7 @@
       "default": "const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });\n\n// use typed response\nconsole.log(response);"
     },
     "searchRules": {
-      "default": "const response = await client.searchRules({ indexName: 'indexName', searchRulesParams: { query: 'something' } });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });\n\n// use typed response\nconsole.log(response);"
     },
     "searchSingleIndex": {
       "default": "const response = await client.searchSingleIndex({ indexName: 'indexName' });\n\n// use typed response\nconsole.log(response);"
@@ -1199,7 +1199,7 @@
       "default": "var response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = listOf(\n      GetObjectsRequest(\n        attributesToRetrieve = listOf(\"attr1\", \"attr2\"),\n        objectID = \"uniqueID\",\n        indexName = \"theIndexName\",\n      ),\n    ),\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "getRule": {
-      "default": "var response = client.getRule(\n  indexName = \"indexName\",\n  objectID = \"id1\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getRule(\n  indexName = \"cts_e2e_browse\",\n  objectID = \"qr-1725004648916\",\n)\n\n// Use the response\nprintln(response)"
     },
     "getSettings": {
       "default": "var response = client.getSettings(\n  indexName = \"cts_e2e_settings\",\n)\n\n// Use the response\nprintln(response)"
@@ -1284,7 +1284,7 @@
       "default": "var response = client.searchForFacetValues(\n  indexName = \"indexName\",\n  facetName = \"facetName\",\n)\n\n// Use the response\nprintln(response)"
     },
     "searchRules": {
-      "default": "var response = client.searchRules(\n  indexName = \"indexName\",\n  searchRulesParams = SearchRulesParams(\n    query = \"something\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.searchRules(\n  indexName = \"cts_e2e_browse\",\n  searchRulesParams = SearchRulesParams(\n    query = \"zorro\",\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "searchSingleIndex": {
       "default": "var response = client.searchSingleIndex(\n  indexName = \"indexName\",\n)\n\n// Use the response\nprintln(response)"
@@ -1419,7 +1419,7 @@
       "default": "$response = $client->getObjects(\n    ['requests' => [\n        ['attributesToRetrieve' => [\n            'attr1',\n\n            'attr2',\n        ],\n            'objectID' => 'uniqueID',\n            'indexName' => 'theIndexName',\n        ],\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
     "getRule": {
-      "default": "$response = $client->getRule(\n    'indexName',\n    'id1',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getRule(\n    'cts_e2e_browse',\n    'qr-1725004648916',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "getSettings": {
       "default": "$response = $client->getSettings(\n    'cts_e2e_settings',\n);\n\n// play with the response\nvar_dump($response);"
@@ -1504,7 +1504,7 @@
       "default": "$response = $client->searchForFacetValues(\n    'indexName',\n    'facetName',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "searchRules": {
-      "default": "$response = $client->searchRules(\n    'indexName',\n    ['query' => 'something',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->searchRules(\n    'cts_e2e_browse',\n    ['query' => 'zorro',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
     "searchSingleIndex": {
       "default": "$response = $client->searchSingleIndex(\n    'indexName',\n);\n\n// play with the response\nvar_dump($response);"
@@ -1639,7 +1639,7 @@
       "default": "response = await _client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"theIndexName\",\n            },\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getRule": {
-      "default": "response = await _client.get_rule(\n    index_name=\"indexName\",\n    object_id=\"id1\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_rule(\n    index_name=\"cts_e2e_browse\",\n    object_id=\"qr-1725004648916\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getSettings": {
       "default": "response = await _client.get_settings(\n    index_name=\"cts_e2e_settings\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -1724,7 +1724,7 @@
       "default": "response = await _client.search_for_facet_values(\n    index_name=\"indexName\",\n    facet_name=\"facetName\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "searchRules": {
-      "default": "response = await _client.search_rules(\n    index_name=\"indexName\",\n    search_rules_params={\n        \"query\": \"something\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.search_rules(\n    index_name=\"cts_e2e_browse\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "searchSingleIndex": {
       "default": "response = await _client.search_single_index(\n    index_name=\"indexName\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -1859,7 +1859,7 @@
       "default": "response = client.get_objects(\n  GetObjectsParams.new(\n    requests: [\n      GetObjectsRequest.new(\n        attributes_to_retrieve: [\"attr1\", \"attr2\"],\n        object_id: \"uniqueID\",\n        index_name: \"theIndexName\"\n      )\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getRule": {
-      "default": "response = client.get_rule(\"indexName\", \"id1\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_rule(\"cts_e2e_browse\", \"qr-1725004648916\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getSettings": {
       "default": "response = client.get_settings(\"cts_e2e_settings\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
@@ -1944,7 +1944,7 @@
       "default": "response = client.search_for_facet_values(\"indexName\", \"facetName\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "searchRules": {
-      "default": "response = client.search_rules(\"indexName\", SearchRulesParams.new(query: \"something\"))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.search_rules(\"cts_e2e_browse\", SearchRulesParams.new(query: \"zorro\"))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "searchSingleIndex": {
       "default": "response = client.search_single_index(\"indexName\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
@@ -2079,7 +2079,7 @@
       "default": "val response = client.getObjects(\n  getObjectsParams = GetObjectsParams(\n    requests = Seq(\n      GetObjectsRequest(\n        attributesToRetrieve = Some(Seq(\"attr1\", \"attr2\")),\n        objectID = \"uniqueID\",\n        indexName = \"theIndexName\"\n      )\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getRule": {
-      "default": "val response = client.getRule(\n  indexName = \"indexName\",\n  objectID = \"id1\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getRule(\n  indexName = \"cts_e2e_browse\",\n  objectID = \"qr-1725004648916\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getSettings": {
       "default": "val response = client.getSettings(\n  indexName = \"cts_e2e_settings\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
@@ -2164,7 +2164,7 @@
       "default": "val response = client.searchForFacetValues(\n  indexName = \"indexName\",\n  facetName = \"facetName\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "searchRules": {
-      "default": "val response = client.searchRules(\n  indexName = \"indexName\",\n  searchRulesParams = Some(\n    SearchRulesParams(\n      query = Some(\"something\")\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.searchRules(\n  indexName = \"cts_e2e_browse\",\n  searchRulesParams = Some(\n    SearchRulesParams(\n      query = Some(\"zorro\")\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "searchSingleIndex": {
       "default": "val response = client.searchSingleIndex(\n  indexName = \"indexName\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
@@ -2299,7 +2299,7 @@
       "default": "let response: GetObjectsResponse<Hit> = try await client\n    .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(\n        attributesToRetrieve: [\"attr1\", \"attr2\"],\n        objectID: \"uniqueID\",\n        indexName: \"theIndexName\"\n    )]))"
     },
     "getRule": {
-      "default": "let response = try await client.getRule(indexName: \"indexName\", objectID: \"id1\")"
+      "default": "let response = try await client.getRule(indexName: \"cts_e2e_browse\", objectID: \"qr-1725004648916\")"
     },
     "getSettings": {
       "default": "let response = try await client.getSettings(indexName: \"cts_e2e_settings\")"
@@ -2384,7 +2384,7 @@
       "default": "let response = try await client.searchForFacetValues(indexName: \"indexName\", facetName: \"facetName\")"
     },
     "searchRules": {
-      "default": "let response = try await client.searchRules(\n    indexName: \"indexName\",\n    searchRulesParams: SearchRulesParams(query: \"something\")\n)"
+      "default": "let response = try await client.searchRules(\n    indexName: \"cts_e2e_browse\",\n    searchRulesParams: SearchRulesParams(query: \"zorro\")\n)"
     },
     "searchSingleIndex": {
       "default": "let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: \"indexName\")"

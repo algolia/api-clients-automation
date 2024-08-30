@@ -36,6 +36,7 @@ object JsonSupport {
     new AdvancedSyntaxFeaturesSerializer() :+
     new AlternativesAsExactSerializer() :+
     new AroundRadiusAllSerializer() :+
+    new BooleanStringSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
     new FbtModelSerializer() :+
     new LookingSimilarModelSerializer() :+

@@ -733,8 +733,8 @@ void snippetForgetRule() async {
 
   // Call the API
   final response = await client.getRule(
-    indexName: "indexName",
-    objectID: "id1",
+    indexName: "cts_e2e_browse",
+    objectID: "qr-1725004648916",
   );
   // SEPARATOR<
 }
@@ -1379,9 +1379,9 @@ void snippetForsearchRules() async {
 
   // Call the API
   final response = await client.searchRules(
-    indexName: "indexName",
+    indexName: "cts_e2e_browse",
     searchRulesParams: SearchRulesParams(
-      query: "something",
+      query: "zorro",
     ),
   );
   // SEPARATOR<

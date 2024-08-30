@@ -807,7 +807,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetRuleAsync("indexName", "id1");
+    var response = await client.GetRuleAsync("cts_e2e_browse", "qr-1725004648916");
     // SEPARATOR<
   }
 
@@ -1544,8 +1544,8 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchRulesAsync(
-      "indexName",
-      new SearchRulesParams { Query = "something", }
+      "cts_e2e_browse",
+      new SearchRulesParams { Query = "zorro", }
     );
     // SEPARATOR<
   }

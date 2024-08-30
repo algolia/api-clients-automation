@@ -1089,7 +1089,7 @@ func SnippetForGetRuleOfSearch() {
 
 	// Call the API
 	response, err := client.GetRule(client.NewApiGetRuleRequest(
-		"indexName", "id1",
+		"cts_e2e_browse", "qr-1725004648916",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2037,9 +2037,9 @@ func SnippetForSearchRulesOfSearch() {
 
 	// Call the API
 	response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-		"indexName",
+		"cts_e2e_browse",
 	).WithSearchRulesParams(
-		search.NewEmptySearchRulesParams().SetQuery("something")))
+		search.NewEmptySearchRulesParams().SetQuery("zorro")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

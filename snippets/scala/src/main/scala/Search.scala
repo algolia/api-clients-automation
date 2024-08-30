@@ -860,8 +860,8 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getRule(
-      indexName = "indexName",
-      objectID = "id1"
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916"
     )
 
     // Use the response
@@ -1624,10 +1624,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchRules(
-      indexName = "indexName",
+      indexName = "cts_e2e_browse",
       searchRulesParams = Some(
         SearchRulesParams(
-          query = Some("something")
+          query = Some("zorro")
         )
       )
     )

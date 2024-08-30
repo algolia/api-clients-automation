@@ -933,8 +933,8 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getRule(
-            'indexName',
-            'id1',
+            'cts_e2e_browse',
+            'qr-1725004648916',
         );
 
         // play with the response
@@ -1756,8 +1756,8 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchRules(
-            'indexName',
-            ['query' => 'something',
+            'cts_e2e_browse',
+            ['query' => 'zorro',
             ],
         );
 

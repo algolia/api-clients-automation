@@ -51,6 +51,20 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
+  @DisplayName("getRule")
+  void getRuleTest() {
+    var res = client.getRule("cts_e2e_browse", "qr-1725004648916");
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon" +
+        " Flux\"],\"position\":0}]}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getSettings")
   void getSettingsTest() {
     var res = client.getSettings("cts_e2e_settings");
@@ -175,6 +189,20 @@ class SearchClientRequestsTestsE2E {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}",
+        json.writeValueAsString(res),
+        JSONCompareMode.LENIENT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("searchRules")
+  void searchRulesTest() {
+    var res = client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon" +
+        " Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}",
         json.writeValueAsString(res),
         JSONCompareMode.LENIENT
       )

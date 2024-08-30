@@ -1032,8 +1032,8 @@ async def snippet_for_get_rule():
 
     # Call the API
     response = await _client.get_rule(
-        index_name="indexName",
-        object_id="id1",
+        index_name="cts_e2e_browse",
+        object_id="qr-1725004648916",
     )
 
     # use the class directly
@@ -1942,9 +1942,9 @@ async def snippet_for_search_rules():
 
     # Call the API
     response = await _client.search_rules(
-        index_name="indexName",
+        index_name="cts_e2e_browse",
         search_rules_params={
-            "query": "something",
+            "query": "zorro",
         },
     )
 

@@ -683,7 +683,7 @@ export async function snippetForGetRule(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getRule({ indexName: 'indexName', objectID: 'id1' });
+  const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });
 
   // use typed response
   console.log(response);
@@ -1272,7 +1272,7 @@ export async function snippetForSearchRules(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchRules({ indexName: 'indexName', searchRulesParams: { query: 'something' } });
+  const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
 
   // use typed response
   console.log(response);
