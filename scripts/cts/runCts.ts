@@ -126,7 +126,8 @@ export async function runCts(
   clients: string[],
   suites: Record<CTSType, boolean>,
 ): Promise<void> {
-  const withBenchmarkServer = suites.benchmark && (clients.includes('search') || clients.includes('all'));
+  const withBenchmarkServer =
+    suites.benchmark && (clients.includes('search') || clients.includes('all') || languages.includes('swift'));
   const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
   const closeTestServer = await startTestServer({
     ...suites,

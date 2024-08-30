@@ -4,6 +4,7 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
+    example: Filter Converted
   eventType:
     $ref: './ConversionEvent.yml'
   index:
