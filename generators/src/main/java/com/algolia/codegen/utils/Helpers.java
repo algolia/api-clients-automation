@@ -133,9 +133,13 @@ public class Helpers {
       }
 
       if (!hasRegionalHost) {
-        if (servers.size() == 1 && hostWithFallback.isEmpty()) {
-          URL url = new URL(servers.get(0).url);
-          bundle.put("uniqueHost", url.getHost());
+        if (hostWithFallback.isEmpty()) {
+          List<String> hostsWithoutAppID = new ArrayList<>();
+          for (CodegenServer otherServer : servers) {
+            URL url = new URL(otherServer.url);
+            hostsWithoutAppID.add(url.getHost());
+          }
+          bundle.put("hostsWithoutAppID", hostsWithoutAppID);
         } else {
           bundle.put("hostWithAppID", true);
         }
