@@ -46,9 +46,13 @@ public class {{classname}}(
     val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
     listOf(Host(url)) 
   {{/hasRegionalHost}}
-  {{#uniqueHost}}
-  listOf(Host("{{.}}"))
-  {{/uniqueHost}}
+  {{#hostsWithoutAppID.size}}
+  listOf(
+  {{#hostsWithoutAppID}}
+  Host("{{.}}"),
+  {{/hostsWithoutAppID}}
+  )
+  {{/hostsWithoutAppID.size}}
   }
 
   {{#operation}}
