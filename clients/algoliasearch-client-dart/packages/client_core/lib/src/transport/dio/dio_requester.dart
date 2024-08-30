@@ -114,4 +114,13 @@ class DioRequester implements Requester {
 
   @override
   void close() => _client.close();
+
+  @override
+  void setApiKey(String apiKey) {
+    var authInterceptor = _client.interceptors
+        .firstWhere((element) => element is AuthInterceptor) as AuthInterceptor;
+    _client.interceptors.remove(authInterceptor);
+    _client.interceptors
+        .add(AuthInterceptor(appId: authInterceptor.appId, apiKey: apiKey));
+  }
 }

@@ -24,6 +24,8 @@ Future<void> runTest<T extends ApiClient>({
 ///
 /// Uses provided function to intercept HTTP requests.
 class RequestInterceptor extends Requester {
+  String apiKey = "fake";
+
   Function(HttpRequest) onRequest = (_) {};
 
   RequestInterceptor({Function(HttpRequest)? onRequest}) {
@@ -38,6 +40,11 @@ class RequestInterceptor extends Requester {
   Future<HttpResponse> perform(HttpRequest request) {
     onRequest(request);
     return Future.error(InterceptionException());
+  }
+
+  @override
+  void setApiKey(String apiKey) {
+    this.apiKey = apiKey;
   }
 }
 

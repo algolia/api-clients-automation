@@ -11,6 +11,9 @@ abstract interface class ApiClient {
   /// A set of custom client options to configure the behavior of the API client.
   ClientOptions get options;
 
+  /// Allow switching the API key used to authenticate requests.
+  void setApiKey(String apiKey);
+
   /// Dispose of underlying resources.
   void dispose();
 }
