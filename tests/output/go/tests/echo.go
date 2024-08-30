@@ -6,7 +6,10 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 type EchoRequester struct {
@@ -55,18 +58,25 @@ func ZeroValue[T any]() T {
 	return v
 }
 
-func Union(expected any, received any) any {
+func Union(t *testing.T, expected any, received any) any {
+	t.Helper()
+	if expected != nil {
+		require.NotNil(t, received, expected)
+	}
+
 	switch expected.(type) {
 	case map[string]any:
 		res := map[string]any{}
 		for key, val := range expected.(map[string]any) {
-			res[key] = Union(val, received.(map[string]any)[key])
+			require.Contains(t, received.(map[string]any), key)
+			res[key] = Union(t, val, received.(map[string]any)[key])
 		}
 		return res
 	case []any:
 		res := []any{}
+		require.GreaterOrEqual(t, len(received.([]any)), len(expected.([]any)))
 		for i, val := range expected.([]any) {
-			res = append(res, Union(val, received.([]any)[i]))
+			res = append(res, Union(t, val, received.([]any)[i]))
 		}
 		return res
 	default:
