@@ -962,6 +962,7 @@ ignorePlurals:
         If true, `ignorePlurals` is active for all languages included in `queryLanguages`, or for all supported languages, if `queryLanguges` is empty.
         If false, singulars, plurals, and other declensions won't be considered equivalent.
       default: false
+    - $ref: '#/booleanString'
   x-categories:
     - Languages
 
@@ -1168,3 +1169,9 @@ supportedLanguage:
     - ur
     - uz
     - zh
+
+booleanString:
+  type: string
+  enum:
+    - true
+    - false

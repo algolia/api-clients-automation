@@ -1,12 +1,41 @@
 [
   {
     "parameters": {
-      "indexName": "indexName",
-      "objectID": "id1"
+      "indexName": "cts_e2e_browse",
+      "objectID": "qr-1725004648916"
     },
     "request": {
-      "path": "/1/indexes/indexName/rules/id1",
+      "path": "/1/indexes/cts_e2e_browse/rules/qr-1725004648916",
       "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "description": "test_rule",
+        "enabled": true,
+        "objectID": "qr-1725004648916",
+        "conditions": [
+          {
+            "alternatives": true,
+            "anchoring": "contains",
+            "pattern": "zorro"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "ignorePlurals": "true"
+          },
+          "filterPromotes": true,
+          "promote": [
+            {
+              "objectIDs": [
+                "\u00C6on Flux"
+              ],
+              "position": 0
+            }
+          ]
+        }
+      }
     }
   }
 ]

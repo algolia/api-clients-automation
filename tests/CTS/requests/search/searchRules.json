@@ -1,16 +1,52 @@
 [
   {
     "parameters": {
-      "indexName": "indexName",
+      "indexName": "cts_e2e_browse",
       "searchRulesParams": {
-        "query": "something"
+        "query": "zorro"
       }
     },
     "request": {
-      "path": "/1/indexes/indexName/rules/search",
+      "path": "/1/indexes/cts_e2e_browse/rules/search",
       "method": "POST",
       "body": {
-        "query": "something"
+        "query": "zorro"
+      }
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "hits": [
+          {
+            "conditions": [
+              {
+                "alternatives": true,
+                "anchoring": "contains",
+                "pattern": "zorro"
+              }
+            ],
+            "consequence": {
+              "params": {
+                "ignorePlurals": "true"
+              },
+              "filterPromotes": true,
+              "promote": [
+                {
+                  "objectIDs": [
+                    "\u00C6on Flux"
+                  ],
+                  "position": 0
+                }
+              ]
+            },
+            "description": "test_rule",
+            "enabled": true,
+            "objectID": "qr-1725004648916"
+          }
+        ],
+        "nbHits": 1,
+        "nbPages": 1,
+        "page": 0
       }
     }
   }
