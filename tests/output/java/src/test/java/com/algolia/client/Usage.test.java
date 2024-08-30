@@ -52,7 +52,7 @@ class UsageClientClientTests {
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
 
-    assertEquals("test-app-id-dsn.algolia.net", result.host);
+    assertEquals("usage.algolia.com", result.host);
   }
 
   @Test
@@ -62,7 +62,7 @@ class UsageClientClientTests {
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
 
-    assertEquals("test-app-id.algolia.net", result.host);
+    assertEquals("usage.algolia.com", result.host);
   }
 
   @Test
