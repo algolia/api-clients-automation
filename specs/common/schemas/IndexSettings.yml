@@ -957,12 +957,12 @@ ignorePlurals:
         This overrides languages you set with `queryLanguages`.
       items:
         $ref: '#/supportedLanguage'
+    - $ref: '#/booleanString'
     - type: boolean
       description: |
         If true, `ignorePlurals` is active for all languages included in `queryLanguages`, or for all supported languages, if `queryLanguges` is empty.
         If false, singulars, plurals, and other declensions won't be considered equivalent.
       default: false
-    - $ref: '#/booleanString'
   x-categories:
     - Languages
 

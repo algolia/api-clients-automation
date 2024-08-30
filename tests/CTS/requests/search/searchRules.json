@@ -14,7 +14,7 @@
       }
     },
     "response": {
-      "status": 200,
+      "statusCode": 200,
       "body": {
         "hits": [
           {
