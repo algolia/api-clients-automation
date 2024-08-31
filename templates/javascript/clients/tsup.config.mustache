@@ -1,0 +1,47 @@
+import path from 'path';
+
+import type { Options } from 'tsup';
+import { defineConfig } from 'tsup';
+
+const baseConfig: Options = {
+  clean: true,
+  dts: true,
+  sourcemap: true,
+  splitting: false,
+  tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+};
+
+const nodeConfigs: Options[] = [
+  {
+    ...baseConfig,
+    platform: 'node',
+    format: 'cjs',
+    target: 'node14',
+    external: ['@algolia/client-common'],
+    entry: { '{{packageName}}': 'builds/node.ts' },
+  },
+  {
+    ...baseConfig,
+    platform: 'node',
+    format: 'esm',
+    target: 'node14',
+    external: ['@algolia/client-common'],
+    entry: { '{{packageName}}.esm.node': 'builds/node.ts' },
+  },
+];
+
+const browserConfigs: Options[] = [
+  {
+    ...baseConfig,
+    globalName: '{{packageName}}',
+    platform: 'browser',
+    entry: {
+      '{{packageName}}.esm.browser': 'builds/browser.ts'
+    },
+    external: ['dom'],
+    format: ['esm'],
+    target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
+  }
+]
+
+export default defineConfig([...nodeConfigs, ...browserConfigs]);

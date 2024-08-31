@@ -6,8 +6,8 @@ import {
 } from '@algolia/client-common';
 import { echoRequester } from '@algolia/requester-node-http';
 
-import { algoliasearch, apiClientVersion } from 'algoliasearch';
-import { liteClient } from 'algoliasearch/lite';
+import { algoliasearch, apiClientVersion } from '../builds/node';
+import { liteClient } from '../lite/builds/node';
 
 const client = algoliasearch('APP_ID', 'API_KEY', {
   requester: echoRequester(),
