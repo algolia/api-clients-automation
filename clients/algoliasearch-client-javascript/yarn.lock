@@ -1560,7 +1560,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:7.25.4, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:7.25.6":
+  version: 7.25.6
+  resolution: "@babel/runtime@npm:7.25.6"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10/0c4134734deb20e1005ffb9165bf342e1074576621b246d8e5e41cc7cb315a885b7d98950fbf5c63619a2990a56ae82f444d35fe8c4691a0b70c2fe5673667dc
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.8.4":
   version: 7.25.4
   resolution: "@babel/runtime@npm:7.25.4"
   dependencies:
@@ -3207,7 +3216,7 @@ __metadata:
     "@babel/plugin-transform-class-properties": "npm:7.25.4"
     "@babel/plugin-transform-runtime": "npm:7.25.4"
     "@babel/preset-env": "npm:7.25.4"
-    "@babel/runtime": "npm:7.25.4"
+    "@babel/runtime": "npm:7.25.6"
     "@rollup/plugin-babel": "npm:6.0.4"
     "@rollup/plugin-node-resolve": "npm:15.2.3"
     "@rollup/plugin-terser": "npm:0.4.4"
