@@ -30,7 +30,7 @@
     "@babel/core": "7.25.2",
     "@babel/eslint-parser": "7.25.1",
     "@openapitools/openapi-generator-cli": "2.13.5",
-    "@redocly/cli": "1.21.0",
+    "@redocly/cli": "1.22.1",
     "@stylistic/eslint-plugin": "2.6.4",
     "@typescript-eslint/eslint-plugin": "8.2.0",
     "@typescript-eslint/parser": "8.2.0",
