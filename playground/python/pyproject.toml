@@ -12,7 +12,7 @@ repository = "https://github.com/algolia/api-clients-automation"
 python = "^3.8.1"
 algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
 ruff = "0.4.9"
-python-dotenv = "1.0.0"
+python-dotenv = "1.0.1"
 
 [tool.poetry.scripts]
 search = "app.search:main"
