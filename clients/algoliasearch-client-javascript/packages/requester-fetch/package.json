@@ -11,10 +11,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/requester.fetch.d.ts",
-      "import": "./dist/requester.fetch.js",
-      "module": "./dist/requester.fetch.js",
-      "default": "./dist/requester.fetch.js"
+      "node": {
+        "types": {
+          "import": "./dist/requester.fetch.node.d.ts",
+          "module": "./dist/requester.fetch.node.d.ts",
+          "require": "./dist/requester.fetch.node.d.cts"
+        },
+        "import": "./dist/requester.fetch.node.js",
+        "module": "./dist/requester.fetch.node.js",
+        "require": "./dist/requester.fetch.node.cjs"
+      },
+      "default": {
+        "types": "./dist/requester.fetch.browser.d.ts",
+        "module": "./dist/requester.fetch.browser.js",
+        "import": "./dist/requester.fetch.browser.js"
+      }
     },
     "./src/*": "./src/*.ts"
   },
