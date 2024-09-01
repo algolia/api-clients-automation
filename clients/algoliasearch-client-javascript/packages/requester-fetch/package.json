@@ -13,7 +13,8 @@
     ".": {
       "types": "./dist/requester.fetch.d.ts",
       "import": "./dist/requester.fetch.js",
-      "module": "./dist/requester.fetch.js"
+      "module": "./dist/requester.fetch.js",
+      "default": "./dist/requester.fetch.js"
     },
     "./src/*": "./src/*.ts"
   },

@@ -5,7 +5,18 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@algolia/client-abtesting@npm:0.0.1, @algolia/client-abtesting@workspace:packages/client-abtesting":
+"@algolia/client-abtesting@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@algolia/client-abtesting@npm:5.2.3"
+  dependencies:
+    "@algolia/client-common": "npm:5.2.3"
+    "@algolia/requester-browser-xhr": "npm:5.2.3"
+    "@algolia/requester-node-http": "npm:5.2.3"
+  checksum: 10/f8faaf5e83f859b865794afb35456399e82e081dc4395e6b57a8b39dfc57be5c9ea93291cf0e3bafcf1a738e611dd8ea8f82b634f8094abd44fc105fe1ef3ee4
+  languageName: node
+  linkType: hard
+
+"@algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
@@ -18,7 +29,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-analytics@npm:0.0.1, @algolia/client-analytics@workspace:packages/client-analytics":
+"@algolia/client-analytics@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@algolia/client-analytics@npm:5.2.3"
+  dependencies:
+    "@algolia/client-common": "npm:5.2.3"
+    "@algolia/requester-browser-xhr": "npm:5.2.3"
+    "@algolia/requester-node-http": "npm:5.2.3"
+  checksum: 10/6aebb0e094d06fb0b961de80e68e914037f87b328126783d2b2dc48a7ea84bc977cb28999e58ac1d6113f598f2eb48600e34692cf87fd0a18337db2886a04a9a
+  languageName: node
+  linkType: hard
+
+"@algolia/client-analytics@workspace:packages/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:packages/client-analytics"
   dependencies:
@@ -60,7 +82,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-personalization@npm:0.0.1, @algolia/client-personalization@workspace:packages/client-personalization":
+"@algolia/client-personalization@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@algolia/client-personalization@npm:5.2.3"
+  dependencies:
+    "@algolia/client-common": "npm:5.2.3"
+    "@algolia/requester-browser-xhr": "npm:5.2.3"
+    "@algolia/requester-node-http": "npm:5.2.3"
+  checksum: 10/51ae1140fa5af44492ce295477f8037f2a2748f962ef34aa7f6ff778e63bdc3af84c04a073df5da21a6184cb9beb7f67f0e9bd082c950b43b86ecee88d86ff80
+  languageName: node
+  linkType: hard
+
+"@algolia/client-personalization@workspace:packages/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:packages/client-personalization"
   dependencies:
@@ -86,7 +119,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@npm:0.0.1, @algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@algolia/client-search@npm:5.2.3"
+  dependencies:
+    "@algolia/client-common": "npm:5.2.3"
+    "@algolia/requester-browser-xhr": "npm:5.2.3"
+    "@algolia/requester-node-http": "npm:5.2.3"
+  checksum: 10/44e86768142ae800d72d5a1db0e518f569e6138685ccbbdfbb5ab69647aaf67ce5fde28128e684ac101214d96d532652e3d17dd7dfc291674f7e62aabbcfb0c6
+  languageName: node
+  linkType: hard
+
+"@algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
@@ -138,7 +182,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/recommend@npm:0.0.1, @algolia/recommend@workspace:packages/recommend":
+"@algolia/recommend@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@algolia/recommend@npm:5.2.3"
+  dependencies:
+    "@algolia/client-common": "npm:5.2.3"
+    "@algolia/requester-browser-xhr": "npm:5.2.3"
+    "@algolia/requester-node-http": "npm:5.2.3"
+  checksum: 10/37f923768a5153d07755702ff7c6994953ed03bd0d524203ff28ce0d57d6c1a0a8c879be7e637c7e5b1778fd1387a78c395cdb730adcc84a62810026ca55e32a
+  languageName: node
+  linkType: hard
+
+"@algolia/recommend@workspace:packages/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"
   dependencies:
@@ -3569,12 +3624,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch@workspace:packages/algoliasearch"
   dependencies:
-    "@algolia/client-abtesting": "npm:0.0.1"
-    "@algolia/client-analytics": "npm:0.0.1"
+    "@algolia/client-abtesting": "npm:5.2.3"
+    "@algolia/client-analytics": "npm:5.2.3"
     "@algolia/client-common": "npm:5.2.3"
-    "@algolia/client-personalization": "npm:0.0.1"
-    "@algolia/client-search": "npm:0.0.1"
-    "@algolia/recommend": "npm:0.0.1"
+    "@algolia/client-personalization": "npm:5.2.3"
+    "@algolia/client-search": "npm:5.2.3"
+    "@algolia/recommend": "npm:5.2.3"
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@babel/preset-env": "npm:7.25.4"

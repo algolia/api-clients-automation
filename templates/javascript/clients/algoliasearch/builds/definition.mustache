@@ -24,7 +24,7 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import { AbtestingClient, Region as AbtestingRegion, abtestingClient } from '@algolia/client-abtesting';
 import { AnalyticsClient, Region as AnalyticsRegion, analyticsClient } from '@algolia/client-analytics';
 import { PersonalizationClient, Region as PersonalizationRegion, personalizationClient } from '@algolia/client-personalization';
-import { searchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search';
+import { searchClient } from '@algolia/client-search';
 import { RecommendClient, recommendClient } from '@algolia/recommend';
 
 import type {
@@ -34,9 +34,9 @@ import type {
   GetSecuredApiKeyRemainingValidityOptions,
 } from './models';
 
-export * from './models';
+import { apiClientVersion } from './models';
 
-export const apiClientVersion = searchClientVersion;
+export * from './models';
 
 /**
  * The client type.

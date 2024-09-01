@@ -13,7 +13,8 @@
     ".": {
       "types": "./dist/requester.xhr.d.ts",
       "import": "./dist/requester.xhr.js",
-      "module": "./dist/requester.xhr.js"
+      "module": "./dist/requester.xhr.js",
+      "default": "./dist/requester.xhr.js"
     },
     "./src/*": "./src/*.ts"
   },
