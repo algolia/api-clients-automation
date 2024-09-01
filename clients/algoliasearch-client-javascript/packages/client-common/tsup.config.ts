@@ -3,33 +3,25 @@ import path from 'path';
 import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
-const baseConfig: Options = {
+const baseNodeOptions: Options = {
   clean: true,
-  dts: true,
   sourcemap: true,
   splitting: false,
   tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+  platform: 'node',
+  target: 'node14',
+  dts: { entry: { common: 'index.ts' } },
 };
 
-const nodeConfigs: Options[] = [
+export default defineConfig([
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'cjs',
-    target: 'node14',
-    entry: {
-      'client-common': 'index.ts',
-    },
+    entry: { common: 'index.ts' },
   },
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'esm',
-    target: 'node14',
-    entry: {
-      'client-common.esm.node': 'index.ts',
-    },
+    entry: { 'common.esm': 'index.ts' },
   },
-];
-
-export default defineConfig(nodeConfigs);
+]);

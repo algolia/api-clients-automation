@@ -9,9 +9,14 @@
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
-  "main": "dist/requester-fetch.cjs",
-  "module": "dist/requester-fetch.esm.node.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/requester.fetch.d.ts",
+      "import": "./dist/requester.fetch.js",
+      "module": "./dist/requester.fetch.js"
+    },
+    "./src/*": "./src/*.ts"
+  },
   "files": [
     "dist",
     "src",

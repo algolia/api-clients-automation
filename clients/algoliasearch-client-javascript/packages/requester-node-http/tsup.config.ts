@@ -3,33 +3,26 @@ import path from 'path';
 import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
-const baseConfig: Options = {
+const baseNodeOptions: Options = {
   clean: true,
-  dts: true,
   sourcemap: true,
   splitting: false,
   tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+  platform: 'node',
+  target: 'node14',
+  dts: { entry: { 'requester.http': 'index.ts' } },
+  external: ['@algolia/client-common'],
 };
 
-const nodeConfigs: Options[] = [
+export default defineConfig([
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'cjs',
-    target: 'node14',
-    entry: {
-      'requester-node-http': 'index.ts',
-    },
+    entry: { 'requester.http': 'index.ts' },
   },
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'esm',
-    target: 'node14',
-    entry: {
-      'requester-node-http.esm.node': 'index.ts',
-    },
+    entry: { 'requester.http.esm': 'index.ts' },
   },
-];
-
-export default defineConfig(nodeConfigs);
+]);

@@ -12,9 +12,12 @@
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
-    "test:size": "bundlesize"
+    "test:size": "bundlesize",
+    "test:types": "attw --pack $*",
+    "test:bundle": "publint $*"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.15.4",
     "@babel/core": "7.25.2",
     "@babel/plugin-transform-class-properties": "7.25.4",
     "@babel/plugin-transform-runtime": "7.25.4",
@@ -31,6 +34,7 @@
     "execa": "9.3.1",
     "lerna": "8.1.8",
     "nx": "19.6.2",
+    "publint": "0.2.10",
     "rollup": "4.21.0",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-typescript2": "0.36.0",

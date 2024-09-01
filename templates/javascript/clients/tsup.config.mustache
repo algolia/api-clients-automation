@@ -5,66 +5,90 @@ import { defineConfig } from 'tsup';
 
 const baseConfig: Options = {
   clean: true,
-  dts: true,
   sourcemap: true,
   splitting: false,
   tsconfig: path.resolve(__dirname, 'tsconfig.json'),
 };
 
+const baseNodeOptions: Options = {
+  ...baseConfig,
+  platform: 'node',
+  target: 'node14',
+  external: ['@algolia/client-common', '@algolia/requester-node-http', 'node:crypto'],
+  dts: { entry: { 'node': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts' } },
+  entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}models/**/*.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
+
+  {{#isAlgoliasearchClient}}
+  outDir: 'dist/lite',
+  {{/isAlgoliasearchClient}}
+};
+
+const baseBrowserOptions: Options = {
+  ...baseConfig,
+  name: 'browser esm',
+  platform: 'browser',
+  minify: true,
+  format: ['esm'],
+  target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
+  external: ['dom', '@algolia/requester-browser-xhr'],
+  dts: { entry: { 'browser': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts' } },
+  entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}models/**/*.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
+
+  {{^isAlgoliasearchClient}}
+  globalName: '{{apiName}}',
+  {{/isAlgoliasearchClient}}
+
+  {{#isAlgoliasearchClient}}
+  globalName: 'lite',
+  outDir: 'dist/lite',
+  {{/isAlgoliasearchClient}}
+};
+
 const nodeConfigs: Options[] = [
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'cjs',
-    target: 'node14',
-    external: ['@algolia/client-common', '@algolia/requester-node-http'],
-    entry: { '{{packageName}}': 'builds/node.ts' },
+    name: 'node{{#isAlgoliasearchClient}} lite{{/isAlgoliasearchClient}} cjs'
   },
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
     format: 'esm',
-    target: 'node14',
-    external: ['@algolia/client-common', '@algolia/requester-node-http'],
-    entry: { '{{packageName}}.esm.node': 'builds/node.ts' },
+    name: 'node{{#isAlgoliasearchClient}} lite{{/isAlgoliasearchClient}} esm'
   },
   {{#isAlgoliasearchClient}}
   {
-    ...baseConfig,
-    platform: 'node',
+    ...baseNodeOptions,
+    format: 'cjs',
+    name: 'node cjs',
+    dts: { entry: { 'node': 'builds/node.ts' } },
+    entry: ['builds/node.ts', 'builds/models.ts'],
+    outDir: 'dist',
+    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', 'node:crypto'],
+  },
+  {
+    ...baseNodeOptions,
     format: 'esm',
-    target: 'node14',
-    external: ['@algolia/client-common', '@algolia/requester-node-http'],
-    entry: { 'lite.esm.node': 'builds/node.ts' },
-  }
+    name: 'node esm',
+    dts: { entry: { 'node': 'builds/node.ts' } },
+    entry: ['builds/node.ts', 'builds/models.ts'],
+    outDir: 'dist',
+    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', 'node:crypto'],
+  },
   {{/isAlgoliasearchClient}}
 ];
 
 const browserConfigs: Options[] = [
-  {
-    ...baseConfig,
-    globalName: '{{packageName}}',
-    platform: 'browser',
-    entry: {
-      '{{packageName}}.esm.browser': 'builds/browser.ts'
-    },
-    external: ['dom', '@algolia/requester-browser-xhr'],
-    format: ['esm'],
-    target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
-  },
+  baseBrowserOptions,
   {{#isAlgoliasearchClient}}
   {
-    ...baseConfig,
-    globalName: 'algoliasearch/lite',
-    platform: 'browser',
-    entry: {
-      'lite.esm.browser': 'lite/browser.ts'
-    },
-    external: ['dom', '@algolia/requester-browser-xhr'],
-    format: ['esm'],
-    target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
+    ...baseBrowserOptions,
+    globalName: 'algoliasearch',
+    dts: { entry: { 'browser': 'builds/browser.ts' } },
+    entry: ['builds/browser.ts', 'builds/models.ts'],
+    outDir: 'dist',
+    external: ['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting'],
   }
   {{/isAlgoliasearchClient}}
-]
+];
 
 export default defineConfig([...nodeConfigs, ...browserConfigs]);

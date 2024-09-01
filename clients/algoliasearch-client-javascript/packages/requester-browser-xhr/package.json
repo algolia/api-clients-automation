@@ -9,9 +9,14 @@
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
-  "main": "dist/requester-browser-xhr.cjs",
-  "module": "dist/requester-browser-xhr.esm.node.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/requester.xhr.d.ts",
+      "import": "./dist/requester.xhr.js",
+      "module": "./dist/requester.xhr.js"
+    },
+    "./src/*": "./src/*.ts"
+  },
   "files": [
     "dist",
     "src",

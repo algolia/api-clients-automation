@@ -7,27 +7,26 @@
   "type":"module",
   "license": "MIT",
   "author": "Algolia",
-  "types": "./index.d.ts",
   {{^isAlgoliasearchClient}}
   "name": "@algolia/{{packageName}}",
   "description": "JavaScript client for {{packageName}}",
   "exports": {
     ".": {
-      "node": {
-        "import": "./dist/{{packageName}}.esm.node.js",
-        "module": "./dist/{{packageName}}.esm.node.js",
-        "require": "./dist/{{packageName}}.cjs",
-        "default": "./dist/{{packageName}}.cjs",
-        "types": "./dist/builds/node.d.ts"
+      "types": {
+        "import": "./dist/node.d.ts",
+        "module": "./dist/node.d.ts",
+        "require": "./dist/node.d.cts"
       },
+      "import": "./dist/builds/node.js",
+      "module": "./dist/builds/node.js",
+      "require": "./dist/builds/node.cjs",
       "browser": {
-        "module": "./dist/{{packageName}}.esm.browser.js",
-        "import": "./dist/{{packageName}}.esm.browser.js",
-        "types": "./dist/builds/browser.d.ts"
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/builds/browser.js",
+        "import": "./dist/builds/browser.js"
       }
     },
-    "./src/*": "./src/*.ts",
-    "./model": "./model/index.ts"
+    "./src/*": "./src/*.ts"
   },
   "files": [
     "dist",
@@ -55,33 +54,36 @@
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "exports": {
     ".": {
-      "node": {
-        "import": "./dist/algoliasearch.esm.node.js",
-        "module": "./dist/algoliasearch.esm.node.js",
-        "require": "./dist/algoliasearch.cjs",
-        "default": "./dist/algoliasearch.cjs",
-        "types": "./dist/algoliasearch/builds/node.d.ts"
+      "types": {
+        "import": "./dist/node.d.ts",
+        "module": "./dist/node.d.ts",
+        "require": "./dist/node.d.cts"
       },
+      "import": "./dist/builds/node.js",
+      "module": "./dist/builds/node.js",
+      "require": "./dist/builds/node.cjs",
       "browser": {
-        "module": "./dist/algoliasearch.esm.browser.js",
-        "import": "./dist/algoliasearch.esm.browser.js",
-        "types": "./dist/algoliasearch/builds/browser.d.ts"
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/builds/browser.js",
+        "import": "./dist/builds/browser.js"
       }
     },
     "./lite": {
-      "node": {
-        "import": "./dist/lite/lite.esm.node.js",
-        "module": "./dist/lite/lite.esm.node.js",
-        "require": "./dist/lite/lite.cjs",
-        "default": "./dist/lite/lite.cjs",
-        "types": "./dist/lite/builds/node.d.ts"
+      "types": {
+        "import": "./dist/lite/node.d.ts",
+        "module": "./dist/lite/node.d.ts",
+        "require": "./dist/lite/node.d.cts"
       },
+      "import": "./dist/lite/builds/node.js",
+      "module": "./dist/lite/builds/node.js",
+      "require": "./dist/lite/builds/node.cjs",
       "browser": {
-        "module": "./dist/lite/lite.esm.browser.js",
-        "import": "./dist/lite/lite.esm.browser.js",
-        "types": "./dist/lite/builds/browser.d.ts"
+        "types": "./dist/lite/browser.d.ts",
+        "module": "./dist/lite/builds/browser.js",
+        "import": "./dist/lite/builds/browser.js"
       }
-    }
+    },
+    "./src/*": "./src/*.ts"
   },
   "files": [
     "dist",
