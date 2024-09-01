@@ -5,7 +5,7 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@algolia/client-abtesting@npm:5.2.3, @algolia/client-abtesting@workspace:packages/client-abtesting":
+"@algolia/client-abtesting@npm:0.0.1, @algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
@@ -18,7 +18,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-analytics@npm:5.2.3, @algolia/client-analytics@workspace:packages/client-analytics":
+"@algolia/client-analytics@npm:0.0.1, @algolia/client-analytics@workspace:packages/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:packages/client-analytics"
   dependencies:
@@ -60,7 +60,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-personalization@npm:5.2.3, @algolia/client-personalization@workspace:packages/client-personalization":
+"@algolia/client-personalization@npm:0.0.1, @algolia/client-personalization@workspace:packages/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:packages/client-personalization"
   dependencies:
@@ -86,7 +86,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@npm:5.2.3, @algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@npm:0.0.1, @algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
@@ -138,7 +138,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/recommend@npm:5.2.3, @algolia/recommend@workspace:packages/recommend":
+"@algolia/recommend@npm:0.0.1, @algolia/recommend@workspace:packages/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"
   dependencies:
@@ -3569,12 +3569,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch@workspace:packages/algoliasearch"
   dependencies:
-    "@algolia/client-abtesting": "npm:5.2.3"
-    "@algolia/client-analytics": "npm:5.2.3"
+    "@algolia/client-abtesting": "npm:0.0.1"
+    "@algolia/client-analytics": "npm:0.0.1"
     "@algolia/client-common": "npm:5.2.3"
-    "@algolia/client-personalization": "npm:5.2.3"
-    "@algolia/client-search": "npm:5.2.3"
-    "@algolia/recommend": "npm:5.2.3"
+    "@algolia/client-personalization": "npm:0.0.1"
+    "@algolia/client-search": "npm:0.0.1"
+    "@algolia/recommend": "npm:0.0.1"
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@babel/preset-env": "npm:7.25.4"

@@ -12,15 +12,17 @@
   "description": "JavaScript client for {{packageName}}",
   "exports": {
     ".": {
-      "types": {
-        "import": "./dist/node.d.ts",
-        "module": "./dist/node.d.ts",
-        "require": "./dist/node.d.cts"
+      "node": {
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/builds/node.js",
+        "module": "./dist/builds/node.js",
+        "require": "./dist/builds/node.cjs"
       },
-      "import": "./dist/builds/node.js",
-      "module": "./dist/builds/node.js",
-      "require": "./dist/builds/node.cjs",
-      "browser": {
+      "default": {
         "types": "./dist/browser.d.ts",
         "module": "./dist/builds/browser.js",
         "import": "./dist/builds/browser.js"
@@ -54,30 +56,34 @@
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "exports": {
     ".": {
-      "types": {
-        "import": "./dist/node.d.ts",
-        "module": "./dist/node.d.ts",
-        "require": "./dist/node.d.cts"
+      "node": {
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/node.js",
+        "module": "./dist/node.js",
+        "require": "./dist/node.cjs"
       },
-      "import": "./dist/builds/node.js",
-      "module": "./dist/builds/node.js",
-      "require": "./dist/builds/node.cjs",
-      "browser": {
+      "default": {
         "types": "./dist/browser.d.ts",
-        "module": "./dist/builds/browser.js",
-        "import": "./dist/builds/browser.js"
+        "module": "./dist/browser.js",
+        "import": "./dist/browser.js"
       }
     },
     "./lite": {
-      "types": {
-        "import": "./dist/lite/node.d.ts",
-        "module": "./dist/lite/node.d.ts",
-        "require": "./dist/lite/node.d.cts"
+      "node": {
+        "types": {
+          "import": "./dist/lite/node.d.ts",
+          "module": "./dist/lite/node.d.ts",
+          "require": "./dist/lite/node.d.cts"
+        },
+        "import": "./dist/lite/builds/node.js",
+        "module": "./dist/lite/builds/node.js",
+        "require": "./dist/lite/builds/node.cjs"
       },
-      "import": "./dist/lite/builds/node.js",
-      "module": "./dist/lite/builds/node.js",
-      "require": "./dist/lite/builds/node.cjs",
-      "browser": {
+      "default": {
         "types": "./dist/lite/browser.d.ts",
         "module": "./dist/lite/builds/browser.js",
         "import": "./dist/lite/builds/browser.js"
