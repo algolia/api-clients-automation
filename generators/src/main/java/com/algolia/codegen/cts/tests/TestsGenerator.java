@@ -73,6 +73,7 @@ public abstract class TestsGenerator {
     json = json
       .replace("${{language}}", language)
       .replace("${{languageCased}}", languageCased())
+      .replace("${{languageVersion}}", Helpers.getClientConfigField(language, "packageVersion"))
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
 
