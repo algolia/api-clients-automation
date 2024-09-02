@@ -13,6 +13,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -26,6 +27,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -55,6 +57,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -68,6 +71,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -81,6 +85,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -94,6 +99,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -107,6 +113,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -120,6 +127,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -133,6 +141,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -146,6 +155,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.2.3"
     "@algolia/requester-node-http": "npm:5.2.3"
     "@types/node": "npm:22.5.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -3582,6 +3592,7 @@ __metadata:
     "@types/jest": "npm:29.5.12"
     "@types/node": "npm:22.5.0"
     jest: "npm:29.7.0"
+    rollup: "npm:4.21.2"
     tsup: "npm:8.2.4"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -9724,19 +9735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^0.63.4":
-  version: 0.63.5
-  resolution: "rollup@npm:0.63.5"
-  dependencies:
-    "@types/estree": "npm:0.0.39"
-    "@types/node": "npm:*"
-  bin:
-    rollup: ./bin/rollup
-  checksum: 10/c52ad022bb732ea0e962b3ec45779d9d0523f75283bded8d0c97788f97946781d617b971e7e732ad7a63af60aad76ca534c415d8b101c7ff7d3f5cc879aba025
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^4.19.0":
+"rollup@npm:4.21.2, rollup@npm:^4.19.0":
   version: 4.21.2
   resolution: "rollup@npm:4.21.2"
   dependencies:
@@ -9796,6 +9795,18 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10/5d679af1a04170f7164e3e975a375adb76f9bbf34d1ad8d9c3fa789252d377e7d364dfee054a4283121f9f9368d7b35404b9d42fb260be314d34739243ab0722
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^0.63.4":
+  version: 0.63.5
+  resolution: "rollup@npm:0.63.5"
+  dependencies:
+    "@types/estree": "npm:0.0.39"
+    "@types/node": "npm:*"
+  bin:
+    rollup: ./bin/rollup
+  checksum: 10/c52ad022bb732ea0e962b3ec45779d9d0523f75283bded8d0c97788f97946781d617b971e7e732ad7a63af60aad76ca534c415d8b101c7ff7d3f5cc879aba025
   languageName: node
   linkType: hard
 

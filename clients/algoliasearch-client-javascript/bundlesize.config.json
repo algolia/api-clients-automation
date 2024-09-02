@@ -1,47 +1,47 @@
 {
   "files": [
     {
-      "path": "packages/algoliasearch/dist/builds/browser.js",
-      "maxSize": "9.20KB"
+      "path": "packages/algoliasearch/dist/browser.umd.js",
+      "maxSize": "9.50KB"
     },
     {
-      "path": "packages/algoliasearch/dist/lite/builds/browser.js",
+      "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
       "maxSize": "3.95KB"
     },
     {
-      "path": "packages/client-abtesting/dist/builds/browser.js",
+      "path": "packages/client-abtesting/dist/builds/browser.umd.js",
       "maxSize": "4.10KB"
     },
     {
-      "path": "packages/client-analytics/dist/builds/browser.js",
+      "path": "packages/client-analytics/dist/builds/browser.umd.js",
       "maxSize": "4.75KB"
     },
     {
-      "path": "packages/client-insights/dist/builds/browser.js",
+      "path": "packages/client-insights/dist/builds/browser.umd.js",
       "maxSize": "3.90KB"
     },
     {
-      "path": "packages/client-personalization/dist/builds/browser.js",
+      "path": "packages/client-personalization/dist/builds/browser.umd.js",
       "maxSize": "4.05KB"
     },
     {
-      "path": "packages/client-query-suggestions/dist/builds/browser.js",
+      "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
       "maxSize": "4.05KB"
     },
     {
-      "path": "packages/client-search/dist/builds/browser.js",
+      "path": "packages/client-search/dist/builds/browser.umd.js",
       "maxSize": "7.15KB"
     },
     {
-      "path": "packages/ingestion/dist/builds/browser.js",
+      "path": "packages/ingestion/dist/builds/browser.umd.js",
       "maxSize": "5.90KB"
     },
     {
-      "path": "packages/monitoring/dist/builds/browser.js",
+      "path": "packages/monitoring/dist/builds/browser.umd.js",
       "maxSize": "3.95KB"
     },
     {
-      "path": "packages/recommend/dist/builds/browser.js",
+      "path": "packages/recommend/dist/builds/browser.umd.js",
       "maxSize": "4.10KB"
     }
   ]

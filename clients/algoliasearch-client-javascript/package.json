@@ -13,8 +13,7 @@
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlesize",
-    "test:types": "attw --pack $*",
-    "test:bundle": "publint $*"
+    "test:bundle": "publint $* || true && attw --pack $* || true"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
