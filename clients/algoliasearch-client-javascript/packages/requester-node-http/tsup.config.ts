@@ -6,13 +6,13 @@ import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig([
   {
-    ...getBaseNodeOptions(pkg),
+    ...getBaseNodeOptions(pkg, __dirname),
     format: 'cjs',
     entry: { 'requester.http': 'index.ts' },
     dts: { entry: { 'requester.http': 'index.ts' } },
   },
   {
-    ...getBaseNodeOptions(pkg),
+    ...getBaseNodeOptions(pkg, __dirname),
     format: 'esm',
     entry: { 'requester.http': 'index.ts' },
     dts: { entry: { 'requester.http': 'index.ts' } },
