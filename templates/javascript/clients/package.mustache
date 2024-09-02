@@ -10,7 +10,9 @@
   "scripts": {
     "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
     "clean": "rm -rf ./dist || true",
+    {{#isAlgoliasearchClient}}
     "test": "jest",
+    {{/isAlgoliasearchClient}}
     "test:bundle": "publint . && attw --pack ."
   },
   {{^isAlgoliasearchClient}}
