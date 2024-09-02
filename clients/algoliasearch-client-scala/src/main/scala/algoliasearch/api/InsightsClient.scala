@@ -166,8 +166,8 @@ class InsightsClient(
   }
 
   /** Deletes all events related to the specified user token from events metrics and analytics. The deletion is
-    * asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user
-    * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+    * asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile`
+    * in the Personalization API.
     *
     * @param userToken
     *   User token for which to delete all associated events.
