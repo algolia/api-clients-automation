@@ -146,7 +146,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
     String apiName = CLIENT + Helpers.API_SUFFIX;
-    String packageName = getPackageName(CLIENT);
+    String packageName = getPackageName((String) additionalProperties.get("client"));
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
