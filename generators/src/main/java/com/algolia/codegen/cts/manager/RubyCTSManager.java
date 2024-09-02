@@ -12,9 +12,17 @@ public class RubyCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "ruby";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("ruby", "packageVersion"));
+    bundle.put("packageVersion", getVersion());
     bundle.put("modelModule", Helpers.capitalize(Helpers.camelize(client)));
   }
 }
