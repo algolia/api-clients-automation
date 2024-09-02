@@ -21,8 +21,8 @@
         "module": "./dist/requester.http.d.ts",
         "require": "./dist/requester.http.d.cts"
       },
-      "import": "./dist/requester.http.esm.js",
-      "module": "./dist/requester.http.esm.js",
+      "import": "./dist/requester.http.js",
+      "module": "./dist/requester.http.js",
       "require": "./dist/requester.http.cjs"
     },
     "./src/*": "./src/*.ts"

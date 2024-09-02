@@ -3,9 +3,9 @@ import path from 'path';
 import type { Options } from 'tsup';
 
 type PKG = {
-  dependencies?: Record<string,string>;
+  dependencies?: Record<string, string>;
   name: string;
-}
+};
 
 export const baseConfig: Options = {
   clean: true,
@@ -24,7 +24,7 @@ export function getBaseNodeOptions(pkg: PKG): Options {
     platform: 'node',
     target: 'node14',
     external: [...getDependencies(pkg), 'node:crypto'],
-  }
+  };
 }
 
 export function getBaseBrowserOptions(pkg: PKG): Options {
@@ -33,6 +33,6 @@ export function getBaseBrowserOptions(pkg: PKG): Options {
     platform: 'browser',
     format: ['esm'],
     target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
-    external: [...getDependencies(pkg), 'dom']
-  }
+    external: [...getDependencies(pkg), 'dom'],
+  };
 }

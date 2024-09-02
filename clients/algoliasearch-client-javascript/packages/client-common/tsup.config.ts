@@ -1,27 +1,20 @@
-import path from 'path';
-
-import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
-const baseNodeOptions: Options = {
-  clean: true,
-  sourcemap: true,
-  splitting: false,
-  tsconfig: path.resolve(__dirname, 'tsconfig.json'),
-  platform: 'node',
-  target: 'node14',
-  dts: { entry: { common: 'index.ts' } },
-};
+import { getBaseNodeOptions } from '../../base.tsup.config';
+
+import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig([
   {
-    ...baseNodeOptions,
+    ...getBaseNodeOptions(pkg),
     format: 'cjs',
+    dts: { entry: { common: 'index.ts' } },
     entry: { common: 'index.ts' },
   },
   {
-    ...baseNodeOptions,
+    ...getBaseNodeOptions(pkg),
     format: 'esm',
+    dts: { entry: { common: 'index.ts' } },
     entry: { 'common.esm': 'index.ts' },
   },
 ]);
