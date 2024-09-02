@@ -1388,4 +1388,30 @@ class SnippetSearchClient {
     client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
     // SEPARATOR<
   }
+
+  // Snippet for the waitForAppTask method.
+  //
+  // wait for an application-level task
+  void snippetForWaitForAppTask() {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForAppTask(123L);
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForTask method.
+  //
+  // wait for task
+  void snippetForWaitForTask() {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForTask("<YOUR_INDEX_NAME>", 123L);
+    // SEPARATOR<
+  }
 }

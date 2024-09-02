@@ -1961,4 +1961,36 @@ public class SnippetSearchClient
     );
     // SEPARATOR<
   }
+
+  /// <summary>
+  /// Snippet for the WaitForAppTask method.
+  ///
+  /// wait for an application-level task
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForAppTask()
+  {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForAppTaskAsync(123L);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForTask method.
+  ///
+  /// wait for task
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForTask()
+  {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", 123L);
+    // SEPARATOR<
+  }
 }

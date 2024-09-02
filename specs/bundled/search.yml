@@ -2971,14 +2971,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3023,14 +3016,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3201,6 +3187,106 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getApiKeyResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+  /waitForTask:
+    get:
+      x-helper: true
+      tags:
+        - search
+      operationId: waitForTask
+      summary: Wait for operation to complete
+      description: >
+        Wait for a task to complete to ensure synchronized index updates.
+
+
+        All Algolia write operations are asynchronous. When you make a request
+        for a write operation, for example, to add or update records in your
+        index, Algolia creates a task on a queue and returns a taskID. The task
+        itself runs separately, depending on the server load.
+      parameters:
+        - in: query
+          name: indexName
+          description: The name of the index on which the operation was performed.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: taskID
+          description: The taskID returned by the operation.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTaskResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+  /waitForAppTask:
+    get:
+      x-helper: true
+      operationId: waitForAppTask
+      summary: Wait for application-level operation to complete
+      description: Wait for a application-level task to complete.
+      parameters:
+        - in: query
+          name: taskID
+          description: The taskID returned by the operation.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTaskResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - search
+  /browseObjects:
+    get:
+      x-helper: true
+      tags:
+        - search
+      operationId: browseObjects
+      summary: Get all records from an index
+      description: >
+        You can use the browse method to get records from an index—for example,
+        to export your index as a backup. To export all records, use an empty
+        query.
+
+
+        Use browse instead of search when exporting records from your index,
+        when ranking, or analytics, isn't important. The Analytics API doesn't
+        collect data when using browse.
+
+
+        Don't use this method for building a search UI. Use search instead.
+      parameters:
+        - in: query
+          name: indexName
+          description: The name of the index on which the operation was performed.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: browseParams
+          description: Browse parameters.
+          required: true
+          schema:
+            $ref: '#/components/schemas/browseParamsObject'
+      responses:
+        '204':
+          description: No content.
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /generateSecuredApiKey:
@@ -7424,6 +7510,15 @@ components:
       description: >-
         Task status, `published` if the task is completed, `notPublished`
         otherwise.
+    GetTaskResponse:
+      title: getTaskResponse
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/taskStatus'
+      required:
+        - status
     operationType:
       type: string
       enum:

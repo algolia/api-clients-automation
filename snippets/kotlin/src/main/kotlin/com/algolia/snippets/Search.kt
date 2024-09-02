@@ -2076,4 +2076,39 @@ class SnippetSearchClient {
 
     exitProcess(0)
   }
+
+  suspend fun snippetForWaitForAppTask() {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForAppTask(
+      taskID = 123L,
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForTask() {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForTask(
+      indexName = "<YOUR_INDEX_NAME>",
+      taskID = 123L,
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
 }

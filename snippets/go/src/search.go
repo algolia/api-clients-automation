@@ -2548,3 +2548,59 @@ func SnippetForWaitForApiKeyOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForWaitForAppTaskOfSearch() {
+	/*
+	   Snippet for the waitForAppTask method.
+
+	   wait for an application-level task
+	*/
+
+	// >SEPARATOR waitForAppTask default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForAppTask(
+		123,
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForTaskOfSearch() {
+	/*
+	   Snippet for the waitForTask method.
+
+	   wait for task
+	*/
+
+	// >SEPARATOR waitForTask default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForTask(
+		"<YOUR_INDEX_NAME>", 123,
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}

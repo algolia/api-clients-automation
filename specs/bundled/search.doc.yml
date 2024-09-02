@@ -14586,14 +14586,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -14802,14 +14795,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -19411,6 +19397,15 @@ components:
       description: >-
         Task status, `published` if the task is completed, `notPublished`
         otherwise.
+    GetTaskResponse:
+      title: getTaskResponse
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/taskStatus'
+      required:
+        - status
     operationType:
       type: string
       enum:

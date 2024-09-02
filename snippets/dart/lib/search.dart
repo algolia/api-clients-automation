@@ -1808,3 +1808,34 @@ void snippetForwaitForApiKey2() async {
   );
   // SEPARATOR<
 }
+
+// Snippet for the waitForAppTask method.
+//
+// wait for an application-level task
+void snippetForwaitForAppTask() async {
+  // >SEPARATOR waitForAppTask default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForAppTask(
+    taskID: 123,
+  );
+  // SEPARATOR<
+}
+
+// Snippet for the waitForTask method.
+//
+// wait for task
+void snippetForwaitForTask() async {
+  // >SEPARATOR waitForTask default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForTask(
+    indexName: "<YOUR_INDEX_NAME>",
+    taskID: 123,
+  );
+  // SEPARATOR<
+}
