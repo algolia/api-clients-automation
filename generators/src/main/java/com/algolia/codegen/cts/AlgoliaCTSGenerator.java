@@ -59,13 +59,13 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     if (mode.equals("tests")) {
       ctsManager.addTestsSupportingFiles(supportingFiles);
 
-      testsGenerators.add(new TestsRequest(language, client));
-      testsGenerators.add(new TestsClient(language, client, true));
-      testsGenerators.add(new TestsClient(language, client, false));
+      testsGenerators.add(new TestsRequest(ctsManager));
+      testsGenerators.add(new TestsClient(ctsManager, true));
+      testsGenerators.add(new TestsClient(ctsManager, false));
     } else if (mode.equals("snippets")) {
       ctsManager.addSnippetsSupportingFiles(supportingFiles);
 
-      testsGenerators.add(new SnippetsGenerator(language, client));
+      testsGenerators.add(new SnippetsGenerator(ctsManager));
     } else {
       throw new RuntimeException("Unknown mode: " + mode);
     }

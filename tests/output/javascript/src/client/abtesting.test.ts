@@ -24,6 +24,14 @@ describe('commonApi', () => {
     );
   }, 15000);
 
+  test('the user agent contains the latest version', async () => {
+    const client = createClient();
+
+    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
+
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.2.3\).*/);
+  }, 15000);
+
   test('calls api with default read timeouts', async () => {
     const client = createClient();
 

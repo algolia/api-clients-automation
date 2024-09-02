@@ -2,6 +2,7 @@ package com.algolia.codegen.cts.tests;
 
 import static org.openapitools.codegen.utils.StringUtils.camelize;
 
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
@@ -14,8 +15,8 @@ import org.openapitools.codegen.SupportingFile;
 
 public class SnippetsGenerator extends TestsGenerator {
 
-  public SnippetsGenerator(String language, String client) {
-    super(language, client);
+  public SnippetsGenerator(CTSManager ctsManager) {
+    super(ctsManager);
   }
 
   @Override
