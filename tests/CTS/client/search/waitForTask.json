@@ -1,0 +1,35 @@
+[
+  {
+    "testName": "wait for task",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForTask",
+        "parameters": {
+          "indexName": "wait-task-${{language}}",
+          "taskID": 123
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "published"
+          }
+        }
+      }
+    ]
+  }
+]

@@ -147,9 +147,9 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-e, --no-e2e', 'run the e2e tests, that requires internet connection')
-  .option('-c, --no-client', 'run the client tests')
-  .option('-r, --no-requests', 'run the requests tests')
+  .option('-e, --no-e2e', 'skip the e2e tests, that requires internet connection')
+  .option('-c, --no-client', 'skip the client tests')
+  .option('-r, --no-requests', 'skip the requests tests')
   .option('-b, --benchmark', 'run the benchmarks')
   .action(
     async (langArg: LangArg, clientArg: string[], { verbose, e2e, client: includeClient, requests, benchmark }) => {
