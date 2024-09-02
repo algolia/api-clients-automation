@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.UsageClient
 // IMPORT<
 import com.algolia.client.model.usage.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -86,7 +85,7 @@ class SnippetUsageClient {
     // Call the API
     var response = client.getIndexUsage(
       statistic = Statistic.entries.first { it.value == "queries_operations" },
-      indexName = "myIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       startDate = "2024-04-03T12:46:43Z",
       endDate = "2024-04-05T12:46:43Z",
     )

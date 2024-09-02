@@ -10,7 +10,7 @@ import { printBenchmarkReport } from './testServer/benchmark.js';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
-import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
+import { assertValidWaitForApiKey } from './testServer/waitFor.js';
 
 export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 
@@ -128,7 +128,8 @@ export async function runCts(
 ): Promise<void> {
   const withBenchmarkServer =
     suites.benchmark && (clients.includes('search') || clients.includes('all') || languages.includes('swift'));
-  const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
+  const withClientServer =
+    suites.client && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin'); // the macos swift CI also runs the clients tests
   const closeTestServer = await startTestServer({
     ...suites,
     benchmark: withBenchmarkServer,

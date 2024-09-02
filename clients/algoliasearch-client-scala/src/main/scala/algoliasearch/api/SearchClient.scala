@@ -14,6 +14,7 @@ import algoliasearch.search.BatchParams
 import algoliasearch.search.BatchResponse
 import algoliasearch.search.BatchWriteParams
 import algoliasearch.search.BrowseParams
+import algoliasearch.search.BrowseParamsObject
 import algoliasearch.search.BrowseResponse
 import algoliasearch.search.CreatedAtResponse
 import algoliasearch.search.DeleteApiKeyResponse

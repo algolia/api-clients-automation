@@ -73,7 +73,7 @@ void snippetFordeleteRecommendRule() async {
 
   // Call the API
   final response = await client.deleteRecommendRule(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
     objectID: "objectID",
   );
@@ -90,7 +90,7 @@ void snippetForgetRecommendRule() async {
 
   // Call the API
   final response = await client.getRecommendRule(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
     objectID: "objectID",
   );
@@ -107,7 +107,7 @@ void snippetForgetRecommendStatus() async {
 
   // Call the API
   final response = await client.getRecommendStatus(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
     taskID: 12345,
   );
@@ -127,7 +127,7 @@ void snippetForgetRecommendations() async {
     getRecommendationsParams: GetRecommendationsParams(
       requests: [
         RelatedQuery(
-          indexName: "indexName",
+          indexName: "<YOUR_INDEX_NAME>",
           objectID: "objectID",
           model: RelatedModel.fromJson("related-products"),
           threshold: 42.1,
@@ -148,7 +148,7 @@ void snippetForsearchRecommendRules() async {
 
   // Call the API
   final response = await client.searchRecommendRules(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
   );
   // SEPARATOR<

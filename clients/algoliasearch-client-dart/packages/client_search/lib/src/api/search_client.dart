@@ -12,6 +12,7 @@ import 'package:algolia_client_search/src/model/batch_dictionary_entries_params.
 import 'package:algolia_client_search/src/model/batch_params.dart';
 import 'package:algolia_client_search/src/model/batch_response.dart';
 import 'package:algolia_client_search/src/model/batch_write_params.dart';
+import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
 import 'package:algolia_client_search/src/model/created_at_response.dart';
 import 'package:algolia_client_search/src/model/delete_api_key_response.dart';

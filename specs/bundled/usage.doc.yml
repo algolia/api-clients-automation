@@ -1009,7 +1009,7 @@ paths:
 
             var response = await client.GetIndexUsageAsync(
               Enum.Parse<Statistic>("QueriesOperations"),
-              "myIndexName",
+              "<YOUR_INDEX_NAME>",
               "2024-04-03T12:46:43Z",
               "2024-04-05T12:46:43Z"
             );
@@ -1030,7 +1030,7 @@ paths:
 
             response, err :=
             client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
-              usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+              usage.Statistic("queries_operations"), "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
             ))
 
             if err != nil {
@@ -1052,8 +1052,9 @@ paths:
 
             // Call the API
 
-            client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName",
-            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+            client.getIndexUsage(Statistic.QUERIES_OPERATIONS,
+            "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z",
+            "2024-04-05T12:46:43Z");
         - lang: javascript
           label: JavaScript
           source: |
@@ -1083,7 +1084,7 @@ paths:
 
             var response = client.getIndexUsage(
               statistic = Statistic.entries.first { it.value == "queries_operations" },
-              indexName = "myIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               startDate = "2024-04-03T12:46:43Z",
               endDate = "2024-04-05T12:46:43Z",
             )
@@ -1101,7 +1102,7 @@ paths:
             // Call the API
             $response = $client->getIndexUsage(
                 'queries_operations',
-                'myIndexName',
+                '<YOUR_INDEX_NAME>',
                 '2024-04-03T12:46:43Z',
                 '2024-04-05T12:46:43Z',
             );
@@ -1117,7 +1118,7 @@ paths:
             # Call the API
             response = await _client.get_index_usage(
                 statistic="queries_operations",
-                index_name="myIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 start_date="2024-04-03T12:46:43Z",
                 end_date="2024-04-05T12:46:43Z",
             )
@@ -1129,25 +1130,22 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
             client = Algolia::UsageClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
-
             # Call the API
-
-            response = client.get_index_usage("queries_operations",
-            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
-
+            response = client.get_index_usage(
+              "queries_operations",
+              "<YOUR_INDEX_NAME>",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            )
 
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
@@ -1162,7 +1160,7 @@ paths:
 
             val response = client.getIndexUsage(
               statistic = Statistic.withName("queries_operations"),
-              indexName = "myIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               startDate = "2024-04-03T12:46:43Z",
               endDate = "2024-04-05T12:46:43Z"
             )
@@ -1184,7 +1182,7 @@ paths:
 
             let response = try await client.getIndexUsage(
                 statistic: Statistic.queriesOperations,
-                indexName: "myIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 startDate: "2024-04-03T12:46:43Z",
                 endDate: "2024-04-05T12:46:43Z"
             )

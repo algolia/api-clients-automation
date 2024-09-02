@@ -1,7 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
-import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
-
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import io.swagger.util.Json;
@@ -19,8 +18,8 @@ public class TestsClient extends TestsGenerator {
   private final boolean withBenchmark;
   private final String testType;
 
-  public TestsClient(String language, String client, boolean withBenchmark) {
-    super(language, client);
+  public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
+    super(ctsManager);
     this.withBenchmark = withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
   }
@@ -61,7 +60,7 @@ public class TestsClient extends TestsGenerator {
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     List<Object> blocks = new ArrayList<>();
     for (Map.Entry<String, ClientTestData[]> blockEntry : cts.entrySet()) {
@@ -121,10 +120,8 @@ public class TestsClient extends TestsGenerator {
             }
 
             stepOut.put("method", step.method);
+            stepOut.put("isCustomRequest", step.method != null && Helpers.CUSTOM_METHODS.contains(step.method));
 
-            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
-              stepOut.put("isCustomRequest", true);
-            }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
             // Swift is strongly-typed and compiled language,

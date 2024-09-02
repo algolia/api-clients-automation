@@ -12,7 +12,7 @@ import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
-import { waitForApiKeyServer } from './waitForApiKey';
+import { waitForApiKeyServer } from './waitFor';
 
 export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];

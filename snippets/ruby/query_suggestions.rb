@@ -15,10 +15,10 @@ def snippet_for_create_config
   # Call the API
   response = client.create_config(
     ConfigurationWithIndex.new(
-      index_name: "theIndexName",
+      index_name: "<YOUR_INDEX_NAME>",
       source_indices: [
         SourceIndex.new(
-          index_name: "testIndex",
+          index_name: "<YOUR_INDEX_NAME>",
           facets: [Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )
@@ -121,7 +121,7 @@ def snippet_for_delete_config
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.delete_config("theIndexName")
+  response = client.delete_config("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -159,7 +159,7 @@ def snippet_for_get_config
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_config("cts_e2e_browse_query_suggestions")
+  response = client.get_config("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -178,7 +178,7 @@ def snippet_for_get_config_status
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_config_status("theIndexName")
+  response = client.get_config_status("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -197,7 +197,7 @@ def snippet_for_get_log_file
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_log_file("theIndexName")
+  response = client.get_log_file("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -217,11 +217,11 @@ def snippet_for_update_config
 
   # Call the API
   response = client.update_config(
-    "theIndexName",
+    "<YOUR_INDEX_NAME>",
     Configuration.new(
       source_indices: [
         SourceIndex.new(
-          index_name: "testIndex",
+          index_name: "<YOUR_INDEX_NAME>",
           facets: [Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )

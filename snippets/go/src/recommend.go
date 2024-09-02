@@ -135,7 +135,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-		"indexName", recommend.RecommendModels("related-products"), "objectID",
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -163,7 +163,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-		"indexName", recommend.RecommendModels("related-products"), "objectID",
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -191,7 +191,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 
 	// Call the API
 	response, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-		"indexName", recommend.RecommendModels("related-products"), 12345,
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
 	))
 	if err != nil {
 		// handle the eventual error
@@ -222,7 +222,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
 			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-				recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
+				recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -250,7 +250,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 
 	// Call the API
 	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-		"indexName", recommend.RecommendModels("related-products"),
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
 	))
 	if err != nil {
 		// handle the eventual error

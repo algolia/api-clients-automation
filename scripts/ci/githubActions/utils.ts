@@ -50,6 +50,7 @@ export const DEPENDENCIES = LANGUAGES.reduce(
       // language related files
       langFolder,
       getVersionFileForLanguage(lang),
+      `tests/output/${lang}`,
       `:!${langFolder}/.github`,
       `:!${langFolder}/README.md`,
     ];

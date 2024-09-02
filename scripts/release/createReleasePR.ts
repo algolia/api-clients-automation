@@ -387,10 +387,12 @@ export async function createReleasePR({
   languages,
   releaseType,
   dryRun,
+  breaking,
 }: {
   languages: Language[];
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
+  breaking?: boolean;
 }): Promise<void> {
   if (!dryRun) {
     await prepareGitEnvironment();
@@ -465,7 +467,7 @@ export async function createReleasePR({
 
   setVerbose(true);
   console.log(`Pushing updated changes to: ${headBranch}`);
-  const commitMessage = generationCommitText.commitPrepareReleaseMessage;
+  const commitMessage = `${generationCommitText.commitPrepareReleaseMessage}${breaking ? ' [skip-bc]' : ''}`;
   await run('git add .');
   await run(`CI=true git commit -m "${commitMessage}"`);
 
@@ -480,7 +482,7 @@ export async function createReleasePR({
   const { data } = await octokit.pulls.create({
     owner: OWNER,
     repo: REPO,
-    title: generationCommitText.commitPrepareReleaseMessage,
+    title: commitMessage,
     body: [
       TEXT.header,
       TEXT.summary,

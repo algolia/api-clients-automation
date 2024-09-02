@@ -18,13 +18,13 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(
             sourceIndices: [SourceIndex(
-                indexName: "testIndex",
+                indexName: "<YOUR_INDEX_NAME>",
                 facets: [Facet(attribute: "test")],
                 generate: [["facetA", "facetB"], ["facetC"]]
             )],
             languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
             exclude: ["test"],
-            indexName: "theIndexName"
+            indexName: "<YOUR_INDEX_NAME>"
         ))
         // SEPARATOR<
     }
@@ -90,7 +90,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.deleteConfig(indexName: "theIndexName")
+        let response = try await client.deleteConfig(indexName: "<YOUR_INDEX_NAME>")
         // SEPARATOR<
     }
 
@@ -116,7 +116,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.getConfig(indexName: "cts_e2e_browse_query_suggestions")
+        let response = try await client.getConfig(indexName: "<YOUR_INDEX_NAME>")
         // SEPARATOR<
     }
 
@@ -129,7 +129,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.getConfigStatus(indexName: "theIndexName")
+        let response = try await client.getConfigStatus(indexName: "<YOUR_INDEX_NAME>")
         // SEPARATOR<
     }
 
@@ -142,7 +142,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.getLogFile(indexName: "theIndexName")
+        let response = try await client.getLogFile(indexName: "<YOUR_INDEX_NAME>")
         // SEPARATOR<
     }
 
@@ -156,10 +156,10 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.updateConfig(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             configuration: QuerySuggestionsConfiguration(
                 sourceIndices: [SourceIndex(
-                    indexName: "testIndex",
+                    indexName: "<YOUR_INDEX_NAME>",
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],

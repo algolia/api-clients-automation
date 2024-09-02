@@ -1,1 +1,1 @@
-{{^required}}Some({{/required}}{{> tests/param_value}}{{^required}}){{/required}}
+{{^required}}{{^isHelper}}Some({{/isHelper}}{{#isHelper}}{{^isRoot}}Some({{/isRoot}}{{/isHelper}}{{/required}}{{> tests/param_value}}{{^required}}{{^isHelper}}){{/isHelper}}{{#isHelper}}{{^isRoot}}){{/isRoot}}{{/isHelper}}{{/required}}

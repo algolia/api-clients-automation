@@ -10,7 +10,7 @@ public class CTSManagerFactory {
     return switch (language) {
       case "javascript" -> new JavascriptCTSManager(client);
       case "java" -> new JavaCTSManager(client);
-      case "php" -> new PhpCTSManager();
+      case "php" -> new PhpCTSManager(client);
       case "kotlin" -> new KotlinCTSManager(client);
       case "go" -> new GoCTSManager(client);
       case "dart" -> new DartCTSManager(client);
