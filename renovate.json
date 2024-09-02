@@ -126,7 +126,7 @@
       "fileMatch": "composer.mustache",
       "matchStrings": [
         "\"require(-dev)?\":\\s*{[^}]*}",
-        "\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
+        "\"(?<depName>.*?)(?<!php|ext-curl|ext-json|ext-mbstring)\": \"(?<currentValue>.*?)\",?\\s"
       ],
       "matchStringsStrategy": "recursive",
       "datasourceTemplate": "packagist"
