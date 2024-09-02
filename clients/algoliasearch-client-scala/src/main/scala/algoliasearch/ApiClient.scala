@@ -89,4 +89,8 @@ abstract class ApiClient(
   override def close(): Unit = {
     Try(requester.close())
   }
+
+  def setApiKey(apiKey: String): Unit = {
+    requester.setApiKey(apiKey)
+  }
 }

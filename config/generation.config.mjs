@@ -71,7 +71,9 @@ export const patterns = [
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
   // the release process is allowed to push changes to this file, but in general we don't because those files are generated
-  process.env.RELEASE ? '!clients/algoliasearch-client-javascript/packages/**/package.json' : 'clients/algoliasearch-client-javascript/packages/**/package.json',
+  process.env.RELEASE
+    ? '!clients/algoliasearch-client-javascript/packages/**/package.json'
+    : 'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
@@ -142,6 +144,7 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/ApiClient.scala',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
@@ -166,5 +169,5 @@ export const patterns = [
   '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
 
-  'clients/**/LICENSE'
+  'clients/**/LICENSE',
 ];
