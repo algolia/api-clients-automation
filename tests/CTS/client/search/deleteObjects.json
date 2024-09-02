@@ -1,0 +1,44 @@
+[
+  {
+    "testName": "call deleteObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "deleteObjects",
+        "parameters": {
+          "indexName": "cts_e2e_deleteObjects_${{language}}",
+          "objectIDs": [
+            "1",
+            "2"
+          ]
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 666,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
