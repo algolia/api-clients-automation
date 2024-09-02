@@ -105,6 +105,7 @@ const browserConfigs: Options[] = [
     name: 'algoliasearch min esm',
     globalName: 'algoliasearch',
     dts: false,
+    minify: true,
     entry: {'browser.min': 'builds/browser.ts'},
     outDir: 'dist',
     noExternal:['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting'],
