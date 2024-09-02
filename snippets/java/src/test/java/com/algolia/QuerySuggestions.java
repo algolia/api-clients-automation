@@ -19,11 +19,11 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     client.createConfig(
       new ConfigurationWithIndex()
-        .setIndexName("theIndexName")
+        .setIndexName("<YOUR_INDEX_NAME>")
         .setSourceIndices(
           List.of(
             new SourceIndex()
-              .setIndexName("testIndex")
+              .setIndexName("<YOUR_INDEX_NAME>")
               .setFacets(List.of(new Facet().setAttribute("test")))
               .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
           )
@@ -95,7 +95,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.deleteConfig("theIndexName");
+    client.deleteConfig("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -121,7 +121,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConfig("cts_e2e_browse_query_suggestions");
+    client.getConfig("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -134,7 +134,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConfigStatus("theIndexName");
+    client.getConfigStatus("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -147,7 +147,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getLogFile("theIndexName");
+    client.getLogFile("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -161,12 +161,12 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.updateConfig(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new Configuration()
         .setSourceIndices(
           List.of(
             new SourceIndex()
-              .setIndexName("testIndex")
+              .setIndexName("<YOUR_INDEX_NAME>")
               .setFacets(List.of(new Facet().setAttribute("test")))
               .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
           )

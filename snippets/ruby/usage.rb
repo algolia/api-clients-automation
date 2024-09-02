@@ -89,7 +89,12 @@ def snippet_for_get_index_usage
   client = Algolia::UsageClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_index_usage("queries_operations", "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
+  response = client.get_index_usage(
+    "queries_operations",
+    "<YOUR_INDEX_NAME>",
+    "2024-04-03T12:46:43Z",
+    "2024-04-05T12:46:43Z"
+  )
 
   # use the class directly
   puts(response)

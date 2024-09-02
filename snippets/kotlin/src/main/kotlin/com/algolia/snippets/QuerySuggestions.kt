@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.QuerySuggestionsClient
 // IMPORT<
 import com.algolia.client.model.querysuggestions.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -18,10 +17,10 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     var response = client.createConfig(
       configurationWithIndex = ConfigurationWithIndex(
-        indexName = "theIndexName",
+        indexName = "<YOUR_INDEX_NAME>",
         sourceIndices = listOf(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = listOf(
               Facet(
                 attribute = "test",
@@ -117,7 +116,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.deleteConfig(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -149,7 +148,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getConfig(
-      indexName = "cts_e2e_browse_query_suggestions",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -166,7 +165,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getConfigStatus(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -183,7 +182,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getLogFile(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -200,11 +199,11 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.updateConfig(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       configuration = Configuration(
         sourceIndices = listOf(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = listOf(
               Facet(
                 attribute = "test",

@@ -18,11 +18,13 @@ public class ParametersWithDataType {
   private final Map<String, CodegenModel> models;
   private final String language;
   private final String client;
+  private final boolean prettyIndexName;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client) {
+  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client, boolean prettyIndexName) {
     this.models = models;
     this.language = language;
     this.client = client;
+    this.prettyIndexName = prettyIndexName;
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
@@ -153,6 +155,11 @@ public class ParametersWithDataType {
       handleMap(paramName, param, testOutput, spec, depth);
     } else {
       handlePrimitive(param, testOutput, spec);
+    }
+
+    // for snippets, we want pretty index names, unless they are already pretty
+    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+      testOutput.put("value", "<YOUR_INDEX_NAME>");
     }
 
     return testOutput;

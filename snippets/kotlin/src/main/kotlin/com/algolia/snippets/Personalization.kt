@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.PersonalizationClient
 // IMPORT<
 import com.algolia.client.model.personalization.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 

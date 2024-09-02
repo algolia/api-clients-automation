@@ -108,7 +108,7 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->deleteRecommendRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             'objectID',
         );
@@ -131,7 +131,7 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->getRecommendRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             'objectID',
         );
@@ -154,7 +154,7 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->getRecommendStatus(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             12345,
         );
@@ -178,7 +178,7 @@ class SnippetRecommendClient
         // Call the API
         $response = $client->getRecommendations(
             ['requests' => [
-                ['indexName' => 'indexName',
+                ['indexName' => '<YOUR_INDEX_NAME>',
                     'objectID' => 'objectID',
                     'model' => 'related-products',
                     'threshold' => 42.1,
@@ -205,7 +205,7 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->searchRecommendRules(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
         );
 

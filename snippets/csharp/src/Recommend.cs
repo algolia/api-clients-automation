@@ -85,7 +85,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.DeleteRecommendRuleAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
@@ -105,7 +105,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.GetRecommendRuleAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
@@ -125,7 +125,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.GetRecommendStatusAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       12345L
     );
@@ -152,7 +152,7 @@ public class SnippetRecommendClient
           new RecommendationsRequest(
             new RelatedQuery
             {
-              IndexName = "indexName",
+              IndexName = "<YOUR_INDEX_NAME>",
               ObjectID = "objectID",
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
@@ -177,7 +177,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.SearchRecommendRulesAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts")
     );
     // SEPARATOR<

@@ -4,7 +4,7 @@
       "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
     },
     "createConfig": {
-      "default": "var response = await client.CreateConfigAsync(\n  new ConfigurationWithIndex\n  {\n    IndexName = \"theIndexName\",\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"testIndex\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\", } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" }\n        },\n      }\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
+      "default": "var response = await client.CreateConfigAsync(\n  new ConfigurationWithIndex\n  {\n    IndexName = \"<YOUR_INDEX_NAME>\",\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"<YOUR_INDEX_NAME>\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\", } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" }\n        },\n      }\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
     },
     "customDelete": {
       "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
@@ -19,57 +19,34 @@
       "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
     },
     "deleteConfig": {
-      "default": "var response = await client.DeleteConfigAsync(\"theIndexName\");"
+      "default": "var response = await client.DeleteConfigAsync(\"<YOUR_INDEX_NAME>\");"
     },
     "getAllConfigs": {
       "default": "var response = await client.GetAllConfigsAsync();"
     },
     "getConfig": {
-      "default": "var response = await client.GetConfigAsync(\"cts_e2e_browse_query_suggestions\");"
+      "default": "var response = await client.GetConfigAsync(\"<YOUR_INDEX_NAME>\");"
     },
     "getConfigStatus": {
-      "default": "var response = await client.GetConfigStatusAsync(\"theIndexName\");"
+      "default": "var response = await client.GetConfigStatusAsync(\"<YOUR_INDEX_NAME>\");"
     },
     "getLogFile": {
-      "default": "var response = await client.GetLogFileAsync(\"theIndexName\");"
+      "default": "var response = await client.GetLogFileAsync(\"<YOUR_INDEX_NAME>\");"
     },
     "updateConfig": {
-      "default": "var response = await client.UpdateConfigAsync(\n  \"theIndexName\",\n  new Configuration\n  {\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"testIndex\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\", } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" }\n        },\n      }\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
+      "default": "var response = await client.UpdateConfigAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration\n  {\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"<YOUR_INDEX_NAME>\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\", } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" }\n        },\n      }\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
     },
     "init": {
       "default": "var client = new QuerySuggestionsClient("
-    },
-    "waitForAppTask": {
-      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
-    },
-    "waitForApiKey": {
-      "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
-      "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
-      "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
-    },
-    "waitForTask": {
-      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
     }
   },
-  "dart": {
-    "waitForAppTask": {
-      "default": "await client.waitAppTask(response.taskID);"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "await client.waitTask('<<indexName>>', response.taskID);"
-    }
-  },
+  "dart": {},
   "go": {
     "import": {
       "default": "import suggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
     },
     "createConfig": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"theIndexName\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"testIndex\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "customDelete": {
       "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
@@ -84,33 +61,22 @@
       "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "deleteConfig": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"theIndexName\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "getAllConfigs": {
       "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetAllConfigs()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "getConfig": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"cts_e2e_browse_query_suggestions\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "getConfigStatus": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"theIndexName\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "getLogFile": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"theIndexName\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     },
     "updateConfig": {
-      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"theIndexName\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"testIndex\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
-    },
-    "waitForAppTask": {
-      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
-    },
-    "waitForApiKey": {
-      "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
-      "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
-      "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
-    },
-    "waitForTask": {
-      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+      "default": "// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION\nclient, err := suggestions.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
     }
   },
   "java": {
@@ -118,7 +84,7 @@
       "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.model.querysuggestions.*;"
     },
     "createConfig": {
-      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"theIndexName\")\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"testIndex\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
+      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
     },
     "customDelete": {
       "default": "client.customDelete(\"test/minimal\");"
@@ -133,36 +99,25 @@
       "default": "client.customPut(\"test/minimal\");"
     },
     "deleteConfig": {
-      "default": "client.deleteConfig(\"theIndexName\");"
+      "default": "client.deleteConfig(\"<YOUR_INDEX_NAME>\");"
     },
     "getAllConfigs": {
       "default": "client.getAllConfigs();"
     },
     "getConfig": {
-      "default": "client.getConfig(\"cts_e2e_browse_query_suggestions\");"
+      "default": "client.getConfig(\"<YOUR_INDEX_NAME>\");"
     },
     "getConfigStatus": {
-      "default": "client.getConfigStatus(\"theIndexName\");"
+      "default": "client.getConfigStatus(\"<YOUR_INDEX_NAME>\");"
     },
     "getLogFile": {
-      "default": "client.getLogFile(\"theIndexName\");"
+      "default": "client.getLogFile(\"<YOUR_INDEX_NAME>\");"
     },
     "updateConfig": {
-      "default": "client.updateConfig(\n  \"theIndexName\",\n  new Configuration()\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"testIndex\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
+      "default": "client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
     },
     "init": {
       "default": "QuerySuggestionsClient client = new QuerySuggestionsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
-    },
-    "waitForAppTask": {
-      "default": "client.waitForAppTask(response.getTaskID());"
-    },
-    "waitForApiKey": {
-      "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
-      "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
-      "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
-    },
-    "waitForTask": {
-      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
     }
   },
   "javascript": {
@@ -204,17 +159,6 @@
     },
     "init": {
       "default": "const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
-    },
-    "waitForAppTask": {
-      "default": "await client.waitForAppTask({ taskID: response.taskID });"
-    },
-    "waitForApiKey": {
-      "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
-      "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
-      "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
-    },
-    "waitForTask": {
-      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
     }
   },
   "kotlin": {
@@ -222,7 +166,7 @@
       "default": "import com.algolia.client.api.QuerySuggestionsClient"
     },
     "createConfig": {
-      "default": "var response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"theIndexName\",\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"testIndex\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "customDelete": {
       "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
@@ -237,36 +181,25 @@
       "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
     },
     "deleteConfig": {
-      "default": "var response = client.deleteConfig(\n  indexName = \"theIndexName\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)"
     },
     "getAllConfigs": {
       "default": "var response = client.getAllConfigs()\n\n// Use the response\nprintln(response)"
     },
     "getConfig": {
-      "default": "var response = client.getConfig(\n  indexName = \"cts_e2e_browse_query_suggestions\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)"
     },
     "getConfigStatus": {
-      "default": "var response = client.getConfigStatus(\n  indexName = \"theIndexName\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getConfigStatus(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)"
     },
     "getLogFile": {
-      "default": "var response = client.getLogFile(\n  indexName = \"theIndexName\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getLogFile(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)"
     },
     "updateConfig": {
-      "default": "var response = client.updateConfig(\n  indexName = \"theIndexName\",\n  configuration = Configuration(\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"testIndex\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.updateConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  configuration = Configuration(\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
     },
     "init": {
       "default": "val client = QuerySuggestionsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.taskID)"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
     }
   },
   "php": {
@@ -274,7 +207,7 @@
       "default": "use Algolia\\AlgoliaSearch\\Api\\QuerySuggestionsClient;"
     },
     "createConfig": {
-      "default": "$response = $client->createConfig(\n    ['indexName' => 'theIndexName',\n        'sourceIndices' => [\n            ['indexName' => 'testIndex',\n                'facets' => [\n                    ['attribute' => 'test',\n                    ],\n                ],\n                'generate' => [\n                    [\n                        'facetA',\n\n                        'facetB',\n                    ],\n\n                    [\n                        'facetC',\n                    ],\n                ],\n            ],\n        ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->createConfig(\n    ['indexName' => '<YOUR_INDEX_NAME>',\n        'sourceIndices' => [\n            ['indexName' => '<YOUR_INDEX_NAME>',\n                'facets' => [\n                    ['attribute' => 'test',\n                    ],\n                ],\n                'generate' => [\n                    [\n                        'facetA',\n\n                        'facetB',\n                    ],\n\n                    [\n                        'facetC',\n                    ],\n                ],\n            ],\n        ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
     "customDelete": {
       "default": "$response = $client->customDelete(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
@@ -289,36 +222,25 @@
       "default": "$response = $client->customPut(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "deleteConfig": {
-      "default": "$response = $client->deleteConfig(\n    'theIndexName',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->deleteConfig(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "getAllConfigs": {
       "default": "$response = $client->getAllConfigs();\n\n// play with the response\nvar_dump($response);"
     },
     "getConfig": {
-      "default": "$response = $client->getConfig(\n    'cts_e2e_browse_query_suggestions',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getConfig(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "getConfigStatus": {
-      "default": "$response = $client->getConfigStatus(\n    'theIndexName',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getConfigStatus(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "getLogFile": {
-      "default": "$response = $client->getLogFile(\n    'theIndexName',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getLogFile(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);"
     },
     "updateConfig": {
-      "default": "$response = $client->updateConfig(\n    'theIndexName',\n    ['sourceIndices' => [\n        ['indexName' => 'testIndex',\n            'facets' => [\n                ['attribute' => 'test',\n                ],\n            ],\n            'generate' => [\n                [\n                    'facetA',\n\n                    'facetB',\n                ],\n\n                [\n                    'facetC',\n                ],\n            ],\n        ],\n    ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->updateConfig(\n    '<YOUR_INDEX_NAME>',\n    ['sourceIndices' => [\n        ['indexName' => '<YOUR_INDEX_NAME>',\n            'facets' => [\n                ['attribute' => 'test',\n                ],\n            ],\n            'generate' => [\n                [\n                    'facetA',\n\n                    'facetB',\n                ],\n\n                [\n                    'facetC',\n                ],\n            ],\n        ],\n    ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
     },
     "init": {
       "default": "$client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
-    },
-    "waitForAppTask": {
-      "default": "$client->waitForAppTask($response['taskID']);"
-    },
-    "waitForApiKey": {
-      "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
-      "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
-      "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
-    },
-    "waitForTask": {
-      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
     }
   },
   "python": {
@@ -326,7 +248,7 @@
       "default": "from algoliasearch.query_suggestions.client import QuerySuggestionsClient"
     },
     "createConfig": {
-      "default": "response = await _client.create_config(\n    configuration_with_index={\n        \"indexName\": \"theIndexName\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"testIndex\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.create_config(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "customDelete": {
       "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
@@ -341,36 +263,25 @@
       "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "deleteConfig": {
-      "default": "response = await _client.delete_config(\n    index_name=\"theIndexName\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.delete_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getAllConfigs": {
       "default": "response = await _client.get_all_configs()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getConfig": {
-      "default": "response = await _client.get_config(\n    index_name=\"cts_e2e_browse_query_suggestions\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getConfigStatus": {
-      "default": "response = await _client.get_config_status(\n    index_name=\"theIndexName\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_config_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "getLogFile": {
-      "default": "response = await _client.get_log_file(\n    index_name=\"theIndexName\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_log_file(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "updateConfig": {
-      "default": "response = await _client.update_config(\n    index_name=\"theIndexName\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"testIndex\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.update_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    configuration={\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
     "init": {
       "default": "_client = QuerySuggestionsClient("
-    },
-    "waitForAppTask": {
-      "default": "await client.wait_for_app_task(task_id=response.task_id)"
-    },
-    "waitForApiKey": {
-      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
-      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-    },
-    "waitForTask": {
-      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
     }
   },
   "ruby": {
@@ -378,7 +289,7 @@
       "default": "require \"algolia\""
     },
     "createConfig": {
-      "default": "response = client.create_config(\n  ConfigurationWithIndex.new(\n    index_name: \"theIndexName\",\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"testIndex\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.create_config(\n  ConfigurationWithIndex.new(\n    index_name: \"<YOUR_INDEX_NAME>\",\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
@@ -393,36 +304,25 @@
       "default": "response = client.custom_put(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "deleteConfig": {
-      "default": "response = client.delete_config(\"theIndexName\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.delete_config(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getAllConfigs": {
       "default": "response = client.get_all_configs\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getConfig": {
-      "default": "response = client.get_config(\"cts_e2e_browse_query_suggestions\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_config(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getConfigStatus": {
-      "default": "response = client.get_config_status(\"theIndexName\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_config_status(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "getLogFile": {
-      "default": "response = client.get_log_file(\"theIndexName\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_log_file(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "updateConfig": {
-      "default": "response = client.update_config(\n  \"theIndexName\",\n  Configuration.new(\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"testIndex\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.update_config(\n  \"<YOUR_INDEX_NAME>\",\n  Configuration.new(\n    source_indices: [\n      SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "init": {
       "default": "client = Algolia::QuerySuggestionsClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.wait_for_app_task(response.task_id)"
-    },
-    "waitForApiKey": {
-      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
-      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-    },
-    "waitForTask": {
-      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
     }
   },
   "scala": {
@@ -430,7 +330,7 @@
       "default": "import algoliasearch.api.QuerySuggestionsClient"
     },
     "createConfig": {
-      "default": "val response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"theIndexName\",\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"testIndex\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "customDelete": {
       "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
@@ -445,36 +345,25 @@
       "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "deleteConfig": {
-      "default": "val response = client.deleteConfig(\n  indexName = \"theIndexName\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getAllConfigs": {
       "default": "val response = client.getAllConfigs(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getConfig": {
-      "default": "val response = client.getConfig(\n  indexName = \"cts_e2e_browse_query_suggestions\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getConfigStatus": {
-      "default": "val response = client.getConfigStatus(\n  indexName = \"theIndexName\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getConfigStatus(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "getLogFile": {
-      "default": "val response = client.getLogFile(\n  indexName = \"theIndexName\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getLogFile(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "updateConfig": {
-      "default": "val response = client.updateConfig(\n  indexName = \"theIndexName\",\n  configuration = Configuration(\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"testIndex\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.updateConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  configuration = Configuration(\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
     },
     "init": {
       "default": "val client = QuerySuggestionsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.getTaskID())"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
     }
   },
   "swift": {
@@ -482,7 +371,7 @@
       "default": "import QuerySuggestions"
     },
     "createConfig": {
-      "default": "let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(\n    sourceIndices: [SourceIndex(\n        indexName: \"testIndex\",\n        facets: [Facet(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n    )],\n    languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n    exclude: [\"test\"],\n    indexName: \"theIndexName\"\n))"
+      "default": "let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(\n    sourceIndices: [SourceIndex(\n        indexName: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n    )],\n    languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n    exclude: [\"test\"],\n    indexName: \"<YOUR_INDEX_NAME>\"\n))"
     },
     "customDelete": {
       "default": "let response = try await client.customDelete(path: \"test/minimal\")"
@@ -497,36 +386,25 @@
       "default": "let response = try await client.customPut(path: \"test/minimal\")"
     },
     "deleteConfig": {
-      "default": "let response = try await client.deleteConfig(indexName: \"theIndexName\")"
+      "default": "let response = try await client.deleteConfig(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "getAllConfigs": {
       "default": "let response = try await client.getAllConfigs()"
     },
     "getConfig": {
-      "default": "let response = try await client.getConfig(indexName: \"cts_e2e_browse_query_suggestions\")"
+      "default": "let response = try await client.getConfig(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "getConfigStatus": {
-      "default": "let response = try await client.getConfigStatus(indexName: \"theIndexName\")"
+      "default": "let response = try await client.getConfigStatus(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "getLogFile": {
-      "default": "let response = try await client.getLogFile(indexName: \"theIndexName\")"
+      "default": "let response = try await client.getLogFile(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "updateConfig": {
-      "default": "let response = try await client.updateConfig(\n    indexName: \"theIndexName\",\n    configuration: QuerySuggestionsConfiguration(\n        sourceIndices: [SourceIndex(\n            indexName: \"testIndex\",\n            facets: [Facet(attribute: \"test\")],\n            generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n        )],\n        languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n        exclude: [\"test\"]\n    )\n)"
+      "default": "let response = try await client.updateConfig(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    configuration: QuerySuggestionsConfiguration(\n        sourceIndices: [SourceIndex(\n            indexName: \"<YOUR_INDEX_NAME>\",\n            facets: [Facet(attribute: \"test\")],\n            generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n        )],\n        languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n        exclude: [\"test\"]\n    )\n)"
     },
     "init": {
       "default": "let client = try QuerySuggestionsClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
-    },
-    "waitForAppTask": {
-      "default": "try await client.waitForAppTask(with: response.taskID)"
-    },
-    "waitForApiKey": {
-      "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
-      "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
-      "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
-    },
-    "waitForTask": {
-      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
     }
   }
 }
