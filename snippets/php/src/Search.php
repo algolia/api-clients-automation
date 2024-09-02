@@ -2284,4 +2284,47 @@ class SnippetSearchClient
         var_dump($response);
         // SEPARATOR<
     }
+
+    /**
+     * Snippet for the WaitForAppTask method.
+     *
+     * wait for an application-level task
+     */
+    public function snippetForWaitForAppTask()
+    {
+        // >SEPARATOR waitForAppTask default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForAppTask(
+            123,
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForTask method.
+     *
+     * wait for task
+     */
+    public function snippetForWaitForTask()
+    {
+        // >SEPARATOR waitForTask default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForTask(
+            '<YOUR_INDEX_NAME>',
+            123,
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
 }

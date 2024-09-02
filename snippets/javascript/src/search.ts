@@ -1636,3 +1636,35 @@ export async function snippetForWaitForApiKey2(): Promise<void> {
   console.log(response);
   // SEPARATOR<
 }
+
+// Snippet for the waitForAppTask method.
+//
+// wait for an application-level task
+export async function snippetForWaitForAppTask(): Promise<void> {
+  // >SEPARATOR waitForAppTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForAppTask({ taskID: 123 });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForTask method.
+//
+// wait for task
+export async function snippetForWaitForTask(): Promise<void> {
+  // >SEPARATOR waitForTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}

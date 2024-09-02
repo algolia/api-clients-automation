@@ -96,7 +96,19 @@ describe('commonApi', () => {
   }, 15000);
 });
 
-describe('helpers', () => {
+describe('deleteObjects', () => {
+  test('call deleteObjects without error', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
+
+    expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
+  }, 15000);
+});
+
+describe('generateSecuredApiKey', () => {
   test('generate secured api key basic', async () => {
     const client = createClient();
 
@@ -135,179 +147,6 @@ describe('helpers', () => {
     expect(result).toEqual(
       'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
     );
-  }, 15000);
-
-  test('call replaceAllObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.replaceAllObjects({
-      indexName: 'cts_e2e_replace_all_objects_javascript',
-      objects: [
-        { objectID: '1', name: 'Adam' },
-        { objectID: '2', name: 'Benoit' },
-        { objectID: '3', name: 'Cyril' },
-        { objectID: '4', name: 'David' },
-        { objectID: '5', name: 'Eva' },
-        { objectID: '6', name: 'Fiona' },
-        { objectID: '7', name: 'Gael' },
-        { objectID: '8', name: 'Hugo' },
-        { objectID: '9', name: 'Igor' },
-        { objectID: '10', name: 'Julia' },
-      ],
-      batchSize: 3,
-    });
-
-    expect(result).toEqual({
-      copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
-      batchResponses: [
-        { taskID: 127, objectIDs: ['1', '2', '3'] },
-        { taskID: 130, objectIDs: ['4', '5', '6'] },
-        { taskID: 133, objectIDs: ['7', '8', '9'] },
-        { taskID: 134, objectIDs: ['10'] },
-      ],
-      moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
-    });
-  }, 15000);
-
-  test('call saveObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.saveObjects({
-      indexName: 'cts_e2e_saveObjects_javascript',
-      objects: [
-        { objectID: '1', name: 'Adam' },
-        { objectID: '2', name: 'Benoit' },
-      ],
-    });
-
-    expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
-  }, 15000);
-
-  test('saveObjects should report errors', async () => {
-    const client = searchClient('test-app-id', 'wrong-api-key', {
-      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    try {
-      const result = await client.saveObjects({
-        indexName: 'cts_e2e_saveObjects_javascript',
-        objects: [
-          { objectID: '1', name: 'Adam' },
-          { objectID: '2', name: 'Benoit' },
-        ],
-      });
-      throw new Error('test is expected to throw error');
-    } catch (e) {
-      expect((e as Error).message).toMatch('Invalid Application-ID or API key');
-    }
-  }, 15000);
-
-  test('call partialUpdateObjects with createIfNotExists=true', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_javascript',
-      objects: [
-        { objectID: '1', name: 'Adam' },
-        { objectID: '2', name: 'Benoit' },
-      ],
-      createIfNotExists: true,
-    });
-
-    expect(result).toEqual([{ taskID: 444, objectIDs: ['1', '2'] }]);
-  }, 15000);
-
-  test('call partialUpdateObjects with createIfNotExists=false', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.partialUpdateObjects({
-      indexName: 'cts_e2e_partialUpdateObjects_javascript',
-      objects: [
-        { objectID: '3', name: 'Cyril' },
-        { objectID: '4', name: 'David' },
-      ],
-      createIfNotExists: false,
-    });
-
-    expect(result).toEqual([{ taskID: 555, objectIDs: ['3', '4'] }]);
-  }, 15000);
-
-  test('call deleteObjects without error', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
-
-    expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
-  }, 15000);
-
-  test('wait for api key helper - add', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
-
-    expect(result).toEqual({
-      value: 'api-key-add-operation-test-javascript',
-      description: 'my new api key',
-      acl: ['search', 'addObject'],
-      validity: 300,
-      maxQueriesPerIPPerHour: 100,
-      maxHitsPerQuery: 20,
-      createdAt: 1720094400,
-    });
-  }, 15000);
-
-  test('wait for api key - update', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.waitForApiKey({
-      key: 'api-key-update-operation-test-javascript',
-      operation: 'update',
-      apiKey: {
-        description: 'my updated api key',
-        acl: ['search', 'addObject', 'deleteObject'],
-        indexes: ['Movies', 'Books'],
-        referers: ['*google.com', '*algolia.com'],
-        validity: 305,
-        maxQueriesPerIPPerHour: 95,
-        maxHitsPerQuery: 20,
-      },
-    });
-
-    expect(result).toEqual({
-      value: 'api-key-update-operation-test-javascript',
-      description: 'my updated api key',
-      acl: ['search', 'addObject', 'deleteObject'],
-      indexes: ['Movies', 'Books'],
-      referers: ['*google.com', '*algolia.com'],
-      validity: 305,
-      maxQueriesPerIPPerHour: 95,
-      maxHitsPerQuery: 20,
-      createdAt: 1720094400,
-    });
-  }, 15000);
-
-  test('wait for api key - delete', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', {
-      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
-    });
-
-    const result = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
-
-    expect(result).toBeUndefined();
   }, 15000);
 });
 
@@ -374,6 +213,201 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Parameter `body` is required when calling `addOrUpdateObject`.');
     }
+  }, 15000);
+});
+
+describe('partialUpdateObjects', () => {
+  test('call partialUpdateObjects with createIfNotExists=true', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.partialUpdateObjects({
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
+      objects: [
+        { objectID: '1', name: 'Adam' },
+        { objectID: '2', name: 'Benoit' },
+      ],
+      createIfNotExists: true,
+    });
+
+    expect(result).toEqual([{ taskID: 444, objectIDs: ['1', '2'] }]);
+  }, 15000);
+
+  test('call partialUpdateObjects with createIfNotExists=false', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.partialUpdateObjects({
+      indexName: 'cts_e2e_partialUpdateObjects_javascript',
+      objects: [
+        { objectID: '3', name: 'Cyril' },
+        { objectID: '4', name: 'David' },
+      ],
+      createIfNotExists: false,
+    });
+
+    expect(result).toEqual([{ taskID: 555, objectIDs: ['3', '4'] }]);
+  }, 15000);
+});
+
+describe('replaceAllObjects', () => {
+  test('call replaceAllObjects without error', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6679, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.replaceAllObjects({
+      indexName: 'cts_e2e_replace_all_objects_javascript',
+      objects: [
+        { objectID: '1', name: 'Adam' },
+        { objectID: '2', name: 'Benoit' },
+        { objectID: '3', name: 'Cyril' },
+        { objectID: '4', name: 'David' },
+        { objectID: '5', name: 'Eva' },
+        { objectID: '6', name: 'Fiona' },
+        { objectID: '7', name: 'Gael' },
+        { objectID: '8', name: 'Hugo' },
+        { objectID: '9', name: 'Igor' },
+        { objectID: '10', name: 'Julia' },
+      ],
+      batchSize: 3,
+    });
+
+    expect(result).toEqual({
+      copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
+      batchResponses: [
+        { taskID: 127, objectIDs: ['1', '2', '3'] },
+        { taskID: 130, objectIDs: ['4', '5', '6'] },
+        { taskID: 133, objectIDs: ['7', '8', '9'] },
+        { taskID: 134, objectIDs: ['10'] },
+      ],
+      moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
+    });
+  }, 15000);
+});
+
+describe('saveObjects', () => {
+  test('call saveObjects without error', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.saveObjects({
+      indexName: 'cts_e2e_saveObjects_javascript',
+      objects: [
+        { objectID: '1', name: 'Adam' },
+        { objectID: '2', name: 'Benoit' },
+      ],
+    });
+
+    expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
+  }, 15000);
+
+  test('saveObjects should report errors', async () => {
+    const client = searchClient('test-app-id', 'wrong-api-key', {
+      hosts: [{ url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    try {
+      const result = await client.saveObjects({
+        indexName: 'cts_e2e_saveObjects_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Invalid Application-ID or API key');
+    }
+  }, 15000);
+});
+
+describe('waitForApiKey', () => {
+  test('wait for api key helper - add', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
+
+    expect(result).toEqual({
+      value: 'api-key-add-operation-test-javascript',
+      description: 'my new api key',
+      acl: ['search', 'addObject'],
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - update', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.waitForApiKey({
+      key: 'api-key-update-operation-test-javascript',
+      operation: 'update',
+      apiKey: {
+        description: 'my updated api key',
+        acl: ['search', 'addObject', 'deleteObject'],
+        indexes: ['Movies', 'Books'],
+        referers: ['*google.com', '*algolia.com'],
+        validity: 305,
+        maxQueriesPerIPPerHour: 95,
+        maxHitsPerQuery: 20,
+      },
+    });
+
+    expect(result).toEqual({
+      value: 'api-key-update-operation-test-javascript',
+      description: 'my updated api key',
+      acl: ['search', 'addObject', 'deleteObject'],
+      indexes: ['Movies', 'Books'],
+      referers: ['*google.com', '*algolia.com'],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - delete', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
+
+    expect(result).toBeUndefined();
+  }, 15000);
+});
+
+describe('waitForAppTask', () => {
+  test('wait for an application-level task', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.waitForAppTask({ taskID: 123 });
+
+    expect(result).toEqual({ status: 'published' });
+  }, 15000);
+});
+
+describe('waitForTask', () => {
+  test('wait for task', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });
+
+    expect(result).toEqual({ status: 'published' });
   }, 15000);
 });
 

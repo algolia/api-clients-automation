@@ -2512,3 +2512,50 @@ async def snippet_for_wait_for_api_key2():
     # print the JSON response
     print(response.to_json())
     # SEPARATOR<
+
+
+async def snippet_for_wait_for_app_task():
+    """
+    Snippet for the waitForAppTask method.
+
+    wait for an application-level task
+    """
+    # >SEPARATOR waitForAppTask default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.wait_for_app_task(
+        task_id=123,
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_wait_for_task():
+    """
+    Snippet for the waitForTask method.
+
+    wait for task
+    """
+    # >SEPARATOR waitForTask default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.wait_for_task(
+        index_name="<YOUR_INDEX_NAME>",
+        task_id=123,
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<

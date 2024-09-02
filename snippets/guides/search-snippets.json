@@ -227,6 +227,12 @@
       "wait for api key - update": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-update-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Update\"),\n  new ApiKey\n  {\n    Description = \"my updated api key\",\n    Acl = new List<Acl>\n    {\n      Enum.Parse<Acl>(\"Search\"),\n      Enum.Parse<Acl>(\"AddObject\"),\n      Enum.Parse<Acl>(\"DeleteObject\")\n    },\n    Indexes = new List<string> { \"Movies\", \"Books\" },\n    Referers = new List<string> { \"*google.com\", \"*algolia.com\" },\n    Validity = 305,\n    MaxQueriesPerIPPerHour = 95,\n    MaxHitsPerQuery = 20,\n  }\n);",
       "wait for api key - delete": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-delete-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Delete\")\n);"
     },
+    "waitForAppTask": {
+      "default": "var response = await client.WaitForAppTaskAsync(123L);"
+    },
+    "waitForTask": {
+      "default": "var response = await client.WaitForTaskAsync(\"<YOUR_INDEX_NAME>\", 123L);"
+    },
     "init": {
       "default": "var client = new SearchClient(new SearchConfig(\"YOUR_APP_ID\", \"YOUR_API_KEY\"));"
     }
@@ -458,6 +464,12 @@
       "wait for api key helper - add": "final response = await client.waitForApiKey(\n  key: \"api-key-add-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"add\"),\n);",
       "wait for api key - update": "final response = await client.waitForApiKey(\n  key: \"api-key-update-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"update\"),\n  apiKey: ApiKey(\n    description: \"my updated api key\",\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n      Acl.fromJson(\"deleteObject\"),\n    ],\n    indexes: [\n      \"Movies\",\n      \"Books\",\n    ],\n    referers: [\n      \"*google.com\",\n      \"*algolia.com\",\n    ],\n    validity: 305,\n    maxQueriesPerIPPerHour: 95,\n    maxHitsPerQuery: 20,\n  ),\n);",
       "wait for api key - delete": "final response = await client.waitForApiKey(\n  key: \"api-key-delete-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"delete\"),\n);"
+    },
+    "waitForAppTask": {
+      "default": "final response = await client.waitForAppTask(\n  taskID: 123,\n);"
+    },
+    "waitForTask": {
+      "default": "final response = await client.waitForTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 123,\n);"
     },
     "init": {
       "default": "final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');"
@@ -691,6 +703,12 @@
       "wait for api key - update": "response, err := client.WaitForApiKey(\n  \"api-key-update-operation-test-go\", search.ApiKeyOperation(\"update\"),\n  search.WithApiKey(\n    search.NewEmptyApiKey().SetDescription(\"my updated api key\").SetAcl(\n      []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\"), search.Acl(\"deleteObject\")}).SetIndexes(\n      []string{\"Movies\", \"Books\"}).SetReferers(\n      []string{\"*google.com\", \"*algolia.com\"}).SetValidity(305).SetMaxQueriesPerIPPerHour(95).SetMaxHitsPerQuery(20)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)",
       "wait for api key - delete": "response, err := client.WaitForApiKey(\n  \"api-key-delete-operation-test-go\", search.ApiKeyOperation(\"delete\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
+    "waitForAppTask": {
+      "default": "response, err := client.WaitForAppTask(\n  123,\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "waitForTask": {
+      "default": "response, err := client.WaitForTask(\n  \"<YOUR_INDEX_NAME>\", 123,\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
     "init": {
       "default": "client, err := search.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
     }
@@ -922,6 +940,12 @@
       "wait for api key helper - add": "client.waitForApiKey(\"api-key-add-operation-test-java\", ApiKeyOperation.ADD);",
       "wait for api key - update": "client.waitForApiKey(\n  \"api-key-update-operation-test-java\",\n  ApiKeyOperation.UPDATE,\n  new ApiKey()\n    .setDescription(\"my updated api key\")\n    .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))\n    .setIndexes(List.of(\"Movies\", \"Books\"))\n    .setReferers(List.of(\"*google.com\", \"*algolia.com\"))\n    .setValidity(305)\n    .setMaxQueriesPerIPPerHour(95)\n    .setMaxHitsPerQuery(20)\n);",
       "wait for api key - delete": "client.waitForApiKey(\"api-key-delete-operation-test-java\", ApiKeyOperation.DELETE);"
+    },
+    "waitForAppTask": {
+      "default": "client.waitForAppTask(123L);"
+    },
+    "waitForTask": {
+      "default": "client.waitForTask(\"<YOUR_INDEX_NAME>\", 123L);"
     },
     "init": {
       "default": "SearchClient client = new SearchClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\");"
@@ -1155,6 +1179,12 @@
       "wait for api key - update": "const response = await client.waitForApiKey({\n  key: 'api-key-update-operation-test-javascript',\n  operation: 'update',\n  apiKey: {\n    description: 'my updated api key',\n    acl: ['search', 'addObject', 'deleteObject'],\n    indexes: ['Movies', 'Books'],\n    referers: ['*google.com', '*algolia.com'],\n    validity: 305,\n    maxQueriesPerIPPerHour: 95,\n    maxHitsPerQuery: 20,\n  },\n});\n\n// use typed response\nconsole.log(response);",
       "wait for api key - delete": "const response = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });\n\n// use typed response\nconsole.log(response);"
     },
+    "waitForAppTask": {
+      "default": "const response = await client.waitForAppTask({ taskID: 123 });\n\n// use typed response\nconsole.log(response);"
+    },
+    "waitForTask": {
+      "default": "const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });\n\n// use typed response\nconsole.log(response);"
+    },
     "init": {
       "default": "const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');"
     }
@@ -1386,6 +1416,12 @@
       "wait for api key helper - add": "var response = client.waitForApiKey(\n  key = \"api-key-add-operation-test-kotlin\",\n  operation = ApiKeyOperation.entries.first { it.value == \"add\" },\n)\n\n// Use the response\nprintln(response)",
       "wait for api key - update": "var response = client.waitForApiKey(\n  key = \"api-key-update-operation-test-kotlin\",\n  operation = ApiKeyOperation.entries.first { it.value == \"update\" },\n  apiKey = ApiKey(\n    description = \"my updated api key\",\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }, Acl.entries.first { it.value == \"deleteObject\" }),\n    indexes = listOf(\"Movies\", \"Books\"),\n    referers = listOf(\"*google.com\", \"*algolia.com\"),\n    validity = 305,\n    maxQueriesPerIPPerHour = 95,\n    maxHitsPerQuery = 20,\n  ),\n)\n\n// Use the response\nprintln(response)",
       "wait for api key - delete": "var response = client.waitForApiKey(\n  key = \"api-key-delete-operation-test-kotlin\",\n  operation = ApiKeyOperation.entries.first { it.value == \"delete\" },\n)\n\n// Use the response\nprintln(response)"
+    },
+    "waitForAppTask": {
+      "default": "var response = client.waitForAppTask(\n  taskID = 123L,\n)\n\n// Use the response\nprintln(response)"
+    },
+    "waitForTask": {
+      "default": "var response = client.waitForTask(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  taskID = 123L,\n)\n\n// Use the response\nprintln(response)"
     },
     "init": {
       "default": "val client = SearchClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
@@ -1619,6 +1655,12 @@
       "wait for api key - update": "$response = $client->waitForApiKey(\n    'api-key-update-operation-test-php',\n    'update',\n    ['description' => 'my updated api key',\n        'acl' => [\n            'search',\n\n            'addObject',\n\n            'deleteObject',\n        ],\n        'indexes' => [\n            'Movies',\n\n            'Books',\n        ],\n        'referers' => [\n            '*google.com',\n\n            '*algolia.com',\n        ],\n        'validity' => 305,\n        'maxQueriesPerIPPerHour' => 95,\n        'maxHitsPerQuery' => 20,\n    ],\n);\n\n// play with the response\nvar_dump($response);",
       "wait for api key - delete": "$response = $client->waitForApiKey(\n    'api-key-delete-operation-test-php',\n    'delete',\n);\n\n// play with the response\nvar_dump($response);"
     },
+    "waitForAppTask": {
+      "default": "$response = $client->waitForAppTask(\n    123,\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "waitForTask": {
+      "default": "$response = $client->waitForTask(\n    '<YOUR_INDEX_NAME>',\n    123,\n);\n\n// play with the response\nvar_dump($response);"
+    },
     "init": {
       "default": "$client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');"
     }
@@ -1851,6 +1893,12 @@
       "wait for api key - update": "response = await _client.wait_for_api_key(\n    key=\"api-key-update-operation-test-python\",\n    operation=\"update\",\n    api_key={\n        \"description\": \"my updated api key\",\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n            \"deleteObject\",\n        ],\n        \"indexes\": [\n            \"Movies\",\n            \"Books\",\n        ],\n        \"referers\": [\n            \"*google.com\",\n            \"*algolia.com\",\n        ],\n        \"validity\": 305,\n        \"maxQueriesPerIPPerHour\": 95,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())",
       "wait for api key - delete": "response = await _client.wait_for_api_key(\n    key=\"api-key-delete-operation-test-python\",\n    operation=\"delete\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
+    "waitForAppTask": {
+      "default": "response = await _client.wait_for_app_task(\n    task_id=123,\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "waitForTask": {
+      "default": "response = await _client.wait_for_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
     "init": {
       "default": "_client = SearchClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
     }
@@ -2082,6 +2130,12 @@
       "wait for api key helper - add": "response = client.wait_for_api_key(\"api-key-add-operation-test-ruby\", \"add\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)",
       "wait for api key - update": "response = client.wait_for_api_key(\n  \"api-key-update-operation-test-ruby\",\n  \"update\",\n  ApiKey.new(\n    description: \"my updated api key\",\n    acl: [\"search\", \"addObject\", \"deleteObject\"],\n    indexes: [\"Movies\", \"Books\"],\n    referers: [\"*google.com\", \"*algolia.com\"],\n    validity: 305,\n    max_queries_per_ip_per_hour: 95,\n    max_hits_per_query: 20\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)",
       "wait for api key - delete": "response = client.wait_for_api_key(\"api-key-delete-operation-test-ruby\", \"delete\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "waitForAppTask": {
+      "default": "response = client.wait_for_app_task(123)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "waitForTask": {
+      "default": "response = client.wait_for_task(\"<YOUR_INDEX_NAME>\", 123)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "init": {
       "default": "client = Algolia::SearchClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
@@ -2523,6 +2577,12 @@
       "wait for api key helper - add": "let response = try await client.waitForApiKey(\n    key: \"api-key-add-operation-test-swift\",\n    operation: ApiKeyOperation.add\n)",
       "wait for api key - update": "let response = try await client.waitForApiKey(\n    key: \"api-key-update-operation-test-swift\",\n    operation: ApiKeyOperation.update,\n    apiKey: ApiKey(\n        acl: [Acl.search, Acl.addObject, Acl.deleteObject],\n        description: \"my updated api key\",\n        indexes: [\"Movies\", \"Books\"],\n        maxHitsPerQuery: 20,\n        maxQueriesPerIPPerHour: 95,\n        referers: [\"*google.com\", \"*algolia.com\"],\n        validity: 305\n    )\n)",
       "wait for api key - delete": "let response = try await client.waitForApiKey(\n    key: \"api-key-delete-operation-test-swift\",\n    operation: ApiKeyOperation.delete\n)"
+    },
+    "waitForAppTask": {
+      "default": "let response = try await client.waitForAppTask(taskID: Int64(123))"
+    },
+    "waitForTask": {
+      "default": "let response = try await client.waitForTask(indexName: \"<YOUR_INDEX_NAME>\", taskID: Int64(123))"
     },
     "init": {
       "default": "let client = try SearchClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\")"

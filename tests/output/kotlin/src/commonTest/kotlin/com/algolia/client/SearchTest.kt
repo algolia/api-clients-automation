@@ -165,6 +165,25 @@ class SearchTest {
   }
 
   @Test
+  fun `call deleteObjects without error`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        deleteObjects(
+          indexName = "cts_e2e_deleteObjects_kotlin",
+          objectIDs = listOf("1", "2"),
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""[{"taskID":666,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+
+    )
+  }
+
+  @Test
   fun `generate secured api key basic`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
@@ -212,6 +231,139 @@ class SearchTest {
 
       response = {
         assertEquals("""MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw""", it)
+      },
+
+    )
+  }
+
+  @Test
+  fun `client throws with invalid parameters`() = runTest {
+    assertFails {
+      val client = SearchClient(appId = "", apiKey = "")
+    }.let { error -> assertError(error, "`appId` is missing.") }
+    assertFails {
+      val client = SearchClient(appId = "", apiKey = "my-api-key")
+    }.let { error -> assertError(error, "`appId` is missing.") }
+    assertFails {
+      val client = SearchClient(appId = "my-app-id", apiKey = "")
+    }.let { error -> assertError(error, "`apiKey` is missing.") }
+  }
+
+  @Test
+  fun `'addApiKey' throws with invalid parameters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    assertFails {
+      client.addApiKey(
+        apiKey = empty(),
+      )
+    }.let { error -> assertError(error, "Parameter `apiKey` is required when calling `addApiKey`.") }
+  }
+
+  @Test
+  fun `'addOrUpdateObject' throws with invalid parameters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    assertFails {
+      client.addOrUpdateObject(
+        indexName = empty(),
+        objectID = "my-object-id",
+        body = buildJsonObject {
+        },
+      )
+    }.let { error -> assertError(error, "Parameter `indexName` is required when calling `addOrUpdateObject`.") }
+    assertFails {
+      client.addOrUpdateObject(
+        indexName = "my-index-name",
+        objectID = empty(),
+        body = buildJsonObject {
+        },
+      )
+    }.let { error -> assertError(error, "Parameter `objectID` is required when calling `addOrUpdateObject`.") }
+    assertFails {
+      client.addOrUpdateObject(
+        indexName = "my-index-name",
+        objectID = "my-object-id",
+        body = empty(),
+      )
+    }.let { error -> assertError(error, "Parameter `body` is required when calling `addOrUpdateObject`.") }
+  }
+
+  @Test
+  fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+          ),
+          createIfNotExists = true,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""[{"taskID":444,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+
+    )
+  }
+
+  @Test
+  fun `call partialUpdateObjects with createIfNotExists=false`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    client.runTest(
+      call = {
+        partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_kotlin",
+          objects = listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("3"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Cyril"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("4"),
+              )
+              put(
+                "name",
+                JsonPrimitive("David"),
+              )
+            },
+          ),
+          createIfNotExists = false,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""[{"taskID":555,"objectIDs":["3","4"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
 
     )
@@ -411,107 +563,6 @@ class SearchTest {
   }
 
   @Test
-  fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
-    client.runTest(
-      call = {
-        partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_kotlin",
-          objects = listOf(
-            buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
-            },
-            buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
-            },
-          ),
-          createIfNotExists = true,
-        )
-      },
-
-      response = {
-        assertNotNull(it)
-        JSONAssert.assertEquals("""[{"taskID":444,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
-      },
-
-    )
-  }
-
-  @Test
-  fun `call partialUpdateObjects with createIfNotExists=false`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
-    client.runTest(
-      call = {
-        partialUpdateObjects(
-          indexName = "cts_e2e_partialUpdateObjects_kotlin",
-          objects = listOf(
-            buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("3"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Cyril"),
-              )
-            },
-            buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("4"),
-              )
-              put(
-                "name",
-                JsonPrimitive("David"),
-              )
-            },
-          ),
-          createIfNotExists = false,
-        )
-      },
-
-      response = {
-        assertNotNull(it)
-        JSONAssert.assertEquals("""[{"taskID":555,"objectIDs":["3","4"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
-      },
-
-    )
-  }
-
-  @Test
-  fun `call deleteObjects without error`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
-    client.runTest(
-      call = {
-        deleteObjects(
-          indexName = "cts_e2e_deleteObjects_kotlin",
-          objectIDs = listOf("1", "2"),
-        )
-      },
-
-      response = {
-        assertNotNull(it)
-        JSONAssert.assertEquals("""[{"taskID":666,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
-      },
-
-    )
-  }
-
-  @Test
   fun `wait for api key helper - add`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
     client.runTest(
@@ -577,53 +628,39 @@ class SearchTest {
   }
 
   @Test
-  fun `client throws with invalid parameters`() = runTest {
-    assertFails {
-      val client = SearchClient(appId = "", apiKey = "")
-    }.let { error -> assertError(error, "`appId` is missing.") }
-    assertFails {
-      val client = SearchClient(appId = "", apiKey = "my-api-key")
-    }.let { error -> assertError(error, "`appId` is missing.") }
-    assertFails {
-      val client = SearchClient(appId = "my-app-id", apiKey = "")
-    }.let { error -> assertError(error, "`apiKey` is missing.") }
+  fun `wait for an application-level task`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForAppTask(
+          taskID = 123L,
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"status":"published"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+
+    )
   }
 
   @Test
-  fun `'addApiKey' throws with invalid parameters`() = runTest {
-    val client = SearchClient(appId = "appId", apiKey = "apiKey")
-    assertFails {
-      client.addApiKey(
-        apiKey = empty(),
-      )
-    }.let { error -> assertError(error, "Parameter `apiKey` is required when calling `addApiKey`.") }
-  }
+  fun `wait for task`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    client.runTest(
+      call = {
+        waitForTask(
+          indexName = "wait-task-kotlin",
+          taskID = 123L,
+        )
+      },
 
-  @Test
-  fun `'addOrUpdateObject' throws with invalid parameters`() = runTest {
-    val client = SearchClient(appId = "appId", apiKey = "apiKey")
-    assertFails {
-      client.addOrUpdateObject(
-        indexName = empty(),
-        objectID = "my-object-id",
-        body = buildJsonObject {
-        },
-      )
-    }.let { error -> assertError(error, "Parameter `indexName` is required when calling `addOrUpdateObject`.") }
-    assertFails {
-      client.addOrUpdateObject(
-        indexName = "my-index-name",
-        objectID = empty(),
-        body = buildJsonObject {
-        },
-      )
-    }.let { error -> assertError(error, "Parameter `objectID` is required when calling `addOrUpdateObject`.") }
-    assertFails {
-      client.addOrUpdateObject(
-        indexName = "my-index-name",
-        objectID = "my-object-id",
-        body = empty(),
-      )
-    }.let { error -> assertError(error, "Parameter `body` is required when calling `addOrUpdateObject`.") }
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"status":"published"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+
+    )
   }
 }
