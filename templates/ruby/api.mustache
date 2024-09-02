@@ -58,6 +58,14 @@ module {{moduleName}}
     def self.create_with_config(config)
       new(config)
     end
+    
+    # Helper method to switch the API key used to authenticate the requests.
+    #
+    # @param api_key [String] the new API key to use.
+    # @return [void]
+    def self.set_api_key(api_key)
+      @api_client.set_api_key(api_key)
+    end
 
 {{#operation}}
     {{#notes}}
