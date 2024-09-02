@@ -80,6 +80,10 @@ class {{classname}}:
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
         return await self._transporter.close()
+    
+    def set_api_key(self, api_key: str) -> None:
+        """Sets a new API key to authenticate requests."""
+        self._transporter.set_api_key(api_key)
 
     {{#isSearchClient}}
 {{> search_helpers}}
