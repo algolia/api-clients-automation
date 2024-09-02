@@ -60,6 +60,11 @@ public final class HttpRequester implements Requester {
     return execute(httpRequest, requestOptions, serializer.getJavaType(returnType));
   }
 
+  @Override
+  public void setApiKey(@Nonnull String apiKey) {
+    this.httpClient.interceptors().add(new HeaderInterceptor(Collections.singletonMap("X-Algolia-API-Key", apiKey)));
+  }
+
   /** Core method to execute an HTTP request and handle the response. */
   private <T> T execute(@Nonnull HttpRequest httpRequest, RequestOptions requestOptions, JavaType returnType) {
     if (isClosed.get()) {

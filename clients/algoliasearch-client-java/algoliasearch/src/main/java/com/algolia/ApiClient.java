@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class ApiClient implements Closeable {
 
-  private final Requester requester;
+  protected final Requester requester;
   private final ExecutorService executor;
 
   /** Constructs a new instance of the {@link ApiClient}. */
