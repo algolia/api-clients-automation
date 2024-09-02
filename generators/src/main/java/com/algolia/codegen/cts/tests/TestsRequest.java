@@ -16,9 +16,8 @@ public class TestsRequest extends TestsGenerator {
 
   private List<SupportingFile> supportingFiles;
 
-  public TestsRequest(CTSManager ctsManager, boolean withSnippets) {
+  public TestsRequest(CTSManager ctsManager) {
     super(ctsManager);
-    this.withSnippets = withSnippets;
   }
 
   @Override
