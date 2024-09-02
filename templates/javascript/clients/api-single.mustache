@@ -75,6 +75,15 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
       transporter.algoliaAgent.add({ segment, version });
     },
 
+    /**
+    * Helper method to switch the API key used to authenticate the requests.
+    *
+    * @param apiKey - The new API Key to use.
+    */
+    setApiKey(apiKey: string): void {
+      auth.setApiKey(apiKey);
+    },
+
     {{#isSearchClient}}
     {{> client/api/helpers}}
     {{/isSearchClient}}
