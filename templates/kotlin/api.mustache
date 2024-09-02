@@ -12,7 +12,7 @@ import kotlinx.serialization.json.*
 {{#operations}}
 public class {{classname}}(
   override val appId: String,
-  override val apiKey: String,
+  override var apiKey: String,
   {{#hasRegionalHost}}
   public val region: String{{#fallbackToAliasHost}}? = null{{/fallbackToAliasHost}},
   {{/hasRegionalHost}}
