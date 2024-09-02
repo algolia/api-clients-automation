@@ -2090,8 +2090,7 @@ paths:
         Suggestions index.
 
         To delete the Query Suggestions index itself, use the Search API and the
-        [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
-        operation.
+        `Delete an index` operation.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
