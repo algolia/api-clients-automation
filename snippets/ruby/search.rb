@@ -1901,3 +1901,41 @@ def snippet_for_wait_for_api_key2
   puts(response.to_json)
   # SEPARATOR<
 end
+
+# Snippet for the waitForAppTask method.
+#
+# wait for an application-level task
+def snippet_for_wait_for_app_task
+  # >SEPARATOR waitForAppTask default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_app_task(123)
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForTask method.
+#
+# wait for task
+def snippet_for_wait_for_task
+  # >SEPARATOR waitForTask default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_task("<YOUR_INDEX_NAME>", 123)
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end

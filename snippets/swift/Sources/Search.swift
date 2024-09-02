@@ -1460,4 +1460,30 @@ final class SearchClientSnippet {
         )
         // SEPARATOR<
     }
+
+    /// Snippet for the waitForAppTask method.
+    ///
+    /// wait for an application-level task
+    func snippetForWaitForAppTask() async throws {
+        // >SEPARATOR waitForAppTask default
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.waitForAppTask(taskID: Int64(123))
+        // SEPARATOR<
+    }
+
+    /// Snippet for the waitForTask method.
+    ///
+    /// wait for task
+    func snippetForWaitForTask() async throws {
+        // >SEPARATOR waitForTask default
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.waitForTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
+        // SEPARATOR<
+    }
 }

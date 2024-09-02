@@ -10,7 +10,7 @@ import { printBenchmarkReport } from './testServer/benchmark.js';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
-import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
+import { assertValidWaitForApiKey } from './testServer/waitFor.js';
 
 export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 
