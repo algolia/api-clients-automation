@@ -55,7 +55,7 @@ func SnippetForCreateDestinationOfIngestion() {
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
 		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
 	))
 	if err != nil {
 		// handle the eventual error

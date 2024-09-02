@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.SupportingFile;
@@ -55,6 +56,38 @@ public abstract class TestsGenerator {
       cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(json, jsonType));
     }
     return cts;
+  }
+
+  protected <T> Map<String, T[]> loadFullCTS(Class<T[]> jsonType) throws Exception {
+    String clientName = client;
+    // This special case allow us to read the `search` CTS to generated the tests for the
+    // `lite` client, which is available in Javascript and Dart
+    if (client.equals("algoliasearch")) {
+      clientName = "search";
+    }
+
+    Map<String, T[]> baseCTS = loadCTS("requests", clientName, jsonType);
+
+    // The algoliasearch client bundles many client and therefore should provide tests for all the
+    // subsequent specs
+    if (client.equals("algoliasearch")) {
+      Map<String, T[]> recommendCTS = loadCTS("requests", "recommend", jsonType);
+      for (Map.Entry<String, T[]> entry : recommendCTS.entrySet()) {
+        String operation = entry.getKey();
+        // custom methods are common to every clients, we don't want duplicate tests
+        if (operation.startsWith("custom")) {
+          continue;
+        }
+
+        if (baseCTS.containsKey(operation)) {
+          baseCTS.put(operation, ArrayUtils.addAll(baseCTS.get(operation), entry.getValue()));
+        } else {
+          baseCTS.put(operation, entry.getValue());
+        }
+      }
+    }
+
+    return baseCTS;
   }
 
   private String languageCased() {

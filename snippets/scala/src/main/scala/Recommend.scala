@@ -103,7 +103,7 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.deleteRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
@@ -124,7 +124,7 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.getRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
@@ -145,7 +145,7 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.getRecommendStatus(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       taskID = 12345L
     )
@@ -169,7 +169,7 @@ class SnippetRecommendClient {
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
           RelatedQuery(
-            indexName = "indexName",
+            indexName = "<YOUR_INDEX_NAME>",
             objectID = "objectID",
             model = RelatedModel.withName("related-products"),
             threshold = 42.1
@@ -194,7 +194,7 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.searchRecommendRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products")
     )
 

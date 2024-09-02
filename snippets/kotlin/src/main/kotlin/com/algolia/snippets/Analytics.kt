@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.AnalyticsClient
 // IMPORT<
 import com.algolia.client.model.analytics.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 

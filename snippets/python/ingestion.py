@@ -51,7 +51,7 @@ async def snippet_for_create_destination():
             "type": "search",
             "name": "destinationName",
             "input": {
-                "indexName": "full_name______",
+                "indexName": "<YOUR_INDEX_NAME>",
             },
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },

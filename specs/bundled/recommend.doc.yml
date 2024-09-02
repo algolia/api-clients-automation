@@ -1050,7 +1050,7 @@ paths:
                   new RecommendationsRequest(
                     new RelatedQuery
                     {
-                      IndexName = "indexName",
+                      IndexName = "<YOUR_INDEX_NAME>",
                       ObjectID = "objectID",
                       Model = Enum.Parse<RelatedModel>("RelatedProducts"),
                       Threshold = 42.1,
@@ -1074,7 +1074,7 @@ paths:
               getRecommendationsParams: GetRecommendationsParams(
                 requests: [
                   RelatedQuery(
-                    indexName: "indexName",
+                    indexName: "<YOUR_INDEX_NAME>",
                     objectID: "objectID",
                     model: RelatedModel.fromJson("related-products"),
                     threshold: 42.1,
@@ -1102,7 +1102,7 @@ paths:
 
               recommend.NewEmptyGetRecommendationsParams().SetRequests(
                 []recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
+                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
             ))
 
             if err != nil {
@@ -1129,7 +1129,11 @@ paths:
               new GetRecommendationsParams()
                 .setRequests(
                   List.of(
-                    new RelatedQuery().setIndexName("indexName").setObjectID("objectID").setModel(RelatedModel.RELATED_PRODUCTS).setThreshold(42.1)
+                    new RelatedQuery()
+                      .setIndexName("<YOUR_INDEX_NAME>")
+                      .setObjectID("objectID")
+                      .setModel(RelatedModel.RELATED_PRODUCTS)
+                      .setThreshold(42.1)
                   )
                 )
             );
@@ -1161,7 +1165,7 @@ paths:
               getRecommendationsParams = GetRecommendationsParams(
                 requests = listOf(
                   RelatedQuery(
-                    indexName = "indexName",
+                    indexName = "<YOUR_INDEX_NAME>",
                     objectID = "objectID",
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 42.1,
@@ -1187,7 +1191,7 @@ paths:
 
             $response = $client->getRecommendations(
                 ['requests' => [
-                    ['indexName' => 'indexName',
+                    ['indexName' => '<YOUR_INDEX_NAME>',
                         'objectID' => 'objectID',
                         'model' => 'related-products',
                         'threshold' => 42.1,
@@ -1211,7 +1215,7 @@ paths:
                 get_recommendations_params={
                     "requests": [
                         {
-                            "indexName": "indexName",
+                            "indexName": "<YOUR_INDEX_NAME>",
                             "objectID": "objectID",
                             "model": "related-products",
                             "threshold": 42.1,
@@ -1239,7 +1243,12 @@ paths:
             response = client.get_recommendations(
               GetRecommendationsParams.new(
                 requests: [
-                  RelatedQuery.new(index_name: "indexName", object_id: "objectID", model: "related-products", threshold: 42.1)
+                  RelatedQuery.new(
+                    index_name: "<YOUR_INDEX_NAME>",
+                    object_id: "objectID",
+                    model: "related-products",
+                    threshold: 42.1
+                  )
                 ]
               )
             )
@@ -1268,7 +1277,7 @@ paths:
               getRecommendationsParams = GetRecommendationsParams(
                 requests = Seq(
                   RelatedQuery(
-                    indexName = "indexName",
+                    indexName = "<YOUR_INDEX_NAME>",
                     objectID = "objectID",
                     model = RelatedModel.withName("related-products"),
                     threshold = 42.1
@@ -1296,7 +1305,7 @@ paths:
                 .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                     RecommendationsRequest
                         .relatedQuery(RelatedQuery(
-                            indexName: "indexName",
+                            indexName: "<YOUR_INDEX_NAME>",
                             threshold: 42.1,
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID"
@@ -1345,7 +1354,7 @@ paths:
             // Call the API
 
             var response = await client.GetRecommendRuleAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
@@ -1361,7 +1370,7 @@ paths:
             // Call the API
 
             final response = await client.getRecommendRule(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
@@ -1382,7 +1391,7 @@ paths:
 
             response, err :=
             client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-              "indexName", recommend.RecommendModels("related-products"), "objectID",
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
             ))
 
             if err != nil {
@@ -1405,7 +1414,7 @@ paths:
 
             // Call the API
 
-            client.getRecommendRule("indexName",
+            client.getRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
         - lang: javascript
           label: JavaScript
@@ -1434,7 +1443,7 @@ paths:
             // Call the API
 
             var response = client.getRecommendRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.entries.first { it.value == "related-products" },
               objectID = "objectID",
             )
@@ -1455,7 +1464,7 @@ paths:
             // Call the API
 
             $response = $client->getRecommendRule(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'related-products',
                 'objectID',
             );
@@ -1472,7 +1481,7 @@ paths:
 
             # Call the API
             response = await _client.get_recommend_rule(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
             )
@@ -1493,7 +1502,7 @@ paths:
 
             # Call the API
 
-            response = client.get_recommend_rule("indexName",
+            response = client.get_recommend_rule("<YOUR_INDEX_NAME>",
             "related-products", "objectID")
 
 
@@ -1517,7 +1526,7 @@ paths:
             // Call the API
 
             val response = client.getRecommendRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.withName("related-products"),
               objectID = "objectID"
             )
@@ -1538,7 +1547,7 @@ paths:
             // Call the API
 
             let response = try await client.getRecommendRule(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 model: RecommendModels.relatedProducts,
                 objectID: "objectID"
             )
@@ -1578,7 +1587,7 @@ paths:
             // Call the API
 
             var response = await client.DeleteRecommendRuleAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
@@ -1594,7 +1603,7 @@ paths:
             // Call the API
 
             final response = await client.deleteRecommendRule(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
@@ -1615,7 +1624,7 @@ paths:
 
             response, err :=
             client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-              "indexName", recommend.RecommendModels("related-products"), "objectID",
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
             ))
 
             if err != nil {
@@ -1638,7 +1647,7 @@ paths:
 
             // Call the API
 
-            client.deleteRecommendRule("indexName",
+            client.deleteRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
         - lang: javascript
           label: JavaScript
@@ -1667,7 +1676,7 @@ paths:
             // Call the API
 
             var response = client.deleteRecommendRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.entries.first { it.value == "related-products" },
               objectID = "objectID",
             )
@@ -1688,7 +1697,7 @@ paths:
             // Call the API
 
             $response = $client->deleteRecommendRule(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'related-products',
                 'objectID',
             );
@@ -1705,7 +1714,7 @@ paths:
 
             # Call the API
             response = await _client.delete_recommend_rule(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
             )
@@ -1726,7 +1735,7 @@ paths:
 
             # Call the API
 
-            response = client.delete_recommend_rule("indexName",
+            response = client.delete_recommend_rule("<YOUR_INDEX_NAME>",
             "related-products", "objectID")
 
 
@@ -1750,7 +1759,7 @@ paths:
             // Call the API
 
             val response = client.deleteRecommendRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.withName("related-products"),
               objectID = "objectID"
             )
@@ -1771,7 +1780,7 @@ paths:
             // Call the API
 
             let response = try await client.deleteRecommendRule(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 model: RecommendModels.relatedProducts,
                 objectID: "objectID"
             )
@@ -1838,7 +1847,7 @@ paths:
             // Call the API
 
             var response = await client.GetRecommendStatusAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               12345L
             );
@@ -1854,7 +1863,7 @@ paths:
             // Call the API
 
             final response = await client.getRecommendStatus(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               taskID: 12345,
             );
@@ -1875,7 +1884,7 @@ paths:
 
             response, err :=
             client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-              "indexName", recommend.RecommendModels("related-products"), 12345,
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
             ))
 
             if err != nil {
@@ -1898,7 +1907,7 @@ paths:
 
             // Call the API
 
-            client.getRecommendStatus("indexName",
+            client.getRecommendStatus("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, 12345L);
         - lang: javascript
           label: JavaScript
@@ -1927,7 +1936,7 @@ paths:
             // Call the API
 
             var response = client.getRecommendStatus(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.entries.first { it.value == "related-products" },
               taskID = 12345L,
             )
@@ -1948,7 +1957,7 @@ paths:
             // Call the API
 
             $response = $client->getRecommendStatus(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'related-products',
                 12345,
             );
@@ -1965,7 +1974,7 @@ paths:
 
             # Call the API
             response = await _client.get_recommend_status(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 task_id=12345,
             )
@@ -1986,7 +1995,7 @@ paths:
 
             # Call the API
 
-            response = client.get_recommend_status("indexName",
+            response = client.get_recommend_status("<YOUR_INDEX_NAME>",
             "related-products", 12345)
 
 
@@ -2010,7 +2019,7 @@ paths:
             // Call the API
 
             val response = client.getRecommendStatus(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.withName("related-products"),
               taskID = 12345L
             )
@@ -2031,7 +2040,7 @@ paths:
             // Call the API
 
             let response = try await client.getRecommendStatus(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 model: RecommendModels.relatedProducts,
                 taskID: Int64(12345)
             )
@@ -2148,7 +2157,7 @@ paths:
             // Call the API
 
             var response = await client.SearchRecommendRulesAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
         - lang: dart
@@ -2163,7 +2172,7 @@ paths:
             // Call the API
 
             final response = await client.searchRecommendRules(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
             );
         - lang: go
@@ -2183,7 +2192,7 @@ paths:
 
             response, err :=
             client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-              "indexName", recommend.RecommendModels("related-products"),
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
             ))
 
             if err != nil {
@@ -2206,7 +2215,7 @@ paths:
 
             // Call the API
 
-            client.searchRecommendRules("indexName",
+            client.searchRecommendRules("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS);
         - lang: javascript
           label: JavaScript
@@ -2237,7 +2246,7 @@ paths:
             // Call the API
 
             var response = client.searchRecommendRules(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.entries.first { it.value == "related-products" },
             )
 
@@ -2257,7 +2266,7 @@ paths:
             // Call the API
 
             $response = $client->searchRecommendRules(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'related-products',
             );
 
@@ -2273,7 +2282,7 @@ paths:
 
             # Call the API
             response = await _client.search_recommend_rules(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
             )
 
@@ -2293,7 +2302,7 @@ paths:
 
             # Call the API
 
-            response = client.search_recommend_rules("indexName",
+            response = client.search_recommend_rules("<YOUR_INDEX_NAME>",
             "related-products")
 
 
@@ -2317,7 +2326,7 @@ paths:
             // Call the API
 
             val response = client.searchRecommendRules(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               model = RecommendModels.withName("related-products")
             )
 
@@ -2337,7 +2346,7 @@ paths:
             // Call the API
 
             let response = try await client.searchRecommendRules(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 model: RecommendModels.relatedProducts
             )
 components:

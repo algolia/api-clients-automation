@@ -48,7 +48,7 @@ async def snippet_for_add_or_update_object():
 
     # Call the API
     response = await _client.add_or_update_object(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         body={
             "key": "value",
@@ -510,7 +510,7 @@ async def snippet_for_browse():
 
     # Call the API
     response = await _client.browse(
-        index_name="cts_e2e_browse",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -533,7 +533,7 @@ async def snippet_for_clear_objects():
 
     # Call the API
     response = await _client.clear_objects(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -556,7 +556,7 @@ async def snippet_for_clear_rules():
 
     # Call the API
     response = await _client.clear_rules(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -579,7 +579,7 @@ async def snippet_for_clear_synonyms():
 
     # Call the API
     response = await _client.clear_synonyms(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -717,7 +717,7 @@ async def snippet_for_delete_by():
 
     # Call the API
     response = await _client.delete_by(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
         delete_by_params={
             "filters": "brand:brandName",
         },
@@ -743,7 +743,7 @@ async def snippet_for_delete_index():
 
     # Call the API
     response = await _client.delete_index(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -778,6 +778,33 @@ async def snippet_for_delete_object():
     # SEPARATOR<
 
 
+async def snippet_for_delete_objects():
+    """
+    Snippet for the deleteObjects method.
+
+    call deleteObjects without error
+    """
+    # >SEPARATOR deleteObjects default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.delete_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        object_ids=[
+            "1",
+            "2",
+        ],
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_delete_rule():
     """
     Snippet for the deleteRule method.
@@ -790,7 +817,7 @@ async def snippet_for_delete_rule():
 
     # Call the API
     response = await _client.delete_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
     )
 
@@ -837,8 +864,81 @@ async def snippet_for_delete_synonym():
 
     # Call the API
     response = await _client.delete_synonym(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_generate_secured_api_key():
+    """
+    Snippet for the generateSecuredApiKey method.
+
+    generate secured api key basic
+    """
+    # >SEPARATOR generateSecuredApiKey generate secured api key basic
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.generate_secured_api_key(
+        parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+        restrictions={
+            "validUntil": 2524604400,
+            "restrictIndices": [
+                "Movies",
+            ],
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_generate_secured_api_key1():
+    """
+    Snippet for the generateSecuredApiKey method.
+
+    generate secured api key with searchParams
+    """
+    # >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.generate_secured_api_key(
+        parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+        restrictions={
+            "validUntil": 2524604400,
+            "restrictIndices": [
+                "Movies",
+                "cts_e2e_settings",
+            ],
+            "restrictSources": "192.168.1.0/24",
+            "filters": "category:Book OR category:Ebook AND _tags:published",
+            "userToken": "user123",
+            "searchParams": {
+                "query": "batman",
+                "typoTolerance": "strict",
+                "aroundRadius": "all",
+                "mode": "neuralSearch",
+                "hitsPerPage": 10,
+                "optionalWords": [
+                    "one",
+                    "two",
+                ],
+            },
+        },
     )
 
     # use the class directly
@@ -970,7 +1070,7 @@ async def snippet_for_get_object():
 
     # Call the API
     response = await _client.get_object(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         attributes_to_retrieve=[
             "attr1",
@@ -1006,7 +1106,7 @@ async def snippet_for_get_objects():
                         "attr2",
                     ],
                     "objectID": "uniqueID",
-                    "indexName": "theIndexName",
+                    "indexName": "<YOUR_INDEX_NAME>",
                 },
             ],
         },
@@ -1032,7 +1132,7 @@ async def snippet_for_get_rule():
 
     # Call the API
     response = await _client.get_rule(
-        index_name="cts_e2e_browse",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="qr-1725004648916",
     )
 
@@ -1056,7 +1156,7 @@ async def snippet_for_get_settings():
 
     # Call the API
     response = await _client.get_settings(
-        index_name="cts_e2e_settings",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -1100,7 +1200,7 @@ async def snippet_for_get_synonym():
 
     # Call the API
     response = await _client.get_synonym(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
     )
 
@@ -1124,7 +1224,7 @@ async def snippet_for_get_task():
 
     # Call the API
     response = await _client.get_task(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
         task_id=123,
     )
 
@@ -1304,7 +1404,7 @@ async def snippet_for_multiple_batch():
                     "body": {
                         "key": "value",
                     },
-                    "indexName": "theIndexName",
+                    "indexName": "<YOUR_INDEX_NAME>",
                 },
             ],
         },
@@ -1415,11 +1515,79 @@ async def snippet_for_partial_update_object():
 
     # Call the API
     response = await _client.partial_update_object(
-        index_name="theIndexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         attributes_to_update={
             "attributeId": "new value",
         },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_partial_update_objects():
+    """
+    Snippet for the partialUpdateObjects method.
+
+    call partialUpdateObjects with createIfNotExists=true
+    """
+    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.partial_update_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+        create_if_not_exists=True,
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_partial_update_objects1():
+    """
+    Snippet for the partialUpdateObjects method.
+
+    call partialUpdateObjects with createIfNotExists=false
+    """
+    # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.partial_update_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+        ],
+        create_if_not_exists=False,
     )
 
     # use the class directly
@@ -1443,6 +1611,72 @@ async def snippet_for_remove_user_id():
     # Call the API
     response = await _client.remove_user_id(
         user_id="uniqueID",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_replace_all_objects():
+    """
+    Snippet for the replaceAllObjects method.
+
+    call replaceAllObjects without error
+    """
+    # >SEPARATOR replaceAllObjects default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.replace_all_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+            {
+                "objectID": "5",
+                "name": "Eva",
+            },
+            {
+                "objectID": "6",
+                "name": "Fiona",
+            },
+            {
+                "objectID": "7",
+                "name": "Gael",
+            },
+            {
+                "objectID": "8",
+                "name": "Hugo",
+            },
+            {
+                "objectID": "9",
+                "name": "Igor",
+            },
+            {
+                "objectID": "10",
+                "name": "Julia",
+            },
+        ],
+        batch_size=3,
     )
 
     # use the class directly
@@ -1531,6 +1765,72 @@ async def snippet_for_save_object():
     # SEPARATOR<
 
 
+async def snippet_for_save_objects():
+    """
+    Snippet for the saveObjects method.
+
+    call saveObjects without error
+    """
+    # >SEPARATOR saveObjects call saveObjects without error
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.save_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_save_objects1():
+    """
+    Snippet for the saveObjects method.
+
+    saveObjects should report errors
+    """
+    # >SEPARATOR saveObjects saveObjects should report errors
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.save_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_save_rule():
     """
     Snippet for the saveRule method.
@@ -1543,7 +1843,7 @@ async def snippet_for_save_rule():
 
     # Call the API
     response = await _client.save_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
         rule={
             "objectID": "id1",
@@ -1621,7 +1921,7 @@ async def snippet_for_save_synonym():
 
     # Call the API
     response = await _client.save_synonym(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
         synonym_hit={
             "objectID": "id1",
@@ -1813,7 +2113,7 @@ async def snippet_for_search3():
     # SEPARATOR<
 
 
-async def snippet_for_search6():
+async def snippet_for_search4():
     """
     Snippet for the search method.
 
@@ -1847,7 +2147,7 @@ async def snippet_for_search6():
     # SEPARATOR<
 
 
-async def snippet_for_search7():
+async def snippet_for_search5():
     """
     Snippet for the search method.
 
@@ -1918,7 +2218,7 @@ async def snippet_for_search_for_facet_values():
 
     # Call the API
     response = await _client.search_for_facet_values(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         facet_name="facetName",
     )
 
@@ -1942,7 +2242,7 @@ async def snippet_for_search_rules():
 
     # Call the API
     response = await _client.search_rules(
-        index_name="cts_e2e_browse",
+        index_name="<YOUR_INDEX_NAME>",
         search_rules_params={
             "query": "zorro",
         },
@@ -1968,7 +2268,7 @@ async def snippet_for_search_single_index():
 
     # Call the API
     response = await _client.search_single_index(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -1991,7 +2291,7 @@ async def snippet_for_search_synonyms():
 
     # Call the API
     response = await _client.search_synonyms(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
     )
 
     # use the class directly
@@ -2067,7 +2367,7 @@ async def snippet_for_set_settings():
 
     setSettingsAttributesForFaceting
     """
-    # >SEPARATOR setSettings setSettingsAttributesForFaceting
+    # >SEPARATOR setSettings default
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -2113,6 +2413,97 @@ async def snippet_for_update_api_key():
             "maxQueriesPerIPPerHour": 100,
             "maxHitsPerQuery": 20,
         },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_wait_for_api_key():
+    """
+    Snippet for the waitForApiKey method.
+
+    wait for api key helper - add
+    """
+    # >SEPARATOR waitForApiKey wait for api key helper - add
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.wait_for_api_key(
+        key="api-key-add-operation-test-python",
+        operation="add",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_wait_for_api_key1():
+    """
+    Snippet for the waitForApiKey method.
+
+    wait for api key - update
+    """
+    # >SEPARATOR waitForApiKey wait for api key - update
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.wait_for_api_key(
+        key="api-key-update-operation-test-python",
+        operation="update",
+        api_key={
+            "description": "my updated api key",
+            "acl": [
+                "search",
+                "addObject",
+                "deleteObject",
+            ],
+            "indexes": [
+                "Movies",
+                "Books",
+            ],
+            "referers": [
+                "*google.com",
+                "*algolia.com",
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20,
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_wait_for_api_key2():
+    """
+    Snippet for the waitForApiKey method.
+
+    wait for api key - delete
+    """
+    # >SEPARATOR waitForApiKey wait for api key - delete
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.wait_for_api_key(
+        key="api-key-delete-operation-test-python",
+        operation="delete",
     )
 
     # use the class directly
