@@ -122,16 +122,6 @@
       "datasourceTemplate": "github-releases"
     },
     {
-      "description": "Update composer.json for PHP",
-      "fileMatch": "composer.mustache",
-      "matchStrings": [
-        "\"require(-dev)?\":\\s*{[^}]*}",
-        "\"(?<depName>.*?)(?<!php|ext-curl|ext-json|ext-mbstring)\": \"(?<currentValue>.*?)\",?\\s"
-      ],
-      "matchStringsStrategy": "recursive",
-      "datasourceTemplate": "packagist"
-    },
-    {
       "description": "Update pubspec.yaml for Dart",
       "fileMatch": "pubspec.mustache",
       "matchStrings": [
