@@ -58,7 +58,7 @@ const nodeConfigs: Options[] = [
     dts: { entry: { 'node': 'builds/node.ts' } },
     entry: ['builds/node.ts', 'builds/models.ts'],
     outDir: 'dist',
-    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', 'node:crypto'],
+    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', '@algolia/client-analytics', 'node:crypto'],
   },
   {
     ...baseNodeOptions,
@@ -67,7 +67,7 @@ const nodeConfigs: Options[] = [
     dts: { entry: { 'node': 'builds/node.ts' } },
     entry: ['builds/node.ts', 'builds/models.ts'],
     outDir: 'dist',
-    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', 'node:crypto'],
+    external: ['@algolia/client-common', '@algolia/requester-node-http', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', '@algolia/client-analytics', 'node:crypto'],
   },
   {{/isAlgoliasearchClient}}
 ];
@@ -87,7 +87,7 @@ const browserConfigs: Options[] = [
     noExternal:['@algolia/client-common', '@algolia/requester-browser-xhr'],
     minify: true,
     name: 'browser min esm',
-    entry: {'builds/browser.min': 'builds/browser.ts'},
+    entry: {'builds/browser.min': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts'},
   },
   {{#isAlgoliasearchClient}}
   {
@@ -98,7 +98,7 @@ const browserConfigs: Options[] = [
     entry: ['builds/browser.ts', 'builds/models.ts'],
     outDir: 'dist',
     minify: false,
-    external: ['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting'],
+    external: ['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', '@algolia/client-analytics'],
   },
   {
     ...baseBrowserOptions,
@@ -108,7 +108,7 @@ const browserConfigs: Options[] = [
     minify: true,
     entry: {'browser.min': 'builds/browser.ts'},
     outDir: 'dist',
-    noExternal:['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting'],
+    noExternal:['@algolia/client-common', '@algolia/requester-browser-xhr', '@algolia/client-search', '@algolia/recommend', '@algolia/client-personalization', '@algolia/client-abtesting', '@algolia/client-analytics'],
   }
   {{/isAlgoliasearchClient}}
 ];
