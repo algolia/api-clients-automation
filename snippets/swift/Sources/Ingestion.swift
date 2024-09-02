@@ -36,7 +36,7 @@ final class IngestionClientSnippet {
         let response = try await client.createDestination(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // SEPARATOR<

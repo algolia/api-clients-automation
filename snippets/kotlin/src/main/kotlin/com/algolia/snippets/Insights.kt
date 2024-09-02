@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.InsightsClient
 // IMPORT<
 import com.algolia.client.model.insights.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 

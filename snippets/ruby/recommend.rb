@@ -89,7 +89,7 @@ def snippet_for_delete_recommend_rule
   client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.delete_recommend_rule("indexName", "related-products", "objectID")
+  response = client.delete_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
 
   # use the class directly
   puts(response)
@@ -108,7 +108,7 @@ def snippet_for_get_recommend_rule
   client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_recommend_rule("indexName", "related-products", "objectID")
+  response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
 
   # use the class directly
   puts(response)
@@ -127,7 +127,7 @@ def snippet_for_get_recommend_status
   client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_recommend_status("indexName", "related-products", 12345)
+  response = client.get_recommend_status("<YOUR_INDEX_NAME>", "related-products", 12345)
 
   # use the class directly
   puts(response)
@@ -149,7 +149,12 @@ def snippet_for_get_recommendations
   response = client.get_recommendations(
     GetRecommendationsParams.new(
       requests: [
-        RelatedQuery.new(index_name: "indexName", object_id: "objectID", model: "related-products", threshold: 42.1)
+        RelatedQuery.new(
+          index_name: "<YOUR_INDEX_NAME>",
+          object_id: "objectID",
+          model: "related-products",
+          threshold: 42.1
+        )
       ]
     )
   )
@@ -171,7 +176,7 @@ def snippet_for_search_recommend_rules
   client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_recommend_rules("indexName", "related-products")
+  response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
 
   # use the class directly
   puts(response)
