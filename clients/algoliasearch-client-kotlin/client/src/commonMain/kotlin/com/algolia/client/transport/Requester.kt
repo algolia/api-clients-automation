@@ -30,4 +30,8 @@ public interface Requester {
     requestOptions: RequestOptions? = null,
     returnType: TypeInfo,
   ): T
+
+  public fun setApiKey(apiKey: String) {
+    println("Nothing to do here")
+  }
 }

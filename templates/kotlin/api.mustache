@@ -55,6 +55,14 @@ public class {{classname}}(
   {{/hostsWithoutVariables.size}}
   }
 
+  /**
+   * Helper method to switch the API key used to authenticate requests.
+   */
+  public fun setApiKey(apiKey: String) {
+    this.apiKey = apiKey
+    this.requester.setApiKey(apiKey)
+  }
+
   {{#operation}}
 
   /**

@@ -2,6 +2,7 @@ package com.algolia.client.transport.internal
 
 import com.algolia.client.configuration.CallType
 import com.algolia.client.configuration.Host
+import com.algolia.client.configuration.internal.HEADER_APIKEY
 import com.algolia.client.exception.AlgoliaRetryException
 import com.algolia.client.exception.internal.asApiException
 import com.algolia.client.exception.internal.asClientException
@@ -37,6 +38,16 @@ public class KtorRequester(
   private val hostStatusExpirationDelayMS: Long = 1000L * 60L * 5L
   private val mutex: Mutex = Mutex()
   private val retryableHosts = hosts.map { RetryableHost(it) }
+
+  override fun setApiKey(apiKey: String) {
+    httpClient.config {
+      defaultRequest {
+        headers {
+          append(HEADER_APIKEY, apiKey)
+        }
+      }
+    }
+  }
 
   override suspend fun <T> execute(
     requestConfig: RequestConfig,
