@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import io.swagger.v3.core.util.Json;
@@ -17,11 +18,13 @@ import org.openapitools.codegen.SupportingFile;
 
 public abstract class TestsGenerator {
 
+  protected final CTSManager ctsManager;
   protected final String language, client;
 
-  public TestsGenerator(String language, String client) {
-    this.language = language;
-    this.client = client;
+  public TestsGenerator(CTSManager ctsManager) {
+    this.ctsManager = ctsManager;
+    this.language = ctsManager.getLanguage();
+    this.client = ctsManager.getClient();
   }
 
   public abstract boolean available();
@@ -57,23 +60,12 @@ public abstract class TestsGenerator {
     return cts;
   }
 
-  private String languageCased() {
-    switch (language) {
-      case "javascript":
-        return "JavaScript";
-      case "php":
-        return "PHP";
-      default:
-        return Helpers.capitalize(language);
-    }
-  }
-
   private String injectVariables(String json) {
     long threeDays = 3 * 24 * 60 * 60 * 1000;
     json = json
       .replace("${{language}}", language)
-      .replace("${{languageCased}}", languageCased())
-      .replace("${{languageVersion}}", Helpers.getClientConfigField(language, "packageVersion"))
+      .replace("${{languageCased}}", ctsManager.getLanguageCased())
+      .replace("${{languageVersion}}", ctsManager.getVersion())
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
 

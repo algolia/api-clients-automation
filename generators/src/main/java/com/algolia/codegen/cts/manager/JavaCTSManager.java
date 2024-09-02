@@ -13,6 +13,14 @@ public class JavaCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "java";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/build.mustache", "tests/output/java", "build.gradle"));
@@ -25,7 +33,7 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
+    bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

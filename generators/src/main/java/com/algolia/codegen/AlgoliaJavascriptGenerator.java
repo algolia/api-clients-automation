@@ -129,14 +129,14 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   }
 
   // Get the packageName from the output field in clients.config.json
-  public String getPackageName(String client) throws ConfigException {
+  public static String getPackageName(String client) throws ConfigException {
     String output = StreamSupport.stream(
       Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
       false
     )
-      .filter(node -> node.get("name").asText().equals((String) additionalProperties.get("client")))
+      .filter(node -> node.get("name").asText().equals(client))
       .findFirst()
-      .orElseThrow(() -> new ConfigException("Cannot find client " + additionalProperties.get("client") + " in config/clients.config.json"))
+      .orElseThrow(() -> new ConfigException("Cannot find client " + client + " in config/clients.config.json"))
       .get("output")
       .asText();
 

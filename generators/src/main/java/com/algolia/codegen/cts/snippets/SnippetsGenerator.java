@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.snippets;
 
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.utils.*;
 import java.io.File;
@@ -10,8 +11,8 @@ import org.openapitools.codegen.SupportingFile;
 
 public class SnippetsGenerator extends TestsRequest {
 
-  public SnippetsGenerator(String language, String client) {
-    super(language, client, true);
+  public SnippetsGenerator(CTSManager ctsManager) {
+    super(ctsManager, true);
   }
 
   @Override

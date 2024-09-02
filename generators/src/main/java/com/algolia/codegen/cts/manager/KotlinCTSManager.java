@@ -12,9 +12,17 @@ public class KotlinCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "kotlin";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("kotlin", "packageVersion"));
+    bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

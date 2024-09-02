@@ -2,6 +2,7 @@ package com.algolia.codegen.cts.tests;
 
 import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
 
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import io.swagger.util.Json;
@@ -19,8 +20,8 @@ public class TestsClient extends TestsGenerator {
   private final boolean withBenchmark;
   private final String testType;
 
-  public TestsClient(String language, String client, boolean withBenchmark) {
-    super(language, client);
+  public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
+    super(ctsManager);
     this.withBenchmark = withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
   }
