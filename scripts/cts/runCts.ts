@@ -128,7 +128,8 @@ export async function runCts(
 ): Promise<void> {
   const withBenchmarkServer =
     suites.benchmark && (clients.includes('search') || clients.includes('all') || languages.includes('swift'));
-  const withClientServer = suites.client && (clients.includes('search') || clients.includes('all'));
+  const withClientServer =
+    suites.client && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin'); // the macos swift CI also runs the clients tests
   const closeTestServer = await startTestServer({
     ...suites,
     benchmark: withBenchmarkServer,
