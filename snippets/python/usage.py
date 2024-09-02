@@ -109,7 +109,7 @@ async def snippet_for_get_index_usage():
     # Call the API
     response = await _client.get_index_usage(
         statistic="queries_operations",
-        index_name="myIndexName",
+        index_name="<YOUR_INDEX_NAME>",
         start_date="2024-04-03T12:46:43Z",
         end_date="2024-04-05T12:46:43Z",
     )

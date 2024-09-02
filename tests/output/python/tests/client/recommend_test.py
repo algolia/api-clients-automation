@@ -59,6 +59,18 @@ class TestRecommendClient:
 
     async def test_common_api_1(self):
         """
+        the user agent contains the latest version
+        """
+        self.create_client()
+
+        _req = await self._client.custom_post_with_http_info(
+            path="1/test",
+        )
+        regex_user_agent = compile("^Algolia for Python \\(4.2.2\\).*")
+        assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    async def test_common_api_2(self):
+        """
         calls api with default read timeouts
         """
         self.create_client()
@@ -69,7 +81,7 @@ class TestRecommendClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
-    async def test_common_api_2(self):
+    async def test_common_api_3(self):
         """
         calls api with default write timeouts
         """

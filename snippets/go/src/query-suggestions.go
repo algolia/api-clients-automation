@@ -24,8 +24,8 @@ func SnippetForCreateConfigOfSuggestions() {
 	// Call the API
 	response, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
-		suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
-			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+		suggestions.NewEmptyConfigurationWithIndex().SetIndexName("<YOUR_INDEX_NAME>").SetSourceIndices(
+			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{
 					[]string{"facetA", "facetB"},
@@ -171,7 +171,7 @@ func SnippetForDeleteConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -225,7 +225,7 @@ func SnippetForGetConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfig(client.NewApiGetConfigRequest(
-		"cts_e2e_browse_query_suggestions",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -253,7 +253,7 @@ func SnippetForGetConfigStatusOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -281,7 +281,7 @@ func SnippetForGetLogFileOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -309,9 +309,9 @@ func SnippetForUpdateConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 		suggestions.NewEmptyConfiguration().SetSourceIndices(
-			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{
 					[]string{"facetA", "facetB"},

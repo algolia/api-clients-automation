@@ -16,6 +16,14 @@ public class CSharpCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "csharp";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("globaljson.mustache", "tests/output/csharp", "global.json"));
@@ -23,7 +31,7 @@ public class CSharpCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("csharp", "packageVersion"));
+    bundle.put("packageVersion", getVersion());
 
     try {
       bundle.put("dotnetSdkMajorVersion", Files.readString(Paths.get("config/.csharp-version")).trim());

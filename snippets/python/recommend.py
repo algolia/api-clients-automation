@@ -108,7 +108,7 @@ async def snippet_for_delete_recommend_rule():
 
     # Call the API
     response = await _client.delete_recommend_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
@@ -133,7 +133,7 @@ async def snippet_for_get_recommend_rule():
 
     # Call the API
     response = await _client.get_recommend_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
@@ -158,7 +158,7 @@ async def snippet_for_get_recommend_status():
 
     # Call the API
     response = await _client.get_recommend_status(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         task_id=12345,
     )
@@ -186,7 +186,7 @@ async def snippet_for_get_recommendations():
         get_recommendations_params={
             "requests": [
                 {
-                    "indexName": "indexName",
+                    "indexName": "<YOUR_INDEX_NAME>",
                     "objectID": "objectID",
                     "model": "related-products",
                     "threshold": 42.1,
@@ -215,7 +215,7 @@ async def snippet_for_search_recommend_rules():
 
     # Call the API
     response = await _client.search_recommend_rules(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
     )
 

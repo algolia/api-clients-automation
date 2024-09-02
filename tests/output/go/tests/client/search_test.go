@@ -179,8 +179,22 @@ func TestSearchcommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestSearchcommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.2.2\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestSearchcommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -195,7 +209,7 @@ func TestSearchcommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestSearchcommonApi2(t *testing.T) {
+func TestSearchcommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res

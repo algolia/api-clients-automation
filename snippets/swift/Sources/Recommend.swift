@@ -69,7 +69,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.deleteRecommendRule(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
         )
@@ -86,7 +86,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.getRecommendRule(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
         )
@@ -103,7 +103,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.getRecommendStatus(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             taskID: Int64(12345)
         )
@@ -123,7 +123,7 @@ final class RecommendClientSnippet {
             .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                 RecommendationsRequest
                     .relatedQuery(RelatedQuery(
-                        indexName: "indexName",
+                        indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
                         model: RelatedModel.relatedProducts,
                         objectID: "objectID"
@@ -142,7 +142,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.searchRecommendRules(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts
         )
         // SEPARATOR<

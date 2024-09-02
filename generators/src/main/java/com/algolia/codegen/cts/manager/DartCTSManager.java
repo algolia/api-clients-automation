@@ -8,22 +8,30 @@ import org.apache.commons.text.WordUtils;
 
 public class DartCTSManager implements CTSManager {
 
-  private final String clientName;
+  private final String client;
 
-  public DartCTSManager(String clientName) {
-    this.clientName = clientName;
+  public DartCTSManager(String client) {
+    this.client = client;
+  }
+
+  public String getLanguage() {
+    return "dart";
+  }
+
+  public String getClient() {
+    return client;
   }
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("dart", "packageVersion"));
-    if (clientName.equals("algoliasearch")) {
+    bundle.put("packageVersion", getVersion());
+    if (client.equals("algoliasearch")) {
       bundle.put("import", "package:algoliasearch/algoliasearch_lite.dart");
       bundle.put("client", "SearchClient");
     } else {
-      String packageName = "algolia_client_" + StringUtils.lowerCase(clientName).replace("-", "_");
+      String packageName = "algolia_client_" + StringUtils.lowerCase(client).replace("-", "_");
       bundle.put("import", "package:" + packageName + "/" + packageName + ".dart");
-      bundle.put("client", WordUtils.capitalizeFully(clientName, '-').replace("-", "") + "Client");
+      bundle.put("client", WordUtils.capitalizeFully(client, '-').replace("-", "") + "Client");
     }
   }
 }
