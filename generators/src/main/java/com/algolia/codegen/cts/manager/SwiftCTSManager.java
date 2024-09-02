@@ -15,6 +15,14 @@ public class SwiftCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "swift";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/Package.mustache", "tests/output/swift", "Package.swift"));

@@ -1094,7 +1094,7 @@ paths:
             // Call the API
 
             var response = await
-            client.SearchSingleIndexAsync<Hit>("indexName");
+            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -1107,7 +1107,7 @@ paths:
             // Call the API
 
             final response = await client.searchSingleIndex(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -1126,7 +1126,7 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -1149,7 +1149,7 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex("indexName", Hit.class);
+            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
         - lang: javascript
           label: JavaScript
           source: >
@@ -1179,7 +1179,7 @@ paths:
             // Call the API
 
             var response = client.searchSingleIndex(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -1194,7 +1194,7 @@ paths:
 
             // Call the API
             $response = $client->searchSingleIndex(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -1207,7 +1207,7 @@ paths:
 
             # Call the API
             response = await _client.search_single_index(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -1222,7 +1222,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.search_single_index("indexName")
+            response = client.search_single_index("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -1241,7 +1241,7 @@ paths:
             // Call the API
 
             val response = client.searchSingleIndex(
-              indexName = "indexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -1260,7 +1260,7 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(indexName: "indexName")
+            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
   /1/indexes/*/queries:
     post:
       tags:
@@ -1635,8 +1635,8 @@ paths:
 
             // Call the API
 
-            var response = await client.SearchForFacetValuesAsync("indexName",
-            "facetName");
+            var response = await
+            client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
         - lang: dart
           label: Dart
           source: >
@@ -1649,7 +1649,7 @@ paths:
             // Call the API
 
             final response = await client.searchForFacetValues(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               facetName: "facetName",
             );
         - lang: go
@@ -1669,7 +1669,7 @@ paths:
 
             response, err :=
             client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "indexName", "facetName",
+              "<YOUR_INDEX_NAME>", "facetName",
             ))
 
             if err != nil {
@@ -1692,7 +1692,7 @@ paths:
 
             // Call the API
 
-            client.searchForFacetValues("indexName", "facetName");
+            client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
         - lang: javascript
           label: JavaScript
           source: >
@@ -1722,7 +1722,7 @@ paths:
             // Call the API
 
             var response = client.searchForFacetValues(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               facetName = "facetName",
             )
 
@@ -1738,7 +1738,7 @@ paths:
 
             // Call the API
             $response = $client->searchForFacetValues(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'facetName',
             );
 
@@ -1752,7 +1752,7 @@ paths:
 
             # Call the API
             response = await _client.search_for_facet_values(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 facet_name="facetName",
             )
 
@@ -1763,17 +1763,25 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
+
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
+
             # Call the API
-            response = client.search_for_facet_values("indexName", "facetName")
+
+            response = client.search_for_facet_values("<YOUR_INDEX_NAME>",
+            "facetName")
+
 
             # use the class directly
+
             puts(response)
 
+
             # print the JSON response
+
             puts(response.to_json)
         - lang: scala
           label: Scala
@@ -1787,7 +1795,7 @@ paths:
             // Call the API
 
             val response = client.searchForFacetValues(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               facetName = "facetName"
             )
 
@@ -1807,7 +1815,7 @@ paths:
             // Call the API
 
             let response = try await client.searchForFacetValues(indexName:
-            "indexName", facetName: "facetName")
+            "<YOUR_INDEX_NAME>", facetName: "facetName")
   /1/indexes/{indexName}/browse:
     post:
       tags:
@@ -1899,7 +1907,7 @@ paths:
 
             // Call the API
 
-            var response = await client.BrowseAsync<Hit>("cts_e2e_browse");
+            var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -1912,7 +1920,7 @@ paths:
             // Call the API
 
             final response = await client.browse(
-              indexName: "cts_e2e_browse",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -1926,7 +1934,7 @@ paths:
 
             // Call the API
             response, err := client.Browse(client.NewApiBrowseRequest(
-              "cts_e2e_browse",
+              "<YOUR_INDEX_NAME>",
             ))
             if err != nil {
               // handle the eventual error
@@ -1946,7 +1954,7 @@ paths:
 
             // Call the API
 
-            client.browse("cts_e2e_browse", Hit.class);
+            client.browse("<YOUR_INDEX_NAME>", Hit.class);
         - lang: javascript
           label: JavaScript
           source: >
@@ -1976,7 +1984,7 @@ paths:
             // Call the API
 
             var response = client.browse(
-              indexName = "cts_e2e_browse",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -1991,7 +1999,7 @@ paths:
 
             // Call the API
             $response = $client->browse(
-                'cts_e2e_browse',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -2004,7 +2012,7 @@ paths:
 
             # Call the API
             response = await _client.browse(
-                index_name="cts_e2e_browse",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -2019,7 +2027,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.browse("cts_e2e_browse")
+            response = client.browse("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -2038,7 +2046,7 @@ paths:
             // Call the API
 
             val response = client.browse(
-              indexName = "cts_e2e_browse"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -2057,7 +2065,7 @@ paths:
             // Call the API
 
             let response: BrowseResponse<Hit> = try await
-            client.browse(indexName: "cts_e2e_browse")
+            client.browse(indexName: "<YOUR_INDEX_NAME>")
   /1/indexes/{indexName}:
     post:
       tags:
@@ -2385,7 +2393,7 @@ paths:
 
             // Call the API
 
-            var response = await client.DeleteIndexAsync("theIndexName");
+            var response = await client.DeleteIndexAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -2398,7 +2406,7 @@ paths:
             // Call the API
 
             final response = await client.deleteIndex(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -2412,7 +2420,7 @@ paths:
 
             // Call the API
             response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
             ))
             if err != nil {
               // handle the eventual error
@@ -2432,7 +2440,7 @@ paths:
 
             // Call the API
 
-            client.deleteIndex("theIndexName");
+            client.deleteIndex("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -2462,7 +2470,7 @@ paths:
             // Call the API
 
             var response = client.deleteIndex(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -2477,7 +2485,7 @@ paths:
 
             // Call the API
             $response = $client->deleteIndex(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -2490,7 +2498,7 @@ paths:
 
             # Call the API
             response = await _client.delete_index(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -2505,7 +2513,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.delete_index("theIndexName")
+            response = client.delete_index("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -2524,7 +2532,7 @@ paths:
             // Call the API
 
             val response = client.deleteIndex(
-              indexName = "theIndexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -2543,7 +2551,7 @@ paths:
             // Call the API
 
             let response = try await client.deleteIndex(indexName:
-            "theIndexName")
+            "<YOUR_INDEX_NAME>")
   /1/indexes/{indexName}/{objectID}:
     get:
       tags:
@@ -2611,7 +2619,7 @@ paths:
             // Call the API
 
             var response = await client.GetObjectAsync(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               "uniqueID",
               new List<string> { "attr1", "attr2" }
             );
@@ -2627,7 +2635,7 @@ paths:
             // Call the API
 
             final response = await client.getObject(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
               attributesToRetrieve: [
                 "attr1",
@@ -2646,7 +2654,7 @@ paths:
 
             // Call the API
             response, err := client.GetObject(client.NewApiGetObjectRequest(
-              "theIndexName", "uniqueID",
+              "<YOUR_INDEX_NAME>", "uniqueID",
             ).WithAttributesToRetrieve(
               []string{"attr1", "attr2"}))
             if err != nil {
@@ -2667,7 +2675,7 @@ paths:
 
             // Call the API
 
-            client.getObject("theIndexName", "uniqueID", List.of("attr1",
+            client.getObject("<YOUR_INDEX_NAME>", "uniqueID", List.of("attr1",
             "attr2"));
         - lang: javascript
           label: JavaScript
@@ -2696,7 +2704,7 @@ paths:
             // Call the API
 
             var response = client.getObject(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               attributesToRetrieve = listOf("attr1", "attr2"),
             )
@@ -2713,7 +2721,7 @@ paths:
 
             // Call the API
             $response = $client->getObject(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
                 'uniqueID',
                 [
                     'attr1',
@@ -2732,7 +2740,7 @@ paths:
 
             # Call the API
             response = await _client.get_object(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_retrieve=[
                     "attr1",
@@ -2755,8 +2763,8 @@ paths:
 
             # Call the API
 
-            response = client.get_object("theIndexName", "uniqueID", ["attr1",
-            "attr2"])
+            response = client.get_object("<YOUR_INDEX_NAME>", "uniqueID",
+            ["attr1", "attr2"])
 
 
             # use the class directly
@@ -2779,7 +2787,7 @@ paths:
             // Call the API
 
             val response = client.getObject(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               attributesToRetrieve = Some(Seq("attr1", "attr2"))
             )
@@ -2800,7 +2808,7 @@ paths:
             // Call the API
 
             let response = try await client.getObject(
-                indexName: "theIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
                 attributesToRetrieve: ["attr1", "attr2"]
             )
@@ -2859,7 +2867,7 @@ paths:
             // Call the API
 
             var response = await client.AddOrUpdateObjectAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "uniqueID",
               new Dictionary<string, string> { { "key", "value" } }
             );
@@ -2875,7 +2883,7 @@ paths:
             // Call the API
 
             final response = await client.addOrUpdateObject(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
               body: {
                 'key': "value",
@@ -2898,7 +2906,7 @@ paths:
 
             response, err :=
             client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-              "indexName", "uniqueID", map[string]any{"key": "value"},
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"},
             ))
 
             if err != nil {
@@ -2921,8 +2929,8 @@ paths:
 
             // Call the API
 
-            client.addOrUpdateObject("indexName", "uniqueID", Map.of("key",
-            "value"));
+            client.addOrUpdateObject("<YOUR_INDEX_NAME>", "uniqueID",
+            Map.of("key", "value"));
         - lang: javascript
           label: JavaScript
           source: |
@@ -2950,7 +2958,7 @@ paths:
             // Call the API
 
             var response = client.addOrUpdateObject(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               body = buildJsonObject {
                 put(
@@ -2972,7 +2980,7 @@ paths:
 
             // Call the API
             $response = $client->addOrUpdateObject(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'uniqueID',
                 ['key' => 'value',
                 ],
@@ -2988,7 +2996,7 @@ paths:
 
             # Call the API
             response = await _client.add_or_update_object(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 body={
                     "key": "value",
@@ -3010,8 +3018,8 @@ paths:
 
             # Call the API
 
-            response = client.add_or_update_object("indexName", "uniqueID",
-            {key: "value"})
+            response = client.add_or_update_object("<YOUR_INDEX_NAME>",
+            "uniqueID", {key: "value"})
 
 
             # use the class directly
@@ -3034,7 +3042,7 @@ paths:
             // Call the API
 
             val response = client.addOrUpdateObject(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               body = JObject(List(JField("key", JString("value"))))
             )
@@ -3055,7 +3063,7 @@ paths:
             // Call the API
 
             let response = try await client.addOrUpdateObject(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
                 body: ["key": "value"]
             )
@@ -3323,7 +3331,7 @@ paths:
             // Call the API
 
             var response = await client.DeleteByAsync(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               new DeleteByParams { Filters = "brand:brandName", }
             );
         - lang: dart
@@ -3338,7 +3346,7 @@ paths:
             // Call the API
 
             final response = await client.deleteBy(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
               deleteByParams: DeleteByParams(
                 filters: "brand:brandName",
               ),
@@ -3355,7 +3363,7 @@ paths:
 
             // Call the API
             response, err := client.DeleteBy(client.NewApiDeleteByRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
             ))
             if err != nil {
@@ -3376,7 +3384,7 @@ paths:
 
             // Call the API
 
-            client.deleteBy("theIndexName", new
+            client.deleteBy("<YOUR_INDEX_NAME>", new
             DeleteByParams().setFilters("brand:brandName"));
         - lang: javascript
           label: JavaScript
@@ -3407,7 +3415,7 @@ paths:
             // Call the API
 
             var response = client.deleteBy(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               deleteByParams = DeleteByParams(
                 filters = "brand:brandName",
               ),
@@ -3425,7 +3433,7 @@ paths:
 
             // Call the API
             $response = $client->deleteBy(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
                 ['filters' => 'brand:brandName',
                 ],
             );
@@ -3440,7 +3448,7 @@ paths:
 
             # Call the API
             response = await _client.delete_by(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 delete_by_params={
                     "filters": "brand:brandName",
                 },
@@ -3461,7 +3469,7 @@ paths:
 
             # Call the API
 
-            response = client.delete_by("theIndexName",
+            response = client.delete_by("<YOUR_INDEX_NAME>",
             DeleteByParams.new(filters: "brand:brandName"))
 
 
@@ -3485,7 +3493,7 @@ paths:
             // Call the API
 
             val response = client.deleteBy(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               deleteByParams = DeleteByParams(
                 filters = Some("brand:brandName")
               )
@@ -3507,7 +3515,7 @@ paths:
             // Call the API
 
             let response = try await client.deleteBy(
-                indexName: "theIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 deleteByParams: DeleteByParams(filters: "brand:brandName")
             )
   /1/indexes/{indexName}/clear:
@@ -3546,7 +3554,7 @@ paths:
 
             // Call the API
 
-            var response = await client.ClearObjectsAsync("theIndexName");
+            var response = await client.ClearObjectsAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -3559,7 +3567,7 @@ paths:
             // Call the API
 
             final response = await client.clearObjects(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -3578,7 +3586,7 @@ paths:
 
             response, err :=
             client.ClearObjects(client.NewApiClearObjectsRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -3601,7 +3609,7 @@ paths:
 
             // Call the API
 
-            client.clearObjects("theIndexName");
+            client.clearObjects("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -3631,7 +3639,7 @@ paths:
             // Call the API
 
             var response = client.clearObjects(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -3646,7 +3654,7 @@ paths:
 
             // Call the API
             $response = $client->clearObjects(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -3659,7 +3667,7 @@ paths:
 
             # Call the API
             response = await _client.clear_objects(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -3674,7 +3682,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.clear_objects("theIndexName")
+            response = client.clear_objects("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -3693,7 +3701,7 @@ paths:
             // Call the API
 
             val response = client.clearObjects(
-              indexName = "theIndexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -3712,7 +3720,7 @@ paths:
             // Call the API
 
             let response = try await client.clearObjects(indexName:
-            "theIndexName")
+            "<YOUR_INDEX_NAME>")
   /1/indexes/{indexName}/{objectID}/partial:
     post:
       tags:
@@ -3816,7 +3824,7 @@ paths:
             // Call the API
 
             var response = await client.PartialUpdateObjectAsync(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               "uniqueID",
               new Dictionary<string, string> { { "attributeId", "new value" } }
             );
@@ -3832,7 +3840,7 @@ paths:
             // Call the API
 
             final response = await client.partialUpdateObject(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
               attributesToUpdate: {
                 'attributeId': "new value",
@@ -3855,7 +3863,7 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "theIndexName", "uniqueID", map[string]any{"attributeId": "new value"},
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
             ))
 
             if err != nil {
@@ -3878,7 +3886,7 @@ paths:
 
             // Call the API
 
-            client.partialUpdateObject("theIndexName", "uniqueID",
+            client.partialUpdateObject("<YOUR_INDEX_NAME>", "uniqueID",
             Map.of("attributeId", "new value"));
         - lang: javascript
           label: JavaScript
@@ -3907,7 +3915,7 @@ paths:
             // Call the API
 
             var response = client.partialUpdateObject(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               attributesToUpdate = buildJsonObject {
                 put(
@@ -3929,7 +3937,7 @@ paths:
 
             // Call the API
             $response = $client->partialUpdateObject(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
                 'uniqueID',
                 ['attributeId' => 'new value',
                 ],
@@ -3945,7 +3953,7 @@ paths:
 
             # Call the API
             response = await _client.partial_update_object(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_update={
                     "attributeId": "new value",
@@ -3967,8 +3975,8 @@ paths:
 
             # Call the API
 
-            response = client.partial_update_object("theIndexName", "uniqueID",
-            {attributeId: "new value"})
+            response = client.partial_update_object("<YOUR_INDEX_NAME>",
+            "uniqueID", {attributeId: "new value"})
 
 
             # use the class directly
@@ -3991,7 +3999,7 @@ paths:
             // Call the API
 
             val response = client.partialUpdateObject(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
             )
@@ -4012,7 +4020,7 @@ paths:
             // Call the API
 
             let response = try await client.partialUpdateObject(
-                indexName: "theIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 objectID: "uniqueID",
                 attributesToUpdate: ["attributeId": "new value"]
             )
@@ -4475,7 +4483,7 @@ paths:
                   {
                     Action = Enum.Parse<Action>("AddObject"),
                     Body = new Dictionary<string, string> { { "key", "value" } },
-                    IndexName = "theIndexName",
+                    IndexName = "<YOUR_INDEX_NAME>",
                   }
                 },
               }
@@ -4499,7 +4507,7 @@ paths:
                     body: {
                       'key': "value",
                     },
-                    indexName: "theIndexName",
+                    indexName: "<YOUR_INDEX_NAME>",
                   ),
                 ],
               ),
@@ -4523,7 +4531,7 @@ paths:
             client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
               search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("theIndexName")}),
+                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
             ))
 
             if err != nil {
@@ -4549,7 +4557,7 @@ paths:
             client.multipleBatch(
               new BatchParams()
                 .setRequests(
-                  List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
+                  List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("<YOUR_INDEX_NAME>"))
                 )
             );
         - lang: javascript
@@ -4587,7 +4595,7 @@ paths:
                         JsonPrimitive("value"),
                       )
                     },
-                    indexName = "theIndexName",
+                    indexName = "<YOUR_INDEX_NAME>",
                   ),
                 ),
               ),
@@ -4609,7 +4617,7 @@ paths:
                     ['action' => 'addObject',
                         'body' => ['key' => 'value',
                         ],
-                        'indexName' => 'theIndexName',
+                        'indexName' => '<YOUR_INDEX_NAME>',
                     ],
                 ],
                 ],
@@ -4632,7 +4640,7 @@ paths:
                             "body": {
                                 "key": "value",
                             },
-                            "indexName": "theIndexName",
+                            "indexName": "<YOUR_INDEX_NAME>",
                         },
                     ],
                 },
@@ -4652,7 +4660,7 @@ paths:
             # Call the API
             response = client.multiple_batch(
               BatchParams.new(
-                requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "theIndexName")]
+                requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "<YOUR_INDEX_NAME>")]
               )
             )
 
@@ -4678,7 +4686,7 @@ paths:
                   MultipleBatchRequest(
                     action = Action.withName("addObject"),
                     body = Some(JObject(List(JField("key", JString("value"))))),
-                    indexName = "theIndexName"
+                    indexName = "<YOUR_INDEX_NAME>"
                   )
                 )
               )
@@ -4703,7 +4711,7 @@ paths:
             BatchParams(requests: [MultipleBatchRequest(
                 action: SearchAction.addObject,
                 body: ["key": "value"],
-                indexName: "theIndexName"
+                indexName: "<YOUR_INDEX_NAME>"
             )]))
   /1/indexes/*/objects:
     post:
@@ -4812,7 +4820,7 @@ paths:
                   {
                     AttributesToRetrieve = new List<string> { "attr1", "attr2" },
                     ObjectID = "uniqueID",
-                    IndexName = "theIndexName",
+                    IndexName = "<YOUR_INDEX_NAME>",
                   }
                 },
               }
@@ -4837,7 +4845,7 @@ paths:
                       "attr2",
                     ],
                     objectID: "uniqueID",
-                    indexName: "theIndexName",
+                    indexName: "<YOUR_INDEX_NAME>",
                   ),
                 ],
               ),
@@ -4857,7 +4865,7 @@ paths:
 
               search.NewEmptyGetObjectsParams().SetRequests(
                 []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")}),
+                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
             ))
             if err != nil {
               // handle the eventual error
@@ -4881,7 +4889,10 @@ paths:
               new GetObjectsParams()
                 .setRequests(
                   List.of(
-                    new GetObjectsRequest().setAttributesToRetrieve(List.of("attr1", "attr2")).setObjectID("uniqueID").setIndexName("theIndexName")
+                    new GetObjectsRequest()
+                      .setAttributesToRetrieve(List.of("attr1", "attr2"))
+                      .setObjectID("uniqueID")
+                      .setIndexName("<YOUR_INDEX_NAME>")
                   )
                 ),
               Hit.class
@@ -4916,7 +4927,7 @@ paths:
                   GetObjectsRequest(
                     attributesToRetrieve = listOf("attr1", "attr2"),
                     objectID = "uniqueID",
-                    indexName = "theIndexName",
+                    indexName = "<YOUR_INDEX_NAME>",
                   ),
                 ),
               ),
@@ -4941,7 +4952,7 @@ paths:
                         'attr2',
                     ],
                         'objectID' => 'uniqueID',
-                        'indexName' => 'theIndexName',
+                        'indexName' => '<YOUR_INDEX_NAME>',
                     ],
                 ],
                 ],
@@ -4965,7 +4976,7 @@ paths:
                                 "attr2",
                             ],
                             "objectID": "uniqueID",
-                            "indexName": "theIndexName",
+                            "indexName": "<YOUR_INDEX_NAME>",
                         },
                     ],
                 },
@@ -4989,7 +5000,7 @@ paths:
                   GetObjectsRequest.new(
                     attributes_to_retrieve: ["attr1", "attr2"],
                     object_id: "uniqueID",
-                    index_name: "theIndexName"
+                    index_name: "<YOUR_INDEX_NAME>"
                   )
                 ]
               )
@@ -5017,7 +5028,7 @@ paths:
                   GetObjectsRequest(
                     attributesToRetrieve = Some(Seq("attr1", "attr2")),
                     objectID = "uniqueID",
-                    indexName = "theIndexName"
+                    indexName = "<YOUR_INDEX_NAME>"
                   )
                 )
               )
@@ -5042,7 +5053,7 @@ paths:
                 .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
                     attributesToRetrieve: ["attr1", "attr2"],
                     objectID: "uniqueID",
-                    indexName: "theIndexName"
+                    indexName: "<YOUR_INDEX_NAME>"
                 )]))
   /1/indexes/{indexName}/settings:
     get:
@@ -5082,7 +5093,7 @@ paths:
 
             // Call the API
 
-            var response = await client.GetSettingsAsync("cts_e2e_settings");
+            var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -5095,7 +5106,7 @@ paths:
             // Call the API
 
             final response = await client.getSettings(
-              indexName: "cts_e2e_settings",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -5109,7 +5120,7 @@ paths:
 
             // Call the API
             response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "cts_e2e_settings",
+              "<YOUR_INDEX_NAME>",
             ))
             if err != nil {
               // handle the eventual error
@@ -5129,7 +5140,7 @@ paths:
 
             // Call the API
 
-            client.getSettings("cts_e2e_settings");
+            client.getSettings("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -5159,7 +5170,7 @@ paths:
             // Call the API
 
             var response = client.getSettings(
-              indexName = "cts_e2e_settings",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -5174,7 +5185,7 @@ paths:
 
             // Call the API
             $response = $client->getSettings(
-                'cts_e2e_settings',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -5187,7 +5198,7 @@ paths:
 
             # Call the API
             response = await _client.get_settings(
-                index_name="cts_e2e_settings",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -5202,7 +5213,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.get_settings("cts_e2e_settings")
+            response = client.get_settings("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -5221,7 +5232,7 @@ paths:
             // Call the API
 
             val response = client.getSettings(
-              indexName = "cts_e2e_settings"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -5240,7 +5251,7 @@ paths:
             // Call the API
 
             let response = try await client.getSettings(indexName:
-            "cts_e2e_settings")
+            "<YOUR_INDEX_NAME>")
     put:
       tags:
         - Indices
@@ -5542,7 +5553,8 @@ paths:
 
             // Call the API
 
-            var response = await client.GetSynonymAsync("indexName", "id1");
+            var response = await client.GetSynonymAsync("<YOUR_INDEX_NAME>",
+            "id1");
         - lang: dart
           label: Dart
           source: >
@@ -5555,7 +5567,7 @@ paths:
             // Call the API
 
             final response = await client.getSynonym(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
         - lang: go
@@ -5570,7 +5582,7 @@ paths:
 
             // Call the API
             response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-              "indexName", "id1",
+              "<YOUR_INDEX_NAME>", "id1",
             ))
             if err != nil {
               // handle the eventual error
@@ -5590,7 +5602,7 @@ paths:
 
             // Call the API
 
-            client.getSynonym("indexName", "id1");
+            client.getSynonym("<YOUR_INDEX_NAME>", "id1");
         - lang: javascript
           label: JavaScript
           source: >
@@ -5620,7 +5632,7 @@ paths:
             // Call the API
 
             var response = client.getSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
             )
 
@@ -5636,7 +5648,7 @@ paths:
 
             // Call the API
             $response = $client->getSynonym(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'id1',
             );
 
@@ -5650,7 +5662,7 @@ paths:
 
             # Call the API
             response = await _client.get_synonym(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
 
@@ -5666,7 +5678,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.get_synonym("indexName", "id1")
+            response = client.get_synonym("<YOUR_INDEX_NAME>", "id1")
 
             # use the class directly
             puts(response)
@@ -5685,7 +5697,7 @@ paths:
             // Call the API
 
             val response = client.getSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1"
             )
 
@@ -5704,8 +5716,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.getSynonym(indexName: "indexName",
-            objectID: "id1")
+            let response = try await client.getSynonym(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "id1")
     put:
       tags:
         - Synonyms
@@ -5772,7 +5784,7 @@ paths:
             // Call the API
 
             var response = await client.SaveSynonymAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               new SynonymHit
               {
@@ -5794,7 +5806,7 @@ paths:
             // Call the API
 
             final response = await client.saveSynonym(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
               synonymHit: SynonymHit(
                 objectID: "id1",
@@ -5819,7 +5831,7 @@ paths:
 
             // Call the API
             response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
-              "indexName", "id1",
+              "<YOUR_INDEX_NAME>", "id1",
               search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
                 []string{"car", "vehicule", "auto"}),
             ).WithForwardToReplicas(true))
@@ -5842,7 +5854,7 @@ paths:
             // Call the API
 
             client.saveSynonym(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
               true
@@ -5875,7 +5887,7 @@ paths:
             // Call the API
 
             var response = client.saveSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
               synonymHit = SynonymHit(
                 objectID = "id1",
@@ -5897,7 +5909,7 @@ paths:
 
             // Call the API
             $response = $client->saveSynonym(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'id1',
                 ['objectID' => 'id1',
                     'type' => 'synonym',
@@ -5922,7 +5934,7 @@ paths:
 
             # Call the API
             response = await _client.save_synonym(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 synonym_hit={
                     "objectID": "id1",
@@ -5949,7 +5961,7 @@ paths:
 
             # Call the API
             response = client.save_synonym(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
               true
@@ -5972,7 +5984,7 @@ paths:
             // Call the API
 
             val response = client.saveSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
               synonymHit = SynonymHit(
                 objectID = "id1",
@@ -5998,7 +6010,7 @@ paths:
             // Call the API
 
             let response = try await client.saveSynonym(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 objectID: "id1",
                 synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                 forwardToReplicas: true
@@ -6042,7 +6054,8 @@ paths:
 
             // Call the API
 
-            var response = await client.DeleteSynonymAsync("indexName", "id1");
+            var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>",
+            "id1");
         - lang: dart
           label: Dart
           source: >
@@ -6055,7 +6068,7 @@ paths:
             // Call the API
 
             final response = await client.deleteSynonym(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
         - lang: go
@@ -6075,7 +6088,7 @@ paths:
 
             response, err :=
             client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-              "indexName", "id1",
+              "<YOUR_INDEX_NAME>", "id1",
             ))
 
             if err != nil {
@@ -6098,7 +6111,7 @@ paths:
 
             // Call the API
 
-            client.deleteSynonym("indexName", "id1");
+            client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
         - lang: javascript
           label: JavaScript
           source: >
@@ -6128,7 +6141,7 @@ paths:
             // Call the API
 
             var response = client.deleteSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
             )
 
@@ -6144,7 +6157,7 @@ paths:
 
             // Call the API
             $response = $client->deleteSynonym(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'id1',
             );
 
@@ -6158,7 +6171,7 @@ paths:
 
             # Call the API
             response = await _client.delete_synonym(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
 
@@ -6174,7 +6187,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.delete_synonym("indexName", "id1")
+            response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
 
             # use the class directly
             puts(response)
@@ -6193,7 +6206,7 @@ paths:
             // Call the API
 
             val response = client.deleteSynonym(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1"
             )
 
@@ -6213,7 +6226,7 @@ paths:
             // Call the API
 
             let response = try await client.deleteSynonym(indexName:
-            "indexName", objectID: "id1")
+            "<YOUR_INDEX_NAME>", objectID: "id1")
   /1/indexes/{indexName}/synonyms/batch:
     post:
       tags:
@@ -6619,7 +6632,7 @@ paths:
 
             // Call the API
 
-            var response = await client.ClearSynonymsAsync("indexName");
+            var response = await client.ClearSynonymsAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -6632,7 +6645,7 @@ paths:
             // Call the API
 
             final response = await client.clearSynonyms(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -6651,7 +6664,7 @@ paths:
 
             response, err :=
             client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -6674,7 +6687,7 @@ paths:
 
             // Call the API
 
-            client.clearSynonyms("indexName");
+            client.clearSynonyms("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -6704,7 +6717,7 @@ paths:
             // Call the API
 
             var response = client.clearSynonyms(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -6719,7 +6732,7 @@ paths:
 
             // Call the API
             $response = $client->clearSynonyms(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -6732,7 +6745,7 @@ paths:
 
             # Call the API
             response = await _client.clear_synonyms(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -6747,7 +6760,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.clear_synonyms("indexName")
+            response = client.clear_synonyms("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -6766,7 +6779,7 @@ paths:
             // Call the API
 
             val response = client.clearSynonyms(
-              indexName = "indexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -6785,7 +6798,7 @@ paths:
             // Call the API
 
             let response = try await client.clearSynonyms(indexName:
-            "indexName")
+            "<YOUR_INDEX_NAME>")
   /1/indexes/{indexName}/synonyms/search:
     post:
       tags:
@@ -6843,7 +6856,8 @@ paths:
 
             // Call the API
 
-            var response = await client.SearchSynonymsAsync("indexName");
+            var response = await
+            client.SearchSynonymsAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -6856,7 +6870,7 @@ paths:
             // Call the API
 
             final response = await client.searchSynonyms(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -6875,7 +6889,7 @@ paths:
 
             response, err :=
             client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -6898,7 +6912,7 @@ paths:
 
             // Call the API
 
-            client.searchSynonyms("indexName");
+            client.searchSynonyms("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -6928,7 +6942,7 @@ paths:
             // Call the API
 
             var response = client.searchSynonyms(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -6943,7 +6957,7 @@ paths:
 
             // Call the API
             $response = $client->searchSynonyms(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -6956,7 +6970,7 @@ paths:
 
             # Call the API
             response = await _client.search_synonyms(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -6971,7 +6985,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.search_synonyms("indexName")
+            response = client.search_synonyms("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -6990,7 +7004,7 @@ paths:
             // Call the API
 
             val response = client.searchSynonyms(
-              indexName = "indexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -7009,7 +7023,7 @@ paths:
             // Call the API
 
             let response = try await client.searchSynonyms(indexName:
-            "indexName")
+            "<YOUR_INDEX_NAME>")
   /1/keys:
     get:
       tags:
@@ -8404,7 +8418,7 @@ paths:
 
             // Call the API
 
-            var response = await client.GetRuleAsync("cts_e2e_browse",
+            var response = await client.GetRuleAsync("<YOUR_INDEX_NAME>",
             "qr-1725004648916");
         - lang: dart
           label: Dart
@@ -8418,7 +8432,7 @@ paths:
             // Call the API
 
             final response = await client.getRule(
-              indexName: "cts_e2e_browse",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "qr-1725004648916",
             );
         - lang: go
@@ -8433,7 +8447,7 @@ paths:
 
             // Call the API
             response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "cts_e2e_browse", "qr-1725004648916",
+              "<YOUR_INDEX_NAME>", "qr-1725004648916",
             ))
             if err != nil {
               // handle the eventual error
@@ -8453,7 +8467,7 @@ paths:
 
             // Call the API
 
-            client.getRule("cts_e2e_browse", "qr-1725004648916");
+            client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
         - lang: javascript
           label: JavaScript
           source: >
@@ -8483,7 +8497,7 @@ paths:
             // Call the API
 
             var response = client.getRule(
-              indexName = "cts_e2e_browse",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "qr-1725004648916",
             )
 
@@ -8499,7 +8513,7 @@ paths:
 
             // Call the API
             $response = $client->getRule(
-                'cts_e2e_browse',
+                '<YOUR_INDEX_NAME>',
                 'qr-1725004648916',
             );
 
@@ -8513,7 +8527,7 @@ paths:
 
             # Call the API
             response = await _client.get_rule(
-                index_name="cts_e2e_browse",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="qr-1725004648916",
             )
 
@@ -8529,7 +8543,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.get_rule("cts_e2e_browse", "qr-1725004648916")
+            response = client.get_rule("<YOUR_INDEX_NAME>", "qr-1725004648916")
 
             # use the class directly
             puts(response)
@@ -8548,7 +8562,7 @@ paths:
             // Call the API
 
             val response = client.getRule(
-              indexName = "cts_e2e_browse",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "qr-1725004648916"
             )
 
@@ -8567,8 +8581,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.getRule(indexName: "cts_e2e_browse",
-            objectID: "qr-1725004648916")
+            let response = try await client.getRule(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
     put:
       tags:
         - Rules
@@ -8622,7 +8636,7 @@ paths:
             // Call the API
 
             var response = await client.SaveRuleAsync(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               new Rule
               {
@@ -8645,7 +8659,7 @@ paths:
             // Call the API
 
             final response = await client.saveRule(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
               rule: Rule(
                 objectID: "id1",
@@ -8669,7 +8683,7 @@ paths:
 
             // Call the API
             response, err := client.SaveRule(client.NewApiSaveRuleRequest(
-              "indexName", "id1",
+              "<YOUR_INDEX_NAME>", "id1",
               search.NewEmptyRule().SetObjectID("id1").SetConditions(
                 []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
             ))
@@ -8692,7 +8706,7 @@ paths:
             // Call the API
 
             client.saveRule(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
             );
@@ -8723,7 +8737,7 @@ paths:
             // Call the API
 
             var response = client.saveRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
               rule = Rule(
                 objectID = "id1",
@@ -8748,7 +8762,7 @@ paths:
 
             // Call the API
             $response = $client->saveRule(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'id1',
                 ['objectID' => 'id1',
                     'conditions' => [
@@ -8769,7 +8783,7 @@ paths:
 
             # Call the API
             response = await _client.save_rule(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 rule={
                     "objectID": "id1",
@@ -8795,7 +8809,7 @@ paths:
 
             # Call the API
             response = client.save_rule(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
               "id1",
               Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
             )
@@ -8817,7 +8831,7 @@ paths:
             // Call the API
 
             val response = client.saveRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
               rule = Rule(
                 objectID = "id1",
@@ -8848,7 +8862,7 @@ paths:
             // Call the API
 
             let response = try await client.saveRule(
-                indexName: "indexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 objectID: "id1",
                 rule: Rule(
                     objectID: "id1",
@@ -8893,7 +8907,8 @@ paths:
 
             // Call the API
 
-            var response = await client.DeleteRuleAsync("indexName", "id1");
+            var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>",
+            "id1");
         - lang: dart
           label: Dart
           source: >
@@ -8906,7 +8921,7 @@ paths:
             // Call the API
 
             final response = await client.deleteRule(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
         - lang: go
@@ -8921,7 +8936,7 @@ paths:
 
             // Call the API
             response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-              "indexName", "id1",
+              "<YOUR_INDEX_NAME>", "id1",
             ))
             if err != nil {
               // handle the eventual error
@@ -8941,7 +8956,7 @@ paths:
 
             // Call the API
 
-            client.deleteRule("indexName", "id1");
+            client.deleteRule("<YOUR_INDEX_NAME>", "id1");
         - lang: javascript
           label: JavaScript
           source: >
@@ -8971,7 +8986,7 @@ paths:
             // Call the API
 
             var response = client.deleteRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1",
             )
 
@@ -8987,7 +9002,7 @@ paths:
 
             // Call the API
             $response = $client->deleteRule(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
                 'id1',
             );
 
@@ -9001,7 +9016,7 @@ paths:
 
             # Call the API
             response = await _client.delete_rule(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
 
@@ -9017,7 +9032,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.delete_rule("indexName", "id1")
+            response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
 
             # use the class directly
             puts(response)
@@ -9036,7 +9051,7 @@ paths:
             // Call the API
 
             val response = client.deleteRule(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
               objectID = "id1"
             )
 
@@ -9055,8 +9070,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.deleteRule(indexName: "indexName",
-            objectID: "id1")
+            let response = try await client.deleteRule(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "id1")
   /1/indexes/{indexName}/rules/batch:
     post:
       tags:
@@ -9476,7 +9491,7 @@ paths:
 
             // Call the API
 
-            var response = await client.ClearRulesAsync("indexName");
+            var response = await client.ClearRulesAsync("<YOUR_INDEX_NAME>");
         - lang: dart
           label: Dart
           source: >
@@ -9489,7 +9504,7 @@ paths:
             // Call the API
 
             final response = await client.clearRules(
-              indexName: "indexName",
+              indexName: "<YOUR_INDEX_NAME>",
             );
         - lang: go
           label: Go
@@ -9503,7 +9518,7 @@ paths:
 
             // Call the API
             response, err := client.ClearRules(client.NewApiClearRulesRequest(
-              "indexName",
+              "<YOUR_INDEX_NAME>",
             ))
             if err != nil {
               // handle the eventual error
@@ -9523,7 +9538,7 @@ paths:
 
             // Call the API
 
-            client.clearRules("indexName");
+            client.clearRules("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -9553,7 +9568,7 @@ paths:
             // Call the API
 
             var response = client.clearRules(
-              indexName = "indexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -9568,7 +9583,7 @@ paths:
 
             // Call the API
             $response = $client->clearRules(
-                'indexName',
+                '<YOUR_INDEX_NAME>',
             );
 
             // play with the response
@@ -9581,7 +9596,7 @@ paths:
 
             # Call the API
             response = await _client.clear_rules(
-                index_name="indexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -9596,7 +9611,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.clear_rules("indexName")
+            response = client.clear_rules("<YOUR_INDEX_NAME>")
 
             # use the class directly
             puts(response)
@@ -9615,7 +9630,7 @@ paths:
             // Call the API
 
             val response = client.clearRules(
-              indexName = "indexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -9633,7 +9648,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.clearRules(indexName: "indexName")
+            let response = try await client.clearRules(indexName:
+            "<YOUR_INDEX_NAME>")
   /1/indexes/{indexName}/rules/search:
     post:
       tags:
@@ -9727,7 +9743,7 @@ paths:
             // Call the API
 
             var response = await client.SearchRulesAsync(
-              "cts_e2e_browse",
+              "<YOUR_INDEX_NAME>",
               new SearchRulesParams { Query = "zorro", }
             );
         - lang: dart
@@ -9742,7 +9758,7 @@ paths:
             // Call the API
 
             final response = await client.searchRules(
-              indexName: "cts_e2e_browse",
+              indexName: "<YOUR_INDEX_NAME>",
               searchRulesParams: SearchRulesParams(
                 query: "zorro",
               ),
@@ -9759,7 +9775,7 @@ paths:
 
             // Call the API
             response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "cts_e2e_browse",
+              "<YOUR_INDEX_NAME>",
             ).WithSearchRulesParams(
               search.NewEmptySearchRulesParams().SetQuery("zorro")))
             if err != nil {
@@ -9780,7 +9796,7 @@ paths:
 
             // Call the API
 
-            client.searchRules("cts_e2e_browse", new
+            client.searchRules("<YOUR_INDEX_NAME>", new
             SearchRulesParams().setQuery("zorro"));
         - lang: javascript
           label: JavaScript
@@ -9811,7 +9827,7 @@ paths:
             // Call the API
 
             var response = client.searchRules(
-              indexName = "cts_e2e_browse",
+              indexName = "<YOUR_INDEX_NAME>",
               searchRulesParams = SearchRulesParams(
                 query = "zorro",
               ),
@@ -9829,7 +9845,7 @@ paths:
 
             // Call the API
             $response = $client->searchRules(
-                'cts_e2e_browse',
+                '<YOUR_INDEX_NAME>',
                 ['query' => 'zorro',
                 ],
             );
@@ -9844,7 +9860,7 @@ paths:
 
             # Call the API
             response = await _client.search_rules(
-                index_name="cts_e2e_browse",
+                index_name="<YOUR_INDEX_NAME>",
                 search_rules_params={
                     "query": "zorro",
                 },
@@ -9865,7 +9881,7 @@ paths:
 
             # Call the API
 
-            response = client.search_rules("cts_e2e_browse",
+            response = client.search_rules("<YOUR_INDEX_NAME>",
             SearchRulesParams.new(query: "zorro"))
 
 
@@ -9889,7 +9905,7 @@ paths:
             // Call the API
 
             val response = client.searchRules(
-              indexName = "cts_e2e_browse",
+              indexName = "<YOUR_INDEX_NAME>",
               searchRulesParams = Some(
                 SearchRulesParams(
                   query = Some("zorro")
@@ -9913,7 +9929,7 @@ paths:
             // Call the API
 
             let response = try await client.searchRules(
-                indexName: "cts_e2e_browse",
+                indexName: "<YOUR_INDEX_NAME>",
                 searchRulesParams: SearchRulesParams(query: "zorro")
             )
   /1/dictionaries/{dictionaryName}/batch:
@@ -14570,14 +14586,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -14786,14 +14795,7 @@ paths:
           content:
             application/json:
               schema:
-                title: getTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
+                $ref: '#/components/schemas/GetTaskResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -14814,7 +14816,7 @@ paths:
 
             // Call the API
 
-            var response = await client.GetTaskAsync("theIndexName", 123L);
+            var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
         - lang: dart
           label: Dart
           source: >
@@ -14827,7 +14829,7 @@ paths:
             // Call the API
 
             final response = await client.getTask(
-              indexName: "theIndexName",
+              indexName: "<YOUR_INDEX_NAME>",
               taskID: 123,
             );
         - lang: go
@@ -14842,7 +14844,7 @@ paths:
 
             // Call the API
             response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "theIndexName", 123,
+              "<YOUR_INDEX_NAME>", 123,
             ))
             if err != nil {
               // handle the eventual error
@@ -14862,7 +14864,7 @@ paths:
 
             // Call the API
 
-            client.getTask("theIndexName", 123L);
+            client.getTask("<YOUR_INDEX_NAME>", 123L);
         - lang: javascript
           label: JavaScript
           source: >
@@ -14892,7 +14894,7 @@ paths:
             // Call the API
 
             var response = client.getTask(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               taskID = 123L,
             )
 
@@ -14908,7 +14910,7 @@ paths:
 
             // Call the API
             $response = $client->getTask(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
                 123,
             );
 
@@ -14922,7 +14924,7 @@ paths:
 
             # Call the API
             response = await _client.get_task(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 task_id=123,
             )
 
@@ -14938,7 +14940,7 @@ paths:
             client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            response = client.get_task("theIndexName", 123)
+            response = client.get_task("<YOUR_INDEX_NAME>", 123)
 
             # use the class directly
             puts(response)
@@ -14957,7 +14959,7 @@ paths:
             // Call the API
 
             val response = client.getTask(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               taskID = 123L
             )
 
@@ -14976,8 +14978,8 @@ paths:
 
             // Call the API
 
-            let response = try await client.getTask(indexName: "theIndexName",
-            taskID: Int64(123))
+            let response = try await client.getTask(indexName:
+            "<YOUR_INDEX_NAME>", taskID: Int64(123))
   /1/indexes/{indexName}/operation:
     post:
       tags:
@@ -19395,6 +19397,15 @@ components:
       description: >-
         Task status, `published` if the task is completed, `notPublished`
         otherwise.
+    GetTaskResponse:
+      title: getTaskResponse
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/taskStatus'
+      required:
+        - status
     operationType:
       type: string
       enum:

@@ -25,12 +25,12 @@ public class SnippetQuerySuggestionsClient
     var response = await client.CreateConfigAsync(
       new ConfigurationWithIndex
       {
-        IndexName = "theIndexName",
+        IndexName = "<YOUR_INDEX_NAME>",
         SourceIndices = new List<SourceIndex>
         {
           new SourceIndex
           {
-            IndexName = "testIndex",
+            IndexName = "<YOUR_INDEX_NAME>",
             Facets = new List<Facet> { new Facet { Attribute = "test", } },
             Generate = new List<List<string>>
             {
@@ -132,7 +132,7 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.DeleteConfigAsync("theIndexName");
+    var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -168,7 +168,7 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+    var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -186,7 +186,7 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetConfigStatusAsync("theIndexName");
+    var response = await client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -204,7 +204,7 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetLogFileAsync("theIndexName");
+    var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -223,14 +223,14 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.UpdateConfigAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new Configuration
       {
         SourceIndices = new List<SourceIndex>
         {
           new SourceIndex
           {
-            IndexName = "testIndex",
+            IndexName = "<YOUR_INDEX_NAME>",
             Facets = new List<Facet> { new Facet { Attribute = "test", } },
             Generate = new List<List<string>>
             {

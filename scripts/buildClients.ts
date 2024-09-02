@@ -15,6 +15,9 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'csharp':
       await run('dotnet build --configuration Release', { cwd, language });
       break;
+    case 'go':
+      await run('go build ./...', { cwd, language });
+      break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
       if (buildType === 'client') {

@@ -43,8 +43,22 @@ func TestAbtestingcommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestAbtestingcommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createAbtestingClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.2.3\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestAbtestingcommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -59,7 +73,7 @@ func TestAbtestingcommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestAbtestingcommonApi2(t *testing.T) {
+func TestAbtestingcommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res

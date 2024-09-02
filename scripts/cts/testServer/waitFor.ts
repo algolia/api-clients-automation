@@ -113,8 +113,20 @@ function addRoutes(app: Express): void {
       throw new Error(`Invalid API key ${req.params.key}`);
     }
   });
+
+  app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {
+    res.status(200).json({
+      status: 'published',
+    });
+  });
+
+  app.get('/1/task/:taskID', (req, res) => {
+    res.status(200).json({
+      status: 'published',
+    });
+  });
 }
 
 export function waitForApiKeyServer(): Promise<Server> {
-  return setupServer('waitForApiKey', 6681, addRoutes);
+  return setupServer('waitFor', 6681, addRoutes);
 }

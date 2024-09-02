@@ -70,7 +70,7 @@ final class UsageClientSnippet {
         // Call the API
         let response = try await client.getIndexUsage(
             statistic: Statistic.queriesOperations,
-            indexName: "myIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             startDate: "2024-04-03T12:46:43Z",
             endDate: "2024-04-05T12:46:43Z"
         )

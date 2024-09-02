@@ -32,6 +32,23 @@ class InsightsTest {
   }
 
   @Test
+  fun `the user agent contains the latest version`() = runTest {
+    val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(3.2.3\\).*".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
   fun `calls api with default read timeouts`() = runTest {
     val client = InsightsClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(

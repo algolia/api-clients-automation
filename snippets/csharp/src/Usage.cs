@@ -86,7 +86,7 @@ public class SnippetUsageClient
     // Call the API
     var response = await client.GetIndexUsageAsync(
       Enum.Parse<Statistic>("QueriesOperations"),
-      "myIndexName",
+      "<YOUR_INDEX_NAME>",
       "2024-04-03T12:46:43Z",
       "2024-04-05T12:46:43Z"
     );

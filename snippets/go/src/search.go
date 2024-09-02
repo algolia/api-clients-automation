@@ -53,7 +53,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 
 	// Call the API
 	response, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-		"indexName", "uniqueID", map[string]any{"key": "value"},
+		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"},
 	))
 	if err != nil {
 		// handle the eventual error
@@ -474,7 +474,7 @@ func SnippetForBrowseOfSearch() {
 
 	// Call the API
 	response, err := client.Browse(client.NewApiBrowseRequest(
-		"cts_e2e_browse",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -502,7 +502,7 @@ func SnippetForClearObjectsOfSearch() {
 
 	// Call the API
 	response, err := client.ClearObjects(client.NewApiClearObjectsRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -530,7 +530,7 @@ func SnippetForClearRulesOfSearch() {
 
 	// Call the API
 	response, err := client.ClearRules(client.NewApiClearRulesRequest(
-		"indexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -558,7 +558,7 @@ func SnippetForClearSynonymsOfSearch() {
 
 	// Call the API
 	response, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-		"indexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -726,7 +726,7 @@ func SnippetForDeleteByOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteBy(client.NewApiDeleteByRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 		search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
 	))
 	if err != nil {
@@ -755,7 +755,7 @@ func SnippetForDeleteIndexOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -794,6 +794,35 @@ func SnippetForDeleteObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForDeleteObjectsOfSearch() {
+	/*
+	   Snippet for the deleteObjects method.
+
+	   call deleteObjects without error
+	*/
+
+	// >SEPARATOR deleteObjects default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.DeleteObjects(
+		"<YOUR_INDEX_NAME>",
+		[]string{"1", "2"},
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForDeleteRuleOfSearch() {
 	/*
 	   Snippet for the deleteRule method.
@@ -811,7 +840,7 @@ func SnippetForDeleteRuleOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-		"indexName", "id1",
+		"<YOUR_INDEX_NAME>", "id1",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -867,8 +896,70 @@ func SnippetForDeleteSynonymOfSearch() {
 
 	// Call the API
 	response, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-		"indexName", "id1",
+		"<YOUR_INDEX_NAME>", "id1",
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   generate secured api key basic
+	*/
+
+	// >SEPARATOR generateSecuredApiKey generate secured api key basic
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
+			[]string{"Movies"}),
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch1() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   generate secured api key with searchParams
+	*/
+
+	// >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
+			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(
+				[]string{"one", "two"})),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1029,7 +1120,7 @@ func SnippetForGetObjectOfSearch() {
 
 	// Call the API
 	response, err := client.GetObject(client.NewApiGetObjectRequest(
-		"theIndexName", "uniqueID",
+		"<YOUR_INDEX_NAME>", "uniqueID",
 	).WithAttributesToRetrieve(
 		[]string{"attr1", "attr2"}))
 	if err != nil {
@@ -1061,7 +1152,7 @@ func SnippetForGetObjectsOfSearch() {
 
 		search.NewEmptyGetObjectsParams().SetRequests(
 			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")}),
+				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1089,7 +1180,7 @@ func SnippetForGetRuleOfSearch() {
 
 	// Call the API
 	response, err := client.GetRule(client.NewApiGetRuleRequest(
-		"cts_e2e_browse", "qr-1725004648916",
+		"<YOUR_INDEX_NAME>", "qr-1725004648916",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1117,7 +1208,7 @@ func SnippetForGetSettingsOfSearch() {
 
 	// Call the API
 	response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-		"cts_e2e_settings",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1171,7 +1262,7 @@ func SnippetForGetSynonymOfSearch() {
 
 	// Call the API
 	response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-		"indexName", "id1",
+		"<YOUR_INDEX_NAME>", "id1",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1199,7 +1290,7 @@ func SnippetForGetTaskOfSearch() {
 
 	// Call the API
 	response, err := client.GetTask(client.NewApiGetTaskRequest(
-		"theIndexName", 123,
+		"<YOUR_INDEX_NAME>", 123,
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1413,7 +1504,7 @@ func SnippetForMultipleBatchOfSearch() {
 	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
 		search.NewEmptyBatchParams().SetRequests(
-			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("theIndexName")}),
+			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1529,8 +1620,66 @@ func SnippetForPartialUpdateObjectOfSearch() {
 
 	// Call the API
 	response, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-		"theIndexName", "uniqueID", map[string]any{"attributeId": "new value"},
+		"<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPartialUpdateObjectsOfSearch() {
+	/*
+	   Snippet for the partialUpdateObjects method.
+
+	   call partialUpdateObjects with createIfNotExists=true
+	*/
+
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PartialUpdateObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+		search.WithCreateIfNotExists(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPartialUpdateObjectsOfSearch1() {
+	/*
+	   Snippet for the partialUpdateObjects method.
+
+	   call partialUpdateObjects with createIfNotExists=false
+	*/
+
+	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PartialUpdateObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
+		search.WithCreateIfNotExists(false))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1559,6 +1708,35 @@ func SnippetForRemoveUserIdOfSearch() {
 	response, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
 		"uniqueID",
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceAllObjectsOfSearch() {
+	/*
+	   Snippet for the replaceAllObjects method.
+
+	   call replaceAllObjects without error
+	*/
+
+	// >SEPARATOR replaceAllObjects default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
+		search.WithBatchSize(3))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1653,6 +1831,64 @@ func SnippetForSaveObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForSaveObjectsOfSearch() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   call saveObjects without error
+	*/
+
+	// >SEPARATOR saveObjects call saveObjects without error
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveObjectsOfSearch1() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   saveObjects should report errors
+	*/
+
+	// >SEPARATOR saveObjects saveObjects should report errors
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForSaveRuleOfSearch() {
 	/*
 	   Snippet for the saveRule method.
@@ -1670,7 +1906,7 @@ func SnippetForSaveRuleOfSearch() {
 
 	// Call the API
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
-		"indexName", "id1",
+		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptyRule().SetObjectID("id1").SetConditions(
 			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}),
 	))
@@ -1731,7 +1967,7 @@ func SnippetForSaveSynonymOfSearch() {
 
 	// Call the API
 	response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
-		"indexName", "id1",
+		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
 			[]string{"car", "vehicule", "auto"}),
 	).WithForwardToReplicas(true))
@@ -1899,7 +2135,7 @@ func SnippetForSearchOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchOfSearch6() {
+func SnippetForSearchOfSearch4() {
 	/*
 	   Snippet for the search method.
 
@@ -1931,7 +2167,7 @@ func SnippetForSearchOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForSearchOfSearch7() {
+func SnippetForSearchOfSearch5() {
 	/*
 	   Snippet for the search method.
 
@@ -2009,7 +2245,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 
 	// Call the API
 	response, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-		"indexName", "facetName",
+		"<YOUR_INDEX_NAME>", "facetName",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2037,7 +2273,7 @@ func SnippetForSearchRulesOfSearch() {
 
 	// Call the API
 	response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-		"cts_e2e_browse",
+		"<YOUR_INDEX_NAME>",
 	).WithSearchRulesParams(
 		search.NewEmptySearchRulesParams().SetQuery("zorro")))
 	if err != nil {
@@ -2066,7 +2302,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"indexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2094,7 +2330,7 @@ func SnippetForSearchSynonymsOfSearch() {
 
 	// Call the API
 	response, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-		"indexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2171,7 +2407,7 @@ func SnippetForSetSettingsOfSearch() {
 	   setSettingsAttributesForFaceting
 	*/
 
-	// >SEPARATOR setSettings setSettingsAttributesForFaceting
+	// >SEPARATOR setSettings default
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -2215,6 +2451,150 @@ func SnippetForUpdateApiKeyOfSearch() {
 		search.NewEmptyApiKey().SetAcl(
 			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForApiKeyOfSearch() {
+	/*
+	   Snippet for the waitForApiKey method.
+
+	   wait for api key helper - add
+	*/
+
+	// >SEPARATOR waitForApiKey wait for api key helper - add
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForApiKey(
+		"api-key-add-operation-test-go", search.ApiKeyOperation("add"),
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForApiKeyOfSearch1() {
+	/*
+	   Snippet for the waitForApiKey method.
+
+	   wait for api key - update
+	*/
+
+	// >SEPARATOR waitForApiKey wait for api key - update
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForApiKey(
+		"api-key-update-operation-test-go", search.ApiKeyOperation("update"),
+		search.WithApiKey(
+			search.NewEmptyApiKey().SetDescription("my updated api key").SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("deleteObject")}).SetIndexes(
+				[]string{"Movies", "Books"}).SetReferers(
+				[]string{"*google.com", "*algolia.com"}).SetValidity(305).SetMaxQueriesPerIPPerHour(95).SetMaxHitsPerQuery(20)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForApiKeyOfSearch2() {
+	/*
+	   Snippet for the waitForApiKey method.
+
+	   wait for api key - delete
+	*/
+
+	// >SEPARATOR waitForApiKey wait for api key - delete
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForApiKey(
+		"api-key-delete-operation-test-go", search.ApiKeyOperation("delete"),
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForAppTaskOfSearch() {
+	/*
+	   Snippet for the waitForAppTask method.
+
+	   wait for an application-level task
+	*/
+
+	// >SEPARATOR waitForAppTask default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForAppTask(
+		123,
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForWaitForTaskOfSearch() {
+	/*
+	   Snippet for the waitForTask method.
+
+	   wait for task
+	*/
+
+	// >SEPARATOR waitForTask default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.WaitForTask(
+		"<YOUR_INDEX_NAME>", 123,
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)

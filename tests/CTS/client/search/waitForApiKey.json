@@ -1,0 +1,145 @@
+[
+  {
+    "testName": "wait for api key helper - add",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-add-operation-test-${{language}}",
+          "operation": "add"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "value": "api-key-add-operation-test-${{language}}",
+            "description": "my new api key",
+            "acl": [
+              "search",
+              "addObject"
+            ],
+            "validity": 300,
+            "maxQueriesPerIPPerHour": 100,
+            "maxHitsPerQuery": 20,
+            "createdAt": 1720094400
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "wait for api key - update",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-update-operation-test-${{language}}",
+          "operation": "update",
+          "apiKey": {
+            "description": "my updated api key",
+            "acl": [
+              "search",
+              "addObject",
+              "deleteObject"
+            ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "value": "api-key-update-operation-test-${{language}}",
+            "description": "my updated api key",
+            "acl": [
+              "search",
+              "addObject",
+              "deleteObject"
+            ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20,
+            "createdAt": 1720094400
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "wait for api key - delete",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "waitForApiKey",
+        "parameters": {
+          "key": "api-key-delete-operation-test-${{language}}",
+          "operation": "delete"
+        },
+        "expected": {
+          "type": "response",
+          "match": null
+        }
+      }
+    ]
+  }
+]

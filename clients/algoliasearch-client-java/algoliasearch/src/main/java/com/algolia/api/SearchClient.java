@@ -5837,8 +5837,14 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-    TaskUtils.retryUntil(
+  public GetTaskResponse waitForTask(
+    String indexName,
+    Long taskID,
+    int maxRetries,
+    IntUnaryOperator timeout,
+    RequestOptions requestOptions
+  ) {
+    return TaskUtils.retryUntil(
       () -> this.getTask(indexName, taskID, requestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
@@ -5854,8 +5860,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
-    this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetTaskResponse waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
+    return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
@@ -5867,8 +5873,8 @@ public class SearchClient extends ApiClient {
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
-    this.waitForTask(indexName, taskID, maxRetries, timeout, null);
+  public GetTaskResponse waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForTask(indexName, taskID, maxRetries, timeout, null);
   }
 
   /**
@@ -5877,8 +5883,8 @@ public class SearchClient extends ApiClient {
    * @param indexName The `indexName` where the operation was performed.
    * @param taskID The `taskID` returned in the method response.
    */
-  public void waitForTask(String indexName, Long taskID) {
-    this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetTaskResponse waitForTask(String indexName, Long taskID) {
+    return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
@@ -5891,8 +5897,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-    TaskUtils.retryUntil(
+  public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    return TaskUtils.retryUntil(
       () -> this.getAppTask(taskID, requestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
@@ -5907,8 +5913,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForAppTask(Long taskID, RequestOptions requestOptions) {
-    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetTaskResponse waitForAppTask(Long taskID, RequestOptions requestOptions) {
+    return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
@@ -5919,8 +5925,8 @@ public class SearchClient extends ApiClient {
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
-    this.waitForAppTask(taskID, maxRetries, timeout, null);
+  public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForAppTask(taskID, maxRetries, timeout, null);
   }
 
   /**
@@ -5928,8 +5934,8 @@ public class SearchClient extends ApiClient {
    *
    * @param taskID The `taskID` returned in the method response.
    */
-  public void waitForAppTask(Long taskID) {
-    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetTaskResponse waitForAppTask(Long taskID) {
+    return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**

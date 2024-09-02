@@ -40,7 +40,7 @@ def snippet_for_add_or_update_object
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.add_or_update_object("indexName", "uniqueID", {key: "value"})
+  response = client.add_or_update_object("<YOUR_INDEX_NAME>", "uniqueID", {key: "value"})
 
   # use the class directly
   puts(response)
@@ -369,7 +369,7 @@ def snippet_for_browse
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.browse("cts_e2e_browse")
+  response = client.browse("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -388,7 +388,7 @@ def snippet_for_clear_objects
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.clear_objects("theIndexName")
+  response = client.clear_objects("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -407,7 +407,7 @@ def snippet_for_clear_rules
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.clear_rules("indexName")
+  response = client.clear_rules("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -426,7 +426,7 @@ def snippet_for_clear_synonyms
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.clear_synonyms("indexName")
+  response = client.clear_synonyms("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -540,7 +540,7 @@ def snippet_for_delete_by
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.delete_by("theIndexName", DeleteByParams.new(filters: "brand:brandName"))
+  response = client.delete_by("<YOUR_INDEX_NAME>", DeleteByParams.new(filters: "brand:brandName"))
 
   # use the class directly
   puts(response)
@@ -559,7 +559,7 @@ def snippet_for_delete_index
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.delete_index("theIndexName")
+  response = client.delete_index("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -588,6 +588,25 @@ def snippet_for_delete_object
   # SEPARATOR<
 end
 
+# Snippet for the deleteObjects method.
+#
+# call deleteObjects without error
+def snippet_for_delete_objects
+  # >SEPARATOR deleteObjects default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.delete_objects("<YOUR_INDEX_NAME>", ["1", "2"])
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the deleteRule method.
 #
 # delete rule simple case
@@ -597,7 +616,7 @@ def snippet_for_delete_rule
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.delete_rule("indexName", "id1")
+  response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
 
   # use the class directly
   puts(response)
@@ -635,7 +654,65 @@ def snippet_for_delete_synonym
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.delete_synonym("indexName", "id1")
+  response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# generate secured api key basic
+def snippet_for_generate_secured_api_key
+  # >SEPARATOR generateSecuredApiKey generate secured api key basic
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "2640659426d5107b6e47d75db9cbaef8",
+    SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# generate secured api key with searchParams
+def snippet_for_generate_secured_api_key1
+  # >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "2640659426d5107b6e47d75db9cbaef8",
+    SecuredApiKeyRestrictions.new(
+      valid_until: 2524604400,
+      restrict_indices: ["Movies", "cts_e2e_settings"],
+      restrict_sources: "192.168.1.0/24",
+      filters: "category:Book OR category:Ebook AND _tags:published",
+      user_token: "user123",
+      search_params: SearchParamsObject.new(
+        query: "batman",
+        typo_tolerance: "strict",
+        around_radius: "all",
+        mode: "neuralSearch",
+        hits_per_page: 10,
+        optional_words: ["one", "two"]
+      )
+    )
+  )
 
   # use the class directly
   puts(response)
@@ -749,7 +826,7 @@ def snippet_for_get_object
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_object("theIndexName", "uniqueID", ["attr1", "attr2"])
+  response = client.get_object("<YOUR_INDEX_NAME>", "uniqueID", ["attr1", "attr2"])
 
   # use the class directly
   puts(response)
@@ -774,7 +851,7 @@ def snippet_for_get_objects
         GetObjectsRequest.new(
           attributes_to_retrieve: ["attr1", "attr2"],
           object_id: "uniqueID",
-          index_name: "theIndexName"
+          index_name: "<YOUR_INDEX_NAME>"
         )
       ]
     )
@@ -797,7 +874,7 @@ def snippet_for_get_rule
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_rule("cts_e2e_browse", "qr-1725004648916")
+  response = client.get_rule("<YOUR_INDEX_NAME>", "qr-1725004648916")
 
   # use the class directly
   puts(response)
@@ -816,7 +893,7 @@ def snippet_for_get_settings
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_settings("cts_e2e_settings")
+  response = client.get_settings("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -854,7 +931,7 @@ def snippet_for_get_synonym
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_synonym("indexName", "id1")
+  response = client.get_synonym("<YOUR_INDEX_NAME>", "id1")
 
   # use the class directly
   puts(response)
@@ -873,7 +950,7 @@ def snippet_for_get_task
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_task("theIndexName", 123)
+  response = client.get_task("<YOUR_INDEX_NAME>", 123)
 
   # use the class directly
   puts(response)
@@ -1027,7 +1104,7 @@ def snippet_for_multiple_batch
   # Call the API
   response = client.multiple_batch(
     BatchParams.new(
-      requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "theIndexName")]
+      requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "<YOUR_INDEX_NAME>")]
     )
   )
 
@@ -1114,7 +1191,53 @@ def snippet_for_partial_update_object
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.partial_update_object("theIndexName", "uniqueID", {attributeId: "new value"})
+  response = client.partial_update_object("<YOUR_INDEX_NAME>", "uniqueID", {attributeId: "new value"})
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the partialUpdateObjects method.
+#
+# call partialUpdateObjects with createIfNotExists=true
+def snippet_for_partial_update_objects
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.partial_update_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+    true
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the partialUpdateObjects method.
+#
+# call partialUpdateObjects with createIfNotExists=false
+def snippet_for_partial_update_objects1
+  # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.partial_update_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
+    false
+  )
 
   # use the class directly
   puts(response)
@@ -1134,6 +1257,40 @@ def snippet_for_remove_user_id
 
   # Call the API
   response = client.remove_user_id("uniqueID")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceAllObjects method.
+#
+# call replaceAllObjects without error
+def snippet_for_replace_all_objects
+  # >SEPARATOR replaceAllObjects default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.replace_all_objects(
+    "<YOUR_INDEX_NAME>",
+    [
+      {objectID: "1", name: "Adam"},
+      {objectID: "2", name: "Benoit"},
+      {objectID: "3", name: "Cyril"},
+      {objectID: "4", name: "David"},
+      {objectID: "5", name: "Eva"},
+      {objectID: "6", name: "Fiona"},
+      {objectID: "7", name: "Gael"},
+      {objectID: "8", name: "Hugo"},
+      {objectID: "9", name: "Igor"},
+      {objectID: "10", name: "Julia"}
+    ],
+    3
+  )
 
   # use the class directly
   puts(response)
@@ -1200,6 +1357,50 @@ def snippet_for_save_object
   # SEPARATOR<
 end
 
+# Snippet for the saveObjects method.
+#
+# call saveObjects without error
+def snippet_for_save_objects
+  # >SEPARATOR saveObjects call saveObjects without error
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjects method.
+#
+# saveObjects should report errors
+def snippet_for_save_objects1
+  # >SEPARATOR saveObjects saveObjects should report errors
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the saveRule method.
 #
 # saveRule with minimal parameters
@@ -1210,7 +1411,7 @@ def snippet_for_save_rule
 
   # Call the API
   response = client.save_rule(
-    "indexName",
+    "<YOUR_INDEX_NAME>",
     "id1",
     Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
   )
@@ -1260,7 +1461,7 @@ def snippet_for_save_synonym
 
   # Call the API
   response = client.save_synonym(
-    "indexName",
+    "<YOUR_INDEX_NAME>",
     "id1",
     SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
     true
@@ -1406,7 +1607,7 @@ end
 # Snippet for the search method.
 #
 # retrieveFacets
-def snippet_for_search6
+def snippet_for_search4
   # >SEPARATOR search retrieveFacets
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1429,7 +1630,7 @@ end
 # Snippet for the search method.
 #
 # retrieveFacetsWildcard
-def snippet_for_search7
+def snippet_for_search5
   # >SEPARATOR search retrieveFacetsWildcard
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1477,7 +1678,7 @@ def snippet_for_search_for_facet_values
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_for_facet_values("indexName", "facetName")
+  response = client.search_for_facet_values("<YOUR_INDEX_NAME>", "facetName")
 
   # use the class directly
   puts(response)
@@ -1496,7 +1697,7 @@ def snippet_for_search_rules
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_rules("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+  response = client.search_rules("<YOUR_INDEX_NAME>", SearchRulesParams.new(query: "zorro"))
 
   # use the class directly
   puts(response)
@@ -1515,7 +1716,7 @@ def snippet_for_search_single_index
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_single_index("indexName")
+  response = client.search_single_index("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -1534,7 +1735,7 @@ def snippet_for_search_synonyms
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.search_synonyms("indexName")
+  response = client.search_synonyms("<YOUR_INDEX_NAME>")
 
   # use the class directly
   puts(response)
@@ -1592,7 +1793,7 @@ end
 #
 # setSettingsAttributesForFaceting
 def snippet_for_set_settings
-  # >SEPARATOR setSettings setSettingsAttributesForFaceting
+  # >SEPARATOR setSettings default
   # Initialize the client
   client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1623,6 +1824,113 @@ def snippet_for_update_api_key
     "myApiKey",
     ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
   )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForApiKey method.
+#
+# wait for api key helper - add
+def snippet_for_wait_for_api_key
+  # >SEPARATOR waitForApiKey wait for api key helper - add
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForApiKey method.
+#
+# wait for api key - update
+def snippet_for_wait_for_api_key1
+  # >SEPARATOR waitForApiKey wait for api key - update
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_api_key(
+    "api-key-update-operation-test-ruby",
+    "update",
+    ApiKey.new(
+      description: "my updated api key",
+      acl: ["search", "addObject", "deleteObject"],
+      indexes: ["Movies", "Books"],
+      referers: ["*google.com", "*algolia.com"],
+      validity: 305,
+      max_queries_per_ip_per_hour: 95,
+      max_hits_per_query: 20
+    )
+  )
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForApiKey method.
+#
+# wait for api key - delete
+def snippet_for_wait_for_api_key2
+  # >SEPARATOR waitForApiKey wait for api key - delete
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForAppTask method.
+#
+# wait for an application-level task
+def snippet_for_wait_for_app_task
+  # >SEPARATOR waitForAppTask default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_app_task(123)
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the waitForTask method.
+#
+# wait for task
+def snippet_for_wait_for_task
+  # >SEPARATOR waitForTask default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.wait_for_task("<YOUR_INDEX_NAME>", 123)
 
   # use the class directly
   puts(response)

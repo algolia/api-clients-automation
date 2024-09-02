@@ -20,8 +20,20 @@ class TestClientPersonalizationClient < Test::Unit::TestCase
     )
   end
 
-  # calls api with default read timeouts
+  # the user agent contains the latest version
   def test_common_api1
+    client = Algolia::PersonalizationClient.create(
+      "APP_ID",
+      "API_KEY",
+      "us",
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.custom_post_with_http_info("1/test")
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.2.3\).*/))
+  end
+
+  # calls api with default read timeouts
+  def test_common_api2
     client = Algolia::PersonalizationClient.create(
       "APP_ID",
       "API_KEY",
@@ -34,7 +46,7 @@ class TestClientPersonalizationClient < Test::Unit::TestCase
   end
 
   # calls api with default write timeouts
-  def test_common_api2
+  def test_common_api3
     client = Algolia::PersonalizationClient.create(
       "APP_ID",
       "API_KEY",

@@ -35,32 +35,9 @@
     },
     "init": {
       "default": "var client = new AbtestingClient("
-    },
-    "waitForAppTask": {
-      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
-    },
-    "waitForApiKey": {
-      "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
-      "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
-      "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
-    },
-    "waitForTask": {
-      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
     }
   },
-  "dart": {
-    "waitForAppTask": {
-      "default": "await client.waitAppTask(response.taskID);"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "await client.waitTask('<<indexName>>', response.taskID);"
-    }
-  },
+  "dart": {},
   "go": {
     "import": {
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting\""
@@ -94,17 +71,6 @@
     },
     "stopABTest": {
       "default": "// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION\nclient, err := abtesting.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
-    },
-    "waitForAppTask": {
-      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
-    },
-    "waitForApiKey": {
-      "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
-      "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
-      "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
-    },
-    "waitForTask": {
-      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
     }
   },
   "java": {
@@ -143,17 +109,6 @@
     },
     "init": {
       "default": "AbtestingClient client = new AbtestingClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
-    },
-    "waitForAppTask": {
-      "default": "client.waitForAppTask(response.getTaskID());"
-    },
-    "waitForApiKey": {
-      "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
-      "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
-      "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
-    },
-    "waitForTask": {
-      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
     }
   },
   "javascript": {
@@ -192,17 +147,6 @@
     },
     "init": {
       "default": "const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
-    },
-    "waitForAppTask": {
-      "default": "await client.waitForAppTask({ taskID: response.taskID });"
-    },
-    "waitForApiKey": {
-      "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
-      "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
-      "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
-    },
-    "waitForTask": {
-      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
     }
   },
   "kotlin": {
@@ -241,17 +185,6 @@
     },
     "init": {
       "default": "val client = AbtestingClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.taskID)"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
     }
   },
   "php": {
@@ -290,17 +223,6 @@
     },
     "init": {
       "default": "$client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
-    },
-    "waitForAppTask": {
-      "default": "$client->waitForAppTask($response['taskID']);"
-    },
-    "waitForApiKey": {
-      "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
-      "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
-      "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
-    },
-    "waitForTask": {
-      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
     }
   },
   "python": {
@@ -339,17 +261,6 @@
     },
     "init": {
       "default": "_client = AbtestingClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "await client.wait_for_app_task(task_id=response.task_id)"
-    },
-    "waitForApiKey": {
-      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
-      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-    },
-    "waitForTask": {
-      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
     }
   },
   "ruby": {
@@ -388,17 +299,6 @@
     },
     "init": {
       "default": "client = Algolia::AbtestingClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.wait_for_app_task(response.task_id)"
-    },
-    "waitForApiKey": {
-      "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-      "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
-      "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-    },
-    "waitForTask": {
-      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
     }
   },
   "scala": {
@@ -437,17 +337,6 @@
     },
     "init": {
       "default": "val client = AbtestingClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = Option(\"YOUR_APP_ID_REGION\"))"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.getTaskID())"
-    },
-    "waitForApiKey": {
-      "add": "",
-      "update": "",
-      "delete": ""
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
     }
   },
   "swift": {
@@ -486,17 +375,6 @@
     },
     "init": {
       "default": "let client = try AbtestingClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
-    },
-    "waitForAppTask": {
-      "default": "try await client.waitForAppTask(with: response.taskID)"
-    },
-    "waitForApiKey": {
-      "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
-      "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
-      "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
-    },
-    "waitForTask": {
-      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
     }
   }
 }

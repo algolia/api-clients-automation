@@ -508,6 +508,22 @@ export async function snippetForDeleteObject(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the deleteObjects method.
+//
+// call deleteObjects without error
+export async function snippetForDeleteObjects(): Promise<void> {
+  // >SEPARATOR deleteObjects default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the deleteRule method.
 //
 // delete rule simple case
@@ -550,6 +566,58 @@ export async function snippetForDeleteSynonym(): Promise<void> {
 
   // Call the API
   const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key basic
+export function snippetForGenerateSecuredApiKey(): void {
+  // >SEPARATOR generateSecuredApiKey generate secured api key basic
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: { validUntil: 2524604400, restrictIndices: ['Movies'] },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key with searchParams
+export function snippetForGenerateSecuredApiKey1(): void {
+  // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: {
+      validUntil: 2524604400,
+      restrictIndices: ['Movies', 'cts_e2e_settings'],
+      restrictSources: '192.168.1.0/24',
+      filters: 'category:Book OR category:Ebook AND _tags:published',
+      userToken: 'user123',
+      searchParams: {
+        query: 'batman',
+        typoTolerance: 'strict',
+        aroundRadius: 'all',
+        mode: 'neuralSearch',
+        hitsPerPage: 10,
+        optionalWords: ['one', 'two'],
+      },
+    },
+  });
 
   // use typed response
   console.log(response);
@@ -961,6 +1029,52 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=true
+export async function snippetForPartialUpdateObjects(): Promise<void> {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObjects({
+    indexName: 'cts_e2e_partialUpdateObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+    createIfNotExists: true,
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=false
+export async function snippetForPartialUpdateObjects1(): Promise<void> {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObjects({
+    indexName: 'cts_e2e_partialUpdateObjects_javascript',
+    objects: [
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+    ],
+    createIfNotExists: false,
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the removeUserId method.
 //
 // removeUserId
@@ -971,6 +1085,37 @@ export async function snippetForRemoveUserId(): Promise<void> {
 
   // Call the API
   const response = await client.removeUserId({ userID: 'uniqueID' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// call replaceAllObjects without error
+export async function snippetForReplaceAllObjects(): Promise<void> {
+  // >SEPARATOR replaceAllObjects default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.replaceAllObjects({
+    indexName: 'cts_e2e_replace_all_objects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+      { objectID: '5', name: 'Eva' },
+      { objectID: '6', name: 'Fiona' },
+      { objectID: '7', name: 'Gael' },
+      { objectID: '8', name: 'Hugo' },
+      { objectID: '9', name: 'Igor' },
+      { objectID: '10', name: 'Julia' },
+    ],
+    batchSize: 3,
+  });
 
   // use typed response
   console.log(response);
@@ -1019,6 +1164,50 @@ export async function snippetForSaveObject(): Promise<void> {
 
   // Call the API
   const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// call saveObjects without error
+export async function snippetForSaveObjects(): Promise<void> {
+  // >SEPARATOR saveObjects call saveObjects without error
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'cts_e2e_saveObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// saveObjects should report errors
+export async function snippetForSaveObjects1(): Promise<void> {
+  // >SEPARATOR saveObjects saveObjects should report errors
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'cts_e2e_saveObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+  });
 
   // use typed response
   console.log(response);
@@ -1195,7 +1384,7 @@ export async function snippetForSearch3(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacets
-export async function snippetForSearch6(): Promise<void> {
+export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1213,7 +1402,7 @@ export async function snippetForSearch6(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch7(): Promise<void> {
+export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1354,7 +1543,7 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
 //
 // setSettingsAttributesForFaceting
 export async function snippetForSetSettings(): Promise<void> {
-  // >SEPARATOR setSettings setSettingsAttributesForFaceting
+  // >SEPARATOR setSettings default
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -1382,6 +1571,98 @@ export async function snippetForUpdateApiKey(): Promise<void> {
     key: 'myApiKey',
     apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
   });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key helper - add
+export async function snippetForWaitForApiKey(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key helper - add
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - update
+export async function snippetForWaitForApiKey1(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key - update
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({
+    key: 'api-key-update-operation-test-javascript',
+    operation: 'update',
+    apiKey: {
+      description: 'my updated api key',
+      acl: ['search', 'addObject', 'deleteObject'],
+      indexes: ['Movies', 'Books'],
+      referers: ['*google.com', '*algolia.com'],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+    },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - delete
+export async function snippetForWaitForApiKey2(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key - delete
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForAppTask method.
+//
+// wait for an application-level task
+export async function snippetForWaitForAppTask(): Promise<void> {
+  // >SEPARATOR waitForAppTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForAppTask({ taskID: 123 });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForTask method.
+//
+// wait for task
+export async function snippetForWaitForTask(): Promise<void> {
+  // >SEPARATOR waitForTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });
 
   // use typed response
   console.log(response);
