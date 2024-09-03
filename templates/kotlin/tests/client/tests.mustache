@@ -43,7 +43,12 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
               JSONAssert.assertEquals("""{{{match.value}}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
             {{/match.isPrimitive}}
             {{#match.isPrimitive}}
+              {{#match.isNull}}
+                assertNull(it)
+              {{/match.isNull}}
+              {{^match.isNull}} 
                 assertEquals({{#match}}{{> tests/param_value}}{{/match}}, it)
+              {{/match.isNull}}
             {{/match.isPrimitive}}
             }{{/isHelper}}
             {{^isHelper}}response = {
