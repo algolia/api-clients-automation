@@ -134,8 +134,10 @@ function addRoutes(app: Express): void {
         customRanking: ['desc(price)', 'asc(name)'],
         replicas: ['indexExistsYES-1', 'indexExistsYES-2'],
       });
-    } else {
+    } else if (req.params.indexName === 'indexExistsNO') {
       res.status(404).json({ message: 'Index not found' });
+    } else {
+      res.status(403).json({ message: 'Invalid API key' });
     }
   });
 }

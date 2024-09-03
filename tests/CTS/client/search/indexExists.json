@@ -58,5 +58,34 @@
         }
       }
     ]
+  },
+  {
+    "testName": "indexExistsWithError",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsERROR"
+        },
+        "expected": {
+          "error": "API error [403] {\\\"message\\\":\\\"Invalid API key\\\"}"
+        }
+      }
+    ]
   }
 ]
