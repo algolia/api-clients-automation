@@ -22,26 +22,26 @@ describe('{{testType}}', () => {
         {{#dynamicTemplate}}{{/dynamicTemplate}}
 
         {{#testUserAgent}}
-          expect(decodeURIComponent(result.algoliaAgent)).toMatch(/{{{match}}}/);
+          expect(decodeURIComponent(result.algoliaAgent)).toMatch(/{{{match.value}}}/);
         {{/testUserAgent}}
         {{#testTimeouts}}
-          expect(result).toEqual(expect.objectContaining({{{match.parameters}}}));
+          expect(result).toEqual(expect.objectContaining({{{match.value}}}));
         {{/testTimeouts}}
         {{#testHost}}
-          expect(result.host).toEqual("{{{match}}}");
+          expect(result.host).toEqual("{{{match.value}}}");
         {{/testHost}}
         {{#testResponse}}
-          {{#matchIsJSON}}
-            expect(result).toEqual({{{match.parameters}}});
-          {{/matchIsJSON}}
-          {{^matchIsJSON}}
-            {{#matchIsNull}}
-              expect(result).toBeUndefined();
-            {{/matchIsNull}}
-            {{^matchIsNull}}
-              expect(result).toEqual("{{{match}}}");
-            {{/matchIsNull}}
-          {{/matchIsJSON}}
+          {{#match.isPrimitive}}
+            {{#match.isString}}
+              expect(result).toEqual("{{{match.value}}}");
+            {{/match.isString}}
+            {{^match.isString}}
+              expect(result).toEqual({{{match.value}}});
+            {{/match.isString}}
+          {{/match.isPrimitive}}
+          {{^match.isPrimitive}}
+            expect(result).toEqual({{{match.value}}});
+          {{/match.isPrimitive}}
         {{/testResponse}}
       {{/isError}}
       {{#times}}

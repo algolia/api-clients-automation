@@ -1,1 +1,1 @@
-{{^hasAdditionalProperties}}{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} = {{> tests/param_value}}{{/hasAdditionalProperties}}{{#hasAdditionalProperties}}{{> tests/param_value}}{{/hasAdditionalProperties}}
+{{^hasAdditionalProperties}}{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} = {{> tests/param_value}},{{/hasAdditionalProperties}}{{#hasAdditionalProperties}}{{> tests/param_value}},{{/hasAdditionalProperties}}

@@ -4,16 +4,14 @@ try {
       {{> tests/request_param}}
       {{/parametersWithDataType}}
   );
-  {{#match}}
   {{#testResponse}}
-  {{#matchIsJSON}}
-  expectBody(res, """{{{match.parameters}}}""");
-  {{/matchIsJSON}}
-  {{^matchIsJSON}}
-  expect(res, """{{match}}""");
-  {{/matchIsJSON}}
+  {{^match.isPrimitive}}
+  expectBody(res, """{{{match.value}}}""");
+  {{/match.isPrimitive}}
+  {{#match.isPrimitive}}
+  expect(res, {{#match}}{{> tests/param_value}}{{/match}});
+  {{/match.isPrimitive}}
   {{/testResponse}}
-  {{/match}}
 } on InterceptionException catch (_) {
   // Ignore InterceptionException
 }

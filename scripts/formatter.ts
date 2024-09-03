@@ -45,7 +45,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
     case 'php':
       await runComposerInstall();
       await run(
-        `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
+        `php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
         { language },
       );
       break;

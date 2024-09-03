@@ -23,31 +23,24 @@
     {{/isError}}
     {{^isError}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
-    {{#match}}
     {{#testUserAgent}}
-    assert(req.headers['user-agent'].match(/{{{match}}}/))
+    assert(req.headers['user-agent'].match(/{{{match.value}}}/))
     {{/testUserAgent}}
     {{#testTimeouts}}
-    assert_equal({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, req.connect_timeout)
-    assert_equal({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, req.timeout)
+    assert_equal({{{matchConnectTimeout}}}, req.connect_timeout)
+    assert_equal({{{matchResponseTimeout}}}, req.timeout)
     {{/testTimeouts}}
     {{#testHost}}
-    assert_equal('{{{match}}}', req.host.url)
+    assert_equal('{{{match.value}}}', req.host.url)
     {{/testHost}}
     {{#testResponse}}
-    {{#matchIsJSON}}
-    assert_equal({{{match.parameters}}}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
-    {{/matchIsJSON}}
-    {{^matchIsJSON}}
-    {{#matchIsNull}}
-    assert_nil(req)
-    {{/matchIsNull}}
-    {{^matchIsNull}}
-    assert_equal('{{{match}}}', req)
-    {{/matchIsNull}}
-    {{/matchIsJSON}}
+    {{^match.isPrimitive}}
+    assert_equal({{{match.value}}}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    {{/match.isPrimitive}}
+    {{#match.isPrimitive}}
+    assert_equal({{#match}}{{> tests/generateInnerParams}}{{/match}}, req)
+    {{/match.isPrimitive}}
     {{/testResponse}}
-    {{/match}}
     {{/isError}}
     {{#times}}
     end
