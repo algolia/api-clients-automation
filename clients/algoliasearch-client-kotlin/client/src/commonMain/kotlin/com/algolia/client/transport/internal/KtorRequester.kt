@@ -43,6 +43,7 @@ public class KtorRequester(
     httpClient.config {
       defaultRequest {
         headers {
+          remove(HEADER_APIKEY)
           append(HEADER_APIKEY, apiKey)
         }
       }
