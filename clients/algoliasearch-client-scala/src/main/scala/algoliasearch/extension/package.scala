@@ -395,5 +395,16 @@ package object extension {
         moveOperationResponse = move
       )
     }
+
+    def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
+      try {
+        client.getSettings(indexName)
+      } catch {
+        case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => Future.successful(false)
+        case e: Throwable                                                   => throw e
+      }
+
+      Future.successful(true)
+    }
   }
 }

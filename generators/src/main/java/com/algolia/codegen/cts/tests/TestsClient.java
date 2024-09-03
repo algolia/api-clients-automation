@@ -111,6 +111,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
               if (ope.returnType != null && ope.returnType.length() > 0) {
                 stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
+                stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
               // set on testOut because we need to wrap everything for java.

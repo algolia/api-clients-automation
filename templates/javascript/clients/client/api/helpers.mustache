@@ -448,6 +448,19 @@ async replaceAllObjects(
 
   return { copyOperationResponse, batchResponses, moveOperationResponse };
 },
+
+async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
+  try {
+    await this.getSettings({ indexName });
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      return false;
+    }
+    throw error;
+  }
+
+  return true;
+},
 {{/isAlgoliasearchClient}}
 
 /**
@@ -478,17 +491,4 @@ searchForFacets(
   requestOptions?: RequestOptions
 ): Promise<{results: Array<SearchForFacetValuesResponse>}> {
   return this.search(searchMethodParams, requestOptions) as Promise<{results: Array<SearchForFacetValuesResponse>}>;
-},
-
-async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
-  try {
-    await this.getSettings({ indexName });
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 404) {
-      return false;
-    }
-    throw error;
-  }
-
-  return true;
 },

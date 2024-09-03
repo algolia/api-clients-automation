@@ -627,4 +627,18 @@ public extension SearchClient {
 
         return timestampDate.timeIntervalSince1970 - Date().timeIntervalSince1970
     }
+
+    func indexExists(indexName: String) async throws -> Bool {
+        do {
+            _ = try await self.getSettings(indexName: indexName)
+        } catch let AlgoliaError.httpError(error) {
+            if error.statusCode == 404 {
+                return false
+            }
+
+            throw error
+        }
+
+        return true
+    }
 }

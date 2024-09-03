@@ -89,7 +89,9 @@
             "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid API key\\\"}",
             "javascript": "Invalid API key",
             "kotlin": "Client request(GET http://${{localhost}}:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid API key\\\"}\\\"",
-            "php": "Invalid API key"
+            "php": "Invalid API key",
+            "python": "Invalid API key",
+            "ruby": "Invalid API key"
           }
         }
       }
