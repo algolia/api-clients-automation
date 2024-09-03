@@ -16,18 +16,18 @@ export function getBaseConfig(cwd: string): Options {
   };
 }
 
-export function getDependencies(pkg: PKG, env: 'node' | 'browser'): string[] {
+export function getDependencies(pkg: PKG, env: 'browser' | 'node'): string[] {
   const deps = Object.keys(pkg.dependencies || {}) || [];
 
-  if (pkg.name !== "algoliasearch") {
-    return deps
+  if (pkg.name !== 'algoliasearch') {
+    return deps;
   }
 
   if (env === 'node') {
-    return deps.filter(dep => dep !== '@algolia/requester-browser-xhr')
+    return deps.filter((dep) => dep !== '@algolia/requester-browser-xhr');
   }
 
-  return deps.filter(dep => dep !== '@algolia/requester-node-http')
+  return deps.filter((dep) => dep !== '@algolia/requester-node-http');
 }
 
 export function getBaseNodeOptions(pkg: PKG, cwd: string): Options {
