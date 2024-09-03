@@ -90,7 +90,7 @@ abstract class ApiClient(
     Try(requester.close())
   }
 
-  def setApiKey(apiKey: String): Unit = {
-    requester.setApiKey(apiKey)
+  def setAlgoliaApiKey(apiKey: String): Unit = {
+    requester.setAlgoliaApiKey(apiKey)
   }
 }

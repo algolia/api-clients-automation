@@ -80,8 +80,8 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     *
     * @param apiKey - The new API Key to use.
     */
-    setApiKey(apiKey: string): void {
-      auth.setApiKey(apiKey);
+    setAlgoliaApiKey(apiKey: string): void {
+      auth.setAlgoliaApiKey(apiKey);
     },
 
     {{#isSearchClient}}

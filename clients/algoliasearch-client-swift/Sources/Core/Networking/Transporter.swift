@@ -43,7 +43,7 @@ open class Transporter {
         self.requestBuilder = requestBuilder
     }
     
-    public func setApiKey(apiKey: String) {
+    public func setAlgoliaApiKey(apiKey: String) {
         self.configuration.defaultHeaders?.updateValue(apiKey, forKey: "X-Algolia-API-Key")
     }
 

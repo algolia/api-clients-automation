@@ -20,8 +20,10 @@ import okhttp3.internal.http.HttpMethod;
 import okio.BufferedSink;
 
 /**
- * HttpRequester is responsible for making HTTP requests using the OkHttp client. It provides a
- * mechanism for request serialization and deserialization using a given {@link JsonSerializer}.
+ * HttpRequester is responsible for making HTTP requests using the OkHttp
+ * client. It provides a
+ * mechanism for request serialization and deserialization using a given
+ * {@link JsonSerializer}.
  */
 public final class HttpRequester implements Requester {
 
@@ -33,11 +35,11 @@ public final class HttpRequester implements Requester {
   /** Private constructor initialized using the builder pattern. */
   private HttpRequester(Builder builder, ClientConfig config) {
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-      .connectTimeout(config.getConnectTimeout())
-      .readTimeout(config.getReadTimeout())
-      .writeTimeout(config.getWriteTimeout())
-      .addInterceptor(new HeaderInterceptor(config.getDefaultHeaders()))
-      .addNetworkInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
+        .connectTimeout(config.getConnectTimeout())
+        .readTimeout(config.getReadTimeout())
+        .writeTimeout(config.getWriteTimeout())
+        .addInterceptor(new HeaderInterceptor(config.getDefaultHeaders()))
+        .addNetworkInterceptor(new LogInterceptor(config.getLogger(), config.getLogLevel()));
     builder.interceptors.forEach(clientBuilder::addInterceptor);
     builder.networkInterceptors.forEach(clientBuilder::addNetworkInterceptor);
     if (config.getCompressionType() == CompressionType.GZIP) {
@@ -51,7 +53,8 @@ public final class HttpRequester implements Requester {
   }
 
   @Override
-  public <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, Class<?> returnType, Class<?> innerType) {
+  public <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, Class<?> returnType,
+      Class<?> innerType) {
     return execute(httpRequest, requestOptions, serializer.getJavaType(returnType, innerType));
   }
 
@@ -61,7 +64,7 @@ public final class HttpRequester implements Requester {
   }
 
   @Override
-  public void setApiKey(@Nonnull String apiKey) {
+  public void setAlgoliaApiKey(@Nonnull String apiKey) {
     this.httpClient.interceptors().add(new HeaderInterceptor(Collections.singletonMap("X-Algolia-API-Key", apiKey)));
   }
 
@@ -77,7 +80,8 @@ public final class HttpRequester implements Requester {
     RequestBody requestBody = createRequestBody(httpRequest);
 
     // Build the HTTP request.
-    Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody).build();
+    Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody)
+        .build();
 
     // Get or adjust the HTTP client according to request options.
     OkHttpClient client = getOkHttpClient(requestOptions);
@@ -106,9 +110,9 @@ public final class HttpRequester implements Requester {
   @Nonnull
   private static HttpUrl createHttpUrl(@Nonnull HttpRequest request, RequestOptions requestOptions) {
     HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
-      .scheme("https")
-      .host("algolia.com") // will be overridden by the retry strategy
-      .encodedPath(request.getPath());
+        .scheme("https")
+        .host("algolia.com") // will be overridden by the retry strategy
+        .encodedPath(request.getPath());
     request.getQueryParameters().forEach(urlBuilder::addEncodedQueryParameter);
     if (requestOptions != null) {
       requestOptions.getQueryParameters().forEach(urlBuilder::addEncodedQueryParameter);
@@ -156,13 +160,18 @@ public final class HttpRequester implements Requester {
     return builder.build();
   }
 
-  /** Returns a suitable OkHttpClient instance based on the provided request options. */
+  /**
+   * Returns a suitable OkHttpClient instance based on the provided request
+   * options.
+   */
   @Nonnull
   private OkHttpClient getOkHttpClient(RequestOptions requestOptions) {
     // Return the default client if no request options are provided.
-    if (requestOptions == null) return httpClient;
+    if (requestOptions == null)
+      return httpClient;
 
-    // Create a new client builder from the default client and adjust timeouts if provided.
+    // Create a new client builder from the default client and adjust timeouts if
+    // provided.
     OkHttpClient.Builder builder = httpClient.newBuilder();
     if (requestOptions.getReadTimeout() != null) {
       builder.readTimeout(requestOptions.getReadTimeout());
@@ -175,7 +184,8 @@ public final class HttpRequester implements Requester {
 
   @Override
   public void close() throws IOException {
-    if (isClosed.get()) return;
+    if (isClosed.get())
+      return;
     httpClient.dispatcher().executorService().shutdown();
     httpClient.connectionPool().evictAll();
     if (httpClient.cache() != null) {
@@ -185,7 +195,8 @@ public final class HttpRequester implements Requester {
   }
 
   /**
-   * The Builder class for HttpRequester. It provides a mechanism for constructing an instance of
+   * The Builder class for HttpRequester. It provides a mechanism for constructing
+   * an instance of
    * HttpRequester with customized configurations.
    */
   public static class Builder {

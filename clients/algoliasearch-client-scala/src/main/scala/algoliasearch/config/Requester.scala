@@ -22,7 +22,7 @@ trait Requester extends AutoCloseable {
       requestOptions: Option[RequestOptions]
   ): T
 
-  def setApiKey(apiKey: String): Unit = {
+  def setAlgoliaApiKey(apiKey: String): Unit = {
     println("Nothing to do here")
   }
 }
