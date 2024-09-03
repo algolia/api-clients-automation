@@ -16,8 +16,18 @@ export function getBaseConfig(cwd: string): Options {
   };
 }
 
-export function getDependencies(pkg: PKG): string[] {
-  return Object.keys(pkg.dependencies || {}) || [];
+export function getDependencies(pkg: PKG, env: 'node' | 'browser'): string[] {
+  const deps = Object.keys(pkg.dependencies || {}) || [];
+
+  if (pkg.name !== "algoliasearch") {
+    return deps
+  }
+
+  if (env === 'node') {
+    return deps.filter(dep => dep !== '@algolia/requester-browser-xhr')
+  }
+
+  return deps.filter(dep => dep !== '@algolia/requester-node-http')
 }
 
 export function getBaseNodeOptions(pkg: PKG, cwd: string): Options {
@@ -25,7 +35,7 @@ export function getBaseNodeOptions(pkg: PKG, cwd: string): Options {
     ...getBaseConfig(cwd),
     platform: 'node',
     target: 'node14',
-    external: [...getDependencies(pkg), 'node:crypto'],
+    external: [...getDependencies(pkg, 'node'), 'node:crypto'],
   };
 }
 
@@ -35,6 +45,6 @@ export function getBaseBrowserOptions(pkg: PKG, cwd: string): Options {
     platform: 'browser',
     format: ['esm'],
     target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
-    external: [...getDependencies(pkg), 'dom'],
+    external: [...getDependencies(pkg, 'browser'), 'dom'],
   };
 }
