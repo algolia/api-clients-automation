@@ -1,7 +1,7 @@
 import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
-import {getBaseNodeOptions,getBaseBrowserOptions,getDependencies} from "../../base.tsup.config"
+import { getBaseNodeOptions, getBaseBrowserOptions, getDependencies } from "../../base.tsup.config"
 
 import pkg from "./package.json" with {type:'json'}
 
@@ -80,7 +80,7 @@ const browserConfigs: Options[] = [
     noExternal: ['dom', '@algolia/client-common', '@algolia/requester-browser-xhr'],
     {{/isAlgoliasearchClient}}
     {{^isAlgoliasearchClient}}
-    noExternal: getDependencies(pkg),
+    noExternal: getDependencies(pkg, 'browser'),
     {{/isAlgoliasearchClient}}
   },
   {{#isAlgoliasearchClient}}
@@ -102,7 +102,7 @@ const browserConfigs: Options[] = [
     entry: {'browser.min': 'builds/browser.ts'},
     outDir: 'dist',
     external: [],
-    noExternal: getDependencies(pkg),
+    noExternal: getDependencies(pkg, 'browser'),
   }
   {{/isAlgoliasearchClient}}
 ];
