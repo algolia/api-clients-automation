@@ -3,7 +3,6 @@ package com.algolia.codegen.cts.tests;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
-import io.swagger.util.Json;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,6 +148,9 @@ public class TestsClient extends TestsGenerator {
                     break;
                   case "timeouts":
                     stepOut.put("testTimeouts", true);
+                    Map<String, Integer> timeouts = (Map<String, Integer>) step.expected.match;
+                    stepOut.put("matchConnectTimeout", timeouts.get("connectTimeout"));
+                    stepOut.put("matchResponseTimeout", timeouts.get("responseTimeout"));
                     break;
                   case "response":
                     stepOut.put("testResponse", true);
@@ -172,24 +174,8 @@ public class TestsClient extends TestsGenerator {
                     ((String) stepOut.get("expectedError")).replace(step.method, Helpers.toPascalCase(step.method))
                   );
                 }
-              } else if (step.expected.match != null) {
-                Map<String, Object> matchMap = new HashMap<>();
-                if (step.expected.match instanceof Map match) {
-                  paramsType.enhanceParameters(match, matchMap);
-                  stepOut.put("match", matchMap);
-                  stepOut.put("matchIsJSON", true);
-                } else if (step.expected.match instanceof List match) {
-                  matchMap.put("parameters", Json.mapper().writeValueAsString(step.expected.match));
-                  stepOut.put("match", matchMap);
-                  stepOut.put("matchIsJSON", true);
-                } else {
-                  stepOut.put("match", step.expected.match);
-                }
-              } else if (step.expected.match == null) {
-                stepOut.put("match", Map.of());
-                stepOut.put("matchIsJSON", false);
-                stepOut.put("matchIsNull", true);
               }
+              stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
             }
             steps.add(stepOut);
           }

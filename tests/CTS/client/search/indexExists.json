@@ -1,0 +1,62 @@
+[
+  {
+    "testName": "indexExists",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsYES"
+        },
+        "expected": {
+          "type": "response",
+          "match": true
+        }
+      }
+    ]
+  },
+  {
+    "testName": "indexNotExists",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsNO"
+        },
+        "expected": {
+          "type": "response",
+          "match": false
+        }
+      }
+    ]
+  }
+]

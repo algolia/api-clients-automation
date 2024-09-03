@@ -40,6 +40,11 @@ const flags = {
 
 program.name('cli');
 
+program.hook('preAction', () => {
+  // restore the cursor because sometime it's broken
+  process.stdout.write('\x1B[?25h');
+});
+
 program
   .command('generate')
   .description('Generate a specified client')

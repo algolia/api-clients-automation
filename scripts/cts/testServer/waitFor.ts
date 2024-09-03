@@ -125,6 +125,19 @@ function addRoutes(app: Express): void {
       status: 'published',
     });
   });
+
+  app.get('/1/indexes/:indexName/settings', (req, res) => {
+    if (req.params.indexName === 'indexExistsYES') {
+      res.status(200).json({
+        attributesForFaceting: ['searchable(brand)'],
+        searchableAttributes: ['name', 'brand'],
+        customRanking: ['desc(price)', 'asc(name)'],
+        replicas: ['indexExistsYES-1', 'indexExistsYES-2'],
+      });
+    } else {
+      res.status(404).json({ message: 'Index not found' });
+    }
+  });
 }
 
 export function waitForApiKeyServer(): Promise<Server> {
