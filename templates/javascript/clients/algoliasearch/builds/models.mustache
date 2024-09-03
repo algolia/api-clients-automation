@@ -1,11 +1,9 @@
 // {{{generationBanner}}}
 
+import type { Region as ABTestingRegion } from '@algolia/client-abtesting';
+import type { Region as AnalyticsRegion } from '@algolia/client-analytics';
+import type { ClientOptions } from '@algolia/client-common';
 import type {
-  Host,
-  Requester,
-  ClientOptions,
-} from '@algolia/client-common';
-import {
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
   Anchoring,
@@ -14,7 +12,6 @@ import {
   AroundRadiusAll,
   AutomaticFacetFilter,
   AutomaticFacetFilters,
-  BrowsePagination,
   BaseSearchParams,
   BaseSearchParamsWithoutQuery,
   BaseSearchResponse,
@@ -79,13 +76,10 @@ import {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
-  apiClientVersion,
 } from '@algolia/client-search';
+import { apiClientVersion } from '@algolia/client-search';
 
-import {Region as AnalyticsRegion} from '@algolia/client-analytics';
-import {Region as ABTestingRegion} from '@algolia/client-abtesting'
-
-type Region = AnalyticsRegion | ABTestingRegion;
+type Region = ABTestingRegion | AnalyticsRegion;
 
 export * from '@algolia/client-search';
 export * from '@algolia/recommend';
@@ -172,10 +166,10 @@ export {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
-  apiClientVersion,
   AnalyticsRegion,
   ABTestingRegion,
   Region,
+  apiClientVersion,
 };
 
 /**
