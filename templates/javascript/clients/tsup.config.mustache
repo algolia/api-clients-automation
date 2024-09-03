@@ -8,7 +8,7 @@ import pkg from "./package.json" with {type:'json'}
 const nodeOptions: Options = {
   ...getBaseNodeOptions(pkg, __dirname),
   dts: { entry: { 'node': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts' } },
-  entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}model/**/*.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
+  entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/node.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
 
   {{#isAlgoliasearchClient}}
   outDir: 'dist/lite',
@@ -32,7 +32,7 @@ const nodeConfigs: Options[] = [
     format: 'cjs',
     name: 'node cjs',
     dts: { entry: { 'node': 'builds/node.ts' } },
-    entry: ['builds/node.ts', 'builds/models.ts'],
+    entry: ['builds/node.ts'],
     outDir: 'dist',
   },
   {
@@ -40,7 +40,7 @@ const nodeConfigs: Options[] = [
     format: 'esm',
     name: 'node esm',
     dts: { entry: { 'node': 'builds/node.ts' } },
-    entry: ['builds/node.ts', 'builds/models.ts'],
+    entry: ['builds/node.ts'],
     outDir: 'dist',
   },
   {{/isAlgoliasearchClient}}
@@ -64,7 +64,7 @@ const browserConfigs: Options[] = [
     minify: false,
     name: 'browser esm',
     dts: { entry: { 'browser': '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts' } },
-    entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}model/**/*.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
+    entry: ['{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}builds/browser.ts', '{{#isAlgoliasearchClient}}lite/{{/isAlgoliasearchClient}}src/*.ts'],
     {{#isAlgoliasearchClient}}
     external: ['dom', '@algolia/client-common', '@algolia/requester-browser-xhr'],
     {{/isAlgoliasearchClient}}
@@ -89,7 +89,7 @@ const browserConfigs: Options[] = [
     name: 'algoliasearch esm',
     globalName: 'algoliasearch',
     dts: { entry: { 'browser': 'builds/browser.ts' } },
-    entry: ['builds/browser.ts', 'builds/models.ts'],
+    entry: ['builds/browser.ts'],
     outDir: 'dist',
     minify: false,
   },
