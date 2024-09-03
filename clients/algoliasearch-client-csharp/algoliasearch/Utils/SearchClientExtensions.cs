@@ -598,15 +598,19 @@ public partial class SearchClient
 
   public async Task<bool> IndexExistsAsync(string indexName, CancellationToken cancellationToken = default)
   {
-      try
-      {
-          await GetSettingsAsync(indexName, null, cancellationToken);
-      }
-      catch (AlgoliaApiException ex) when (ex.HttpErrorCode == 404)
-      {
-          return await Task.FromResult(false);
-      }
+    try
+    {
+      await GetSettingsAsync(indexName, null, cancellationToken);
+    }
+    catch (AlgoliaApiException ex) when (ex.HttpErrorCode == 404)
+    {
+      return await Task.FromResult(false);
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
 
-      return await Task.FromResult(true);
+    return await Task.FromResult(true);
   }
 }

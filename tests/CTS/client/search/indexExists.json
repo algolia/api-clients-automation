@@ -83,7 +83,11 @@
           "indexName": "indexExistsERROR"
         },
         "expected": {
-          "error": "API error [403] {\\\"message\\\":\\\"Invalid API key\\\"}"
+          "error": {
+            "go": "API error [403] {\\\"message\\\":\\\"Invalid API key\\\"}",
+            "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid API key\\\"}",
+            "csharp": "{\\\"message\\\":\\\"Invalid API key\\\"}"
+          }
         }
       }
     ]
