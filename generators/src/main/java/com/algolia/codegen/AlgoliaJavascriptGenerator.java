@@ -51,7 +51,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     supportingFiles.clear();
 
     // Files common to both generations
-    supportingFiles.add(new SupportingFile("rollup.mustache", "", "rollup.config.js"));
+    supportingFiles.add(new SupportingFile("tsup.config.mustache", "", "tsup.config.ts"));
+    supportingFiles.add(new SupportingFile("rollup.config.mustache", "", "rollup.config.js"));
     supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
     supportingFiles.add(new SupportingFile("tsconfig.mustache", "", "tsconfig.json"));
 
