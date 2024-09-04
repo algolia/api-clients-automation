@@ -78,9 +78,9 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     /**
     * Helper method to switch the API key used to authenticate the requests.
     *
-    * @param apiKey - The new API Key to use.
+    * @param apiKey.apiKey - The new API Key to use.
     */
-    setAlgoliaApiKey(apiKey: string): void {
+    setAlgoliaApiKey({ apiKey }: { apiKey: string }): void {
       auth.setAlgoliaApiKey(apiKey);
     },
 

@@ -1,2 +1,2 @@
-{{^useEchoRequester}}{{{returnType}}} res = {{/useEchoRequester}}{{> tests/method}};
+{{^useEchoRequester}}{{#hasResponsePayload}}{{{returnType}}} res = {{/hasResponsePayload}}{{/useEchoRequester}}{{> tests/method}};
 {{#useEchoRequester}}EchoResponse result = echo.getLastResponse();{{/useEchoRequester}}

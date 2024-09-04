@@ -15,6 +15,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{/autoCreateClient}}
   _ = echo
   {{#steps}}
+  {
   {{#times}}
   for i := 0; i < {{.}}; i++ {
   {{/times}}
@@ -54,6 +55,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{#times}}
   }
   {{/times}}
+  }
   {{/steps}}
 }
 

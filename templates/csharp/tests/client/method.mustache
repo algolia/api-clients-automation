@@ -1,2 +1,2 @@
-{{^useEchoRequester}}var res = {{/useEchoRequester}}{{> tests/method}};
+{{^useEchoRequester}}{{#hasResponsePayload}}var res = {{/hasResponsePayload}}{{/useEchoRequester}}{{> tests/method}};
 {{#useEchoRequester}}EchoResponse result = _echo.LastResponse;{{/useEchoRequester}}

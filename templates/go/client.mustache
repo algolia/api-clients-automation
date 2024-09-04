@@ -141,7 +141,7 @@ func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase
 }
 
 // Allow update of stored API key used to authenticate requests.
-func (c *APIClient) SetApiKey(apiKey string) {
+func (c *APIClient) SetAlgoliaApiKey(apiKey string) {
 	c.cfg.ApiKey = apiKey
 }
 

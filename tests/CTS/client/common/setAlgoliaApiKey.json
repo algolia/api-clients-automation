@@ -1,23 +1,33 @@
 [
   {
     "testName": "switch API key",
+    "autoCreateClient": false,
     "steps": [
       {
         "type": "createClient",
         "parameters": {
           "appId": "test-app-id",
-          "apiKey": "test-api-key"
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6683
+            }
+          ]
         }
       },
       {
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "check-api-key"
+          "path": "check-api-key/1"
         },
         "expected": {
           "type": "response",
-          "match": "test-api-key"
+          "match": {
+            "headerAPIKeyValue": "test-api-key"
+          }
         }
       },
       {
@@ -31,11 +41,13 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "check-api-key"
+          "path": "check-api-key/2"
         },
         "expected": {
           "type": "response",
-          "match": "updated-api-key"
+          "match": {
+            "headerAPIKeyValue": "updated-api-key"
+          }
         }
       }
     ]

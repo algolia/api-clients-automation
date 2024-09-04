@@ -6,6 +6,7 @@ public function test{{testIndex}}{{testType}}()
         $client = $this->createClient(self::APP_ID, self::API_KEY);
     {{/autoCreateClient}}
     {{#steps}}
+    {
       {{#times}}
       for ($i = 1; $i <= {{.}}; $i++) {
       {{/times}}
@@ -62,6 +63,7 @@ public function test{{testIndex}}{{testType}}()
       {{#times}}
       }
       {{/times}}
+    }
     {{/steps}}
 }
 

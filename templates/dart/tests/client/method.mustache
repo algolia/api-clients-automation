@@ -1,5 +1,5 @@
 try {
-  final res = await client.{{method}}(
+  {{#hasResponsePayload}}final res = {{/hasResponsePayload}}await client.{{method}}(
       {{#parametersWithDataType}}
       {{> tests/request_param}}
       {{/parametersWithDataType}}

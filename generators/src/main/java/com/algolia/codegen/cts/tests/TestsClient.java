@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
@@ -114,9 +115,25 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
+              stepOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+
+              // default to true because most api calls are asynchronous
+              stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+              // Determines whether the endpoint is expected to return a response payload
+              // deserialized and therefore a variable to store it into.
+              stepOut.put("hasResponsePayload", true);
+
+              for (CodegenResponse response : ope.responses) {
+                if (response.code.equals("204")) {
+                  stepOut.put("hasResponsePayload", false);
+                }
+              }
+
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
+
+              // default to true because most api calls are asynchronous
+              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
             }
 
             stepOut.put("method", step.method);

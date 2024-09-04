@@ -1,4 +1,4 @@
-let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
+{{#hasResponsePayload}}let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{/hasResponsePayload}}{{> tests/method}}
 {{^isHelper}}
 {{^isBenchmark}}
 let responseBodyData = try XCTUnwrap(response.bodyData)

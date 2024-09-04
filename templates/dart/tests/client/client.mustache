@@ -20,7 +20,8 @@ void main() {
       options: ClientOptions(requester: requester),
     );
     {{/autoCreateClient}}    
-    {{#steps}}    
+    {{#steps}}
+    {
     {{#isError}}
     await expectError(
       '{{{expectedError}}}',
@@ -45,6 +46,7 @@ void main() {
     {{/match}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
     {{/isError}}
+    }
     {{/steps}}
     }
   );
