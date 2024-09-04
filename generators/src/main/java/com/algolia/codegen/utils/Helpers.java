@@ -262,7 +262,6 @@ public class Helpers {
     String versionFile = language.equals("javascript")
       ? ".nvmrc"
       : "config/." + (language.equals("kotlin") || language.equals("scala") ? "java" : language) + "-version";
-    String version = Files.readString(new File(versionFile).toPath()).trim();
-    return language.equals("java") ? version.split("\\.")[0] : version;
+    return Files.readString(new File(versionFile).toPath()).trim();
   }
 }
