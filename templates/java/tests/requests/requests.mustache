@@ -30,7 +30,7 @@ class {{client}}RequestsTests {
     void init() {
         this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
         this.echo = new EchoInterceptor();
-        var options = ClientOptions.builder()
+        ClientOptions options = ClientOptions.builder()
                 .setRequesterConfig(requester -> requester.addInterceptor(echo))
                 .build();
         this.client = new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}options);

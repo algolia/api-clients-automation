@@ -152,6 +152,12 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
       bundle.put("lambda", lambda);
 
+      String languageVersion = (String) additionalProperties.get("languageVersion");
+      if (languageVersion.equals("")) {
+        languageVersion = Helpers.getLanguageVersion(language);
+      }
+      bundle.put("languageVersion", languageVersion);
+
       ctsManager.addDataToBundle(bundle);
 
       for (TestsGenerator testGen : testsGenerators) {
