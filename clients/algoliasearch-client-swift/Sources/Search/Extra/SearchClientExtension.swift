@@ -541,7 +541,7 @@ public extension SearchClient {
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> ReplaceAllObjectsResponse {
-        let tmpIndexName = try "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
+        let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         var copyOperationResponse = try await operationIndex(
             indexName: indexName,
@@ -636,7 +636,7 @@ public extension SearchClient {
                 return false
             }
 
-            throw error
+            throw AlgoliaError.httpError(error)
         }
 
         return true
