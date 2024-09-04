@@ -92,3 +92,9 @@ paths:
     $ref: 'paths/deleteUserProfile.yml'
   /1/strategies/personalization:
     $ref: 'paths/personalizationStrategy.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

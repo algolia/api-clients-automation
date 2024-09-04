@@ -63,3 +63,9 @@ paths:
     $ref: 'paths/statistic.yml'
   /1/usage/{statistic}/{indexName}:
     $ref: 'paths/statisticIndex.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

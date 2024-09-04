@@ -92,3 +92,9 @@ paths:
     $ref: 'paths/getConfigurationStatus.yml'
   /1/logs/{indexName}:
     $ref: 'paths/getLogFile.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

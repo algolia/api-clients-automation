@@ -166,3 +166,9 @@ paths:
   # ########################
   /2/status:
     $ref: 'paths/status/getStatus.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

@@ -1,0 +1,43 @@
+[
+  {
+    "testName": "switch API key",
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "check-api-key"
+        },
+        "expected": {
+          "type": "response",
+          "match": "test-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "setAlgoliaApiKey",
+        "parameters": {
+          "apiKey": "updated-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "check-api-key"
+        },
+        "expected": {
+          "type": "response",
+          "match": "updated-api-key"
+        }
+      }
+    ]
+  }
+]

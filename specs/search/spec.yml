@@ -390,3 +390,6 @@ paths:
 
   /indexExists:
     $ref: 'helpers/indexExists.yml#/method'
+
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

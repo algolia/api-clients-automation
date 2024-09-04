@@ -101,3 +101,9 @@ paths:
 
   /1/usertokens/{userToken}:
     $ref: 'paths/deleteUserToken.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

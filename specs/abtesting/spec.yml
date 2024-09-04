@@ -99,3 +99,9 @@ paths:
     $ref: 'paths/stopABTest.yml'
   /2/abtests/schedule:
     $ref: 'paths/scheduleABTest.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

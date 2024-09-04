@@ -131,3 +131,9 @@ paths:
 
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     $ref: 'paths/searchRecommendRules.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setAlgoliaApiKey:
+    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'

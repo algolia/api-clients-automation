@@ -1,0 +1,26 @@
+method:
+  get:
+    x-helper: true
+    x-asynchronous-helper: false
+    tags:
+      - Api Key
+    operationId: setAlgoliaApiKey
+    summary: Switch the API key used to authenticate requests
+    description: |
+      Switch the API key used to authenticate requests.
+    parameters:
+      - in: query
+        name: apiKey
+        description: API key to be used from now on.
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: string
+      '400':
+        $ref: '../../common/responses/IndexNotFound.yml'
