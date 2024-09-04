@@ -387,3 +387,6 @@ paths:
 
   /partialUpdateObjects:
     $ref: 'helpers/partialUpdateObjects.yml#/method'
+
+  /indexExists:
+    $ref: 'helpers/indexExists.yml#/method'

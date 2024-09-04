@@ -16,32 +16,25 @@
       {{/isError}}
       {{^isError}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
-        {{#match}}
-          {{#testUserAgent}} {
-            var regexp = new Regex("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}");
-            Assert.Matches(regexp,result.Headers["user-agent"]);
-            }{{/testUserAgent}}
-          {{#testTimeouts}}
-              Assert.Equal({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, result.ConnectTimeout.TotalMilliseconds);
-              Assert.Equal({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, result.ResponseTimeout.TotalMilliseconds);
-          {{/testTimeouts}}
-          {{#testHost}}
-              Assert.Equal("{{{match}}}", result.Host);
-          {{/testHost}}
-          {{#testResponse}}
-            {{#matchIsJSON}}
-              JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
-            {{/matchIsJSON}}
-            {{^matchIsJSON}}
-              {{#matchIsNull}}
-                Assert.Null(res);
-              {{/matchIsNull}}
-              {{^matchIsNull}}
-                Assert.Equal("{{{match}}}", res);
-              {{/matchIsNull}}
-            {{/matchIsJSON}}
-          {{/testResponse}}
-        {{/match}}
+        {{#testUserAgent}} {
+          var regexp = new Regex({{#match}}{{> tests/generateParams}}{{/match}});
+          Assert.Matches(regexp,result.Headers["user-agent"]);
+          }{{/testUserAgent}}
+        {{#testTimeouts}}
+            Assert.Equal({{{matchConnectTimeout}}}, result.ConnectTimeout.TotalMilliseconds);
+            Assert.Equal({{{matchResponseTimeout}}}, result.ResponseTimeout.TotalMilliseconds);
+        {{/testTimeouts}}
+        {{#testHost}}
+            Assert.Equal({{#match}}{{> tests/generateParams}}{{/match}}, result.Host);
+        {{/testHost}}
+        {{#testResponse}}
+          {{#match.isPrimitive}}
+            Assert.Equal({{#match}}{{> tests/generateParams}}{{/match}}, res);
+          {{/match.isPrimitive}}
+          {{^match.isPrimitive}}
+            JsonAssert.EqualOverrideDefault({{#match}}{{> tests/generateParams}}{{/match}}, JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
+          {{/match.isPrimitive}}
+        {{/testResponse}}
       {{/isError}}
     {{#times}}
     }
