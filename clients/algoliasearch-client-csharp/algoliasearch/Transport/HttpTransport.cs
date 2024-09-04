@@ -296,7 +296,7 @@ internal class HttpTransport
   /// </summary>
   /// <param name="apiKey">Your API Key</param>
   /// <returns></returns>
-  public void SetApiKey(string apiKey)
+  public void SetAlgoliaApiKey(string apiKey)
   {
     _algoliaConfig.ApiKey = apiKey;
   }
