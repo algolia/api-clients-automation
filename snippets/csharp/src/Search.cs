@@ -1001,6 +1001,54 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexExists
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists()
+  {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexNotExists
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists1()
+  {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexExistsWithError
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists2()
+  {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the ListApiKeys method.
   ///
   /// listApiKeys

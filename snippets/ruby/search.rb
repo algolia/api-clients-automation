@@ -1017,6 +1017,63 @@ def snippet_for_has_pending_mappings
   # SEPARATOR<
 end
 
+# Snippet for the indexExists method.
+#
+# indexExists
+def snippet_for_index_exists
+  # >SEPARATOR indexExists indexExists
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.index_exists("<YOUR_INDEX_NAME>")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the indexExists method.
+#
+# indexNotExists
+def snippet_for_index_exists1
+  # >SEPARATOR indexExists indexNotExists
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.index_exists("<YOUR_INDEX_NAME>")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the indexExists method.
+#
+# indexExistsWithError
+def snippet_for_index_exists2
+  # >SEPARATOR indexExists indexExistsWithError
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  response = client.index_exists("<YOUR_INDEX_NAME>")
+
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the listApiKeys method.
 #
 # listApiKeys

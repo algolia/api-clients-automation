@@ -916,6 +916,51 @@ void snippetForhasPendingMappings() async {
   // SEPARATOR<
 }
 
+// Snippet for the indexExists method.
+//
+// indexExists
+void snippetForindexExists() async {
+  // >SEPARATOR indexExists indexExists
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexNotExists
+void snippetForindexExists1() async {
+  // >SEPARATOR indexExists indexNotExists
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExistsWithError
+void snippetForindexExists2() async {
+  // >SEPARATOR indexExists indexExistsWithError
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // SEPARATOR<
+}
+
 // Snippet for the listApiKeys method.
 //
 // listApiKeys

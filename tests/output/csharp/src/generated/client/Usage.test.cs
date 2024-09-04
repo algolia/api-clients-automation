@@ -30,6 +30,7 @@ public class UsageClientTests
   public async Task ApiTest0()
   {
     var client = new UsageClient(new UsageConfig("test-app-id", "test-api-key"), _echo);
+
     await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
@@ -40,6 +41,7 @@ public class UsageClientTests
   public async Task ApiTest1()
   {
     var client = new UsageClient(new UsageConfig("test-app-id", "test-api-key"), _echo);
+
     await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 

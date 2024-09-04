@@ -78,6 +78,7 @@ public class MonitoringClientTests
   public async Task ParametersTest0()
   {
     var client = new MonitoringClient(new MonitoringConfig("my-app-id", "my-api-key"), _echo);
+
     await client.CustomDeleteAsync("test");
     EchoResponse result = _echo.LastResponse;
 

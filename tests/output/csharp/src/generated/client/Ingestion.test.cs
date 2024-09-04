@@ -78,6 +78,7 @@ public class IngestionClientTests
   public async Task ParametersTest0()
   {
     var client = new IngestionClient(new IngestionConfig("my-app-id", "my-api-key", "us"), _echo);
+
     await client.GetSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = _echo.LastResponse;
 

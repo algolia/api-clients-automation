@@ -240,6 +240,49 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('indexExists')]
+    public function test0indexExists()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->indexExists(
+            'indexExistsYES',
+        );
+        $this->assertEquals(
+            true,
+            $res
+        );
+    }
+
+    #[TestDox('indexNotExists')]
+    public function test1indexExists()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->indexExists(
+            'indexExistsNO',
+        );
+        $this->assertEquals(
+            false,
+            $res
+        );
+    }
+
+    #[TestDox('indexExistsWithError')]
+    public function test2indexExists()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        try {
+            $res = $client->indexExists(
+                'indexExistsERROR',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Invalid API key');
+        }
+    }
+
     #[TestDox('client throws with invalid parameters')]
     public function test0parameters()
     {
@@ -546,7 +589,10 @@ class SearchTest extends TestCase implements HttpClientInterface
             'api-key-delete-operation-test-php',
             'delete',
         );
-        $this->assertNull($res);
+        $this->assertEquals(
+            null,
+            $res
+        );
     }
 
     #[TestDox('wait for an application-level task')]

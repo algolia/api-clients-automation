@@ -759,6 +759,45 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the indexExists method.
+    ///
+    /// indexExists
+    func snippetForIndexExists() async throws {
+        // >SEPARATOR indexExists indexExists
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the indexExists method.
+    ///
+    /// indexNotExists
+    func snippetForIndexExists1() async throws {
+        // >SEPARATOR indexExists indexNotExists
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the indexExists method.
+    ///
+    /// indexExistsWithError
+    func snippetForIndexExists2() async throws {
+        // >SEPARATOR indexExists indexExistsWithError
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // SEPARATOR<
+    }
+
     /// Snippet for the listApiKeys method.
     ///
     /// listApiKeys

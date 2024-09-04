@@ -88,7 +88,6 @@ class IngestionClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -100,7 +99,6 @@ class IngestionClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -111,7 +109,6 @@ class IngestionClientClientTests {
     IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("data.us.algolia.com", result.host);
   }
 

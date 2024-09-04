@@ -241,6 +241,73 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # indexExists
+  def test_index_exists0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.index_exists?("indexExistsYES")
+    assert_equal(true, req)
+  end
+
+  # indexNotExists
+  def test_index_exists1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.index_exists?("indexExistsNO")
+    assert_equal(false, req)
+  end
+
+  # indexExistsWithError
+  def test_index_exists2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    begin
+      client.index_exists?("indexExistsERROR")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal("Invalid API key", e.message)
+    end
+  end
+
   # client throws with invalid parameters
   def test_parameters0
     begin
@@ -575,7 +642,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
-    assert_nil(req)
+    assert_equal(nil, req)
   end
 
   # wait for an application-level task

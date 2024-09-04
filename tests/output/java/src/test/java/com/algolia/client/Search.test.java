@@ -54,7 +54,6 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("test-app-id-dsn.algolia.net", result.host);
   }
 
@@ -64,7 +63,6 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("test-app-id.algolia.net", result.host);
   }
 
@@ -171,7 +169,6 @@ class SearchClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -183,7 +180,6 @@ class SearchClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -252,6 +248,54 @@ class SearchClientClientTests {
         "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
         res
       );
+    });
+  }
+
+  @Test
+  @DisplayName("indexExists")
+  void indexExistsTest0() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      var res = client.indexExists("indexExistsYES");
+
+      assertEquals(true, res);
+    });
+  }
+
+  @Test
+  @DisplayName("indexNotExists")
+  void indexExistsTest1() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      var res = client.indexExists("indexExistsNO");
+
+      assertEquals(false, res);
+    });
+  }
+
+  @Test
+  @DisplayName("indexExistsWithError")
+  void indexExistsTest2() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      );
+      {
+        Exception exception = assertThrows(Exception.class, () -> {
+          var res = client.indexExists("indexExistsERROR");
+        });
+        assertEquals("Status Code: 403 - {\"message\":\"Invalid API key\"}", exception.getMessage());
+      }
     });
   }
 

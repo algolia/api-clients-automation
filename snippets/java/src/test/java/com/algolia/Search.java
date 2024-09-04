@@ -739,6 +739,45 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the indexExists method.
+  //
+  // indexExists
+  void snippetForIndexExists() {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  // Snippet for the indexExists method.
+  //
+  // indexNotExists
+  void snippetForIndexExists1() {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  // Snippet for the indexExists method.
+  //
+  // indexExistsWithError
+  void snippetForIndexExists2() {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
   // Snippet for the listApiKeys method.
   //
   // listApiKeys

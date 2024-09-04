@@ -150,6 +150,41 @@ describe('generateSecuredApiKey', () => {
   }, 15000);
 });
 
+describe('indexExists', () => {
+  test('indexExists', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.indexExists({ indexName: 'indexExistsYES' });
+
+    expect(result).toEqual(true);
+  }, 15000);
+
+  test('indexNotExists', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    const result = await client.indexExists({ indexName: 'indexExistsNO' });
+
+    expect(result).toEqual(false);
+  }, 15000);
+
+  test('indexExistsWithError', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [{ url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' }],
+    });
+
+    try {
+      const result = await client.indexExists({ indexName: 'indexExistsERROR' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Invalid API key');
+    }
+  }, 15000);
+});
+
 describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {
@@ -383,7 +418,7 @@ describe('waitForApiKey', () => {
 
     const result = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
 
-    expect(result).toBeUndefined();
+    expect(result).toEqual();
   }, 15000);
 });
 

@@ -870,6 +870,54 @@ export async function snippetForHasPendingMappings(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the indexExists method.
+//
+// indexExists
+export async function snippetForIndexExists(): Promise<void> {
+  // >SEPARATOR indexExists indexExists
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsYES' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexNotExists
+export async function snippetForIndexExists1(): Promise<void> {
+  // >SEPARATOR indexExists indexNotExists
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsNO' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExistsWithError
+export async function snippetForIndexExists2(): Promise<void> {
+  // >SEPARATOR indexExists indexExistsWithError
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsERROR' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the listApiKeys method.
 //
 // listApiKeys
