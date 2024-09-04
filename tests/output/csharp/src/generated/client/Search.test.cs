@@ -30,6 +30,7 @@ public class SearchClientTests
   public async Task ApiTest0()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
+
     await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
@@ -40,6 +41,7 @@ public class SearchClientTests
   public async Task ApiTest1()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
+
     await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
@@ -284,6 +286,86 @@ public class SearchClientTests
     Assert.Equal(
       "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
       res
+    );
+  }
+
+  [Fact(DisplayName = "indexExists")]
+  public async Task IndexExistsTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.IndexExistsAsync("indexExistsYES");
+
+    Assert.True(res);
+  }
+
+  [Fact(DisplayName = "indexNotExists")]
+  public async Task IndexExistsTest1()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.IndexExistsAsync("indexExistsNO");
+
+    Assert.False(res);
+  }
+
+  [Fact(DisplayName = "indexExistsWithError")]
+  public async Task IndexExistsTest2()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.IndexExistsAsync("indexExistsERROR");
+    });
+    Assert.Equal(
+      "{\"message\":\"Invalid API key\"}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
     );
   }
 

@@ -14,7 +14,7 @@
                     {{#requestOptions.headers}}
                     headers = buildMap { 
                     {{#parametersWithDataType}}
-                        put("{{{key}}}", {{> tests/param_value}})    
+                        put("{{{key}}}", {{> tests/param_value}})
                     {{/parametersWithDataType}}
                     },
                     {{/requestOptions.headers}}

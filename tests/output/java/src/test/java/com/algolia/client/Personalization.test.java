@@ -88,7 +88,6 @@ class PersonalizationClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -100,7 +99,6 @@ class PersonalizationClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }

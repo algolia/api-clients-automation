@@ -88,7 +88,6 @@ class AnalyticsClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -100,7 +99,6 @@ class AnalyticsClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -111,7 +109,6 @@ class AnalyticsClientClientTests {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", withEchoRequester());
     client.getAverageClickPosition("my-index");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("analytics.algolia.com", result.host);
   }
 
@@ -121,7 +118,6 @@ class AnalyticsClientClientTests {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("analytics.de.algolia.com", result.host);
   }
 

@@ -22,42 +22,40 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
           call = {
             {{> tests/method}}
           },
-          {{#match}}
           {{^testResponse}}
           intercept = {
             {{#testUserAgent}}
-                val regexp = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}".toRegex()
+                val regexp = {{#match}}{{> tests/param_value}}{{/match}}.toRegex()
                 val header = it.headers["User-Agent"].orEmpty()
                 assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
             {{/testUserAgent}}
             {{#testTimeouts}}
-                assertEquals({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, it.connectTimeout);
-                assertEquals({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, it.socketTimeout);
+                assertEquals({{{matchConnectTimeout}}}, it.connectTimeout);
+                assertEquals({{{matchResponseTimeout}}}, it.socketTimeout);
             {{/testTimeouts}}
             {{#testHost}}
-                assertEquals("{{{match}}}", it.url.host);
+                assertEquals({{#match}}{{> tests/param_value}}{{/match}}, it.url.host);
             {{/testHost}}        
           }{{/testResponse}}{{#testResponse}}
             {{#isHelper}}response = {
-            {{#matchIsJSON}}
+            {{^match.isPrimitive}}
               assertNotNull(it)
-              JSONAssert.assertEquals("""{{{match.parameters}}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
-            {{/matchIsJSON}}
-            {{^matchIsJSON}}
-              {{#matchIsNull}}
+              JSONAssert.assertEquals("""{{{match.value}}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+            {{/match.isPrimitive}}
+            {{#match.isPrimitive}}
+              {{#match.isNull}}
                 assertNull(it)
-              {{/matchIsNull}}
-              {{^matchIsNull}}
-                assertEquals("""{{{match}}}""", it)
-              {{/matchIsNull}}
-            {{/matchIsJSON}}
+              {{/match.isNull}}
+              {{^match.isNull}} 
+                assertEquals({{#match}}{{> tests/param_value}}{{/match}}, it)
+              {{/match.isNull}}
+            {{/match.isPrimitive}}
             }{{/isHelper}}
             {{^isHelper}}response = {
                 val response = Json.encodeToString(it)
-                assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
+                assertEquals({{#match}}{{> tests/param_value}}{{/match}}, response)
             }{{/isHelper}}
             {{/testResponse}}
-          {{/match}}
     )
     {{/isMethod}}
     {{/isError}}

@@ -19,52 +19,45 @@ public function test{{testIndex}}{{testType}}()
         {{/isError}}
         {{^isError}}
             {{#dynamicTemplate}}{{/dynamicTemplate}}
-            {{#match}}
-                {{#testUserAgent}}
-                $this->assertTrue(
-                    (bool) preg_match(
-                        '/{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}/',
-                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
-                    )
-                );
-                {{/testUserAgent}}
-                {{#testHost}}
+            {{#testUserAgent}}
+            $this->assertTrue(
+                (bool) preg_match(
+                    '/{{{match.value}}}/',
+                    $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                )
+            );
+            {{/testUserAgent}}
+            {{#testHost}}
+            $this->assertEquals(
+                {{#match}}{{> tests/generateParams}}{{/match}}
+                $this->recordedRequest['request']->getUri()->getHost()
+            );
+            {{/testHost}}
+            {{#testTimeouts}}
+            $this->assertEquals(
+                {{{matchConnectTimeout}}},
+                $this->recordedRequest['connectTimeout']
+            );
+        
+            $this->assertEquals(
+                {{{matchResponseTimeout}}},
+                $this->recordedRequest['responseTimeout']
+            );
+            {{/testTimeouts}}
+            {{#testResponse}}
+              {{^match.isPrimitive}}
                 $this->assertEquals(
-                    '{{{match}}}',
-                    $this->recordedRequest['request']->getUri()->getHost()
+                    '{{{match.value}}}',
+                    json_encode($res)
                 );
-                {{/testHost}}
-                {{#testTimeouts}}
+              {{/match.isPrimitive}}
+              {{#match.isPrimitive}}
                 $this->assertEquals(
-                    {{{match.parametersWithDataTypeMap.connectTimeout.value}}},
-                    $this->recordedRequest['connectTimeout']
+                    {{#match}}{{> tests/generateParams}}{{/match}}
+                    $res
                 );
-            
-                $this->assertEquals(
-                    {{{match.parametersWithDataTypeMap.responseTimeout.value}}},
-                    $this->recordedRequest['responseTimeout']
-                );
-                {{/testTimeouts}}
-                {{#testResponse}}
-                  {{#matchIsJSON}}
-                    $this->assertEquals(
-                        '{{{match.parameters}}}',
-                        json_encode($res)
-                    );
-                  {{/matchIsJSON}}
-                  {{^matchIsJSON}}
-                    {{#matchIsNull}}
-                      $this->assertNull($res);
-                    {{/matchIsNull}}
-                    {{^matchIsNull}}
-                      $this->assertEquals(
-                          '{{{match}}}',
-                          $res
-                      );
-                    {{/matchIsNull}}
-                  {{/matchIsJSON}}
-                {{/testResponse}}
-            {{/match}}
+              {{/match.isPrimitive}}
+            {{/testResponse}}
         {{/isError}}
       {{#times}}
       }

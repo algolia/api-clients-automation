@@ -1180,6 +1180,69 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the IndexExists method.
+     *
+     * indexExists
+     */
+    public function snippetForIndexExists()
+    {
+        // >SEPARATOR indexExists indexExists
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the IndexExists method.
+     *
+     * indexNotExists
+     */
+    public function snippetForIndexExists1()
+    {
+        // >SEPARATOR indexExists indexNotExists
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the IndexExists method.
+     *
+     * indexExistsWithError
+     */
+    public function snippetForIndexExists2()
+    {
+        // >SEPARATOR indexExists indexExistsWithError
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the ListApiKeys method.
      *
      * listApiKeys

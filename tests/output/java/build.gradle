@@ -15,7 +15,12 @@ dependencies {
     testImplementation 'io.github.cdimascio:dotenv-java:3.0.1'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 test() {
+    systemProperty "file.encoding", "UTF-8"
     useJUnitPlatform()
     testLogging {
 		events "passed", "skipped", "failed"

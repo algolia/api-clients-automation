@@ -92,7 +92,7 @@ void main() {
         apiKey: "my-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'insights.algolia.io');
+      expect(request.host.url, "insights.algolia.io");
     });
     try {
       final res = await client.pushEvents(
@@ -131,7 +131,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'insights.us.algolia.io');
+      expect(request.host.url, "insights.us.algolia.io");
     });
     try {
       final res = await client.customDelete(

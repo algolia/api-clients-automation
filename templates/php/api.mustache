@@ -17,6 +17,8 @@ use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 use {{invokerPackage}}\Support\Helpers;
 
+use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
+
 /**
  * {{classname}} Class Doc Comment
  *
@@ -644,6 +646,19 @@ use {{invokerPackage}}\Support\Helpers;
         $validUntil = (int) $matches[1];
 
         return $validUntil - time();
+    }
+    
+    public function indexExists($indexName)
+    {
+        try {
+            $this->getSettings($indexName);
+        } catch (NotFoundException $e) {
+            return false;
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return true;
     }
     {{/isSearchClient}}
 

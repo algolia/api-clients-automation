@@ -6743,4 +6743,16 @@ public class SearchClient extends ApiClient {
 
     return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
   }
+
+  public boolean indexExists(String indexName) {
+    try {
+      getSettings(indexName);
+    } catch (AlgoliaApiException e) {
+      if (e.getStatusCode() == 404) {
+        return false;
+      }
+      throw e;
+    }
+    return true;
+  }
 }

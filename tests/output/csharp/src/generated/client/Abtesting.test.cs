@@ -78,6 +78,7 @@ public class AbtestingClientTests
   public async Task ParametersTest0()
   {
     var client = new AbtestingClient(new AbtestingConfig("my-app-id", "my-api-key"), _echo);
+
     await client.GetABTestAsync(123);
     EchoResponse result = _echo.LastResponse;
 
@@ -88,6 +89,7 @@ public class AbtestingClientTests
   public async Task ParametersTest1()
   {
     var client = new AbtestingClient(new AbtestingConfig("my-app-id", "my-api-key", "us"), _echo);
+
     await client.GetABTestAsync(123);
     EchoResponse result = _echo.LastResponse;
 

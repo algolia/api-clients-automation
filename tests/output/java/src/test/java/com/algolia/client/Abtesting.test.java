@@ -88,7 +88,6 @@ class AbtestingClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -100,7 +99,6 @@ class AbtestingClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -111,7 +109,6 @@ class AbtestingClientClientTests {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", withEchoRequester());
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("analytics.algolia.com", result.host);
   }
 
@@ -121,7 +118,6 @@ class AbtestingClientClientTests {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("analytics.us.algolia.com", result.host);
   }
 

@@ -129,6 +129,11 @@
     "hasPendingMappings": {
       "default": "var response = await client.HasPendingMappingsAsync();"
     },
+    "indexExists": {
+      "indexExists": "var response = await client.IndexExistsAsync(\"<YOUR_INDEX_NAME>\");",
+      "indexNotExists": "var response = await client.IndexExistsAsync(\"<YOUR_INDEX_NAME>\");",
+      "indexExistsWithError": "var response = await client.IndexExistsAsync(\"<YOUR_INDEX_NAME>\");"
+    },
     "listApiKeys": {
       "default": "var response = await client.ListApiKeysAsync();"
     },
@@ -366,6 +371,11 @@
     },
     "hasPendingMappings": {
       "default": "final response = await client.hasPendingMappings();"
+    },
+    "indexExists": {
+      "indexExists": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
+      "indexNotExists": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
+      "indexExistsWithError": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
     },
     "listApiKeys": {
       "default": "final response = await client.listApiKeys();"
@@ -605,6 +615,11 @@
     "hasPendingMappings": {
       "default": "response, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
+    "indexExists": {
+      "indexExists": "response, err := client.IndexExists(\n  \"<YOUR_INDEX_NAME>\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)",
+      "indexNotExists": "response, err := client.IndexExists(\n  \"<YOUR_INDEX_NAME>\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)",
+      "indexExistsWithError": "response, err := client.IndexExists(\n  \"<YOUR_INDEX_NAME>\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
     "listApiKeys": {
       "default": "response, err := client.ListApiKeys()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
     },
@@ -842,6 +857,11 @@
     },
     "hasPendingMappings": {
       "default": "client.hasPendingMappings();"
+    },
+    "indexExists": {
+      "indexExists": "client.indexExists(\"<YOUR_INDEX_NAME>\");",
+      "indexNotExists": "client.indexExists(\"<YOUR_INDEX_NAME>\");",
+      "indexExistsWithError": "client.indexExists(\"<YOUR_INDEX_NAME>\");"
     },
     "listApiKeys": {
       "default": "client.listApiKeys();"
@@ -1081,6 +1101,11 @@
     "hasPendingMappings": {
       "default": "const response = await client.hasPendingMappings();\n\n// use typed response\nconsole.log(response);"
     },
+    "indexExists": {
+      "indexExists": "const response = await client.indexExists({ indexName: 'indexExistsYES' });\n\n// use typed response\nconsole.log(response);",
+      "indexNotExists": "const response = await client.indexExists({ indexName: 'indexExistsNO' });\n\n// use typed response\nconsole.log(response);",
+      "indexExistsWithError": "const response = await client.indexExists({ indexName: 'indexExistsERROR' });\n\n// use typed response\nconsole.log(response);"
+    },
     "listApiKeys": {
       "default": "const response = await client.listApiKeys();\n\n// use typed response\nconsole.log(response);"
     },
@@ -1318,6 +1343,11 @@
     },
     "hasPendingMappings": {
       "default": "var response = client.hasPendingMappings()\n\n// Use the response\nprintln(response)"
+    },
+    "indexExists": {
+      "indexExists": "var response = client.indexExists(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)",
+      "indexNotExists": "var response = client.indexExists(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)",
+      "indexExistsWithError": "var response = client.indexExists(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)\n\n// Use the response\nprintln(response)"
     },
     "listApiKeys": {
       "default": "var response = client.listApiKeys()\n\n// Use the response\nprintln(response)"
@@ -1557,6 +1587,11 @@
     "hasPendingMappings": {
       "default": "$response = $client->hasPendingMappings();\n\n// play with the response\nvar_dump($response);"
     },
+    "indexExists": {
+      "indexExists": "$response = $client->indexExists(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);",
+      "indexNotExists": "$response = $client->indexExists(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);",
+      "indexExistsWithError": "$response = $client->indexExists(\n    '<YOUR_INDEX_NAME>',\n);\n\n// play with the response\nvar_dump($response);"
+    },
     "listApiKeys": {
       "default": "$response = $client->listApiKeys();\n\n// play with the response\nvar_dump($response);"
     },
@@ -1795,6 +1830,11 @@
     "hasPendingMappings": {
       "default": "response = await _client.has_pending_mappings()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
+    "indexExists": {
+      "indexExists": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())",
+      "indexNotExists": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())",
+      "indexExistsWithError": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
     "listApiKeys": {
       "default": "response = await _client.list_api_keys()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
     },
@@ -2032,6 +2072,11 @@
     },
     "hasPendingMappings": {
       "default": "response = client.has_pending_mappings\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "indexExists": {
+      "indexExists": "response = client.index_exists(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)",
+      "indexNotExists": "response = client.index_exists(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)",
+      "indexExistsWithError": "response = client.index_exists(\"<YOUR_INDEX_NAME>\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
     },
     "listApiKeys": {
       "default": "response = client.list_api_keys\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
@@ -2479,6 +2524,11 @@
     },
     "hasPendingMappings": {
       "default": "let response = try await client.hasPendingMappings()"
+    },
+    "indexExists": {
+      "indexExists": "let response = try await client.indexExists(indexName: \"<YOUR_INDEX_NAME>\")",
+      "indexNotExists": "let response = try await client.indexExists(indexName: \"<YOUR_INDEX_NAME>\")",
+      "indexExistsWithError": "let response = try await client.indexExists(indexName: \"<YOUR_INDEX_NAME>\")"
     },
     "listApiKeys": {
       "default": "let response = try await client.listApiKeys()"

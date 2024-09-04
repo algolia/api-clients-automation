@@ -51,7 +51,6 @@ class UsageClientClientTests {
     UsageClient client = new UsageClient("test-app-id", "test-api-key", withEchoRequester());
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("usage.algolia.com", result.host);
   }
 
@@ -61,7 +60,6 @@ class UsageClientClientTests {
     UsageClient client = new UsageClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("usage.algolia.com", result.host);
   }
 
@@ -108,7 +106,6 @@ class UsageClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -120,7 +117,6 @@ class UsageClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }

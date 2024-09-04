@@ -1025,6 +1025,57 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForIndexExists() {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForIndexExists1() {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForIndexExists2() {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForListApiKeys() {
     // >SEPARATOR listApiKeys default
     // Initialize the client

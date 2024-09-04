@@ -88,7 +88,6 @@ class InsightsClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -100,7 +99,6 @@ class InsightsClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -127,7 +125,6 @@ class InsightsClientClientTests {
         )
     );
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.algolia.io", result.host);
   }
 
@@ -137,7 +134,6 @@ class InsightsClientClientTests {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.us.algolia.io", result.host);
   }
 

@@ -12,7 +12,7 @@ void main() {
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'test-app-id-dsn.algolia.net');
+      expect(request.host.url, "test-app-id-dsn.algolia.net");
     });
     try {
       final res = await client.customGet(
@@ -30,7 +30,7 @@ void main() {
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'test-app-id.algolia.net');
+      expect(request.host.url, "test-app-id.algolia.net");
     });
     try {
       final res = await client.customPost(

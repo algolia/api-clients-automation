@@ -1381,6 +1381,90 @@ func SnippetForHasPendingMappingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForIndexExistsOfSearch() {
+	/*
+	   Snippet for the indexExists method.
+
+	   indexExists
+	*/
+
+	// >SEPARATOR indexExists indexExists
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.IndexExists(
+		"<YOUR_INDEX_NAME>",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForIndexExistsOfSearch1() {
+	/*
+	   Snippet for the indexExists method.
+
+	   indexNotExists
+	*/
+
+	// >SEPARATOR indexExists indexNotExists
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.IndexExists(
+		"<YOUR_INDEX_NAME>",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForIndexExistsOfSearch2() {
+	/*
+	   Snippet for the indexExists method.
+
+	   indexExistsWithError
+	*/
+
+	// >SEPARATOR indexExists indexExistsWithError
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.IndexExists(
+		"<YOUR_INDEX_NAME>",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForListApiKeysOfSearch() {
 	/*
 	   Snippet for the listApiKeys method.

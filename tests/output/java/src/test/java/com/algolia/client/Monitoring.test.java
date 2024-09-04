@@ -87,7 +87,6 @@ class MonitoringClientClientTests {
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
@@ -99,7 +98,6 @@ class MonitoringClientClientTests {
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -110,7 +108,6 @@ class MonitoringClientClientTests {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("status.algolia.com", result.host);
   }
 }
