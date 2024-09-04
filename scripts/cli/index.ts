@@ -2,7 +2,7 @@ import { Argument, program } from 'commander';
 import semver from 'semver';
 
 import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
-import { CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
@@ -41,8 +41,10 @@ const flags = {
 program.name('cli');
 
 program.hook('preAction', () => {
-  // restore the cursor because sometime it's broken
-  process.stdout.write('\x1B[?25h');
+  if (!CI) {
+    // restore the cursor because sometime it's broken
+    process.stdout.write('\x1B[?25h');
+  }
 });
 
 program
