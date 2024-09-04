@@ -631,12 +631,8 @@ public extension SearchClient {
     func indexExists(indexName: String) async throws -> Bool {
         do {
             _ = try await self.getSettings(indexName: indexName)
-        } catch let AlgoliaError.httpError(error) {
-            if error.statusCode == 404 {
-                return false
-            }
-
-            throw AlgoliaError.httpError(error)
+        } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
+            return false
         }
 
         return true
