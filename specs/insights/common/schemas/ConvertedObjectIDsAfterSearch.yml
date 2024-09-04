@@ -11,7 +11,6 @@ additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
-    example: Product Converted
   eventType:
     $ref: './ConversionEvent.yml'
   index:
