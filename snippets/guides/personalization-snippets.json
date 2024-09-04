@@ -87,7 +87,7 @@
       "default": "client.getUserTokenProfile(\"UserToken\");"
     },
     "setPersonalizationStrategy": {
-      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(List.of(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
+      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
     },
     "init": {
       "default": "PersonalizationClient client = new PersonalizationClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"

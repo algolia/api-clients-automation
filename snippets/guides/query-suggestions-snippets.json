@@ -84,7 +84,7 @@
       "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.model.querysuggestions.*;"
     },
     "createConfig": {
-      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
+      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
     },
     "customDelete": {
       "default": "client.customDelete(\"test/minimal\");"
@@ -114,7 +114,7 @@
       "default": "client.getLogFile(\"<YOUR_INDEX_NAME>\");"
     },
     "updateConfig": {
-      "default": "client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      List.of(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(List.of(new Facet().setAttribute(\"test\")))\n          .setGenerate(List.of(List.of(\"facetA\", \"facetB\"), List.of(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(List.of(\"french\")))\n    .setExclude(List.of(\"test\"))\n);"
+      "default": "client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
     },
     "init": {
       "default": "QuerySuggestionsClient client = new QuerySuggestionsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"

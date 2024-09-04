@@ -78,7 +78,7 @@
       "default": "import com.algolia.api.AbtestingClient;\nimport com.algolia.model.abtesting.*;"
     },
     "addABTests": {
-      "default": "client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      List.of(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+      "default": "client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
     "customDelete": {
       "default": "client.customDelete(\"test/minimal\");"
@@ -102,7 +102,7 @@
       "default": "client.listABTests();"
     },
     "scheduleABTest": {
-      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      List.of(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
     "stopABTest": {
       "default": "client.stopABTest(42);"

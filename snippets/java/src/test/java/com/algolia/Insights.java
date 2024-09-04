@@ -85,7 +85,7 @@ class SnippetInsightsClient {
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
-          List.of(
+          Arrays.asList(
             new ClickedObjectIDsAfterSearch()
               .setEventType(ClickEvent.CLICK)
               .setEventName("Product Clicked")
@@ -93,9 +93,9 @@ class SnippetInsightsClient {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1641290601962L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(List.of(7, 6))
+              .setPositions(Arrays.asList(7, 6))
           )
         )
     );

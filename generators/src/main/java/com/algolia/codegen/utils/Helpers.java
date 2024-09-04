@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
@@ -255,5 +256,12 @@ public class Helpers {
 
   public static void prettyPrint(Object o) {
     Json.prettyPrint(o);
+  }
+
+  public static String getLanguageVersion(String language) throws IOException {
+    String versionFile = language.equals("javascript")
+      ? ".nvmrc"
+      : "config/." + (language.equals("kotlin") || language.equals("scala") ? "java" : language) + "-version";
+    return Files.readString(new File(versionFile).toPath()).trim();
   }
 }
