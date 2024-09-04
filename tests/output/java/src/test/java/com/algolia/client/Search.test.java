@@ -81,7 +81,7 @@ class SearchClientClientTests {
         false
       )
     );
-    var res = client.customGet("1/test/retry/java");
+    Object res = client.customGet("1/test/retry/java");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -98,7 +98,7 @@ class SearchClientClientTests {
     );
     {
       Exception exception = assertThrows(Exception.class, () -> {
-        var res = client.customGet("1/test/hang/java");
+        Object res = client.customGet("1/test/hang/java");
       });
       assertEquals(
         "Error(s) while processing the retry strategy\n" + "Caused by: java.net.SocketTimeoutException: timeout",
@@ -115,7 +115,17 @@ class SearchClientClientTests {
       "test-api-key",
       withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)), true)
     );
-    var res = client.customPost("1/test/gzip", Map.of(), Map.of("message", "this is a compressed body"));
+    Object res = client.customPost(
+      "1/test/gzip",
+      new HashMap() {
+        {}
+      },
+      new HashMap() {
+        {
+          put("message", "this is a compressed body");
+        }
+      }
+    );
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -193,7 +203,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.deleteObjects("cts_e2e_deleteObjects_java", List.of("1", "2"));
+      List res = client.deleteObjects("cts_e2e_deleteObjects_java", Arrays.asList("1", "2"));
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -207,9 +217,9 @@ class SearchClientClientTests {
     SearchClient client = createClient();
 
     assertDoesNotThrow(() -> {
-      var res = client.generateSecuredApiKey(
+      String res = client.generateSecuredApiKey(
         "2640659426d5107b6e47d75db9cbaef8",
-        new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(List.of("Movies"))
+        new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(Arrays.asList("Movies"))
       );
 
       assertEquals(
@@ -225,11 +235,11 @@ class SearchClientClientTests {
     SearchClient client = createClient();
 
     assertDoesNotThrow(() -> {
-      var res = client.generateSecuredApiKey(
+      String res = client.generateSecuredApiKey(
         "2640659426d5107b6e47d75db9cbaef8",
         new SecuredApiKeyRestrictions()
           .setValidUntil(2524604400L)
-          .setRestrictIndices(List.of("Movies", "cts_e2e_settings"))
+          .setRestrictIndices(Arrays.asList("Movies", "cts_e2e_settings"))
           .setRestrictSources("192.168.1.0/24")
           .setFilters("category:Book OR category:Ebook AND _tags:published")
           .setUserToken("user123")
@@ -240,7 +250,7 @@ class SearchClientClientTests {
               .setAroundRadius(AroundRadiusAll.ALL)
               .setMode(Mode.NEURAL_SEARCH)
               .setHitsPerPage(10)
-              .setOptionalWords(List.of("one", "two"))
+              .setOptionalWords(Arrays.asList("one", "two"))
           )
       );
 
@@ -260,7 +270,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.indexExists("indexExistsYES");
+      Boolean res = client.indexExists("indexExistsYES");
 
       assertEquals(true, res);
     });
@@ -275,7 +285,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.indexExists("indexExistsNO");
+      Boolean res = client.indexExists("indexExistsNO");
 
       assertEquals(false, res);
     });
@@ -292,7 +302,7 @@ class SearchClientClientTests {
       );
       {
         Exception exception = assertThrows(Exception.class, () -> {
-          var res = client.indexExists("indexExistsERROR");
+          Boolean res = client.indexExists("indexExistsERROR");
         });
         assertEquals("Status Code: 403 - {\"message\":\"Invalid API key\"}", exception.getMessage());
       }
@@ -343,14 +353,26 @@ class SearchClientClientTests {
 
     {
       Exception exception = assertThrows(Exception.class, () -> {
-        client.addOrUpdateObject(null, "my-object-id", Map.of());
+        client.addOrUpdateObject(
+          null,
+          "my-object-id",
+          new HashMap() {
+            {}
+          }
+        );
         EchoResponse result = echo.getLastResponse();
       });
       assertEquals("Parameter `indexName` is required when calling `addOrUpdateObject`.", exception.getMessage());
     }
     {
       Exception exception = assertThrows(Exception.class, () -> {
-        client.addOrUpdateObject("my-index-name", null, Map.of());
+        client.addOrUpdateObject(
+          "my-index-name",
+          null,
+          new HashMap() {
+            {}
+          }
+        );
         EchoResponse result = echo.getLastResponse();
       });
       assertEquals("Parameter `objectID` is required when calling `addOrUpdateObject`.", exception.getMessage());
@@ -373,9 +395,22 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.partialUpdateObjects(
+      List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
-        List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit")),
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          }
+        ),
         true
       );
 
@@ -394,9 +429,22 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.partialUpdateObjects(
+      List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
-        List.of(Map.of("objectID", "3", "name", "Cyril"), Map.of("objectID", "4", "name", "David")),
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "3");
+              put("name", "Cyril");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "4");
+              put("name", "David");
+            }
+          }
+        ),
         false
       );
 
@@ -415,19 +463,69 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
       );
-      var res = client.replaceAllObjects(
+      ReplaceAllObjectsResponse res = client.replaceAllObjects(
         "cts_e2e_replace_all_objects_java",
-        List.of(
-          Map.of("objectID", "1", "name", "Adam"),
-          Map.of("objectID", "2", "name", "Benoit"),
-          Map.of("objectID", "3", "name", "Cyril"),
-          Map.of("objectID", "4", "name", "David"),
-          Map.of("objectID", "5", "name", "Eva"),
-          Map.of("objectID", "6", "name", "Fiona"),
-          Map.of("objectID", "7", "name", "Gael"),
-          Map.of("objectID", "8", "name", "Hugo"),
-          Map.of("objectID", "9", "name", "Igor"),
-          Map.of("objectID", "10", "name", "Julia")
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "3");
+              put("name", "Cyril");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "4");
+              put("name", "David");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "5");
+              put("name", "Eva");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "6");
+              put("name", "Fiona");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "7");
+              put("name", "Gael");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "8");
+              put("name", "Hugo");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "9");
+              put("name", "Igor");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "10");
+              put("name", "Julia");
+            }
+          }
         ),
         3
       );
@@ -451,9 +549,22 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
       );
-      var res = client.saveObjects(
+      List res = client.saveObjects(
         "cts_e2e_saveObjects_java",
-        List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          }
+        )
       );
 
       assertDoesNotThrow(() ->
@@ -473,9 +584,22 @@ class SearchClientClientTests {
       );
       {
         Exception exception = assertThrows(Exception.class, () -> {
-          var res = client.saveObjects(
+          List res = client.saveObjects(
             "cts_e2e_saveObjects_java",
-            List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
+            Arrays.asList(
+              new HashMap() {
+                {
+                  put("objectID", "1");
+                  put("name", "Adam");
+                }
+              },
+              new HashMap() {
+                {
+                  put("objectID", "2");
+                  put("name", "Benoit");
+                }
+              }
+            )
           );
         });
         assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API" + " key\",\"status\":403}", exception.getMessage());
@@ -492,7 +616,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
+      GetApiKeyResponse res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
@@ -514,14 +638,14 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey(
+      GetApiKeyResponse res = client.waitForApiKey(
         "api-key-update-operation-test-java",
         ApiKeyOperation.UPDATE,
         new ApiKey()
           .setDescription("my updated api key")
-          .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))
-          .setIndexes(List.of("Movies", "Books"))
-          .setReferers(List.of("*google.com", "*algolia.com"))
+          .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))
+          .setIndexes(Arrays.asList("Movies", "Books"))
+          .setReferers(Arrays.asList("*google.com", "*algolia.com"))
           .setValidity(305)
           .setMaxQueriesPerIPPerHour(95)
           .setMaxHitsPerQuery(20)
@@ -548,7 +672,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
+      GetApiKeyResponse res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
 
       assertEquals(null, res);
     });
@@ -563,7 +687,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForAppTask(123L);
+      GetTaskResponse res = client.waitForAppTask(123L);
 
       assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"published\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
     });
@@ -578,7 +702,7 @@ class SearchClientClientTests {
         "test-api-key",
         withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
       );
-      var res = client.waitForTask("wait-task-java", 123L);
+      GetTaskResponse res = client.waitForTask("wait-task-java", 123L);
 
       assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"published\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
     });

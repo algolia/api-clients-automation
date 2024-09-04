@@ -94,7 +94,7 @@
       "default": "client.deleteUserToken(\"test-user-1\");"
     },
     "pushEvents": {
-      "default": "client.pushEvents(\n  new InsightsEvents()\n    .setEvents(\n      List.of(\n        new ClickedObjectIDsAfterSearch()\n          .setEventType(ClickEvent.CLICK)\n          .setEventName(\"Product Clicked\")\n          .setIndex(\"products\")\n          .setUserToken(\"user-123456\")\n          .setAuthenticatedUserToken(\"user-123456\")\n          .setTimestamp(1641290601962L)\n          .setObjectIDs(List.of(\"9780545139700\", \"9780439784542\"))\n          .setQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\")\n          .setPositions(List.of(7, 6))\n      )\n    )\n);"
+      "default": "client.pushEvents(\n  new InsightsEvents()\n    .setEvents(\n      Arrays.asList(\n        new ClickedObjectIDsAfterSearch()\n          .setEventType(ClickEvent.CLICK)\n          .setEventName(\"Product Clicked\")\n          .setIndex(\"products\")\n          .setUserToken(\"user-123456\")\n          .setAuthenticatedUserToken(\"user-123456\")\n          .setTimestamp(1641290601962L)\n          .setObjectIDs(Arrays.asList(\"9780545139700\", \"9780439784542\"))\n          .setQueryID(\"43b15df305339e827f0ac0bdc5ebcaa7\")\n          .setPositions(Arrays.asList(7, 6))\n      )\n    )\n);"
     },
     "init": {
       "default": "InsightsClient client = new InsightsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"

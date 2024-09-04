@@ -1569,7 +1569,7 @@ paths:
 
             client.searchAuthentications(
               new AuthenticationSearch()
-                .setAuthenticationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+                .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
         - lang: javascript
           label: JavaScript
@@ -2980,7 +2980,8 @@ paths:
             // Call the API
 
             client.searchDestinations(
-              new DestinationSearch().setDestinationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+              new DestinationSearch()
+                .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
         - lang: javascript
           label: JavaScript
@@ -4129,8 +4130,8 @@ paths:
                 .setName("sourceName")
                 .setInput(
                   new SourceCommercetools()
-                    .setStoreKeys(List.of("myStore"))
-                    .setLocales(List.of("de"))
+                    .setStoreKeys(Arrays.asList("myStore"))
+                    .setLocales(Arrays.asList("de"))
                     .setUrl("http://commercetools.com")
                     .setProjectKey("keyID")
                 )
@@ -4448,8 +4449,8 @@ paths:
                 .setName("sourceName")
                 .setInput(
                   new SourceCommercetools()
-                    .setStoreKeys(List.of("myStore"))
-                    .setLocales(List.of("de"))
+                    .setStoreKeys(Arrays.asList("myStore"))
+                    .setLocales(Arrays.asList("de"))
                     .setUrl("http://commercetools.com")
                     .setProjectKey("keyID")
                 )
@@ -4759,7 +4760,7 @@ paths:
             // Call the API
 
             client.searchSources(
-              new SourceSearch().setSourceIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+              new SourceSearch().setSourceIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
         - lang: javascript
           label: JavaScript
@@ -6149,8 +6150,8 @@ paths:
             client.runSource(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new RunSourcePayload()
-                .setIndexToInclude(List.of("products_us", "products eu"))
-                .setEntityIDs(List.of("1234", "5678"))
+                .setIndexToInclude(Arrays.asList("products_us", "products eu"))
+                .setEntityIDs(Arrays.asList("1234", "5678"))
                 .setEntityType(EntityType.PRODUCT)
             );
         - lang: javascript
@@ -6936,7 +6937,11 @@ paths:
             client.searchTasksV1(
               new TaskSearch()
                 .setTaskIDs(
-                  List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+                  Arrays.asList(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
             );
         - lang: javascript
@@ -8976,7 +8981,11 @@ paths:
             client.searchTasks(
               new TaskSearch()
                 .setTaskIDs(
-                  List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+                  Arrays.asList(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
             );
         - lang: javascript
@@ -10162,7 +10171,7 @@ paths:
               new PushTaskPayload()
                 .setAction(Action.ADD_OBJECT)
                 .setRecords(
-                  List.of(
+                  Arrays.asList(
                     new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
                     new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
                   )
@@ -11366,9 +11375,17 @@ paths:
 
             // Call the API
 
-            client.tryTransformation(new
-            TransformationTry().setCode("foo").setSampleRecord(Map.of("bar",
-            "baz")));
+            client.tryTransformation(
+              new TransformationTry()
+                .setCode("foo")
+                .setSampleRecord(
+                  new HashMap() {
+                    {
+                      put("bar", "baz");
+                    }
+                  }
+                )
+            );
         - lang: javascript
           label: JavaScript
           source: >
@@ -11623,7 +11640,11 @@ paths:
             client.searchTransformations(
               new TransformationSearch()
                 .setTransformationIDs(
-                  List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+                  Arrays.asList(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
             );
         - lang: javascript
@@ -13035,7 +13056,15 @@ paths:
 
             client.tryTransformationBeforeUpdate(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+              new TransformationTry()
+                .setCode("foo")
+                .setSampleRecord(
+                  new HashMap() {
+                    {
+                      put("bar", "baz");
+                    }
+                  }
+                )
             );
         - lang: javascript
           label: JavaScript

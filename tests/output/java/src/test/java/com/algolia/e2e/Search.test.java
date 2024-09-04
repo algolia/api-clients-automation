@@ -27,7 +27,7 @@ class SearchClientRequestsTestsE2E {
     if ("true".equals(System.getenv("CI"))) {
       this.client = new SearchClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"));
     } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
+      Dotenv dotenv = Dotenv.configure().directory("../../").load();
       this.client = new SearchClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"));
     }
   }
@@ -40,7 +40,7 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("browse with minimal parameters")
   void browseTest() {
-    var res = client.browse("cts_e2e_browse", Hit.class);
+    BrowseResponse res = client.browse("cts_e2e_browse", Hit.class);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"page\":0,\"nbHits\":33191,\"nbPages\":34,\"hitsPerPage\":1000,\"query\":\"\",\"params\":\"\"}",
@@ -53,7 +53,7 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("getRule")
   void getRuleTest() {
-    var res = client.getRule("cts_e2e_browse", "qr-1725004648916");
+    Rule res = client.getRule("cts_e2e_browse", "qr-1725004648916");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon" +
@@ -67,7 +67,7 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("getSettings")
   void getSettingsTest() {
-    var res = client.getSettings("cts_e2e_settings");
+    SettingsResponse res = client.getSettings("cts_e2e_settings");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}",
@@ -80,8 +80,8 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("search for a single hits request with minimal parameters")
   void searchTest4() {
-    var res = client.search(
-      new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
+    SearchResponses res = client.search(
+      new SearchMethodParams().setRequests(Arrays.asList(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
       Hit.class
     );
     assertDoesNotThrow(() ->
@@ -96,16 +96,16 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("search with highlight and snippet results")
   void searchTest5() {
-    var res = client.search(
+    SearchResponses res = client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(
+          Arrays.asList(
             new SearchForHits()
               .setIndexName("cts_e2e_highlight_snippet_results")
               .setQuery("vim")
-              .setAttributesToSnippet(List.of("*:20"))
-              .setAttributesToHighlight(List.of("*"))
-              .setAttributesToRetrieve(List.of("*"))
+              .setAttributesToSnippet(Arrays.asList("*:20"))
+              .setAttributesToHighlight(Arrays.asList("*"))
+              .setAttributesToRetrieve(Arrays.asList("*"))
           )
         ),
       Hit.class
@@ -122,9 +122,11 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("search for a single facet request with minimal parameters")
   void searchTest8() {
-    var res = client.search(
+    SearchResponses res = client.search(
       new SearchMethodParams()
-        .setRequests(List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor")))
+        .setRequests(
+          Arrays.asList(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor"))
+        )
         .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
       Hit.class
     );
@@ -142,28 +144,30 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("search filters end to end")
   void searchTest14() {
-    var res = client.search(
+    SearchResponses res = client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(
+          Arrays.asList(
             new SearchForHits().setIndexName("cts_e2e_search_facet").setFilters("editor:'visual studio' OR editor:neovim"),
             new SearchForHits()
               .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
+              .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
             new SearchForHits()
               .setIndexName("cts_e2e_search_facet")
               .setFacetFilters(
                 FacetFilters.of(
-                  List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(List.of(FacetFilters.of("editor:neovim"))))
+                  Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim"))))
                 )
               ),
             new SearchForHits()
               .setIndexName("cts_e2e_search_facet")
               .setFacetFilters(
                 FacetFilters.of(
-                  List.of(
+                  Arrays.asList(
                     FacetFilters.of("editor:'visual studio'"),
-                    FacetFilters.of(List.of(FacetFilters.of("editor:neovim"), FacetFilters.of(List.of(FacetFilters.of("editor:goland")))))
+                    FacetFilters.of(
+                      Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
+                    )
                   )
                 )
               )
@@ -185,7 +189,10 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("get searchDictionaryEntries results with minimal parameters")
   void searchDictionaryEntriesTest() {
-    var res = client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
+    SearchDictionaryEntriesResponse res = client.searchDictionaryEntries(
+      DictionaryType.STOPWORDS,
+      new SearchDictionaryEntriesParams().setQuery("about")
+    );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}",
@@ -198,7 +205,7 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("searchRules")
   void searchRulesTest() {
-    var res = client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
+    SearchRulesResponse res = client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon" +
@@ -212,18 +219,18 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("search with special characters in indexName")
   void searchSingleIndexTest1() {
-    var res = client.searchSingleIndex("cts_e2e_space in index", Hit.class);
+    SearchResponse res = client.searchSingleIndex("cts_e2e_space in index", Hit.class);
   }
 
   @Test
   @DisplayName("single search retrieve snippets")
   void searchSingleIndexTest3() {
-    var res = client.searchSingleIndex(
+    SearchResponse res = client.searchSingleIndex(
       "cts_e2e_browse",
       new SearchParamsObject()
         .setQuery("batman mask of the phantasm")
-        .setAttributesToRetrieve(List.of("*"))
-        .setAttributesToSnippet(List.of("*:20")),
+        .setAttributesToRetrieve(Arrays.asList("*"))
+        .setAttributesToSnippet(Arrays.asList("*:20")),
       Hit.class
     );
     assertDoesNotThrow(() ->
@@ -238,6 +245,6 @@ class SearchClientRequestsTestsE2E {
   @Test
   @DisplayName("setSettings with minimal parameters")
   void setSettingsTest1() {
-    var res = client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
+    UpdatedAtResponse res = client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
   }
 }

@@ -22,7 +22,7 @@ class SnippetAbtestingClient {
         .setEndAt("2022-12-31T00:00:00.000Z")
         .setName("myABTest")
         .setVariants(
-          List.of(
+          Arrays.asList(
             new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
@@ -137,7 +137,7 @@ class SnippetAbtestingClient {
         .setScheduledAt("2022-11-31T00:00:00.000Z")
         .setName("myABTest")
         .setVariants(
-          List.of(
+          Arrays.asList(
             new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )

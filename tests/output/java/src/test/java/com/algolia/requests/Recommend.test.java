@@ -31,7 +31,7 @@ class RecommendClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new RecommendClient("appId", "apiKey", options);
   }
 
@@ -56,7 +56,14 @@ class RecommendClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("test/all", Map.of("query", "parameters"));
+      client.customDelete(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -92,7 +99,14 @@ class RecommendClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("test/all", Map.of("query", "parameters with space"));
+      client.customGet(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters with space");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -121,10 +135,14 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customGet(
         "test/all",
-        Map.of("query", "to be overriden"),
+        new HashMap() {
+          {
+            put("query", "to be overriden");
+          }
+        },
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
-          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
           .addExtraHeader("x-header-1", "spaces are left alone")
       );
     });
@@ -179,7 +197,19 @@ class RecommendClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -205,8 +235,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
@@ -237,8 +275,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
@@ -269,8 +315,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -312,8 +366,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -355,8 +417,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
@@ -387,8 +457,16 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
@@ -419,9 +497,17 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -451,9 +537,17 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -483,9 +577,17 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -525,7 +627,19 @@ class RecommendClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -588,7 +702,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
@@ -617,7 +731,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
@@ -625,10 +739,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
                 )
             )
           )
@@ -653,7 +767,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new TrendingItemsQuery()
                 .setIndexName("indexName")
                 .setModel(TrendingItemsModel.TRENDING_ITEMS)
@@ -683,7 +797,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new TrendingItemsQuery()
                 .setIndexName("indexName")
                 .setModel(TrendingItemsModel.TRENDING_ITEMS)
@@ -692,10 +806,10 @@ class RecommendClientRequestsTests {
                 .setFacetName("myFacetName")
                 .setFacetValue("myFacetValue")
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback"))))
+                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
                 )
             )
           )
@@ -720,7 +834,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
@@ -754,7 +868,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
@@ -762,10 +876,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query1"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback1"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
                 ),
               new RelatedQuery()
                 .setIndexName("indexName2")
@@ -774,10 +888,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query2"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback2"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
                 )
             )
           )
@@ -802,7 +916,7 @@ class RecommendClientRequestsTests {
       client.getRecommendations(
         new GetRecommendationsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new BoughtTogetherQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")

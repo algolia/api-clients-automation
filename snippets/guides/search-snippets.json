@@ -733,10 +733,10 @@
       "default": "import com.algolia.api.SearchClient;\nimport com.algolia.model.search.*;"
     },
     "addApiKey": {
-      "default": "client.addApiKey(\n  new ApiKey()\n    .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n    .setDescription(\"my new api key\")\n    .setValidity(300)\n    .setMaxQueriesPerIPPerHour(100)\n    .setMaxHitsPerQuery(20)\n);"
+      "default": "client.addApiKey(\n  new ApiKey()\n    .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))\n    .setDescription(\"my new api key\")\n    .setValidity(300)\n    .setMaxQueriesPerIPPerHour(100)\n    .setMaxHitsPerQuery(20)\n);"
     },
     "addOrUpdateObject": {
-      "default": "client.addOrUpdateObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\", Map.of(\"key\", \"value\"));"
+      "default": "client.addOrUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new HashMap() {\n    {\n      put(\"key\", \"value\");\n    }\n  }\n);"
     },
     "appendSource": {
       "default": "client.appendSource(new Source().setSource(\"theSource\").setDescription(\"theDescription\"));"
@@ -745,21 +745,21 @@
       "default": "client.assignUserId(\"userID\", new AssignUserIdParams().setCluster(\"theCluster\"));"
     },
     "batch": {
-      "addObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      List.of(\n        new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of(\"key\", \"bar\", \"foo\", \"1\")),\n        new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of(\"key\", \"baz\", \"foo\", \"2\"))\n      )\n    )\n);",
-      "clear": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of(\"key\", \"value\"))))\n);",
-      "delete": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of(\"key\", \"value\"))))\n);",
-      "deleteObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of(\"key\", \"value\"))))\n);",
-      "partialUpdateObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of(\"key\", \"value\"))))\n);",
-      "partialUpdateObjectNoCreate": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of(\"key\", \"value\"))))\n);",
-      "updateObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of(\"key\", \"value\"))))\n);"
+      "addObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.ADD_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"bar\");\n                put(\"foo\", \"1\");\n              }\n            }\n          ),\n        new BatchRequest()\n          .setAction(Action.ADD_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"baz\");\n                put(\"foo\", \"2\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "clear": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.CLEAR)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "delete": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.DELETE)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "deleteObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.DELETE_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "partialUpdateObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.PARTIAL_UPDATE_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "partialUpdateObjectNoCreate": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);",
+      "updateObject": "client.batch(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchRequest()\n          .setAction(Action.UPDATE_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n      )\n    )\n);"
     },
     "batchAssignUserIds": {
-      "default": "client.batchAssignUserIds(\"userID\", new BatchAssignUserIdsParams().setCluster(\"theCluster\").setUsers(List.of(\"user1\", \"user2\")));"
+      "default": "client.batchAssignUserIds(\"userID\", new BatchAssignUserIdsParams().setCluster(\"theCluster\").setUsers(Arrays.asList(\"user1\", \"user2\")));"
     },
     "batchDictionaryEntries": {
-      "replace": "client.batchDictionaryEntries(\n  DictionaryType.PLURALS,\n  new BatchDictionaryEntriesParams()\n    .setClearExistingDictionaryEntries(true)\n    .setRequests(\n      List.of(\n        new BatchDictionaryEntriesRequest()\n          .setAction(DictionaryAction.ADD_ENTRY)\n          .setBody(\n            new DictionaryEntry()\n              .setObjectID(\"1\")\n              .setLanguage(SupportedLanguage.EN)\n              .setWord(\"fancy\")\n              .setWords(List.of(\"believe\", \"algolia\"))\n              .setDecomposition(List.of(\"trust\", \"algolia\"))\n              .setState(DictionaryEntryState.ENABLED)\n          )\n      )\n    )\n);",
-      "delete": "client.batchDictionaryEntries(\n  DictionaryType.PLURALS,\n  new BatchDictionaryEntriesParams()\n    .setClearExistingDictionaryEntries(true)\n    .setRequests(\n      List.of(\n        new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID(\"1\"))\n      )\n    )\n);",
-      "append": "client.batchDictionaryEntries(\n  DictionaryType.STOPWORDS,\n  new BatchDictionaryEntriesParams()\n    .setRequests(\n      List.of(\n        new BatchDictionaryEntriesRequest()\n          .setAction(DictionaryAction.ADD_ENTRY)\n          .setBody(\n            new DictionaryEntry().setObjectID(\"1\").setLanguage(SupportedLanguage.EN).setAdditionalProperty(\"additional\", \"try me\")\n          )\n      )\n    )\n);"
+      "replace": "client.batchDictionaryEntries(\n  DictionaryType.PLURALS,\n  new BatchDictionaryEntriesParams()\n    .setClearExistingDictionaryEntries(true)\n    .setRequests(\n      Arrays.asList(\n        new BatchDictionaryEntriesRequest()\n          .setAction(DictionaryAction.ADD_ENTRY)\n          .setBody(\n            new DictionaryEntry()\n              .setObjectID(\"1\")\n              .setLanguage(SupportedLanguage.EN)\n              .setWord(\"fancy\")\n              .setWords(Arrays.asList(\"believe\", \"algolia\"))\n              .setDecomposition(Arrays.asList(\"trust\", \"algolia\"))\n              .setState(DictionaryEntryState.ENABLED)\n          )\n      )\n    )\n);",
+      "delete": "client.batchDictionaryEntries(\n  DictionaryType.PLURALS,\n  new BatchDictionaryEntriesParams()\n    .setClearExistingDictionaryEntries(true)\n    .setRequests(\n      Arrays.asList(\n        new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID(\"1\"))\n      )\n    )\n);",
+      "append": "client.batchDictionaryEntries(\n  DictionaryType.STOPWORDS,\n  new BatchDictionaryEntriesParams()\n    .setRequests(\n      Arrays.asList(\n        new BatchDictionaryEntriesRequest()\n          .setAction(DictionaryAction.ADD_ENTRY)\n          .setBody(\n            new DictionaryEntry().setObjectID(\"1\").setLanguage(SupportedLanguage.EN).setAdditionalProperty(\"additional\", \"try me\")\n          )\n      )\n    )\n);"
     },
     "browse": {
       "default": "client.browse(\"<YOUR_INDEX_NAME>\", Hit.class);"
@@ -798,7 +798,7 @@
       "default": "client.deleteObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\");"
     },
     "deleteObjects": {
-      "default": "client.deleteObjects(\"<YOUR_INDEX_NAME>\", List.of(\"1\", \"2\"));"
+      "default": "client.deleteObjects(\"<YOUR_INDEX_NAME>\", Arrays.asList(\"1\", \"2\"));"
     },
     "deleteRule": {
       "default": "client.deleteRule(\"<YOUR_INDEX_NAME>\", \"id1\");"
@@ -810,8 +810,8 @@
       "default": "client.deleteSynonym(\"<YOUR_INDEX_NAME>\", \"id1\");"
     },
     "generateSecuredApiKey": {
-      "generate secured api key basic": "client.generateSecuredApiKey(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(List.of(\"Movies\"))\n);",
-      "generate secured api key with searchParams": "client.generateSecuredApiKey(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  new SecuredApiKeyRestrictions()\n    .setValidUntil(2524604400L)\n    .setRestrictIndices(List.of(\"Movies\", \"cts_e2e_settings\"))\n    .setRestrictSources(\"192.168.1.0/24\")\n    .setFilters(\"category:Book OR category:Ebook AND _tags:published\")\n    .setUserToken(\"user123\")\n    .setSearchParams(\n      new SearchParamsObject()\n        .setQuery(\"batman\")\n        .setTypoTolerance(TypoToleranceEnum.STRICT)\n        .setAroundRadius(AroundRadiusAll.ALL)\n        .setMode(Mode.NEURAL_SEARCH)\n        .setHitsPerPage(10)\n        .setOptionalWords(List.of(\"one\", \"two\"))\n    )\n);"
+      "generate secured api key basic": "client.generateSecuredApiKey(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(Arrays.asList(\"Movies\"))\n);",
+      "generate secured api key with searchParams": "client.generateSecuredApiKey(\n  \"2640659426d5107b6e47d75db9cbaef8\",\n  new SecuredApiKeyRestrictions()\n    .setValidUntil(2524604400L)\n    .setRestrictIndices(Arrays.asList(\"Movies\", \"cts_e2e_settings\"))\n    .setRestrictSources(\"192.168.1.0/24\")\n    .setFilters(\"category:Book OR category:Ebook AND _tags:published\")\n    .setUserToken(\"user123\")\n    .setSearchParams(\n      new SearchParamsObject()\n        .setQuery(\"batman\")\n        .setTypoTolerance(TypoToleranceEnum.STRICT)\n        .setAroundRadius(AroundRadiusAll.ALL)\n        .setMode(Mode.NEURAL_SEARCH)\n        .setHitsPerPage(10)\n        .setOptionalWords(Arrays.asList(\"one\", \"two\"))\n    )\n);"
     },
     "getApiKey": {
       "default": "client.getApiKey(\"myTestApiKey\");"
@@ -829,10 +829,10 @@
       "default": "client.getLogs();"
     },
     "getObject": {
-      "default": "client.getObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\", List.of(\"attr1\", \"attr2\"));"
+      "default": "client.getObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\", Arrays.asList(\"attr1\", \"attr2\"));"
     },
     "getObjects": {
-      "default": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      List.of(\n        new GetObjectsRequest()\n          .setAttributesToRetrieve(List.of(\"attr1\", \"attr2\"))\n          .setObjectID(\"uniqueID\")\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    ),\n  Hit.class\n);"
+      "default": "client.getObjects(\n  new GetObjectsParams()\n    .setRequests(\n      Arrays.asList(\n        new GetObjectsRequest()\n          .setAttributesToRetrieve(Arrays.asList(\"attr1\", \"attr2\"))\n          .setObjectID(\"uniqueID\")\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    ),\n  Hit.class\n);"
     },
     "getRule": {
       "default": "client.getRule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
@@ -876,58 +876,58 @@
       "default": "client.listUserIds();"
     },
     "multipleBatch": {
-      "default": "client.multipleBatch(\n  new BatchParams()\n    .setRequests(\n      List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of(\"key\", \"value\")).setIndexName(\"<YOUR_INDEX_NAME>\"))\n    )\n);"
+      "default": "client.multipleBatch(\n  new BatchParams()\n    .setRequests(\n      Arrays.asList(\n        new MultipleBatchRequest()\n          .setAction(Action.ADD_OBJECT)\n          .setBody(\n            new HashMap() {\n              {\n                put(\"key\", \"value\");\n              }\n            }\n          )\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n      )\n    )\n);"
     },
     "operationIndex": {
-      "scopes": "client.operationIndex(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams()\n    .setOperation(OperationType.MOVE)\n    .setDestination(\"<DESTINATION_INDEX_NAME>\")\n    .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))\n);",
+      "scopes": "client.operationIndex(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams()\n    .setOperation(OperationType.MOVE)\n    .setDestination(\"<DESTINATION_INDEX_NAME>\")\n    .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))\n);",
       "copy": "client.operationIndex(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams().setOperation(OperationType.COPY).setDestination(\"<DESTINATION_INDEX_NAME>\")\n);",
       "move": "client.operationIndex(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(\"<DESTINATION_INDEX_NAME>\")\n);"
     },
     "partialUpdateObject": {
-      "default": "client.partialUpdateObject(\"<YOUR_INDEX_NAME>\", \"uniqueID\", Map.of(\"attributeId\", \"new value\"));"
+      "default": "client.partialUpdateObject(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new HashMap() {\n    {\n      put(\"attributeId\", \"new value\");\n    }\n  }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  List.of(Map.of(\"objectID\", \"1\", \"name\", \"Adam\"), Map.of(\"objectID\", \"2\", \"name\", \"Benoit\")),\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  List.of(Map.of(\"objectID\", \"3\", \"name\", \"Cyril\"), Map.of(\"objectID\", \"4\", \"name\", \"David\")),\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists&#x3D;true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists&#x3D;false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
     },
     "removeUserId": {
       "default": "client.removeUserId(\"uniqueID\");"
     },
     "replaceAllObjects": {
-      "default": "client.replaceAllObjects(\n  \"<YOUR_INDEX_NAME>\",\n  List.of(\n    Map.of(\"objectID\", \"1\", \"name\", \"Adam\"),\n    Map.of(\"objectID\", \"2\", \"name\", \"Benoit\"),\n    Map.of(\"objectID\", \"3\", \"name\", \"Cyril\"),\n    Map.of(\"objectID\", \"4\", \"name\", \"David\"),\n    Map.of(\"objectID\", \"5\", \"name\", \"Eva\"),\n    Map.of(\"objectID\", \"6\", \"name\", \"Fiona\"),\n    Map.of(\"objectID\", \"7\", \"name\", \"Gael\"),\n    Map.of(\"objectID\", \"8\", \"name\", \"Hugo\"),\n    Map.of(\"objectID\", \"9\", \"name\", \"Igor\"),\n    Map.of(\"objectID\", \"10\", \"name\", \"Julia\")\n  ),\n  3\n);"
+      "default": "client.replaceAllObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"5\");\n        put(\"name\", \"Eva\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"6\");\n        put(\"name\", \"Fiona\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"7\");\n        put(\"name\", \"Gael\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"8\");\n        put(\"name\", \"Hugo\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"9\");\n        put(\"name\", \"Igor\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"10\");\n        put(\"name\", \"Julia\");\n      }\n    }\n  ),\n  3\n);"
     },
     "replaceSources": {
-      "default": "client.replaceSources(List.of(new Source().setSource(\"theSource\").setDescription(\"theDescription\")));"
+      "default": "client.replaceSources(Arrays.asList(new Source().setSource(\"theSource\").setDescription(\"theDescription\")));"
     },
     "restoreApiKey": {
       "default": "client.restoreApiKey(\"myApiKey\");"
     },
     "saveObject": {
-      "default": "client.saveObject(\"<YOUR_INDEX_NAME>\", Map.of(\"objectID\", \"id\", \"test\", \"val\"));"
+      "default": "client.saveObject(\n  \"<YOUR_INDEX_NAME>\",\n  new HashMap() {\n    {\n      put(\"objectID\", \"id\");\n      put(\"test\", \"val\");\n    }\n  }\n);"
     },
     "saveObjects": {
-      "call saveObjects without error": "client.saveObjects(\"<YOUR_INDEX_NAME>\", List.of(Map.of(\"objectID\", \"1\", \"name\", \"Adam\"), Map.of(\"objectID\", \"2\", \"name\", \"Benoit\")));",
-      "saveObjects should report errors": "client.saveObjects(\"<YOUR_INDEX_NAME>\", List.of(Map.of(\"objectID\", \"1\", \"name\", \"Adam\"), Map.of(\"objectID\", \"2\", \"name\", \"Benoit\")));"
+      "call saveObjects without error": "client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
+      "saveObjects should report errors": "client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);"
     },
     "saveRule": {
-      "default": "client.saveRule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new Rule().setObjectID(\"id1\").setConditions(List.of(new Condition().setPattern(\"apple\").setAnchoring(Anchoring.CONTAINS)))\n);"
+      "default": "client.saveRule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new Rule().setObjectID(\"id1\").setConditions(Arrays.asList(new Condition().setPattern(\"apple\").setAnchoring(Anchoring.CONTAINS)))\n);"
     },
     "saveRules": {
-      "default": "client.saveRules(\n  \"<YOUR_INDEX_NAME>\",\n  List.of(\n    new Rule()\n      .setObjectID(\"a-rule-id\")\n      .setConditions(List.of(new Condition().setPattern(\"smartphone\").setAnchoring(Anchoring.CONTAINS))),\n    new Rule()\n      .setObjectID(\"a-second-rule-id\")\n      .setConditions(List.of(new Condition().setPattern(\"apple\").setAnchoring(Anchoring.CONTAINS)))\n  ),\n  false,\n  true\n);"
+      "default": "client.saveRules(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new Rule()\n      .setObjectID(\"a-rule-id\")\n      .setConditions(Arrays.asList(new Condition().setPattern(\"smartphone\").setAnchoring(Anchoring.CONTAINS))),\n    new Rule()\n      .setObjectID(\"a-second-rule-id\")\n      .setConditions(Arrays.asList(new Condition().setPattern(\"apple\").setAnchoring(Anchoring.CONTAINS)))\n  ),\n  false,\n  true\n);"
     },
     "saveSynonym": {
-      "default": "client.saveSynonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new SynonymHit().setObjectID(\"id1\").setType(SynonymType.SYNONYM).setSynonyms(List.of(\"car\", \"vehicule\", \"auto\")),\n  true\n);"
+      "default": "client.saveSynonym(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new SynonymHit().setObjectID(\"id1\").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList(\"car\", \"vehicule\", \"auto\")),\n  true\n);"
     },
     "saveSynonyms": {
-      "default": "client.saveSynonyms(\n  \"<YOUR_INDEX_NAME>\",\n  List.of(\n    new SynonymHit().setObjectID(\"id1\").setType(SynonymType.SYNONYM).setSynonyms(List.of(\"car\", \"vehicule\", \"auto\")),\n    new SynonymHit()\n      .setObjectID(\"id2\")\n      .setType(SynonymType.ONEWAYSYNONYM)\n      .setInput(\"iphone\")\n      .setSynonyms(List.of(\"ephone\", \"aphone\", \"yphone\"))\n  ),\n  true,\n  true\n);"
+      "default": "client.saveSynonyms(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new SynonymHit().setObjectID(\"id1\").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList(\"car\", \"vehicule\", \"auto\")),\n    new SynonymHit()\n      .setObjectID(\"id2\")\n      .setType(SynonymType.ONEWAYSYNONYM)\n      .setInput(\"iphone\")\n      .setSynonyms(Arrays.asList(\"ephone\", \"aphone\", \"yphone\"))\n  ),\n  true,\n  true\n);"
     },
     "search": {
-      "withHitsPerPage": "client.search(\n  new SearchMethodParams()\n    .setRequests(List.of(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setHitsPerPage(50))),\n  Hit.class\n);",
-      "filterOnly": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      List.of(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFilters(\"actor:Scarlett Johansson\"))\n    ),\n  Hit.class\n);",
-      "filterOr": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      List.of(\n        new SearchForHits()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setQuery(\"<YOUR_QUERY>\")\n          .setFilters(\"actor:Tom Cruise OR actor:Scarlett Johansson\")\n      )\n    ),\n  Hit.class\n);",
-      "filterNot": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      List.of(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFilters(\"NOT actor:Nicolas Cage\"))\n    ),\n  Hit.class\n);",
-      "retrieveFacets": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      List.of(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFacets(List.of(\"author\", \"genre\")))\n    ),\n  Hit.class\n);",
-      "retrieveFacetsWildcard": "client.search(\n  new SearchMethodParams()\n    .setRequests(List.of(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFacets(List.of(\"*\")))),\n  Hit.class\n);"
+      "withHitsPerPage": "client.search(\n  new SearchMethodParams()\n    .setRequests(Arrays.asList(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setHitsPerPage(50))),\n  Hit.class\n);",
+      "filterOnly": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      Arrays.asList(\n        new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFilters(\"actor:Scarlett Johansson\")\n      )\n    ),\n  Hit.class\n);",
+      "filterOr": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      Arrays.asList(\n        new SearchForHits()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setQuery(\"<YOUR_QUERY>\")\n          .setFilters(\"actor:Tom Cruise OR actor:Scarlett Johansson\")\n      )\n    ),\n  Hit.class\n);",
+      "filterNot": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      Arrays.asList(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFilters(\"NOT actor:Nicolas Cage\"))\n    ),\n  Hit.class\n);",
+      "retrieveFacets": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      Arrays.asList(\n        new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFacets(Arrays.asList(\"author\", \"genre\"))\n      )\n    ),\n  Hit.class\n);",
+      "retrieveFacetsWildcard": "client.search(\n  new SearchMethodParams()\n    .setRequests(\n      Arrays.asList(new SearchForHits().setIndexName(\"<YOUR_INDEX_NAME>\").setQuery(\"<YOUR_QUERY>\").setFacets(Arrays.asList(\"*\")))\n    ),\n  Hit.class\n);"
     },
     "searchDictionaryEntries": {
       "default": "client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery(\"about\"));"
@@ -948,17 +948,17 @@
       "default": "client.searchUserIds(new SearchUserIdsParams().setQuery(\"test\").setClusterName(\"theClusterName\").setPage(5).setHitsPerPage(10));"
     },
     "setDictionarySettings": {
-      "default": "client.setDictionarySettings(\n  new DictionarySettingsParams()\n    .setDisableStandardEntries(new StandardEntries().setPlurals(Map.of(\"fr\", false, \"en\", false, \"ru\", true)))\n);"
+      "default": "client.setDictionarySettings(\n  new DictionarySettingsParams()\n    .setDisableStandardEntries(\n      new StandardEntries()\n        .setPlurals(\n          new HashMap() {\n            {\n              put(\"fr\", false);\n              put(\"en\", false);\n              put(\"ru\", true);\n            }\n          }\n        )\n    )\n);"
     },
     "setSettings": {
-      "default": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setAttributesForFaceting(List.of(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n);"
+      "default": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setAttributesForFaceting(Arrays.asList(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n);"
     },
     "updateApiKey": {
-      "default": "client.updateApiKey(\n  \"myApiKey\",\n  new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)\n);"
+      "default": "client.updateApiKey(\n  \"myApiKey\",\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "client.waitForApiKey(\"api-key-add-operation-test-java\", ApiKeyOperation.ADD);",
-      "wait for api key - update": "client.waitForApiKey(\n  \"api-key-update-operation-test-java\",\n  ApiKeyOperation.UPDATE,\n  new ApiKey()\n    .setDescription(\"my updated api key\")\n    .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))\n    .setIndexes(List.of(\"Movies\", \"Books\"))\n    .setReferers(List.of(\"*google.com\", \"*algolia.com\"))\n    .setValidity(305)\n    .setMaxQueriesPerIPPerHour(95)\n    .setMaxHitsPerQuery(20)\n);",
+      "wait for api key - update": "client.waitForApiKey(\n  \"api-key-update-operation-test-java\",\n  ApiKeyOperation.UPDATE,\n  new ApiKey()\n    .setDescription(\"my updated api key\")\n    .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))\n    .setIndexes(Arrays.asList(\"Movies\", \"Books\"))\n    .setReferers(Arrays.asList(\"*google.com\", \"*algolia.com\"))\n    .setValidity(305)\n    .setMaxQueriesPerIPPerHour(95)\n    .setMaxHitsPerQuery(20)\n);",
       "wait for api key - delete": "client.waitForApiKey(\"api-key-delete-operation-test-java\", ApiKeyOperation.DELETE);"
     },
     "waitForAppTask": {
