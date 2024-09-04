@@ -42,13 +42,11 @@ components:
 servers:
   - url: 'https://usage.algolia.com'
     description: Base URL of the Usage API.
-  - url: 'https://usage-dev.algolia.com'
-    description: Base URL for the development version of the Usage API (Algolia employees only).
 security:
   - appId: []
     apiKey: []
 tags:
-  - name: usage
+  - name: statistics
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
 paths:

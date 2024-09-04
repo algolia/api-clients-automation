@@ -27,7 +27,7 @@ public sealed class UsageConfig : AlgoliaConfig
   /// </summary>
   /// <param name="appId">Your application ID</param>
   /// <param name="apiKey">Your API Key</param>
-  public UsageConfig(string appId, string apiKey) : base(appId, apiKey, "Usage", "7.2.3")
+  public UsageConfig(string appId, string apiKey) : base(appId, apiKey, "Usage", "7.2.4")
   {
     DefaultHosts = GetDefaultHosts();
     Compression = CompressionType.None;
@@ -39,13 +39,6 @@ public sealed class UsageConfig : AlgoliaConfig
     new()
     {
       Url = "usage.algolia.com",
-      Up = true,
-      LastUse = DateTime.UtcNow,
-      Accept =  CallType.Read | CallType.Write
-    },
-    new()
-    {
-      Url = "usage-dev.algolia.com",
       Up = true,
       LastUse = DateTime.UtcNow,
       Accept =  CallType.Read | CallType.Write

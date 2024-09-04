@@ -37,11 +37,11 @@ StartDate:
 StartDateRequired:
   in: query
   name: startDate
-  description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+  description: Start date of the period to analyze, in RFC 3339 format.
   required: true
   schema:
     type: string
-    example: 2022-09-19
+    example: 2024-08-30T00:00:00Z
 
 EndDate:
   in: query
@@ -54,11 +54,11 @@ EndDate:
 EndDateRequired:
   in: query
   name: endDate
-  description: End date of the period to analyze, in `YYYY-MM-DD` format.
+  description: End date of the period to analyze, in RFC 3339 format.
   required: true
   schema:
     type: string
-    example: 2023-01-21
+    example: 2024-08-30T00:00:00Z
 
 ForwardToReplicas:
   in: query

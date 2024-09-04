@@ -527,8 +527,7 @@ public class QuerySuggestionsClient extends ApiClient {
   /**
    * Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops
    * updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the
-   * Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
-   * operation.
+   * Search API and the `Delete an index` operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -542,8 +541,7 @@ public class QuerySuggestionsClient extends ApiClient {
   /**
    * Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops
    * updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the
-   * Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
-   * operation.
+   * Search API and the `Delete an index` operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -555,8 +553,7 @@ public class QuerySuggestionsClient extends ApiClient {
   /**
    * (asynchronously) Deletes a Query Suggestions configuration. Deleting only removes the
    * configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions
-   * index itself, use the Search API and the [Delete an
-   * index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+   * index itself, use the Search API and the `Delete an index` operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -574,8 +571,7 @@ public class QuerySuggestionsClient extends ApiClient {
   /**
    * (asynchronously) Deletes a Query Suggestions configuration. Deleting only removes the
    * configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions
-   * index itself, use the Search API and the [Delete an
-   * index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+   * index itself, use the Search API and the `Delete an index` operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

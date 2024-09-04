@@ -30,7 +30,6 @@ public class UsageClient extends ApiClient {
   private static List<Host> getDefaultHosts() {
     List<Host> hosts = new ArrayList<>();
     hosts.add(new Host("usage.algolia.com", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host("usage-dev.algolia.com", EnumSet.of(CallType.READ, CallType.WRITE)));
     return hosts;
   }
 
@@ -573,8 +572,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -716,8 +715,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -856,8 +855,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -995,8 +994,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IndexUsage getIndexUsage(
@@ -1131,8 +1130,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1289,8 +1288,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1429,8 +1428,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1568,8 +1567,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IndexUsage> getIndexUsageAsync(
@@ -1703,8 +1702,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1844,8 +1843,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1978,8 +1977,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2115,8 +2114,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IndexUsage getUsage(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
@@ -2246,8 +2245,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -2400,8 +2399,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -2538,8 +2537,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2675,8 +2674,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
-   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param startDate Start date of the period to analyze, in RFC 3339 format. (required)
+   * @param endDate End date of the period to analyze, in RFC 3339 format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IndexUsage> getUsageAsync(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
