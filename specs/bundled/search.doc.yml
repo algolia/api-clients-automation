@@ -1415,7 +1415,7 @@ paths:
 
             client.search(
               new SearchMethodParams()
-                .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+                .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
               Hit.class
             );
         - lang: javascript
@@ -2200,8 +2200,15 @@ paths:
 
             // Call the API
 
-            client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id",
-            "test", "val"));
+            client.saveObject(
+              "<YOUR_INDEX_NAME>",
+              new HashMap() {
+                {
+                  put("objectID", "id");
+                  put("test", "val");
+                }
+              }
+            );
         - lang: javascript
           label: JavaScript
           source: >
@@ -2675,8 +2682,8 @@ paths:
 
             // Call the API
 
-            client.getObject("<YOUR_INDEX_NAME>", "uniqueID", List.of("attr1",
-            "attr2"));
+            client.getObject("<YOUR_INDEX_NAME>", "uniqueID",
+            Arrays.asList("attr1", "attr2"));
         - lang: javascript
           label: JavaScript
           source: |
@@ -2929,8 +2936,15 @@ paths:
 
             // Call the API
 
-            client.addOrUpdateObject("<YOUR_INDEX_NAME>", "uniqueID",
-            Map.of("key", "value"));
+            client.addOrUpdateObject(
+              "<YOUR_INDEX_NAME>",
+              "uniqueID",
+              new HashMap() {
+                {
+                  put("key", "value");
+                }
+              }
+            );
         - lang: javascript
           label: JavaScript
           source: |
@@ -3886,8 +3900,15 @@ paths:
 
             // Call the API
 
-            client.partialUpdateObject("<YOUR_INDEX_NAME>", "uniqueID",
-            Map.of("attributeId", "new value"));
+            client.partialUpdateObject(
+              "<YOUR_INDEX_NAME>",
+              "uniqueID",
+              new HashMap() {
+                {
+                  put("attributeId", "new value");
+                }
+              }
+            );
         - lang: javascript
           label: JavaScript
           source: |
@@ -4167,9 +4188,27 @@ paths:
               "<YOUR_INDEX_NAME>",
               new BatchWriteParams()
                 .setRequests(
-                  List.of(
-                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+                  Arrays.asList(
+                    new BatchRequest()
+                      .setAction(Action.ADD_OBJECT)
+                      .setBody(
+                        new HashMap() {
+                          {
+                            put("key", "bar");
+                            put("foo", "1");
+                          }
+                        }
+                      ),
+                    new BatchRequest()
+                      .setAction(Action.ADD_OBJECT)
+                      .setBody(
+                        new HashMap() {
+                          {
+                            put("key", "baz");
+                            put("foo", "2");
+                          }
+                        }
+                      )
                   )
                 )
             );
@@ -4557,7 +4596,18 @@ paths:
             client.multipleBatch(
               new BatchParams()
                 .setRequests(
-                  List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("<YOUR_INDEX_NAME>"))
+                  Arrays.asList(
+                    new MultipleBatchRequest()
+                      .setAction(Action.ADD_OBJECT)
+                      .setBody(
+                        new HashMap() {
+                          {
+                            put("key", "value");
+                          }
+                        }
+                      )
+                      .setIndexName("<YOUR_INDEX_NAME>")
+                  )
                 )
             );
         - lang: javascript
@@ -4888,9 +4938,9 @@ paths:
             client.getObjects(
               new GetObjectsParams()
                 .setRequests(
-                  List.of(
+                  Arrays.asList(
                     new GetObjectsRequest()
-                      .setAttributesToRetrieve(List.of("attr1", "attr2"))
+                      .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
                       .setObjectID("uniqueID")
                       .setIndexName("<YOUR_INDEX_NAME>")
                   )
@@ -5371,7 +5421,7 @@ paths:
 
             client.setSettings(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings().setAttributesForFaceting(List.of("actor", "filterOnly(category)", "searchable(publisher)"))
+              new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
             );
         - lang: javascript
           label: JavaScript
@@ -5856,7 +5906,7 @@ paths:
             client.saveSynonym(
               "<YOUR_INDEX_NAME>",
               "id1",
-              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
               true
             );
         - lang: javascript
@@ -6374,13 +6424,13 @@ paths:
 
             client.saveSynonyms(
               "<YOUR_INDEX_NAME>",
-              List.of(
-                new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+              Arrays.asList(
+                new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
                 new SynonymHit()
                   .setObjectID("id2")
                   .setType(SynonymType.ONEWAYSYNONYM)
                   .setInput("iphone")
-                  .setSynonyms(List.of("ephone", "aphone", "yphone"))
+                  .setSynonyms(Arrays.asList("ephone", "aphone", "yphone"))
               ),
               true,
               true
@@ -7324,7 +7374,7 @@ paths:
 
             client.addApiKey(
               new ApiKey()
-                .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
+                .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
                 .setDescription("my new api key")
                 .setValidity(300)
                 .setMaxQueriesPerIPPerHour(100)
@@ -7813,7 +7863,7 @@ paths:
 
             client.updateApiKey(
               "myApiKey",
-              new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
+              new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
             );
         - lang: javascript
           label: JavaScript
@@ -8708,7 +8758,7 @@ paths:
             client.saveRule(
               "<YOUR_INDEX_NAME>",
               "id1",
-              new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+              new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
             );
         - lang: javascript
           label: JavaScript
@@ -9222,13 +9272,13 @@ paths:
 
             client.saveRules(
               "<YOUR_INDEX_NAME>",
-              List.of(
+              Arrays.asList(
                 new Rule()
                   .setObjectID("a-rule-id")
-                  .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+                  .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
                 new Rule()
                   .setObjectID("a-second-rule-id")
-                  .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+                  .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
               ),
               false,
               true
@@ -10110,7 +10160,7 @@ paths:
               new BatchDictionaryEntriesParams()
                 .setClearExistingDictionaryEntries(true)
                 .setRequests(
-                  List.of(
+                  Arrays.asList(
                     new BatchDictionaryEntriesRequest()
                       .setAction(DictionaryAction.ADD_ENTRY)
                       .setBody(
@@ -10118,8 +10168,8 @@ paths:
                           .setObjectID("1")
                           .setLanguage(SupportedLanguage.EN)
                           .setWord("fancy")
-                          .setWords(List.of("believe", "algolia"))
-                          .setDecomposition(List.of("trust", "algolia"))
+                          .setWords(Arrays.asList("believe", "algolia"))
+                          .setDecomposition(Arrays.asList("trust", "algolia"))
                           .setState(DictionaryEntryState.ENABLED)
                       )
                   )
@@ -10925,7 +10975,18 @@ paths:
 
             client.setDictionarySettings(
               new DictionarySettingsParams()
-                .setDisableStandardEntries(new StandardEntries().setPlurals(Map.of("fr", false, "en", false, "ru", true)))
+                .setDisableStandardEntries(
+                  new StandardEntries()
+                    .setPlurals(
+                      new HashMap() {
+                        {
+                          put("fr", false);
+                          put("en", false);
+                          put("ru", true);
+                        }
+                      }
+                    )
+                )
             );
         - lang: javascript
           label: JavaScript
@@ -11837,7 +11898,7 @@ paths:
             // Call the API
 
             client.batchAssignUserIds("userID", new
-            BatchAssignUserIdsParams().setCluster("theCluster").setUsers(List.of("user1",
+            BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1",
             "user2")));
         - lang: javascript
           label: JavaScript
@@ -13612,7 +13673,7 @@ paths:
 
             // Call the API
 
-            client.replaceSources(List.of(new
+            client.replaceSources(Arrays.asList(new
             Source().setSource("theSource").setDescription("theDescription")));
         - lang: javascript
           label: JavaScript
@@ -15168,7 +15229,7 @@ paths:
               new OperationIndexParams()
                 .setOperation(OperationType.MOVE)
                 .setDestination("<DESTINATION_INDEX_NAME>")
-                .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
+                .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
             );
         - lang: javascript
           label: JavaScript

@@ -111,7 +111,7 @@ class SnippetRecommendClient {
     client.getRecommendations(
       new GetRecommendationsParams()
         .setRequests(
-          List.of(
+          Arrays.asList(
             new RelatedQuery()
               .setIndexName("<YOUR_INDEX_NAME>")
               .setObjectID("objectID")

@@ -130,7 +130,7 @@
       "default": "client.getRecommendStatus(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS, 12345L);"
     },
     "getRecommendations": {
-      "default": "client.getRecommendations(\n  new GetRecommendationsParams()\n    .setRequests(\n      List.of(\n        new RelatedQuery()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setObjectID(\"objectID\")\n          .setModel(RelatedModel.RELATED_PRODUCTS)\n          .setThreshold(42.1)\n      )\n    )\n);"
+      "default": "client.getRecommendations(\n  new GetRecommendationsParams()\n    .setRequests(\n      Arrays.asList(\n        new RelatedQuery()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setObjectID(\"objectID\")\n          .setModel(RelatedModel.RELATED_PRODUCTS)\n          .setThreshold(42.1)\n      )\n    )\n);"
     },
     "searchRecommendRules": {
       "default": "client.searchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);"

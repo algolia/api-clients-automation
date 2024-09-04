@@ -21,15 +21,15 @@ class SnippetQuerySuggestionsClient {
       new ConfigurationWithIndex()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setSourceIndices(
-          List.of(
+          Arrays.asList(
             new SourceIndex()
               .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacets(List.of(new Facet().setAttribute("test")))
-              .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+              .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+              .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
           )
         )
-        .setLanguages(Languages.of(List.of("french")))
-        .setExclude(List.of("test"))
+        .setLanguages(Languages.of(Arrays.asList("french")))
+        .setExclude(Arrays.asList("test"))
     );
     // SEPARATOR<
   }
@@ -164,15 +164,15 @@ class SnippetQuerySuggestionsClient {
       "<YOUR_INDEX_NAME>",
       new Configuration()
         .setSourceIndices(
-          List.of(
+          Arrays.asList(
             new SourceIndex()
               .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacets(List.of(new Facet().setAttribute("test")))
-              .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+              .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+              .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
           )
         )
-        .setLanguages(Languages.of(List.of("french")))
-        .setExclude(List.of("test"))
+        .setLanguages(Languages.of(Arrays.asList("french")))
+        .setExclude(Arrays.asList("test"))
     );
     // SEPARATOR<
   }

@@ -378,7 +378,7 @@
       "default": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationIndexName().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
     },
     "createSource": {
-      "default": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(List.of(\"myStore\"))\n        .setLocales(List.of(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+      "default": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
     },
     "createTask": {
       "default": "client.createTask(new TaskCreate().setSourceID(\"search\").setDestinationID(\"destinationName\").setAction(ActionType.REPLACE));"
@@ -486,10 +486,10 @@
       "default": "client.listTransformations();"
     },
     "pushTask": {
-      "default": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      List.of(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);"
+      "default": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);"
     },
     "runSource": {
-      "default": "client.runSource(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload()\n    .setIndexToInclude(List.of(\"products_us\", \"products eu\"))\n    .setEntityIDs(List.of(\"1234\", \"5678\"))\n    .setEntityType(EntityType.PRODUCT)\n);"
+      "default": "client.runSource(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload()\n    .setIndexToInclude(Arrays.asList(\"products_us\", \"products eu\"))\n    .setEntityIDs(Arrays.asList(\"1234\", \"5678\"))\n    .setEntityType(EntityType.PRODUCT)\n);"
     },
     "runTask": {
       "default": "client.runTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
@@ -498,31 +498,31 @@
       "default": "client.runTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "searchAuthentications": {
-      "default": "client.searchAuthentications(\n  new AuthenticationSearch()\n    .setAuthenticationIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "client.searchAuthentications(\n  new AuthenticationSearch()\n    .setAuthenticationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
     },
     "searchDestinations": {
-      "default": "client.searchDestinations(\n  new DestinationSearch().setDestinationIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "client.searchDestinations(\n  new DestinationSearch()\n    .setDestinationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
     },
     "searchSources": {
-      "default": "client.searchSources(\n  new SourceSearch().setSourceIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "client.searchSources(\n  new SourceSearch().setSourceIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
     },
     "searchTasks": {
-      "default": "client.searchTasks(\n  new TaskSearch()\n    .setTaskIDs(\n      List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n    )\n);"
+      "default": "client.searchTasks(\n  new TaskSearch()\n    .setTaskIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
     },
     "searchTasksV1": {
-      "default": "client.searchTasksV1(\n  new TaskSearch()\n    .setTaskIDs(\n      List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n    )\n);"
+      "default": "client.searchTasksV1(\n  new TaskSearch()\n    .setTaskIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
     },
     "searchTransformations": {
-      "default": "client.searchTransformations(\n  new TransformationSearch()\n    .setTransformationIDs(\n      List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n    )\n);"
+      "default": "client.searchTransformations(\n  new TransformationSearch()\n    .setTransformationIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
     },
     "triggerDockerSourceDiscover": {
       "default": "client.triggerDockerSourceDiscover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "tryTransformation": {
-      "default": "client.tryTransformation(new TransformationTry().setCode(\"foo\").setSampleRecord(Map.of(\"bar\", \"baz\")));"
+      "default": "client.tryTransformation(\n  new TransformationTry()\n    .setCode(\"foo\")\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);"
     },
     "tryTransformationBeforeUpdate": {
-      "default": "client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry().setCode(\"foo\").setSampleRecord(Map.of(\"bar\", \"baz\"))\n);"
+      "default": "client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry()\n    .setCode(\"foo\")\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);"
     },
     "updateAuthentication": {
       "default": "client.updateAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new AuthenticationUpdate().setName(\"newName\"));"
@@ -543,7 +543,7 @@
       "default": "client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate().setCode(\"foo\").setName(\"bar\").setDescription(\"baz\")\n);"
     },
     "validateSource": {
-      "default": "client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(List.of(\"myStore\"))\n        .setLocales(List.of(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+      "default": "client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
     },
     "validateSourceBeforeUpdate": {
       "default": "client.validateSourceBeforeUpdate(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"

@@ -27,7 +27,7 @@ class InsightsClientRequestsTestsE2E {
     if ("true".equals(System.getenv("CI"))) {
       this.client = new InsightsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
     } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
+      Dotenv dotenv = Dotenv.configure().directory("../../").load();
       this.client = new InsightsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
     }
   }
@@ -40,10 +40,10 @@ class InsightsClientRequestsTestsE2E {
   @Test
   @DisplayName("Many events type")
   void pushEventsTest1() {
-    var res = client.pushEvents(
+    EventsResponse res = client.pushEvents(
       new InsightsEvents()
         .setEvents(
-          List.of(
+          Arrays.asList(
             new ConvertedObjectIDsAfterSearch()
               .setEventType(ConversionEvent.CONVERSION)
               .setEventName("Product Purchased")
@@ -51,7 +51,7 @@ class InsightsClientRequestsTestsE2E {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1725235200000L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
             new ViewedObjectIDs()
               .setEventType(ViewEvent.VIEW)
@@ -60,7 +60,7 @@ class InsightsClientRequestsTestsE2E {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1725235200000L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
           )
         )
     );
