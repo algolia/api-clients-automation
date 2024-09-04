@@ -2234,7 +2234,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Clicked
         eventType:
           $ref: '#/components/schemas/ClickEvent'
         index:
@@ -2356,7 +2355,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Added To Cart
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
@@ -2409,7 +2407,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Purchased
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
@@ -2463,7 +2460,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Converted
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         index:
@@ -2505,7 +2501,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Clicked
         eventType:
           $ref: '#/components/schemas/ClickEvent'
         index:
@@ -2564,7 +2559,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Purchased
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
@@ -2611,7 +2605,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Added To Cart
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         eventSubtype:
@@ -2660,7 +2653,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Converted
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         index:
@@ -2705,7 +2697,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Filter Clicked
         eventType:
           $ref: '#/components/schemas/ClickEvent'
         index:
@@ -2734,7 +2725,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Filter Converted
         eventType:
           $ref: '#/components/schemas/ConversionEvent'
         index:
@@ -2768,7 +2758,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Product Viewed
         eventType:
           $ref: '#/components/schemas/ViewEvent'
         index:
@@ -2801,7 +2790,6 @@ components:
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
-          example: Filter Viewed
         eventType:
           $ref: '#/components/schemas/ViewEvent'
         index:
