@@ -357,7 +357,7 @@ jobs:
         run: rm -rf ${{ matrix.client.testsToDelete }} || true
 
       - name: Generate CTS
-        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-e2e

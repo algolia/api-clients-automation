@@ -10,7 +10,11 @@ import type { Generator, GeneratorMode } from '../types.js';
  * Defaults options are used to
  * - Set config path.
  */
-export async function generateOpenapitools(gens: Generator[], mode: GeneratorMode): Promise<void> {
+export async function generateOpenapitools(
+  gens: Generator[],
+  mode: GeneratorMode,
+  additionalProperties = {},
+): Promise<void> {
   const generators = {};
   for (const { key, client, language, ...rest } of gens) {
     const templateDir =
@@ -29,6 +33,7 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
         language,
         client,
         mode,
+        ...additionalProperties,
       },
     };
   }

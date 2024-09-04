@@ -7,8 +7,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.CSharpClientCodegen;
@@ -37,7 +35,7 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     setLibrary("httpclient");
 
     try {
-      additionalProperties.put("dotnetSdkMajorVersion", Files.readString(Paths.get("config/.csharp-version")).trim());
+      additionalProperties.put("languageVersion", Helpers.getLanguageVersion("csharp"));
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);

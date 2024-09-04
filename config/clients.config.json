@@ -115,7 +115,13 @@
     "snippets": {
       "extension": ".java",
       "outputFolder": "src/test/java/com/algolia"
-    }
+    },
+    "supportedVersions": [
+      "8",
+      "11",
+      "17.0.12",
+      "21"
+    ]
   },
   "javascript": {
     "clients": [

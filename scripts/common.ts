@@ -277,13 +277,14 @@ export async function setupAndGen(
   generators: Generator[],
   mode: GeneratorMode,
   fn: (gen: Generator) => Promise<void>,
+  additionalProperties = {},
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];
     await buildSpecs({ clients, outputFormat: 'yml', docs: false, useCache: true });
   }
 
-  await generateOpenapitools(generators, mode);
+  await generateOpenapitools(generators, mode, additionalProperties);
   await buildCustomGenerators();
 
   for (const gen of generators) {
