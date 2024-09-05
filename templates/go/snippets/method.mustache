@@ -29,7 +29,8 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
       // handle the eventual error
       panic(err)
     }
-
+    
+    // >LOG
     {{#hasResponse}}
     // use the model directly
     print(response)

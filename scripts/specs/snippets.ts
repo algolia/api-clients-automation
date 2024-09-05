@@ -27,7 +27,9 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
       }
 
       for (const [sampleName, sample] of Object.entries(samples)) {
-        const sampleMatch = sample.match(/.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/);
+        const sampleMatch = sample.match(
+          /.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)(#|\/\/) >LOG/,
+        );
         if (!sampleMatch) {
           continue;
         }
@@ -37,11 +39,11 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
         if (!('init' in snippetSamples[language])) {
           snippetSamples[language].init = {
-            default: initLine.replace(/\n$/, ''),
+            default: initLine.trim(),
           };
         }
 
-        snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
+        snippetSamples[language][operation][sampleName] = callLine.trim();
       }
     }
   }
@@ -72,7 +74,7 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
       snippetSamples[gen.language].import = {
-        default: importMatch[1].replace(/\n$/, ''),
+        default: importMatch[1].trim(),
       };
     }
 

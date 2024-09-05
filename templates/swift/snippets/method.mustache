@@ -22,6 +22,7 @@ final class {{client}}Snippet {
       {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
       queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.queryParameters}}
     ){{/hasRequestOptions}})
+    // >LOG
     // SEPARATOR<
   }
   {{/snippets}}

@@ -34,6 +34,7 @@ class Snippet{{client}} {
     // Call the API
     {{#hasResponse}}val response = {{/hasResponse}}{{> tests/method}}
     
+    // >LOG
     {{#hasResponse}}
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))

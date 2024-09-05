@@ -18,7 +18,8 @@ export {{#isAsync}}async{{/isAsync}} function snippetFor{{#lambda.pascalcase}}{{
 
   // Call the API
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
-  
+
+  // >LOG
   {{#hasResponse}}
   // use typed response
   console.log(response);
