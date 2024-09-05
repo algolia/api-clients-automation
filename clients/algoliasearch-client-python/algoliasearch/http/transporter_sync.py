@@ -75,7 +75,9 @@ class TransporterSync(BaseTransporter):
 
             try:
                 resp = self._session.send(
-                    req, timeout=(request_options.timeouts["connect"]/1000, self._timeout/ 1000), proxies=proxy
+                    req,
+                    timeout=self._timeout / 1000,
+                    proxies=proxy,
                 )
 
                 response = ApiResponse(
@@ -85,8 +87,8 @@ class TransporterSync(BaseTransporter):
                     host=host.url,
                     status_code=resp.status_code,
                     headers=resp.headers,  # type: ignore -- insensitive dict is still a dict
-                    data=resp.json(),
-                    raw_data=resp.json(),
+                    data=resp.text,
+                    raw_data=resp.text,
                     error_message=str(resp.reason),
                 )
             except Timeout as e:
@@ -106,7 +108,7 @@ class TransporterSync(BaseTransporter):
             elif decision == RetryOutcome.FAIL:
                 content = response.error_message
                 if response.data and "message" in response.data:
-                    content = response.data["message"]
+                    content = loads(response.data)["message"]
 
                 raise RequestException(content, response.status_code)
 
