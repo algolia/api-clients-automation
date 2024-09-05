@@ -14,13 +14,15 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
   client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create('YOUR_APP_ID','YOUR_API_KEY'{{#hasRegionalHost}},'YOUR_APP_ID_REGION'{{/hasRegionalHost}})
 
   # Call the API
-  response = client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
-
+  {{#hasResponsePayload}}response = {{/hasResponsePayload}}client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+  
+  {{#hasResponsePayload}}
   # use the class directly
   puts response
 
   # print the JSON response
   puts response.to_json
+  {{/hasResponsePayload}}
   # SEPARATOR<
 end
 
