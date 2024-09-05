@@ -28,25 +28,25 @@ module Algolia
       @write_timeout = opts[:write_timeout] || 30_000
       @read_timeout = opts[:read_timeout] || 5_000
       @connect_timeout = opts[:connect_timeout] || 2_000
-      @compression_type = opts[:compression_type] || "none"
+      @compression_type = opts[:compression_type] || 'none'
       @requester = opts[:requester]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 
       @header_params = {
-        "X-Algolia-Application-Id" => app_id,
-        "X-Algolia-API-Key" => api_key,
-        "Content-Type" => "application/json",
-        "User-Agent" => @user_agent
+        'X-Algolia-Application-Id' => app_id,
+        'X-Algolia-API-Key' => api_key,
+        'Content-Type' => 'application/json',
+        'User-Agent' => @user_agent
       }
       @header_params.transform_keys!(&:downcase)
 
       yield(self) if block_given?
     end
 
-    def set_api_key(api_key)
+    def set_algolia_api_key(api_key)
       @api_key = api_key
-      @header_params["X-Algolia-API-Key"] = api_key
+      @header_params['X-Algolia-API-Key'] = api_key
     end
 
     # The default Configuration object.
