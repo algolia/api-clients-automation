@@ -23,6 +23,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
       panic(err)
     }
 
+    // Call the API
     {{#hasResponse}}response, err :={{/hasResponse}}{{^hasResponse}}err ={{/hasResponse}} {{> tests/method}}
     if err != nil {
       // handle the eventual error
