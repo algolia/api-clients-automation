@@ -7,7 +7,7 @@ describe('{{testType}}', () => {
     {{/autoCreateClient}}
 
     {{#steps}}
-    {
+    {{#shouldScope}} { {{/shouldScope}}
       {{#times}}
       for (let i = 0; i < {{.}}; i++) {
       {{/times}}
@@ -48,7 +48,7 @@ describe('{{testType}}', () => {
       {{#times}}
       }
       {{/times}}
-    }
+    {{#shouldScope}} } {{/shouldScope}}
     {{/steps}}
   }, 15000);
 
