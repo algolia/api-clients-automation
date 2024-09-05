@@ -3466,7 +3466,6 @@ __metadata:
     bundlesize: "npm:0.18.2"
     execa: "npm:9.3.1"
     lerna: "npm:8.1.8"
-    nx: "npm:^19.6.0"
     rollup: "npm:4.21.2"
     rollup-plugin-node-globals: "npm:1.4.0"
     rollup-plugin-typescript2: "npm:0.36.0"
@@ -8396,7 +8395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:19.6.5, nx@npm:>=17.1.2 < 20, nx@npm:^19.6.0":
+"nx@npm:19.6.5, nx@npm:>=17.1.2 < 20":
   version: 19.6.5
   resolution: "nx@npm:19.6.5"
   dependencies:
