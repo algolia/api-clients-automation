@@ -200,87 +200,14 @@ abstract class Configuration
         return $this;
     }
 
-    public function getHosts()
-    {
-        return $this->config['hosts'];
-    }
-
-    public function setHosts($hosts)
-    {
-        $this->config['hosts'] = $hosts;
-
-        return $this;
-    }
-
-    public function setFullHosts($hosts)
-    {
-        $this->config['hasFullHosts'] = true;
-
-        return $this->setHosts($hosts);
-    }
-
-    public function getHasFullHosts()
-    {
-        return $this->config['hasFullHosts'];
-    }
-
-    public function getReadTimeout()
-    {
-        return $this->config['readTimeout'];
-    }
-
-    public function setReadTimeout($readTimeout)
-    {
-        $this->config['readTimeout'] = $readTimeout;
-
-        return $this;
-    }
-
-    public function getWriteTimeout()
-    {
-        return $this->config['writeTimeout'];
-    }
-
-    public function setWriteTimeout($writeTimeout)
-    {
-        $this->config['writeTimeout'] = $writeTimeout;
-
-        return $this;
-    }
-
-    public function getConnectTimeout()
-    {
-        return $this->config['connectTimeout'];
-    }
-
-    public function setConnectTimeout($connectTimeout)
-    {
-        $this->config['connectTimeout'] = $connectTimeout;
-
-        return $this;
-    }
-
-    public function getDefaultHeaders()
-    {
-        return $this->config['defaultHeaders'];
-    }
-
-    public function setDefaultHeaders(array $defaultHeaders)
-    {
-        $this->config['defaultHeaders'] = $defaultHeaders;
-
-        return $this;
-    }
-
     /**
-     * Sets the user agent of the api client.
-     *
-     * @param string $algoliaAgent the user agent of the api client
-     *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException
+     * @deprecated This method is deprecated. Use setClientApiKey() instead.
      */
+    public function setAlgoliaApiKey($apiKey)
+    {
+        return $this->setClientApiKey($apiKey);
+    }
+
     public function setAlgoliaAgent($algoliaAgent)
     {
         if (!is_string($algoliaAgent)) {

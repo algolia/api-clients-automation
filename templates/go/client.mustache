@@ -143,7 +143,7 @@ func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase
 // Allow update of stored API key used to authenticate requests.
 func (c *APIClient) SetClientApiKey(apiKey string) error {
   if c.cfg == nil {
-    return fmt.Errorf("client config is not set")
+    return errors.New("client config is not set")
   }
 	
   c.cfg.ApiKey = apiKey
