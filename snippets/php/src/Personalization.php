@@ -16,7 +16,7 @@ class SnippetPersonalizationClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -37,7 +37,7 @@ class SnippetPersonalizationClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -58,7 +58,7 @@ class SnippetPersonalizationClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -79,7 +79,7 @@ class SnippetPersonalizationClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -100,7 +100,7 @@ class SnippetPersonalizationClient
      *
      * delete deleteUserProfile
      */
-    public function snippetForDeleteUserProfile()
+    public function snippetForDeleteUserProfile(): void
     {
         // >SEPARATOR deleteUserProfile default
         // Initialize the client
@@ -121,7 +121,7 @@ class SnippetPersonalizationClient
      *
      * get getPersonalizationStrategy
      */
-    public function snippetForGetPersonalizationStrategy()
+    public function snippetForGetPersonalizationStrategy(): void
     {
         // >SEPARATOR getPersonalizationStrategy default
         // Initialize the client
@@ -140,7 +140,7 @@ class SnippetPersonalizationClient
      *
      * get getUserTokenProfile
      */
-    public function snippetForGetUserTokenProfile()
+    public function snippetForGetUserTokenProfile(): void
     {
         // >SEPARATOR getUserTokenProfile default
         // Initialize the client
@@ -161,7 +161,7 @@ class SnippetPersonalizationClient
      *
      * set setPersonalizationStrategy
      */
-    public function snippetForSetPersonalizationStrategy()
+    public function snippetForSetPersonalizationStrategy(): void
     {
         // >SEPARATOR setPersonalizationStrategy default
         // Initialize the client

@@ -16,7 +16,7 @@ class SnippetQuerySuggestionsClient
      *
      * createConfig
      */
-    public function snippetForCreateConfig()
+    public function snippetForCreateConfig(): void
     {
         // >SEPARATOR createConfig default
         // Initialize the client
@@ -63,7 +63,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -84,7 +84,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -105,7 +105,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -126,7 +126,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -147,7 +147,7 @@ class SnippetQuerySuggestionsClient
      *
      * deleteConfig
      */
-    public function snippetForDeleteConfig()
+    public function snippetForDeleteConfig(): void
     {
         // >SEPARATOR deleteConfig default
         // Initialize the client
@@ -168,7 +168,7 @@ class SnippetQuerySuggestionsClient
      *
      * getAllConfigs
      */
-    public function snippetForGetAllConfigs()
+    public function snippetForGetAllConfigs(): void
     {
         // >SEPARATOR getAllConfigs default
         // Initialize the client
@@ -187,7 +187,7 @@ class SnippetQuerySuggestionsClient
      *
      * Retrieve QS config e2e
      */
-    public function snippetForGetConfig()
+    public function snippetForGetConfig(): void
     {
         // >SEPARATOR getConfig default
         // Initialize the client
@@ -208,7 +208,7 @@ class SnippetQuerySuggestionsClient
      *
      * getConfigStatus
      */
-    public function snippetForGetConfigStatus()
+    public function snippetForGetConfigStatus(): void
     {
         // >SEPARATOR getConfigStatus default
         // Initialize the client
@@ -229,7 +229,7 @@ class SnippetQuerySuggestionsClient
      *
      * getLogFile
      */
-    public function snippetForGetLogFile()
+    public function snippetForGetLogFile(): void
     {
         // >SEPARATOR getLogFile default
         // Initialize the client
@@ -250,7 +250,7 @@ class SnippetQuerySuggestionsClient
      *
      * updateConfig
      */
-    public function snippetForUpdateConfig()
+    public function snippetForUpdateConfig(): void
     {
         // >SEPARATOR updateConfig default
         // Initialize the client

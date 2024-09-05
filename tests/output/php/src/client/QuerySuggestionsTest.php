@@ -27,7 +27,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     private $recordedRequest;
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequest = [
             'request' => $request,
@@ -39,7 +39,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct user agent')]
-    public function test0commonApi()
+    public function test0commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -54,7 +54,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('the user agent contains the latest version')]
-    public function test1commonApi()
+    public function test1commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -69,7 +69,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default read timeouts')]
-    public function test2commonApi()
+    public function test2commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -87,7 +87,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test3commonApi()
+    public function test3commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -105,7 +105,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('throws when region is not given')]
-    public function test0parameters()
+    public function test0parameters(): void
     {
         try {
             $client = $this->createClient(
@@ -121,7 +121,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('throws when incorrect region is given')]
-    public function test1parameters()
+    public function test1parameters(): void
     {
         try {
             $client = $this->createClient(
@@ -137,7 +137,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('does not throw when region is given')]
-    public function test2parameters()
+    public function test2parameters(): void
     {
         $client = $this->createClient(
             'my-app-id',
@@ -151,10 +151,8 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * @param mixed $appId
      * @param mixed $apiKey
      * @param mixed $region
-     *
-     * @return QuerySuggestionsClient
      */
-    private function createClient($appId, $apiKey, $region = 'us')
+    private function createClient($appId, $apiKey, $region = 'us'): QuerySuggestionsClient
     {
         $config = QuerySuggestionsConfig::create($appId, $apiKey, $region);
         $clusterHosts = QuerySuggestionsClient::getClusterHosts($config);

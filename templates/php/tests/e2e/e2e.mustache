@@ -27,7 +27,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 #[CoversClass({{client}}::class)]
 class {{clientPrefix}}Test extends TestCase 
 {
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -42,7 +42,7 @@ class {{clientPrefix}}Test extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): {{client}}
     {
         return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
     }
@@ -50,7 +50,7 @@ class {{clientPrefix}}Test extends TestCase
     {{#blocksE2E}}
     {{#tests}}
     #[TestDox('{{{testName}}}')]
-    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
+    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}(): void
     {
         $client = $this->getClient();
         $resp = {{> tests/method}};

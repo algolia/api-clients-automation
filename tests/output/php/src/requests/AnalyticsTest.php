@@ -24,7 +24,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
@@ -32,7 +32,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete()
+    public function testCustomDelete(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -49,7 +49,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1()
+    public function testCustomDelete1(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -69,7 +69,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet()
+    public function testCustomGet(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -86,7 +86,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1()
+    public function testCustomGet1(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -106,7 +106,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2()
+    public function testCustomGet2(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -137,7 +137,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost()
+    public function testCustomPost(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -154,7 +154,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1()
+    public function testCustomPost1(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -176,7 +176,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2()
+    public function testCustomPost2(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -203,7 +203,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3()
+    public function testCustomPost3(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -230,7 +230,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4()
+    public function testCustomPost4(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -258,7 +258,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5()
+    public function testCustomPost5(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -286,7 +286,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6()
+    public function testCustomPost6(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -313,7 +313,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7()
+    public function testCustomPost7(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -340,7 +340,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8()
+    public function testCustomPost8(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -368,7 +368,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9()
+    public function testCustomPost9(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -396,7 +396,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10()
+    public function testCustomPost10(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -424,7 +424,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut()
+    public function testCustomPut(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -441,7 +441,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1()
+    public function testCustomPut1(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -463,7 +463,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getAddToCartRate with minimal parameters')]
-    public function testGetAddToCartRate()
+    public function testGetAddToCartRate(): void
     {
         $client = $this->getClient();
         $client->getAddToCartRate(
@@ -481,7 +481,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getAddToCartRate with all parameters')]
-    public function testGetAddToCartRate1()
+    public function testGetAddToCartRate1(): void
     {
         $client = $this->getClient();
         $client->getAddToCartRate(
@@ -502,7 +502,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getAverageClickPosition with minimal parameters')]
-    public function testGetAverageClickPosition()
+    public function testGetAverageClickPosition(): void
     {
         $client = $this->getClient();
         $client->getAverageClickPosition(
@@ -520,7 +520,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getAverageClickPosition with all parameters')]
-    public function testGetAverageClickPosition1()
+    public function testGetAverageClickPosition1(): void
     {
         $client = $this->getClient();
         $client->getAverageClickPosition(
@@ -541,7 +541,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getClickPositions with minimal parameters')]
-    public function testGetClickPositions()
+    public function testGetClickPositions(): void
     {
         $client = $this->getClient();
         $client->getClickPositions(
@@ -559,7 +559,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getClickPositions with all parameters')]
-    public function testGetClickPositions1()
+    public function testGetClickPositions1(): void
     {
         $client = $this->getClient();
         $client->getClickPositions(
@@ -580,7 +580,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getClickThroughRate with minimal parameters')]
-    public function testGetClickThroughRate()
+    public function testGetClickThroughRate(): void
     {
         $client = $this->getClient();
         $client->getClickThroughRate(
@@ -598,7 +598,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getClickThroughRate with all parameters')]
-    public function testGetClickThroughRate1()
+    public function testGetClickThroughRate1(): void
     {
         $client = $this->getClient();
         $client->getClickThroughRate(
@@ -619,7 +619,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getConversationRate with minimal parameters')]
-    public function testGetConversionRate()
+    public function testGetConversionRate(): void
     {
         $client = $this->getClient();
         $client->getConversionRate(
@@ -637,7 +637,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getConversationRate with all parameters')]
-    public function testGetConversionRate1()
+    public function testGetConversionRate1(): void
     {
         $client = $this->getClient();
         $client->getConversionRate(
@@ -658,7 +658,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getNoClickRate with minimal parameters')]
-    public function testGetNoClickRate()
+    public function testGetNoClickRate(): void
     {
         $client = $this->getClient();
         $client->getNoClickRate(
@@ -676,7 +676,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getNoClickRate with all parameters')]
-    public function testGetNoClickRate1()
+    public function testGetNoClickRate1(): void
     {
         $client = $this->getClient();
         $client->getNoClickRate(
@@ -697,7 +697,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getNoResultsRate with minimal parameters')]
-    public function testGetNoResultsRate()
+    public function testGetNoResultsRate(): void
     {
         $client = $this->getClient();
         $client->getNoResultsRate(
@@ -715,7 +715,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getNoResultsRate with all parameters')]
-    public function testGetNoResultsRate1()
+    public function testGetNoResultsRate1(): void
     {
         $client = $this->getClient();
         $client->getNoResultsRate(
@@ -736,7 +736,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getPurchaseRate with minimal parameters')]
-    public function testGetPurchaseRate()
+    public function testGetPurchaseRate(): void
     {
         $client = $this->getClient();
         $client->getPurchaseRate(
@@ -754,7 +754,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getPurchaseRate with all parameters')]
-    public function testGetPurchaseRate1()
+    public function testGetPurchaseRate1(): void
     {
         $client = $this->getClient();
         $client->getPurchaseRate(
@@ -775,7 +775,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getRevenue with minimal parameters')]
-    public function testGetRevenue()
+    public function testGetRevenue(): void
     {
         $client = $this->getClient();
         $client->getRevenue(
@@ -793,7 +793,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getRevenue with all parameters')]
-    public function testGetRevenue1()
+    public function testGetRevenue1(): void
     {
         $client = $this->getClient();
         $client->getRevenue(
@@ -814,7 +814,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesCount with minimal parameters')]
-    public function testGetSearchesCount()
+    public function testGetSearchesCount(): void
     {
         $client = $this->getClient();
         $client->getSearchesCount(
@@ -832,7 +832,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesCount with all parameters')]
-    public function testGetSearchesCount1()
+    public function testGetSearchesCount1(): void
     {
         $client = $this->getClient();
         $client->getSearchesCount(
@@ -853,7 +853,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesNoClicks with minimal parameters')]
-    public function testGetSearchesNoClicks()
+    public function testGetSearchesNoClicks(): void
     {
         $client = $this->getClient();
         $client->getSearchesNoClicks(
@@ -871,7 +871,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesNoClicks with all parameters')]
-    public function testGetSearchesNoClicks1()
+    public function testGetSearchesNoClicks1(): void
     {
         $client = $this->getClient();
         $client->getSearchesNoClicks(
@@ -894,7 +894,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesNoResults with minimal parameters')]
-    public function testGetSearchesNoResults()
+    public function testGetSearchesNoResults(): void
     {
         $client = $this->getClient();
         $client->getSearchesNoResults(
@@ -912,7 +912,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getSearchesNoResults with all parameters')]
-    public function testGetSearchesNoResults1()
+    public function testGetSearchesNoResults1(): void
     {
         $client = $this->getClient();
         $client->getSearchesNoResults(
@@ -935,7 +935,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getStatus with minimal parameters')]
-    public function testGetStatus()
+    public function testGetStatus(): void
     {
         $client = $this->getClient();
         $client->getStatus(
@@ -953,7 +953,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopCountries with minimal parameters')]
-    public function testGetTopCountries()
+    public function testGetTopCountries(): void
     {
         $client = $this->getClient();
         $client->getTopCountries(
@@ -971,7 +971,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopCountries with all parameters')]
-    public function testGetTopCountries1()
+    public function testGetTopCountries1(): void
     {
         $client = $this->getClient();
         $client->getTopCountries(
@@ -994,7 +994,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterAttributes with minimal parameters')]
-    public function testGetTopFilterAttributes()
+    public function testGetTopFilterAttributes(): void
     {
         $client = $this->getClient();
         $client->getTopFilterAttributes(
@@ -1012,7 +1012,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterAttributes with all parameters')]
-    public function testGetTopFilterAttributes1()
+    public function testGetTopFilterAttributes1(): void
     {
         $client = $this->getClient();
         $client->getTopFilterAttributes(
@@ -1036,7 +1036,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterForAttribute with minimal parameters')]
-    public function testGetTopFilterForAttribute()
+    public function testGetTopFilterForAttribute(): void
     {
         $client = $this->getClient();
         $client->getTopFilterForAttribute(
@@ -1055,7 +1055,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterForAttribute with minimal parameters and multiple attributes')]
-    public function testGetTopFilterForAttribute1()
+    public function testGetTopFilterForAttribute1(): void
     {
         $client = $this->getClient();
         $client->getTopFilterForAttribute(
@@ -1074,7 +1074,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterForAttribute with all parameters')]
-    public function testGetTopFilterForAttribute2()
+    public function testGetTopFilterForAttribute2(): void
     {
         $client = $this->getClient();
         $client->getTopFilterForAttribute(
@@ -1099,7 +1099,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFilterForAttribute with all parameters and multiple attributes')]
-    public function testGetTopFilterForAttribute3()
+    public function testGetTopFilterForAttribute3(): void
     {
         $client = $this->getClient();
         $client->getTopFilterForAttribute(
@@ -1124,7 +1124,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFiltersNoResults with minimal parameters')]
-    public function testGetTopFiltersNoResults()
+    public function testGetTopFiltersNoResults(): void
     {
         $client = $this->getClient();
         $client->getTopFiltersNoResults(
@@ -1142,7 +1142,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopFiltersNoResults with all parameters')]
-    public function testGetTopFiltersNoResults1()
+    public function testGetTopFiltersNoResults1(): void
     {
         $client = $this->getClient();
         $client->getTopFiltersNoResults(
@@ -1166,7 +1166,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopHits with minimal parameters')]
-    public function testGetTopHits()
+    public function testGetTopHits(): void
     {
         $client = $this->getClient();
         $client->getTopHits(
@@ -1184,7 +1184,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopHits with all parameters')]
-    public function testGetTopHits1()
+    public function testGetTopHits1(): void
     {
         $client = $this->getClient();
         $client->getTopHits(
@@ -1210,7 +1210,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopSearches with minimal parameters')]
-    public function testGetTopSearches()
+    public function testGetTopSearches(): void
     {
         $client = $this->getClient();
         $client->getTopSearches(
@@ -1228,7 +1228,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getTopSearches with all parameters')]
-    public function testGetTopSearches1()
+    public function testGetTopSearches1(): void
     {
         $client = $this->getClient();
         $client->getTopSearches(
@@ -1255,7 +1255,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getUsersCount with minimal parameters')]
-    public function testGetUsersCount()
+    public function testGetUsersCount(): void
     {
         $client = $this->getClient();
         $client->getUsersCount(
@@ -1273,7 +1273,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getUsersCount with all parameters')]
-    public function testGetUsersCount1()
+    public function testGetUsersCount1(): void
     {
         $client = $this->getClient();
         $client->getUsersCount(
@@ -1293,7 +1293,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -1334,7 +1334,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         }
     }
 
-    protected function getClient()
+    protected function getClient(): AnalyticsClient
     {
         $config = AnalyticsConfig::create('appID', 'apiKey', 'us');
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));

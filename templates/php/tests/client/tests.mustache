@@ -1,6 +1,6 @@
 {{#tests}}
 #[TestDox('{{{testName}}}')]
-public function test{{testIndex}}{{testType}}()
+public function test{{testIndex}}{{testType}}(): void
 {
     {{#autoCreateClient}}
         $client = $this->createClient(self::APP_ID, self::API_KEY);
