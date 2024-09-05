@@ -17,7 +17,7 @@
         def _aggregator(_: GetTaskResponse) -> None:
             self._retry_count += 1
 
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
@@ -44,7 +44,7 @@
         def _aggregator(_: GetTaskResponse) -> None:
             self._retry_count += 1
 
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
@@ -102,7 +102,7 @@
                 return _resp is not None
             return _resp is None
 
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             validate=_validate,
             aggregator=_aggregator,
@@ -130,7 +130,7 @@
                 request_options=request_options,
             )
 
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             validate=lambda _resp: _resp.cursor is None,
             aggregator=aggregator,
@@ -157,7 +157,7 @@
                 search_rules_params=search_rules_params,
                 request_options=request_options,
             )
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             validate=lambda _resp: _resp.nb_hits < search_rules_params.hits_per_page,
             aggregator=aggregator,
@@ -185,7 +185,7 @@
             )
             search_synonyms_params.page += 1
             return resp
-        return {{^isSync}}await {{/isSync}}create_iterable(
+        return {{^isSync}}await {{/isSync}}create_iterable{{#isSync}}_sync{{/isSync}}(
             func=_func,
             validate=lambda _resp: _resp.nb_hits < search_synonyms_params.hits_per_page,
             aggregator=aggregator,
@@ -369,12 +369,12 @@
             move_operation_response=move_operation_response,
         )
 
-    async def index_exists(self, index_name: str) -> bool:
+    {{^isSync}}async {{/isSync}}def index_exists(self, index_name: str) -> bool:
         """
         Helper: Checks if the given `index_name` exists.
         """
         try:
-            await self.get_settings(index_name)
+            {{^isSync}}await {{/isSync}}self.get_settings(index_name)
         except Exception as e:
             if isinstance(e, RequestException) and e.status_code == 404:
                 return False

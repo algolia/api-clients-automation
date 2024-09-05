@@ -148,6 +148,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       if (hasRegionalHost) {
         bundle.put("defaultRegion", regionVariable.defaultValue);
       }
+      bundle.put("isSync", false);
       // special lambda for dynamic templates
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
       bundle.put("lambda", lambda);

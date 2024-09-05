@@ -29,6 +29,8 @@ class TransporterSync(BaseTransporter):
     def __init__(self, config: BaseConfig) -> None:
         self._session = None
         self._config = config
+        self._retry_strategy = RetryStrategy()
+        self._hosts = []
 
     def __enter__(self) -> Self:
         return self

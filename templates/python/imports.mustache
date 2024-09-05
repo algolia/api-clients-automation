@@ -44,7 +44,7 @@ if version_info >= (3, 11):
 else:
   from typing_extensions import Self, Annotated
 
-from algoliasearch.http.helpers import create_iterable, RetryTimeout
+from algoliasearch.http.helpers import create_iterable, create_iterable_sync, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions

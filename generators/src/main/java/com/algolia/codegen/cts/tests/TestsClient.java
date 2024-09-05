@@ -21,7 +21,7 @@ public class TestsClient extends TestsGenerator {
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
     super(ctsManager);
     this.withBenchmark = withBenchmark;
-    this.withSyncTests = language.equals("python");
+    this.withSyncTests = language.equals("python") && !withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
@@ -189,25 +189,31 @@ public class TestsClient extends TestsGenerator {
           throw e;
         }
       }
+      testObj.put("isSync", false);
       testObj.put("tests", tests);
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
     if (this.withSyncTests) {
       List<Object> modes = new ArrayList<>();
 
-      Map<String, Object> sync = new HashMap<>();
-      sync.put("isSync", true);
-      sync.put(withBenchmark ? "blocksBenchmarkSync" : "blocksClientSync", blocks);
-
       Map<String, Object> async = new HashMap<>();
-      async.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
-
-      modes.add(sync);
+      async.put(withBenchmark ? "blocksBenchmark" : "blocksClient", Helpers.deepCopy(blocks));
       modes.add(async);
 
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSync", true);
+      List<Object> blocksSync = Helpers.deepCopy(blocks);
+      for (Object block : blocksSync) {
+        Map<String, Object> testObj = (Map<String, Object>) block;
+        testObj.put("isSync", true);
+      }
+      sync.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocksSync);
+      modes.add(sync);
+
       bundle.put("modes", modes);
+    } else {
+      bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
     }
   }
 }

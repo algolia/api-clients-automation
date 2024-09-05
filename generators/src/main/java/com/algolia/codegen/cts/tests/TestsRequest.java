@@ -200,23 +200,15 @@ public class TestsRequest extends TestsGenerator {
         blocksE2E.add(e2eObj);
       }
     }
-    bundle.put("blocksRequests", blocks);
-    if (!blocksE2E.isEmpty()) {
-      bundle.put("blocksE2E", blocksE2E);
-    } else if (supportingFiles != null) {
-      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
-    }
-
     if (this.withSyncTests) {
       List<Object> modes = new ArrayList<>();
 
       if (!blocksE2E.isEmpty()) {
         Map<String, Object> sync = new HashMap<>();
         sync.put("isSync", true);
-        sync.put("blocksE2ESync", blocksE2E);
+        sync.put("blocksE2E", blocksE2E);
 
         Map<String, Object> async = new HashMap<>();
-        sync.put("isSync", true);
         sync.put("blocksE2E", blocksE2E);
 
         modes.add(sync);
@@ -225,7 +217,7 @@ public class TestsRequest extends TestsGenerator {
 
       Map<String, Object> sync = new HashMap<>();
       sync.put("isSync", true);
-      sync.put("blocksRequestsSync", blocks);
+      sync.put("blocksRequests", blocks);
 
       Map<String, Object> async = new HashMap<>();
       async.put("blocksRequests", blocks);
@@ -234,6 +226,13 @@ public class TestsRequest extends TestsGenerator {
       modes.add(async);
 
       bundle.put("modes", modes);
+    } else {
+      bundle.put("blocksRequests", blocks);
+      if (!blocksE2E.isEmpty()) {
+        bundle.put("blocksE2E", blocksE2E);
+      } else if (supportingFiles != null) {
+        supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+      }
     }
   }
 }

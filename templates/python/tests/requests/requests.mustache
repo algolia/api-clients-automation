@@ -14,7 +14,7 @@ from algoliasearch.search.models.get_task_response import GetTaskResponse
 {{#modes}}
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
     _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
-    _client = {{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config))
+    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config))
 
     {{#blocksRequests}}
     {{#tests}}
@@ -42,7 +42,4 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Syn
     {{/tests}}
     {{/blocksRequests}}
 
-    {{#isSearchClient}}
-    {{> tests/requests/helpers}}
-    {{/isSearchClient}}
 {{/modes}}
