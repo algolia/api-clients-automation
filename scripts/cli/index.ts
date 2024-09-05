@@ -3,6 +3,7 @@ import semver from 'semver';
 
 import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
 import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
@@ -283,9 +284,10 @@ program
   .description('Executes a command inside the correct docker image')
   .addArgument(args.requiredLanguage)
   .argument('command...', 'The command to execute')
-  .action(async (language: Language, command: string[]) => {
+  .option('-c, --client', "Run the command in the client's folder")
+  .action(async (language: Language, command: string[], { client }) => {
     setVerbose(true);
-    await run(command.join(' '), { language });
+    await run(command.join(' '), { language, cwd: client ? getLanguageFolder(language) : undefined });
   });
 
 program.parse();
