@@ -29,7 +29,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     /**
      * @return {{client}}
      */
-    private function createClient($appId, $apiKey{{#hasRegionalHost}}, $region = '{{{defaultRegion}}}'{{/hasRegionalHost}})
+    private function createClient($appId, $apiKey{{#hasRegionalHost}}, $region = '{{{defaultRegion}}}'{{/hasRegionalHost}}): {{client}}
     {
         $config = {{clientPrefix}}Config::create($appId, $apiKey{{#hasRegionalHost}}, $region{{/hasRegionalHost}});
         $clusterHosts = {{client}}::getClusterHosts($config);
@@ -38,7 +38,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         return new {{client}}($api, $config);
     }
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequest = [
             'request' => $request,

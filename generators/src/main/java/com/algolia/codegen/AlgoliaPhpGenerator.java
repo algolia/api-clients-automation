@@ -44,9 +44,9 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().equals(".php-cs-fixer.dist.php"));
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("phpunit.xml.mustache"));
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("AbstractModel.php"));
-
-    supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
-    supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ApiException.mustache"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ObjectSerializer.mustache"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ModelInterface.mustache"));
 
     supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
     supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));

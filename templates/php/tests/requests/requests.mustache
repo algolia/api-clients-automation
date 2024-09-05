@@ -21,7 +21,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -62,14 +62,14 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         }
     }
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
         return new Response(200, [], '{}');
     }
 
-    protected function getClient()
+    protected function getClient(): {{client}}
     {
         $config = {{clientPrefix}}Config::create('appID', 'apiKey'{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
@@ -80,7 +80,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
     {{#blocksRequests}}
     {{#tests}}
     #[TestDox('{{{testName}}}')]
-    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
+    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}(): void
     {
         $client = $this->getClient();
         {{> tests/method}};

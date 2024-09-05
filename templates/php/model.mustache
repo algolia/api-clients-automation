@@ -6,12 +6,10 @@
 {{#model}}
 
 namespace {{modelPackage}};
-{{^isEnum}}
-{{^parentSchema}}
 
-{{/parentSchema}}
-{{/isEnum}}
-use \{{invokerPackage}}\ObjectSerializer;
+use Algolia\AlgoliaSearch\ObjectSerializer;
+use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * {{classname}} Class Doc Comment

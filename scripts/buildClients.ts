@@ -32,6 +32,13 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
       break;
+    case 'php':
+      // await runComposerInstall();
+      // await run(
+      //   `clients/algoliasearch-client-php/vendor/bin/phpstan analyse --memory-limit 512M -c clients/algoliasearch-client-php/phpstan.neon ${cwd}`,
+      //   { language },
+      // );
+      break;
     case 'python':
       // there is no type checking for the playground or snippets
       if (buildType === 'client') {
