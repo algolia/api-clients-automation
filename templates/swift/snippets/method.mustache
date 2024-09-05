@@ -16,8 +16,7 @@ final class {{client}}Snippet {
     // Initialize the client
     let client = try {{client}}(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
 
-    // Call the API
-    let response{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = try {{#isAsync}}await {{/isAsync}}client.{{method}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: RequestOptions({{#requestOptions.headers}}
+    {{#hasResponse}}let response{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = {{/hasResponse}}try {{#isAsync}}await {{/isAsync}}client.{{method}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: RequestOptions({{#requestOptions.headers}}
       headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.headers}}
       {{#requestOptions.headers}}{{#requestOptions.queryParameters}},{{/requestOptions.queryParameters}}{{/requestOptions.headers}}{{#requestOptions.queryParameters}}
       queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.queryParameters}}

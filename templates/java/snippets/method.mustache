@@ -17,7 +17,6 @@ class Snippet{{client}} {
     // Initialize the client
     {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
-    // Call the API
     {{> tests/method}};
     // SEPARATOR<
   }

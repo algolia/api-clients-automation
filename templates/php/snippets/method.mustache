@@ -23,11 +23,11 @@ class Snippet{{client}}
         // Initialize the client
         $client = {{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
-        // Call the API
-        $response = {{> tests/method}};
-
+        {{#hasResponse}}$response = {{/hasResponse}}{{> tests/method}};
+        {{#hasResponse}}
         // play with the response
         var_dump($response);
+        {{/hasResponse}}
         // SEPARATOR<
     }
 

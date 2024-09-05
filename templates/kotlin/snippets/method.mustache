@@ -19,11 +19,11 @@ class Snippet{{client}} {
       // Initialize the client
       val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
-      // Call the API
-      var response = client.{{> tests/method}}
-
+      {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}
+      {{#hasResponse}}
       // Use the response
       println(response)
+      {{/hasResponse}}
       // SEPARATOR<
 
       exitProcess(0)

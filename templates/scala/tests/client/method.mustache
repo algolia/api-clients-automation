@@ -1,4 +1,4 @@
-{{^useEchoRequester}}{{#hasResponsePayload}}var res = {{/hasResponsePayload}}{{#isAsync}}Await.result{{/isAsync}}{{/useEchoRequester}}{{#isAsync}}{{#useEchoRequester}}Await.ready{{/useEchoRequester}}({{/isAsync}}
+{{^useEchoRequester}}{{#hasResponse}}var res = {{/hasResponse}}{{#isAsync}}Await.result{{/isAsync}}{{/useEchoRequester}}{{#isAsync}}{{#useEchoRequester}}Await.ready{{/useEchoRequester}}({{/isAsync}}
     {{> tests/method}}{{#isAsync}},
     Duration.Inf
 ){{/isAsync}}

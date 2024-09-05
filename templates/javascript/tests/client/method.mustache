@@ -1,1 +1,1 @@
-{{#hasResponsePayload}}const result = {{/hasResponsePayload}}{{> tests/method}}{{#useEchoRequester}} as unknown as EchoResponse{{/useEchoRequester}};
+{{#hasResponse}}const result = {{/hasResponse}}{{> tests/method}}{{#useEchoRequester}} as unknown as EchoResponse{{/useEchoRequester}};

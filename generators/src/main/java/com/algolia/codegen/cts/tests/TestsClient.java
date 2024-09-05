@@ -123,10 +123,10 @@ public class TestsClient extends TestsGenerator {
 
               // Determines whether the endpoint is expected to return a response payload
               // deserialized and therefore a variable to store it into.
-              stepOut.put("hasResponsePayload", true);
+              stepOut.put("hasResponse", true);
               for (CodegenResponse response : ope.responses) {
                 if (response.code.equals("204")) {
-                  stepOut.put("hasResponsePayload", false);
+                  stepOut.put("hasResponse", false);
                 }
               }
 
