@@ -40,6 +40,8 @@ abstract class ApiClient(
     throw AlgoliaClientException("`apiKey` is missing.")
   }
 
+  private val authInterceptor = new AuthInterceptor(appId, apiKey)
+
   private val requester = options.customRequester match {
     case Some(customRequester) => customRequester
     case None =>
@@ -62,7 +64,7 @@ abstract class ApiClient(
 
     val builder = HttpRequester
       .builder(options.customFormats.getOrElse(formats))
-      .withInterceptor(new AuthInterceptor(appId, apiKey))
+      .withInterceptor(authInterceptor)
       .withInterceptor(new UserAgentInterceptor(algoliaAgent))
       .withInterceptor(new RetryStrategy(statefulHosts))
 
@@ -91,6 +93,6 @@ abstract class ApiClient(
   }
 
   def setAlgoliaApiKey(apiKey: String): Unit = {
-    requester.setAlgoliaApiKey(apiKey)
+    authInterceptor.setApiKey(apiKey)
   }
 }

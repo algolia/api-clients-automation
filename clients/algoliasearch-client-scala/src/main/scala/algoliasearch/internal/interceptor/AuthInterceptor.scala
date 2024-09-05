@@ -10,12 +10,16 @@ import okhttp3.{Interceptor, Response}
   *   API key
   */
 private[algoliasearch] class AuthInterceptor(
-    applicationId: String,
-    apiKey: String
+  applicationId: String,
+  private var apiKey: String
 ) extends Interceptor {
 
   private val HeaderApplicationId = "x-algolia-application-id"
   private val HeaderApiKey = "x-algolia-api-key"
+
+  def setApiKey(newApiKey: String): Unit = {
+    apiKey = newApiKey
+  }
 
   override def intercept(chain: Interceptor.Chain): Response = {
     val originalRequest = chain.request()

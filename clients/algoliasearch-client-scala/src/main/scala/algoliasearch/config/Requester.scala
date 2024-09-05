@@ -21,8 +21,4 @@ trait Requester extends AutoCloseable {
       httpRequest: HttpRequest,
       requestOptions: Option[RequestOptions]
   ): T
-
-  def setAlgoliaApiKey(apiKey: String): Unit = {
-    println("Nothing to do here")
-  }
 }

@@ -44,17 +44,6 @@ private[algoliasearch] class HttpRequester private (
     clientBuilder.build()
   }
 
-  override def setAlgoliaApiKey(apiKey: String): Unit = {
-    httpClient
-      .newBuilder()
-      .addInterceptor(new Interceptor {
-        override def intercept(chain: Interceptor.Chain): Response = {
-          val request = chain.request().newBuilder().addHeader("X-Algolia-API-Key", apiKey).build()
-          chain.proceed(request)
-        }
-      })
-  }
-
   private val jsonSerializer = JsonSerializer()(builder.formats)
   private val isClosed: AtomicBoolean = new AtomicBoolean(false)
 
