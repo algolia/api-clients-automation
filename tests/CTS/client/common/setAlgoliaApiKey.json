@@ -32,7 +32,7 @@
       },
       {
         "type": "method",
-        "method": "setAlgoliaApiKey",
+        "method": "setClientApiKey",
         "parameters": {
           "apiKey": "updated-api-key"
         }

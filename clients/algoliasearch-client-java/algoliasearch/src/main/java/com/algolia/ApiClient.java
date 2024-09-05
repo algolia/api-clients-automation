@@ -70,7 +70,7 @@ public abstract class ApiClient implements Closeable {
    *
    * @param apiKey The new API key to be used from now on.
    */
-  public void setAlgoliaApiKey(@Nonnull String apiKey) {
+  public void setClientApiKey(@Nonnull String apiKey) {
     this.authInterceptor.setApiKey(apiKey);
   }
 

@@ -67,7 +67,7 @@ abstract class Configuration
             throw new AlgoliaException('`apiKey` is missing.');
         }
 
-        $this->setAlgoliaApiKey($config['apiKey']);
+        $this->setClientApiKey($config['apiKey']);
         $this->setAuth('x-algolia-api-key', $config['apiKey']);
 
         $this->setAppId($config['appId']);
@@ -193,7 +193,7 @@ abstract class Configuration
         return $this->config['apiKey'];
     }
 
-    public function setAlgoliaApiKey($apiKey)
+    public function setClientApiKey($apiKey)
     {
         $this->config['apiKey'] = $apiKey;
 

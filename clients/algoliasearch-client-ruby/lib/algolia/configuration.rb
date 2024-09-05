@@ -44,7 +44,7 @@ module Algolia
       yield(self) if block_given?
     end
 
-    def set_algolia_api_key(api_key)
+    def set_client_api_key(api_key)
       @api_key = api_key
       @header_params["X-Algolia-API-Key"] = api_key
     end

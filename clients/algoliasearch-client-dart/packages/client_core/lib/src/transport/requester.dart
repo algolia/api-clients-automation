@@ -12,7 +12,7 @@ abstract class Requester {
   Future<HttpResponse> perform(HttpRequest request);
 
   /// Allows to switch the API key used to authenticate requests.
-  void setAlgoliaApiKey(String apiKey);
+  void setClientApiKey(String apiKey);
 
   /// Closes any underlying resources that the Requester might be using.
   ///

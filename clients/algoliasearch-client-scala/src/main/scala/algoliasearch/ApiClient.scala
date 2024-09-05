@@ -92,7 +92,7 @@ abstract class ApiClient(
     Try(requester.close())
   }
 
-  def setAlgoliaApiKey(apiKey: String): Unit = {
+  def setClientApiKey(apiKey: String): Unit = {
     authInterceptor.setApiKey(apiKey)
   }
 }

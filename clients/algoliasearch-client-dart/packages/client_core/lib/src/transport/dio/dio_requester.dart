@@ -118,7 +118,7 @@ class DioRequester implements Requester {
   void close() => _client.close();
 
   @override
-  void setAlgoliaApiKey(String apiKey) {
+  void setClientApiKey(String apiKey) {
     _authInterceptor.apiKey = apiKey;
   }
 }

@@ -39,7 +39,7 @@ public class KtorRequester(
   private val mutex: Mutex = Mutex()
   private val retryableHosts = hosts.map { RetryableHost(it) }
 
-  public override fun setAlgoliaApiKey(apiKey: String) {
+  public override fun setClientApiKey(apiKey: String) {
     headers {
       if (contains(HEADER_APIKEY)) {
         remove(HEADER_APIKEY)

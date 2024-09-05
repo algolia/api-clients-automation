@@ -31,9 +31,9 @@ import Foundation
         self.init(configuration: try {{classname}}Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 
-    open func setAlgoliaApiKey(apiKey: String) {
+    open func setClientApiKey(apiKey: String) {
         self.configuration.apiKey = apiKey
-        self.transporter.setAlgoliaApiKey(apiKey: apiKey)
+        self.transporter.setClientApiKey(apiKey: apiKey)
     }
 
 {{#operation}}

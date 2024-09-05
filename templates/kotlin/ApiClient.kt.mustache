@@ -19,8 +19,8 @@ public sealed interface ApiClient {
   /**
    * Helper method to switch the API key used to authenticate requests.
    */
-  public fun setAlgoliaApiKey(apiKey: String) {
+  public fun setClientApiKey(apiKey: String) {
     this.apiKey = apiKey
-    this.requester.setAlgoliaApiKey(apiKey)
+    this.requester.setClientApiKey(apiKey)
   }
 }

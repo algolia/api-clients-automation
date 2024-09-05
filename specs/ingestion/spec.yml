@@ -195,5 +195,5 @@ paths:
   # ###############
   # ### Helpers ###
   # ###############
-  /setAlgoliaApiKey:
-    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

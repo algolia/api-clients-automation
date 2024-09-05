@@ -391,5 +391,5 @@ paths:
   /indexExists:
     $ref: 'helpers/indexExists.yml#/method'
 
-  /setAlgoliaApiKey:
-    $ref: '../common/helpers/setAlgoliaApiKey.yml#/method'
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

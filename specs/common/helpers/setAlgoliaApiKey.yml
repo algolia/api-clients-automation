@@ -4,7 +4,7 @@ method:
     x-asynchronous-helper: false
     tags:
       - Api Key
-    operationId: setAlgoliaApiKey
+    operationId: setClientApiKey
     summary: Switch the API key used to authenticate requests
     description: |
       Switch the API key used to authenticate requests.

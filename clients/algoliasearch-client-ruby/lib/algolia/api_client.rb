@@ -20,8 +20,8 @@ module Algolia
       @@default ||= ApiClient.new
     end
 
-    def set_algolia_api_key(api_key)
-      @config.set_algolia_api_key(api_key)
+    def set_client_api_key(api_key)
+      @config.set_client_api_key(api_key)
     end
 
     # Call an API with given options.

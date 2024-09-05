@@ -76,8 +76,8 @@ final class {{classname}} implements ApiClient {
 
   /// Allows to switch the API key used to authenticate requests.
   @override
-  void setAlgoliaApiKey({required String apiKey}) {
-    this._retryStrategy.requester.setAlgoliaApiKey(apiKey);
+  void setClientApiKey({required String apiKey}) {
+    this._retryStrategy.requester.setClientApiKey(apiKey);
   }
   {{#operation}}
 

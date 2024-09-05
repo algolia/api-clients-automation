@@ -103,7 +103,7 @@ namespace Algolia.Search.Clients
     /// </summary>
     /// <param name="apiKey">Your API Key</param>
     /// <returns></returns>
-    public void SetAlgoliaApiKey(string apiKey)
+    public void SetClientApiKey(string apiKey)
     {
       ApiKey = apiKey;
       DefaultHeaders[Defaults.AlgoliaApiKeyHeader.ToLowerInvariant()] = apiKey;

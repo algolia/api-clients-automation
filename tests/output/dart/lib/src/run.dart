@@ -43,7 +43,7 @@ class RequestInterceptor extends Requester {
   }
 
   @override
-  void setAlgoliaApiKey(String apiKey) {
+  void setClientApiKey(String apiKey) {
     this.apiKey = apiKey;
   }
 }

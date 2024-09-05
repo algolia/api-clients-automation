@@ -7,7 +7,7 @@ export function createAuth(
 ): {
   readonly headers: () => Headers;
   readonly queryParameters: () => QueryParameters;
-  readonly setAlgoliaApiKey: (newApiKey: string) => void;
+  readonly setClientApiKey: (newApiKey: string) => void;
 } {
   const credentials = {
     'x-algolia-api-key': apiKey,
@@ -23,7 +23,7 @@ export function createAuth(
       return authMode === 'WithinQueryParameters' ? credentials : {};
     },
 
-    setAlgoliaApiKey(newApiKey: string): void {
+    setClientApiKey(newApiKey: string): void {
       credentials['x-algolia-api-key'] = newApiKey;
     },
   };

@@ -6,7 +6,7 @@ abstract interface class ApiClient {
   ClientOptions get options;
 
   /// Allow switching the API key used to authenticate requests.
-  void setAlgoliaApiKey({required String apiKey});
+  void setClientApiKey({required String apiKey});
 
   /// Dispose of underlying resources.
   void dispose();
