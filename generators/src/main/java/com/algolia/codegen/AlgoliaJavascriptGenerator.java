@@ -82,8 +82,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       supportingFiles.add(new SupportingFile("README.mustache", "", "../../README.md"));
 
       // `algoliasearch` builds
-      supportingFiles.add(new SupportingFile("algoliasearch/builds/browser.mustache", "builds", "browser.ts"));
-      supportingFiles.add(new SupportingFile("algoliasearch/builds/node.mustache", "builds", "node.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "browser.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "node.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
 
       // `lite` builds
