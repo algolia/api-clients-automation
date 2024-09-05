@@ -11,8 +11,16 @@ import {{packageName}}.transport.Requester
  * @property options A set of custom client options to configure the behavior of the API client.
  */
 public sealed interface ApiClient {
-    public val appId: String
-    public val apiKey: String
-    public val options: ClientOptions
-    public val requester: Requester
+  public val appId: String
+  public var apiKey: String
+  public val options: ClientOptions
+  public val requester: Requester
+
+  /**
+   * Helper method to switch the API key used to authenticate requests.
+   */
+  public fun setAlgoliaApiKey(apiKey: String) {
+    this.apiKey = apiKey
+    this.requester.setAlgoliaApiKey(apiKey)
+  }
 }

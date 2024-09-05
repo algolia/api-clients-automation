@@ -5,7 +5,6 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
     val client = {{client}}(appId = "appId", apiKey = "apiKey",{{#hasRegionalHost}}region = "{{defaultRegion}}",{{/hasRegionalHost}})
     {{/autoCreateClient}}
     {{#steps}}
-    {
     {{#times}}
     for (i in 1..{{.}}) {
     {{/times}}
@@ -63,7 +62,6 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
     {{#times}}
     }
     {{/times}}
-    }
     {{/steps}}
 }
 {{/tests}}
