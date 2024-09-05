@@ -17,6 +17,7 @@ async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{test
 
     # Call the API
     {{#hasResponse}}response = {{/hasResponse}}{{#isAsync}}await {{/isAsync}}_client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    
     {{#hasResponse}}
     # use the class directly
     print(response)

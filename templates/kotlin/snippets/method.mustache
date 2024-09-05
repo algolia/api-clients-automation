@@ -21,6 +21,7 @@ class Snippet{{client}} {
 
       // Call the API
       {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}
+      
       {{#hasResponse}}
       // Use the response
       println(response)

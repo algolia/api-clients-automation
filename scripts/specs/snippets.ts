@@ -27,7 +27,7 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
       }
 
       for (const [sampleName, sample] of Object.entries(samples)) {
-        const sampleMatch = sample.match(/.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/);
+        const sampleMatch = sample.match(/.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/);
         if (!sampleMatch) {
           continue;
         }
