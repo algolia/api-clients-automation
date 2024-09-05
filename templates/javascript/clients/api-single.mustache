@@ -82,7 +82,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     * @param params.apiKey - The new API Key to use.
     */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      auth.setClientApiKey(apiKey);
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     {{#isSearchClient}}
