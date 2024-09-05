@@ -16,7 +16,7 @@ class SnippetIngestionClient
      *
      * createAuthenticationOAuth
      */
-    public function snippetForCreateAuthentication()
+    public function snippetForCreateAuthentication(): void
     {
         // >SEPARATOR createAuthentication default
         // Initialize the client
@@ -43,7 +43,7 @@ class SnippetIngestionClient
      *
      * createDestination
      */
-    public function snippetForCreateDestination()
+    public function snippetForCreateDestination(): void
     {
         // >SEPARATOR createDestination default
         // Initialize the client
@@ -69,7 +69,7 @@ class SnippetIngestionClient
      *
      * createSource
      */
-    public function snippetForCreateSource()
+    public function snippetForCreateSource(): void
     {
         // >SEPARATOR createSource default
         // Initialize the client
@@ -102,7 +102,7 @@ class SnippetIngestionClient
      *
      * task without cron
      */
-    public function snippetForCreateTask()
+    public function snippetForCreateTask(): void
     {
         // >SEPARATOR createTask default
         // Initialize the client
@@ -126,7 +126,7 @@ class SnippetIngestionClient
      *
      * createTaskOnDemand
      */
-    public function snippetForCreateTaskV1()
+    public function snippetForCreateTaskV1(): void
     {
         // >SEPARATOR createTaskV1 default
         // Initialize the client
@@ -152,7 +152,7 @@ class SnippetIngestionClient
      *
      * createTransformation
      */
-    public function snippetForCreateTransformation()
+    public function snippetForCreateTransformation(): void
     {
         // >SEPARATOR createTransformation default
         // Initialize the client
@@ -176,7 +176,7 @@ class SnippetIngestionClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -197,7 +197,7 @@ class SnippetIngestionClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -218,7 +218,7 @@ class SnippetIngestionClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -239,7 +239,7 @@ class SnippetIngestionClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -260,7 +260,7 @@ class SnippetIngestionClient
      *
      * deleteAuthentication
      */
-    public function snippetForDeleteAuthentication()
+    public function snippetForDeleteAuthentication(): void
     {
         // >SEPARATOR deleteAuthentication default
         // Initialize the client
@@ -281,7 +281,7 @@ class SnippetIngestionClient
      *
      * deleteDestination
      */
-    public function snippetForDeleteDestination()
+    public function snippetForDeleteDestination(): void
     {
         // >SEPARATOR deleteDestination default
         // Initialize the client
@@ -302,7 +302,7 @@ class SnippetIngestionClient
      *
      * deleteSource
      */
-    public function snippetForDeleteSource()
+    public function snippetForDeleteSource(): void
     {
         // >SEPARATOR deleteSource default
         // Initialize the client
@@ -323,7 +323,7 @@ class SnippetIngestionClient
      *
      * deleteTask
      */
-    public function snippetForDeleteTask()
+    public function snippetForDeleteTask(): void
     {
         // >SEPARATOR deleteTask default
         // Initialize the client
@@ -344,7 +344,7 @@ class SnippetIngestionClient
      *
      * deleteTaskV1
      */
-    public function snippetForDeleteTaskV1()
+    public function snippetForDeleteTaskV1(): void
     {
         // >SEPARATOR deleteTaskV1 default
         // Initialize the client
@@ -365,7 +365,7 @@ class SnippetIngestionClient
      *
      * deleteTransformation
      */
-    public function snippetForDeleteTransformation()
+    public function snippetForDeleteTransformation(): void
     {
         // >SEPARATOR deleteTransformation default
         // Initialize the client
@@ -386,7 +386,7 @@ class SnippetIngestionClient
      *
      * disableTask
      */
-    public function snippetForDisableTask()
+    public function snippetForDisableTask(): void
     {
         // >SEPARATOR disableTask default
         // Initialize the client
@@ -407,7 +407,7 @@ class SnippetIngestionClient
      *
      * disableTaskV1
      */
-    public function snippetForDisableTaskV1()
+    public function snippetForDisableTaskV1(): void
     {
         // >SEPARATOR disableTaskV1 default
         // Initialize the client
@@ -428,7 +428,7 @@ class SnippetIngestionClient
      *
      * enableTask
      */
-    public function snippetForEnableTask()
+    public function snippetForEnableTask(): void
     {
         // >SEPARATOR enableTask default
         // Initialize the client
@@ -449,7 +449,7 @@ class SnippetIngestionClient
      *
      * enableTaskV1
      */
-    public function snippetForEnableTaskV1()
+    public function snippetForEnableTaskV1(): void
     {
         // >SEPARATOR enableTaskV1 default
         // Initialize the client
@@ -470,7 +470,7 @@ class SnippetIngestionClient
      *
      * generateTransformationCode
      */
-    public function snippetForGenerateTransformationCode()
+    public function snippetForGenerateTransformationCode(): void
     {
         // >SEPARATOR generateTransformationCode default
         // Initialize the client
@@ -493,7 +493,7 @@ class SnippetIngestionClient
      *
      * getAuthentication
      */
-    public function snippetForGetAuthentication()
+    public function snippetForGetAuthentication(): void
     {
         // >SEPARATOR getAuthentication default
         // Initialize the client
@@ -514,7 +514,7 @@ class SnippetIngestionClient
      *
      * getDestination
      */
-    public function snippetForGetDestination()
+    public function snippetForGetDestination(): void
     {
         // >SEPARATOR getDestination default
         // Initialize the client
@@ -535,7 +535,7 @@ class SnippetIngestionClient
      *
      * getEvent
      */
-    public function snippetForGetEvent()
+    public function snippetForGetEvent(): void
     {
         // >SEPARATOR getEvent default
         // Initialize the client
@@ -557,7 +557,7 @@ class SnippetIngestionClient
      *
      * getRun
      */
-    public function snippetForGetRun()
+    public function snippetForGetRun(): void
     {
         // >SEPARATOR getRun default
         // Initialize the client
@@ -578,7 +578,7 @@ class SnippetIngestionClient
      *
      * getSource
      */
-    public function snippetForGetSource()
+    public function snippetForGetSource(): void
     {
         // >SEPARATOR getSource default
         // Initialize the client
@@ -599,7 +599,7 @@ class SnippetIngestionClient
      *
      * getTask
      */
-    public function snippetForGetTask()
+    public function snippetForGetTask(): void
     {
         // >SEPARATOR getTask default
         // Initialize the client
@@ -620,7 +620,7 @@ class SnippetIngestionClient
      *
      * getTaskV1
      */
-    public function snippetForGetTaskV1()
+    public function snippetForGetTaskV1(): void
     {
         // >SEPARATOR getTaskV1 default
         // Initialize the client
@@ -641,7 +641,7 @@ class SnippetIngestionClient
      *
      * getTransformation
      */
-    public function snippetForGetTransformation()
+    public function snippetForGetTransformation(): void
     {
         // >SEPARATOR getTransformation default
         // Initialize the client
@@ -662,7 +662,7 @@ class SnippetIngestionClient
      *
      * getAuthentications
      */
-    public function snippetForListAuthentications()
+    public function snippetForListAuthentications(): void
     {
         // >SEPARATOR listAuthentications default
         // Initialize the client
@@ -681,7 +681,7 @@ class SnippetIngestionClient
      *
      * getDestinations
      */
-    public function snippetForListDestinations()
+    public function snippetForListDestinations(): void
     {
         // >SEPARATOR listDestinations default
         // Initialize the client
@@ -700,7 +700,7 @@ class SnippetIngestionClient
      *
      * getEvents
      */
-    public function snippetForListEvents()
+    public function snippetForListEvents(): void
     {
         // >SEPARATOR listEvents default
         // Initialize the client
@@ -721,7 +721,7 @@ class SnippetIngestionClient
      *
      * listRuns
      */
-    public function snippetForListRuns()
+    public function snippetForListRuns(): void
     {
         // >SEPARATOR listRuns default
         // Initialize the client
@@ -740,7 +740,7 @@ class SnippetIngestionClient
      *
      * listSources
      */
-    public function snippetForListSources()
+    public function snippetForListSources(): void
     {
         // >SEPARATOR listSources default
         // Initialize the client
@@ -759,7 +759,7 @@ class SnippetIngestionClient
      *
      * listTasks
      */
-    public function snippetForListTasks()
+    public function snippetForListTasks(): void
     {
         // >SEPARATOR listTasks default
         // Initialize the client
@@ -778,7 +778,7 @@ class SnippetIngestionClient
      *
      * listTasksV1
      */
-    public function snippetForListTasksV1()
+    public function snippetForListTasksV1(): void
     {
         // >SEPARATOR listTasksV1 default
         // Initialize the client
@@ -797,7 +797,7 @@ class SnippetIngestionClient
      *
      * listTransformationModels
      */
-    public function snippetForListTransformationModels()
+    public function snippetForListTransformationModels(): void
     {
         // >SEPARATOR listTransformationModels default
         // Initialize the client
@@ -816,7 +816,7 @@ class SnippetIngestionClient
      *
      * listTransformations
      */
-    public function snippetForListTransformations()
+    public function snippetForListTransformations(): void
     {
         // >SEPARATOR listTransformations default
         // Initialize the client
@@ -835,7 +835,7 @@ class SnippetIngestionClient
      *
      * pushTask
      */
-    public function snippetForPushTask()
+    public function snippetForPushTask(): void
     {
         // >SEPARATOR pushTask default
         // Initialize the client
@@ -869,7 +869,7 @@ class SnippetIngestionClient
      *
      * runSource
      */
-    public function snippetForRunSource()
+    public function snippetForRunSource(): void
     {
         // >SEPARATOR runSource default
         // Initialize the client
@@ -902,7 +902,7 @@ class SnippetIngestionClient
      *
      * runTask
      */
-    public function snippetForRunTask()
+    public function snippetForRunTask(): void
     {
         // >SEPARATOR runTask default
         // Initialize the client
@@ -923,7 +923,7 @@ class SnippetIngestionClient
      *
      * runTaskV1
      */
-    public function snippetForRunTaskV1()
+    public function snippetForRunTaskV1(): void
     {
         // >SEPARATOR runTaskV1 default
         // Initialize the client
@@ -944,7 +944,7 @@ class SnippetIngestionClient
      *
      * searchAuthentications
      */
-    public function snippetForSearchAuthentications()
+    public function snippetForSearchAuthentications(): void
     {
         // >SEPARATOR searchAuthentications default
         // Initialize the client
@@ -970,7 +970,7 @@ class SnippetIngestionClient
      *
      * searchDestinations
      */
-    public function snippetForSearchDestinations()
+    public function snippetForSearchDestinations(): void
     {
         // >SEPARATOR searchDestinations default
         // Initialize the client
@@ -996,7 +996,7 @@ class SnippetIngestionClient
      *
      * searchSources
      */
-    public function snippetForSearchSources()
+    public function snippetForSearchSources(): void
     {
         // >SEPARATOR searchSources default
         // Initialize the client
@@ -1022,7 +1022,7 @@ class SnippetIngestionClient
      *
      * searchTasks
      */
-    public function snippetForSearchTasks()
+    public function snippetForSearchTasks(): void
     {
         // >SEPARATOR searchTasks default
         // Initialize the client
@@ -1050,7 +1050,7 @@ class SnippetIngestionClient
      *
      * searchTasksV1
      */
-    public function snippetForSearchTasksV1()
+    public function snippetForSearchTasksV1(): void
     {
         // >SEPARATOR searchTasksV1 default
         // Initialize the client
@@ -1078,7 +1078,7 @@ class SnippetIngestionClient
      *
      * searchTransformations
      */
-    public function snippetForSearchTransformations()
+    public function snippetForSearchTransformations(): void
     {
         // >SEPARATOR searchTransformations default
         // Initialize the client
@@ -1106,7 +1106,7 @@ class SnippetIngestionClient
      *
      * triggerDockerSourceDiscover
      */
-    public function snippetForTriggerDockerSourceDiscover()
+    public function snippetForTriggerDockerSourceDiscover(): void
     {
         // >SEPARATOR triggerDockerSourceDiscover default
         // Initialize the client
@@ -1127,7 +1127,7 @@ class SnippetIngestionClient
      *
      * tryTransformation
      */
-    public function snippetForTryTransformation()
+    public function snippetForTryTransformation(): void
     {
         // >SEPARATOR tryTransformation default
         // Initialize the client
@@ -1151,7 +1151,7 @@ class SnippetIngestionClient
      *
      * tryTransformationBeforeUpdate
      */
-    public function snippetForTryTransformationBeforeUpdate()
+    public function snippetForTryTransformationBeforeUpdate(): void
     {
         // >SEPARATOR tryTransformationBeforeUpdate default
         // Initialize the client
@@ -1176,7 +1176,7 @@ class SnippetIngestionClient
      *
      * updateAuthentication
      */
-    public function snippetForUpdateAuthentication()
+    public function snippetForUpdateAuthentication(): void
     {
         // >SEPARATOR updateAuthentication default
         // Initialize the client
@@ -1199,7 +1199,7 @@ class SnippetIngestionClient
      *
      * updateDestination
      */
-    public function snippetForUpdateDestination()
+    public function snippetForUpdateDestination(): void
     {
         // >SEPARATOR updateDestination default
         // Initialize the client
@@ -1222,7 +1222,7 @@ class SnippetIngestionClient
      *
      * updateSource
      */
-    public function snippetForUpdateSource()
+    public function snippetForUpdateSource(): void
     {
         // >SEPARATOR updateSource default
         // Initialize the client
@@ -1245,7 +1245,7 @@ class SnippetIngestionClient
      *
      * updateTask
      */
-    public function snippetForUpdateTask()
+    public function snippetForUpdateTask(): void
     {
         // >SEPARATOR updateTask default
         // Initialize the client
@@ -1269,7 +1269,7 @@ class SnippetIngestionClient
      *
      * updateTaskV1
      */
-    public function snippetForUpdateTaskV1()
+    public function snippetForUpdateTaskV1(): void
     {
         // >SEPARATOR updateTaskV1 default
         // Initialize the client
@@ -1292,7 +1292,7 @@ class SnippetIngestionClient
      *
      * updateTransformation
      */
-    public function snippetForUpdateTransformation()
+    public function snippetForUpdateTransformation(): void
     {
         // >SEPARATOR updateTransformation default
         // Initialize the client
@@ -1317,7 +1317,7 @@ class SnippetIngestionClient
      *
      * validateSource
      */
-    public function snippetForValidateSource()
+    public function snippetForValidateSource(): void
     {
         // >SEPARATOR validateSource default
         // Initialize the client
@@ -1350,7 +1350,7 @@ class SnippetIngestionClient
      *
      * validateSourceBeforeUpdate
      */
-    public function snippetForValidateSourceBeforeUpdate()
+    public function snippetForValidateSourceBeforeUpdate(): void
     {
         // >SEPARATOR validateSourceBeforeUpdate default
         // Initialize the client

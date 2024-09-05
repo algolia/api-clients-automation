@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class SearchTest extends TestCase
 {
     #[TestDox('benchmark the search method')]
-    public function test0benchmark()
+    public function test0benchmark(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6682']));
 

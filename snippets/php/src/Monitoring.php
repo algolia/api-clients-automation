@@ -16,7 +16,7 @@ class SnippetMonitoringClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -37,7 +37,7 @@ class SnippetMonitoringClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -58,7 +58,7 @@ class SnippetMonitoringClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -79,7 +79,7 @@ class SnippetMonitoringClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -100,7 +100,7 @@ class SnippetMonitoringClient
      *
      * getClusterIncidents
      */
-    public function snippetForGetClusterIncidents()
+    public function snippetForGetClusterIncidents(): void
     {
         // >SEPARATOR getClusterIncidents default
         // Initialize the client
@@ -121,7 +121,7 @@ class SnippetMonitoringClient
      *
      * getClusterStatus
      */
-    public function snippetForGetClusterStatus()
+    public function snippetForGetClusterStatus(): void
     {
         // >SEPARATOR getClusterStatus default
         // Initialize the client
@@ -142,7 +142,7 @@ class SnippetMonitoringClient
      *
      * getIncidents
      */
-    public function snippetForGetIncidents()
+    public function snippetForGetIncidents(): void
     {
         // >SEPARATOR getIncidents default
         // Initialize the client
@@ -161,7 +161,7 @@ class SnippetMonitoringClient
      *
      * getIndexingTime
      */
-    public function snippetForGetIndexingTime()
+    public function snippetForGetIndexingTime(): void
     {
         // >SEPARATOR getIndexingTime default
         // Initialize the client
@@ -182,7 +182,7 @@ class SnippetMonitoringClient
      *
      * getLatency
      */
-    public function snippetForGetLatency()
+    public function snippetForGetLatency(): void
     {
         // >SEPARATOR getLatency default
         // Initialize the client
@@ -203,7 +203,7 @@ class SnippetMonitoringClient
      *
      * getMetrics
      */
-    public function snippetForGetMetrics()
+    public function snippetForGetMetrics(): void
     {
         // >SEPARATOR getMetrics default
         // Initialize the client
@@ -225,7 +225,7 @@ class SnippetMonitoringClient
      *
      * getReachability
      */
-    public function snippetForGetReachability()
+    public function snippetForGetReachability(): void
     {
         // >SEPARATOR getReachability default
         // Initialize the client
@@ -246,7 +246,7 @@ class SnippetMonitoringClient
      *
      * getInventory
      */
-    public function snippetForGetServers()
+    public function snippetForGetServers(): void
     {
         // >SEPARATOR getServers default
         // Initialize the client
@@ -265,7 +265,7 @@ class SnippetMonitoringClient
      *
      * getStatus
      */
-    public function snippetForGetStatus()
+    public function snippetForGetStatus(): void
     {
         // >SEPARATOR getStatus default
         // Initialize the client

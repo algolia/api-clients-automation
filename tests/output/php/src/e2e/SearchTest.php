@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class SearchTest extends TestCase
 {
     #[TestDox('browse with minimal parameters')]
-    public function testBrowse()
+    public function testBrowse(): void
     {
         $client = $this->getClient();
         $resp = $client->browse(
@@ -38,7 +38,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('getRule')]
-    public function testGetRule()
+    public function testGetRule(): void
     {
         $client = $this->getClient();
         $resp = $client->getRule(
@@ -52,7 +52,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('getSettings')]
-    public function testGetSettings()
+    public function testGetSettings(): void
     {
         $client = $this->getClient();
         $resp = $client->getSettings(
@@ -65,7 +65,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search for a single hits request with minimal parameters')]
-    public function testSearch4()
+    public function testSearch4(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -82,7 +82,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search with highlight and snippet results')]
-    public function testSearch5()
+    public function testSearch5(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -109,7 +109,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search for a single facet request with minimal parameters')]
-    public function testSearch8()
+    public function testSearch8(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -129,7 +129,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search filters end to end')]
-    public function testSearch14()
+    public function testSearch14(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -179,7 +179,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('get searchDictionaryEntries results with minimal parameters')]
-    public function testSearchDictionaryEntries()
+    public function testSearchDictionaryEntries(): void
     {
         $client = $this->getClient();
         $resp = $client->searchDictionaryEntries(
@@ -194,7 +194,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('searchRules')]
-    public function testSearchRules()
+    public function testSearchRules(): void
     {
         $client = $this->getClient();
         $resp = $client->searchRules(
@@ -209,7 +209,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search with special characters in indexName')]
-    public function testSearchSingleIndex1()
+    public function testSearchSingleIndex1(): void
     {
         $client = $this->getClient();
         $resp = $client->searchSingleIndex(
@@ -218,7 +218,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('single search retrieve snippets')]
-    public function testSearchSingleIndex3()
+    public function testSearchSingleIndex3(): void
     {
         $client = $this->getClient();
         $resp = $client->searchSingleIndex(
@@ -239,7 +239,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('setSettings with minimal parameters')]
-    public function testSetSettings1()
+    public function testSetSettings1(): void
     {
         $client = $this->getClient();
         $resp = $client->setSettings(
@@ -250,7 +250,7 @@ class SearchTest extends TestCase
         );
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -265,7 +265,7 @@ class SearchTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): SearchClient
     {
         return SearchClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
     }

@@ -16,7 +16,7 @@ class SnippetSearchClient
      *
      * addApiKey
      */
-    public function snippetForAddApiKey()
+    public function snippetForAddApiKey(): void
     {
         // >SEPARATOR addApiKey default
         // Initialize the client
@@ -46,7 +46,7 @@ class SnippetSearchClient
      *
      * addOrUpdateObject
      */
-    public function snippetForAddOrUpdateObject()
+    public function snippetForAddOrUpdateObject(): void
     {
         // >SEPARATOR addOrUpdateObject default
         // Initialize the client
@@ -70,7 +70,7 @@ class SnippetSearchClient
      *
      * appendSource
      */
-    public function snippetForAppendSource()
+    public function snippetForAppendSource(): void
     {
         // >SEPARATOR appendSource default
         // Initialize the client
@@ -93,7 +93,7 @@ class SnippetSearchClient
      *
      * assignUserId
      */
-    public function snippetForAssignUserId()
+    public function snippetForAssignUserId(): void
     {
         // >SEPARATOR assignUserId default
         // Initialize the client
@@ -116,7 +116,7 @@ class SnippetSearchClient
      *
      * addObject
      */
-    public function snippetForBatch()
+    public function snippetForBatch(): void
     {
         // >SEPARATOR batch addObject
         // Initialize the client
@@ -151,7 +151,7 @@ class SnippetSearchClient
      *
      * clear
      */
-    public function snippetForBatch1()
+    public function snippetForBatch1(): void
     {
         // >SEPARATOR batch clear
         // Initialize the client
@@ -179,7 +179,7 @@ class SnippetSearchClient
      *
      * delete
      */
-    public function snippetForBatch2()
+    public function snippetForBatch2(): void
     {
         // >SEPARATOR batch delete
         // Initialize the client
@@ -207,7 +207,7 @@ class SnippetSearchClient
      *
      * deleteObject
      */
-    public function snippetForBatch3()
+    public function snippetForBatch3(): void
     {
         // >SEPARATOR batch deleteObject
         // Initialize the client
@@ -235,7 +235,7 @@ class SnippetSearchClient
      *
      * partialUpdateObject
      */
-    public function snippetForBatch4()
+    public function snippetForBatch4(): void
     {
         // >SEPARATOR batch partialUpdateObject
         // Initialize the client
@@ -263,7 +263,7 @@ class SnippetSearchClient
      *
      * partialUpdateObjectNoCreate
      */
-    public function snippetForBatch5()
+    public function snippetForBatch5(): void
     {
         // >SEPARATOR batch partialUpdateObjectNoCreate
         // Initialize the client
@@ -291,7 +291,7 @@ class SnippetSearchClient
      *
      * updateObject
      */
-    public function snippetForBatch6()
+    public function snippetForBatch6(): void
     {
         // >SEPARATOR batch updateObject
         // Initialize the client
@@ -319,7 +319,7 @@ class SnippetSearchClient
      *
      * batchAssignUserIds
      */
-    public function snippetForBatchAssignUserIds()
+    public function snippetForBatchAssignUserIds(): void
     {
         // >SEPARATOR batchAssignUserIds default
         // Initialize the client
@@ -347,7 +347,7 @@ class SnippetSearchClient
      *
      * replace
      */
-    public function snippetForBatchDictionaryEntries()
+    public function snippetForBatchDictionaryEntries(): void
     {
         // >SEPARATOR batchDictionaryEntries replace
         // Initialize the client
@@ -389,7 +389,7 @@ class SnippetSearchClient
      *
      * delete
      */
-    public function snippetForBatchDictionaryEntries1()
+    public function snippetForBatchDictionaryEntries1(): void
     {
         // >SEPARATOR batchDictionaryEntries delete
         // Initialize the client
@@ -418,7 +418,7 @@ class SnippetSearchClient
      *
      * append
      */
-    public function snippetForBatchDictionaryEntries2()
+    public function snippetForBatchDictionaryEntries2(): void
     {
         // >SEPARATOR batchDictionaryEntries append
         // Initialize the client
@@ -448,7 +448,7 @@ class SnippetSearchClient
      *
      * browse with minimal parameters
      */
-    public function snippetForBrowse()
+    public function snippetForBrowse(): void
     {
         // >SEPARATOR browse default
         // Initialize the client
@@ -469,7 +469,7 @@ class SnippetSearchClient
      *
      * clearObjects
      */
-    public function snippetForClearObjects()
+    public function snippetForClearObjects(): void
     {
         // >SEPARATOR clearObjects default
         // Initialize the client
@@ -490,7 +490,7 @@ class SnippetSearchClient
      *
      * clearRules
      */
-    public function snippetForClearRules()
+    public function snippetForClearRules(): void
     {
         // >SEPARATOR clearRules default
         // Initialize the client
@@ -511,7 +511,7 @@ class SnippetSearchClient
      *
      * clearSynonyms
      */
-    public function snippetForClearSynonyms()
+    public function snippetForClearSynonyms(): void
     {
         // >SEPARATOR clearSynonyms default
         // Initialize the client
@@ -532,7 +532,7 @@ class SnippetSearchClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -553,7 +553,7 @@ class SnippetSearchClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -574,7 +574,7 @@ class SnippetSearchClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -595,7 +595,7 @@ class SnippetSearchClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -616,7 +616,7 @@ class SnippetSearchClient
      *
      * deleteApiKey
      */
-    public function snippetForDeleteApiKey()
+    public function snippetForDeleteApiKey(): void
     {
         // >SEPARATOR deleteApiKey default
         // Initialize the client
@@ -637,7 +637,7 @@ class SnippetSearchClient
      *
      * deleteBy
      */
-    public function snippetForDeleteBy()
+    public function snippetForDeleteBy(): void
     {
         // >SEPARATOR deleteBy default
         // Initialize the client
@@ -660,7 +660,7 @@ class SnippetSearchClient
      *
      * deleteIndex
      */
-    public function snippetForDeleteIndex()
+    public function snippetForDeleteIndex(): void
     {
         // >SEPARATOR deleteIndex default
         // Initialize the client
@@ -681,7 +681,7 @@ class SnippetSearchClient
      *
      * deleteObject
      */
-    public function snippetForDeleteObject()
+    public function snippetForDeleteObject(): void
     {
         // >SEPARATOR deleteObject default
         // Initialize the client
@@ -703,7 +703,7 @@ class SnippetSearchClient
      *
      * call deleteObjects without error
      */
-    public function snippetForDeleteObjects()
+    public function snippetForDeleteObjects(): void
     {
         // >SEPARATOR deleteObjects default
         // Initialize the client
@@ -729,7 +729,7 @@ class SnippetSearchClient
      *
      * delete rule simple case
      */
-    public function snippetForDeleteRule()
+    public function snippetForDeleteRule(): void
     {
         // >SEPARATOR deleteRule default
         // Initialize the client
@@ -751,7 +751,7 @@ class SnippetSearchClient
      *
      * deleteSource
      */
-    public function snippetForDeleteSource()
+    public function snippetForDeleteSource(): void
     {
         // >SEPARATOR deleteSource default
         // Initialize the client
@@ -772,7 +772,7 @@ class SnippetSearchClient
      *
      * deleteSynonym
      */
-    public function snippetForDeleteSynonym()
+    public function snippetForDeleteSynonym(): void
     {
         // >SEPARATOR deleteSynonym default
         // Initialize the client
@@ -794,7 +794,7 @@ class SnippetSearchClient
      *
      * generate secured api key basic
      */
-    public function snippetForGenerateSecuredApiKey()
+    public function snippetForGenerateSecuredApiKey(): void
     {
         // >SEPARATOR generateSecuredApiKey generate secured api key basic
         // Initialize the client
@@ -820,7 +820,7 @@ class SnippetSearchClient
      *
      * generate secured api key with searchParams
      */
-    public function snippetForGenerateSecuredApiKey1()
+    public function snippetForGenerateSecuredApiKey1(): void
     {
         // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
         // Initialize the client
@@ -862,7 +862,7 @@ class SnippetSearchClient
      *
      * getApiKey
      */
-    public function snippetForGetApiKey()
+    public function snippetForGetApiKey(): void
     {
         // >SEPARATOR getApiKey default
         // Initialize the client
@@ -883,7 +883,7 @@ class SnippetSearchClient
      *
      * getAppTask
      */
-    public function snippetForGetAppTask()
+    public function snippetForGetAppTask(): void
     {
         // >SEPARATOR getAppTask default
         // Initialize the client
@@ -904,7 +904,7 @@ class SnippetSearchClient
      *
      * get getDictionaryLanguages
      */
-    public function snippetForGetDictionaryLanguages()
+    public function snippetForGetDictionaryLanguages(): void
     {
         // >SEPARATOR getDictionaryLanguages default
         // Initialize the client
@@ -923,7 +923,7 @@ class SnippetSearchClient
      *
      * get getDictionarySettings results
      */
-    public function snippetForGetDictionarySettings()
+    public function snippetForGetDictionarySettings(): void
     {
         // >SEPARATOR getDictionarySettings default
         // Initialize the client
@@ -942,7 +942,7 @@ class SnippetSearchClient
      *
      * getLogs with minimal parameters
      */
-    public function snippetForGetLogs()
+    public function snippetForGetLogs(): void
     {
         // >SEPARATOR getLogs default
         // Initialize the client
@@ -961,7 +961,7 @@ class SnippetSearchClient
      *
      * getObject
      */
-    public function snippetForGetObject()
+    public function snippetForGetObject(): void
     {
         // >SEPARATOR getObject default
         // Initialize the client
@@ -988,7 +988,7 @@ class SnippetSearchClient
      *
      * getObjects
      */
-    public function snippetForGetObjects()
+    public function snippetForGetObjects(): void
     {
         // >SEPARATOR getObjects default
         // Initialize the client
@@ -1019,7 +1019,7 @@ class SnippetSearchClient
      *
      * getRule
      */
-    public function snippetForGetRule()
+    public function snippetForGetRule(): void
     {
         // >SEPARATOR getRule default
         // Initialize the client
@@ -1041,7 +1041,7 @@ class SnippetSearchClient
      *
      * getSettings
      */
-    public function snippetForGetSettings()
+    public function snippetForGetSettings(): void
     {
         // >SEPARATOR getSettings default
         // Initialize the client
@@ -1062,7 +1062,7 @@ class SnippetSearchClient
      *
      * getSources
      */
-    public function snippetForGetSources()
+    public function snippetForGetSources(): void
     {
         // >SEPARATOR getSources default
         // Initialize the client
@@ -1081,7 +1081,7 @@ class SnippetSearchClient
      *
      * getSynonym
      */
-    public function snippetForGetSynonym()
+    public function snippetForGetSynonym(): void
     {
         // >SEPARATOR getSynonym default
         // Initialize the client
@@ -1103,7 +1103,7 @@ class SnippetSearchClient
      *
      * getTask
      */
-    public function snippetForGetTask()
+    public function snippetForGetTask(): void
     {
         // >SEPARATOR getTask default
         // Initialize the client
@@ -1125,7 +1125,7 @@ class SnippetSearchClient
      *
      * getTopUserIds
      */
-    public function snippetForGetTopUserIds()
+    public function snippetForGetTopUserIds(): void
     {
         // >SEPARATOR getTopUserIds default
         // Initialize the client
@@ -1144,7 +1144,7 @@ class SnippetSearchClient
      *
      * getUserId
      */
-    public function snippetForGetUserId()
+    public function snippetForGetUserId(): void
     {
         // >SEPARATOR getUserId default
         // Initialize the client
@@ -1165,7 +1165,7 @@ class SnippetSearchClient
      *
      * hasPendingMappings with minimal parameters
      */
-    public function snippetForHasPendingMappings()
+    public function snippetForHasPendingMappings(): void
     {
         // >SEPARATOR hasPendingMappings default
         // Initialize the client
@@ -1184,7 +1184,7 @@ class SnippetSearchClient
      *
      * indexExists
      */
-    public function snippetForIndexExists()
+    public function snippetForIndexExists(): void
     {
         // >SEPARATOR indexExists indexExists
         // Initialize the client
@@ -1205,7 +1205,7 @@ class SnippetSearchClient
      *
      * indexNotExists
      */
-    public function snippetForIndexExists1()
+    public function snippetForIndexExists1(): void
     {
         // >SEPARATOR indexExists indexNotExists
         // Initialize the client
@@ -1226,7 +1226,7 @@ class SnippetSearchClient
      *
      * indexExistsWithError
      */
-    public function snippetForIndexExists2()
+    public function snippetForIndexExists2(): void
     {
         // >SEPARATOR indexExists indexExistsWithError
         // Initialize the client
@@ -1247,7 +1247,7 @@ class SnippetSearchClient
      *
      * listApiKeys
      */
-    public function snippetForListApiKeys()
+    public function snippetForListApiKeys(): void
     {
         // >SEPARATOR listApiKeys default
         // Initialize the client
@@ -1266,7 +1266,7 @@ class SnippetSearchClient
      *
      * listClusters
      */
-    public function snippetForListClusters()
+    public function snippetForListClusters(): void
     {
         // >SEPARATOR listClusters default
         // Initialize the client
@@ -1285,7 +1285,7 @@ class SnippetSearchClient
      *
      * listIndices with minimal parameters
      */
-    public function snippetForListIndices()
+    public function snippetForListIndices(): void
     {
         // >SEPARATOR listIndices default
         // Initialize the client
@@ -1304,7 +1304,7 @@ class SnippetSearchClient
      *
      * listUserIds with minimal parameters
      */
-    public function snippetForListUserIds()
+    public function snippetForListUserIds(): void
     {
         // >SEPARATOR listUserIds default
         // Initialize the client
@@ -1323,7 +1323,7 @@ class SnippetSearchClient
      *
      * multipleBatch
      */
-    public function snippetForMultipleBatch()
+    public function snippetForMultipleBatch(): void
     {
         // >SEPARATOR multipleBatch default
         // Initialize the client
@@ -1351,7 +1351,7 @@ class SnippetSearchClient
      *
      * scopes
      */
-    public function snippetForOperationIndex()
+    public function snippetForOperationIndex(): void
     {
         // >SEPARATOR operationIndex scopes
         // Initialize the client
@@ -1380,7 +1380,7 @@ class SnippetSearchClient
      *
      * copy
      */
-    public function snippetForOperationIndex1()
+    public function snippetForOperationIndex1(): void
     {
         // >SEPARATOR operationIndex copy
         // Initialize the client
@@ -1404,7 +1404,7 @@ class SnippetSearchClient
      *
      * move
      */
-    public function snippetForOperationIndex2()
+    public function snippetForOperationIndex2(): void
     {
         // >SEPARATOR operationIndex move
         // Initialize the client
@@ -1428,7 +1428,7 @@ class SnippetSearchClient
      *
      * Partial update with a new value for a string attribute
      */
-    public function snippetForPartialUpdateObject()
+    public function snippetForPartialUpdateObject(): void
     {
         // >SEPARATOR partialUpdateObject default
         // Initialize the client
@@ -1452,7 +1452,7 @@ class SnippetSearchClient
      *
      * call partialUpdateObjects with createIfNotExists=true
      */
-    public function snippetForPartialUpdateObjects()
+    public function snippetForPartialUpdateObjects(): void
     {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
         // Initialize the client
@@ -1483,7 +1483,7 @@ class SnippetSearchClient
      *
      * call partialUpdateObjects with createIfNotExists=false
      */
-    public function snippetForPartialUpdateObjects1()
+    public function snippetForPartialUpdateObjects1(): void
     {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
         // Initialize the client
@@ -1514,7 +1514,7 @@ class SnippetSearchClient
      *
      * removeUserId
      */
-    public function snippetForRemoveUserId()
+    public function snippetForRemoveUserId(): void
     {
         // >SEPARATOR removeUserId default
         // Initialize the client
@@ -1535,7 +1535,7 @@ class SnippetSearchClient
      *
      * call replaceAllObjects without error
      */
-    public function snippetForReplaceAllObjects()
+    public function snippetForReplaceAllObjects(): void
     {
         // >SEPARATOR replaceAllObjects default
         // Initialize the client
@@ -1598,7 +1598,7 @@ class SnippetSearchClient
      *
      * replaceSources
      */
-    public function snippetForReplaceSources()
+    public function snippetForReplaceSources(): void
     {
         // >SEPARATOR replaceSources default
         // Initialize the client
@@ -1623,7 +1623,7 @@ class SnippetSearchClient
      *
      * restoreApiKey
      */
-    public function snippetForRestoreApiKey()
+    public function snippetForRestoreApiKey(): void
     {
         // >SEPARATOR restoreApiKey default
         // Initialize the client
@@ -1644,7 +1644,7 @@ class SnippetSearchClient
      *
      * saveObject
      */
-    public function snippetForSaveObject()
+    public function snippetForSaveObject(): void
     {
         // >SEPARATOR saveObject default
         // Initialize the client
@@ -1668,7 +1668,7 @@ class SnippetSearchClient
      *
      * call saveObjects without error
      */
-    public function snippetForSaveObjects()
+    public function snippetForSaveObjects(): void
     {
         // >SEPARATOR saveObjects call saveObjects without error
         // Initialize the client
@@ -1698,7 +1698,7 @@ class SnippetSearchClient
      *
      * saveObjects should report errors
      */
-    public function snippetForSaveObjects1()
+    public function snippetForSaveObjects1(): void
     {
         // >SEPARATOR saveObjects saveObjects should report errors
         // Initialize the client
@@ -1728,7 +1728,7 @@ class SnippetSearchClient
      *
      * saveRule with minimal parameters
      */
-    public function snippetForSaveRule()
+    public function snippetForSaveRule(): void
     {
         // >SEPARATOR saveRule default
         // Initialize the client
@@ -1757,7 +1757,7 @@ class SnippetSearchClient
      *
      * saveRules with minimal parameters
      */
-    public function snippetForSaveRules()
+    public function snippetForSaveRules(): void
     {
         // >SEPARATOR saveRules default
         // Initialize the client
@@ -1797,7 +1797,7 @@ class SnippetSearchClient
      *
      * saveSynonym
      */
-    public function snippetForSaveSynonym()
+    public function snippetForSaveSynonym(): void
     {
         // >SEPARATOR saveSynonym default
         // Initialize the client
@@ -1830,7 +1830,7 @@ class SnippetSearchClient
      *
      * saveSynonyms
      */
-    public function snippetForSaveSynonyms()
+    public function snippetForSaveSynonyms(): void
     {
         // >SEPARATOR saveSynonyms default
         // Initialize the client
@@ -1877,7 +1877,7 @@ class SnippetSearchClient
      *
      * withHitsPerPage
      */
-    public function snippetForSearch()
+    public function snippetForSearch(): void
     {
         // >SEPARATOR search withHitsPerPage
         // Initialize the client
@@ -1904,7 +1904,7 @@ class SnippetSearchClient
      *
      * filterOnly
      */
-    public function snippetForSearch1()
+    public function snippetForSearch1(): void
     {
         // >SEPARATOR search filterOnly
         // Initialize the client
@@ -1931,7 +1931,7 @@ class SnippetSearchClient
      *
      * filterOr
      */
-    public function snippetForSearch2()
+    public function snippetForSearch2(): void
     {
         // >SEPARATOR search filterOr
         // Initialize the client
@@ -1958,7 +1958,7 @@ class SnippetSearchClient
      *
      * filterNot
      */
-    public function snippetForSearch3()
+    public function snippetForSearch3(): void
     {
         // >SEPARATOR search filterNot
         // Initialize the client
@@ -1985,7 +1985,7 @@ class SnippetSearchClient
      *
      * retrieveFacets
      */
-    public function snippetForSearch4()
+    public function snippetForSearch4(): void
     {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
@@ -2016,7 +2016,7 @@ class SnippetSearchClient
      *
      * retrieveFacetsWildcard
      */
-    public function snippetForSearch5()
+    public function snippetForSearch5(): void
     {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
@@ -2045,7 +2045,7 @@ class SnippetSearchClient
      *
      * get searchDictionaryEntries results with minimal parameters
      */
-    public function snippetForSearchDictionaryEntries()
+    public function snippetForSearchDictionaryEntries(): void
     {
         // >SEPARATOR searchDictionaryEntries default
         // Initialize the client
@@ -2068,7 +2068,7 @@ class SnippetSearchClient
      *
      * get searchForFacetValues results with minimal parameters
      */
-    public function snippetForSearchForFacetValues()
+    public function snippetForSearchForFacetValues(): void
     {
         // >SEPARATOR searchForFacetValues default
         // Initialize the client
@@ -2090,7 +2090,7 @@ class SnippetSearchClient
      *
      * searchRules
      */
-    public function snippetForSearchRules()
+    public function snippetForSearchRules(): void
     {
         // >SEPARATOR searchRules default
         // Initialize the client
@@ -2113,7 +2113,7 @@ class SnippetSearchClient
      *
      * search with minimal parameters
      */
-    public function snippetForSearchSingleIndex()
+    public function snippetForSearchSingleIndex(): void
     {
         // >SEPARATOR searchSingleIndex default
         // Initialize the client
@@ -2134,7 +2134,7 @@ class SnippetSearchClient
      *
      * searchSynonyms with minimal parameters
      */
-    public function snippetForSearchSynonyms()
+    public function snippetForSearchSynonyms(): void
     {
         // >SEPARATOR searchSynonyms default
         // Initialize the client
@@ -2155,7 +2155,7 @@ class SnippetSearchClient
      *
      * searchUserIds
      */
-    public function snippetForSearchUserIds()
+    public function snippetForSearchUserIds(): void
     {
         // >SEPARATOR searchUserIds default
         // Initialize the client
@@ -2180,7 +2180,7 @@ class SnippetSearchClient
      *
      * get setDictionarySettings results with minimal parameters
      */
-    public function snippetForSetDictionarySettings()
+    public function snippetForSetDictionarySettings(): void
     {
         // >SEPARATOR setDictionarySettings default
         // Initialize the client
@@ -2206,7 +2206,7 @@ class SnippetSearchClient
      *
      * setSettingsAttributesForFaceting
      */
-    public function snippetForSetSettings()
+    public function snippetForSetSettings(): void
     {
         // >SEPARATOR setSettings default
         // Initialize the client
@@ -2235,7 +2235,7 @@ class SnippetSearchClient
      *
      * updateApiKey
      */
-    public function snippetForUpdateApiKey()
+    public function snippetForUpdateApiKey(): void
     {
         // >SEPARATOR updateApiKey default
         // Initialize the client
@@ -2265,7 +2265,7 @@ class SnippetSearchClient
      *
      * wait for api key helper - add
      */
-    public function snippetForWaitForApiKey()
+    public function snippetForWaitForApiKey(): void
     {
         // >SEPARATOR waitForApiKey wait for api key helper - add
         // Initialize the client
@@ -2287,7 +2287,7 @@ class SnippetSearchClient
      *
      * wait for api key - update
      */
-    public function snippetForWaitForApiKey1()
+    public function snippetForWaitForApiKey1(): void
     {
         // >SEPARATOR waitForApiKey wait for api key - update
         // Initialize the client
@@ -2331,7 +2331,7 @@ class SnippetSearchClient
      *
      * wait for api key - delete
      */
-    public function snippetForWaitForApiKey2()
+    public function snippetForWaitForApiKey2(): void
     {
         // >SEPARATOR waitForApiKey wait for api key - delete
         // Initialize the client
@@ -2353,7 +2353,7 @@ class SnippetSearchClient
      *
      * wait for an application-level task
      */
-    public function snippetForWaitForAppTask()
+    public function snippetForWaitForAppTask(): void
     {
         // >SEPARATOR waitForAppTask default
         // Initialize the client
@@ -2374,7 +2374,7 @@ class SnippetSearchClient
      *
      * wait for task
      */
-    public function snippetForWaitForTask()
+    public function snippetForWaitForTask(): void
     {
         // >SEPARATOR waitForTask default
         // Initialize the client

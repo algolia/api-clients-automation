@@ -16,7 +16,7 @@ class SnippetAbtestingClient
      *
      * addABTests with minimal parameters
      */
-    public function snippetForAddABTests()
+    public function snippetForAddABTests(): void
     {
         // >SEPARATOR addABTests default
         // Initialize the client
@@ -48,7 +48,7 @@ class SnippetAbtestingClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -69,7 +69,7 @@ class SnippetAbtestingClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -90,7 +90,7 @@ class SnippetAbtestingClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -111,7 +111,7 @@ class SnippetAbtestingClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -132,7 +132,7 @@ class SnippetAbtestingClient
      *
      * deleteABTest
      */
-    public function snippetForDeleteABTest()
+    public function snippetForDeleteABTest(): void
     {
         // >SEPARATOR deleteABTest default
         // Initialize the client
@@ -153,7 +153,7 @@ class SnippetAbtestingClient
      *
      * getABTest
      */
-    public function snippetForGetABTest()
+    public function snippetForGetABTest(): void
     {
         // >SEPARATOR getABTest default
         // Initialize the client
@@ -174,7 +174,7 @@ class SnippetAbtestingClient
      *
      * listABTests with minimal parameters
      */
-    public function snippetForListABTests()
+    public function snippetForListABTests(): void
     {
         // >SEPARATOR listABTests default
         // Initialize the client
@@ -193,7 +193,7 @@ class SnippetAbtestingClient
      *
      * scheduleABTest with minimal parameters
      */
-    public function snippetForScheduleABTest()
+    public function snippetForScheduleABTest(): void
     {
         // >SEPARATOR scheduleABTest default
         // Initialize the client
@@ -226,7 +226,7 @@ class SnippetAbtestingClient
      *
      * stopABTest
      */
-    public function snippetForStopABTest()
+    public function snippetForStopABTest(): void
     {
         // >SEPARATOR stopABTest default
         // Initialize the client

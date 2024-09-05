@@ -27,7 +27,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     private $recordedRequest;
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequest = [
             'request' => $request,
@@ -39,12 +39,11 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct read host')]
-    public function test0api()
+    public function test0api(): void
     {
         $client = $this->createClient(
             'test-app-id',
-            'test-api-key',
-            null
+            'test-api-key'
         );
         $this->assertIsObject($client);
         $client->customGet(
@@ -57,12 +56,11 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct write host')]
-    public function test1api()
+    public function test1api(): void
     {
         $client = $this->createClient(
             'test-app-id',
-            'test-api-key',
-            null
+            'test-api-key'
         );
         $this->assertIsObject($client);
         $client->customPost(
@@ -75,7 +73,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct user agent')]
-    public function test0commonApi()
+    public function test0commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -90,7 +88,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('the user agent contains the latest version')]
-    public function test1commonApi()
+    public function test1commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -105,7 +103,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default read timeouts')]
-    public function test2commonApi()
+    public function test2commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -123,7 +121,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test3commonApi()
+    public function test3commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -143,10 +141,8 @@ class RecommendTest extends TestCase implements HttpClientInterface
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     *
-     * @return RecommendClient
      */
-    private function createClient($appId, $apiKey)
+    private function createClient($appId, $apiKey): RecommendClient
     {
         $config = RecommendConfig::create($appId, $apiKey);
         $clusterHosts = RecommendClient::getClusterHosts($config);

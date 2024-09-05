@@ -16,7 +16,7 @@ class SnippetRecommendClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -37,7 +37,7 @@ class SnippetRecommendClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -58,7 +58,7 @@ class SnippetRecommendClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -79,7 +79,7 @@ class SnippetRecommendClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -100,7 +100,7 @@ class SnippetRecommendClient
      *
      * deleteRecommendRule
      */
-    public function snippetForDeleteRecommendRule()
+    public function snippetForDeleteRecommendRule(): void
     {
         // >SEPARATOR deleteRecommendRule default
         // Initialize the client
@@ -123,7 +123,7 @@ class SnippetRecommendClient
      *
      * getRecommendRule
      */
-    public function snippetForGetRecommendRule()
+    public function snippetForGetRecommendRule(): void
     {
         // >SEPARATOR getRecommendRule default
         // Initialize the client
@@ -146,7 +146,7 @@ class SnippetRecommendClient
      *
      * getRecommendStatus
      */
-    public function snippetForGetRecommendStatus()
+    public function snippetForGetRecommendStatus(): void
     {
         // >SEPARATOR getRecommendStatus default
         // Initialize the client
@@ -169,7 +169,7 @@ class SnippetRecommendClient
      *
      * get recommendations for recommend model with minimal parameters
      */
-    public function snippetForGetRecommendations()
+    public function snippetForGetRecommendations(): void
     {
         // >SEPARATOR getRecommendations default
         // Initialize the client
@@ -197,7 +197,7 @@ class SnippetRecommendClient
      *
      * searchRecommendRules
      */
-    public function snippetForSearchRecommendRules()
+    public function snippetForSearchRecommendRules(): void
     {
         // >SEPARATOR searchRecommendRules default
         // Initialize the client

@@ -16,7 +16,7 @@ class SnippetUsageClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -37,7 +37,7 @@ class SnippetUsageClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -58,7 +58,7 @@ class SnippetUsageClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -79,7 +79,7 @@ class SnippetUsageClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -100,7 +100,7 @@ class SnippetUsageClient
      *
      * getIndexUsage with minimal parameters
      */
-    public function snippetForGetIndexUsage()
+    public function snippetForGetIndexUsage(): void
     {
         // >SEPARATOR getIndexUsage default
         // Initialize the client
@@ -124,7 +124,7 @@ class SnippetUsageClient
      *
      * getUsage with minimal parameters
      */
-    public function snippetForGetUsage()
+    public function snippetForGetUsage(): void
     {
         // >SEPARATOR getUsage default
         // Initialize the client
