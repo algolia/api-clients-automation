@@ -109,7 +109,7 @@ class SnippetUsageClient
         // Call the API
         $response = $client->getIndexUsage(
             'queries_operations',
-            'myIndexName',
+            '<YOUR_INDEX_NAME>',
             '2024-04-03T12:46:43Z',
             '2024-04-05T12:46:43Z',
         );

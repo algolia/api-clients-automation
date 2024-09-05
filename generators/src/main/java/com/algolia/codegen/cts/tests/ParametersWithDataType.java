@@ -18,16 +18,32 @@ public class ParametersWithDataType {
   private final Map<String, CodegenModel> models;
   private final String language;
   private final String client;
+  private final boolean prettyIndexName;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client) {
+  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client, boolean prettyIndexName) {
     this.models = models;
     this.language = language;
     this.client = client;
+    this.prettyIndexName = prettyIndexName;
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
     throws CTSException, JsonMappingException, JsonProcessingException {
     this.enhanceParameters(parameters, bundle, null);
+  }
+
+  public Map<String, Object> enhanceParameter(Object param) throws CTSException, JsonMappingException, JsonProcessingException {
+    Map<String, Object> testOutput = createDefaultOutput();
+    testOutput.put("isRoot", true);
+    if (param == null) {
+      handleNull(null, testOutput);
+    } else if (param instanceof List || param instanceof Map) {
+      testOutput.put("isString", true);
+      testOutput.put("value", Json.mapper().writeValueAsString(param));
+    } else {
+      handlePrimitive(param, testOutput, null);
+    }
+    return testOutput;
   }
 
   /**
@@ -155,6 +171,11 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, spec);
     }
 
+    // for snippets, we want pretty index names, unless they are already pretty
+    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+      testOutput.put("value", "<YOUR_INDEX_NAME>");
+    }
+
     return testOutput;
   }
 
@@ -207,13 +228,15 @@ public class ParametersWithDataType {
     testOutput.put("isSimpleObject", false);
     testOutput.put("oneOfModel", false);
     testOutput.put("isAdditionalProperty", false);
+    testOutput.put("isPrimitive", false);
 
     return testOutput;
   }
 
   private void handleNull(IJsonSchemaValidationProperties spec, Map<String, Object> testOutput) {
+    testOutput.put("isPrimitive", true);
     testOutput.put("isNull", true);
-    if (spec.getIsModel() || spec instanceof CodegenModel) {
+    if (spec != null && (spec.getIsModel() || spec instanceof CodegenModel)) {
       testOutput.put("isNullObject", true);
     }
   }
@@ -451,6 +474,7 @@ public class ParametersWithDataType {
         testOutput.put("isAnyType", true);
       }
     }
+    testOutput.put("isPrimitive", true);
     testOutput.put("value", param);
   }
 
@@ -515,6 +539,11 @@ public class ParametersWithDataType {
   }
 
   private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output) throws CTSException {
+    if (param == null) {
+      if (spec != null) spec.setIsNull(true);
+      if (output != null) output.put("isNull", true);
+      return "null";
+    }
     switch (param.getClass().getSimpleName()) {
       case "String":
         if (spec != null) spec.setIsString(true);

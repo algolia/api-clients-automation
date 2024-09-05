@@ -22,14 +22,7 @@ get:
       content:
         application/json:
           schema:
-            title: getTaskResponse
-            type: object
-            additionalProperties: false
-            properties:
-              status:
-                $ref: '../../../common/responses/common.yml#/taskStatus'
-            required:
-              - status
+            $ref: '../../common/schemas/GetTaskResponse.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

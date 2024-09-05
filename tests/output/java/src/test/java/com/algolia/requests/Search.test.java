@@ -31,7 +31,7 @@ class SearchClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new SearchClient("appId", "apiKey", options);
   }
 
@@ -46,7 +46,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.addApiKey(
         new ApiKey()
-          .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
+          .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
           .setDescription("my new api key")
           .setValidity(300)
           .setMaxQueriesPerIPPerHour(100)
@@ -70,7 +70,15 @@ class SearchClientRequestsTests {
   @DisplayName("addOrUpdateObject")
   void addOrUpdateObjectTest() {
     assertDoesNotThrow(() -> {
-      client.addOrUpdateObject("indexName", "uniqueID", Map.of("key", "value"));
+      client.addOrUpdateObject(
+        "indexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("key", "value");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/uniqueID", req.path);
@@ -152,9 +160,27 @@ class SearchClientRequestsTests {
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(
-            List.of(
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.ADD_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "bar");
+                      put("foo", "1");
+                    }
+                  }
+                ),
+              new BatchRequest()
+                .setAction(Action.ADD_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "baz");
+                      put("foo", "2");
+                    }
+                  }
+                )
             )
           )
       );
@@ -177,7 +203,20 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of("key", "value"))))
+        new BatchWriteParams()
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.CLEAR)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -194,7 +233,20 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of("key", "value"))))
+        new BatchWriteParams()
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.DELETE)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -211,7 +263,20 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of("key", "value"))))
+        new BatchWriteParams()
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.DELETE_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -233,7 +298,19 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of("key", "value"))))
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.PARTIAL_UPDATE_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -255,7 +332,19 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of("key", "value"))))
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -276,7 +365,20 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of("key", "value"))))
+        new BatchWriteParams()
+          .setRequests(
+            Arrays.asList(
+              new BatchRequest()
+                .setAction(Action.UPDATE_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -295,7 +397,10 @@ class SearchClientRequestsTests {
   @DisplayName("batchAssignUserIds")
   void batchAssignUserIdsTest() {
     assertDoesNotThrow(() -> {
-      client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(List.of("user1", "user2")));
+      client.batchAssignUserIds(
+        "userID",
+        new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2"))
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/clusters/mapping/batch", req.path);
@@ -328,7 +433,7 @@ class SearchClientRequestsTests {
         new BatchDictionaryEntriesParams()
           .setClearExistingDictionaryEntries(true)
           .setRequests(
-            List.of(
+            Arrays.asList(
               new BatchDictionaryEntriesRequest()
                 .setAction(DictionaryAction.ADD_ENTRY)
                 .setBody(
@@ -336,8 +441,8 @@ class SearchClientRequestsTests {
                     .setObjectID("1")
                     .setLanguage(SupportedLanguage.EN)
                     .setWord("fancy")
-                    .setWords(List.of("believe", "algolia"))
-                    .setDecomposition(List.of("trust", "algolia"))
+                    .setWords(Arrays.asList("believe", "algolia"))
+                    .setDecomposition(Arrays.asList("trust", "algolia"))
                     .setState(DictionaryEntryState.ENABLED)
                 )
             )
@@ -365,7 +470,7 @@ class SearchClientRequestsTests {
         new BatchDictionaryEntriesParams()
           .setClearExistingDictionaryEntries(true)
           .setRequests(
-            List.of(
+            Arrays.asList(
               new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID("1"))
             )
           )
@@ -391,7 +496,7 @@ class SearchClientRequestsTests {
         DictionaryType.STOPWORDS,
         new BatchDictionaryEntriesParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new BatchDictionaryEntriesRequest()
                 .setAction(DictionaryAction.ADD_ENTRY)
                 .setBody(
@@ -431,7 +536,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.browse(
         "indexName",
-        new BrowseParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("tags:algolia")))),
+        new BrowseParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
         Hit.class
       );
     });
@@ -507,7 +612,14 @@ class SearchClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("test/all", Map.of("query", "parameters"));
+      client.customDelete(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -543,7 +655,14 @@ class SearchClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("test/all", Map.of("query", "parameters with space"));
+      client.customGet(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters with space");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -572,10 +691,14 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customGet(
         "test/all",
-        Map.of("query", "to be overriden"),
+        new HashMap() {
+          {
+            put("query", "to be overriden");
+          }
+        },
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
-          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
           .addExtraHeader("x-header-1", "spaces are left alone")
       );
     });
@@ -630,7 +753,19 @@ class SearchClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -656,8 +791,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
@@ -688,8 +831,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
@@ -720,8 +871,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -763,8 +922,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -806,8 +973,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
@@ -838,8 +1013,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
@@ -870,9 +1053,17 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -902,9 +1093,17 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -934,9 +1133,17 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -976,7 +1183,19 @@ class SearchClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -1183,7 +1402,7 @@ class SearchClientRequestsTests {
   @DisplayName("getObject")
   void getObjectTest() {
     assertDoesNotThrow(() -> {
-      client.getObject("theIndexName", "uniqueID", List.of("attr1", "attr2"));
+      client.getObject("theIndexName", "uniqueID", Arrays.asList("attr1", "attr2"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID", req.path);
@@ -1213,9 +1432,9 @@ class SearchClientRequestsTests {
       client.getObjects(
         new GetObjectsParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new GetObjectsRequest()
-                .setAttributesToRetrieve(List.of("attr1", "attr2"))
+                .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
                 .setObjectID("uniqueID")
                 .setIndexName("theIndexName")
             )
@@ -1239,10 +1458,10 @@ class SearchClientRequestsTests {
   @DisplayName("getRule")
   void getRuleTest() {
     assertDoesNotThrow(() -> {
-      client.getRule("indexName", "id1");
+      client.getRule("cts_e2e_browse", "qr-1725004648916");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/id1", req.path);
+    assertEquals("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
@@ -1464,7 +1683,18 @@ class SearchClientRequestsTests {
       client.multipleBatch(
         new BatchParams()
           .setRequests(
-            List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
+            Arrays.asList(
+              new MultipleBatchRequest()
+                .setAction(Action.ADD_OBJECT)
+                .setBody(
+                  new HashMap() {
+                    {
+                      put("key", "value");
+                    }
+                  }
+                )
+                .setIndexName("theIndexName")
+            )
           )
       );
     });
@@ -1489,7 +1719,7 @@ class SearchClientRequestsTests {
         new OperationIndexParams()
           .setOperation(OperationType.MOVE)
           .setDestination("<DESTINATION_INDEX_NAME>")
-          .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
+          .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1542,7 +1772,15 @@ class SearchClientRequestsTests {
   @DisplayName("Partial update with a new value for a string attribute")
   void partialUpdateObjectTest() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", "new value"));
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("attributeId", "new value");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
@@ -1554,7 +1792,15 @@ class SearchClientRequestsTests {
   @DisplayName("Partial update with a new value for an integer attribute")
   void partialUpdateObjectTest1() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", 1));
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("attributeId", 1);
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
@@ -1566,7 +1812,15 @@ class SearchClientRequestsTests {
   @DisplayName("Partial update with a new value for a boolean attribute")
   void partialUpdateObjectTest2() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", true));
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("attributeId", true);
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
@@ -1578,7 +1832,15 @@ class SearchClientRequestsTests {
   @DisplayName("Partial update with a new value for an array attribute")
   void partialUpdateObjectTest3() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", List.of("one", "two", "three")));
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put("attributeId", Arrays.asList("one", "two", "three"));
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
@@ -1590,7 +1852,22 @@ class SearchClientRequestsTests {
   @DisplayName("Partial update with a new value for an object attribute")
   void partialUpdateObjectTest4() {
     assertDoesNotThrow(() -> {
-      client.partialUpdateObject("theIndexName", "uniqueID", Map.of("attributeId", Map.of("nested", "value")));
+      client.partialUpdateObject(
+        "theIndexName",
+        "uniqueID",
+        new HashMap() {
+          {
+            put(
+              "attributeId",
+              new HashMap() {
+                {
+                  put("nested", "value");
+                }
+              }
+            );
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/uniqueID/partial", req.path);
@@ -1614,7 +1891,7 @@ class SearchClientRequestsTests {
   @DisplayName("replaceSources")
   void replaceSourcesTest() {
     assertDoesNotThrow(() -> {
-      client.replaceSources(List.of(new Source().setSource("theSource").setDescription("theDescription")));
+      client.replaceSources(Arrays.asList(new Source().setSource("theSource").setDescription("theDescription")));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/security/sources", req.path);
@@ -1640,7 +1917,15 @@ class SearchClientRequestsTests {
   @DisplayName("saveObject")
   void saveObjectTest() {
     assertDoesNotThrow(() -> {
-      client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
+      client.saveObject(
+        "<YOUR_INDEX_NAME>",
+        new HashMap() {
+          {
+            put("objectID", "id");
+            put("test", "val");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E", req.path);
@@ -1655,7 +1940,7 @@ class SearchClientRequestsTests {
       client.saveRule(
         "indexName",
         "id1",
-        new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+        new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1680,7 +1965,7 @@ class SearchClientRequestsTests {
         new Rule()
           .setObjectID("id1")
           .setConditions(
-            List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search"))
+            Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search"))
           )
           .setConsequence(
             new Consequence()
@@ -1689,28 +1974,34 @@ class SearchClientRequestsTests {
                   .setFilters("brand:apple")
                   .setQuery(
                     new ConsequenceQueryObject()
-                      .setRemove(List.of("algolia"))
+                      .setRemove(Arrays.asList("algolia"))
                       .setEdits(
-                        List.of(
+                        Arrays.asList(
                           new Edit().setType(EditType.REMOVE).setDelete("abc").setInsert("cde"),
                           new Edit().setType(EditType.REPLACE).setDelete("abc").setInsert("cde")
                         )
                       )
                   )
               )
-              .setHide(List.of(new ConsequenceHide().setObjectID("321")))
+              .setHide(Arrays.asList(new ConsequenceHide().setObjectID("321")))
               .setFilterPromotes(false)
-              .setUserData(Map.of("algolia", "aloglia"))
+              .setUserData(
+                new HashMap() {
+                  {
+                    put("algolia", "aloglia");
+                  }
+                }
+              )
               .setPromote(
-                List.of(
+                Arrays.asList(
                   new PromoteObjectID().setObjectID("abc").setPosition(3),
-                  new PromoteObjectIDs().setObjectIDs(List.of("abc", "def")).setPosition(1)
+                  new PromoteObjectIDs().setObjectIDs(Arrays.asList("abc", "def")).setPosition(1)
                 )
               )
           )
           .setDescription("test")
           .setEnabled(true)
-          .setValidity(List.of(new TimeRange().setFrom(1656670273).setUntil(1656670277))),
+          .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277))),
         true
       );
     });
@@ -1747,13 +2038,13 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.saveRules(
         "<YOUR_INDEX_NAME>",
-        List.of(
+        Arrays.asList(
           new Rule()
             .setObjectID("a-rule-id")
-            .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+            .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
           new Rule()
             .setObjectID("a-second-rule-id")
-            .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+            .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
         ),
         false,
         true
@@ -1792,11 +2083,13 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.saveRules(
         "<YOUR_INDEX_NAME>",
-        List.of(
+        Arrays.asList(
           new Rule()
             .setObjectID("id1")
             .setConditions(
-              List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search"))
+              Arrays.asList(
+                new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search")
+              )
             )
             .setConsequence(
               new Consequence()
@@ -1805,28 +2098,34 @@ class SearchClientRequestsTests {
                     .setFilters("brand:apple")
                     .setQuery(
                       new ConsequenceQueryObject()
-                        .setRemove(List.of("algolia"))
+                        .setRemove(Arrays.asList("algolia"))
                         .setEdits(
-                          List.of(
+                          Arrays.asList(
                             new Edit().setType(EditType.REMOVE).setDelete("abc").setInsert("cde"),
                             new Edit().setType(EditType.REPLACE).setDelete("abc").setInsert("cde")
                           )
                         )
                     )
                 )
-                .setHide(List.of(new ConsequenceHide().setObjectID("321")))
+                .setHide(Arrays.asList(new ConsequenceHide().setObjectID("321")))
                 .setFilterPromotes(false)
-                .setUserData(Map.of("algolia", "aloglia"))
+                .setUserData(
+                  new HashMap() {
+                    {
+                      put("algolia", "aloglia");
+                    }
+                  }
+                )
                 .setPromote(
-                  List.of(
+                  Arrays.asList(
                     new PromoteObjectID().setObjectID("abc").setPosition(3),
-                    new PromoteObjectIDs().setObjectIDs(List.of("abc", "def")).setPosition(1)
+                    new PromoteObjectIDs().setObjectIDs(Arrays.asList("abc", "def")).setPosition(1)
                   )
                 )
             )
             .setDescription("test")
             .setEnabled(true)
-            .setValidity(List.of(new TimeRange().setFrom(1656670273).setUntil(1656670277)))
+            .setValidity(Arrays.asList(new TimeRange().setFrom(1656670273).setUntil(1656670277)))
         ),
         true,
         true
@@ -1866,7 +2165,7 @@ class SearchClientRequestsTests {
       client.saveSynonym(
         "indexName",
         "id1",
-        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
         true
       );
     });
@@ -1903,13 +2202,13 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.saveSynonyms(
         "<YOUR_INDEX_NAME>",
-        List.of(
-          new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+        Arrays.asList(
+          new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
           new SynonymHit()
             .setObjectID("id2")
             .setType(SynonymType.ONEWAYSYNONYM)
             .setInput("iphone")
-            .setSynonyms(List.of("ephone", "aphone", "yphone"))
+            .setSynonyms(Arrays.asList("ephone", "aphone", "yphone"))
         ),
         true,
         true
@@ -1948,7 +2247,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
-          .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+          .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
         Hit.class
       );
     });
@@ -1971,7 +2270,9 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
+            Arrays.asList(
+              new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson")
+            )
           ),
         Hit.class
       );
@@ -1995,7 +2296,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits()
                 .setIndexName("<YOUR_INDEX_NAME>")
                 .setQuery("<YOUR_QUERY>")
@@ -2025,7 +2326,9 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
+            Arrays.asList(
+              new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage")
+            )
           ),
         Hit.class
       );
@@ -2047,7 +2350,7 @@ class SearchClientRequestsTests {
   void searchTest4() {
     assertDoesNotThrow(() -> {
       client.search(
-        new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
+        new SearchMethodParams().setRequests(Arrays.asList(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
         Hit.class
       );
     });
@@ -2066,13 +2369,13 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits()
                 .setIndexName("cts_e2e_highlight_snippet_results")
                 .setQuery("vim")
-                .setAttributesToSnippet(List.of("*:20"))
-                .setAttributesToHighlight(List.of("*"))
-                .setAttributesToRetrieve(List.of("*"))
+                .setAttributesToSnippet(Arrays.asList("*:20"))
+                .setAttributesToHighlight(Arrays.asList("*"))
+                .setAttributesToRetrieve(Arrays.asList("*"))
             )
           ),
         Hit.class
@@ -2097,7 +2400,9 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("author", "genre")))
+            Arrays.asList(
+              new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("author", "genre"))
+            )
           ),
         Hit.class
       );
@@ -2120,7 +2425,9 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
-          .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("*")))),
+          .setRequests(
+            Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("*")))
+          ),
         Hit.class
       );
     });
@@ -2143,7 +2450,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor"))
+            Arrays.asList(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor"))
           )
           .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
         Hit.class
@@ -2168,7 +2475,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits().setIndexName("theIndexName").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
             )
           ),
@@ -2194,7 +2501,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForFacets()
                 .setIndexName("theIndexName")
                 .setType(SearchTypeFacet.FACET)
@@ -2227,7 +2534,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits().setIndexName("theIndexName"),
               new SearchForFacets().setIndexName("theIndexName2").setType(SearchTypeFacet.FACET).setFacet("theFacet"),
               new SearchForHits().setIndexName("theIndexName").setType(SearchTypeDefault.DEFAULT)
@@ -2256,7 +2563,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForFacets()
                 .setIndexName("theIndexName")
                 .setType(SearchTypeFacet.FACET)
@@ -2290,7 +2597,7 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits()
                 .setIndexName("theIndexName")
                 .setFacetFilters(FacetFilters.of("mySearch:filters"))
@@ -2302,33 +2609,44 @@ class SearchClientRequestsTests {
                 .setIndexName("theIndexName")
                 .setFacetFilters(
                   FacetFilters.of(
-                    List.of(
+                    Arrays.asList(
                       FacetFilters.of("mySearch:filters"),
                       FacetFilters.of(
-                        List.of(FacetFilters.of("mySearch:filters"), FacetFilters.of(List.of(FacetFilters.of("mySearch:filters"))))
+                        Arrays.asList(
+                          FacetFilters.of("mySearch:filters"),
+                          FacetFilters.of(Arrays.asList(FacetFilters.of("mySearch:filters")))
+                        )
                       )
                     )
                   )
                 )
                 .setReRankingApplyFilter(
                   ReRankingApplyFilter.of(
-                    List.of(
+                    Arrays.asList(
                       ReRankingApplyFilter.of("mySearch:filters"),
-                      ReRankingApplyFilter.of(List.of(ReRankingApplyFilter.of("mySearch:filters")))
+                      ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of("mySearch:filters")))
                     )
                   )
                 )
                 .setTagFilters(
-                  TagFilters.of(List.of(TagFilters.of("mySearch:filters"), TagFilters.of(List.of(TagFilters.of("mySearch:filters")))))
+                  TagFilters.of(
+                    Arrays.asList(TagFilters.of("mySearch:filters"), TagFilters.of(Arrays.asList(TagFilters.of("mySearch:filters"))))
+                  )
                 )
                 .setNumericFilters(
                   NumericFilters.of(
-                    List.of(NumericFilters.of("mySearch:filters"), NumericFilters.of(List.of(NumericFilters.of("mySearch:filters"))))
+                    Arrays.asList(
+                      NumericFilters.of("mySearch:filters"),
+                      NumericFilters.of(Arrays.asList(NumericFilters.of("mySearch:filters")))
+                    )
                   )
                 )
                 .setOptionalFilters(
                   OptionalFilters.of(
-                    List.of(OptionalFilters.of("mySearch:filters"), OptionalFilters.of(List.of(OptionalFilters.of("mySearch:filters"))))
+                    Arrays.asList(
+                      OptionalFilters.of("mySearch:filters"),
+                      OptionalFilters.of(Arrays.asList(OptionalFilters.of("mySearch:filters")))
+                    )
                   )
                 )
             )
@@ -2355,25 +2673,32 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits().setIndexName("cts_e2e_search_facet").setFilters("editor:'visual studio' OR editor:neovim"),
               new SearchForHits()
                 .setIndexName("cts_e2e_search_facet")
-                .setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
+                .setFacetFilters(
+                  FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))
+                ),
               new SearchForHits()
                 .setIndexName("cts_e2e_search_facet")
                 .setFacetFilters(
                   FacetFilters.of(
-                    List.of(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(List.of(FacetFilters.of("editor:neovim"))))
+                    Arrays.asList(
+                      FacetFilters.of("editor:'visual studio'"),
+                      FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim")))
+                    )
                   )
                 ),
               new SearchForHits()
                 .setIndexName("cts_e2e_search_facet")
                 .setFacetFilters(
                   FacetFilters.of(
-                    List.of(
+                    Arrays.asList(
                       FacetFilters.of("editor:'visual studio'"),
-                      FacetFilters.of(List.of(FacetFilters.of("editor:neovim"), FacetFilters.of(List.of(FacetFilters.of("editor:goland")))))
+                      FacetFilters.of(
+                        Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
+                      )
                     )
                   )
                 )
@@ -2406,36 +2731,36 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits()
                 .setAdvancedSyntax(true)
-                .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.EXACT_PHRASE))
+                .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
                 .setAllowTyposOnNumericTokens(true)
-                .setAlternativesAsExact(List.of(AlternativesAsExact.MULTI_WORDS_SYNONYM))
+                .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM))
                 .setAnalytics(true)
-                .setAnalyticsTags(List.of(""))
+                .setAnalyticsTags(Arrays.asList(""))
                 .setAroundLatLng("")
                 .setAroundLatLngViaIP(true)
                 .setAroundPrecision(AroundPrecision.of(0))
                 .setAroundRadius(AroundRadiusAll.ALL)
                 .setAttributeCriteriaComputedByMinProximity(true)
-                .setAttributesToHighlight(List.of(""))
-                .setAttributesToRetrieve(List.of(""))
-                .setAttributesToSnippet(List.of(""))
+                .setAttributesToHighlight(Arrays.asList(""))
+                .setAttributesToRetrieve(Arrays.asList(""))
+                .setAttributesToSnippet(Arrays.asList(""))
                 .setClickAnalytics(true)
-                .setCustomRanking(List.of(""))
+                .setCustomRanking(Arrays.asList(""))
                 .setDecompoundQuery(true)
-                .setDisableExactOnAttributes(List.of(""))
-                .setDisableTypoToleranceOnAttributes(List.of(""))
+                .setDisableExactOnAttributes(Arrays.asList(""))
+                .setDisableTypoToleranceOnAttributes(Arrays.asList(""))
                 .setDistinct(Distinct.of(0))
                 .setEnableABTest(true)
                 .setEnablePersonalization(true)
                 .setEnableReRanking(true)
                 .setEnableRules(true)
                 .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
-                .setFacetFilters(FacetFilters.of(List.of(FacetFilters.of(""))))
+                .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(""))))
                 .setFacetingAfterDistinct(true)
-                .setFacets(List.of(""))
+                .setFacets(Arrays.asList(""))
                 .setFilters("")
                 .setGetRankingInfo(true)
                 .setHighlightPostTag("")
@@ -2443,9 +2768,14 @@ class SearchClientRequestsTests {
                 .setHitsPerPage(1)
                 .setIgnorePlurals(IgnorePlurals.of(false))
                 .setIndexName("theIndexName")
-                .setInsideBoundingBox(List.of(List.of(47.3165, 4.9665, 47.3424, 5.0201), List.of(40.9234, 2.1185, 38.643, 1.9916)))
+                .setInsideBoundingBox(
+                  Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
+                )
                 .setInsidePolygon(
-                  List.of(List.of(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9), List.of(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104))
+                  Arrays.asList(
+                    Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
+                    Arrays.asList(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
+                  )
                 )
                 .setKeepDiacriticsOnCharacters("")
                 .setLength(1)
@@ -2454,19 +2784,19 @@ class SearchClientRequestsTests {
                 .setMinWordSizefor1Typo(0)
                 .setMinWordSizefor2Typos(0)
                 .setMinimumAroundRadius(1)
-                .setNaturalLanguages(List.of(SupportedLanguage.FR))
-                .setNumericFilters(NumericFilters.of(List.of(NumericFilters.of(""))))
+                .setNaturalLanguages(Arrays.asList(SupportedLanguage.FR))
+                .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
                 .setOffset(0)
-                .setOptionalFilters(OptionalFilters.of(List.of(OptionalFilters.of(""))))
-                .setOptionalWords(List.of(""))
+                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
+                .setOptionalWords(Arrays.asList(""))
                 .setPage(0)
                 .setPercentileComputation(true)
                 .setPersonalizationImpact(0)
                 .setQuery("")
-                .setQueryLanguages(List.of(SupportedLanguage.FR))
+                .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
                 .setQueryType(QueryType.PREFIX_ALL)
-                .setRanking(List.of(""))
-                .setReRankingApplyFilter(ReRankingApplyFilter.of(List.of(ReRankingApplyFilter.of(""))))
+                .setRanking(Arrays.asList(""))
+                .setReRankingApplyFilter(ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of(""))))
                 .setRelevancyStrictness(0)
                 .setRemoveStopWords(RemoveStopWords.of(true))
                 .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
@@ -2474,21 +2804,27 @@ class SearchClientRequestsTests {
                   new RenderingContent()
                     .setFacetOrdering(
                       new FacetOrdering()
-                        .setFacets(new Facets().setOrder(List.of("a", "b")))
-                        .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.COUNT)))
+                        .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+                        .setValues(
+                          new HashMap() {
+                            {
+                              put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
+                            }
+                          }
+                        )
                     )
                 )
                 .setReplaceSynonymsInHighlight(true)
-                .setResponseFields(List.of(""))
+                .setResponseFields(Arrays.asList(""))
                 .setRestrictHighlightAndSnippetArrays(true)
-                .setRestrictSearchableAttributes(List.of(""))
-                .setRuleContexts(List.of(""))
+                .setRestrictSearchableAttributes(Arrays.asList(""))
+                .setRuleContexts(Arrays.asList(""))
                 .setSimilarQuery("")
                 .setSnippetEllipsisText("")
                 .setSortFacetValuesBy("")
                 .setSumOrFiltersScores(true)
                 .setSynonyms(true)
-                .setTagFilters(TagFilters.of(List.of(TagFilters.of(""))))
+                .setTagFilters(TagFilters.of(Arrays.asList(TagFilters.of(""))))
                 .setType(SearchTypeDefault.DEFAULT)
                 .setTypoTolerance(TypoToleranceEnum.MIN)
                 .setUserToken("")
@@ -2576,12 +2912,12 @@ class SearchClientRequestsTests {
   @DisplayName("searchRules")
   void searchRulesTest() {
     assertDoesNotThrow(() -> {
-      client.searchRules("indexName", new SearchRulesParams().setQuery("something"));
+      client.searchRules("cts_e2e_browse", new SearchRulesParams().setQuery("zorro"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/search", req.path);
+    assertEquals("/1/indexes/cts_e2e_browse/rules/search", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"something\"}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"zorro\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
@@ -2614,7 +2950,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(
         "indexName",
-        new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("tags:algolia")))),
+        new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
         Hit.class
       );
     });
@@ -2634,8 +2970,8 @@ class SearchClientRequestsTests {
         "cts_e2e_browse",
         new SearchParamsObject()
           .setQuery("batman mask of the phantasm")
-          .setAttributesToRetrieve(List.of("*"))
-          .setAttributesToSnippet(List.of("*:20")),
+          .setAttributesToRetrieve(Arrays.asList("*"))
+          .setAttributesToSnippet(Arrays.asList("*:20")),
         Hit.class
       );
     });
@@ -2708,7 +3044,18 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setDictionarySettings(
         new DictionarySettingsParams()
-          .setDisableStandardEntries(new StandardEntries().setPlurals(Map.of("fr", false, "en", false, "ru", true)))
+          .setDisableStandardEntries(
+            new StandardEntries()
+              .setPlurals(
+                new HashMap() {
+                  {
+                    put("fr", false);
+                    put("en", false);
+                    put("ru", true);
+                  }
+                }
+              )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2731,9 +3078,29 @@ class SearchClientRequestsTests {
         new DictionarySettingsParams()
           .setDisableStandardEntries(
             new StandardEntries()
-              .setPlurals(Map.of("fr", false, "en", false, "ru", true))
-              .setStopwords(Map.of("fr", false))
-              .setCompounds(Map.of("ru", true))
+              .setPlurals(
+                new HashMap() {
+                  {
+                    put("fr", false);
+                    put("en", false);
+                    put("ru", true);
+                  }
+                }
+              )
+              .setStopwords(
+                new HashMap() {
+                  {
+                    put("fr", false);
+                  }
+                }
+              )
+              .setCompounds(
+                new HashMap() {
+                  {
+                    put("ru", true);
+                  }
+                }
+              )
           )
       );
     });
@@ -2755,7 +3122,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "<YOUR_INDEX_NAME>",
-        new IndexSettings().setAttributesForFaceting(List.of("actor", "filterOnly(category)", "searchable(publisher)"))
+        new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2882,7 +3249,7 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `ignorePlurals`")
   void setSettingsTest5() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(List.of(SupportedLanguage.FR))), true);
+      client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(Arrays.asList(SupportedLanguage.FR))), true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
@@ -2936,7 +3303,11 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `removeStopWords`")
   void setSettingsTest7() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(List.of(SupportedLanguage.FR))), true);
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setRemoveStopWords(RemoveStopWords.of(Arrays.asList(SupportedLanguage.FR))),
+        true
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
@@ -3021,26 +3392,45 @@ class SearchClientRequestsTests {
         "theIndexName",
         new IndexSettings()
           .setAdvancedSyntax(true)
-          .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.EXACT_PHRASE))
+          .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
           .setAllowCompressionOfIntegerArray(true)
           .setAllowTyposOnNumericTokens(true)
-          .setAlternativesAsExact(List.of(AlternativesAsExact.SINGLE_WORD_SYNONYM))
+          .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.SINGLE_WORD_SYNONYM))
           .setAttributeCriteriaComputedByMinProximity(true)
           .setAttributeForDistinct("test")
-          .setAttributesForFaceting(List.of("algolia"))
-          .setAttributesToHighlight(List.of("algolia"))
-          .setAttributesToRetrieve(List.of("algolia"))
-          .setAttributesToSnippet(List.of("algolia"))
-          .setAttributesToTransliterate(List.of("algolia"))
-          .setCamelCaseAttributes(List.of("algolia"))
-          .setCustomNormalization(Map.of("algolia", Map.of("aloglia", "aglolia")))
-          .setCustomRanking(List.of("algolia"))
+          .setAttributesForFaceting(Arrays.asList("algolia"))
+          .setAttributesToHighlight(Arrays.asList("algolia"))
+          .setAttributesToRetrieve(Arrays.asList("algolia"))
+          .setAttributesToSnippet(Arrays.asList("algolia"))
+          .setAttributesToTransliterate(Arrays.asList("algolia"))
+          .setCamelCaseAttributes(Arrays.asList("algolia"))
+          .setCustomNormalization(
+            new HashMap() {
+              {
+                put(
+                  "algolia",
+                  new HashMap() {
+                    {
+                      put("aloglia", "aglolia");
+                    }
+                  }
+                );
+              }
+            }
+          )
+          .setCustomRanking(Arrays.asList("algolia"))
           .setDecompoundQuery(false)
-          .setDecompoundedAttributes(Map.of("algolia", "aloglia"))
-          .setDisableExactOnAttributes(List.of("algolia"))
-          .setDisablePrefixOnAttributes(List.of("algolia"))
-          .setDisableTypoToleranceOnAttributes(List.of("algolia"))
-          .setDisableTypoToleranceOnWords(List.of("algolia"))
+          .setDecompoundedAttributes(
+            new HashMap() {
+              {
+                put("algolia", "aloglia");
+              }
+            }
+          )
+          .setDisableExactOnAttributes(Arrays.asList("algolia"))
+          .setDisablePrefixOnAttributes(Arrays.asList("algolia"))
+          .setDisableTypoToleranceOnAttributes(Arrays.asList("algolia"))
+          .setDisableTypoToleranceOnWords(Arrays.asList("algolia"))
           .setDistinct(Distinct.of(3))
           .setEnablePersonalization(true)
           .setEnableReRanking(false)
@@ -3050,7 +3440,7 @@ class SearchClientRequestsTests {
           .setHighlightPostTag("</span>")
           .setHitsPerPage(10)
           .setIgnorePlurals(IgnorePlurals.of(false))
-          .setIndexLanguages(List.of(SupportedLanguage.FR))
+          .setIndexLanguages(Arrays.asList(SupportedLanguage.FR))
           .setKeepDiacriticsOnCharacters("abc")
           .setMaxFacetHits(20)
           .setMaxValuesPerFacet(30)
@@ -3058,12 +3448,12 @@ class SearchClientRequestsTests {
           .setMinWordSizefor1Typo(5)
           .setMinWordSizefor2Typos(11)
           .setMode(Mode.NEURAL_SEARCH)
-          .setNumericAttributesForFiltering(List.of("algolia"))
-          .setOptionalWords(List.of("myspace"))
+          .setNumericAttributesForFiltering(Arrays.asList("algolia"))
+          .setOptionalWords(Arrays.asList("myspace"))
           .setPaginationLimitedTo(0)
-          .setQueryLanguages(List.of(SupportedLanguage.FR))
+          .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
           .setQueryType(QueryType.PREFIX_LAST)
-          .setRanking(List.of("geo"))
+          .setRanking(Arrays.asList("geo"))
           .setReRankingApplyFilter(ReRankingApplyFilter.of("mySearch:filters"))
           .setRelevancyStrictness(10)
           .setRemoveStopWords(RemoveStopWords.of(false))
@@ -3072,22 +3462,34 @@ class SearchClientRequestsTests {
             new RenderingContent()
               .setFacetOrdering(
                 new FacetOrdering()
-                  .setFacets(new Facets().setOrder(List.of("a", "b")))
-                  .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.COUNT)))
+                  .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+                  .setValues(
+                    new HashMap() {
+                      {
+                        put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
+                      }
+                    }
+                  )
               )
           )
           .setReplaceSynonymsInHighlight(true)
-          .setReplicas(List.of(""))
-          .setResponseFields(List.of("algolia"))
+          .setReplicas(Arrays.asList(""))
+          .setResponseFields(Arrays.asList("algolia"))
           .setRestrictHighlightAndSnippetArrays(true)
-          .setSearchableAttributes(List.of("foo"))
-          .setSemanticSearch(new SemanticSearch().setEventSources(List.of("foo")))
+          .setSearchableAttributes(Arrays.asList("foo"))
+          .setSemanticSearch(new SemanticSearch().setEventSources(Arrays.asList("foo")))
           .setSeparatorsToIndex("bar")
           .setSnippetEllipsisText("---")
           .setSortFacetValuesBy("date")
           .setTypoTolerance(TypoTolerance.of(false))
-          .setUnretrievableAttributes(List.of("foo"))
-          .setUserData(Map.of("user", "data"))
+          .setUnretrievableAttributes(Arrays.asList("foo"))
+          .setUserData(
+            new HashMap() {
+              {
+                put("user", "data");
+              }
+            }
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -3108,7 +3510,11 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateApiKey(
         "myApiKey",
-        new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
+        new ApiKey()
+          .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
+          .setValidity(300)
+          .setMaxQueriesPerIPPerHour(100)
+          .setMaxHitsPerQuery(20)
       );
     });
     EchoResponse req = echo.getLastResponse();

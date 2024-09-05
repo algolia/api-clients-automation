@@ -67,11 +67,13 @@ func NewClientWithConfig(cfg MonitoringConfiguration) (*APIClient, error) {
 }
 
 func getDefaultHosts() []transport.StatefulHost {
-	return []transport.StatefulHost{transport.NewStatefulHost("https", "status.algolia.com", call.IsReadWrite)}
+	return []transport.StatefulHost{
+		transport.NewStatefulHost("https", "status.algolia.com", call.IsReadWrite),
+	}
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.2.2); Go (%s); Monitoring (4.2.2)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.2.4); Go (%s); Monitoring (4.2.4)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

@@ -1,3 +1,13 @@
+## [2.2.4](https://github.com/algolia/algoliasearch-client-scala/compare/2.2.3...2.2.4)
+
+- [a9405b168](https://github.com/algolia/api-clients-automation/commit/a9405b168) fix(specs): usage api ([#3624](https://github.com/algolia/api-clients-automation/pull/3624)) by [@kai687](https://github.com/kai687/)
+- [e3af9554e](https://github.com/algolia/api-clients-automation/commit/e3af9554e) fix(specs): no links across API specs ([#3643](https://github.com/algolia/api-clients-automation/pull/3643)) by [@kai687](https://github.com/kai687/)
+
+## [2.2.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.2.2...2.2.3)
+
+- [3d07a1e4f](https://github.com/algolia/api-clients-automation/commit/3d07a1e4f) fix(specs): ignorePlurals can be a boolean string ([#3620](https://github.com/algolia/api-clients-automation/pull/3620)) by [@millotp](https://github.com/millotp/)
+- [c0675ff6b](https://github.com/algolia/api-clients-automation/commit/c0675ff6b) fix(clients): correly parse usage hosts ([#3622](https://github.com/algolia/api-clients-automation/pull/3622)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [2.2.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.2.1...2.2.2)
 
 - [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)

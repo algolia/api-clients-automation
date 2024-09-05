@@ -46,7 +46,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.AddOrUpdateObjectAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       "uniqueID",
       new Dictionary<string, string> { { "key", "value" } }
     );
@@ -435,7 +435,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.BrowseAsync<Hit>("cts_e2e_browse");
+    var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -451,7 +451,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.ClearObjectsAsync("theIndexName");
+    var response = await client.ClearObjectsAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -467,7 +467,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.ClearRulesAsync("indexName");
+    var response = await client.ClearRulesAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -483,7 +483,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.ClearSynonymsAsync("indexName");
+    var response = await client.ClearSynonymsAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -580,7 +580,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteByAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new DeleteByParams { Filters = "brand:brandName", }
     );
     // SEPARATOR<
@@ -598,7 +598,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.DeleteIndexAsync("theIndexName");
+    var response = await client.DeleteIndexAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -619,6 +619,25 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the DeleteObjects method.
+  ///
+  /// call deleteObjects without error
+  /// </summary>
+  public async Task SnippetForSearchClientDeleteObjects()
+  {
+    // >SEPARATOR deleteObjects default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.DeleteObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<string> { "1", "2" }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the DeleteRule method.
   ///
   /// delete rule simple case
@@ -630,7 +649,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.DeleteRuleAsync("indexName", "id1");
+    var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>", "id1");
     // SEPARATOR<
   }
 
@@ -662,7 +681,65 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.DeleteSynonymAsync("indexName", "id1");
+    var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>", "id1");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// generate secured api key basic
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey()
+  {
+    // >SEPARATOR generateSecuredApiKey generate secured api key basic
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions
+      {
+        ValidUntil = 2524604400L,
+        RestrictIndices = new List<string> { "Movies" },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// generate secured api key with searchParams
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey1()
+  {
+    // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions
+      {
+        ValidUntil = 2524604400L,
+        RestrictIndices = new List<string> { "Movies", "cts_e2e_settings" },
+        RestrictSources = "192.168.1.0/24",
+        Filters = "category:Book OR category:Ebook AND _tags:published",
+        UserToken = "user123",
+        SearchParams = new SearchParamsObject
+        {
+          Query = "batman",
+          TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Strict")),
+          AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
+          Mode = Enum.Parse<Mode>("NeuralSearch"),
+          HitsPerPage = 10,
+          OptionalWords = new List<string> { "one", "two" },
+        },
+      }
+    );
     // SEPARATOR<
   }
 
@@ -759,7 +836,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetObjectAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       "uniqueID",
       new List<string> { "attr1", "attr2" }
     );
@@ -787,7 +864,7 @@ public class SnippetSearchClient
           {
             AttributesToRetrieve = new List<string> { "attr1", "attr2" },
             ObjectID = "uniqueID",
-            IndexName = "theIndexName",
+            IndexName = "<YOUR_INDEX_NAME>",
           }
         },
       }
@@ -807,7 +884,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetRuleAsync("indexName", "id1");
+    var response = await client.GetRuleAsync("<YOUR_INDEX_NAME>", "qr-1725004648916");
     // SEPARATOR<
   }
 
@@ -823,7 +900,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetSettingsAsync("cts_e2e_settings");
+    var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -855,7 +932,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetSynonymAsync("indexName", "id1");
+    var response = await client.GetSynonymAsync("<YOUR_INDEX_NAME>", "id1");
     // SEPARATOR<
   }
 
@@ -871,7 +948,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.GetTaskAsync("theIndexName", 123L);
+    var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
     // SEPARATOR<
   }
 
@@ -920,6 +997,54 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.HasPendingMappingsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexExists
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists()
+  {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexNotExists
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists1()
+  {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the IndexExists method.
+  ///
+  /// indexExistsWithError
+  /// </summary>
+  public async Task SnippetForSearchClientIndexExists2()
+  {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -1008,7 +1133,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("AddObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-            IndexName = "theIndexName",
+            IndexName = "<YOUR_INDEX_NAME>",
           }
         },
       }
@@ -1103,9 +1228,57 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.PartialUpdateObjectAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       "uniqueID",
       new Dictionary<string, string> { { "attributeId", "new value" } }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PartialUpdateObjects method.
+  ///
+  /// call partialUpdateObjects with createIfNotExists=true
+  /// </summary>
+  public async Task SnippetForSearchClientPartialUpdateObjects()
+  {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.PartialUpdateObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+      },
+      true
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PartialUpdateObjects method.
+  ///
+  /// call partialUpdateObjects with createIfNotExists=false
+  /// </summary>
+  public async Task SnippetForSearchClientPartialUpdateObjects1()
+  {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.PartialUpdateObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+      },
+      false
     );
     // SEPARATOR<
   }
@@ -1123,6 +1296,38 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.RemoveUserIdAsync("uniqueID");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceAllObjects method.
+  ///
+  /// call replaceAllObjects without error
+  /// </summary>
+  public async Task SnippetForSearchClientReplaceAllObjects()
+  {
+    // >SEPARATOR replaceAllObjects default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.ReplaceAllObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+        new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+        new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
+        new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
+        new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+        new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
+        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+      },
+      3
+    );
     // SEPARATOR<
   }
 
@@ -1183,6 +1388,52 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the SaveObjects method.
+  ///
+  /// call saveObjects without error
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjects()
+  {
+    // >SEPARATOR saveObjects call saveObjects without error
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveObjects method.
+  ///
+  /// saveObjects should report errors
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjects1()
+  {
+    // >SEPARATOR saveObjects saveObjects should report errors
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the SaveRule method.
   ///
   /// saveRule with minimal parameters
@@ -1195,7 +1446,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SaveRuleAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       "id1",
       new Rule
       {
@@ -1261,7 +1512,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SaveSynonymAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       "id1",
       new SynonymHit
       {
@@ -1439,7 +1690,7 @@ public class SnippetSearchClient
   ///
   /// retrieveFacets
   /// </summary>
-  public async Task SnippetForSearchClientSearch6()
+  public async Task SnippetForSearchClientSearch4()
   {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
@@ -1470,7 +1721,7 @@ public class SnippetSearchClient
   ///
   /// retrieveFacetsWildcard
   /// </summary>
-  public async Task SnippetForSearchClientSearch7()
+  public async Task SnippetForSearchClientSearch5()
   {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
@@ -1527,7 +1778,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchForFacetValuesAsync("indexName", "facetName");
+    var response = await client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
     // SEPARATOR<
   }
 
@@ -1544,8 +1795,8 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchRulesAsync(
-      "indexName",
-      new SearchRulesParams { Query = "something", }
+      "<YOUR_INDEX_NAME>",
+      new SearchRulesParams { Query = "zorro", }
     );
     // SEPARATOR<
   }
@@ -1562,7 +1813,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchSingleIndexAsync<Hit>("indexName");
+    var response = await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -1578,7 +1829,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.SearchSynonymsAsync("indexName");
+    var response = await client.SearchSynonymsAsync("<YOUR_INDEX_NAME>");
     // SEPARATOR<
   }
 
@@ -1642,7 +1893,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSetSettings()
   {
-    // >SEPARATOR setSettings setSettingsAttributesForFaceting
+    // >SEPARATOR setSettings default
     // Initialize the client
     var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
@@ -1684,6 +1935,110 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForApiKey method.
+  ///
+  /// wait for api key helper - add
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForApiKey()
+  {
+    // >SEPARATOR waitForApiKey wait for api key helper - add
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForApiKeyAsync(
+      "api-key-add-operation-test-csharp",
+      Enum.Parse<ApiKeyOperation>("Add")
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForApiKey method.
+  ///
+  /// wait for api key - update
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForApiKey1()
+  {
+    // >SEPARATOR waitForApiKey wait for api key - update
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForApiKeyAsync(
+      "api-key-update-operation-test-csharp",
+      Enum.Parse<ApiKeyOperation>("Update"),
+      new ApiKey
+      {
+        Description = "my updated api key",
+        Acl = new List<Acl>
+        {
+          Enum.Parse<Acl>("Search"),
+          Enum.Parse<Acl>("AddObject"),
+          Enum.Parse<Acl>("DeleteObject")
+        },
+        Indexes = new List<string> { "Movies", "Books" },
+        Referers = new List<string> { "*google.com", "*algolia.com" },
+        Validity = 305,
+        MaxQueriesPerIPPerHour = 95,
+        MaxHitsPerQuery = 20,
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForApiKey method.
+  ///
+  /// wait for api key - delete
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForApiKey2()
+  {
+    // >SEPARATOR waitForApiKey wait for api key - delete
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForApiKeyAsync(
+      "api-key-delete-operation-test-csharp",
+      Enum.Parse<ApiKeyOperation>("Delete")
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForAppTask method.
+  ///
+  /// wait for an application-level task
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForAppTask()
+  {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForAppTaskAsync(123L);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the WaitForTask method.
+  ///
+  /// wait for task
+  /// </summary>
+  public async Task SnippetForSearchClientWaitForTask()
+  {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", 123L);
     // SEPARATOR<
   }
 }

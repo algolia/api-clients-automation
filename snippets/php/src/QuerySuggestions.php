@@ -24,9 +24,9 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->createConfig(
-            ['indexName' => 'theIndexName',
+            ['indexName' => '<YOUR_INDEX_NAME>',
                 'sourceIndices' => [
-                    ['indexName' => 'testIndex',
+                    ['indexName' => '<YOUR_INDEX_NAME>',
                         'facets' => [
                             ['attribute' => 'test',
                             ],
@@ -155,7 +155,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->deleteConfig(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -195,7 +195,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getConfig(
-            'cts_e2e_browse_query_suggestions',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -216,7 +216,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getConfigStatus(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -237,7 +237,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getLogFile(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -258,9 +258,9 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->updateConfig(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             ['sourceIndices' => [
-                ['indexName' => 'testIndex',
+                ['indexName' => '<YOUR_INDEX_NAME>',
                     'facets' => [
                         ['attribute' => 'test',
                         ],

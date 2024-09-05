@@ -66,25 +66,39 @@ class IngestionClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
+  @DisplayName("the user agent contains the latest version")
   void commonApiTest1() {
+    IngestionClient client = createClient();
+
+    client.customPost("1/test");
+    EchoResponse result = echo.getLastResponse();
+    {
+      String regexp = "^Algolia for Java \\(4.2.5\\).*";
+      assertTrue(
+        result.headers.get("user-agent").matches(regexp),
+        "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("calls api with default read timeouts")
+  void commonApiTest2() {
     IngestionClient client = createClient();
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void commonApiTest2() {
+  void commonApiTest3() {
     IngestionClient client = createClient();
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -95,7 +109,6 @@ class IngestionClientClientTests {
     IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("data.us.algolia.com", result.host);
   }
 

@@ -19,7 +19,7 @@ describe('api', () => {
 
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
-    expect(result.host).toEqual('test-app-id-dsn.algolia.net');
+    expect(result.host).toEqual('usage.algolia.com');
   }, 15000);
 
   test('calls api with correct write host', async () => {
@@ -27,7 +27,7 @@ describe('api', () => {
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
-    expect(result.host).toEqual('test-app-id.algolia.net');
+    expect(result.host).toEqual('usage.algolia.com');
   }, 15000);
 });
 
@@ -40,6 +40,14 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Usage (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
+  }, 15000);
+
+  test('the user agent contains the latest version', async () => {
+    const client = createClient();
+
+    const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
+
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.2.5\).*/);
   }, 15000);
 
   test('calls api with default read timeouts', async () => {

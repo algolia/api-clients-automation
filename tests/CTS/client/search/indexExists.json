@@ -1,0 +1,101 @@
+[
+  {
+    "testName": "indexExists",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsYES"
+        },
+        "expected": {
+          "type": "response",
+          "match": true
+        }
+      }
+    ]
+  },
+  {
+    "testName": "indexNotExists",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsNO"
+        },
+        "expected": {
+          "type": "response",
+          "match": false
+        }
+      }
+    ]
+  },
+  {
+    "testName": "indexExistsWithError",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6681
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "indexExists",
+        "parameters": {
+          "indexName": "indexExistsERROR"
+        },
+        "expected": {
+          "error": {
+            "csharp": "{\\\"message\\\":\\\"Invalid API key\\\"}",
+            "go": "API error [403] {\\\"message\\\":\\\"Invalid API key\\\"}",
+            "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid API key\\\"}",
+            "javascript": "Invalid API key",
+            "kotlin": "Client request(GET http://${{localhost}}:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid API key\\\"}\\\"",
+            "php": "Invalid API key",
+            "python": "Invalid API key",
+            "ruby": "Invalid API key",
+            "swift": "HTTP error: Status code: 403 Message: Invalid API key"
+          }
+        }
+      }
+    ]
+  }
+]

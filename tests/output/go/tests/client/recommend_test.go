@@ -94,8 +94,22 @@ func TestRecommendcommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Recommend (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestRecommendcommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createRecommendClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.2.4\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestRecommendcommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -110,7 +124,7 @@ func TestRecommendcommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestRecommendcommonApi2(t *testing.T) {
+func TestRecommendcommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res

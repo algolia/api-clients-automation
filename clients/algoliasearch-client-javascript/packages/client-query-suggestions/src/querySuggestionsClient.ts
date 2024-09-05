@@ -27,7 +27,7 @@ import type { ConfigurationResponse } from '../model/configurationResponse';
 import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
 import type { LogFile } from '../model/logFile';
 
-export const apiClientVersion = '5.2.3';
+export const apiClientVersion = '5.2.5';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -253,7 +253,7 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+     * Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the `Delete an index` operation.
      *
      * Required API Key ACLs:
      * - editSettings.

@@ -47,7 +47,9 @@ object MonitoringClient {
   )
 
   private def hosts(): Seq[Host] = {
-    List(Host("status.algolia.com", Set(CallType.Read, CallType.Write)))
+    List(
+      Host("status.algolia.com", Set(CallType.Read, CallType.Write))
+    )
   }
 }
 

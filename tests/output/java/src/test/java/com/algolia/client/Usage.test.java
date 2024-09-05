@@ -51,8 +51,7 @@ class UsageClientClientTests {
     UsageClient client = new UsageClient("test-app-id", "test-api-key", withEchoRequester());
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
-
-    assertEquals("test-app-id-dsn.algolia.net", result.host);
+    assertEquals("usage.algolia.com", result.host);
   }
 
   @Test
@@ -61,8 +60,7 @@ class UsageClientClientTests {
     UsageClient client = new UsageClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
-
-    assertEquals("test-app-id.algolia.net", result.host);
+    assertEquals("usage.algolia.com", result.host);
   }
 
   @Test
@@ -86,25 +84,39 @@ class UsageClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
+  @DisplayName("the user agent contains the latest version")
   void commonApiTest1() {
+    UsageClient client = createClient();
+
+    client.customPost("1/test");
+    EchoResponse result = echo.getLastResponse();
+    {
+      String regexp = "^Algolia for Java \\(4.2.5\\).*";
+      assertTrue(
+        result.headers.get("user-agent").matches(regexp),
+        "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("calls api with default read timeouts")
+  void commonApiTest2() {
     UsageClient client = createClient();
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void commonApiTest2() {
+  void commonApiTest3() {
     UsageClient client = createClient();
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }

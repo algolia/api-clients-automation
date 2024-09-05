@@ -15,6 +15,9 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'csharp':
       await run('dotnet build --configuration Release', { cwd, language });
       break;
+    case 'go':
+      await run('go build ./...', { cwd, language });
+      break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
       if (buildType === 'client') {
@@ -28,6 +31,13 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'java':
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
+      break;
+    case 'php':
+      // await runComposerInstall();
+      // await run(
+      //   `clients/algoliasearch-client-php/vendor/bin/phpstan analyse --memory-limit 512M -c clients/algoliasearch-client-php/phpstan.neon ${cwd}`,
+      //   { language },
+      // );
       break;
     case 'python':
       // there is no type checking for the playground or snippets

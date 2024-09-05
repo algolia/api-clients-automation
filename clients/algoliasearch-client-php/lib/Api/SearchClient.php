@@ -7,6 +7,7 @@ namespace Algolia\AlgoliaSearch\Api;
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Exceptions\ExceededRetriesException;
+use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 use Algolia\AlgoliaSearch\Exceptions\ValidUntilNotFoundException;
 use Algolia\AlgoliaSearch\Iterators\ObjectIterator;
 use Algolia\AlgoliaSearch\Iterators\RuleIterator;
@@ -21,6 +22,7 @@ use Algolia\AlgoliaSearch\Model\Search\BrowseParams;
 use Algolia\AlgoliaSearch\Model\Search\DeleteByParams;
 use Algolia\AlgoliaSearch\Model\Search\DictionarySettingsParams;
 use Algolia\AlgoliaSearch\Model\Search\GetObjectsParams;
+use Algolia\AlgoliaSearch\Model\Search\GetTaskResponse;
 use Algolia\AlgoliaSearch\Model\Search\IndexSettings;
 use Algolia\AlgoliaSearch\Model\Search\OperationIndexParams;
 use Algolia\AlgoliaSearch\Model\Search\Rule;
@@ -47,7 +49,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.3.3';
+    public const VERSION = '4.3.5';
 
     /**
      * @var ApiWrapperInterface
@@ -2762,6 +2764,8 @@ class SearchClient
      * @param null|int $maxRetries     Maximum number of retries
      * @param null|int $timeout        Timeout
      *
+     * @return GetTaskResponse
+     *
      * @throws ExceededRetriesException
      */
     public function waitForTask($indexName, $taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
@@ -2774,7 +2778,7 @@ class SearchClient
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
 
-        Helpers::retryUntil(
+        return Helpers::retryUntil(
             $this,
             'getTask',
             [$indexName, $taskId, $requestOptions],
@@ -2792,6 +2796,8 @@ class SearchClient
      * @param null|int $maxRetries     Maximum number of retries
      * @param null|int $timeout        Timeout
      *
+     * @return GetTaskResponse
+     *
      * @throws ExceededRetriesException
      */
     public function waitForAppTask($taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
@@ -2804,7 +2810,7 @@ class SearchClient
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
 
-        Helpers::retryUntil(
+        return Helpers::retryUntil(
             $this,
             'getAppTask',
             [$taskId, $requestOptions],
@@ -3091,6 +3097,19 @@ class SearchClient
         $validUntil = (int) $matches[1];
 
         return $validUntil - time();
+    }
+
+    public function indexExists($indexName)
+    {
+        try {
+            $this->getSettings($indexName);
+        } catch (NotFoundException $e) {
+            return false;
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return true;
     }
 
     private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)

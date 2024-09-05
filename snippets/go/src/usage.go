@@ -135,7 +135,7 @@ func SnippetForGetIndexUsageOfUsage() {
 
 	// Call the API
 	response, err := client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
-		usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+		usage.Statistic("queries_operations"), "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
 	))
 	if err != nil {
 		// handle the eventual error

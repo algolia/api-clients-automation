@@ -75,11 +75,15 @@ object {{classname}} {
     ) ++ commonHosts
   }
   {{/hostWithAppID}}
-  {{#uniqueHost}}
+  {{#hostsWithoutVariables.size}}
   private def hosts(): Seq[Host] = {
-    List(Host("{{.}}", Set(CallType.Read, CallType.Write)))
+    List(
+    {{#hostsWithoutVariables}}
+    Host("{{.}}", Set(CallType.Read, CallType.Write)),
+    {{/hostsWithoutVariables}}
+    )
   }
-  {{/uniqueHost}}
+  {{/hostsWithoutVariables.size}}
 }
 
 class {{classname}}(

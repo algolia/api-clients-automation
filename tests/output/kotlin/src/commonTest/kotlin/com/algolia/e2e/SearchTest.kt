@@ -43,6 +43,21 @@ class SearchTest {
   }
 
   @Test
+  fun `getRule`() = runTest {
+    client.runTest(
+      call = {
+        getRule(
+          indexName = "cts_e2e_browse",
+          objectID = "qr-1725004648916",
+        )
+      },
+      response = {
+        JSONAssert.assertEquals("{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}", Json.encodeToString(it), JSONCompareMode.LENIENT)
+      },
+    )
+  }
+
+  @Test
   fun `getSettings`() = runTest {
     client.runTest(
       call = {
@@ -169,6 +184,23 @@ class SearchTest {
       },
       response = {
         JSONAssert.assertEquals("{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}", Json.encodeToString(it), JSONCompareMode.LENIENT)
+      },
+    )
+  }
+
+  @Test
+  fun `searchRules`() = runTest {
+    client.runTest(
+      call = {
+        searchRules(
+          indexName = "cts_e2e_browse",
+          searchRulesParams = SearchRulesParams(
+            query = "zorro",
+          ),
+        )
+      },
+      response = {
+        JSONAssert.assertEquals("{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}", Json.encodeToString(it), JSONCompareMode.LENIENT)
       },
     )
   }

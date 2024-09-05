@@ -104,7 +104,7 @@ class SnippetUsageClient {
     // Call the API
     val response = client.getIndexUsage(
       statistic = Statistic.withName("queries_operations"),
-      indexName = "myIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       startDate = "2024-04-03T12:46:43Z",
       endDate = "2024-04-05T12:46:43Z"
     )

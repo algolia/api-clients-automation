@@ -19,7 +19,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class MonitoringClient
 {
-    public const VERSION = '4.3.3';
+    public const VERSION = '4.3.5';
 
     /**
      * @var ApiWrapperInterface
@@ -77,7 +77,9 @@ class MonitoringClient
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create('status.algolia.com');
+            $clusterHosts = ClusterHosts::create([
+                'status.algolia.com',
+            ]);
         }
 
         return $clusterHosts;

@@ -12,10 +12,12 @@ info:
     The base URLs for requests to the A/B testing API are:
 
 
-    - `https://analytics.us.algolia.com` (alias:
-    `https://analytics.algolia.com`)
+    - `https://analytics.us.algolia.com`
 
     - `https://analytics.de.algolia.com`
+
+    - `https://analytics.algolia.com` (routes requests to the closest of the
+    above servers, based on your geographical location)
 
 
     Use the URL that matches your [analytics
@@ -1084,7 +1086,7 @@ paths:
                 .setEndAt("2022-12-31T00:00:00.000Z")
                 .setName("myABTest")
                 .setVariants(
-                  List.of(
+                  Arrays.asList(
                     new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
@@ -2333,7 +2335,7 @@ paths:
                 .setScheduledAt("2022-11-31T00:00:00.000Z")
                 .setName("myABTest")
                 .setVariants(
-                  List.of(
+                  Arrays.asList(
                     new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )

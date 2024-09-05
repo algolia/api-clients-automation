@@ -66,25 +66,39 @@ class InsightsClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
+  @DisplayName("the user agent contains the latest version")
   void commonApiTest1() {
+    InsightsClient client = createClient();
+
+    client.customPost("1/test");
+    EchoResponse result = echo.getLastResponse();
+    {
+      String regexp = "^Algolia for Java \\(4.2.5\\).*";
+      assertTrue(
+        result.headers.get("user-agent").matches(regexp),
+        "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("calls api with default read timeouts")
+  void commonApiTest2() {
     InsightsClient client = createClient();
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void commonApiTest2() {
+  void commonApiTest3() {
     InsightsClient client = createClient();
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -96,7 +110,7 @@ class InsightsClientClientTests {
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
-          List.of(
+          Arrays.asList(
             new ClickedObjectIDsAfterSearch()
               .setEventType(ClickEvent.CLICK)
               .setEventName("Product Clicked")
@@ -104,14 +118,13 @@ class InsightsClientClientTests {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1641290601962L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(List.of(7, 6))
+              .setPositions(Arrays.asList(7, 6))
           )
         )
     );
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.algolia.io", result.host);
   }
 
@@ -121,7 +134,6 @@ class InsightsClientClientTests {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.us.algolia.io", result.host);
   }
 

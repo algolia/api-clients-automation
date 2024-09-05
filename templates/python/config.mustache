@@ -45,11 +45,13 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
 
         {{^hasRegionalHost}}
         self.hosts = HostsCollection(
-            {{#uniqueHost}}
+            {{#hostsWithoutVariables.size}}
             [
+              {{#hostsWithoutVariables}}
                 Host("{{{.}}}"),
+              {{/hostsWithoutVariables}}
             ]
-            {{/uniqueHost}}
+            {{/hostsWithoutVariables.size}}
             {{#hostWithAppID}}
             [
                 Host(url="{}-dsn.algolia.net".format(self.app_id), priority=10, accept=CallType.READ),

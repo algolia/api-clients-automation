@@ -28,6 +28,18 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # getRule
+  def test_get_rule
+    res = @client.get_rule_with_http_info("cts_e2e_browse", "qr-1725004648916")
+
+    assert_equal(res.status, 200)
+    res = @client.get_rule("cts_e2e_browse", "qr-1725004648916")
+    expected_body = JSON.parse(
+      "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]}}"
+    )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # getSettings
   def test_get_settings
     res = @client.get_settings_with_http_info("cts_e2e_settings")
@@ -173,6 +185,18 @@ class TestSearchClientE2E < Test::Unit::TestCase
     res = @client.search_dictionary_entries("stopwords", SearchDictionaryEntriesParams.new(query: "about"))
     expected_body = JSON.parse(
       "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
+    )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
+  # searchRules
+  def test_search_rules
+    res = @client.search_rules_with_http_info("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+
+    assert_equal(res.status, 200)
+    res = @client.search_rules("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
+    expected_body = JSON.parse(
+      "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end

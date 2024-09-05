@@ -40,8 +40,20 @@ public class AnalyticsClientTests
     }
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
+  [Fact(DisplayName = "the user agent contains the latest version")]
   public async Task CommonApiTest1()
+  {
+    var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
+    await client.CustomPostAsync("1/test");
+    EchoResponse result = _echo.LastResponse;
+    {
+      var regexp = new Regex("^Algolia for Csharp \\(7.2.4\\).*");
+      Assert.Matches(regexp, result.Headers["user-agent"]);
+    }
+  }
+
+  [Fact(DisplayName = "calls api with default read timeouts")]
+  public async Task CommonApiTest2()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
     await client.CustomGetAsync("1/test");
@@ -52,7 +64,7 @@ public class AnalyticsClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest2()
+  public async Task CommonApiTest3()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
     await client.CustomPostAsync("1/test");
@@ -66,6 +78,7 @@ public class AnalyticsClientTests
   public async Task ParametersTest0()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("my-app-id", "my-api-key"), _echo);
+
     await client.GetAverageClickPositionAsync("my-index");
     EchoResponse result = _echo.LastResponse;
 
@@ -76,6 +89,7 @@ public class AnalyticsClientTests
   public async Task ParametersTest1()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("my-app-id", "my-api-key", "de"), _echo);
+
     await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 

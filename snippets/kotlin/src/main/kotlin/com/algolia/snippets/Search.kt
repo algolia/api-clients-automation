@@ -3,9 +3,9 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.SearchClient
+import com.algolia.client.extensions.*
 // IMPORT<
 import com.algolia.client.model.search.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -40,7 +40,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.addOrUpdateObject(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       body = buildJsonObject {
         put(
@@ -444,7 +444,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.browse(
-      indexName = "cts_e2e_browse",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -461,7 +461,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.clearObjects(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -478,7 +478,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.clearRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -495,7 +495,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.clearSynonyms(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -597,7 +597,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.deleteBy(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       deleteByParams = DeleteByParams(
         filters = "brand:brandName",
       ),
@@ -617,7 +617,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.deleteIndex(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -645,6 +645,24 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForDeleteObjects() {
+    // >SEPARATOR deleteObjects default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.deleteObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectIDs = listOf("1", "2"),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForDeleteRule() {
     // >SEPARATOR deleteRule default
     // Initialize the client
@@ -652,7 +670,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.deleteRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
     )
 
@@ -687,8 +705,61 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.deleteSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey() {
+    // >SEPARATOR generateSecuredApiKey generate secured api key basic
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        validUntil = 2524604400L,
+        restrictIndices = listOf("Movies"),
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey1() {
+    // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        validUntil = 2524604400L,
+        restrictIndices = listOf("Movies", "cts_e2e_settings"),
+        restrictSources = "192.168.1.0/24",
+        filters = "category:Book OR category:Ebook AND _tags:published",
+        userToken = "user123",
+        searchParams = SearchParamsObject(
+          query = "batman",
+          typoTolerance = TypoToleranceEnum.entries.first { it.value == "strict" },
+          aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
+          mode = Mode.entries.first { it.value == "neuralSearch" },
+          hitsPerPage = 10,
+          optionalWords = listOf("one", "two"),
+        ),
+      ),
     )
 
     // Use the response
@@ -784,7 +855,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToRetrieve = listOf("attr1", "attr2"),
     )
@@ -808,7 +879,7 @@ class SnippetSearchClient {
           GetObjectsRequest(
             attributesToRetrieve = listOf("attr1", "attr2"),
             objectID = "uniqueID",
-            indexName = "theIndexName",
+            indexName = "<YOUR_INDEX_NAME>",
           ),
         ),
       ),
@@ -828,8 +899,8 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getRule(
-      indexName = "indexName",
-      objectID = "id1",
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "qr-1725004648916",
     )
 
     // Use the response
@@ -846,7 +917,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getSettings(
-      indexName = "cts_e2e_settings",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -878,7 +949,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
     )
 
@@ -896,7 +967,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.getTask(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       taskID = 123L,
     )
 
@@ -946,6 +1017,57 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.hasPendingMappings()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForIndexExists() {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForIndexExists1() {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForIndexExists2() {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.indexExists(
+      indexName = "<YOUR_INDEX_NAME>",
+    )
 
     // Use the response
     println(response)
@@ -1031,7 +1153,7 @@ class SnippetSearchClient {
                 JsonPrimitive("value"),
               )
             },
-            indexName = "theIndexName",
+            indexName = "<YOUR_INDEX_NAME>",
           ),
         ),
       ),
@@ -1115,7 +1237,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.partialUpdateObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToUpdate = buildJsonObject {
         put(
@@ -1123,6 +1245,86 @@ class SnippetSearchClient {
           JsonPrimitive("new value"),
         )
       },
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObjects() {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Adam"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("2"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Benoit"),
+          )
+        },
+      ),
+      createIfNotExists = true,
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPartialUpdateObjects1() {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.partialUpdateObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("3"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Cyril"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("4"),
+          )
+          put(
+            "name",
+            JsonPrimitive("David"),
+          )
+        },
+      ),
+      createIfNotExists = false,
     )
 
     // Use the response
@@ -1140,6 +1342,126 @@ class SnippetSearchClient {
     // Call the API
     var response = client.removeUserId(
       userID = "uniqueID",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceAllObjects() {
+    // >SEPARATOR replaceAllObjects default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.replaceAllObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Adam"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("2"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Benoit"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("3"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Cyril"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("4"),
+          )
+          put(
+            "name",
+            JsonPrimitive("David"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("5"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Eva"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("6"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Fiona"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("7"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Gael"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("8"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Hugo"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("9"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Igor"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("10"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Julia"),
+          )
+        },
+      ),
+      batchSize = 3,
     )
 
     // Use the response
@@ -1215,6 +1537,84 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSaveObjects() {
+    // >SEPARATOR saveObjects call saveObjects without error
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.saveObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Adam"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("2"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Benoit"),
+          )
+        },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveObjects1() {
+    // >SEPARATOR saveObjects saveObjects should report errors
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.saveObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = listOf(
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("1"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Adam"),
+          )
+        },
+        buildJsonObject {
+          put(
+            "objectID",
+            JsonPrimitive("2"),
+          )
+          put(
+            "name",
+            JsonPrimitive("Benoit"),
+          )
+        },
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSaveRule() {
     // >SEPARATOR saveRule default
     // Initialize the client
@@ -1222,7 +1622,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.saveRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       rule = Rule(
         objectID = "id1",
@@ -1288,7 +1688,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.saveSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       synonymHit = SynonymHit(
         objectID = "id1",
@@ -1437,7 +1837,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSearch6() {
+  suspend fun snippetForSearch4() {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1462,7 +1862,7 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForSearch7() {
+  suspend fun snippetForSearch5() {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1514,7 +1914,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchForFacetValues(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       facetName = "facetName",
     )
 
@@ -1532,9 +1932,9 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       searchRulesParams = SearchRulesParams(
-        query = "something",
+        query = "zorro",
       ),
     )
 
@@ -1552,7 +1952,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchSingleIndex(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -1569,7 +1969,7 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchSynonyms(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
     // Use the response
@@ -1623,7 +2023,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSetSettings() {
-    // >SEPARATOR setSettings setSettingsAttributesForFaceting
+    // >SEPARATOR setSettings default
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1656,6 +2056,104 @@ class SnippetSearchClient {
         maxQueriesPerIPPerHour = 100,
         maxHitsPerQuery = 20,
       ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForApiKey() {
+    // >SEPARATOR waitForApiKey wait for api key helper - add
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForApiKey(
+      key = "api-key-add-operation-test-kotlin",
+      operation = ApiKeyOperation.entries.first { it.value == "add" },
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForApiKey1() {
+    // >SEPARATOR waitForApiKey wait for api key - update
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForApiKey(
+      key = "api-key-update-operation-test-kotlin",
+      operation = ApiKeyOperation.entries.first { it.value == "update" },
+      apiKey = ApiKey(
+        description = "my updated api key",
+        acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }, Acl.entries.first { it.value == "deleteObject" }),
+        indexes = listOf("Movies", "Books"),
+        referers = listOf("*google.com", "*algolia.com"),
+        validity = 305,
+        maxQueriesPerIPPerHour = 95,
+        maxHitsPerQuery = 20,
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForApiKey2() {
+    // >SEPARATOR waitForApiKey wait for api key - delete
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForApiKey(
+      key = "api-key-delete-operation-test-kotlin",
+      operation = ApiKeyOperation.entries.first { it.value == "delete" },
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForAppTask() {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForAppTask(
+      taskID = 123L,
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForWaitForTask() {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.waitForTask(
+      indexName = "<YOUR_INDEX_NAME>",
+      taskID = 123L,
     )
 
     // Use the response

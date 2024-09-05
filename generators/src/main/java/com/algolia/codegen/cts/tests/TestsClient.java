@@ -1,10 +1,8 @@
 package com.algolia.codegen.cts.tests;
 
-import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
-
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
-import io.swagger.util.Json;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +18,8 @@ public class TestsClient extends TestsGenerator {
   private final boolean withSyncTests;
   private final String testType;
 
-  public TestsClient(String language, String client, boolean withBenchmark) {
-    super(language, client);
+  public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
+    super(ctsManager);
     this.withBenchmark = withBenchmark;
     this.withSyncTests = language.equals("python");
     this.testType = withBenchmark ? "benchmark" : "client";
@@ -63,7 +61,7 @@ public class TestsClient extends TestsGenerator {
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
     Map<String, ClientTestData[]> cts = loadCTS(testType, client, ClientTestData[].class);
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     List<Object> blocks = new ArrayList<>();
     for (Map.Entry<String, ClientTestData[]> blockEntry : cts.entrySet()) {
@@ -115,6 +113,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
               if (ope.returnType != null && ope.returnType.length() > 0) {
                 stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
+                stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
               // set on testOut because we need to wrap everything for java.
@@ -123,10 +122,8 @@ public class TestsClient extends TestsGenerator {
             }
 
             stepOut.put("method", step.method);
+            stepOut.put("isCustomRequest", step.method != null && Helpers.CUSTOM_METHODS.contains(step.method));
 
-            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
-              stepOut.put("isCustomRequest", true);
-            }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
             // Swift is strongly-typed and compiled language,
@@ -154,6 +151,9 @@ public class TestsClient extends TestsGenerator {
                     break;
                   case "timeouts":
                     stepOut.put("testTimeouts", true);
+                    Map<String, Integer> timeouts = (Map<String, Integer>) step.expected.match;
+                    stepOut.put("matchConnectTimeout", timeouts.get("connectTimeout"));
+                    stepOut.put("matchResponseTimeout", timeouts.get("responseTimeout"));
                     break;
                   case "response":
                     stepOut.put("testResponse", true);
@@ -177,24 +177,8 @@ public class TestsClient extends TestsGenerator {
                     ((String) stepOut.get("expectedError")).replace(step.method, Helpers.toPascalCase(step.method))
                   );
                 }
-              } else if (step.expected.match != null) {
-                Map<String, Object> matchMap = new HashMap<>();
-                if (step.expected.match instanceof Map match) {
-                  paramsType.enhanceParameters(match, matchMap);
-                  stepOut.put("match", matchMap);
-                  stepOut.put("matchIsJSON", true);
-                } else if (step.expected.match instanceof List match) {
-                  matchMap.put("parameters", Json.mapper().writeValueAsString(step.expected.match));
-                  stepOut.put("match", matchMap);
-                  stepOut.put("matchIsJSON", true);
-                } else {
-                  stepOut.put("match", step.expected.match);
-                }
-              } else if (step.expected.match == null) {
-                stepOut.put("match", Map.of());
-                stepOut.put("matchIsJSON", false);
-                stepOut.put("matchIsNull", true);
               }
+              stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
             }
             steps.add(stepOut);
           }

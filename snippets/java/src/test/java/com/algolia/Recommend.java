@@ -69,7 +69,7 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
+    client.deleteRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
     // SEPARATOR<
   }
 
@@ -82,7 +82,7 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
+    client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
     // SEPARATOR<
   }
 
@@ -95,7 +95,7 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRecommendStatus("indexName", RecommendModels.RELATED_PRODUCTS, 12345L);
+    client.getRecommendStatus("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, 12345L);
     // SEPARATOR<
   }
 
@@ -111,8 +111,12 @@ class SnippetRecommendClient {
     client.getRecommendations(
       new GetRecommendationsParams()
         .setRequests(
-          List.of(
-            new RelatedQuery().setIndexName("indexName").setObjectID("objectID").setModel(RelatedModel.RELATED_PRODUCTS).setThreshold(42.1)
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("<YOUR_INDEX_NAME>")
+              .setObjectID("objectID")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(42.1)
           )
         )
     );
@@ -128,7 +132,7 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchRecommendRules("indexName", RecommendModels.RELATED_PRODUCTS);
+    client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
     // SEPARATOR<
   }
 }

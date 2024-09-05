@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.AlgoliaJavascriptGenerator;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,6 +13,22 @@ public class JavascriptCTSManager implements CTSManager {
 
   public JavascriptCTSManager(String client) {
     this.client = client;
+  }
+
+  public String getLanguage() {
+    return "javascript";
+  }
+
+  public String getLanguageCased() {
+    return "JavaScript";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
+  public String getVersion() {
+    return Helpers.getPackageJsonVersion(AlgoliaJavascriptGenerator.getPackageName(client));
   }
 
   @Override

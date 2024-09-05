@@ -54,6 +54,20 @@ class InsightsTest extends AnyFunSuite {
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
 
+  test("the user agent contains the latest version") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp = """^Algolia for Scala \(2.2.4\).*""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
   test("calls api with default read timeouts") {
     val (client, echo) = testClient()
 

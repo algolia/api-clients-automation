@@ -54,7 +54,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->addOrUpdateObject(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'uniqueID',
             ['key' => 'value',
             ],
@@ -456,7 +456,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->browse(
-            'cts_e2e_browse',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -477,7 +477,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->clearObjects(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -498,7 +498,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->clearRules(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -519,7 +519,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->clearSynonyms(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -645,7 +645,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->deleteBy(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             ['filters' => 'brand:brandName',
             ],
         );
@@ -668,7 +668,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->deleteIndex(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -699,6 +699,32 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the DeleteObjects method.
+     *
+     * call deleteObjects without error
+     */
+    public function snippetForDeleteObjects()
+    {
+        // >SEPARATOR deleteObjects default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->deleteObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                '1',
+
+                '2',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the DeleteRule method.
      *
      * delete rule simple case
@@ -711,7 +737,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->deleteRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'id1',
         );
 
@@ -754,8 +780,76 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->deleteSynonym(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'id1',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * generate secured api key basic
+     */
+    public function snippetForGenerateSecuredApiKey()
+    {
+        // >SEPARATOR generateSecuredApiKey generate secured api key basic
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['validUntil' => 2524604400,
+                'restrictIndices' => [
+                    'Movies',
+                ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * generate secured api key with searchParams
+     */
+    public function snippetForGenerateSecuredApiKey1()
+    {
+        // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['validUntil' => 2524604400,
+                'restrictIndices' => [
+                    'Movies',
+
+                    'cts_e2e_settings',
+                ],
+                'restrictSources' => '192.168.1.0/24',
+                'filters' => 'category:Book OR category:Ebook AND _tags:published',
+                'userToken' => 'user123',
+                'searchParams' => ['query' => 'batman',
+                    'typoTolerance' => 'strict',
+                    'aroundRadius' => 'all',
+                    'mode' => 'neuralSearch',
+                    'hitsPerPage' => 10,
+                    'optionalWords' => [
+                        'one',
+
+                        'two',
+                    ],
+                ],
+            ],
         );
 
         // play with the response
@@ -875,7 +969,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getObject(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             'uniqueID',
             [
                 'attr1',
@@ -909,7 +1003,7 @@ class SnippetSearchClient
                     'attr2',
                 ],
                     'objectID' => 'uniqueID',
-                    'indexName' => 'theIndexName',
+                    'indexName' => '<YOUR_INDEX_NAME>',
                 ],
             ],
             ],
@@ -933,8 +1027,8 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getRule(
-            'indexName',
-            'id1',
+            '<YOUR_INDEX_NAME>',
+            'qr-1725004648916',
         );
 
         // play with the response
@@ -955,7 +1049,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getSettings(
-            'cts_e2e_settings',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -995,7 +1089,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getSynonym(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'id1',
         );
 
@@ -1017,7 +1111,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->getTask(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             123,
         );
 
@@ -1079,6 +1173,69 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->hasPendingMappings();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the IndexExists method.
+     *
+     * indexExists
+     */
+    public function snippetForIndexExists()
+    {
+        // >SEPARATOR indexExists indexExists
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the IndexExists method.
+     *
+     * indexNotExists
+     */
+    public function snippetForIndexExists1()
+    {
+        // >SEPARATOR indexExists indexNotExists
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the IndexExists method.
+     *
+     * indexExistsWithError
+     */
+    public function snippetForIndexExists2()
+    {
+        // >SEPARATOR indexExists indexExistsWithError
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->indexExists(
+            '<YOUR_INDEX_NAME>',
+        );
 
         // play with the response
         var_dump($response);
@@ -1178,7 +1335,7 @@ class SnippetSearchClient
                 ['action' => 'addObject',
                     'body' => ['key' => 'value',
                     ],
-                    'indexName' => 'theIndexName',
+                    'indexName' => '<YOUR_INDEX_NAME>',
                 ],
             ],
             ],
@@ -1279,10 +1436,72 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->partialUpdateObject(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             'uniqueID',
             ['attributeId' => 'new value',
             ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObjects method.
+     *
+     * call partialUpdateObjects with createIfNotExists=true
+     */
+    public function snippetForPartialUpdateObjects()
+    {
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->partialUpdateObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PartialUpdateObjects method.
+     *
+     * call partialUpdateObjects with createIfNotExists=false
+     */
+    public function snippetForPartialUpdateObjects1()
+    {
+        // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->partialUpdateObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            false,
         );
 
         // play with the response
@@ -1304,6 +1523,69 @@ class SnippetSearchClient
         // Call the API
         $response = $client->removeUserId(
             'uniqueID',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ReplaceAllObjects method.
+     *
+     * call replaceAllObjects without error
+     */
+    public function snippetForReplaceAllObjects()
+    {
+        // >SEPARATOR replaceAllObjects default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->replaceAllObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fiona',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gael',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'Igor',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'Julia',
+                ],
+            ],
+            3,
         );
 
         // play with the response
@@ -1382,6 +1664,66 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SaveObjects method.
+     *
+     * call saveObjects without error
+     */
+    public function snippetForSaveObjects()
+    {
+        // >SEPARATOR saveObjects call saveObjects without error
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjects method.
+     *
+     * saveObjects should report errors
+     */
+    public function snippetForSaveObjects1()
+    {
+        // >SEPARATOR saveObjects saveObjects should report errors
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->saveObjects(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SaveRule method.
      *
      * saveRule with minimal parameters
@@ -1394,7 +1736,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->saveRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'id1',
             ['objectID' => 'id1',
                 'conditions' => [
@@ -1463,7 +1805,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->saveSynonym(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'id1',
             ['objectID' => 'id1',
                 'type' => 'synonym',
@@ -1643,7 +1985,7 @@ class SnippetSearchClient
      *
      * retrieveFacets
      */
-    public function snippetForSearch6()
+    public function snippetForSearch4()
     {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
@@ -1674,7 +2016,7 @@ class SnippetSearchClient
      *
      * retrieveFacetsWildcard
      */
-    public function snippetForSearch7()
+    public function snippetForSearch5()
     {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
@@ -1734,7 +2076,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchForFacetValues(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'facetName',
         );
 
@@ -1756,8 +2098,8 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchRules(
-            'indexName',
-            ['query' => 'something',
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'zorro',
             ],
         );
 
@@ -1779,7 +2121,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchSingleIndex(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -1800,7 +2142,7 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchSynonyms(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
         );
 
         // play with the response
@@ -1866,7 +2208,7 @@ class SnippetSearchClient
      */
     public function snippetForSetSettings()
     {
-        // >SEPARATOR setSettings setSettingsAttributesForFaceting
+        // >SEPARATOR setSettings default
         // Initialize the client
         $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -1911,6 +2253,137 @@ class SnippetSearchClient
                 'maxQueriesPerIPPerHour' => 100,
                 'maxHitsPerQuery' => 20,
             ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForApiKey method.
+     *
+     * wait for api key helper - add
+     */
+    public function snippetForWaitForApiKey()
+    {
+        // >SEPARATOR waitForApiKey wait for api key helper - add
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForApiKey(
+            'api-key-add-operation-test-php',
+            'add',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForApiKey method.
+     *
+     * wait for api key - update
+     */
+    public function snippetForWaitForApiKey1()
+    {
+        // >SEPARATOR waitForApiKey wait for api key - update
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForApiKey(
+            'api-key-update-operation-test-php',
+            'update',
+            ['description' => 'my updated api key',
+                'acl' => [
+                    'search',
+
+                    'addObject',
+
+                    'deleteObject',
+                ],
+                'indexes' => [
+                    'Movies',
+
+                    'Books',
+                ],
+                'referers' => [
+                    '*google.com',
+
+                    '*algolia.com',
+                ],
+                'validity' => 305,
+                'maxQueriesPerIPPerHour' => 95,
+                'maxHitsPerQuery' => 20,
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForApiKey method.
+     *
+     * wait for api key - delete
+     */
+    public function snippetForWaitForApiKey2()
+    {
+        // >SEPARATOR waitForApiKey wait for api key - delete
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForApiKey(
+            'api-key-delete-operation-test-php',
+            'delete',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForAppTask method.
+     *
+     * wait for an application-level task
+     */
+    public function snippetForWaitForAppTask()
+    {
+        // >SEPARATOR waitForAppTask default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForAppTask(
+            123,
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the WaitForTask method.
+     *
+     * wait for task
+     */
+    public function snippetForWaitForTask()
+    {
+        // >SEPARATOR waitForTask default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->waitForTask(
+            '<YOUR_INDEX_NAME>',
+            123,
         );
 
         // play with the response

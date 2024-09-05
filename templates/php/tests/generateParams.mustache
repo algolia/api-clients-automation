@@ -3,7 +3,7 @@
   null,
 {{/isNull}}
 {{#isString}}
-  "{{{value}}}",
+  "{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}",
 {{/isString}}
 {{#isEnum}}
   "{{{value}}}",

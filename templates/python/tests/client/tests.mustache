@@ -18,32 +18,25 @@
         {{^isError}}
         {{#times}}for _ in range(0, {{.}}):
           {{/times}}{{#dynamicTemplate}}{{/dynamicTemplate}}
-        {{#match}}
         {{#testUserAgent}}
-        regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}")
+        regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
         {{/testUserAgent}}
         {{#testTimeouts}}
-        assert _req.timeouts.get("connect") == {{{match.parametersWithDataTypeMap.connectTimeout.value}}}
-        assert _req.timeouts.get("response") == {{{match.parametersWithDataTypeMap.responseTimeout.value}}}
+        assert _req.timeouts.get("connect") == {{{matchConnectTimeout}}}
+        assert _req.timeouts.get("response") == {{{matchResponseTimeout}}}
         {{/testTimeouts}}
         {{#testHost}}
-        assert _req.host == "{{{match}}}"
+        assert _req.host == "{{{match.value}}}"
         {{/testHost}}
         {{#testResponse}}
-        {{#matchIsJSON}}
-        assert (_req if isinstance(_req, dict) else [elem.to_dict() for elem in _req] if isinstance(_req, list) else  _req.to_dict()) == loads("""{{{match.parameters}}}""")
-        {{/matchIsJSON}}
-        {{^matchIsJSON}}
-        {{#matchIsNull}}
-        assert _req is None
-        {{/matchIsNull}}
-        {{^matchIsNull}}
-        assert _req == """{{{match}}}"""
-        {{/matchIsNull}}
-        {{/matchIsJSON}}
+        {{^match.isPrimitive}}
+        assert (_req if isinstance(_req, dict) else [elem.to_dict() for elem in _req] if isinstance(_req, list) else  _req.to_dict()) == loads("""{{{match.value}}}""")
+        {{/match.isPrimitive}}
+        {{#match.isPrimitive}}
+        assert _req == {{#match}}{{> tests/generateInnerParams}}{{/match}}
+        {{/match.isPrimitive}}
         {{/testResponse}}
-        {{/match}}
         {{/isError}}
         {{/steps}}
 

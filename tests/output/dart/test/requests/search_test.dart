@@ -1508,11 +1508,12 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.getRule(
-        indexName: "indexName",
-        objectID: "id1",
+        indexName: "cts_e2e_browse",
+        objectID: "qr-1725004648916",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/rules/id1');
+        expectPath(
+            request.path, '/1/indexes/cts_e2e_browse/rules/qr-1725004648916');
         expect(request.method, 'get');
         expect(request.body, null);
       },
@@ -3298,15 +3299,15 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.searchRules(
-        indexName: "indexName",
+        indexName: "cts_e2e_browse",
         searchRulesParams: SearchRulesParams(
-          query: "something",
+          query: "zorro",
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/rules/search');
+        expectPath(request.path, '/1/indexes/cts_e2e_browse/rules/search');
         expect(request.method, 'post');
-        expectBody(request.body, """{"query":"something"}""");
+        expectBody(request.body, """{"query":"zorro"}""");
       },
     ),
   );

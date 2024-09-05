@@ -5,6 +5,7 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.SearchClient
+import algoliasearch.extension.SearchClientExtensions
 // IMPORT<
 import algoliasearch.search.*
 
@@ -52,7 +53,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.addOrUpdateObject(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       body = JObject(List(JField("key", JString("value"))))
     )
@@ -429,7 +430,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.browse(
-      indexName = "cts_e2e_browse"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -448,7 +449,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearObjects(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -467,7 +468,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearRules(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -486,7 +487,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearSynonyms(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -600,7 +601,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteBy(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       deleteByParams = DeleteByParams(
         filters = Some("brand:brandName")
       )
@@ -622,7 +623,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteIndex(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -661,7 +662,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
@@ -700,7 +701,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
@@ -812,7 +813,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToRetrieve = Some(Seq("attr1", "attr2"))
     )
@@ -838,7 +839,7 @@ class SnippetSearchClient {
           GetObjectsRequest(
             attributesToRetrieve = Some(Seq("attr1", "attr2")),
             objectID = "uniqueID",
-            indexName = "theIndexName"
+            indexName = "<YOUR_INDEX_NAME>"
           )
         )
       )
@@ -860,8 +861,8 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getRule(
-      indexName = "indexName",
-      objectID = "id1"
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "qr-1725004648916"
     )
 
     // Use the response
@@ -880,7 +881,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getSettings(
-      indexName = "cts_e2e_settings"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -917,7 +918,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
@@ -937,7 +938,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getTask(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       taskID = 123L
     )
 
@@ -1089,7 +1090,7 @@ class SnippetSearchClient {
           MultipleBatchRequest(
             action = Action.withName("addObject"),
             body = Some(JObject(List(JField("key", JString("value"))))),
-            indexName = "theIndexName"
+            indexName = "<YOUR_INDEX_NAME>"
           )
         )
       )
@@ -1181,7 +1182,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.partialUpdateObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
     )
@@ -1284,7 +1285,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.saveRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       rule = Rule(
         objectID = "id1",
@@ -1360,7 +1361,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.saveSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       synonymHit = SynonymHit(
         objectID = "id1",
@@ -1521,7 +1522,7 @@ class SnippetSearchClient {
     *
     * retrieveFacets
     */
-  def snippetForSearchClientSearch6(): Unit = {
+  def snippetForSearchClientSearch4(): Unit = {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1548,7 +1549,7 @@ class SnippetSearchClient {
     *
     * retrieveFacetsWildcard
     */
-  def snippetForSearchClientSearch7(): Unit = {
+  def snippetForSearchClientSearch5(): Unit = {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1604,7 +1605,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchForFacetValues(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       facetName = "facetName"
     )
 
@@ -1624,10 +1625,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       searchRulesParams = Some(
         SearchRulesParams(
-          query = Some("something")
+          query = Some("zorro")
         )
       )
     )
@@ -1648,7 +1649,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchSingleIndex(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -1667,7 +1668,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchSynonyms(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
     // Use the response
@@ -1727,7 +1728,7 @@ class SnippetSearchClient {
     * setSettingsAttributesForFaceting
     */
   def snippetForSearchClientSetSettings(): Unit = {
-    // >SEPARATOR setSettings setSettingsAttributesForFaceting
+    // >SEPARATOR setSettings default
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 

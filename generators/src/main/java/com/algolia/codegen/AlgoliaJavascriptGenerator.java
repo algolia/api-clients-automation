@@ -51,7 +51,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     supportingFiles.clear();
 
     // Files common to both generations
-    supportingFiles.add(new SupportingFile("rollup.mustache", "", "rollup.config.js"));
+    supportingFiles.add(new SupportingFile("tsup.config.mustache", "", "tsup.config.ts"));
+    supportingFiles.add(new SupportingFile("rollup.config.mustache", "", "rollup.config.js"));
     supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
     supportingFiles.add(new SupportingFile("tsconfig.mustache", "", "tsconfig.json"));
 
@@ -129,14 +130,14 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   }
 
   // Get the packageName from the output field in clients.config.json
-  public String getPackageName(String client) throws ConfigException {
+  public static String getPackageName(String client) throws ConfigException {
     String output = StreamSupport.stream(
       Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
       false
     )
-      .filter(node -> node.get("name").asText().equals((String) additionalProperties.get("client")))
+      .filter(node -> node.get("name").asText().equals(client))
       .findFirst()
-      .orElseThrow(() -> new ConfigException("Cannot find client " + additionalProperties.get("client") + " in config/clients.config.json"))
+      .orElseThrow(() -> new ConfigException("Cannot find client " + client + " in config/clients.config.json"))
       .get("output")
       .asText();
 
@@ -146,7 +147,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
     String apiName = CLIENT + Helpers.API_SUFFIX;
-    String packageName = getPackageName(CLIENT);
+    String packageName = getPackageName((String) additionalProperties.get("client"));
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));

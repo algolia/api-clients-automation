@@ -26,6 +26,26 @@ describe('browse', () => {
   });
 });
 
+describe('getRule', () => {
+  test('getRule', async () => {
+    const resp = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });
+
+    const expectedBody = {
+      description: 'test_rule',
+      enabled: true,
+      objectID: 'qr-1725004648916',
+      conditions: [{ alternatives: true, anchoring: 'contains', pattern: 'zorro' }],
+      consequence: {
+        params: { ignorePlurals: 'true' },
+        filterPromotes: true,
+        promote: [{ objectIDs: ['Æon Flux'], position: 0 }],
+      },
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+});
+
 describe('getSettings', () => {
   test('getSettings', async () => {
     const resp = await client.getSettings({ indexName: 'cts_e2e_settings' });
@@ -236,6 +256,33 @@ describe('searchDictionaryEntries', () => {
       page: 0,
       nbHits: 1,
       nbPages: 1,
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+});
+
+describe('searchRules', () => {
+  test('searchRules', async () => {
+    const resp = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
+
+    const expectedBody = {
+      hits: [
+        {
+          conditions: [{ alternatives: true, anchoring: 'contains', pattern: 'zorro' }],
+          consequence: {
+            params: { ignorePlurals: 'true' },
+            filterPromotes: true,
+            promote: [{ objectIDs: ['Æon Flux'], position: 0 }],
+          },
+          description: 'test_rule',
+          enabled: true,
+          objectID: 'qr-1725004648916',
+        },
+      ],
+      nbHits: 1,
+      nbPages: 1,
+      page: 0,
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));

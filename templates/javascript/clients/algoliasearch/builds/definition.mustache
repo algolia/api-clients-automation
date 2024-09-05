@@ -1,5 +1,5 @@
 {{#nodeSearchHelpers}}
-import {createHmac} from 'node:crypto';
+import { createHmac } from 'node:crypto';
 {{/nodeSearchHelpers}}
 
 import {
@@ -17,15 +17,18 @@ import {
 } from '@algolia/client-common';
 
 import type { ClientOptions } from '@algolia/client-common';
+import type { AbtestingClient, Region as AbtestingRegion } from "@algolia/client-abtesting"
+import type { AnalyticsClient, Region as AnalyticsRegion } from "@algolia/client-analytics"
+import type { PersonalizationClient, Region as PersonalizationRegion } from "@algolia/client-personalization"
+import type { RecommendClient } from "@algolia/recommend"
 
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
-
-import { AbtestingClient, Region as AbtestingRegion, abtestingClient } from '@algolia/client-abtesting';
-import { AnalyticsClient, Region as AnalyticsRegion, analyticsClient } from '@algolia/client-analytics';
-import { PersonalizationClient, Region as PersonalizationRegion, personalizationClient } from '@algolia/client-personalization';
-import { searchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search';
-import { RecommendClient, recommendClient } from '@algolia/recommend';
+import { abtestingClient } from '@algolia/client-abtesting';
+import { analyticsClient } from '@algolia/client-analytics';
+import { personalizationClient } from '@algolia/client-personalization';
+import { searchClient } from '@algolia/client-search';
+import { recommendClient } from '@algolia/recommend';
 
 import type {
   InitClientOptions,
@@ -34,9 +37,9 @@ import type {
   GetSecuredApiKeyRemainingValidityOptions,
 } from './models';
 
-export * from './models';
+import { apiClientVersion } from './models';
 
-export const apiClientVersion = searchClientVersion;
+export * from './models';
 
 /**
  * The client type.

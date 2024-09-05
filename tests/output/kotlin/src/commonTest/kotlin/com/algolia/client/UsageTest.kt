@@ -24,7 +24,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }
@@ -39,7 +39,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }
@@ -55,6 +55,23 @@ class UsageTest {
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Usage (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
+  fun `the user agent contains the latest version`() = runTest {
+    val client = UsageClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(3.2.4\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },

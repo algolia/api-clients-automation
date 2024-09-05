@@ -44,7 +44,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct write host") {
@@ -57,7 +57,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct user agent") {
@@ -71,6 +71,20 @@ class UsageTest extends AnyFunSuite {
     )
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Usage (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("the user agent contains the latest version") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp = """^Algolia for Scala \(2.2.4\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

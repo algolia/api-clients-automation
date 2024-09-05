@@ -1170,12 +1170,12 @@ paths:
             var response = await client.CreateConfigAsync(
               new ConfigurationWithIndex
               {
-                IndexName = "theIndexName",
+                IndexName = "<YOUR_INDEX_NAME>",
                 SourceIndices = new List<SourceIndex>
                 {
                   new SourceIndex
                   {
-                    IndexName = "testIndex",
+                    IndexName = "<YOUR_INDEX_NAME>",
                     Facets = new List<Facet> { new Facet { Attribute = "test", } },
                     Generate = new List<List<string>>
                     {
@@ -1208,8 +1208,8 @@ paths:
             response, err :=
             client.CreateConfig(client.NewApiCreateConfigRequest(
 
-              suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
-                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+              suggestions.NewEmptyConfigurationWithIndex().SetIndexName("<YOUR_INDEX_NAME>").SetSourceIndices(
+                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
                     []string{"facetA", "facetB"},
@@ -1241,17 +1241,17 @@ paths:
 
             client.createConfig(
               new ConfigurationWithIndex()
-                .setIndexName("theIndexName")
+                .setIndexName("<YOUR_INDEX_NAME>")
                 .setSourceIndices(
-                  List.of(
+                  Arrays.asList(
                     new SourceIndex()
-                      .setIndexName("testIndex")
-                      .setFacets(List.of(new Facet().setAttribute("test")))
-                      .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                      .setIndexName("<YOUR_INDEX_NAME>")
+                      .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+                      .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
                   )
                 )
-                .setLanguages(Languages.of(List.of("french")))
-                .setExclude(List.of("test"))
+                .setLanguages(Languages.of(Arrays.asList("french")))
+                .setExclude(Arrays.asList("test"))
             );
         - lang: javascript
           label: JavaScript
@@ -1290,10 +1290,10 @@ paths:
 
             var response = client.createConfig(
               configurationWithIndex = ConfigurationWithIndex(
-                indexName = "theIndexName",
+                indexName = "<YOUR_INDEX_NAME>",
                 sourceIndices = listOf(
                   SourceIndex(
-                    indexName = "testIndex",
+                    indexName = "<YOUR_INDEX_NAME>",
                     facets = listOf(
                       Facet(
                         attribute = "test",
@@ -1323,9 +1323,9 @@ paths:
             // Call the API
 
             $response = $client->createConfig(
-                ['indexName' => 'theIndexName',
+                ['indexName' => '<YOUR_INDEX_NAME>',
                     'sourceIndices' => [
-                        ['indexName' => 'testIndex',
+                        ['indexName' => '<YOUR_INDEX_NAME>',
                             'facets' => [
                                 ['attribute' => 'test',
                                 ],
@@ -1367,10 +1367,10 @@ paths:
             # Call the API
             response = await _client.create_config(
                 configuration_with_index={
-                    "indexName": "theIndexName",
+                    "indexName": "<YOUR_INDEX_NAME>",
                     "sourceIndices": [
                         {
-                            "indexName": "testIndex",
+                            "indexName": "<YOUR_INDEX_NAME>",
                             "facets": [
                                 {
                                     "attribute": "test",
@@ -1414,10 +1414,10 @@ paths:
 
             response = client.create_config(
               ConfigurationWithIndex.new(
-                index_name: "theIndexName",
+                index_name: "<YOUR_INDEX_NAME>",
                 source_indices: [
                   SourceIndex.new(
-                    index_name: "testIndex",
+                    index_name: "<YOUR_INDEX_NAME>",
                     facets: [Facet.new(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                   )
@@ -1449,10 +1449,10 @@ paths:
 
             val response = client.createConfig(
               configurationWithIndex = ConfigurationWithIndex(
-                indexName = "theIndexName",
+                indexName = "<YOUR_INDEX_NAME>",
                 sourceIndices = Seq(
                   SourceIndex(
-                    indexName = "testIndex",
+                    indexName = "<YOUR_INDEX_NAME>",
                     facets = Some(
                       Seq(
                         Facet(
@@ -1486,13 +1486,13 @@ paths:
             let response = try await client.createConfig(configurationWithIndex:
             ConfigurationWithIndex(
                 sourceIndices: [SourceIndex(
-                    indexName: "testIndex",
+                    indexName: "<YOUR_INDEX_NAME>",
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],
                 languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
                 exclude: ["test"],
-                indexName: "theIndexName"
+                indexName: "<YOUR_INDEX_NAME>"
             ))
   /1/configs/{indexName}:
     get:
@@ -1521,18 +1521,14 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
             );
 
-
             // Call the API
-
-            var response = await
-            client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+            var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
         - lang: go
           label: Go
           source: >
@@ -1551,7 +1547,7 @@ paths:
             // Call the API
 
             response, err := client.GetConfig(client.NewApiGetConfigRequest(
-              "cts_e2e_browse_query_suggestions",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -1575,7 +1571,7 @@ paths:
 
             // Call the API
 
-            client.getConfig("cts_e2e_browse_query_suggestions");
+            client.getConfig("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -1606,7 +1602,7 @@ paths:
             // Call the API
 
             var response = client.getConfig(
-              indexName = "cts_e2e_browse_query_suggestions",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -1625,7 +1621,7 @@ paths:
             // Call the API
 
             $response = $client->getConfig(
-                'cts_e2e_browse_query_suggestions',
+                '<YOUR_INDEX_NAME>',
             );
 
 
@@ -1642,7 +1638,7 @@ paths:
 
             # Call the API
             response = await _client.get_config(
-                index_name="cts_e2e_browse_query_suggestions",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -1661,7 +1657,7 @@ paths:
 
             # Call the API
 
-            response = client.get_config("cts_e2e_browse_query_suggestions")
+            response = client.get_config("<YOUR_INDEX_NAME>")
 
 
             # use the class directly
@@ -1684,7 +1680,7 @@ paths:
             // Call the API
 
             val response = client.getConfig(
-              indexName = "cts_e2e_browse_query_suggestions"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -1703,7 +1699,7 @@ paths:
             // Call the API
 
             let response = try await client.getConfig(indexName:
-            "cts_e2e_browse_query_suggestions")
+            "<YOUR_INDEX_NAME>")
     put:
       tags:
         - configurations
@@ -1750,14 +1746,14 @@ paths:
 
             // Call the API
             var response = await client.UpdateConfigAsync(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               new Configuration
               {
                 SourceIndices = new List<SourceIndex>
                 {
                   new SourceIndex
                   {
-                    IndexName = "testIndex",
+                    IndexName = "<YOUR_INDEX_NAME>",
                     Facets = new List<Facet> { new Facet { Attribute = "test", } },
                     Generate = new List<List<string>>
                     {
@@ -1789,9 +1785,9 @@ paths:
 
             response, err :=
             client.UpdateConfig(client.NewApiUpdateConfigRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               suggestions.NewEmptyConfiguration().SetSourceIndices(
-                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
                     []string{"facetA", "facetB"},
@@ -1822,18 +1818,18 @@ paths:
             // Call the API
 
             client.updateConfig(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               new Configuration()
                 .setSourceIndices(
-                  List.of(
+                  Arrays.asList(
                     new SourceIndex()
-                      .setIndexName("testIndex")
-                      .setFacets(List.of(new Facet().setAttribute("test")))
-                      .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                      .setIndexName("<YOUR_INDEX_NAME>")
+                      .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+                      .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
                   )
                 )
-                .setLanguages(Languages.of(List.of("french")))
-                .setExclude(List.of("test"))
+                .setLanguages(Languages.of(Arrays.asList("french")))
+                .setExclude(Arrays.asList("test"))
             );
         - lang: javascript
           label: JavaScript
@@ -1873,11 +1869,11 @@ paths:
             // Call the API
 
             var response = client.updateConfig(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               configuration = Configuration(
                 sourceIndices = listOf(
                   SourceIndex(
-                    indexName = "testIndex",
+                    indexName = "<YOUR_INDEX_NAME>",
                     facets = listOf(
                       Facet(
                         attribute = "test",
@@ -1907,9 +1903,9 @@ paths:
             // Call the API
 
             $response = $client->updateConfig(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
                 ['sourceIndices' => [
-                    ['indexName' => 'testIndex',
+                    ['indexName' => '<YOUR_INDEX_NAME>',
                         'facets' => [
                             ['attribute' => 'test',
                             ],
@@ -1950,11 +1946,11 @@ paths:
 
             # Call the API
             response = await _client.update_config(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 configuration={
                     "sourceIndices": [
                         {
-                            "indexName": "testIndex",
+                            "indexName": "<YOUR_INDEX_NAME>",
                             "facets": [
                                 {
                                     "attribute": "test",
@@ -1997,11 +1993,11 @@ paths:
             # Call the API
 
             response = client.update_config(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
               Configuration.new(
                 source_indices: [
                   SourceIndex.new(
-                    index_name: "testIndex",
+                    index_name: "<YOUR_INDEX_NAME>",
                     facets: [Facet.new(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                   )
@@ -2032,11 +2028,11 @@ paths:
             // Call the API
 
             val response = client.updateConfig(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               configuration = Configuration(
                 sourceIndices = Seq(
                   SourceIndex(
-                    indexName = "testIndex",
+                    indexName = "<YOUR_INDEX_NAME>",
                     facets = Some(
                       Seq(
                         Facet(
@@ -2068,10 +2064,10 @@ paths:
             // Call the API
 
             let response = try await client.updateConfig(
-                indexName: "theIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 configuration: QuerySuggestionsConfiguration(
                     sourceIndices: [SourceIndex(
-                        indexName: "testIndex",
+                        indexName: "<YOUR_INDEX_NAME>",
                         facets: [Facet(attribute: "test")],
                         generate: [["facetA", "facetB"], ["facetC"]]
                     )],
@@ -2094,8 +2090,7 @@ paths:
         Suggestions index.
 
         To delete the Query Suggestions index itself, use the Search API and the
-        [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
-        operation.
+        `Delete an index` operation.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -2125,7 +2120,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.DeleteConfigAsync("theIndexName");
+            var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
         - lang: go
           label: Go
           source: >
@@ -2145,7 +2140,7 @@ paths:
 
             response, err :=
             client.DeleteConfig(client.NewApiDeleteConfigRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -2169,7 +2164,7 @@ paths:
 
             // Call the API
 
-            client.deleteConfig("theIndexName");
+            client.deleteConfig("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -2200,7 +2195,7 @@ paths:
             // Call the API
 
             var response = client.deleteConfig(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -2219,7 +2214,7 @@ paths:
             // Call the API
 
             $response = $client->deleteConfig(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
             );
 
 
@@ -2236,7 +2231,7 @@ paths:
 
             # Call the API
             response = await _client.delete_config(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -2255,7 +2250,7 @@ paths:
 
             # Call the API
 
-            response = client.delete_config("theIndexName")
+            response = client.delete_config("<YOUR_INDEX_NAME>")
 
 
             # use the class directly
@@ -2278,7 +2273,7 @@ paths:
             // Call the API
 
             val response = client.deleteConfig(
-              indexName = "theIndexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -2297,7 +2292,7 @@ paths:
             // Call the API
 
             let response = try await client.deleteConfig(indexName:
-            "theIndexName")
+            "<YOUR_INDEX_NAME>")
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -2350,14 +2345,18 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: >
             // Initialize the client
+
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
             );
 
+
             // Call the API
-            var response = await client.GetConfigStatusAsync("theIndexName");
+
+            var response = await
+            client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
         - lang: go
           label: Go
           source: >
@@ -2377,7 +2376,7 @@ paths:
 
             response, err :=
             client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -2401,7 +2400,7 @@ paths:
 
             // Call the API
 
-            client.getConfigStatus("theIndexName");
+            client.getConfigStatus("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -2432,7 +2431,7 @@ paths:
             // Call the API
 
             var response = client.getConfigStatus(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -2451,7 +2450,7 @@ paths:
             // Call the API
 
             $response = $client->getConfigStatus(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
             );
 
 
@@ -2468,7 +2467,7 @@ paths:
 
             # Call the API
             response = await _client.get_config_status(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -2487,7 +2486,7 @@ paths:
 
             # Call the API
 
-            response = client.get_config_status("theIndexName")
+            response = client.get_config_status("<YOUR_INDEX_NAME>")
 
 
             # use the class directly
@@ -2510,7 +2509,7 @@ paths:
             // Call the API
 
             val response = client.getConfigStatus(
-              indexName = "theIndexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -2529,7 +2528,7 @@ paths:
             // Call the API
 
             let response = try await client.getConfigStatus(indexName:
-            "theIndexName")
+            "<YOUR_INDEX_NAME>")
   /1/logs/{indexName}:
     get:
       tags:
@@ -2588,7 +2587,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.GetLogFileAsync("theIndexName");
+            var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
         - lang: go
           label: Go
           source: >
@@ -2607,7 +2606,7 @@ paths:
             // Call the API
 
             response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-              "theIndexName",
+              "<YOUR_INDEX_NAME>",
             ))
 
             if err != nil {
@@ -2631,7 +2630,7 @@ paths:
 
             // Call the API
 
-            client.getLogFile("theIndexName");
+            client.getLogFile("<YOUR_INDEX_NAME>");
         - lang: javascript
           label: JavaScript
           source: >
@@ -2662,7 +2661,7 @@ paths:
             // Call the API
 
             var response = client.getLogFile(
-              indexName = "theIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
             )
 
 
@@ -2681,7 +2680,7 @@ paths:
             // Call the API
 
             $response = $client->getLogFile(
-                'theIndexName',
+                '<YOUR_INDEX_NAME>',
             );
 
 
@@ -2698,7 +2697,7 @@ paths:
 
             # Call the API
             response = await _client.get_log_file(
-                index_name="theIndexName",
+                index_name="<YOUR_INDEX_NAME>",
             )
 
             # use the class directly
@@ -2717,7 +2716,7 @@ paths:
 
             # Call the API
 
-            response = client.get_log_file("theIndexName")
+            response = client.get_log_file("<YOUR_INDEX_NAME>")
 
 
             # use the class directly
@@ -2740,7 +2739,7 @@ paths:
             // Call the API
 
             val response = client.getLogFile(
-              indexName = "theIndexName"
+              indexName = "<YOUR_INDEX_NAME>"
             )
 
 
@@ -2759,7 +2758,7 @@ paths:
             // Call the API
 
             let response = try await client.getLogFile(indexName:
-            "theIndexName")
+            "<YOUR_INDEX_NAME>")
 components:
   securitySchemes:
     appId:

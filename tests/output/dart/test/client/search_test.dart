@@ -12,7 +12,7 @@ void main() {
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'test-app-id-dsn.algolia.net');
+      expect(request.host.url, "test-app-id-dsn.algolia.net");
     });
     try {
       final res = await client.customGet(
@@ -30,7 +30,7 @@ void main() {
         apiKey: "test-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'test-app-id.algolia.net');
+      expect(request.host.url, "test-app-id.algolia.net");
     });
     try {
       final res = await client.customPost(
@@ -85,6 +85,25 @@ void main() {
   });
 
   test('calls api with correct user agent', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+      appId: 'appId',
+      apiKey: 'apiKey',
+      options: ClientOptions(requester: requester),
+    );
+    requester.setOnRequest((request) {
+      TestHandle.current.markSkipped('User agent added using an interceptor');
+    });
+    try {
+      final res = await client.customPost(
+        path: "1/test",
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('the user agent contains the latest version', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
       appId: 'appId',

@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.RecommendClient
 // IMPORT<
 import com.algolia.client.model.recommend.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -85,7 +84,7 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.deleteRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       objectID = "objectID",
     )
@@ -104,7 +103,7 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.getRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       objectID = "objectID",
     )
@@ -123,7 +122,7 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.getRecommendStatus(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       taskID = 12345L,
     )
@@ -145,7 +144,7 @@ class SnippetRecommendClient {
       getRecommendationsParams = GetRecommendationsParams(
         requests = listOf(
           RelatedQuery(
-            indexName = "indexName",
+            indexName = "<YOUR_INDEX_NAME>",
             objectID = "objectID",
             model = RelatedModel.entries.first { it.value == "related-products" },
             threshold = 42.1,
@@ -168,7 +167,7 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.searchRecommendRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
     )
 

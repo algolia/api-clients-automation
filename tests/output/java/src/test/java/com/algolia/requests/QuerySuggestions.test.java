@@ -31,7 +31,7 @@ class QuerySuggestionsClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new QuerySuggestionsClient("appId", "apiKey", "us", options);
   }
 
@@ -48,15 +48,15 @@ class QuerySuggestionsClientRequestsTests {
         new ConfigurationWithIndex()
           .setIndexName("theIndexName")
           .setSourceIndices(
-            List.of(
+            Arrays.asList(
               new SourceIndex()
                 .setIndexName("testIndex")
-                .setFacets(List.of(new Facet().setAttribute("test")))
-                .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+                .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
             )
           )
-          .setLanguages(Languages.of(List.of("french")))
-          .setExclude(List.of("test"))
+          .setLanguages(Languages.of(Arrays.asList("french")))
+          .setExclude(Arrays.asList("test"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -87,7 +87,14 @@ class QuerySuggestionsClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("test/all", Map.of("query", "parameters"));
+      client.customDelete(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -123,7 +130,14 @@ class QuerySuggestionsClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("test/all", Map.of("query", "parameters with space"));
+      client.customGet(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters with space");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -152,10 +166,14 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customGet(
         "test/all",
-        Map.of("query", "to be overriden"),
+        new HashMap() {
+          {
+            put("query", "to be overriden");
+          }
+        },
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
-          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
           .addExtraHeader("x-header-1", "spaces are left alone")
       );
     });
@@ -210,7 +228,19 @@ class QuerySuggestionsClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -236,8 +266,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
@@ -268,8 +306,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
@@ -300,8 +346,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -343,8 +397,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -386,8 +448,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
@@ -418,8 +488,16 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
@@ -450,9 +528,17 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -482,9 +568,17 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -514,9 +608,17 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -556,7 +658,19 @@ class QuerySuggestionsClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -644,15 +758,15 @@ class QuerySuggestionsClientRequestsTests {
         "theIndexName",
         new Configuration()
           .setSourceIndices(
-            List.of(
+            Arrays.asList(
               new SourceIndex()
                 .setIndexName("testIndex")
-                .setFacets(List.of(new Facet().setAttribute("test")))
-                .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+                .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
             )
           )
-          .setLanguages(Languages.of(List.of("french")))
-          .setExclude(List.of("test"))
+          .setLanguages(Languages.of(Arrays.asList("french")))
+          .setExclude(Arrays.asList("test"))
       );
     });
     EchoResponse req = echo.getLastResponse();

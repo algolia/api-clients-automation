@@ -120,7 +120,7 @@ export async function snippetForSearch3(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacets
-export async function snippetForSearch6(): Promise<void> {
+export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -138,7 +138,7 @@ export async function snippetForSearch6(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch7(): Promise<void> {
+export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');

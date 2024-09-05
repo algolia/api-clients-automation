@@ -361,6 +361,15 @@ paths:
   /waitForApiKey:
     $ref: 'helpers/waitForApiKey.yml#/method'
 
+  /waitForTask:
+    $ref: 'helpers/waitForTask.yml#/method'
+
+  /waitForAppTask:
+    $ref: 'helpers/waitForAppTask.yml#/method'
+
+  /browseObjects:
+    $ref: 'helpers/browseObjects.yml#/method'
+
   /generateSecuredApiKey:
     $ref: 'helpers/generateSecuredApiKey.yml#/method'
 
@@ -378,3 +387,6 @@ paths:
 
   /partialUpdateObjects:
     $ref: 'helpers/partialUpdateObjects.yml#/method'
+
+  /indexExists:
+    $ref: 'helpers/indexExists.yml#/method'

@@ -130,8 +130,32 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
-    /// calls api with default read timeouts
+    /// the user agent contains the latest version
     func testCommonApiTest1() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let pattern = "^Algolia for Swift \\(9.2.4\\).*"
+        let rule = StringRule(pattern: pattern)
+        let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
+        guard let userAgent else {
+            XCTFail("Expected user-agent header")
+            return
+        }
+
+        XCTAssertNoThrow(
+            try Validator.validate(userAgent, against: rule),
+            "Expected " + userAgent + " to match the following regex: " + pattern
+        )
+    }
+
+    /// calls api with default read timeouts
+    func testCommonApiTest2() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -144,7 +168,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// calls api with default write timeouts
-    func testCommonApiTest2() async throws {
+    func testCommonApiTest3() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -156,8 +180,23 @@ final class SearchClientClientTests: XCTestCase {
         XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
     }
 
+    /// call deleteObjects without error
+    func testDeleteObjectsTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_swift", objectIDs: ["1", "2"])
+
+        let comparableData = try XCTUnwrap("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
     /// generate secured api key basic
-    func testHelpersTest0() async throws {
+    func testGenerateSecuredApiKeyTest0() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -174,7 +213,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// generate secured api key with searchParams
-    func testHelpersTest1() async throws {
+    func testGenerateSecuredApiKeyTest1() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -204,224 +243,50 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
-    /// call replaceAllObjects without error
-    func testHelpersTest2() async throws {
+    /// indexExists
+    func testIndexExistsTest0() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6679")!)]
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.replaceAllObjects(
-            indexName: "cts_e2e_replace_all_objects_swift",
-            objects: [
-                ["objectID": "1", "name": "Adam"],
-                ["objectID": "2", "name": "Benoit"],
-                ["objectID": "3", "name": "Cyril"],
-                ["objectID": "4", "name": "David"],
-                ["objectID": "5", "name": "Eva"],
-                ["objectID": "6", "name": "Fiona"],
-                ["objectID": "7", "name": "Gael"],
-                ["objectID": "8", "name": "Hugo"],
-                ["objectID": "9", "name": "Igor"],
-                ["objectID": "10", "name": "Julia"],
-            ],
-            batchSize: 3
-        )
+        let response = try await client.indexExists(indexName: "indexExistsYES")
 
-        let comparableData =
-            try XCTUnwrap(
-                "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
-                    .data(using: .utf8)
-            )
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
+        XCTAssertEqual(true, response)
     }
 
-    /// call saveObjects without error
-    func testHelpersTest3() async throws {
+    /// indexNotExists
+    func testIndexExistsTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.saveObjects(
-            indexName: "cts_e2e_saveObjects_swift",
-            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
-        )
+        let response = try await client.indexExists(indexName: "indexExistsNO")
 
-        let comparableData = try XCTUnwrap("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
+        XCTAssertEqual(false, response)
     }
 
-    /// saveObjects should report errors
-    func testHelpersTest4() async throws {
+    /// indexExistsWithError
+    func testIndexExistsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
-            apiKey: "wrong-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.saveObjects(
-                indexName: "cts_e2e_saveObjects_swift",
-                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
-            )
+            let response = try await client.indexExists(indexName: "indexExistsERROR")
 
             XCTFail("Expected an error to be thrown")
         } catch {
-            XCTAssertEqual(
-                error.localizedDescription,
-                "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
-            )
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 403 Message: Invalid API key")
         }
-    }
-
-    /// call partialUpdateObjects with createIfNotExists=true
-    func testHelpersTest5() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.partialUpdateObjects(
-            indexName: "cts_e2e_partialUpdateObjects_swift",
-            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
-            createIfNotExists: true
-        )
-
-        let comparableData = try XCTUnwrap("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
-    }
-
-    /// call partialUpdateObjects with createIfNotExists=false
-    func testHelpersTest6() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.partialUpdateObjects(
-            indexName: "cts_e2e_partialUpdateObjects_swift",
-            objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
-            createIfNotExists: false
-        )
-
-        let comparableData = try XCTUnwrap("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]".data(using: .utf8))
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
-    }
-
-    /// call deleteObjects without error
-    func testHelpersTest7() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.deleteObjects(indexName: "cts_e2e_deleteObjects_swift", objectIDs: ["1", "2"])
-
-        let comparableData = try XCTUnwrap("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
-    }
-
-    /// wait for api key helper - add
-    func testHelpersTest8() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.waitForApiKey(
-            key: "api-key-add-operation-test-swift",
-            operation: ApiKeyOperation.add
-        )
-
-        let comparableData =
-            try XCTUnwrap(
-                "{\"value\":\"api-key-add-operation-test-swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
-                    .data(using: .utf8)
-            )
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
-    }
-
-    /// wait for api key - update
-    func testHelpersTest9() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.waitForApiKey(
-            key: "api-key-update-operation-test-swift",
-            operation: ApiKeyOperation.update,
-            apiKey: ApiKey(
-                acl: [Acl.search, Acl.addObject, Acl.deleteObject],
-                description: "my updated api key",
-                indexes: ["Movies", "Books"],
-                maxHitsPerQuery: 20,
-                maxQueriesPerIPPerHour: 95,
-                referers: ["*google.com", "*algolia.com"],
-                validity: 305
-            )
-        )
-
-        let comparableData =
-            try XCTUnwrap(
-                "{\"value\":\"api-key-update-operation-test-swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
-                    .data(using: .utf8)
-            )
-        try XCTLenientAssertEqual(
-            received: CodableHelper.jsonEncoder.encode(response),
-            expected: comparableData
-        )
-    }
-
-    /// wait for api key - delete
-    func testHelpersTest10() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: "test-app-id",
-            apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
-        )
-        let transporter = Transporter(configuration: configuration)
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.waitForApiKey(
-            key: "api-key-delete-operation-test-swift",
-            operation: ApiKeyOperation.delete
-        )
-
-        XCTAssertNil(response)
     }
 
     /// client throws with invalid parameters
@@ -467,5 +332,219 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
+    }
+
+    /// call partialUpdateObjects with createIfNotExists=true
+    func testPartialUpdateObjectsTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.partialUpdateObjects(
+            indexName: "cts_e2e_partialUpdateObjects_swift",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            createIfNotExists: true
+        )
+
+        let comparableData = try XCTUnwrap("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// call partialUpdateObjects with createIfNotExists=false
+    func testPartialUpdateObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.partialUpdateObjects(
+            indexName: "cts_e2e_partialUpdateObjects_swift",
+            objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
+            createIfNotExists: false
+        )
+
+        let comparableData = try XCTUnwrap("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// call replaceAllObjects without error
+    func testReplaceAllObjectsTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6679")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.replaceAllObjects(
+            indexName: "cts_e2e_replace_all_objects_swift",
+            objects: [
+                ["objectID": "1", "name": "Adam"],
+                ["objectID": "2", "name": "Benoit"],
+                ["objectID": "3", "name": "Cyril"],
+                ["objectID": "4", "name": "David"],
+                ["objectID": "5", "name": "Eva"],
+                ["objectID": "6", "name": "Fiona"],
+                ["objectID": "7", "name": "Gael"],
+                ["objectID": "8", "name": "Hugo"],
+                ["objectID": "9", "name": "Igor"],
+                ["objectID": "10", "name": "Julia"],
+            ],
+            batchSize: 3
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// call saveObjects without error
+    func testSaveObjectsTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.saveObjects(
+            indexName: "cts_e2e_saveObjects_swift",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
+        )
+
+        let comparableData = try XCTUnwrap("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// saveObjects should report errors
+    func testSaveObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "wrong-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.saveObjects(
+                indexName: "cts_e2e_saveObjects_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
+            )
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(
+                error.localizedDescription,
+                "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
+            )
+        }
+    }
+
+    /// wait for api key helper - add
+    func testWaitForApiKeyTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-add-operation-test-swift",
+            operation: ApiKeyOperation.add
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"value\":\"api-key-add-operation-test-swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// wait for api key - update
+    func testWaitForApiKeyTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-update-operation-test-swift",
+            operation: ApiKeyOperation.update,
+            apiKey: ApiKey(
+                acl: [Acl.search, Acl.addObject, Acl.deleteObject],
+                description: "my updated api key",
+                indexes: ["Movies", "Books"],
+                maxHitsPerQuery: 20,
+                maxQueriesPerIPPerHour: 95,
+                referers: ["*google.com", "*algolia.com"],
+                validity: 305
+            )
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"value\":\"api-key-update-operation-test-swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// wait for api key - delete
+    func testWaitForApiKeyTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-delete-operation-test-swift",
+            operation: ApiKeyOperation.delete
+        )
+
+        XCTAssertNil(response)
+    }
+
+    /// wait for an application-level task
+    func testWaitForAppTaskTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForAppTask(taskID: Int64(123))
+
+        let comparableData = try XCTUnwrap("{\"status\":\"published\"}".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+    }
+
+    /// wait for task
+    func testWaitForTaskTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForTask(indexName: "wait-task-swift", taskID: Int64(123))
+
+        let comparableData = try XCTUnwrap("{\"status\":\"published\"}".data(using: .utf8))
+        try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
     }
 }

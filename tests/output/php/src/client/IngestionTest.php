@@ -53,8 +53,23 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('calls api with default read timeouts')]
+    #[TestDox('the user agent contains the latest version')]
     public function test1commonApi()
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertTrue(
+            (bool) preg_match(
+                '/^Algolia for PHP \(4.3.5\).*/',
+                $this->recordedRequest['request']->getHeader('User-Agent')[0]
+            )
+        );
+    }
+
+    #[TestDox('calls api with default read timeouts')]
+    public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -72,7 +87,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test2commonApi()
+    public function test3commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
