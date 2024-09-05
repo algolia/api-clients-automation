@@ -31,7 +31,5 @@ public interface Requester {
     returnType: TypeInfo,
   ): T
 
-  public fun setAlgoliaApiKey(apiKey: String) {
-    println("Nothing to do here")
-  }
+  public fun setAlgoliaApiKey(apiKey: String);
 }
