@@ -7,7 +7,6 @@ void {{testType}}Test{{testIndex}}() {
   {{/autoCreateClient}}
 
   {{#steps}}
-  {
   {{#times}}
   for (int i = 0; i < {{.}}; i++) {
   {{/times}}
@@ -20,7 +19,9 @@ void {{testType}}Test{{testIndex}}() {
       }
     {{/isError}}
     {{^isError}}
-      {{#isHelper}}assertDoesNotThrow(() -> { {{/isHelper}}
+      {{#shouldScope}}
+      assertDoesNotThrow(() -> { 
+      {{/shouldScope}}
       {{#dynamicTemplate}}{{/dynamicTemplate}}
       {{#testUserAgent}}
       {
@@ -43,12 +44,13 @@ void {{testType}}Test{{testIndex}}() {
           assertDoesNotThrow(() -> JSONAssert.assertEquals({{#match}}{{> tests/generateParams}}{{/match}}, json.writeValueAsString(res), JSONCompareMode.STRICT));
         {{/match.isPrimitive}}
       {{/testResponse}}
-      {{#isHelper}} });{{/isHelper}}
+      {{#shouldScope}}
+      });
+      {{/shouldScope}}
     {{/isError}}
   {{#times}}
   }
   {{/times}}
-  }
   {{/steps}}
 }
 {{/tests}}

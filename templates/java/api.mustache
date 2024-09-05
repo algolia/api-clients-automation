@@ -130,15 +130,6 @@ public class {{classname}} extends ApiClient {
     }
     {{/hostsWithoutVariables.size}}
 
-  /**
-   * Helper method to switch the API key used to authenticate the requests.
-   * 
-   * @param apiKey The new API key to be used from now on.
-   */
-  public void setAlgoliaApiKey(@Nonnull String apiKey) {
-    this.requester.setAlgoliaApiKey(apiKey);
-  }
-
     {{#operation}}
     /**
      * {{{notes}}}{{#allParams}}

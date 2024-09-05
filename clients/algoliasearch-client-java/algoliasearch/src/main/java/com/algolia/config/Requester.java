@@ -31,8 +31,4 @@ public interface Requester extends Closeable {
    * @return The deserialized response.
    */
   <T> T execute(HttpRequest httpRequest, RequestOptions requestOptions, TypeReference<?> returnType);
-
-  default void setAlgoliaApiKey(String apiKey) {
-    System.out.println("Nothing to do here");
-  }
 }

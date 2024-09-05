@@ -70,7 +70,8 @@ public class TestsClient extends TestsGenerator {
       skipTest:for (ClientTestData test : blockEntry.getValue()) {
         try {
           Map<String, Object> testOut = new HashMap<>();
-          List<Object> steps = new ArrayList<>();
+          List<Map<String, Object>> steps = new ArrayList<>();
+          int methodCount = 0;
           testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
@@ -115,14 +116,14 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
-              stepOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-
+              boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
+              stepOut.put("isHelper", isHelper);
               // default to true because most api calls are asynchronous
               stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+
               // Determines whether the endpoint is expected to return a response payload
               // deserialized and therefore a variable to store it into.
               stepOut.put("hasResponsePayload", true);
-
               for (CodegenResponse response : ope.responses) {
                 if (response.code.equals("204")) {
                   stepOut.put("hasResponsePayload", false);
@@ -130,10 +131,12 @@ public class TestsClient extends TestsGenerator {
               }
 
               // set on testOut because we need to wrap everything for java.
-              testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+              testOut.put("isHelper", isHelper);
 
               // default to true because most api calls are asynchronous
               testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+
+              methodCount++;
             }
 
             stepOut.put("method", step.method);
@@ -196,6 +199,12 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
             }
             steps.add(stepOut);
+          }
+          for (Map<String, Object> step : steps) {
+            step.put(
+              "shouldScope",
+              (boolean) step.getOrDefault("isMethod", false) && (methodCount > 1 || (boolean) step.getOrDefault("isHelper", false))
+            );
           }
           testOut.put("steps", steps);
           tests.add(testOut);

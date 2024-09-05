@@ -60,11 +60,6 @@ public final class HttpRequester implements Requester {
     return execute(httpRequest, requestOptions, serializer.getJavaType(returnType));
   }
 
-  @Override
-  public void setAlgoliaApiKey(@Nonnull String apiKey) {
-    this.httpClient.interceptors().add(new HeaderInterceptor(Collections.singletonMap("X-Algolia-API-Key", apiKey)));
-  }
-
   /** Core method to execute an HTTP request and handle the response. */
   private <T> T execute(@Nonnull HttpRequest httpRequest, RequestOptions requestOptions, JavaType returnType) {
     if (isClosed.get()) {
@@ -162,8 +157,7 @@ public final class HttpRequester implements Requester {
     // Return the default client if no request options are provided.
     if (requestOptions == null) return httpClient;
 
-    // Create a new client builder from the default client and adjust timeouts if
-    // provided.
+    // Create a new client builder from the default client and adjust timeouts if provided.
     OkHttpClient.Builder builder = httpClient.newBuilder();
     if (requestOptions.getReadTimeout() != null) {
       builder.readTimeout(requestOptions.getReadTimeout());

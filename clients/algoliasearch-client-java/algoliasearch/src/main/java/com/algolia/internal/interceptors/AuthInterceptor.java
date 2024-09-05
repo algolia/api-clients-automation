@@ -12,10 +12,14 @@ public final class AuthInterceptor implements Interceptor {
   private static final String HEADER_API_KEY = "x-algolia-api-key";
 
   private final String applicationId;
-  private final String apiKey;
+  private String apiKey;
 
   public AuthInterceptor(String applicationId, String apiKey) {
     this.applicationId = applicationId;
+    this.apiKey = apiKey;
+  }
+
+  public void setApiKey(String apiKey) {
     this.apiKey = apiKey;
   }
 
