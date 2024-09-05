@@ -21,7 +21,6 @@ void main() {
     );
     {{/autoCreateClient}}    
     {{#steps}}
-    {
     {{#isError}}
     await expectError(
       '{{{expectedError}}}',
@@ -31,6 +30,9 @@ void main() {
     );
     {{/isError}}
     {{^isError}}
+    {{#shouldScope}}
+    {
+    {{/shouldScope}}
     {{#match}}
     requester.setOnRequest((request) {
       {{#testUserAgent}}
@@ -45,8 +47,10 @@ void main() {
     });
     {{/match}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
-    {{/isError}}
+    {{#shouldScope}} 
     }
+    {{/shouldScope}}
+    {{/isError}}
     {{/steps}}
     }
   );

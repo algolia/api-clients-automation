@@ -14,12 +14,6 @@ import 'package:{{pubName}}/src/version.dart';
 final class {{classname}} implements ApiClient {
 
   @override
-  String apiKey;
-
-  @override
-  final String appId;
-
-  @override
   final ClientOptions options;
 
   {{#hasRegionalHost}}
@@ -29,8 +23,8 @@ final class {{classname}} implements ApiClient {
   final RetryStrategy _retryStrategy;
 
   {{classname}}({
-    required this.appId,
-    required this.apiKey,
+    required String appId,
+    required String apiKey,
     this.options = const ClientOptions(),
     {{#hasRegionalHost}}
     {{^fallbackToAliasHost}}required{{/fallbackToAliasHost}} this.region,
@@ -82,8 +76,7 @@ final class {{classname}} implements ApiClient {
 
   /// Allows to switch the API key used to authenticate requests.
   @override
-  void setAlgoliaApiKey(String apiKey) {
-    this.apiKey = apiKey;
+  void setAlgoliaApiKey({required String apiKey}) {
     this._retryStrategy.requester.setAlgoliaApiKey(apiKey);
   }
   {{#operation}}
