@@ -2,6 +2,7 @@
 from time import time
 from json import loads
 from algoliasearch.http.transporter import EchoTransporter
+from algoliasearch.http.transporter_sync import EchoTransporterSync
 from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
@@ -13,7 +14,7 @@ from algoliasearch.search.models.get_task_response import GetTaskResponse
 {{#modes}}
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
     _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
-    _client = {{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}.create_with_config(config=_config, transporter=EchoTransporter(_config))
+    _client = {{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config))
 
     {{#blocksRequests}}
     {{#tests}}

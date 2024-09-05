@@ -19,6 +19,7 @@ public class TestsRequest extends TestsGenerator {
 
   public TestsRequest(CTSManager ctsManager) {
     super(ctsManager);
+    this.withSyncTests = false;
   }
 
   @Override

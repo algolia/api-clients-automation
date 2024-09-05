@@ -35,11 +35,11 @@ class {{classname}}{{#isSync}}Sync{{/isSync}}:
     See `{{classname}}{{#isSync}}Sync{{/isSync}}.create_with_config` for advanced configuration.
     """
 
-    _transporter: Transporter
+    _transporter: Transporter{{#isSync}}Sync{{/isSync}}
     _config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}
     _request_options: RequestOptions
 
-    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None, {{/hasRegionalHost}}transporter: Optional[Transporter] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
+    def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str]{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str{{/fallbackToAliasHost}} = None, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSync}}Sync{{/isSync}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
             config = transporter._config
 
@@ -49,25 +49,25 @@ class {{classname}}{{#isSync}}Sync{{/isSync}}:
         self._request_options = RequestOptions(config)
 
         if transporter is None:
-            transporter = Transporter(config)
+            transporter = Transporter{{#isSync}}Sync{{/isSync}}(config)
         self._transporter = transporter
 
-    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter] = None) -> Self:
-        """Allows creating a client with a customized `{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}` and `Transporter`. If `transporter` is not provided, the default one will be initialized from the given `config`.
+    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSync}}Sync{{/isSync}}] = None) -> Self:
+        """Allows creating a client with a customized `{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}` and `Transporter{{#isSync}}Sync{{/isSync}}`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
         config ({{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}): The config of the API client.
-        transporter (Transporter): The HTTP transporter, see `http/transporter.py` for implementation details.
+        transporter (Transporter{{#isSync}}Sync{{/isSync}}): The HTTP transporter, see `http/transporter.py` for implementation details.
 
         Returns:
         The initialized API client.
 
         Example:
         _client_with_custom_config = {{classname}}{{#isSync}}Sync{{/isSync}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...))
-        _client_with_custom_config_and_transporter = {{classname}}{{#isSync}}Sync{{/isSync}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...), transporter=Transporter(...))
+        _client_with_custom_config_and_transporter = {{classname}}{{#isSync}}Sync{{/isSync}}.create_with_config(config={{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(...), transporter=Transporter{{#isSync}}Sync{{/isSync}}(...))
         """
         if transporter is None:
-            transporter = Transporter(config)
+            transporter = Transporter{{#isSync}}Sync{{/isSync}}(config)
 
         return {{classname}}{{#isSync}}Sync{{/isSync}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
