@@ -6,7 +6,6 @@ public function test{{testIndex}}{{testType}}(): void
         $client = $this->createClient(self::APP_ID, self::API_KEY);
     {{/autoCreateClient}}
     {{#steps}}
-    {
       {{#times}}
       for ($i = 1; $i <= {{.}}; $i++) {
       {{/times}}
@@ -19,6 +18,9 @@ public function test{{testIndex}}{{testType}}(): void
           }
         {{/isError}}
         {{^isError}}
+            {{#shouldScope}}
+            {
+            {{/shouldScope}}
             {{#dynamicTemplate}}{{/dynamicTemplate}}
             {{#testUserAgent}}
             $this->assertTrue(
@@ -59,9 +61,11 @@ public function test{{testIndex}}{{testType}}(): void
                 );
               {{/match.isPrimitive}}
             {{/testResponse}}
+            {{#shouldScope}}
+            }
+            {{/shouldScope}}
         {{/isError}}
       {{#times}}
-      }
       {{/times}}
     }
     {{/steps}}

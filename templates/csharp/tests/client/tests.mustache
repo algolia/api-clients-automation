@@ -6,7 +6,6 @@
     var client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
     {{/autoCreateClient}}
     {{#steps}}
-    {{#shouldScope}} { {{/shouldScope}}
     {{#times}}
     for (int i = 0; i < {{.}}; i++) {
     {{/times}}
@@ -16,6 +15,9 @@
 
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}} 
+        {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}} {
           var regexp = new Regex({{#match}}{{> tests/generateParams}}{{/match}});
@@ -36,11 +38,13 @@
             JsonAssert.EqualOverrideDefault({{#match}}{{> tests/generateParams}}{{/match}}, JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
           {{/match.isPrimitive}}
         {{/testResponse}}
+        {{#shouldScope}} 
+        }
+        {{/shouldScope}}
       {{/isError}}
     {{#times}}
     }
     {{/times}}
-    {{#shouldScope}} } {{/shouldScope}}
     {{/steps}}
     }
 {{/tests}}

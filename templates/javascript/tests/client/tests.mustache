@@ -7,7 +7,6 @@ describe('{{testType}}', () => {
     {{/autoCreateClient}}
 
     {{#steps}}
-    {{#shouldScope}} { {{/shouldScope}}
       {{#times}}
       for (let i = 0; i < {{.}}; i++) {
       {{/times}}
@@ -20,6 +19,9 @@ describe('{{testType}}', () => {
         }
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}} 
+        {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
 
         {{#testUserAgent}}
@@ -44,11 +46,13 @@ describe('{{testType}}', () => {
             expect(result).toEqual({{{match.value}}});
           {{/match.isPrimitive}}
         {{/testResponse}}
+        {{#shouldScope}} 
+        }
+        {{/shouldScope}}
       {{/isError}}
       {{#times}}
       }
       {{/times}}
-    {{#shouldScope}} } {{/shouldScope}}
     {{/steps}}
   }, 15000);
 
