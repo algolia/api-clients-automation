@@ -1,7 +1,7 @@
 from json import loads
 from sys import version_info
 
-from requests import Request, Session
+from requests import Request, Session, Timeout
 
 if version_info >= (3, 11):
     from typing import Self
@@ -75,7 +75,7 @@ class TransporterSync(BaseTransporter):
 
             try:
                 resp = self._session.send(
-                    req, timeout=self._timeout / 1000, proxies=proxy
+                    req, timeout=(request_options.timeouts["connect"]/1000, self._timeout/ 1000), proxies=proxy
                 )
 
                 response = ApiResponse(
@@ -89,7 +89,7 @@ class TransporterSync(BaseTransporter):
                     raw_data=resp.json(),
                     error_message=str(resp.reason),
                 )
-            except TimeoutError as e:
+            except Timeout as e:
                 response = ApiResponse(
                     verb=verb,
                     path=path,
@@ -106,7 +106,7 @@ class TransporterSync(BaseTransporter):
             elif decision == RetryOutcome.FAIL:
                 content = response.error_message
                 if response.data and "message" in response.data:
-                    content = loads(response.data)["message"]
+                    content = response.data["message"]
 
                 raise RequestException(content, response.status_code)
 
