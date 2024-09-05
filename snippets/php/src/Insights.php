@@ -16,7 +16,7 @@ class SnippetInsightsClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -37,7 +37,7 @@ class SnippetInsightsClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -58,7 +58,7 @@ class SnippetInsightsClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -79,7 +79,7 @@ class SnippetInsightsClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -100,7 +100,7 @@ class SnippetInsightsClient
      *
      * deleteUserToken
      */
-    public function snippetForDeleteUserToken()
+    public function snippetForDeleteUserToken(): void
     {
         // >SEPARATOR deleteUserToken default
         // Initialize the client
@@ -121,7 +121,7 @@ class SnippetInsightsClient
      *
      * pushEvents
      */
-    public function snippetForPushEvents()
+    public function snippetForPushEvents(): void
     {
         // >SEPARATOR pushEvents default
         // Initialize the client

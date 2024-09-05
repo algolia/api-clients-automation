@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class IngestionTest extends TestCase
 {
     #[TestDox('enableTask')]
-    public function testEnableTask()
+    public function testEnableTask(): void
     {
         $client = $this->getClient();
         $resp = $client->enableTask(
@@ -38,7 +38,7 @@ class IngestionTest extends TestCase
     }
 
     #[TestDox('enableTaskV1')]
-    public function testEnableTaskV1()
+    public function testEnableTaskV1(): void
     {
         $client = $this->getClient();
         $resp = $client->enableTaskV1(
@@ -51,7 +51,7 @@ class IngestionTest extends TestCase
     }
 
     #[TestDox('getSource')]
-    public function testGetSource()
+    public function testGetSource(): void
     {
         $client = $this->getClient();
         $resp = $client->getSource(
@@ -64,7 +64,7 @@ class IngestionTest extends TestCase
     }
 
     #[TestDox('getAuthentications with query params')]
-    public function testListAuthentications1()
+    public function testListAuthentications1(): void
     {
         $client = $this->getClient();
         $resp = $client->listAuthentications(
@@ -88,7 +88,7 @@ class IngestionTest extends TestCase
     }
 
     #[TestDox('searchTasks')]
-    public function testSearchTasks()
+    public function testSearchTasks(): void
     {
         $client = $this->getClient();
         $resp = $client->searchTasks(
@@ -108,7 +108,7 @@ class IngestionTest extends TestCase
     }
 
     #[TestDox('searchTasksV1')]
-    public function testSearchTasksV1()
+    public function testSearchTasksV1(): void
     {
         $client = $this->getClient();
         $resp = $client->searchTasksV1(
@@ -127,7 +127,7 @@ class IngestionTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -142,7 +142,7 @@ class IngestionTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): IngestionClient
     {
         return IngestionClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }

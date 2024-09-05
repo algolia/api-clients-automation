@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class AbtestingTest extends TestCase
 {
     #[TestDox('listABTests with parameters')]
-    public function testListABTests1()
+    public function testListABTests1(): void
     {
         $client = $this->getClient();
         $resp = $client->listABTests(
@@ -40,7 +40,7 @@ class AbtestingTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -55,7 +55,7 @@ class AbtestingTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): AbtestingClient
     {
         return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }
