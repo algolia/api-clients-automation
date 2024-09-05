@@ -290,14 +290,4 @@ internal class HttpTransport
       _ => Defaults.WriteTimeout
     };
   }
-
-  /// <summary>
-  /// Helper to switch the API key sent with each request
-  /// </summary>
-  /// <param name="apiKey">Your API Key</param>
-  /// <returns></returns>
-  public void SetAlgoliaApiKey(string apiKey)
-  {
-    _algoliaConfig.ApiKey = apiKey;
-  }
 }

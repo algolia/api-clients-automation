@@ -97,5 +97,16 @@ namespace Algolia.Search.Clients
       DefaultHeaders[Defaults.UserAgentHeader.ToLowerInvariant()] = UserAgent.ToString();
       return DefaultHeaders;
     }
+
+    /// <summary>
+    /// Helper to switch the API key sent with each request
+    /// </summary>
+    /// <param name="apiKey">Your API Key</param>
+    /// <returns></returns>
+    public void SetAlgoliaApiKey(string apiKey)
+    {
+      ApiKey = apiKey;
+      DefaultHeaders[Defaults.AlgoliaApiKeyHeader.ToLowerInvariant()] = apiKey;
+    }
   }
 }
