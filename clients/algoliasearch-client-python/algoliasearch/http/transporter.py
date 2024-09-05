@@ -48,10 +48,6 @@ class Transporter:
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         pass
 
-    def set_algolia_api_key(self, api_key: str) -> None:
-        """Sets a new API key to authenticate requests."""
-        self._config.api_key = api_key
-
     def prepare(
         self,
         request_options: RequestOptions,
