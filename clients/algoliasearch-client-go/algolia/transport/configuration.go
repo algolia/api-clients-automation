@@ -20,7 +20,3 @@ type Configuration struct {
 	Compression                     compression.Compression
 	ExposeIntermediateNetworkErrors bool
 }
-
-func (c *Configuration) SetApiKey(apiKey string) {
-	c.ApiKey = apiKey
-}
