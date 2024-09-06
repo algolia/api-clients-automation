@@ -54,7 +54,7 @@ final class PersonalizationClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.2.4\\).*"
+        let pattern = "^Algolia for Swift \\(9.3.0\\).*"
         let rule = StringRule(pattern: pattern)
         let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
         guard let userAgent else {

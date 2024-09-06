@@ -125,7 +125,7 @@ class SearchTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.2.4\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.3.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },

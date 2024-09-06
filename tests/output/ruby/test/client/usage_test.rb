@@ -55,7 +55,7 @@ class TestClientUsageClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.2.4\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.3.0\).*/))
   end
 
   # calls api with default read timeouts
