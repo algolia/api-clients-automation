@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
@@ -69,7 +70,8 @@ public class TestsClient extends TestsGenerator {
       skipTest:for (ClientTestData test : blockEntry.getValue()) {
         try {
           Map<String, Object> testOut = new HashMap<>();
-          List<Object> steps = new ArrayList<>();
+          List<Map<String, Object>> steps = new ArrayList<>();
+          int methodCount = 0;
           testOut.put("inClientTest", true);
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
@@ -114,9 +116,27 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
+              boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
+              stepOut.put("isHelper", isHelper);
+              // default to true because most api calls are asynchronous
+              stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+
+              // Determines whether the endpoint is expected to return a response payload
+              // deserialized and therefore a variable to store it into.
+              stepOut.put("hasResponse", true);
+              for (CodegenResponse response : ope.responses) {
+                if (response.code.equals("204")) {
+                  stepOut.put("hasResponse", false);
+                }
+              }
+
               // set on testOut because we need to wrap everything for java.
-              testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
+              testOut.put("isHelper", isHelper);
+
+              // default to true because most api calls are asynchronous
+              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+
+              methodCount++;
             }
 
             stepOut.put("method", step.method);
@@ -179,6 +199,12 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
             }
             steps.add(stepOut);
+          }
+          for (Map<String, Object> step : steps) {
+            step.put(
+              "shouldScope",
+              (boolean) step.getOrDefault("isMethod", false) && (methodCount > 1 || (boolean) step.getOrDefault("isHelper", false))
+            );
           }
           testOut.put("steps", steps);
           tests.add(testOut);

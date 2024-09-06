@@ -116,4 +116,45 @@ void main() {
       // Ignore InterceptionException
     }
   });
+
+  test('switch API key', () async {
+    final requester = RequestInterceptor();
+    final client = RecommendClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(url: 'localhost:6683', scheme: 'http'),
+        ]));
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "check-api-key/1",
+        );
+        expectBody(res, """{"headerAPIKeyValue":"test-api-key"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      try {
+        client.setClientApiKey(
+          apiKey: "updated-api-key",
+        );
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "check-api-key/2",
+        );
+        expectBody(res, """{"headerAPIKeyValue":"updated-api-key"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
 }

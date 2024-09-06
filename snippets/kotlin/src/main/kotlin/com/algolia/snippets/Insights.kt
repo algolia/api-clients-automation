@@ -19,6 +19,7 @@ class SnippetInsightsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetInsightsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetInsightsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetInsightsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -83,12 +87,11 @@ class SnippetInsightsClient {
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.deleteUserToken(
+    client.deleteUserToken(
       userToken = "test-user-1",
     )
 
-    // Use the response
-    println(response)
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -118,8 +121,25 @@ class SnippetInsightsClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

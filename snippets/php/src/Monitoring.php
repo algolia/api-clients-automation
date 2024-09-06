@@ -27,6 +27,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -48,6 +49,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,6 +71,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -90,6 +93,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -111,6 +115,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -132,6 +137,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -151,6 +157,7 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getIncidents();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -172,6 +179,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -193,6 +201,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -215,6 +224,7 @@ class SnippetMonitoringClient
             'minute',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -236,6 +246,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -255,6 +266,7 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getServers();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -274,8 +286,29 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getStatus();
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

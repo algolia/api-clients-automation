@@ -32,6 +32,7 @@ func SnippetForAddApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -60,6 +61,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -89,6 +91,7 @@ func SnippetForAppendSourceOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -118,6 +121,7 @@ func SnippetForAssignUserIdOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -148,6 +152,7 @@ func SnippetForBatchOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -178,6 +183,7 @@ func SnippetForBatchOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -208,6 +214,7 @@ func SnippetForBatchOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -238,6 +245,7 @@ func SnippetForBatchOfSearch3() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -268,6 +276,7 @@ func SnippetForBatchOfSearch4() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -298,6 +307,7 @@ func SnippetForBatchOfSearch5() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -328,6 +338,7 @@ func SnippetForBatchOfSearch6() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -358,6 +369,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -391,6 +403,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -422,6 +435,7 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -453,6 +467,7 @@ func SnippetForBatchDictionaryEntriesOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -481,6 +496,7 @@ func SnippetForBrowseOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -509,6 +525,7 @@ func SnippetForClearObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -537,6 +554,7 @@ func SnippetForClearRulesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -565,6 +583,7 @@ func SnippetForClearSynonymsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -593,6 +612,7 @@ func SnippetForCustomDeleteOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -621,6 +641,7 @@ func SnippetForCustomGetOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -649,6 +670,7 @@ func SnippetForCustomPostOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -677,6 +699,7 @@ func SnippetForCustomPutOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -705,6 +728,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -734,6 +758,7 @@ func SnippetForDeleteByOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -762,6 +787,7 @@ func SnippetForDeleteIndexOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -790,6 +816,7 @@ func SnippetForDeleteObjectOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -819,6 +846,7 @@ func SnippetForDeleteObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -847,6 +875,7 @@ func SnippetForDeleteRuleOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -875,6 +904,7 @@ func SnippetForDeleteSourceOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -903,6 +933,7 @@ func SnippetForDeleteSynonymOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -933,6 +964,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -965,6 +997,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -993,6 +1026,7 @@ func SnippetForGetApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1021,6 +1055,7 @@ func SnippetForGetAppTaskOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1047,6 +1082,7 @@ func SnippetForGetDictionaryLanguagesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1073,6 +1109,7 @@ func SnippetForGetDictionarySettingsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1099,6 +1136,7 @@ func SnippetForGetLogsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1128,6 +1166,7 @@ func SnippetForGetObjectOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1159,6 +1198,7 @@ func SnippetForGetObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1187,6 +1227,7 @@ func SnippetForGetRuleOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1215,6 +1256,7 @@ func SnippetForGetSettingsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1241,6 +1283,7 @@ func SnippetForGetSourcesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1269,6 +1312,7 @@ func SnippetForGetSynonymOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1297,6 +1341,7 @@ func SnippetForGetTaskOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1323,6 +1368,7 @@ func SnippetForGetTopUserIdsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1351,6 +1397,7 @@ func SnippetForGetUserIdOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1377,6 +1424,7 @@ func SnippetForHasPendingMappingsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1405,6 +1453,7 @@ func SnippetForIndexExistsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1433,6 +1482,7 @@ func SnippetForIndexExistsOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1461,6 +1511,7 @@ func SnippetForIndexExistsOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1487,6 +1538,7 @@ func SnippetForListApiKeysOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1513,6 +1565,7 @@ func SnippetForListClustersOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1539,6 +1592,7 @@ func SnippetForListIndicesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1565,6 +1619,7 @@ func SnippetForListUserIdsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1595,6 +1650,7 @@ func SnippetForMultipleBatchOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1625,6 +1681,7 @@ func SnippetForOperationIndexOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1654,6 +1711,7 @@ func SnippetForOperationIndexOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1683,6 +1741,7 @@ func SnippetForOperationIndexOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1711,6 +1770,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1740,6 +1800,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1769,6 +1830,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1797,6 +1859,7 @@ func SnippetForRemoveUserIdOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1826,6 +1889,7 @@ func SnippetForReplaceAllObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1855,6 +1919,7 @@ func SnippetForReplaceSourcesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1883,6 +1948,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1911,6 +1977,7 @@ func SnippetForSaveObjectOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1940,6 +2007,7 @@ func SnippetForSaveObjectsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1969,6 +2037,7 @@ func SnippetForSaveObjectsOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -1999,6 +2068,7 @@ func SnippetForSaveRuleOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2030,6 +2100,7 @@ func SnippetForSaveRulesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2060,6 +2131,7 @@ func SnippetForSaveSynonymOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2091,6 +2163,7 @@ func SnippetForSaveSynonymsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2122,6 +2195,7 @@ func SnippetForSearchOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2153,6 +2227,7 @@ func SnippetForSearchOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2184,6 +2259,7 @@ func SnippetForSearchOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2215,6 +2291,7 @@ func SnippetForSearchOfSearch3() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2247,6 +2324,7 @@ func SnippetForSearchOfSearch4() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2279,6 +2357,7 @@ func SnippetForSearchOfSearch5() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2308,6 +2387,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2336,6 +2416,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2365,6 +2446,7 @@ func SnippetForSearchRulesOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2393,6 +2475,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2421,6 +2504,7 @@ func SnippetForSearchSynonymsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2450,8 +2534,36 @@ func SnippetForSearchUserIdsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetClientApiKeyOfSearch() {
+	/*
+	   Snippet for the setClientApiKey method.
+
+	   switch API key
+	*/
+
+	// >SEPARATOR setClientApiKey default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SetClientApiKey(
+		"updated-api-key",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }
 func SnippetForSetDictionarySettingsOfSearch() {
@@ -2480,6 +2592,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2510,6 +2623,7 @@ func SnippetForSetSettingsOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2540,6 +2654,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2568,6 +2683,7 @@ func SnippetForWaitForApiKeyOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2600,6 +2716,7 @@ func SnippetForWaitForApiKeyOfSearch1() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2628,6 +2745,7 @@ func SnippetForWaitForApiKeyOfSearch2() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2656,6 +2774,7 @@ func SnippetForWaitForAppTaskOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -2684,6 +2803,7 @@ func SnippetForWaitForTaskOfSearch() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<

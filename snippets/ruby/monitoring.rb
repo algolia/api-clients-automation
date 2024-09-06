@@ -15,6 +15,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -34,6 +35,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -53,6 +55,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -72,6 +75,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -91,6 +95,7 @@ def snippet_for_get_cluster_incidents
   # Call the API
   response = client.get_cluster_incidents("c1-de")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -110,6 +115,7 @@ def snippet_for_get_cluster_status
   # Call the API
   response = client.get_cluster_status("c1-de")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -129,6 +135,7 @@ def snippet_for_get_incidents
   # Call the API
   response = client.get_incidents
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -148,6 +155,7 @@ def snippet_for_get_indexing_time
   # Call the API
   response = client.get_indexing_time("c1-de")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -167,6 +175,7 @@ def snippet_for_get_latency
   # Call the API
   response = client.get_latency("c1-de")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -186,6 +195,7 @@ def snippet_for_get_metrics
   # Call the API
   response = client.get_metrics("avg_build_time", "minute")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -205,6 +215,7 @@ def snippet_for_get_reachability
   # Call the API
   response = client.get_reachability("c1-de")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -224,6 +235,7 @@ def snippet_for_get_servers
   # Call the API
   response = client.get_servers
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -243,10 +255,25 @@ def snippet_for_get_status
   # Call the API
   response = client.get_status
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

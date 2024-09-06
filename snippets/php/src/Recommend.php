@@ -27,6 +27,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -48,6 +49,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,6 +71,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -90,6 +93,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -113,6 +117,7 @@ class SnippetRecommendClient
             'objectID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -136,6 +141,7 @@ class SnippetRecommendClient
             'objectID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -159,6 +165,7 @@ class SnippetRecommendClient
             12345,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -187,6 +194,7 @@ class SnippetRecommendClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -209,8 +217,29 @@ class SnippetRecommendClient
             'related-products',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

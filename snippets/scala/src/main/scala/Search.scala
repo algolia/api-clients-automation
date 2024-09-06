@@ -37,6 +37,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -58,6 +59,7 @@ class SnippetSearchClient {
       body = JObject(List(JField("key", JString("value"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -80,6 +82,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -102,6 +105,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -133,6 +137,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -160,6 +165,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -187,6 +193,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -214,6 +221,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -241,6 +249,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -268,6 +277,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -295,6 +305,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -318,6 +329,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -353,6 +365,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -383,6 +396,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -414,6 +428,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -433,6 +448,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -452,6 +468,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -471,6 +488,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -490,6 +508,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -509,6 +528,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -528,6 +548,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -547,6 +568,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -566,6 +588,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -585,6 +608,7 @@ class SnippetSearchClient {
       key = "myTestApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -607,6 +631,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -626,6 +651,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -646,6 +672,7 @@ class SnippetSearchClient {
       objectID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -666,6 +693,7 @@ class SnippetSearchClient {
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -685,6 +713,7 @@ class SnippetSearchClient {
       source = "theSource"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -705,6 +734,7 @@ class SnippetSearchClient {
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -724,6 +754,7 @@ class SnippetSearchClient {
       key = "myTestApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -743,6 +774,7 @@ class SnippetSearchClient {
       taskID = 123L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -761,6 +793,7 @@ class SnippetSearchClient {
     val response = client.getDictionaryLanguages(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -779,6 +812,7 @@ class SnippetSearchClient {
     val response = client.getDictionarySettings(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -797,6 +831,7 @@ class SnippetSearchClient {
     val response = client.getLogs(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -818,6 +853,7 @@ class SnippetSearchClient {
       attributesToRetrieve = Some(Seq("attr1", "attr2"))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -845,6 +881,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -865,6 +902,7 @@ class SnippetSearchClient {
       objectID = "qr-1725004648916"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -884,6 +922,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -902,6 +941,7 @@ class SnippetSearchClient {
     val response = client.getSources(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -922,6 +962,7 @@ class SnippetSearchClient {
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -942,6 +983,7 @@ class SnippetSearchClient {
       taskID = 123L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -960,6 +1002,7 @@ class SnippetSearchClient {
     val response = client.getTopUserIds(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -979,6 +1022,7 @@ class SnippetSearchClient {
       userID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -997,6 +1041,7 @@ class SnippetSearchClient {
     val response = client.hasPendingMappings(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1015,6 +1060,7 @@ class SnippetSearchClient {
     val response = client.listApiKeys(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1033,6 +1079,7 @@ class SnippetSearchClient {
     val response = client.listClusters(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1051,6 +1098,7 @@ class SnippetSearchClient {
     val response = client.listIndices(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1069,6 +1117,7 @@ class SnippetSearchClient {
     val response = client.listUserIds(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1096,6 +1145,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1120,6 +1170,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1143,6 +1194,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1166,6 +1218,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1187,6 +1240,7 @@ class SnippetSearchClient {
       attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1206,6 +1260,7 @@ class SnippetSearchClient {
       userID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1230,6 +1285,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1249,6 +1305,7 @@ class SnippetSearchClient {
       key = "myApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1269,6 +1326,7 @@ class SnippetSearchClient {
       body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1300,6 +1358,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1345,6 +1404,7 @@ class SnippetSearchClient {
       clearExistingRules = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1371,6 +1431,7 @@ class SnippetSearchClient {
       forwardToReplicas = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1405,6 +1466,7 @@ class SnippetSearchClient {
       replaceExistingSynonyms = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1432,6 +1494,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1459,6 +1522,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1486,6 +1550,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1513,6 +1578,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1540,6 +1606,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1567,6 +1634,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1589,6 +1657,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1609,6 +1678,7 @@ class SnippetSearchClient {
       facetName = "facetName"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1633,6 +1703,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1652,6 +1723,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1671,6 +1743,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1695,6 +1768,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1718,6 +1792,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1740,6 +1815,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1765,6 +1841,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

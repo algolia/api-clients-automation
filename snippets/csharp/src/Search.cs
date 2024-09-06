@@ -30,6 +30,7 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -50,6 +51,7 @@ public class SnippetSearchClient
       "uniqueID",
       new Dictionary<string, string> { { "key", "value" } }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -68,6 +70,7 @@ public class SnippetSearchClient
     var response = await client.AppendSourceAsync(
       new Source { VarSource = "theSource", Description = "theDescription", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -87,6 +90,7 @@ public class SnippetSearchClient
       "userID",
       new AssignUserIdParams { Cluster = "theCluster", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -121,6 +125,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -150,6 +155,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -179,6 +185,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -208,6 +215,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -237,6 +245,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -266,6 +275,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -295,6 +305,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -318,6 +329,7 @@ public class SnippetSearchClient
         Users = new List<string> { "user1", "user2" },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -356,6 +368,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -386,6 +399,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -420,6 +434,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -436,6 +451,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -452,6 +468,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ClearObjectsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -468,6 +485,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ClearRulesAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -484,6 +502,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ClearSynonymsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -500,6 +519,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -516,6 +536,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -532,6 +553,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -548,6 +570,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -564,6 +587,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteApiKeyAsync("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -583,6 +607,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new DeleteByParams { Filters = "brand:brandName", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -599,6 +624,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteIndexAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -615,6 +641,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteObjectAsync("<YOUR_INDEX_NAME>", "uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -634,6 +661,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new List<string> { "1", "2" }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -650,6 +678,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -666,6 +695,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteSourceAsync("theSource");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -682,6 +712,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -705,6 +736,7 @@ public class SnippetSearchClient
         RestrictIndices = new List<string> { "Movies" },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -740,6 +772,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -756,6 +789,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetApiKeyAsync("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -772,6 +806,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetAppTaskAsync(123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -788,6 +823,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetDictionaryLanguagesAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -804,6 +840,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetDictionarySettingsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -820,6 +857,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetLogsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -840,6 +878,7 @@ public class SnippetSearchClient
       "uniqueID",
       new List<string> { "attr1", "attr2" }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -869,6 +908,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -885,6 +925,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetRuleAsync("<YOUR_INDEX_NAME>", "qr-1725004648916");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -901,6 +942,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -917,6 +959,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetSourcesAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -933,6 +976,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetSynonymAsync("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -949,6 +993,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -965,6 +1010,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetTopUserIdsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -981,6 +1027,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.GetUserIdAsync("uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -997,6 +1044,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.HasPendingMappingsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1013,6 +1061,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1029,6 +1078,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1045,6 +1095,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1061,6 +1112,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ListApiKeysAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1077,6 +1129,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ListClustersAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1093,6 +1146,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ListIndicesAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1109,6 +1163,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.ListUserIdsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1138,6 +1193,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1166,6 +1222,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1189,6 +1246,7 @@ public class SnippetSearchClient
         Destination = "<DESTINATION_INDEX_NAME>",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1212,6 +1270,7 @@ public class SnippetSearchClient
         Destination = "<DESTINATION_INDEX_NAME>",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1232,6 +1291,7 @@ public class SnippetSearchClient
       "uniqueID",
       new Dictionary<string, string> { { "attributeId", "new value" } }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1256,6 +1316,7 @@ public class SnippetSearchClient
       },
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1280,6 +1341,7 @@ public class SnippetSearchClient
       },
       false
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1296,6 +1358,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.RemoveUserIdAsync("uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1328,6 +1391,7 @@ public class SnippetSearchClient
       },
       3
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1349,6 +1413,7 @@ public class SnippetSearchClient
         new Source { VarSource = "theSource", Description = "theDescription", }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1365,6 +1430,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.RestoreApiKeyAsync("myApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1384,6 +1450,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1407,6 +1474,7 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1430,6 +1498,7 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1457,6 +1526,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1496,6 +1566,7 @@ public class SnippetSearchClient
       false,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1522,6 +1593,7 @@ public class SnippetSearchClient
       },
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1558,6 +1630,7 @@ public class SnippetSearchClient
       true,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1589,6 +1662,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1620,6 +1694,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1651,6 +1726,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1682,6 +1758,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1713,6 +1790,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1744,6 +1822,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1763,6 +1842,7 @@ public class SnippetSearchClient
       Enum.Parse<DictionaryType>("Stopwords"),
       new SearchDictionaryEntriesParams { Query = "about", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1779,6 +1859,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1798,6 +1879,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new SearchRulesParams { Query = "zorro", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1814,6 +1896,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1830,6 +1913,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchSynonymsAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1854,6 +1938,24 @@ public class SnippetSearchClient
         HitsPerPage = 10,
       }
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForSearchClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1883,6 +1985,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1910,6 +2013,7 @@ public class SnippetSearchClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1935,6 +2039,7 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1954,6 +2059,7 @@ public class SnippetSearchClient
       "api-key-add-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Add")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1988,6 +2094,7 @@ public class SnippetSearchClient
         MaxHitsPerQuery = 20,
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -2007,6 +2114,7 @@ public class SnippetSearchClient
       "api-key-delete-operation-test-csharp",
       Enum.Parse<ApiKeyOperation>("Delete")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -2023,6 +2131,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.WaitForAppTaskAsync(123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -2039,6 +2148,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 }

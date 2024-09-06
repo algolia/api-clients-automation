@@ -47,6 +47,7 @@ class SnippetQuerySuggestionsClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -66,6 +67,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -85,6 +87,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -104,6 +107,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -123,6 +127,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -142,6 +147,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -160,6 +166,7 @@ class SnippetQuerySuggestionsClient {
     val response = client.getAllConfigs(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -179,6 +186,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -198,6 +206,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -217,6 +226,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -253,6 +263,7 @@ class SnippetQuerySuggestionsClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

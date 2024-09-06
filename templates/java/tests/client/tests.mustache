@@ -6,7 +6,6 @@ void {{testType}}Test{{testIndex}}() {
     {{client}} client = createClient();
   {{/autoCreateClient}}
 
-  {{#isHelper}}assertDoesNotThrow(() -> { {{/isHelper}}
   {{#steps}}
   {{#times}}
   for (int i = 0; i < {{.}}; i++) {
@@ -20,8 +19,11 @@ void {{testType}}Test{{testIndex}}() {
       }
     {{/isError}}
     {{^isError}}
+      {{#shouldScope}}
+      assertDoesNotThrow(() -> { 
+      {{/shouldScope}}
       {{#dynamicTemplate}}{{/dynamicTemplate}}
-      {{#testUserAgent}} 
+      {{#testUserAgent}}
       {
         String regexp = {{#match}}{{> tests/generateParams}}{{/match}};
         assertTrue(result.headers.get("user-agent").matches(regexp), "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp);
@@ -42,11 +44,13 @@ void {{testType}}Test{{testIndex}}() {
           assertDoesNotThrow(() -> JSONAssert.assertEquals({{#match}}{{> tests/generateParams}}{{/match}}, json.writeValueAsString(res), JSONCompareMode.STRICT));
         {{/match.isPrimitive}}
       {{/testResponse}}
+      {{#shouldScope}}
+      });
+      {{/shouldScope}}
     {{/isError}}
   {{#times}}
   }
   {{/times}}
   {{/steps}}
-  {{#isHelper}} });{{/isHelper}}
 }
 {{/tests}}

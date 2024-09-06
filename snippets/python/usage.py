@@ -19,6 +19,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -42,6 +43,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -65,6 +67,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -88,6 +91,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -114,6 +118,7 @@ async def snippet_for_get_index_usage():
         end_date="2024-04-05T12:46:43Z",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -139,9 +144,29 @@ async def snippet_for_get_usage():
         end_date="2024-04-05T12:46:43Z",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<

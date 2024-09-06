@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,7 @@ import (
 	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -160,4 +162,50 @@ func TestAbtestingparameters2(t *testing.T) {
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
+}
+
+// switch API key
+func TestAbtestingsetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *abtesting.APIClient
+	var cfg abtesting.AbtestingConfiguration
+	_ = client
+	_ = echo
+	cfg = abtesting.AbtestingConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+		Region: abtesting.Region("us"),
+	}
+	client, err = abtesting.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,7 @@ import (
 	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -173,4 +175,50 @@ func TestAnalyticsparameters3(t *testing.T) {
 		tests.ZeroValue[string](),
 	))
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")
+}
+
+// switch API key
+func TestAnalyticssetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *analytics.APIClient
+	var cfg analytics.AnalyticsConfiguration
+	_ = client
+	_ = echo
+	cfg = analytics.AnalyticsConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+		Region: analytics.Region("us"),
+	}
+	client, err = analytics.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

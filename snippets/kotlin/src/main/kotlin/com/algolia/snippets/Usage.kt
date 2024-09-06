@@ -19,6 +19,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -90,6 +94,7 @@ class SnippetUsageClient {
       endDate = "2024-04-05T12:46:43Z",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -109,8 +114,25 @@ class SnippetUsageClient {
       endDate = "2024-04-05T12:46:43Z",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

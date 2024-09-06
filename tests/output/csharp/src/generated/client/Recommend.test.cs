@@ -95,4 +95,47 @@ public class RecommendClientTests
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
     Assert.Equal(30000, result.ResponseTimeout.TotalMilliseconds);
   }
+
+  [Fact(DisplayName = "switch API key")]
+  public async Task SetClientApiKeyTest0()
+  {
+    RecommendConfig _config = new RecommendConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6683,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new RecommendClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("check-api-key/1");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"test-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      client.SetClientApiKey("updated-api-key");
+    }
+    {
+      var res = await client.CustomGetAsync("check-api-key/2");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"updated-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
 }

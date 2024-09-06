@@ -112,4 +112,44 @@ class QuerySuggestionsTest extends AnyFunSuite {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "us")
   }
+
+  test("switch API key") {
+
+    val client = QuerySuggestionsClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/1"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+    }
+
+    {
+
+      client.setClientApiKey(
+        apiKey = "updated-api-key"
+      )
+    }
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/2"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+    }
+  }
 }

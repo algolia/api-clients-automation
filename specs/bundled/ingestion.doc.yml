@@ -169,6 +169,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -196,6 +197,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -211,6 +214,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -224,6 +229,8 @@ paths:
 
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -244,6 +251,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -263,6 +272,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -281,6 +292,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -303,6 +316,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -328,6 +343,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -343,6 +360,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -382,6 +401,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -409,6 +429,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -424,6 +446,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -437,6 +461,8 @@ paths:
 
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -457,6 +483,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -476,6 +504,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -494,6 +524,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -516,6 +548,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -541,6 +575,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -556,6 +592,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -595,6 +633,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -622,6 +661,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -637,6 +678,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -650,6 +693,8 @@ paths:
 
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -670,6 +715,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -689,6 +736,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -707,6 +756,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -729,6 +780,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -754,6 +807,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -769,6 +824,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -802,6 +859,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -830,6 +888,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -845,6 +905,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -859,6 +921,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -879,6 +943,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -898,6 +964,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -916,6 +984,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -938,6 +1008,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -963,6 +1035,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -978,6 +1052,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/authentications:
     get:
       tags:
@@ -1028,6 +1104,7 @@ paths:
 
             // Call the API
             var response = await client.ListAuthenticationsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1054,6 +1131,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1069,6 +1148,8 @@ paths:
             // Call the API
 
             client.listAuthentications();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1082,6 +1163,8 @@ paths:
 
             const response = await client.listAuthentications();
 
+
+            // >LOG
 
             // use typed response
 
@@ -1100,6 +1183,8 @@ paths:
             var response = client.listAuthentications()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1117,6 +1202,8 @@ paths:
             $response = $client->listAuthentications();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1133,6 +1220,8 @@ paths:
 
             response = await _client.list_authentications()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1155,6 +1244,8 @@ paths:
 
             response = client.list_authentications
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1180,6 +1271,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1195,6 +1288,8 @@ paths:
             // Call the API
 
             let response = try await client.listAuthentications()
+
+            // >LOG
     post:
       tags:
         - authentications
@@ -1246,6 +1341,7 @@ paths:
                 ),
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1276,6 +1372,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1296,6 +1394,8 @@ paths:
                 .setName("authName")
                 .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1313,6 +1413,8 @@ paths:
               input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1341,6 +1443,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1365,6 +1469,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -1393,6 +1499,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -1420,6 +1528,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1453,6 +1563,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1474,6 +1586,8 @@ paths:
                 name: "authName",
                 input: AuthInput.authOAuth(AuthOAuth(url: "http://test.oauth", clientId: "myID", clientSecret: "mySecret"))
             ))
+
+            // >LOG
   /1/authentications/search:
     post:
       tags:
@@ -1523,6 +1637,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1553,6 +1668,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1571,6 +1688,8 @@ paths:
               new AuthenticationSearch()
                 .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1586,6 +1705,8 @@ paths:
               authenticationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1607,6 +1728,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1632,6 +1755,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1655,6 +1780,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1682,6 +1809,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             puts(response)
@@ -1708,6 +1837,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1727,6 +1858,7 @@ paths:
                     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 ]))
+            // >LOG
   /1/authentications/{authenticationID}:
     get:
       tags:
@@ -1764,6 +1896,8 @@ paths:
 
             var response = await
             client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1792,6 +1926,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1807,6 +1943,8 @@ paths:
             // Call the API
 
             client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1821,6 +1959,8 @@ paths:
             const response = await client.getAuthentication({ authenticationID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1841,6 +1981,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1860,6 +2002,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1878,6 +2022,8 @@ paths:
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1901,6 +2047,8 @@ paths:
             response =
             client.get_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1926,6 +2074,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1942,6 +2092,8 @@ paths:
 
             let response = try await client.getAuthentication(authenticationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
     patch:
       tags:
         - authentications
@@ -1983,6 +2135,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new AuthenticationUpdate { Name = "newName", }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2012,6 +2165,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2028,6 +2183,8 @@ paths:
 
             client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             new AuthenticationUpdate().setName("newName"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2044,6 +2201,8 @@ paths:
               authenticationUpdate: { name: 'newName' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2067,6 +2226,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2087,6 +2248,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -2109,6 +2272,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2134,6 +2299,8 @@ paths:
               AuthenticationUpdate.new(name: "newName")
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2162,6 +2329,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2180,6 +2349,8 @@ paths:
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 authenticationUpdate: AuthenticationUpdate(name: "newName")
             )
+
+            // >LOG
     delete:
       tags:
         - authentications
@@ -2218,6 +2389,8 @@ paths:
 
             var response = await
             client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2246,6 +2419,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2261,6 +2436,8 @@ paths:
             // Call the API
 
             client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2275,6 +2452,8 @@ paths:
             const response = await client.deleteAuthentication({
             authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2295,6 +2474,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2314,6 +2495,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2332,6 +2515,8 @@ paths:
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2355,6 +2540,8 @@ paths:
             response =
             client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2380,6 +2567,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2397,6 +2586,8 @@ paths:
             let response = try await
             client.deleteAuthentication(authenticationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/destinations:
     get:
       tags:
@@ -2447,6 +2638,7 @@ paths:
 
             // Call the API
             var response = await client.ListDestinationsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2473,6 +2665,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2488,6 +2682,8 @@ paths:
             // Call the API
 
             client.listDestinations();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2501,6 +2697,8 @@ paths:
 
             const response = await client.listDestinations();
 
+
+            // >LOG
 
             // use typed response
 
@@ -2519,6 +2717,8 @@ paths:
             var response = client.listDestinations()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2536,6 +2736,8 @@ paths:
             $response = $client->listDestinations();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2552,6 +2754,8 @@ paths:
 
             response = await _client.list_destinations()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2574,6 +2778,8 @@ paths:
 
             response = client.list_destinations
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2599,6 +2805,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2614,6 +2822,8 @@ paths:
             // Call the API
 
             let response = try await client.listDestinations()
+
+            // >LOG
     post:
       tags:
         - destinations
@@ -2659,6 +2869,7 @@ paths:
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2689,6 +2900,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2710,6 +2923,8 @@ paths:
                 .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2728,6 +2943,8 @@ paths:
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2755,6 +2972,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2778,6 +2997,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -2804,6 +3025,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2833,6 +3056,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2865,6 +3090,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2886,6 +3113,8 @@ paths:
                 input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
+
+            // >LOG
   /1/destinations/search:
     post:
       tags:
@@ -2935,6 +3164,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2965,6 +3195,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2983,6 +3215,8 @@ paths:
               new DestinationSearch()
                 .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2998,6 +3232,8 @@ paths:
               destinationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3019,6 +3255,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -3044,6 +3282,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3067,6 +3307,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3094,6 +3336,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             puts(response)
@@ -3120,6 +3364,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3140,6 +3386,8 @@ paths:
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             ]))
+
+            // >LOG
   /1/destinations/{destinationID}:
     get:
       tags:
@@ -3177,6 +3425,8 @@ paths:
 
             var response = await
             client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3205,6 +3455,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3220,6 +3472,8 @@ paths:
             // Call the API
 
             client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3234,6 +3488,8 @@ paths:
             const response = await client.getDestination({ destinationID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3254,6 +3510,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3273,6 +3531,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3291,6 +3551,8 @@ paths:
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3314,6 +3576,8 @@ paths:
             response =
             client.get_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3339,6 +3603,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3355,6 +3621,8 @@ paths:
 
             let response = try await client.getDestination(destinationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
     patch:
       tags:
         - destinations
@@ -3396,6 +3664,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new DestinationUpdate { Name = "newName", }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3425,6 +3694,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3441,6 +3712,8 @@ paths:
 
             client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
             DestinationUpdate().setName("newName"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3457,6 +3730,8 @@ paths:
               destinationUpdate: { name: 'newName' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3480,6 +3755,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3500,6 +3777,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -3522,6 +3801,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3546,6 +3827,8 @@ paths:
             client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             DestinationUpdate.new(name: "newName"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3574,6 +3857,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3592,6 +3877,8 @@ paths:
                 destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 destinationUpdate: DestinationUpdate(name: "newName")
             )
+
+            // >LOG
     delete:
       tags:
         - destinations
@@ -3630,6 +3917,8 @@ paths:
 
             var response = await
             client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3658,6 +3947,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3673,6 +3964,8 @@ paths:
             // Call the API
 
             client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3687,6 +3980,8 @@ paths:
             const response = await client.deleteDestination({ destinationID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3707,6 +4002,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3726,6 +4023,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3744,6 +4043,8 @@ paths:
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3767,6 +4068,8 @@ paths:
             response =
             client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3792,6 +4095,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3808,6 +4113,8 @@ paths:
 
             let response = try await client.deleteDestination(destinationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/sources:
     get:
       tags:
@@ -3858,6 +4165,7 @@ paths:
 
             // Call the API
             var response = await client.ListSourcesAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3884,6 +4192,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3899,6 +4209,8 @@ paths:
             // Call the API
 
             client.listSources();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3912,6 +4224,8 @@ paths:
 
             const response = await client.listSources();
 
+
+            // >LOG
 
             // use typed response
 
@@ -3930,6 +4244,8 @@ paths:
             var response = client.listSources()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3947,6 +4263,8 @@ paths:
             $response = $client->listSources();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3963,6 +4281,8 @@ paths:
 
             response = await _client.list_sources()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3985,6 +4305,8 @@ paths:
 
             response = client.list_sources
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4010,6 +4332,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4025,6 +4349,8 @@ paths:
             // Call the API
 
             let response = try await client.listSources()
+
+            // >LOG
     post:
       tags:
         - sources
@@ -4078,6 +4404,7 @@ paths:
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4110,6 +4437,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4137,6 +4466,8 @@ paths:
                 )
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -4155,6 +4486,8 @@ paths:
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -4184,6 +4517,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -4215,6 +4550,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -4249,6 +4586,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -4282,6 +4621,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4319,6 +4660,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4345,6 +4688,8 @@ paths:
                 )),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
+
+            // >LOG
   /1/sources/validate:
     post:
       tags:
@@ -4400,6 +4745,7 @@ paths:
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4429,6 +4775,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4456,6 +4804,8 @@ paths:
                 )
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -4474,6 +4824,8 @@ paths:
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -4503,6 +4855,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -4534,6 +4888,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -4568,6 +4924,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -4601,6 +4959,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4640,6 +5000,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4666,6 +5028,8 @@ paths:
                 )),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
+
+            // >LOG
   /1/sources/search:
     post:
       tags:
@@ -4715,6 +5079,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4745,6 +5110,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4762,6 +5129,8 @@ paths:
             client.searchSources(
               new SourceSearch().setSourceIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -4777,6 +5146,8 @@ paths:
               sourceIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -4798,6 +5169,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -4823,6 +5196,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -4847,6 +5222,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -4870,6 +5247,8 @@ paths:
               SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"])
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4897,6 +5276,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4916,6 +5297,8 @@ paths:
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             ]))
+
+            // >LOG
   /1/sources/{sourceID}:
     get:
       tags:
@@ -4953,6 +5336,8 @@ paths:
 
             var response = await
             client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4980,6 +5365,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4995,6 +5382,8 @@ paths:
             // Call the API
 
             client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5009,6 +5398,8 @@ paths:
             const response = await client.getSource({ sourceID:
             '75eeb306-51d3-4e5e-a279-3c92bd8893ac' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5029,6 +5420,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5048,6 +5441,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5066,6 +5461,8 @@ paths:
                 source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5088,6 +5485,8 @@ paths:
 
             response = client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5113,6 +5512,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5129,6 +5530,8 @@ paths:
 
             let response = try await client.getSource(sourceID:
             "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+
+            // >LOG
     patch:
       tags:
         - sources
@@ -5170,6 +5573,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new SourceUpdate { Name = "newName", }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5199,6 +5603,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5215,6 +5621,8 @@ paths:
 
             client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
             SourceUpdate().setName("newName"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5231,6 +5639,8 @@ paths:
               sourceUpdate: { name: 'newName' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5254,6 +5664,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5274,6 +5686,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -5296,6 +5710,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5320,6 +5736,8 @@ paths:
             client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             SourceUpdate.new(name: "newName"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5348,6 +5766,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5366,6 +5786,8 @@ paths:
                 sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 sourceUpdate: SourceUpdate(name: "newName")
             )
+
+            // >LOG
     delete:
       tags:
         - sources
@@ -5404,6 +5826,8 @@ paths:
 
             var response = await
             client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5432,6 +5856,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5447,6 +5873,8 @@ paths:
             // Call the API
 
             client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5461,6 +5889,8 @@ paths:
             const response = await client.deleteSource({ sourceID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5481,6 +5911,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5500,6 +5932,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5518,6 +5952,8 @@ paths:
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5541,6 +5977,8 @@ paths:
             response =
             client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5566,6 +6004,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5582,6 +6022,8 @@ paths:
 
             let response = try await client.deleteSource(sourceID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/sources/{sourceID}/validate:
     post:
       tags:
@@ -5626,6 +6068,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new SourceUpdate { Name = "newName", }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5655,6 +6098,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5671,6 +6116,8 @@ paths:
 
             client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             new SourceUpdate().setName("newName"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5687,6 +6134,8 @@ paths:
               sourceUpdate: { name: 'newName' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5710,6 +6159,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5730,6 +6181,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -5752,6 +6205,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5777,6 +6232,8 @@ paths:
               SourceUpdate.new(name: "newName")
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5805,6 +6262,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5823,6 +6282,8 @@ paths:
                 sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 sourceUpdate: SourceUpdate(name: "newName")
             )
+
+            // >LOG
   /1/sources/{sourceID}/discover:
     post:
       tags:
@@ -5862,6 +6323,7 @@ paths:
             var response = await client.TriggerDockerSourceDiscoverAsync(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5890,6 +6352,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5905,6 +6369,8 @@ paths:
             // Call the API
 
             client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5919,6 +6385,8 @@ paths:
             const response = await client.triggerDockerSourceDiscover({
             sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5939,6 +6407,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5958,6 +6428,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5976,6 +6448,8 @@ paths:
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5999,6 +6473,8 @@ paths:
             response =
             client.trigger_docker_source_discover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6024,6 +6500,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6041,6 +6519,8 @@ paths:
             let response = try await
             client.triggerDockerSourceDiscover(sourceID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/sources/{sourceID}/run:
     post:
       tags:
@@ -6104,6 +6584,7 @@ paths:
                 EntityType = Enum.Parse<EntityType>("Product"),
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6133,6 +6614,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6154,6 +6637,8 @@ paths:
                 .setEntityIDs(Arrays.asList("1234", "5678"))
                 .setEntityType(EntityType.PRODUCT)
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6174,6 +6659,8 @@ paths:
               },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6198,6 +6685,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -6230,6 +6719,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -6260,6 +6751,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -6288,6 +6781,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6320,6 +6815,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6342,6 +6839,8 @@ paths:
                     entityType: EntityType.product
                 )
             )
+
+            // >LOG
   /1/tasks:
     get:
       tags:
@@ -6398,6 +6897,7 @@ paths:
 
             // Call the API
             var response = await client.ListTasksV1Async();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6424,6 +6924,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6439,6 +6941,8 @@ paths:
             // Call the API
 
             client.listTasksV1();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6452,6 +6956,8 @@ paths:
 
             const response = await client.listTasksV1();
 
+
+            // >LOG
 
             // use typed response
 
@@ -6470,6 +6976,8 @@ paths:
             var response = client.listTasksV1()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -6487,6 +6995,8 @@ paths:
             $response = $client->listTasksV1();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -6503,6 +7013,8 @@ paths:
 
             response = await _client.list_tasks_v1()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6525,6 +7037,8 @@ paths:
 
             response = client.list_tasks_v1
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6550,6 +7064,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6565,6 +7081,8 @@ paths:
             // Call the API
 
             let response = try await client.listTasksV1()
+
+            // >LOG
     post:
       tags:
         - tasks
@@ -6611,6 +7129,7 @@ paths:
                 Action = Enum.Parse<ActionType>("Replace"),
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6641,6 +7160,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6662,6 +7183,8 @@ paths:
                 .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
                 .setAction(ActionType.REPLACE)
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6680,6 +7203,8 @@ paths:
               action: 'replace',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6707,6 +7232,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -6730,6 +7257,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -6756,6 +7285,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6785,6 +7316,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -6817,6 +7350,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6838,6 +7373,8 @@ paths:
                 trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
                 action: ActionType.replace
             ))
+
+            // >LOG
   /1/tasks/search:
     post:
       tags:
@@ -6890,6 +7427,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6920,6 +7458,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6944,6 +7484,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6963,6 +7505,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6984,6 +7528,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -7011,6 +7557,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -7035,6 +7583,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7066,6 +7616,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             puts(response)
@@ -7096,6 +7648,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7116,6 +7670,8 @@ paths:
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             ]))
+
+            // >LOG
   /1/tasks/{taskID}:
     get:
       tags:
@@ -7155,6 +7711,8 @@ paths:
 
             var response = await
             client.GetTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -7182,6 +7740,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -7197,6 +7757,8 @@ paths:
             // Call the API
 
             client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -7211,6 +7773,8 @@ paths:
             const response = await client.getTaskV1({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -7231,6 +7795,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7250,6 +7816,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -7268,6 +7836,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7291,6 +7861,8 @@ paths:
             response =
             client.get_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7316,6 +7888,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7332,6 +7906,8 @@ paths:
 
             let response = try await client.getTaskV1(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
     patch:
       tags:
         - tasks
@@ -7372,6 +7948,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TaskUpdateV1 { Enabled = false, }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -7401,6 +7978,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -7417,6 +7996,8 @@ paths:
 
             client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
             TaskUpdateV1().setEnabled(false));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -7433,6 +8014,8 @@ paths:
               taskUpdate: { enabled: false },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -7456,6 +8039,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7476,6 +8061,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -7498,6 +8085,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7522,6 +8111,8 @@ paths:
             client.update_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             TaskUpdateV1.new(enabled: false))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7550,6 +8141,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7568,6 +8161,8 @@ paths:
                 taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 taskUpdate: TaskUpdateV1(enabled: false)
             )
+
+            // >LOG
     delete:
       tags:
         - tasks
@@ -7602,6 +8197,8 @@ paths:
 
             var response = await
             client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -7630,6 +8227,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -7645,6 +8244,8 @@ paths:
             // Call the API
 
             client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -7659,6 +8260,8 @@ paths:
             const response = await client.deleteTaskV1({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -7679,6 +8282,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7698,6 +8303,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -7716,6 +8323,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7739,6 +8348,8 @@ paths:
             response =
             client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7764,6 +8375,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7780,6 +8393,8 @@ paths:
 
             let response = try await client.deleteTaskV1(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/tasks/{taskID}/run:
     post:
       tags:
@@ -7819,6 +8434,8 @@ paths:
 
             var response = await
             client.RunTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -7846,6 +8463,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -7861,6 +8480,8 @@ paths:
             // Call the API
 
             client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -7875,6 +8496,8 @@ paths:
             const response = await client.runTaskV1({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -7895,6 +8518,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7914,6 +8539,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -7932,6 +8559,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7955,6 +8584,8 @@ paths:
             response =
             client.run_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -7980,6 +8611,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7996,6 +8629,8 @@ paths:
 
             let response = try await client.runTaskV1(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/tasks/{taskID}/enable:
     put:
       tags:
@@ -8033,6 +8668,8 @@ paths:
 
             var response = await
             client.EnableTaskV1Async("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8061,6 +8698,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8076,6 +8715,8 @@ paths:
             // Call the API
 
             client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -8090,6 +8731,8 @@ paths:
             const response = await client.enableTaskV1({ taskID:
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -8110,6 +8753,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8129,6 +8774,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -8147,6 +8794,8 @@ paths:
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8170,6 +8819,8 @@ paths:
             response =
             client.enable_task_v1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8195,6 +8846,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8211,6 +8864,8 @@ paths:
 
             let response = try await client.enableTaskV1(taskID:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
+            // >LOG
   /1/tasks/{taskID}/disable:
     put:
       tags:
@@ -8249,6 +8904,8 @@ paths:
 
             var response = await
             client.DisableTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8277,6 +8934,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8292,6 +8951,8 @@ paths:
             // Call the API
 
             client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -8306,6 +8967,8 @@ paths:
             const response = await client.disableTaskV1({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -8326,6 +8989,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8345,6 +9010,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -8363,6 +9030,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8386,6 +9055,8 @@ paths:
             response =
             client.disable_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8411,6 +9082,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8427,6 +9100,8 @@ paths:
 
             let response = try await client.disableTaskV1(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /2/tasks:
     get:
       tags:
@@ -8481,6 +9156,7 @@ paths:
 
             // Call the API
             var response = await client.ListTasksAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8506,6 +9182,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8521,6 +9199,8 @@ paths:
             // Call the API
 
             client.listTasks();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -8534,6 +9214,8 @@ paths:
 
             const response = await client.listTasks();
 
+
+            // >LOG
 
             // use typed response
 
@@ -8552,6 +9234,8 @@ paths:
             var response = client.listTasks()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8569,6 +9253,8 @@ paths:
             $response = $client->listTasks();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -8585,6 +9271,8 @@ paths:
 
             response = await _client.list_tasks()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8607,6 +9295,8 @@ paths:
 
             response = client.list_tasks
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8632,6 +9322,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8647,6 +9339,8 @@ paths:
             // Call the API
 
             let response = try await client.listTasks()
+
+            // >LOG
     post:
       tags:
         - tasks
@@ -8687,6 +9381,7 @@ paths:
                 Action = Enum.Parse<ActionType>("Replace"),
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8715,6 +9410,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8731,6 +9428,8 @@ paths:
 
             client.createTask(new
             TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -8745,6 +9444,8 @@ paths:
             const response = await client.createTask({ sourceID: 'search',
             destinationID: 'destinationName', action: 'replace' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -8769,6 +9470,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8790,6 +9493,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -8814,6 +9519,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -8837,6 +9544,8 @@ paths:
               TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -8866,6 +9575,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8885,6 +9596,8 @@ paths:
                 destinationID: "destinationName",
                 action: ActionType.replace
             ))
+
+            // >LOG
   /2/tasks/search:
     post:
       tags:
@@ -8935,6 +9648,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8964,6 +9678,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8988,6 +9704,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9007,6 +9725,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9028,6 +9748,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -9055,6 +9777,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -9079,6 +9803,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9110,6 +9836,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             puts(response)
@@ -9140,6 +9868,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9160,6 +9890,8 @@ paths:
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             ]))
+
+            // >LOG
   /2/tasks/{taskID}:
     get:
       tags:
@@ -9197,6 +9929,8 @@ paths:
 
             var response = await
             client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -9224,6 +9958,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -9239,6 +9975,8 @@ paths:
             // Call the API
 
             client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9253,6 +9991,8 @@ paths:
             const response = await client.getTask({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9273,6 +10013,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9292,6 +10034,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -9310,6 +10054,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9332,6 +10078,8 @@ paths:
 
             response = client.get_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9357,6 +10105,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9373,6 +10123,8 @@ paths:
 
             let response = try await client.getTask(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
     patch:
       tags:
         - tasks
@@ -9410,6 +10162,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TaskUpdate { Enabled = false, Cron = "* * * * *", }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -9438,6 +10191,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -9454,6 +10209,8 @@ paths:
 
             client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
             TaskUpdate().setEnabled(false).setCron("* * * * *"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9470,6 +10227,8 @@ paths:
               taskUpdate: { enabled: false, cron: '* * * * *' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9494,6 +10253,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9515,6 +10276,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -9538,6 +10301,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9563,6 +10328,8 @@ paths:
               TaskUpdate.new(enabled: false, cron: "* * * * *")
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9592,6 +10359,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9610,6 +10379,8 @@ paths:
                 taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 taskUpdate: TaskUpdate(cron: "* * * * *", enabled: false)
             )
+
+            // >LOG
     delete:
       tags:
         - tasks
@@ -9642,6 +10413,8 @@ paths:
 
             var response = await
             client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -9669,6 +10442,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -9684,6 +10459,8 @@ paths:
             // Call the API
 
             client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9698,6 +10475,8 @@ paths:
             const response = await client.deleteTask({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9718,6 +10497,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9737,6 +10518,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -9755,6 +10538,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9778,6 +10563,8 @@ paths:
             response =
             client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9803,6 +10590,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9819,6 +10608,8 @@ paths:
 
             let response = try await client.deleteTask(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /2/tasks/{taskID}/run:
     post:
       tags:
@@ -9858,6 +10649,8 @@ paths:
 
             var response = await
             client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -9885,6 +10678,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -9900,6 +10695,8 @@ paths:
             // Call the API
 
             client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9914,6 +10711,8 @@ paths:
             const response = await client.runTask({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9934,6 +10733,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9953,6 +10754,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -9971,6 +10774,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9993,6 +10798,8 @@ paths:
 
             response = client.run_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10018,6 +10825,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10034,6 +10843,8 @@ paths:
 
             let response = try await client.runTask(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /2/tasks/{taskID}/push:
     post:
       tags:
@@ -10123,6 +10934,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10152,6 +10964,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -10177,6 +10991,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -10199,6 +11015,8 @@ paths:
               },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -10238,6 +11056,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10269,6 +11089,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -10304,6 +11126,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -10334,6 +11158,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10372,6 +11198,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10404,6 +11232,8 @@ paths:
                     ]
                 )
             )
+
+            // >LOG
   /2/tasks/{taskID}/enable:
     put:
       tags:
@@ -10441,6 +11271,8 @@ paths:
 
             var response = await
             client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10468,6 +11300,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -10483,6 +11317,8 @@ paths:
             // Call the API
 
             client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -10497,6 +11333,8 @@ paths:
             const response = await client.enableTask({ taskID:
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -10517,6 +11355,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10536,6 +11376,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -10554,6 +11396,8 @@ paths:
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10577,6 +11421,8 @@ paths:
             response =
             client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10602,6 +11448,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10618,6 +11466,8 @@ paths:
 
             let response = try await client.enableTask(taskID:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
+            // >LOG
   /2/tasks/{taskID}/disable:
     put:
       tags:
@@ -10655,6 +11505,8 @@ paths:
 
             var response = await
             client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10682,6 +11534,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -10697,6 +11551,8 @@ paths:
             // Call the API
 
             client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -10711,6 +11567,8 @@ paths:
             const response = await client.disableTask({ taskID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -10731,6 +11589,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10750,6 +11610,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -10768,6 +11630,8 @@ paths:
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10791,6 +11655,8 @@ paths:
             response =
             client.disable_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10816,6 +11682,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10832,6 +11700,8 @@ paths:
 
             let response = try await client.disableTask(taskID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/transformations:
     get:
       tags:
@@ -10881,6 +11751,7 @@ paths:
 
             // Call the API
             var response = await client.ListTransformationsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10907,6 +11778,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -10922,6 +11795,8 @@ paths:
             // Call the API
 
             client.listTransformations();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -10935,6 +11810,8 @@ paths:
 
             const response = await client.listTransformations();
 
+
+            // >LOG
 
             // use typed response
 
@@ -10953,6 +11830,8 @@ paths:
             var response = client.listTransformations()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10970,6 +11849,8 @@ paths:
             $response = $client->listTransformations();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -10986,6 +11867,8 @@ paths:
 
             response = await _client.list_transformations()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11008,6 +11891,8 @@ paths:
 
             response = client.list_transformations
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11033,6 +11918,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11048,6 +11935,8 @@ paths:
             // Call the API
 
             let response = try await client.listTransformations()
+
+            // >LOG
     post:
       tags:
         - transformations
@@ -11088,6 +11977,7 @@ paths:
                 Description = "baz",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11117,6 +12007,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11133,6 +12025,8 @@ paths:
 
             client.createTransformation(new
             TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -11147,6 +12041,8 @@ paths:
             const response = await client.createTransformation({ code: 'foo',
             name: 'bar', description: 'baz' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -11171,6 +12067,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11192,6 +12090,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -11216,6 +12116,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -11239,6 +12141,8 @@ paths:
             client.create_transformation(TransformationCreate.new(code: "foo",
             name: "bar", description: "baz"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11268,6 +12172,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11289,6 +12195,8 @@ paths:
                 name: "bar",
                 description: "baz"
             ))
+
+            // >LOG
   /1/transformations/try:
     post:
       tags:
@@ -11332,6 +12240,7 @@ paths:
                 SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11361,6 +12270,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11386,6 +12297,8 @@ paths:
                   }
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -11400,6 +12313,8 @@ paths:
             const response = await client.tryTransformation({ code: 'foo',
             sampleRecord: { bar: 'baz' } });
 
+
+            // >LOG
 
             // use typed response
 
@@ -11428,6 +12343,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11449,6 +12366,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -11474,6 +12393,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -11496,6 +12417,8 @@ paths:
             response = client.try_transformation(TransformationTry.new(code:
             "foo", sample_record: {bar: "baz"}))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11524,6 +12447,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11543,6 +12468,8 @@ paths:
                 code: "foo",
                 sampleRecord: ["bar": "baz"]
             ))
+
+            // >LOG
   /1/transformations/search:
     post:
       tags:
@@ -11593,6 +12520,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11623,6 +12551,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11647,6 +12577,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -11666,6 +12598,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -11687,6 +12621,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -11714,6 +12650,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -11738,6 +12676,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11769,6 +12709,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             puts(response)
@@ -11799,6 +12741,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11819,6 +12763,7 @@ paths:
                     "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                     "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
                 ]))
+            // >LOG
   /1/transformations/models:
     get:
       tags:
@@ -11860,6 +12805,7 @@ paths:
 
             // Call the API
             var response = await client.ListTransformationModelsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11885,6 +12831,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11900,6 +12848,8 @@ paths:
             // Call the API
 
             client.listTransformationModels();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -11913,6 +12863,8 @@ paths:
 
             const response = await client.listTransformationModels();
 
+
+            // >LOG
 
             // use typed response
 
@@ -11931,6 +12883,8 @@ paths:
             var response = client.listTransformationModels()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11948,6 +12902,8 @@ paths:
             $response = $client->listTransformationModels();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -11964,6 +12920,8 @@ paths:
 
             response = await _client.list_transformation_models()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11986,6 +12944,8 @@ paths:
 
             response = client.list_transformation_models
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12011,6 +12971,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12026,6 +12988,8 @@ paths:
             // Call the API
 
             let response = try await client.listTransformationModels()
+
+            // >LOG
     post:
       tags:
         - transformations
@@ -12086,6 +13050,7 @@ paths:
                   "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -12115,6 +13080,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -12134,6 +13101,8 @@ paths:
                 .setId("foo")
                 .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -12150,6 +13119,8 @@ paths:
               userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -12173,6 +13144,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12193,6 +13166,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -12215,6 +13190,8 @@ paths:
                 },
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12242,6 +13219,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12271,6 +13250,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12290,6 +13271,7 @@ paths:
                     id: "foo",
                     userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
                 ))
+            // >LOG
   /1/transformations/{transformationID}:
     get:
       tags:
@@ -12327,6 +13309,8 @@ paths:
 
             var response = await
             client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -12355,6 +13339,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -12370,6 +13356,8 @@ paths:
             // Call the API
 
             client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -12384,6 +13372,8 @@ paths:
             const response = await client.getTransformation({ transformationID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -12404,6 +13394,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12423,6 +13415,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -12441,6 +13435,8 @@ paths:
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12464,6 +13460,8 @@ paths:
             response =
             client.get_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12489,6 +13487,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12505,6 +13505,8 @@ paths:
 
             let response = try await client.getTransformation(transformationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
     put:
       tags:
         - transformations
@@ -12547,6 +13549,7 @@ paths:
                 Description = "baz",
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -12576,6 +13579,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -12594,6 +13599,8 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -12610,6 +13617,8 @@ paths:
               transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -12635,6 +13644,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12657,6 +13668,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -12682,6 +13695,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -12706,6 +13721,8 @@ paths:
               TransformationCreate.new(code: "foo", name: "bar", description: "baz")
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12736,6 +13753,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12754,6 +13773,8 @@ paths:
                 transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
             )
+
+            // >LOG
     delete:
       tags:
         - transformations
@@ -12786,6 +13807,8 @@ paths:
 
             var response = await
             client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -12814,6 +13837,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -12829,6 +13854,8 @@ paths:
             // Call the API
 
             client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -12843,6 +13870,8 @@ paths:
             const response = await client.deleteTransformation({
             transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -12863,6 +13892,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12882,6 +13913,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -12900,6 +13933,8 @@ paths:
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12923,6 +13958,8 @@ paths:
             response =
             client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -12948,6 +13985,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12965,6 +14004,8 @@ paths:
             let response = try await
             client.deleteTransformation(transformationID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/transformations/{transformationID}/try:
     post:
       tags:
@@ -13011,6 +14052,7 @@ paths:
                 SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13040,6 +14082,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13066,6 +14110,8 @@ paths:
                   }
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13082,6 +14128,8 @@ paths:
               transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -13111,6 +14159,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13133,6 +14183,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -13159,6 +14211,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -13183,6 +14237,8 @@ paths:
               TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13212,6 +14268,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13230,6 +14288,8 @@ paths:
                 transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
             )
+
+            // >LOG
   /1/runs:
     get:
       tags:
@@ -13283,6 +14343,7 @@ paths:
 
             // Call the API
             var response = await client.ListRunsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13308,6 +14369,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13323,6 +14386,8 @@ paths:
             // Call the API
 
             client.listRuns();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13336,6 +14401,8 @@ paths:
 
             const response = await client.listRuns();
 
+
+            // >LOG
 
             // use typed response
 
@@ -13354,6 +14421,8 @@ paths:
             var response = client.listRuns()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13371,6 +14440,8 @@ paths:
             $response = $client->listRuns();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -13387,6 +14458,8 @@ paths:
 
             response = await _client.list_runs()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13409,6 +14482,8 @@ paths:
 
             response = client.list_runs
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13434,6 +14509,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13449,6 +14526,8 @@ paths:
             // Call the API
 
             let response = try await client.listRuns()
+
+            // >LOG
   /1/runs/{runID}:
     get:
       tags:
@@ -13486,6 +14565,8 @@ paths:
 
             var response = await
             client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13513,6 +14594,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13528,6 +14611,8 @@ paths:
             // Call the API
 
             client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13542,6 +14627,8 @@ paths:
             const response = await client.getRun({ runID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -13562,6 +14649,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13581,6 +14670,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -13599,6 +14690,8 @@ paths:
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13621,6 +14714,8 @@ paths:
 
             response = client.get_run("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13646,6 +14741,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13662,6 +14759,8 @@ paths:
 
             let response = try await client.getRun(runID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/runs/{runID}/events:
     get:
       tags:
@@ -13734,6 +14833,8 @@ paths:
 
             var response = await
             client.ListEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13761,6 +14862,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13776,6 +14879,8 @@ paths:
             // Call the API
 
             client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13790,6 +14895,8 @@ paths:
             const response = await client.listEvents({ runID:
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -13810,6 +14917,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13829,6 +14938,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -13847,6 +14958,8 @@ paths:
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13870,6 +14983,8 @@ paths:
             response =
             client.list_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13895,6 +15010,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13911,6 +15028,8 @@ paths:
 
             let response = try await client.listEvents(runID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
@@ -13948,6 +15067,7 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13975,6 +15095,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13991,6 +15113,8 @@ paths:
 
             client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -14007,6 +15131,8 @@ paths:
               eventID: '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -14028,6 +15154,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -14048,6 +15176,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -14067,6 +15197,8 @@ paths:
                 event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -14090,6 +15222,8 @@ paths:
             response = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -14116,6 +15250,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -14134,6 +15270,8 @@ paths:
                 runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 eventID: "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
             )
+
+            // >LOG
 components:
   securitySchemes:
     appId:

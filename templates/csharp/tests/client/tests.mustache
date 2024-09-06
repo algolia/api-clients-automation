@@ -15,6 +15,9 @@
 
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}} 
+        {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}} {
           var regexp = new Regex({{#match}}{{> tests/generateParams}}{{/match}});
@@ -35,6 +38,9 @@
             JsonAssert.EqualOverrideDefault({{#match}}{{> tests/generateParams}}{{/match}}, JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
           {{/match.isPrimitive}}
         {{/testResponse}}
+        {{#shouldScope}} 
+        }
+        {{/shouldScope}}
       {{/isError}}
     {{#times}}
     }

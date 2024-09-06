@@ -19,6 +19,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -42,6 +43,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -65,6 +67,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -88,6 +91,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -111,6 +115,7 @@ async def snippet_for_get_add_to_cart_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -134,6 +139,7 @@ async def snippet_for_get_average_click_position():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -157,6 +163,7 @@ async def snippet_for_get_click_positions():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -180,6 +187,7 @@ async def snippet_for_get_click_through_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -203,6 +211,7 @@ async def snippet_for_get_conversion_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -226,6 +235,7 @@ async def snippet_for_get_no_click_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -249,6 +259,7 @@ async def snippet_for_get_no_results_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -272,6 +283,7 @@ async def snippet_for_get_purchase_rate():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -295,6 +307,7 @@ async def snippet_for_get_revenue():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -318,6 +331,7 @@ async def snippet_for_get_searches_count():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -341,6 +355,7 @@ async def snippet_for_get_searches_no_clicks():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -364,6 +379,7 @@ async def snippet_for_get_searches_no_results():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -387,6 +403,7 @@ async def snippet_for_get_status():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -410,6 +427,7 @@ async def snippet_for_get_top_countries():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -433,6 +451,7 @@ async def snippet_for_get_top_filter_attributes():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -457,6 +476,7 @@ async def snippet_for_get_top_filter_for_attribute():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -480,6 +500,7 @@ async def snippet_for_get_top_filters_no_results():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -503,6 +524,7 @@ async def snippet_for_get_top_hits():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -526,6 +548,7 @@ async def snippet_for_get_top_searches():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -549,9 +572,29 @@ async def snippet_for_get_users_count():
         index="index",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<

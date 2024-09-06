@@ -27,6 +27,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -48,6 +49,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,6 +71,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -90,6 +93,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -111,6 +115,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -132,6 +137,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -153,6 +159,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -174,6 +181,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -195,6 +203,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -216,6 +225,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -237,6 +247,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -258,6 +269,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -279,6 +291,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -300,6 +313,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -321,6 +335,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -342,6 +357,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -363,6 +379,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -384,6 +401,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -405,6 +423,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -427,6 +446,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -448,6 +468,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -469,6 +490,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -490,6 +512,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -511,8 +534,29 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

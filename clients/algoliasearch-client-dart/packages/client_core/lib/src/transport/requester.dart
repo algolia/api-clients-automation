@@ -11,6 +11,9 @@ abstract class Requester {
   /// The method returns a Future that resolves to an [HttpResponse].
   Future<HttpResponse> perform(HttpRequest request);
 
+  /// Allows to switch the API key used to authenticate requests.
+  void setClientApiKey(String apiKey);
+
   /// Closes any underlying resources that the Requester might be using.
   ///
   /// By default, it does nothing (no-op), but it can be implemented to handle resource cleanup

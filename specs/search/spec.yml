@@ -390,3 +390,6 @@ paths:
 
   /indexExists:
     $ref: 'helpers/indexExists.yml#/method'
+
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

@@ -1,5 +1,6 @@
 package com.algolia.client;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IngestionClientClientTests {
@@ -121,5 +124,33 @@ class IngestionClientClientTests {
       });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
+  }
+
+  @Test
+  @DisplayName("switch API key")
+  void setClientApiKeyTest0() {
+    IngestionClient client = new IngestionClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+    );
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/1");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+    assertDoesNotThrow(() -> {
+      client.setClientApiKey("updated-api-key");
+    });
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/2");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
   }
 }

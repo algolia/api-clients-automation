@@ -27,6 +27,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -48,6 +49,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,6 +71,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -90,6 +93,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -111,6 +115,7 @@ class SnippetPersonalizationClient
             'UserToken',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -130,6 +135,7 @@ class SnippetPersonalizationClient
         // Call the API
         $response = $client->getPersonalizationStrategy();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -151,8 +157,29 @@ class SnippetPersonalizationClient
             'UserToken',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -184,6 +211,7 @@ class SnippetPersonalizationClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

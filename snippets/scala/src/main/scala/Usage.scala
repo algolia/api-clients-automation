@@ -30,6 +30,7 @@ class SnippetUsageClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetUsageClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetUsageClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetUsageClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -109,6 +113,7 @@ class SnippetUsageClient {
       endDate = "2024-04-05T12:46:43Z"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -130,6 +135,7 @@ class SnippetUsageClient {
       endDate = "2024-04-05T12:46:43Z"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

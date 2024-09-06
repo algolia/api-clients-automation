@@ -12,9 +12,9 @@ void snippetFor{{method}}{{testIndex}}() async {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
   final client = {{client}}(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY'{{#hasRegionalHost}}, region: 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
-
+  
   // Call the API
-  final response = await client.{{method}}(
+  {{#hasResponse}}final response = {{/hasResponse}}{{#isAsync}}await {{/isAsync}}client.{{method}}(
     {{#parametersWithDataType}}
     {{> tests/request_param}}
     {{/parametersWithDataType}}
@@ -37,6 +37,7 @@ void snippetFor{{method}}{{testIndex}}() async {
     ),
     {{/hasRequestOptions}}
   );
+  // >LOG
   // SEPARATOR<
 }
 

@@ -19,6 +19,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -87,6 +91,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -104,6 +109,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -121,6 +127,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -138,6 +145,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -155,6 +163,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -172,6 +181,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -189,6 +199,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -206,6 +217,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -223,6 +235,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -240,6 +253,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -257,6 +271,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -274,6 +289,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -291,6 +307,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -308,6 +325,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -325,6 +343,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -343,6 +362,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -360,6 +380,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -377,6 +398,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -394,6 +416,7 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -411,8 +434,25 @@ class SnippetAnalyticsClient {
       index = "index",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

@@ -25,6 +25,7 @@ class SnippetSearchClient {
         .setMaxQueriesPerIPPerHour(100)
         .setMaxHitsPerQuery(20)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -46,6 +47,7 @@ class SnippetSearchClient {
         }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -59,6 +61,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -72,6 +75,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.assignUserId("userID", new AssignUserIdParams().setCluster("theCluster"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -112,6 +116,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -141,6 +146,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -170,6 +176,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -199,6 +206,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -228,6 +236,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -257,6 +266,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -286,6 +296,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -299,6 +310,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2")));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -331,6 +343,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -353,6 +366,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -378,6 +392,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -391,6 +406,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.browse("<YOUR_INDEX_NAME>", Hit.class);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -404,6 +420,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.clearObjects("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -417,6 +434,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.clearRules("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -430,6 +448,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.clearSynonyms("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -443,6 +462,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -456,6 +476,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -469,6 +490,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -482,6 +504,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -495,6 +518,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteApiKey("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -508,6 +532,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteBy("<YOUR_INDEX_NAME>", new DeleteByParams().setFilters("brand:brandName"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -521,6 +546,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteIndex("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -534,6 +560,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -547,6 +574,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -560,6 +588,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteRule("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -573,6 +602,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteSource("theSource");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -586,6 +616,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -602,6 +633,7 @@ class SnippetSearchClient {
       "2640659426d5107b6e47d75db9cbaef8",
       new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(Arrays.asList("Movies"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -632,6 +664,7 @@ class SnippetSearchClient {
             .setOptionalWords(Arrays.asList("one", "two"))
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -645,6 +678,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getApiKey("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -658,6 +692,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getAppTask(123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -671,6 +706,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getDictionaryLanguages();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -684,6 +720,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getDictionarySettings();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -697,6 +734,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getLogs();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -710,6 +748,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getObject("<YOUR_INDEX_NAME>", "uniqueID", Arrays.asList("attr1", "attr2"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -734,6 +773,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -747,6 +787,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -760,6 +801,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getSettings("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -773,6 +815,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getSources();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -786,6 +829,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getSynonym("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -799,6 +843,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getTask("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -812,6 +857,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getTopUserIds();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -825,6 +871,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getUserId("uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -838,6 +885,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.hasPendingMappings();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -851,6 +899,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -864,6 +913,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -877,6 +927,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -890,6 +941,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listApiKeys();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -903,6 +955,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listClusters();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -916,6 +969,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listIndices();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -929,6 +983,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listUserIds();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -958,6 +1013,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -977,6 +1033,7 @@ class SnippetSearchClient {
         .setDestination("<DESTINATION_INDEX_NAME>")
         .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -993,6 +1050,7 @@ class SnippetSearchClient {
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1009,6 +1067,7 @@ class SnippetSearchClient {
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1030,6 +1089,7 @@ class SnippetSearchClient {
         }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1060,6 +1120,7 @@ class SnippetSearchClient {
       ),
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1090,6 +1151,7 @@ class SnippetSearchClient {
       ),
       false
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1103,6 +1165,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.removeUserId("uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1181,6 +1244,7 @@ class SnippetSearchClient {
       ),
       3
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1194,6 +1258,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.replaceSources(Arrays.asList(new Source().setSource("theSource").setDescription("theDescription")));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1207,6 +1272,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.restoreApiKey("myApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1228,6 +1294,7 @@ class SnippetSearchClient {
         }
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1257,6 +1324,7 @@ class SnippetSearchClient {
         }
       )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1286,6 +1354,7 @@ class SnippetSearchClient {
         }
       )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1303,6 +1372,7 @@ class SnippetSearchClient {
       "id1",
       new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1328,6 +1398,7 @@ class SnippetSearchClient {
       false,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1346,6 +1417,7 @@ class SnippetSearchClient {
       new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1371,6 +1443,7 @@ class SnippetSearchClient {
       true,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1388,6 +1461,7 @@ class SnippetSearchClient {
         .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1409,6 +1483,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1433,6 +1508,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1452,6 +1528,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1473,6 +1550,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1492,6 +1570,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1505,6 +1584,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1518,6 +1598,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1531,6 +1612,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1544,6 +1626,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1557,6 +1640,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchSynonyms("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1570,6 +1654,21 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchUserIds(new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1597,6 +1696,7 @@ class SnippetSearchClient {
             )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1613,6 +1713,7 @@ class SnippetSearchClient {
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1629,6 +1730,7 @@ class SnippetSearchClient {
       "myApiKey",
       new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1642,6 +1744,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1666,6 +1769,7 @@ class SnippetSearchClient {
         .setMaxQueriesPerIPPerHour(95)
         .setMaxHitsPerQuery(20)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1679,6 +1783,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1692,6 +1797,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.waitForAppTask(123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1705,6 +1811,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.waitForTask("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 }

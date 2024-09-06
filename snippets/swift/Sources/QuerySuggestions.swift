@@ -26,6 +26,7 @@ final class QuerySuggestionsClientSnippet {
             exclude: ["test"],
             indexName: "<YOUR_INDEX_NAME>"
         ))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -39,6 +40,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -52,6 +54,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -65,6 +68,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -78,6 +82,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -91,6 +96,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.deleteConfig(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -104,6 +110,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.getAllConfigs()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -117,6 +124,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.getConfig(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -130,6 +138,7 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.getConfigStatus(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -143,6 +152,21 @@ final class QuerySuggestionsClientSnippet {
 
         // Call the API
         let response = try await client.getLogFile(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -167,6 +191,7 @@ final class QuerySuggestionsClientSnippet {
                 exclude: ["test"]
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 }

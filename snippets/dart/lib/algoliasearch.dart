@@ -15,6 +15,7 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -39,6 +40,7 @@ void snippetForgetRecommendations() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -62,6 +64,7 @@ void snippetForsearch() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -85,6 +88,7 @@ void snippetForsearch1() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -108,6 +112,7 @@ void snippetForsearch2() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -131,6 +136,7 @@ void snippetForsearch3() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -157,6 +163,7 @@ void snippetForsearch4() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -182,5 +189,6 @@ void snippetForsearch5() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
