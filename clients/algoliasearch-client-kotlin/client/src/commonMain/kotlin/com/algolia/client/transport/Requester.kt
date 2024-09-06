@@ -31,5 +31,5 @@ public interface Requester {
     returnType: TypeInfo,
   ): T
 
-  public fun setClientApiKey(apiKey: String);
+  public fun setClientApiKey(apiKey: String)
 }

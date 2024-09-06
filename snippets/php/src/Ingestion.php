@@ -33,6 +33,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -59,6 +60,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -92,6 +94,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -116,6 +119,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -142,6 +146,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -166,6 +171,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -187,6 +193,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -208,6 +215,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -229,6 +237,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -250,6 +259,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -271,6 +281,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -292,6 +303,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -313,6 +325,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -334,6 +347,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -355,6 +369,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -376,6 +391,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -397,6 +413,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -418,6 +435,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -439,6 +457,7 @@ class SnippetIngestionClient
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -460,6 +479,7 @@ class SnippetIngestionClient
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -483,6 +503,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -504,6 +525,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -525,6 +547,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -547,6 +570,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -568,6 +592,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -589,6 +614,7 @@ class SnippetIngestionClient
             '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -610,6 +636,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -631,6 +658,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -652,6 +680,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -671,6 +700,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listAuthentications();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -690,6 +720,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listDestinations();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -711,6 +742,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -730,6 +762,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listRuns();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -749,6 +782,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listSources();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -768,6 +802,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTasks();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -787,6 +822,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTasksV1();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -806,6 +842,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTransformationModels();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -825,6 +862,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTransformations();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -859,6 +897,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -892,6 +931,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -913,6 +953,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -934,6 +975,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -960,6 +1002,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -986,6 +1029,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1012,6 +1056,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1040,6 +1085,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1068,6 +1114,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1096,8 +1143,29 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1117,6 +1185,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1141,6 +1210,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1166,6 +1236,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1189,6 +1260,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1212,6 +1284,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1235,6 +1308,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1259,6 +1333,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1282,6 +1357,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1307,6 +1383,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1340,6 +1417,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1363,6 +1441,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

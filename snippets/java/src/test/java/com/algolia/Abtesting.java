@@ -28,6 +28,7 @@ class SnippetAbtestingClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -41,6 +42,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -54,6 +56,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -67,6 +70,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -80,6 +84,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -93,6 +98,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.deleteABTest(42);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -106,6 +112,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.getABTest(42);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -119,6 +126,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.listABTests();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -143,6 +151,21 @@ class SnippetAbtestingClient {
           )
         )
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -156,6 +179,7 @@ class SnippetAbtestingClient {
 
     // Call the API
     client.stopABTest(42);
+    // >LOG
     // SEPARATOR<
   }
 }

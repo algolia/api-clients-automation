@@ -32,6 +32,7 @@ class SnippetAbtestingClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetAbtestingClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -66,6 +68,7 @@ class SnippetAbtestingClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -83,6 +86,7 @@ class SnippetAbtestingClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -100,6 +104,7 @@ class SnippetAbtestingClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -117,6 +122,7 @@ class SnippetAbtestingClient {
       id = 42,
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -134,6 +140,7 @@ class SnippetAbtestingClient {
       id = 42,
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -149,6 +156,7 @@ class SnippetAbtestingClient {
     // Call the API
     var response = client.listABTests()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -180,8 +188,25 @@ class SnippetAbtestingClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -197,6 +222,7 @@ class SnippetAbtestingClient {
       id = 42,
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<

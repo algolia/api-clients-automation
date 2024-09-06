@@ -34,6 +34,7 @@ class SnippetQuerySuggestionsClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -51,6 +52,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -85,6 +88,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -102,6 +106,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -119,6 +124,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -134,6 +140,7 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     var response = client.getAllConfigs()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -151,6 +158,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -168,6 +176,7 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -185,8 +194,25 @@ class SnippetQuerySuggestionsClient {
       indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -217,6 +243,7 @@ class SnippetQuerySuggestionsClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<

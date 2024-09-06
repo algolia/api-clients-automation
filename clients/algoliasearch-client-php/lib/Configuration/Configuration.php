@@ -269,8 +269,6 @@ abstract class Configuration
      * Switch the API key used to authenticate requessts.
      *
      * @param string $apiKey The new API key to be used
-     *
-     * @return void
      */
     public function setClientApiKey($apiKey)
     {

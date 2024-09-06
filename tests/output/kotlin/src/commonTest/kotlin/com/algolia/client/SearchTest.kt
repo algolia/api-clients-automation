@@ -607,6 +607,44 @@ class SearchTest {
   }
 
   @Test
+  fun `switch API key`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/1",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+      },
+    )
+    client.runTest(
+      call = {
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
+      },
+      intercept = {
+      },
+    )
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/2",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+      },
+    )
+  }
+
+  @Test
   fun `wait for api key helper - add`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
     client.runTest(

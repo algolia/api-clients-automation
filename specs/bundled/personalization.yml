@@ -368,6 +368,26 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - personalization
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:

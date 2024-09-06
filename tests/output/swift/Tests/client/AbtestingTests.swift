@@ -130,4 +130,37 @@ final class AbtestingClientClientTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, "`region` must be one of the following: de, us")
         }
     }
+
+    /// switch API key
+    func testSetClientApiKeyTest0() async throws {
+        let configuration = try AbtestingClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = AbtestingClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            let comparableData = "{\"headerAPIKeyValue\":\"test-api-key\"}".data(using: .utf8)
+            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+            XCTAssertEqual(comparableJSON, responseBodyJSON)
+        }
+        do {
+            try client.setClientApiKey(apiKey: "updated-api-key")
+        }
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            let comparableData = "{\"headerAPIKeyValue\":\"updated-api-key\"}".data(using: .utf8)
+            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+            XCTAssertEqual(comparableJSON, responseBodyJSON)
+        }
+    }
 }

@@ -32,6 +32,7 @@ async def snippet_for_add_ab_tests():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -55,6 +56,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -78,6 +80,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -101,6 +104,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -124,6 +128,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -147,6 +152,7 @@ async def snippet_for_delete_ab_test():
         id=42,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -170,6 +176,7 @@ async def snippet_for_get_ab_test():
         id=42,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -191,6 +198,7 @@ async def snippet_for_list_ab_tests():
     # Call the API
     response = await _client.list_ab_tests()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -228,11 +236,31 @@ async def snippet_for_schedule_ab_test():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<
 
 
@@ -251,6 +279,7 @@ async def snippet_for_stop_ab_test():
         id=42,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 

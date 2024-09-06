@@ -24,6 +24,7 @@ final class AbtestingClientSnippet {
             ],
             endAt: "2022-12-31T00:00:00.000Z"
         ))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -37,6 +38,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -50,6 +52,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -63,6 +66,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -76,6 +80,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -89,6 +94,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.deleteABTest(id: 42)
+        // >LOG
         // SEPARATOR<
     }
 
@@ -102,6 +108,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.getABTest(id: 42)
+        // >LOG
         // SEPARATOR<
     }
 
@@ -115,6 +122,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.listABTests()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -136,6 +144,21 @@ final class AbtestingClientSnippet {
             scheduledAt: "2022-11-31T00:00:00.000Z",
             endAt: "2022-12-31T00:00:00.000Z"
         ))
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -149,6 +172,7 @@ final class AbtestingClientSnippet {
 
         // Call the API
         let response = try await client.stopABTest(id: 42)
+        // >LOG
         // SEPARATOR<
     }
 }

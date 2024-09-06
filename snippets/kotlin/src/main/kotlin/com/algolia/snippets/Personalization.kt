@@ -19,6 +19,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -87,6 +91,7 @@ class SnippetPersonalizationClient {
       userToken = "UserToken",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -102,6 +107,7 @@ class SnippetPersonalizationClient {
     // Call the API
     var response = client.getPersonalizationStrategy()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -119,8 +125,25 @@ class SnippetPersonalizationClient {
       userToken = "UserToken",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -151,6 +174,7 @@ class SnippetPersonalizationClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<

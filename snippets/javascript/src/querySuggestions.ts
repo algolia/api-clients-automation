@@ -23,6 +23,7 @@ export async function snippetForCreateConfig(): Promise<void> {
     exclude: ['test'],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -39,6 +40,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -55,6 +57,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -71,6 +74,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -87,6 +91,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -103,6 +108,7 @@ export async function snippetForDeleteConfig(): Promise<void> {
   // Call the API
   const response = await client.deleteConfig({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -119,6 +125,7 @@ export async function snippetForGetAllConfigs(): Promise<void> {
   // Call the API
   const response = await client.getAllConfigs();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -135,6 +142,7 @@ export async function snippetForGetConfig(): Promise<void> {
   // Call the API
   const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -151,6 +159,7 @@ export async function snippetForGetConfigStatus(): Promise<void> {
   // Call the API
   const response = await client.getConfigStatus({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -167,8 +176,24 @@ export async function snippetForGetLogFile(): Promise<void> {
   // Call the API
   const response = await client.getLogFile({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -192,6 +217,7 @@ export async function snippetForUpdateConfig(): Promise<void> {
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

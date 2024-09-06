@@ -28,6 +28,7 @@ async def snippet_for_add_api_key():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -55,6 +56,7 @@ async def snippet_for_add_or_update_object():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -81,6 +83,7 @@ async def snippet_for_append_source():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -107,6 +110,7 @@ async def snippet_for_assign_user_id():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -148,6 +152,7 @@ async def snippet_for_batch():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -181,6 +186,7 @@ async def snippet_for_batch1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -214,6 +220,7 @@ async def snippet_for_batch2():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -247,6 +254,7 @@ async def snippet_for_batch3():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -280,6 +288,7 @@ async def snippet_for_batch4():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -313,6 +322,7 @@ async def snippet_for_batch5():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -346,6 +356,7 @@ async def snippet_for_batch6():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -376,6 +387,7 @@ async def snippet_for_batch_assign_user_ids():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -421,6 +433,7 @@ async def snippet_for_batch_dictionary_entries():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -455,6 +468,7 @@ async def snippet_for_batch_dictionary_entries1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -490,6 +504,7 @@ async def snippet_for_batch_dictionary_entries2():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -513,6 +528,7 @@ async def snippet_for_browse():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -536,6 +552,7 @@ async def snippet_for_clear_objects():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -559,6 +576,7 @@ async def snippet_for_clear_rules():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -582,6 +600,7 @@ async def snippet_for_clear_synonyms():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -605,6 +624,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -628,6 +648,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -651,6 +672,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -674,6 +696,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -697,6 +720,7 @@ async def snippet_for_delete_api_key():
         key="myTestApiKey",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -723,6 +747,7 @@ async def snippet_for_delete_by():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -746,6 +771,7 @@ async def snippet_for_delete_index():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -770,6 +796,7 @@ async def snippet_for_delete_object():
         object_id="uniqueID",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -797,6 +824,7 @@ async def snippet_for_delete_objects():
         ],
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -821,6 +849,7 @@ async def snippet_for_delete_rule():
         object_id="id1",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -844,6 +873,7 @@ async def snippet_for_delete_source():
         source="theSource",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -868,6 +898,7 @@ async def snippet_for_delete_synonym():
         object_id="id1",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -887,7 +918,7 @@ async def snippet_for_generate_secured_api_key():
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
     # Call the API
-    response = await _client.generate_secured_api_key(
+    response = _client.generate_secured_api_key(
         parent_api_key="2640659426d5107b6e47d75db9cbaef8",
         restrictions={
             "validUntil": 2524604400,
@@ -897,6 +928,7 @@ async def snippet_for_generate_secured_api_key():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -916,7 +948,7 @@ async def snippet_for_generate_secured_api_key1():
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
     # Call the API
-    response = await _client.generate_secured_api_key(
+    response = _client.generate_secured_api_key(
         parent_api_key="2640659426d5107b6e47d75db9cbaef8",
         restrictions={
             "validUntil": 2524604400,
@@ -941,6 +973,7 @@ async def snippet_for_generate_secured_api_key1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -964,6 +997,7 @@ async def snippet_for_get_api_key():
         key="myTestApiKey",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -987,6 +1021,7 @@ async def snippet_for_get_app_task():
         task_id=123,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1008,6 +1043,7 @@ async def snippet_for_get_dictionary_languages():
     # Call the API
     response = await _client.get_dictionary_languages()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1029,6 +1065,7 @@ async def snippet_for_get_dictionary_settings():
     # Call the API
     response = await _client.get_dictionary_settings()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1050,6 +1087,7 @@ async def snippet_for_get_logs():
     # Call the API
     response = await _client.get_logs()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1078,6 +1116,7 @@ async def snippet_for_get_object():
         ],
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1112,6 +1151,7 @@ async def snippet_for_get_objects():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1136,6 +1176,7 @@ async def snippet_for_get_rule():
         object_id="qr-1725004648916",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1159,6 +1200,7 @@ async def snippet_for_get_settings():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1180,6 +1222,7 @@ async def snippet_for_get_sources():
     # Call the API
     response = await _client.get_sources()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1204,6 +1247,7 @@ async def snippet_for_get_synonym():
         object_id="id1",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1228,6 +1272,7 @@ async def snippet_for_get_task():
         task_id=123,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1249,6 +1294,7 @@ async def snippet_for_get_top_user_ids():
     # Call the API
     response = await _client.get_top_user_ids()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1272,6 +1318,7 @@ async def snippet_for_get_user_id():
         user_id="uniqueID",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1293,6 +1340,7 @@ async def snippet_for_has_pending_mappings():
     # Call the API
     response = await _client.has_pending_mappings()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1316,6 +1364,7 @@ async def snippet_for_index_exists():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1339,6 +1388,7 @@ async def snippet_for_index_exists1():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1362,6 +1412,7 @@ async def snippet_for_index_exists2():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1383,6 +1434,7 @@ async def snippet_for_list_api_keys():
     # Call the API
     response = await _client.list_api_keys()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1404,6 +1456,7 @@ async def snippet_for_list_clusters():
     # Call the API
     response = await _client.list_clusters()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1425,6 +1478,7 @@ async def snippet_for_list_indices():
     # Call the API
     response = await _client.list_indices()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1446,6 +1500,7 @@ async def snippet_for_list_user_ids():
     # Call the API
     response = await _client.list_user_ids()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1479,6 +1534,7 @@ async def snippet_for_multiple_batch():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1510,6 +1566,7 @@ async def snippet_for_operation_index():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1537,6 +1594,7 @@ async def snippet_for_operation_index1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1564,6 +1622,7 @@ async def snippet_for_operation_index2():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1591,6 +1650,7 @@ async def snippet_for_partial_update_object():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1625,6 +1685,7 @@ async def snippet_for_partial_update_objects():
         create_if_not_exists=True,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1659,6 +1720,7 @@ async def snippet_for_partial_update_objects1():
         create_if_not_exists=False,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1682,6 +1744,7 @@ async def snippet_for_remove_user_id():
         user_id="uniqueID",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1748,6 +1811,7 @@ async def snippet_for_replace_all_objects():
         batch_size=3,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1776,6 +1840,7 @@ async def snippet_for_replace_sources():
         ],
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1799,6 +1864,7 @@ async def snippet_for_restore_api_key():
         key="myApiKey",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1826,6 +1892,7 @@ async def snippet_for_save_object():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1859,6 +1926,7 @@ async def snippet_for_save_objects():
         ],
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1892,6 +1960,7 @@ async def snippet_for_save_objects1():
         ],
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1925,6 +1994,7 @@ async def snippet_for_save_rule():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1970,6 +2040,7 @@ async def snippet_for_save_rules():
         clear_existing_rules=True,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2004,6 +2075,7 @@ async def snippet_for_save_synonym():
         forward_to_replicas=True,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2050,6 +2122,7 @@ async def snippet_for_save_synonyms():
         replace_existing_synonyms=True,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2081,6 +2154,7 @@ async def snippet_for_search():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2112,6 +2186,7 @@ async def snippet_for_search1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2143,6 +2218,7 @@ async def snippet_for_search2():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2174,6 +2250,7 @@ async def snippet_for_search3():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2208,6 +2285,7 @@ async def snippet_for_search4():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2241,6 +2319,7 @@ async def snippet_for_search5():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2267,6 +2346,7 @@ async def snippet_for_search_dictionary_entries():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2291,6 +2371,7 @@ async def snippet_for_search_for_facet_values():
         facet_name="facetName",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2317,6 +2398,7 @@ async def snippet_for_search_rules():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2340,6 +2422,7 @@ async def snippet_for_search_single_index():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2363,6 +2446,7 @@ async def snippet_for_search_synonyms():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2391,11 +2475,31 @@ async def snippet_for_search_user_ids():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<
 
 
@@ -2422,6 +2526,7 @@ async def snippet_for_set_dictionary_settings():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2452,6 +2557,7 @@ async def snippet_for_set_settings():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2484,6 +2590,7 @@ async def snippet_for_update_api_key():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2508,6 +2615,7 @@ async def snippet_for_wait_for_api_key():
         operation="add",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2551,6 +2659,7 @@ async def snippet_for_wait_for_api_key1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2575,6 +2684,7 @@ async def snippet_for_wait_for_api_key2():
         operation="delete",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2598,6 +2708,7 @@ async def snippet_for_wait_for_app_task():
         task_id=123,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -2622,6 +2733,7 @@ async def snippet_for_wait_for_task():
         task_id=123,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 

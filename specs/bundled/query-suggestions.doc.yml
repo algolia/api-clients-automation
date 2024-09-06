@@ -134,6 +134,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -161,6 +162,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -177,6 +180,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -190,6 +195,8 @@ paths:
 
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -210,6 +217,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -229,6 +238,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -245,6 +256,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -263,6 +275,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -288,6 +302,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -303,6 +319,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -342,6 +360,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -369,6 +388,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -385,6 +406,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -398,6 +421,8 @@ paths:
 
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -418,6 +443,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -437,6 +464,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -453,6 +482,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -471,6 +501,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -496,6 +528,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -511,6 +545,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -550,6 +586,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -577,6 +614,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -593,6 +632,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -606,6 +647,8 @@ paths:
 
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -626,6 +669,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -645,6 +690,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -661,6 +708,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -679,6 +727,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -704,6 +754,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -719,6 +771,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -752,6 +806,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -780,6 +835,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -796,6 +853,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -810,6 +869,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -830,6 +891,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -849,6 +912,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -865,6 +930,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -883,6 +949,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -908,6 +976,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -923,6 +993,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/configs:
     get:
       tags:
@@ -956,6 +1028,7 @@ paths:
 
             // Call the API
             var response = await client.GetAllConfigsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -981,6 +1054,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -997,6 +1072,8 @@ paths:
             // Call the API
 
             client.getAllConfigs();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1010,6 +1087,8 @@ paths:
 
             const response = await client.getAllConfigs();
 
+
+            // >LOG
 
             // use typed response
 
@@ -1028,6 +1107,8 @@ paths:
             var response = client.getAllConfigs()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1045,6 +1126,8 @@ paths:
             $response = $client->getAllConfigs();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1059,6 +1142,7 @@ paths:
             # Call the API
             response = await _client.get_all_configs()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1077,6 +1161,8 @@ paths:
 
             response = client.get_all_configs
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1102,6 +1188,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1117,6 +1205,8 @@ paths:
             // Call the API
 
             let response = try await client.getAllConfigs()
+
+            // >LOG
     post:
       tags:
         - configurations
@@ -1188,6 +1278,7 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1224,6 +1315,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1253,6 +1346,8 @@ paths:
                 .setLanguages(Languages.of(Arrays.asList("french")))
                 .setExclude(Arrays.asList("test"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1273,6 +1368,8 @@ paths:
               exclude: ['test'],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1307,6 +1404,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1353,6 +1452,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1396,6 +1497,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1427,6 +1529,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1469,6 +1573,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1494,6 +1600,8 @@ paths:
                 exclude: ["test"],
                 indexName: "<YOUR_INDEX_NAME>"
             ))
+
+            // >LOG
   /1/configs/{indexName}:
     get:
       tags:
@@ -1529,6 +1637,7 @@ paths:
 
             // Call the API
             var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1556,6 +1665,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1572,6 +1683,8 @@ paths:
             // Call the API
 
             client.getConfig("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1586,6 +1699,8 @@ paths:
             const response = await client.getConfig({ indexName:
             'cts_e2e_browse_query_suggestions' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1606,6 +1721,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1625,6 +1742,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1641,6 +1760,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1659,6 +1779,8 @@ paths:
 
             response = client.get_config("<YOUR_INDEX_NAME>")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1684,6 +1806,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1700,6 +1824,8 @@ paths:
 
             let response = try await client.getConfig(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
     put:
       tags:
         - configurations
@@ -1766,6 +1892,7 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1802,6 +1929,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1831,6 +1960,8 @@ paths:
                 .setLanguages(Languages.of(Arrays.asList("french")))
                 .setExclude(Arrays.asList("test"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1853,6 +1984,8 @@ paths:
               },
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1887,6 +2020,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1933,6 +2068,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1976,6 +2113,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2007,6 +2145,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2049,6 +2189,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2075,6 +2217,8 @@ paths:
                     exclude: ["test"]
                 )
             )
+
+            // >LOG
     delete:
       tags:
         - configurations
@@ -2121,6 +2265,7 @@ paths:
 
             // Call the API
             var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2149,6 +2294,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2165,6 +2312,8 @@ paths:
             // Call the API
 
             client.deleteConfig("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2179,6 +2328,8 @@ paths:
             const response = await client.deleteConfig({ indexName:
             'theIndexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2199,6 +2350,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2218,6 +2371,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2234,6 +2389,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2252,6 +2408,8 @@ paths:
 
             response = client.delete_config("<YOUR_INDEX_NAME>")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2277,6 +2435,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2293,6 +2453,8 @@ paths:
 
             let response = try await client.deleteConfig(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -2357,6 +2519,8 @@ paths:
 
             var response = await
             client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2385,6 +2549,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2401,6 +2567,8 @@ paths:
             // Call the API
 
             client.getConfigStatus("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2415,6 +2583,8 @@ paths:
             const response = await client.getConfigStatus({ indexName:
             'theIndexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2435,6 +2605,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2454,6 +2626,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2470,6 +2644,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2488,6 +2663,8 @@ paths:
 
             response = client.get_config_status("<YOUR_INDEX_NAME>")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2513,6 +2690,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2529,6 +2708,8 @@ paths:
 
             let response = try await client.getConfigStatus(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/logs/{indexName}:
     get:
       tags:
@@ -2588,6 +2769,7 @@ paths:
 
             // Call the API
             var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2615,6 +2797,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2631,6 +2815,8 @@ paths:
             // Call the API
 
             client.getLogFile("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2645,6 +2831,8 @@ paths:
             const response = await client.getLogFile({ indexName: 'theIndexName'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2665,6 +2853,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2684,6 +2874,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2700,6 +2892,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2718,6 +2911,8 @@ paths:
 
             response = client.get_log_file("<YOUR_INDEX_NAME>")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2743,6 +2938,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2759,6 +2956,8 @@ paths:
 
             let response = try await client.getLogFile(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
 components:
   securitySchemes:
     appId:

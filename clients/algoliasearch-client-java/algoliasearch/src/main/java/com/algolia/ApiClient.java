@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a base client for making API requests. The client uses a {@link Requester} for

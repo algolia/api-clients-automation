@@ -1805,6 +1805,26 @@ paths:
                 $ref: '#/components/schemas/Event'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - ingestion
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:

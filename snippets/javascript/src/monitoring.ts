@@ -16,6 +16,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -32,6 +33,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -48,6 +50,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -64,6 +67,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -80,6 +84,7 @@ export async function snippetForGetClusterIncidents(): Promise<void> {
   // Call the API
   const response = await client.getClusterIncidents({ clusters: 'c1-de' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -96,6 +101,7 @@ export async function snippetForGetClusterStatus(): Promise<void> {
   // Call the API
   const response = await client.getClusterStatus({ clusters: 'c1-de' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -112,6 +118,7 @@ export async function snippetForGetIncidents(): Promise<void> {
   // Call the API
   const response = await client.getIncidents();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -128,6 +135,7 @@ export async function snippetForGetIndexingTime(): Promise<void> {
   // Call the API
   const response = await client.getIndexingTime({ clusters: 'c1-de' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -144,6 +152,7 @@ export async function snippetForGetLatency(): Promise<void> {
   // Call the API
   const response = await client.getLatency({ clusters: 'c1-de' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -160,6 +169,7 @@ export async function snippetForGetMetrics(): Promise<void> {
   // Call the API
   const response = await client.getMetrics({ metric: 'avg_build_time', period: 'minute' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -176,6 +186,7 @@ export async function snippetForGetReachability(): Promise<void> {
   // Call the API
   const response = await client.getReachability({ clusters: 'c1-de' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -192,6 +203,7 @@ export async function snippetForGetServers(): Promise<void> {
   // Call the API
   const response = await client.getServers();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -208,7 +220,23 @@ export async function snippetForGetStatus(): Promise<void> {
   // Call the API
   const response = await client.getStatus();
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }

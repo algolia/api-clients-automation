@@ -15,6 +15,7 @@ void snippetForcustomDelete() async {
   final response = await client.customDelete(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -30,6 +31,7 @@ void snippetForcustomGet() async {
   final response = await client.customGet(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -45,6 +47,7 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -60,6 +63,7 @@ void snippetForcustomPut() async {
   final response = await client.customPut(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -77,6 +81,7 @@ void snippetFordeleteRecommendRule() async {
     model: RecommendModels.fromJson("related-products"),
     objectID: "objectID",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -94,6 +99,7 @@ void snippetForgetRecommendRule() async {
     model: RecommendModels.fromJson("related-products"),
     objectID: "objectID",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -111,6 +117,7 @@ void snippetForgetRecommendStatus() async {
     model: RecommendModels.fromJson("related-products"),
     taskID: 12345,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -135,6 +142,7 @@ void snippetForgetRecommendations() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -151,5 +159,22 @@ void snippetForsearchRecommendRules() async {
     indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+void snippetForsetClientApiKey() async {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  client.setClientApiKey(
+    apiKey: "updated-api-key",
+  );
+  // >LOG
   // SEPARATOR<
 }

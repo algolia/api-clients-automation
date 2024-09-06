@@ -48,6 +48,7 @@ async def snippet_for_create_config():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -73,6 +74,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -98,6 +100,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -123,6 +126,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -148,6 +152,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -173,6 +178,7 @@ async def snippet_for_delete_config():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -196,6 +202,7 @@ async def snippet_for_get_all_configs():
     # Call the API
     response = await _client.get_all_configs()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -221,6 +228,7 @@ async def snippet_for_get_config():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -246,6 +254,7 @@ async def snippet_for_get_config_status():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -271,11 +280,33 @@ async def snippet_for_get_log_file():
         index_name="<YOUR_INDEX_NAME>",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = QuerySuggestionsClient(
+        "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+    )
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<
 
 
@@ -323,6 +354,7 @@ async def snippet_for_update_config():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 

@@ -30,6 +30,7 @@ class SnippetMonitoringClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetMonitoringClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetMonitoringClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetMonitoringClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -106,6 +110,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -125,6 +130,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -143,6 +149,7 @@ class SnippetMonitoringClient {
     val response = client.getIncidents(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -162,6 +169,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -181,6 +189,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -201,6 +210,7 @@ class SnippetMonitoringClient {
       period = Period.withName("minute")
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -220,6 +230,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -238,6 +249,7 @@ class SnippetMonitoringClient {
     val response = client.getServers(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -256,6 +268,7 @@ class SnippetMonitoringClient {
     val response = client.getStatus(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

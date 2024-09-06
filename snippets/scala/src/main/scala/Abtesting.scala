@@ -43,6 +43,7 @@ class SnippetAbtestingClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -62,6 +63,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -81,6 +83,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -100,6 +103,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -119,6 +123,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -138,6 +143,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -157,6 +163,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -175,6 +182,7 @@ class SnippetAbtestingClient {
     val response = client.listABTests(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -208,6 +216,7 @@ class SnippetAbtestingClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -227,6 +236,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

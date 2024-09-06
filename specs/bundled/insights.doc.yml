@@ -156,6 +156,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -169,6 +170,7 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -196,6 +198,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -211,6 +215,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -224,6 +230,8 @@ paths:
 
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -244,6 +252,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -263,6 +273,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -281,6 +293,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -303,6 +317,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -328,6 +344,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -343,6 +361,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -382,6 +402,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -395,6 +416,7 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -422,6 +444,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -437,6 +461,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -450,6 +476,8 @@ paths:
 
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -470,6 +498,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -489,6 +519,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -507,6 +539,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -529,6 +563,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -554,6 +590,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -569,6 +607,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -608,6 +648,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -621,6 +662,7 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -648,6 +690,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -663,6 +707,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -676,6 +722,8 @@ paths:
 
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -696,6 +744,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -715,6 +765,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -733,6 +785,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -755,6 +809,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -780,6 +836,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -795,6 +853,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -828,6 +888,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -841,6 +902,7 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -869,6 +931,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -884,6 +948,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -898,6 +964,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -918,6 +986,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -937,6 +1007,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -955,6 +1027,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -977,6 +1051,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1002,6 +1078,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1017,6 +1095,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/events:
     post:
       tags:
@@ -1491,6 +1571,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -1524,6 +1605,7 @@ paths:
                 ],
               ),
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1556,6 +1638,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1587,6 +1671,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1614,6 +1700,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1647,6 +1735,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1687,6 +1777,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1726,6 +1818,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -1763,6 +1857,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1802,6 +1898,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1831,6 +1929,7 @@ paths:
                             timestamp: Int64(1_641_290_601_962)
                         )),
                 ]))
+            // >LOG
   /1/usertokens/{userToken}:
     delete:
       tags:
@@ -1887,6 +1986,7 @@ paths:
 
             // Call the API
             await client.DeleteUserTokenAsync("test-user-1");
+            // >LOG
         - lang: dart
           label: Dart
           source: |
@@ -1897,12 +1997,13 @@ paths:
                 region: 'YOUR_APP_ID_REGION');
 
             // Call the API
-            final response = await client.deleteUserToken(
+            await client.deleteUserToken(
               userToken: "test-user-1",
             );
+            // >LOG
         - lang: go
           label: Go
-          source: >+
+          source: >
             // Initialize the client with your application region, eg.
             insights.YOUR_APP_ID_REGION
 
@@ -1926,6 +2027,8 @@ paths:
               panic(err)
             }
 
+
+            // >LOG
         - lang: java
           label: Java
           source: >
@@ -1938,6 +2041,8 @@ paths:
             // Call the API
 
             client.deleteUserToken("test-user-1");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1949,13 +2054,10 @@ paths:
 
             // Call the API
 
-            const response = await client.deleteUserToken({ userToken:
-            'test-user-1' });
+            await client.deleteUserToken({ userToken: 'test-user-1' });
 
 
-            // use typed response
-
-            console.log(response);
+            // >LOG
         - lang: kotlin
           label: Kotlin
           source: >
@@ -1967,14 +2069,12 @@ paths:
 
             // Call the API
 
-            var response = client.deleteUserToken(
+            client.deleteUserToken(
               userToken = "test-user-1",
             )
 
 
-            // Use the response
-
-            println(response)
+            // >LOG
         - lang: php
           label: PHP
           source: >
@@ -1986,14 +2086,12 @@ paths:
 
             // Call the API
 
-            $response = $client->deleteUserToken(
+            $client->deleteUserToken(
                 'test-user-1',
             );
 
 
-            // play with the response
-
-            var_dump($response);
+            // >LOG
         - lang: python
           label: Python
           source: >
@@ -2005,19 +2103,12 @@ paths:
 
             # Call the API
 
-            response = await _client.delete_user_token(
+            await _client.delete_user_token(
                 user_token="test-user-1",
             )
 
 
-            # use the class directly
-
-            print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
+            # >LOG
         - lang: ruby
           label: Ruby
           source: >
@@ -2029,17 +2120,9 @@ paths:
 
             # Call the API
 
-            response = client.delete_user_token("test-user-1")
+            client.delete_user_token("test-user-1")
 
-
-            # use the class directly
-
-            puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
+            # >LOG
         - lang: scala
           label: Scala
           source: >
@@ -2051,14 +2134,12 @@ paths:
 
             // Call the API
 
-            val response = client.deleteUserToken(
+            client.deleteUserToken(
               userToken = "test-user-1"
             )
 
 
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
+            // >LOG
         - lang: swift
           label: Swift
           source: >
@@ -2070,8 +2151,9 @@ paths:
 
             // Call the API
 
-            let response = try await client.deleteUserToken(userToken:
-            "test-user-1")
+            try await client.deleteUserToken(userToken: "test-user-1")
+
+            // >LOG
 components:
   securitySchemes:
     appId:

@@ -10,8 +10,8 @@ import okhttp3.{Interceptor, Response}
   *   API key
   */
 private[algoliasearch] class AuthInterceptor(
-  applicationId: String,
-  private var apiKey: String
+    applicationId: String,
+    private var apiKey: String
 ) extends Interceptor {
 
   private val HeaderApplicationId = "x-algolia-application-id"

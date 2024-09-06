@@ -16,6 +16,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -34,6 +35,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
     requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -52,6 +54,7 @@ export async function snippetForSearch(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -70,6 +73,7 @@ export async function snippetForSearch1(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -94,6 +98,7 @@ export async function snippetForSearch2(): Promise<void> {
     ],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -112,6 +117,7 @@ export async function snippetForSearch3(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -130,6 +136,7 @@ export async function snippetForSearch4(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -148,6 +155,7 @@ export async function snippetForSearch5(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

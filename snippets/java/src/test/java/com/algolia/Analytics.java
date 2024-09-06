@@ -18,6 +18,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +74,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getAddToCartRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +88,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getAverageClickPosition("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -96,6 +102,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getClickPositions("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -109,6 +116,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getClickThroughRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -122,6 +130,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getConversionRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -135,6 +144,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getNoClickRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -148,6 +158,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getNoResultsRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -161,6 +172,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getPurchaseRate("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -174,6 +186,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getRevenue("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -187,6 +200,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getSearchesCount("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -200,6 +214,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getSearchesNoClicks("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -213,6 +228,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getSearchesNoResults("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -226,6 +242,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getStatus("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -239,6 +256,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopCountries("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -252,6 +270,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopFilterAttributes("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -265,6 +284,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopFilterForAttribute("myAttribute", "index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -278,6 +298,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopFiltersNoResults("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -291,6 +312,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopHits("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -304,6 +326,7 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getTopSearches("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -317,6 +340,21 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getUsersCount("index");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

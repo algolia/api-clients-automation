@@ -17,6 +17,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -68,7 +72,8 @@ final class InsightsClientSnippet {
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.deleteUserToken(userToken: "test-user-1")
+        try await client.deleteUserToken(userToken: "test-user-1")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -96,6 +101,21 @@ final class InsightsClientSnippet {
                         timestamp: Int64(1_641_290_601_962)
                     )),
             ]))
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 }

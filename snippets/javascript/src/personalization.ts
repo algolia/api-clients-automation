@@ -16,6 +16,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -32,6 +33,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -48,6 +50,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -64,6 +67,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -80,6 +84,7 @@ export async function snippetForDeleteUserProfile(): Promise<void> {
   // Call the API
   const response = await client.deleteUserProfile({ userToken: 'UserToken' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -96,6 +101,7 @@ export async function snippetForGetPersonalizationStrategy(): Promise<void> {
   // Call the API
   const response = await client.getPersonalizationStrategy();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -112,8 +118,24 @@ export async function snippetForGetUserTokenProfile(): Promise<void> {
   // Call the API
   const response = await client.getUserTokenProfile({ userToken: 'UserToken' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -132,6 +154,7 @@ export async function snippetForSetPersonalizationStrategy(): Promise<void> {
     personalizationImpact: 42,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

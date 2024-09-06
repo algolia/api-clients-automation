@@ -38,6 +38,7 @@ class SnippetAbtestingClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -59,6 +60,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -80,6 +82,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -101,6 +104,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -122,6 +126,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -143,6 +148,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -164,6 +170,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -183,6 +190,7 @@ class SnippetAbtestingClient
         // Call the API
         $response = $client->listABTests();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -216,8 +224,29 @@ class SnippetAbtestingClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -237,6 +266,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
