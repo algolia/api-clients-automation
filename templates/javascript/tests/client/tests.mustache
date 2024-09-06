@@ -19,6 +19,9 @@ describe('{{testType}}', () => {
         }
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}} 
+        {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
 
         {{#testUserAgent}}
@@ -43,6 +46,9 @@ describe('{{testType}}', () => {
             expect(result).toEqual({{{match.value}}});
           {{/match.isPrimitive}}
         {{/testResponse}}
+        {{#shouldScope}} 
+        }
+        {{/shouldScope}}
       {{/isError}}
       {{#times}}
       }

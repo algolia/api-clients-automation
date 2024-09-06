@@ -82,7 +82,7 @@ namespace Algolia.Search.Clients;
   /// </summary>
   {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
-      private readonly HttpTransport _transport;
+      internal HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
 
       /// <summary>
@@ -139,6 +139,17 @@ namespace Algolia.Search.Clients;
           _logger.LogInformation("Algolia {{apiPackageName}} client is initialized.");
         }
       }
+
+      /// <summary>
+      /// Helper to switch the API key sent with each request
+      /// </summary>
+      /// <param name="apiKey">Your new API Key</param>
+      /// <returns></returns>
+      public void SetClientApiKey(string apiKey)
+      {
+        _transport._algoliaConfig.SetClientApiKey(apiKey);
+      }
+  
 
       {{#operation}}
       {{#supportsAsync}}

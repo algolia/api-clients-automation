@@ -17,10 +17,13 @@ export {{#isAsync}}async{{/isAsync}} function snippetFor{{#lambda.pascalcase}}{{
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
   // Call the API
-  const response = {{> tests/method}};
+  {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
 
+  // >LOG
+  {{#hasResponse}}
   // use typed response
   console.log(response);
+  {{/hasResponse}}
   // SEPARATOR<
 }
 

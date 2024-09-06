@@ -40,7 +40,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
-      {{#hasResponsePayload}}_, {{/hasResponsePayload}}err := {{> tests/method}}
+      {{#hasResponse}}_, {{/hasResponse}}err := {{> tests/method}}
       require.NoError(t, err)
 
       {{#request}}

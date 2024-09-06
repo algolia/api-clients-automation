@@ -114,13 +114,13 @@ function addRoutes(app: Express): void {
     }
   });
 
-  app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {
+  app.get('/1/indexes/:indexName/task/:taskID', (_req, res) => {
     res.status(200).json({
       status: 'published',
     });
   });
 
-  app.get('/1/task/:taskID', (req, res) => {
+  app.get('/1/task/:taskID', (_req, res) => {
     res.status(200).json({
       status: 'published',
     });

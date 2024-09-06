@@ -155,6 +155,18 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         return $this->config;
     }
 
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     *
+     * @return void
+     *
+     */
+    public function setClientApiKey($apiKey) {
+      $this->config->setClientApiKey($apiKey);
+    }
+
 {{#operation}}
     /**
 {{#notes}}

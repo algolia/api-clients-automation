@@ -54,6 +54,9 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     }
     {{/isError}}
     {{^isError}}
+    {{#shouldScope}}
+    {
+    {{/shouldScope}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
     {{#testUserAgent}}
     val regexp = """{{{match.value}}}""".r
@@ -75,6 +78,9 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     assert(res == {{#match}}{{> tests/param_value}}{{/match}})
     {{/match.isPrimitive}}
     {{/testResponse}}
+    {{#shouldScope}}
+    }
+    {{/shouldScope}}
     {{/isError}}
     {{/steps}}
   }

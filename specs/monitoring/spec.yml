@@ -97,3 +97,9 @@ paths:
     $ref: 'paths/getReachability.yml'
   /1/infrastructure/{metric}/period/{period}:
     $ref: 'paths/getMetrics.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
