@@ -39,11 +39,11 @@ class TransporterSync(BaseTransporter):
         pass
 
     def close(self) -> None:
-        if self._session_sync is not None:
-            _session_sync = self._session_sync
-            self._session_sync = None
+        if self._session is not None:
+            _session = self._session
+            self._session = None
 
-            _session_sync.close()
+            _session.close()
 
     def request(
         self,

@@ -43,7 +43,7 @@ function addRoutes(app: Express): void {
         expect(req.body.scope).to.deep.equal(['settings', 'rules', 'synonyms']);
 
         const lang = req.params.indexName.replace('cts_e2e_replace_all_objects_', '');
-        if (!raoState[lang]) {
+        if (!raoState[lang] || raoState[lang].successful) {
           raoState[lang] = {
             copyCount: 1,
             batchCount: 0,

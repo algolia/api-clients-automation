@@ -4,7 +4,7 @@
         {{{testName}}}
         """
         {{#autoCreateClient}}
-        self.create_client()
+        _client = self.create_client()
         {{/autoCreateClient}}
 
         {{#steps}}

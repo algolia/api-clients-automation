@@ -15,27 +15,36 @@ export function assertValidTimeouts(expectedCount: number): void {
   }
 
   for (const [lang, state] of Object.entries(timeoutState)) {
-    expect(state.hangCount).to.equal(1);
-    expect(state.timestamp.length).to.equal(3);
-    expect(state.duration.length).to.equal(3);
-    expect(state.timestamp[1] - state.timestamp[0]).to.be.closeTo(state.duration[0], 100);
-    expect(state.timestamp[2] - state.timestamp[1]).to.be.closeTo(state.duration[1], 100);
+    let numberOfTestSuites = 1;
 
-    // languages are not consistent yet for the delay between requests
-    switch (lang) {
-      case 'javascript':
-        expect(state.duration[0] * 4).to.be.closeTo(state.duration[1], 300);
-        break;
-      case 'php':
-        expect(state.duration[0] * 2).to.be.closeTo(state.duration[1], 200);
-        break;
-      case 'swift':
-        expect(state.duration[0]).to.be.closeTo(state.duration[1], 800);
-        break;
-      default:
-        // the delay should be the same, because the `retryCount` is per host instead of global
-        expect(state.duration[0]).to.be.closeTo(state.duration[1], 100);
-        break;
+    if (lang === 'python') {
+      numberOfTestSuites = 2;
+    }
+
+    expect(state.hangCount).to.equal(Number(numberOfTestSuites));
+    expect(state.timestamp.length).to.equal(3 * numberOfTestSuites);
+    expect(state.duration.length).to.equal(3 * numberOfTestSuites);
+
+    for (let i = 0; i < numberOfTestSuites; i++) {
+      expect(state.timestamp[3 * i + 1] - state.timestamp[3 * i]).to.be.closeTo(state.duration[3 * i], 100);
+      expect(state.timestamp[3 * i + 2] - state.timestamp[3 * i + 1]).to.be.closeTo(state.duration[3 * i + 1], 100);
+
+      // languages are not consistent yet for the delay between requests
+      switch (lang) {
+        case 'javascript':
+          expect(state.duration[3 * i] * 4).to.be.closeTo(state.duration[3 * i + 1], 300);
+          break;
+        case 'php':
+          expect(state.duration[3 * i] * 2).to.be.closeTo(state.duration[3 * i + 1], 200);
+          break;
+        case 'swift':
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * +1], 800);
+          break;
+        default:
+          // the delay should be the same, because the `retryCount` is per host instead of global
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 100);
+          break;
+      }
     }
   }
 }

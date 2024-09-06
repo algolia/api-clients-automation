@@ -83,9 +83,20 @@ class {{classname}}{{#isSync}}Sync{{/isSync}}:
         """Closes the underlying `transporter` of the API client."""
         return await self._transporter.close()
     {{/isSync}}
-        return await self._transporter.close()
+
+    {{#isSync}}
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        """Closes the underlying `transporter` of the API client."""
+        self.close()
+
+    def close(self) -> None:
+        return self._transporter.close()
+    {{/isSync}}
     
-    def set_client_api_key(self, api_key: str) -> None:
+    {{^isSync}}async {{/isSync}}def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
         self._transporter._config.set_client_api_key(api_key)
 
@@ -194,11 +205,5 @@ class {{classname}}{{#isSync}}Sync{{/isSync}}:
         return ({{^isSync}}await {{/isSync}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
 
 {{/operation}}
-<<<<<<< HEAD
 {{/operations}}
 {{/modes}}
-||||||| 80471236d
-{{/operations}}
-=======
-{{/operations}}
->>>>>>> main

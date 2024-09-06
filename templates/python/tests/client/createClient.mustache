@@ -2,4 +2,4 @@ _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{
         {{#hasCustomHosts}}
         {{#isError}}    {{/isError}}_config.hosts = HostsCollection([{{#customHosts}}Host(url='{{host}}', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/customHosts}}])
         {{/hasCustomHosts}}
-        {{#isError}}    {{/isError}}self._client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config){{/useEchoRequester}})
+        {{#isError}}    {{/isError}}_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config){{/useEchoRequester}})
