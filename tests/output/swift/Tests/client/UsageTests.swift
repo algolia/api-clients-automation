@@ -140,4 +140,36 @@ final class UsageClientClientTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, "`apiKey` is missing.")
         }
     }
+
+    /// switch API key
+    func testSetClientApiKeyTest0() async throws {
+        let configuration = try UsageClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = UsageClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            let comparableData = "{\"headerAPIKeyValue\":\"test-api-key\"}".data(using: .utf8)
+            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+            XCTAssertEqual(comparableJSON, responseBodyJSON)
+        }
+        do {
+            try client.setClientApiKey(apiKey: "updated-api-key")
+        }
+        do {
+            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+            let responseBodyData = try XCTUnwrap(response.bodyData)
+            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+            let comparableData = "{\"headerAPIKeyValue\":\"updated-api-key\"}".data(using: .utf8)
+            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+            XCTAssertEqual(comparableJSON, responseBodyJSON)
+        }
+    }
 }

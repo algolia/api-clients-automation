@@ -9,12 +9,6 @@ import 'package:algolia_client_insights/src/model/insights_events.dart';
 
 final class InsightsClient implements ApiClient {
   @override
-  final String apiKey;
-
-  @override
-  final String appId;
-
-  @override
   final ClientOptions options;
 
   final String? region;
@@ -22,8 +16,8 @@ final class InsightsClient implements ApiClient {
   final RetryStrategy _retryStrategy;
 
   InsightsClient({
-    required this.appId,
-    required this.apiKey,
+    required String appId,
+    required String apiKey,
     this.options = const ClientOptions(),
     this.region,
   }) : _retryStrategy = RetryStrategy.create(
@@ -45,6 +39,12 @@ final class InsightsClient implements ApiClient {
             }) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
+  }
+
+  /// Allows to switch the API key used to authenticate requests.
+  @override
+  void setClientApiKey({required String apiKey}) {
+    _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
   /// This method allow you to send requests to the Algolia REST API.

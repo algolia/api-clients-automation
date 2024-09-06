@@ -191,3 +191,9 @@ paths:
     $ref: 'paths/runs/events/events.yml'
   /1/runs/{runID}/events/{eventID}:
     $ref: 'paths/runs/events/eventID.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

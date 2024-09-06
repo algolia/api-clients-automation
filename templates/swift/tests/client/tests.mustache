@@ -24,6 +24,9 @@
         }
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}}
+        do {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}}
 
@@ -64,6 +67,9 @@
             XCTAssertEqual(comparableJSON, responseBodyJSON);
           {{/isHelper}}
         {{/testResponse}}
+        {{#shouldScope}}
+        }
+        {{/shouldScope}}
       {{/isError}}
     {{#times}}
     }

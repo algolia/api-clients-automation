@@ -27,6 +27,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -51,6 +52,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -78,6 +80,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -99,6 +102,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -123,6 +127,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -144,6 +149,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -161,6 +167,7 @@ class SnippetIngestionClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -178,6 +185,7 @@ class SnippetIngestionClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -195,6 +203,7 @@ class SnippetIngestionClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -212,6 +221,7 @@ class SnippetIngestionClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -229,6 +239,7 @@ class SnippetIngestionClient {
       authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -246,6 +257,7 @@ class SnippetIngestionClient {
       destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -263,6 +275,7 @@ class SnippetIngestionClient {
       sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -280,6 +293,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -297,6 +311,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -314,6 +329,7 @@ class SnippetIngestionClient {
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -331,6 +347,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -348,6 +365,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -365,6 +383,7 @@ class SnippetIngestionClient {
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -382,6 +401,7 @@ class SnippetIngestionClient {
       taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -402,6 +422,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -419,6 +440,7 @@ class SnippetIngestionClient {
       authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -436,6 +458,7 @@ class SnippetIngestionClient {
       destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -454,6 +477,7 @@ class SnippetIngestionClient {
       eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -471,6 +495,7 @@ class SnippetIngestionClient {
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -488,6 +513,7 @@ class SnippetIngestionClient {
       sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -505,6 +531,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -522,6 +549,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -539,6 +567,7 @@ class SnippetIngestionClient {
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -554,6 +583,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listAuthentications()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -569,6 +599,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listDestinations()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -586,6 +617,7 @@ class SnippetIngestionClient {
       runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -601,6 +633,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listRuns()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -616,6 +649,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listSources()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -631,6 +665,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listTasks()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -646,6 +681,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listTasksV1()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -661,6 +697,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listTransformationModels()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -676,6 +713,7 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.listTransformations()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -712,6 +750,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -734,6 +773,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -751,6 +791,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -768,6 +809,7 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -787,6 +829,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -806,6 +849,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -825,6 +869,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -844,6 +889,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -863,6 +909,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -882,8 +929,25 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -899,6 +963,7 @@ class SnippetIngestionClient {
       sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -924,6 +989,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -950,6 +1016,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -970,6 +1037,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -990,6 +1058,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1010,6 +1079,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1031,6 +1101,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1051,6 +1122,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1073,6 +1145,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1100,6 +1173,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -1120,6 +1194,7 @@ class SnippetIngestionClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<

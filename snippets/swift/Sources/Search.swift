@@ -23,6 +23,7 @@ final class SearchClientSnippet {
             maxQueriesPerIPPerHour: 100,
             validity: 300
         ))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -40,6 +41,7 @@ final class SearchClientSnippet {
             objectID: "uniqueID",
             body: ["key": "value"]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +58,7 @@ final class SearchClientSnippet {
             source: "theSource",
             description: "theDescription"
         ))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -72,6 +75,7 @@ final class SearchClientSnippet {
             xAlgoliaUserID: "userID",
             assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -91,6 +95,7 @@ final class SearchClientSnippet {
                 SearchBatchRequest(action: SearchAction.addObject, body: ["key": "baz", "foo": "2"]),
             ])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -110,6 +115,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -129,6 +135,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -148,6 +155,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -167,6 +175,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -186,6 +195,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -205,6 +215,7 @@ final class SearchClientSnippet {
                 body: ["key": "value"]
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -221,6 +232,7 @@ final class SearchClientSnippet {
             xAlgoliaUserID: "userID",
             batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -250,6 +262,7 @@ final class SearchClientSnippet {
                 )]
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -272,6 +285,7 @@ final class SearchClientSnippet {
                 )]
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -295,6 +309,7 @@ final class SearchClientSnippet {
                 ])
             )])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -308,6 +323,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response: BrowseResponse<Hit> = try await client.browse(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -321,6 +337,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.clearObjects(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -334,6 +351,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.clearRules(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -347,6 +365,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.clearSynonyms(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -360,6 +379,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -373,6 +393,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -386,6 +407,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -399,6 +421,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -412,6 +435,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteApiKey(key: "myTestApiKey")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -428,6 +452,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             deleteByParams: DeleteByParams(filters: "brand:brandName")
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -441,6 +466,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteIndex(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -454,6 +480,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteObject(indexName: "<YOUR_INDEX_NAME>", objectID: "uniqueID")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -467,6 +494,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteObjects(indexName: "<YOUR_INDEX_NAME>", objectIDs: ["1", "2"])
+        // >LOG
         // SEPARATOR<
     }
 
@@ -480,6 +508,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteRule(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -493,6 +522,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteSource(source: "theSource")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -506,6 +536,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.deleteSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -522,6 +553,7 @@ final class SearchClientSnippet {
             parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
             restrictions: SecuredApiKeyRestrictions(validUntil: Int64(2_524_604_400), restrictIndices: ["Movies"])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -552,6 +584,7 @@ final class SearchClientSnippet {
                 userToken: "user123"
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -565,6 +598,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getApiKey(key: "myTestApiKey")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -578,6 +612,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getAppTask(taskID: Int64(123))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -591,6 +626,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getDictionaryLanguages()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -604,6 +640,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getDictionarySettings()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -617,6 +654,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getLogs()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -634,6 +672,7 @@ final class SearchClientSnippet {
             objectID: "uniqueID",
             attributesToRetrieve: ["attr1", "attr2"]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -652,6 +691,7 @@ final class SearchClientSnippet {
                 objectID: "uniqueID",
                 indexName: "<YOUR_INDEX_NAME>"
             )]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -665,6 +705,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getRule(indexName: "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -678,6 +719,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getSettings(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -691,6 +733,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getSources()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -704,6 +747,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -717,6 +761,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -730,6 +775,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getTopUserIds()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -743,6 +789,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.getUserId(userID: "uniqueID")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -756,6 +803,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.hasPendingMappings()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -769,6 +817,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -782,6 +831,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -795,6 +845,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -808,6 +859,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.listApiKeys()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -821,6 +873,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.listClusters()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -834,6 +887,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.listIndices()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -847,6 +901,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.listUserIds()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -864,6 +919,7 @@ final class SearchClientSnippet {
             body: ["key": "value"],
             indexName: "<YOUR_INDEX_NAME>"
         )]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -884,6 +940,7 @@ final class SearchClientSnippet {
                 scope: [ScopeType.rules, ScopeType.settings]
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -903,6 +960,7 @@ final class SearchClientSnippet {
                 destination: "<DESTINATION_INDEX_NAME>"
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -922,6 +980,7 @@ final class SearchClientSnippet {
                 destination: "<DESTINATION_INDEX_NAME>"
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -939,6 +998,7 @@ final class SearchClientSnippet {
             objectID: "uniqueID",
             attributesToUpdate: ["attributeId": "new value"]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -956,6 +1016,7 @@ final class SearchClientSnippet {
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
             createIfNotExists: true
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -973,6 +1034,7 @@ final class SearchClientSnippet {
             objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
             createIfNotExists: false
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -986,6 +1048,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.removeUserId(userID: "uniqueID")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1014,6 +1077,7 @@ final class SearchClientSnippet {
             ],
             batchSize: 3
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1030,6 +1094,7 @@ final class SearchClientSnippet {
             source: "theSource",
             description: "theDescription"
         )])
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1043,6 +1108,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.restoreApiKey(key: "myApiKey")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1059,6 +1125,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             body: ["objectID": "id", "test": "val"]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1075,6 +1142,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1091,6 +1159,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1111,6 +1180,7 @@ final class SearchClientSnippet {
                 conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1138,6 +1208,7 @@ final class SearchClientSnippet {
             forwardToReplicas: false,
             clearExistingRules: true
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1156,6 +1227,7 @@ final class SearchClientSnippet {
             synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
             forwardToReplicas: true
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1182,6 +1254,7 @@ final class SearchClientSnippet {
             forwardToReplicas: true,
             replaceExistingSynonyms: true
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1200,6 +1273,7 @@ final class SearchClientSnippet {
                 hitsPerPage: 50,
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1218,6 +1292,7 @@ final class SearchClientSnippet {
                 filters: "actor:Scarlett Johansson",
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1236,6 +1311,7 @@ final class SearchClientSnippet {
                 filters: "actor:Tom Cruise OR actor:Scarlett Johansson",
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1254,6 +1330,7 @@ final class SearchClientSnippet {
                 filters: "NOT actor:Nicolas Cage",
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1272,6 +1349,7 @@ final class SearchClientSnippet {
                 facets: ["author", "genre"],
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1290,6 +1368,7 @@ final class SearchClientSnippet {
                 facets: ["*"],
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1306,6 +1385,7 @@ final class SearchClientSnippet {
             dictionaryName: DictionaryType.stopwords,
             searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1319,6 +1399,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.searchForFacetValues(indexName: "<YOUR_INDEX_NAME>", facetName: "facetName")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1335,6 +1416,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             searchRulesParams: SearchRulesParams(query: "zorro")
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1348,6 +1430,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1361,6 +1444,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.searchSynonyms(indexName: "<YOUR_INDEX_NAME>")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1379,6 +1463,21 @@ final class SearchClientSnippet {
             page: 5,
             hitsPerPage: 10
         ))
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1399,6 +1498,7 @@ final class SearchClientSnippet {
                     "ru": true,
                 ]))
             )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1419,6 +1519,7 @@ final class SearchClientSnippet {
                 "searchable(publisher)",
             ])
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1440,6 +1541,7 @@ final class SearchClientSnippet {
                 validity: 300
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1456,6 +1558,7 @@ final class SearchClientSnippet {
             key: "api-key-add-operation-test-swift",
             operation: ApiKeyOperation.add
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1481,6 +1584,7 @@ final class SearchClientSnippet {
                 validity: 305
             )
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1497,6 +1601,7 @@ final class SearchClientSnippet {
             key: "api-key-delete-operation-test-swift",
             operation: ApiKeyOperation.delete
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1510,6 +1615,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.waitForAppTask(taskID: Int64(123))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1523,6 +1629,7 @@ final class SearchClientSnippet {
 
         // Call the API
         let response = try await client.waitForTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
+        // >LOG
         // SEPARATOR<
     }
 }

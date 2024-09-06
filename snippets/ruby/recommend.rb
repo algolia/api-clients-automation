@@ -15,6 +15,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -34,6 +35,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -53,6 +55,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -72,6 +75,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -91,6 +95,7 @@ def snippet_for_delete_recommend_rule
   # Call the API
   response = client.delete_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -110,6 +115,7 @@ def snippet_for_get_recommend_rule
   # Call the API
   response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -129,6 +135,7 @@ def snippet_for_get_recommend_status
   # Call the API
   response = client.get_recommend_status("<YOUR_INDEX_NAME>", "related-products", 12345)
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -159,6 +166,7 @@ def snippet_for_get_recommendations
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -178,10 +186,25 @@ def snippet_for_search_recommend_rules
   # Call the API
   response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::RecommendClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

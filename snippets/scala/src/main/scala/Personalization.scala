@@ -30,6 +30,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetPersonalizationClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -106,6 +110,7 @@ class SnippetPersonalizationClient {
       userToken = "UserToken"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -124,6 +129,7 @@ class SnippetPersonalizationClient {
     val response = client.getPersonalizationStrategy(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -143,6 +149,7 @@ class SnippetPersonalizationClient {
       userToken = "UserToken"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -177,6 +184,7 @@ class SnippetPersonalizationClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

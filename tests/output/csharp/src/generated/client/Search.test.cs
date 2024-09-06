@@ -227,66 +227,72 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.DeleteObjectsAsync(
-      "cts_e2e_deleteObjects_csharp",
-      new List<string> { "1", "2" }
-    );
+    {
+      var res = await client.DeleteObjectsAsync(
+        "cts_e2e_deleteObjects_csharp",
+        new List<string> { "1", "2" }
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "generate secured api key basic")]
   public async Task GenerateSecuredApiKeyTest0()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
-    var res = client.GenerateSecuredApiKey(
-      "2640659426d5107b6e47d75db9cbaef8",
-      new SecuredApiKeyRestrictions
-      {
-        ValidUntil = 2524604400L,
-        RestrictIndices = new List<string> { "Movies" },
-      }
-    );
+    {
+      var res = client.GenerateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions
+        {
+          ValidUntil = 2524604400L,
+          RestrictIndices = new List<string> { "Movies" },
+        }
+      );
 
-    Assert.Equal(
-      "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
-      res
-    );
+      Assert.Equal(
+        "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+        res
+      );
+    }
   }
 
   [Fact(DisplayName = "generate secured api key with searchParams")]
   public async Task GenerateSecuredApiKeyTest1()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
-    var res = client.GenerateSecuredApiKey(
-      "2640659426d5107b6e47d75db9cbaef8",
-      new SecuredApiKeyRestrictions
-      {
-        ValidUntil = 2524604400L,
-        RestrictIndices = new List<string> { "Movies", "cts_e2e_settings" },
-        RestrictSources = "192.168.1.0/24",
-        Filters = "category:Book OR category:Ebook AND _tags:published",
-        UserToken = "user123",
-        SearchParams = new SearchParamsObject
+    {
+      var res = client.GenerateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions
         {
-          Query = "batman",
-          TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Strict")),
-          AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
-          Mode = Enum.Parse<Mode>("NeuralSearch"),
-          HitsPerPage = 10,
-          OptionalWords = new List<string> { "one", "two" },
-        },
-      }
-    );
+          ValidUntil = 2524604400L,
+          RestrictIndices = new List<string> { "Movies", "cts_e2e_settings" },
+          RestrictSources = "192.168.1.0/24",
+          Filters = "category:Book OR category:Ebook AND _tags:published",
+          UserToken = "user123",
+          SearchParams = new SearchParamsObject
+          {
+            Query = "batman",
+            TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Strict")),
+            AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
+            Mode = Enum.Parse<Mode>("NeuralSearch"),
+            HitsPerPage = 10,
+            OptionalWords = new List<string> { "one", "two" },
+          },
+        }
+      );
 
-    Assert.Equal(
-      "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
-      res
-    );
+      Assert.Equal(
+        "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+        res
+      );
+    }
   }
 
   [Fact(DisplayName = "indexExists")]
@@ -309,9 +315,11 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.IndexExistsAsync("indexExistsYES");
+    {
+      var res = await client.IndexExistsAsync("indexExistsYES");
 
-    Assert.True(res);
+      Assert.True(res);
+    }
   }
 
   [Fact(DisplayName = "indexNotExists")]
@@ -334,9 +342,11 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.IndexExistsAsync("indexExistsNO");
+    {
+      var res = await client.IndexExistsAsync("indexExistsNO");
 
-    Assert.False(res);
+      Assert.False(res);
+    }
   }
 
   [Fact(DisplayName = "indexExistsWithError")]
@@ -465,21 +475,23 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_csharp",
-      new List<Object>
-      {
-        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
-      },
-      true
-    );
+    {
+      var res = await client.PartialUpdateObjectsAsync(
+        "cts_e2e_partialUpdateObjects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        },
+        true
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=false")]
@@ -502,21 +514,23 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.PartialUpdateObjectsAsync(
-      "cts_e2e_partialUpdateObjects_csharp",
-      new List<Object>
-      {
-        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
-      },
-      false
-    );
+    {
+      var res = await client.PartialUpdateObjectsAsync(
+        "cts_e2e_partialUpdateObjects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+        },
+        false
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "call replaceAllObjects without error")]
@@ -539,29 +553,31 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.ReplaceAllObjectsAsync(
-      "cts_e2e_replace_all_objects_csharp",
-      new List<Object>
-      {
-        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
-        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
-        new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
-        new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
-        new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
-        new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
-        new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
-        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
-      },
-      3
-    );
+    {
+      var res = await client.ReplaceAllObjectsAsync(
+        "cts_e2e_replace_all_objects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+          new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+          new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
+          new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
+          new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+          new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+        },
+        3
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "call saveObjects without error")]
@@ -584,20 +600,22 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.SaveObjectsAsync(
-      "cts_e2e_saveObjects_csharp",
-      new List<Object>
-      {
-        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
-      }
-    );
+    {
+      var res = await client.SaveObjectsAsync(
+        "cts_e2e_saveObjects_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        }
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "saveObjects should report errors")]
@@ -637,6 +655,49 @@ public class SearchClientTests
     );
   }
 
+  [Fact(DisplayName = "switch API key")]
+  public async Task SetClientApiKeyTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6683,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("check-api-key/1");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"test-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      client.SetClientApiKey("updated-api-key");
+    }
+    {
+      var res = await client.CustomGetAsync("check-api-key/2");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"updated-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
   [Fact(DisplayName = "wait for api key helper - add")]
   public async Task WaitForApiKeyTest0()
   {
@@ -657,16 +718,18 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.WaitForApiKeyAsync(
-      "api-key-add-operation-test-csharp",
-      Enum.Parse<ApiKeyOperation>("Add")
-    );
+    {
+      var res = await client.WaitForApiKeyAsync(
+        "api-key-add-operation-test-csharp",
+        Enum.Parse<ApiKeyOperation>("Add")
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-add-operation-test-csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "{\"value\":\"api-key-add-operation-test-csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "wait for api key - update")]
@@ -689,31 +752,33 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.WaitForApiKeyAsync(
-      "api-key-update-operation-test-csharp",
-      Enum.Parse<ApiKeyOperation>("Update"),
-      new ApiKey
-      {
-        Description = "my updated api key",
-        Acl = new List<Acl>
+    {
+      var res = await client.WaitForApiKeyAsync(
+        "api-key-update-operation-test-csharp",
+        Enum.Parse<ApiKeyOperation>("Update"),
+        new ApiKey
         {
-          Enum.Parse<Acl>("Search"),
-          Enum.Parse<Acl>("AddObject"),
-          Enum.Parse<Acl>("DeleteObject")
-        },
-        Indexes = new List<string> { "Movies", "Books" },
-        Referers = new List<string> { "*google.com", "*algolia.com" },
-        Validity = 305,
-        MaxQueriesPerIPPerHour = 95,
-        MaxHitsPerQuery = 20,
-      }
-    );
+          Description = "my updated api key",
+          Acl = new List<Acl>
+          {
+            Enum.Parse<Acl>("Search"),
+            Enum.Parse<Acl>("AddObject"),
+            Enum.Parse<Acl>("DeleteObject")
+          },
+          Indexes = new List<string> { "Movies", "Books" },
+          Referers = new List<string> { "*google.com", "*algolia.com" },
+          Validity = 305,
+          MaxQueriesPerIPPerHour = 95,
+          MaxHitsPerQuery = 20,
+        }
+      );
 
-    JsonAssert.EqualOverrideDefault(
-      "{\"value\":\"api-key-update-operation-test-csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "{\"value\":\"api-key-update-operation-test-csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "wait for api key - delete")]
@@ -736,12 +801,14 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.WaitForApiKeyAsync(
-      "api-key-delete-operation-test-csharp",
-      Enum.Parse<ApiKeyOperation>("Delete")
-    );
+    {
+      var res = await client.WaitForApiKeyAsync(
+        "api-key-delete-operation-test-csharp",
+        Enum.Parse<ApiKeyOperation>("Delete")
+      );
 
-    Assert.Null(res);
+      Assert.Null(res);
+    }
   }
 
   [Fact(DisplayName = "wait for an application-level task")]
@@ -764,13 +831,15 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.WaitForAppTaskAsync(123L);
+    {
+      var res = await client.WaitForAppTaskAsync(123L);
 
-    JsonAssert.EqualOverrideDefault(
-      "{\"status\":\"published\"}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "{\"status\":\"published\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "wait for task")]
@@ -793,12 +862,14 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.WaitForTaskAsync("wait-task-csharp", 123L);
+    {
+      var res = await client.WaitForTaskAsync("wait-task-csharp", 123L);
 
-    JsonAssert.EqualOverrideDefault(
-      "{\"status\":\"published\"}",
-      JsonSerializer.Serialize(res, JsonConfig.Options),
-      new JsonDiffConfig(false)
-    );
+      JsonAssert.EqualOverrideDefault(
+        "{\"status\":\"published\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 }

@@ -71,4 +71,28 @@ class TestClientMonitoringClient < Test::Unit::TestCase
     assert_equal("status.algolia.com", req.host.url)
   end
 
+  # switch API key
+  def test_set_client_api_key0
+    client = Algolia::MonitoringClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6683,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "monitoringClient"
+      )
+    )
+    req = client.custom_get("check-api-key/1")
+    assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    client.set_client_api_key("updated-api-key")
+    req = client.custom_get("check-api-key/2")
+    assert_equal({:"headerAPIKeyValue" => "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
 end

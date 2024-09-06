@@ -21,6 +21,7 @@ def snippet_for_create_authentication
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -47,6 +48,7 @@ def snippet_for_create_destination
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -78,6 +80,7 @@ def snippet_for_create_source
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -99,6 +102,7 @@ def snippet_for_create_task
     TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -125,6 +129,7 @@ def snippet_for_create_task_v1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -144,6 +149,7 @@ def snippet_for_create_transformation
   # Call the API
   response = client.create_transformation(TransformationCreate.new(code: "foo", name: "bar", description: "baz"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -163,6 +169,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -182,6 +189,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -201,6 +209,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -220,6 +229,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -239,6 +249,7 @@ def snippet_for_delete_authentication
   # Call the API
   response = client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -258,6 +269,7 @@ def snippet_for_delete_destination
   # Call the API
   response = client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -277,6 +289,7 @@ def snippet_for_delete_source
   # Call the API
   response = client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -296,6 +309,7 @@ def snippet_for_delete_task
   # Call the API
   response = client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -315,6 +329,7 @@ def snippet_for_delete_task_v1
   # Call the API
   response = client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -334,6 +349,7 @@ def snippet_for_delete_transformation
   # Call the API
   response = client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -353,6 +369,7 @@ def snippet_for_disable_task
   # Call the API
   response = client.disable_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -372,6 +389,7 @@ def snippet_for_disable_task_v1
   # Call the API
   response = client.disable_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -391,6 +409,7 @@ def snippet_for_enable_task
   # Call the API
   response = client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -410,6 +429,7 @@ def snippet_for_enable_task_v1
   # Call the API
   response = client.enable_task_v1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -434,6 +454,7 @@ def snippet_for_generate_transformation_code
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -453,6 +474,7 @@ def snippet_for_get_authentication
   # Call the API
   response = client.get_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -472,6 +494,7 @@ def snippet_for_get_destination
   # Call the API
   response = client.get_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -491,6 +514,7 @@ def snippet_for_get_event
   # Call the API
   response = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -510,6 +534,7 @@ def snippet_for_get_run
   # Call the API
   response = client.get_run("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -529,6 +554,7 @@ def snippet_for_get_source
   # Call the API
   response = client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -548,6 +574,7 @@ def snippet_for_get_task
   # Call the API
   response = client.get_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -567,6 +594,7 @@ def snippet_for_get_task_v1
   # Call the API
   response = client.get_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -586,6 +614,7 @@ def snippet_for_get_transformation
   # Call the API
   response = client.get_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -605,6 +634,7 @@ def snippet_for_list_authentications
   # Call the API
   response = client.list_authentications
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -624,6 +654,7 @@ def snippet_for_list_destinations
   # Call the API
   response = client.list_destinations
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -643,6 +674,7 @@ def snippet_for_list_events
   # Call the API
   response = client.list_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -662,6 +694,7 @@ def snippet_for_list_runs
   # Call the API
   response = client.list_runs
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -681,6 +714,7 @@ def snippet_for_list_sources
   # Call the API
   response = client.list_sources
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -700,6 +734,7 @@ def snippet_for_list_tasks
   # Call the API
   response = client.list_tasks
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -719,6 +754,7 @@ def snippet_for_list_tasks_v1
   # Call the API
   response = client.list_tasks_v1
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -738,6 +774,7 @@ def snippet_for_list_transformation_models
   # Call the API
   response = client.list_transformation_models
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -757,6 +794,7 @@ def snippet_for_list_transformations
   # Call the API
   response = client.list_transformations
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -785,6 +823,7 @@ def snippet_for_push_task
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -811,6 +850,7 @@ def snippet_for_run_source
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -830,6 +870,7 @@ def snippet_for_run_task
   # Call the API
   response = client.run_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -849,6 +890,7 @@ def snippet_for_run_task_v1
   # Call the API
   response = client.run_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -872,6 +914,7 @@ def snippet_for_search_authentications
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -895,6 +938,7 @@ def snippet_for_search_destinations
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -916,6 +960,7 @@ def snippet_for_search_sources
     SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -943,6 +988,7 @@ def snippet_for_search_tasks
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -970,6 +1016,7 @@ def snippet_for_search_tasks_v1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -997,11 +1044,26 @@ def snippet_for_search_transformations
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end
 
@@ -1016,6 +1078,7 @@ def snippet_for_trigger_docker_source_discover
   # Call the API
   response = client.trigger_docker_source_discover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1035,6 +1098,7 @@ def snippet_for_try_transformation
   # Call the API
   response = client.try_transformation(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1057,6 +1121,7 @@ def snippet_for_try_transformation_before_update
     TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1079,6 +1144,7 @@ def snippet_for_update_authentication
     AuthenticationUpdate.new(name: "newName")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1098,6 +1164,7 @@ def snippet_for_update_destination
   # Call the API
   response = client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", DestinationUpdate.new(name: "newName"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1117,6 +1184,7 @@ def snippet_for_update_source
   # Call the API
   response = client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1139,6 +1207,7 @@ def snippet_for_update_task
     TaskUpdate.new(enabled: false, cron: "* * * * *")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1158,6 +1227,7 @@ def snippet_for_update_task_v1
   # Call the API
   response = client.update_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdateV1.new(enabled: false))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1180,6 +1250,7 @@ def snippet_for_update_transformation
     TransformationCreate.new(code: "foo", name: "bar", description: "baz")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1211,6 +1282,7 @@ def snippet_for_validate_source
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1233,6 +1305,7 @@ def snippet_for_validate_source_before_update
     SourceUpdate.new(name: "newName")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 

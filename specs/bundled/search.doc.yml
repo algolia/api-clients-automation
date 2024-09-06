@@ -305,6 +305,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -319,6 +321,8 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -338,6 +342,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -352,6 +357,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -361,6 +368,7 @@ paths:
             // Call the API
             const response = await client.customGet({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -379,6 +387,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -393,6 +403,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -406,6 +417,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -420,6 +432,7 @@ paths:
             # Call the API
             response = client.custom_get("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -441,6 +454,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -456,6 +471,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -497,6 +514,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -511,6 +530,8 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -530,6 +551,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -544,6 +566,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -553,6 +577,7 @@ paths:
             // Call the API
             const response = await client.customPost({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -571,6 +596,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -585,6 +612,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -598,6 +626,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -612,6 +641,7 @@ paths:
             # Call the API
             response = client.custom_post("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -633,6 +663,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -648,6 +680,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -689,6 +723,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -703,6 +739,8 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -722,6 +760,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -736,6 +775,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -745,6 +786,7 @@ paths:
             // Call the API
             const response = await client.customPut({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -763,6 +805,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -777,6 +821,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -790,6 +835,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -804,6 +850,7 @@ paths:
             # Call the API
             response = client.custom_put("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -825,6 +872,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -840,6 +889,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -875,6 +926,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -889,6 +942,8 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -915,6 +970,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -930,6 +987,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -943,6 +1002,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -963,6 +1024,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -977,6 +1040,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -990,6 +1054,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1004,6 +1069,7 @@ paths:
             # Call the API
             response = client.custom_delete("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -1025,6 +1091,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1040,6 +1108,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/indexes/{indexName}/query:
     post:
       tags:
@@ -1095,6 +1165,8 @@ paths:
 
             var response = await
             client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1109,6 +1181,8 @@ paths:
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1135,6 +1209,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1150,6 +1226,8 @@ paths:
             // Call the API
 
             client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1163,6 +1241,8 @@ paths:
             const response = await client.searchSingleIndex({ indexName:
             'indexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1183,6 +1263,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1197,6 +1279,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -1210,6 +1293,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1224,6 +1308,7 @@ paths:
             # Call the API
             response = client.search_single_index("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -1245,6 +1330,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1261,6 +1348,8 @@ paths:
 
             let response: SearchResponse<Hit> = try await
             client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/*/queries:
     post:
       tags:
@@ -1356,6 +1445,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1378,6 +1469,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -1400,6 +1493,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -1418,6 +1512,8 @@ paths:
                 .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
               Hit.class
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1429,6 +1525,7 @@ paths:
               requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1455,6 +1552,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1475,6 +1574,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -1496,6 +1596,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1514,6 +1615,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -1543,6 +1645,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1563,6 +1667,7 @@ paths:
                     hitsPerPage: 50,
                     indexName: "<YOUR_INDEX_NAME>"
                 ))]))
+            // >LOG
   /1/indexes/{indexName}/facets/{facetName}/query:
     post:
       tags:
@@ -1637,6 +1742,8 @@ paths:
 
             var response = await
             client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1652,6 +1759,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               facetName: "facetName",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1678,6 +1787,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1693,6 +1804,8 @@ paths:
             // Call the API
 
             client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1706,6 +1819,8 @@ paths:
             const response = await client.searchForFacetValues({ indexName:
             'indexName', facetName: 'facetName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1727,6 +1842,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1742,6 +1859,7 @@ paths:
                 'facetName',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -1756,6 +1874,7 @@ paths:
                 facet_name="facetName",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1774,6 +1893,8 @@ paths:
             response = client.search_for_facet_values("<YOUR_INDEX_NAME>",
             "facetName")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1800,6 +1921,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1816,6 +1939,8 @@ paths:
 
             let response = try await client.searchForFacetValues(indexName:
             "<YOUR_INDEX_NAME>", facetName: "facetName")
+
+            // >LOG
   /1/indexes/{indexName}/browse:
     post:
       tags:
@@ -1908,6 +2033,8 @@ paths:
             // Call the API
 
             var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1922,6 +2049,8 @@ paths:
             final response = await client.browse(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -1941,6 +2070,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -1955,6 +2085,8 @@ paths:
             // Call the API
 
             client.browse("<YOUR_INDEX_NAME>", Hit.class);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1968,6 +2100,8 @@ paths:
             const response = await client.browse({ indexName: 'cts_e2e_browse'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1988,6 +2122,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2002,6 +2138,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -2015,6 +2152,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2029,6 +2167,7 @@ paths:
             # Call the API
             response = client.browse("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -2050,6 +2189,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2066,6 +2207,8 @@ paths:
 
             let response: BrowseResponse<Hit> = try await
             client.browse(indexName: "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/{indexName}:
     post:
       tags:
@@ -2150,6 +2293,8 @@ paths:
               "<YOUR_INDEX_NAME>",
               new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -2168,6 +2313,8 @@ paths:
                 'test': "val",
               },
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -2187,6 +2334,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -2209,6 +2357,8 @@ paths:
                 }
               }
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2222,6 +2372,8 @@ paths:
             const response = await client.saveObject({ indexName:
             '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2252,6 +2404,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2269,6 +2423,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -2286,6 +2441,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2304,6 +2460,8 @@ paths:
             response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id",
             test: "val"})
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2330,6 +2488,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2348,6 +2508,8 @@ paths:
                 indexName: "<YOUR_INDEX_NAME>",
                 body: ["objectID": "id", "test": "val"]
             )
+
+            // >LOG
     delete:
       tags:
         - Indices
@@ -2401,6 +2563,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteIndexAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -2415,6 +2579,8 @@ paths:
             final response = await client.deleteIndex(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -2434,6 +2600,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -2448,6 +2615,8 @@ paths:
             // Call the API
 
             client.deleteIndex("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2461,6 +2630,8 @@ paths:
             const response = await client.deleteIndex({ indexName:
             'theIndexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2481,6 +2652,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2495,6 +2668,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -2508,6 +2682,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2522,6 +2697,7 @@ paths:
             # Call the API
             response = client.delete_index("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -2543,6 +2719,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2559,6 +2737,8 @@ paths:
 
             let response = try await client.deleteIndex(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/{indexName}/{objectID}:
     get:
       tags:
@@ -2630,6 +2810,8 @@ paths:
               "uniqueID",
               new List<string> { "attr1", "attr2" }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -2649,6 +2831,8 @@ paths:
                 "attr2",
               ],
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -2669,6 +2853,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -2684,6 +2869,8 @@ paths:
 
             client.getObject("<YOUR_INDEX_NAME>", "uniqueID",
             Arrays.asList("attr1", "attr2"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -2697,6 +2884,7 @@ paths:
               attributesToRetrieve: ['attr1', 'attr2'],
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -2716,6 +2904,8 @@ paths:
               attributesToRetrieve = listOf("attr1", "attr2"),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2737,6 +2927,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -2755,6 +2946,7 @@ paths:
                 ],
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2773,6 +2965,8 @@ paths:
             response = client.get_object("<YOUR_INDEX_NAME>", "uniqueID",
             ["attr1", "attr2"])
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2800,6 +2994,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2819,6 +3015,8 @@ paths:
                 objectID: "uniqueID",
                 attributesToRetrieve: ["attr1", "attr2"]
             )
+
+            // >LOG
     put:
       tags:
         - Records
@@ -2878,6 +3076,8 @@ paths:
               "uniqueID",
               new Dictionary<string, string> { { "key", "value" } }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -2896,6 +3096,8 @@ paths:
                 'key': "value",
               },
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2922,6 +3124,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2945,6 +3149,8 @@ paths:
                 }
               }
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -2958,6 +3164,7 @@ paths:
               body: { key: 'value' },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -2983,6 +3190,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3000,6 +3209,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -3017,6 +3227,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -3035,6 +3246,8 @@ paths:
             response = client.add_or_update_object("<YOUR_INDEX_NAME>",
             "uniqueID", {key: "value"})
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3062,6 +3275,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3081,6 +3296,8 @@ paths:
                 objectID: "uniqueID",
                 body: ["key": "value"]
             )
+
+            // >LOG
     delete:
       tags:
         - Records
@@ -3125,6 +3342,8 @@ paths:
 
             var response = await client.DeleteObjectAsync("<YOUR_INDEX_NAME>",
             "uniqueID");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -3140,6 +3359,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "uniqueID",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3166,6 +3387,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3181,6 +3404,8 @@ paths:
             // Call the API
 
             client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3194,6 +3419,8 @@ paths:
             const response = await client.deleteObject({ indexName:
             '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3215,6 +3442,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3230,6 +3459,7 @@ paths:
                 'uniqueID',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -3244,6 +3474,7 @@ paths:
                 object_id="uniqueID",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -3258,6 +3489,7 @@ paths:
             # Call the API
             response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -3280,6 +3512,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3296,6 +3530,8 @@ paths:
 
             let response = try await client.deleteObject(indexName:
             "<YOUR_INDEX_NAME>", objectID: "uniqueID")
+
+            // >LOG
   /1/indexes/{indexName}/deleteByQuery:
     post:
       tags:
@@ -3348,6 +3584,8 @@ paths:
               "<YOUR_INDEX_NAME>",
               new DeleteByParams { Filters = "brand:brandName", }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -3365,6 +3603,8 @@ paths:
                 filters: "brand:brandName",
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -3385,6 +3625,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -3400,6 +3641,8 @@ paths:
 
             client.deleteBy("<YOUR_INDEX_NAME>", new
             DeleteByParams().setFilters("brand:brandName"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3413,6 +3656,8 @@ paths:
             const response = await client.deleteBy({ indexName: 'theIndexName',
             deleteByParams: { filters: 'brand:brandName' } });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3436,6 +3681,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3452,6 +3699,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -3468,6 +3716,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -3486,6 +3735,8 @@ paths:
             response = client.delete_by("<YOUR_INDEX_NAME>",
             DeleteByParams.new(filters: "brand:brandName"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3514,6 +3765,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3532,6 +3785,8 @@ paths:
                 indexName: "<YOUR_INDEX_NAME>",
                 deleteByParams: DeleteByParams(filters: "brand:brandName")
             )
+
+            // >LOG
   /1/indexes/{indexName}/clear:
     post:
       tags:
@@ -3569,6 +3824,8 @@ paths:
             // Call the API
 
             var response = await client.ClearObjectsAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -3583,6 +3840,8 @@ paths:
             final response = await client.clearObjects(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3609,6 +3868,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3624,6 +3885,8 @@ paths:
             // Call the API
 
             client.clearObjects("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -3637,6 +3900,8 @@ paths:
             const response = await client.clearObjects({ indexName:
             'theIndexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3657,6 +3922,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3671,6 +3938,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -3684,6 +3952,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -3698,6 +3967,7 @@ paths:
             # Call the API
             response = client.clear_objects("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -3719,6 +3989,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3735,6 +4007,8 @@ paths:
 
             let response = try await client.clearObjects(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/{indexName}/{objectID}/partial:
     post:
       tags:
@@ -3842,6 +4116,8 @@ paths:
               "uniqueID",
               new Dictionary<string, string> { { "attributeId", "new value" } }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -3860,6 +4136,8 @@ paths:
                 'attributeId': "new value",
               },
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3886,6 +4164,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3909,6 +4189,8 @@ paths:
                 }
               }
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -3922,6 +4204,7 @@ paths:
               attributesToUpdate: { attributeId: 'new value' },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -3947,6 +4230,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3964,6 +4249,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -3981,6 +4267,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -3999,6 +4286,8 @@ paths:
             response = client.partial_update_object("<YOUR_INDEX_NAME>",
             "uniqueID", {attributeId: "new value"})
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4026,6 +4315,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4045,6 +4336,8 @@ paths:
                 objectID: "uniqueID",
                 attributesToUpdate: ["attributeId": "new value"]
             )
+
+            // >LOG
   /1/indexes/{indexName}/batch:
     post:
       tags:
@@ -4118,6 +4411,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -4150,6 +4445,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -4171,6 +4468,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -4212,6 +4510,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -4229,6 +4529,7 @@ paths:
               },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -4277,6 +4578,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -4305,6 +4608,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -4336,6 +4640,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -4358,6 +4663,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -4391,6 +4697,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4412,6 +4720,8 @@ paths:
                     SearchBatchRequest(action: SearchAction.addObject, body: ["key": "baz", "foo": "2"]),
                 ])
             )
+
+            // >LOG
   /1/indexes/*/batch:
     post:
       tags:
@@ -4527,6 +4837,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -4551,6 +4863,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4578,6 +4892,8 @@ paths:
               panic(err)
             }
 
+
+            // >LOG
 
             // use the model directly
 
@@ -4610,6 +4926,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -4621,6 +4939,7 @@ paths:
               requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -4652,6 +4971,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -4673,6 +4994,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -4696,6 +5018,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -4714,6 +5037,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -4743,6 +5067,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4763,6 +5089,8 @@ paths:
                 body: ["key": "value"],
                 indexName: "<YOUR_INDEX_NAME>"
             )]))
+
+            // >LOG
   /1/indexes/*/objects:
     post:
       tags:
@@ -4875,6 +5203,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -4900,6 +5230,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -4922,6 +5254,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -4947,6 +5280,8 @@ paths:
                 ),
               Hit.class
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -4958,6 +5293,7 @@ paths:
               requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -4984,6 +5320,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5008,6 +5346,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -5032,6 +5371,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -5056,6 +5396,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -5085,6 +5426,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5105,6 +5448,7 @@ paths:
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>"
                 )]))
+            // >LOG
   /1/indexes/{indexName}/settings:
     get:
       tags:
@@ -5144,6 +5488,8 @@ paths:
             // Call the API
 
             var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -5158,6 +5504,8 @@ paths:
             final response = await client.getSettings(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -5177,6 +5525,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -5191,6 +5540,8 @@ paths:
             // Call the API
 
             client.getSettings("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5204,6 +5555,8 @@ paths:
             const response = await client.getSettings({ indexName:
             'cts_e2e_settings' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5224,6 +5577,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5238,6 +5593,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -5251,6 +5607,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -5265,6 +5622,7 @@ paths:
             # Call the API
             response = client.get_settings("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -5286,6 +5644,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5302,6 +5662,8 @@ paths:
 
             let response = try await client.getSettings(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
     put:
       tags:
         - Indices
@@ -5364,6 +5726,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -5385,6 +5749,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -5406,6 +5772,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -5423,6 +5790,8 @@ paths:
               "<YOUR_INDEX_NAME>",
               new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -5435,6 +5804,7 @@ paths:
               indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -5455,6 +5825,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5478,6 +5850,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -5498,6 +5871,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -5515,6 +5889,7 @@ paths:
               IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -5539,6 +5914,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5561,6 +5938,8 @@ paths:
                     "searchable(publisher)",
                 ])
             )
+
+            // >LOG
   /1/indexes/{indexName}/synonyms/{objectID}:
     get:
       tags:
@@ -5605,6 +5984,8 @@ paths:
 
             var response = await client.GetSynonymAsync("<YOUR_INDEX_NAME>",
             "id1");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -5620,6 +6001,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -5639,6 +6022,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -5653,6 +6037,8 @@ paths:
             // Call the API
 
             client.getSynonym("<YOUR_INDEX_NAME>", "id1");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -5666,6 +6052,8 @@ paths:
             const response = await client.getSynonym({ indexName: 'indexName',
             objectID: 'id1' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -5687,6 +6075,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -5702,6 +6092,7 @@ paths:
                 'id1',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -5716,6 +6107,7 @@ paths:
                 object_id="id1",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -5730,6 +6122,7 @@ paths:
             # Call the API
             response = client.get_synonym("<YOUR_INDEX_NAME>", "id1")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -5752,6 +6145,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5768,6 +6163,8 @@ paths:
 
             let response = try await client.getSynonym(indexName:
             "<YOUR_INDEX_NAME>", objectID: "id1")
+
+            // >LOG
     put:
       tags:
         - Synonyms
@@ -5844,6 +6241,8 @@ paths:
               },
               true
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -5869,6 +6268,8 @@ paths:
               ),
               forwardToReplicas: true,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -5890,6 +6291,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -5909,6 +6311,8 @@ paths:
               new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
               true
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -5923,6 +6327,7 @@ paths:
               forwardToReplicas: true,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -5947,6 +6352,8 @@ paths:
               forwardToReplicas = true,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5974,6 +6381,7 @@ paths:
                 true,
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -5998,6 +6406,7 @@ paths:
                 forward_to_replicas=True,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -6017,6 +6426,7 @@ paths:
               true
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -6045,6 +6455,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6065,6 +6477,8 @@ paths:
                 synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                 forwardToReplicas: true
             )
+
+            // >LOG
     delete:
       tags:
         - Synonyms
@@ -6106,6 +6520,8 @@ paths:
 
             var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>",
             "id1");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -6121,6 +6537,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6147,6 +6565,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6162,6 +6582,8 @@ paths:
             // Call the API
 
             client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6175,6 +6597,8 @@ paths:
             const response = await client.deleteSynonym({ indexName:
             'indexName', objectID: 'id1' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6196,6 +6620,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -6211,6 +6637,7 @@ paths:
                 'id1',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -6225,6 +6652,7 @@ paths:
                 object_id="id1",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -6239,6 +6667,7 @@ paths:
             # Call the API
             response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -6261,6 +6690,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6277,6 +6708,8 @@ paths:
 
             let response = try await client.deleteSynonym(indexName:
             "<YOUR_INDEX_NAME>", objectID: "id1")
+
+            // >LOG
   /1/indexes/{indexName}/synonyms/batch:
     post:
       tags:
@@ -6342,6 +6775,8 @@ paths:
               true,
               true
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -6379,6 +6814,8 @@ paths:
               forwardToReplicas: true,
               replaceExistingSynonyms: true,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6408,6 +6845,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6435,6 +6874,8 @@ paths:
               true,
               true
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -6452,6 +6893,7 @@ paths:
               replaceExistingSynonyms: true,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -6484,6 +6926,8 @@ paths:
               replaceExistingSynonyms = true,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -6525,6 +6969,7 @@ paths:
                 true,
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -6561,6 +7006,7 @@ paths:
                 replace_existing_synonyms=True,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -6583,6 +7029,7 @@ paths:
               true
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -6619,6 +7066,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6647,6 +7096,8 @@ paths:
                 forwardToReplicas: true,
                 replaceExistingSynonyms: true
             )
+
+            // >LOG
   /1/indexes/{indexName}/synonyms/clear:
     post:
       tags:
@@ -6683,6 +7134,8 @@ paths:
             // Call the API
 
             var response = await client.ClearSynonymsAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -6697,6 +7150,8 @@ paths:
             final response = await client.clearSynonyms(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6723,6 +7178,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6738,6 +7195,8 @@ paths:
             // Call the API
 
             client.clearSynonyms("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6751,6 +7210,8 @@ paths:
             const response = await client.clearSynonyms({ indexName: 'indexName'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6771,6 +7232,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -6785,6 +7248,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -6798,6 +7262,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -6812,6 +7277,7 @@ paths:
             # Call the API
             response = client.clear_synonyms("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -6833,6 +7299,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -6849,6 +7317,8 @@ paths:
 
             let response = try await client.clearSynonyms(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/{indexName}/synonyms/search:
     post:
       tags:
@@ -6908,6 +7378,8 @@ paths:
 
             var response = await
             client.SearchSynonymsAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -6922,6 +7394,8 @@ paths:
             final response = await client.searchSynonyms(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -6948,6 +7422,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -6963,6 +7439,8 @@ paths:
             // Call the API
 
             client.searchSynonyms("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -6976,6 +7454,8 @@ paths:
             const response = await client.searchSynonyms({ indexName:
             'indexName' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -6996,6 +7476,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7010,6 +7492,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -7023,6 +7506,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -7037,6 +7521,7 @@ paths:
             # Call the API
             response = client.search_synonyms("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -7058,6 +7543,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7074,6 +7561,8 @@ paths:
 
             let response = try await client.searchSynonyms(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/keys:
     get:
       tags:
@@ -7123,6 +7612,8 @@ paths:
             // Call the API
 
             var response = await client.ListApiKeysAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -7135,6 +7626,8 @@ paths:
             // Call the API
 
             final response = await client.listApiKeys();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -7152,6 +7645,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -7166,6 +7660,8 @@ paths:
             // Call the API
 
             client.listApiKeys();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -7175,6 +7671,7 @@ paths:
             // Call the API
             const response = await client.listApiKeys();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -7191,6 +7688,8 @@ paths:
             var response = client.listApiKeys()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7203,6 +7702,7 @@ paths:
             // Call the API
             $response = $client->listApiKeys();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -7214,6 +7714,7 @@ paths:
             # Call the API
             response = await _client.list_api_keys()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -7228,6 +7729,7 @@ paths:
             # Call the API
             response = client.list_api_keys
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -7249,6 +7751,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7264,6 +7768,8 @@ paths:
             // Call the API
 
             let response = try await client.listApiKeys()
+
+            // >LOG
     post:
       tags:
         - Api Keys
@@ -7315,6 +7821,8 @@ paths:
                 MaxHitsPerQuery = 20,
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -7338,6 +7846,8 @@ paths:
                 maxHitsPerQuery: 20,
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -7359,6 +7869,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -7380,6 +7891,8 @@ paths:
                 .setMaxQueriesPerIPPerHour(100)
                 .setMaxHitsPerQuery(20)
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -7395,6 +7908,7 @@ paths:
               maxHitsPerQuery: 20,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -7419,6 +7933,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7442,6 +7958,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -7464,6 +7981,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -7486,6 +8004,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -7513,6 +8032,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7534,6 +8055,8 @@ paths:
                 maxQueriesPerIPPerHour: 100,
                 validity: 300
             ))
+
+            // >LOG
   /1/keys/{key}:
     get:
       tags:
@@ -7579,6 +8102,8 @@ paths:
             // Call the API
 
             var response = await client.GetApiKeyAsync("myTestApiKey");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -7593,6 +8118,8 @@ paths:
             final response = await client.getApiKey(
               key: "myTestApiKey",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -7612,6 +8139,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -7626,6 +8154,8 @@ paths:
             // Call the API
 
             client.getApiKey("myTestApiKey");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -7635,6 +8165,7 @@ paths:
             // Call the API
             const response = await client.getApiKey({ key: 'myTestApiKey' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -7653,6 +8184,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7667,6 +8200,7 @@ paths:
                 'myTestApiKey',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -7680,6 +8214,7 @@ paths:
                 key="myTestApiKey",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -7694,6 +8229,7 @@ paths:
             # Call the API
             response = client.get_api_key("myTestApiKey")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -7715,6 +8251,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -7730,6 +8268,8 @@ paths:
             // Call the API
 
             let response = try await client.getApiKey(key: "myTestApiKey")
+
+            // >LOG
     put:
       tags:
         - Api Keys
@@ -7796,6 +8336,8 @@ paths:
                 MaxHitsPerQuery = 20,
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -7819,6 +8361,8 @@ paths:
                 maxHitsPerQuery: 20,
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -7847,6 +8391,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -7865,6 +8411,8 @@ paths:
               "myApiKey",
               new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -7877,6 +8425,7 @@ paths:
               apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -7901,6 +8450,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -7924,6 +8475,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -7946,6 +8498,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -7963,6 +8516,7 @@ paths:
               ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -7990,6 +8544,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8013,6 +8569,8 @@ paths:
                     validity: 300
                 )
             )
+
+            // >LOG
     delete:
       tags:
         - Api Keys
@@ -8058,6 +8616,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteApiKeyAsync("myTestApiKey");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -8072,6 +8632,8 @@ paths:
             final response = await client.deleteApiKey(
               key: "myTestApiKey",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8098,6 +8660,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8113,6 +8677,8 @@ paths:
             // Call the API
 
             client.deleteApiKey("myTestApiKey");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -8122,6 +8688,7 @@ paths:
             // Call the API
             const response = await client.deleteApiKey({ key: 'myTestApiKey' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -8140,6 +8707,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8154,6 +8723,7 @@ paths:
                 'myTestApiKey',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -8167,6 +8737,7 @@ paths:
                 key="myTestApiKey",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -8181,6 +8752,7 @@ paths:
             # Call the API
             response = client.delete_api_key("myTestApiKey")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -8202,6 +8774,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8217,6 +8791,8 @@ paths:
             // Call the API
 
             let response = try await client.deleteApiKey(key: "myTestApiKey")
+
+            // >LOG
   /1/keys/{key}/restore:
     post:
       tags:
@@ -8266,6 +8842,8 @@ paths:
             // Call the API
 
             var response = await client.RestoreApiKeyAsync("myApiKey");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -8280,6 +8858,8 @@ paths:
             final response = await client.restoreApiKey(
               key: "myApiKey",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -8306,6 +8886,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -8321,6 +8903,8 @@ paths:
             // Call the API
 
             client.restoreApiKey("myApiKey");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -8330,6 +8914,7 @@ paths:
             // Call the API
             const response = await client.restoreApiKey({ key: 'myApiKey' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -8348,6 +8933,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8362,6 +8949,7 @@ paths:
                 'myApiKey',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -8375,6 +8963,7 @@ paths:
                 key="myApiKey",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -8389,6 +8978,7 @@ paths:
             # Call the API
             response = client.restore_api_key("myApiKey")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -8410,6 +9000,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8425,6 +9017,8 @@ paths:
             // Call the API
 
             let response = try await client.restoreApiKey(key: "myApiKey")
+
+            // >LOG
   /1/indexes/{indexName}/rules/{objectID}:
     get:
       tags:
@@ -8470,6 +9064,8 @@ paths:
 
             var response = await client.GetRuleAsync("<YOUR_INDEX_NAME>",
             "qr-1725004648916");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -8485,6 +9081,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "qr-1725004648916",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -8504,6 +9102,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -8518,6 +9117,8 @@ paths:
             // Call the API
 
             client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -8531,6 +9132,8 @@ paths:
             const response = await client.getRule({ indexName: 'cts_e2e_browse',
             objectID: 'qr-1725004648916' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -8552,6 +9155,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8567,6 +9172,7 @@ paths:
                 'qr-1725004648916',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -8581,6 +9187,7 @@ paths:
                 object_id="qr-1725004648916",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -8595,6 +9202,7 @@ paths:
             # Call the API
             response = client.get_rule("<YOUR_INDEX_NAME>", "qr-1725004648916")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -8617,6 +9225,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8633,6 +9243,8 @@ paths:
 
             let response = try await client.getRule(indexName:
             "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
+
+            // >LOG
     put:
       tags:
         - Rules
@@ -8697,6 +9309,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -8721,6 +9335,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -8742,6 +9358,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -8760,6 +9377,8 @@ paths:
               "id1",
               new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -8773,6 +9392,7 @@ paths:
               rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -8801,6 +9421,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -8823,6 +9445,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -8846,6 +9469,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -8864,6 +9488,7 @@ paths:
               Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -8897,6 +9522,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -8919,6 +9546,8 @@ paths:
                     conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
                 )
             )
+
+            // >LOG
     delete:
       tags:
         - Rules
@@ -8959,6 +9588,8 @@ paths:
 
             var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>",
             "id1");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -8974,6 +9605,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               objectID: "id1",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -8993,6 +9626,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -9007,6 +9641,8 @@ paths:
             // Call the API
 
             client.deleteRule("<YOUR_INDEX_NAME>", "id1");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9020,6 +9656,8 @@ paths:
             const response = await client.deleteRule({ indexName: 'indexName',
             objectID: 'id1' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9041,6 +9679,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9056,6 +9696,7 @@ paths:
                 'id1',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -9070,6 +9711,7 @@ paths:
                 object_id="id1",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -9084,6 +9726,7 @@ paths:
             # Call the API
             response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -9106,6 +9749,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9122,6 +9767,8 @@ paths:
 
             let response = try await client.deleteRule(indexName:
             "<YOUR_INDEX_NAME>", objectID: "id1")
+
+            // >LOG
   /1/indexes/{indexName}/rules/batch:
     post:
       tags:
@@ -9199,6 +9846,8 @@ paths:
               false,
               true
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -9235,6 +9884,8 @@ paths:
               forwardToReplicas: false,
               clearExistingRules: true,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -9257,6 +9908,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -9283,6 +9935,8 @@ paths:
               false,
               true
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -9300,6 +9954,7 @@ paths:
               clearExistingRules: true,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -9340,6 +9995,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9373,6 +10030,7 @@ paths:
                 true,
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -9408,6 +10066,7 @@ paths:
                 clear_existing_rules=True,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -9430,6 +10089,7 @@ paths:
               true
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -9477,6 +10137,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9506,6 +10168,8 @@ paths:
                 forwardToReplicas: false,
                 clearExistingRules: true
             )
+
+            // >LOG
   /1/indexes/{indexName}/rules/clear:
     post:
       tags:
@@ -9542,6 +10206,8 @@ paths:
             // Call the API
 
             var response = await client.ClearRulesAsync("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -9556,6 +10222,8 @@ paths:
             final response = await client.clearRules(
               indexName: "<YOUR_INDEX_NAME>",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -9575,6 +10243,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -9589,6 +10258,8 @@ paths:
             // Call the API
 
             client.clearRules("<YOUR_INDEX_NAME>");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9602,6 +10273,8 @@ paths:
             const response = await client.clearRules({ indexName: 'indexName'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9622,6 +10295,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9636,6 +10311,7 @@ paths:
                 '<YOUR_INDEX_NAME>',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -9649,6 +10325,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -9663,6 +10340,7 @@ paths:
             # Call the API
             response = client.clear_rules("<YOUR_INDEX_NAME>")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -9684,6 +10362,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9700,6 +10380,8 @@ paths:
 
             let response = try await client.clearRules(indexName:
             "<YOUR_INDEX_NAME>")
+
+            // >LOG
   /1/indexes/{indexName}/rules/search:
     post:
       tags:
@@ -9796,6 +10478,8 @@ paths:
               "<YOUR_INDEX_NAME>",
               new SearchRulesParams { Query = "zorro", }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -9813,6 +10497,8 @@ paths:
                 query: "zorro",
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -9833,6 +10519,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -9848,6 +10535,8 @@ paths:
 
             client.searchRules("<YOUR_INDEX_NAME>", new
             SearchRulesParams().setQuery("zorro"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -9861,6 +10550,8 @@ paths:
             const response = await client.searchRules({ indexName:
             'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
 
+
+            // >LOG
 
             // use typed response
 
@@ -9884,6 +10575,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -9900,6 +10593,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -9916,6 +10610,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -9934,6 +10629,8 @@ paths:
             response = client.search_rules("<YOUR_INDEX_NAME>",
             SearchRulesParams.new(query: "zorro"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -9964,6 +10661,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -9982,6 +10681,8 @@ paths:
                 indexName: "<YOUR_INDEX_NAME>",
                 searchRulesParams: SearchRulesParams(query: "zorro")
             )
+
+            // >LOG
   /1/dictionaries/{dictionaryName}/batch:
     post:
       tags:
@@ -10074,6 +10775,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -10110,6 +10813,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10140,6 +10845,8 @@ paths:
               panic(err)
             }
 
+
+            // >LOG
 
             // use the model directly
 
@@ -10175,6 +10882,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -10202,6 +10911,7 @@ paths:
               },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -10235,6 +10945,8 @@ paths:
               ),
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -10271,6 +10983,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -10306,6 +11019,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -10338,6 +11052,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -10375,6 +11090,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10406,6 +11123,8 @@ paths:
                     )]
                 )
             )
+
+            // >LOG
   /1/dictionaries/{dictionaryName}/search:
     post:
       tags:
@@ -10470,6 +11189,8 @@ paths:
               Enum.Parse<DictionaryType>("Stopwords"),
               new SearchDictionaryEntriesParams { Query = "about", }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -10487,6 +11208,8 @@ paths:
                 query: "about",
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10514,6 +11237,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -10530,6 +11255,8 @@ paths:
 
             client.searchDictionaryEntries(DictionaryType.STOPWORDS, new
             SearchDictionaryEntriesParams().setQuery("about"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -10542,6 +11269,7 @@ paths:
               searchDictionaryEntriesParams: { query: 'about' },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -10563,6 +11291,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10579,6 +11309,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -10595,6 +11326,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -10613,6 +11345,8 @@ paths:
             response = client.search_dictionary_entries("stopwords",
             SearchDictionaryEntriesParams.new(query: "about"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -10641,6 +11375,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10659,6 +11395,8 @@ paths:
                 dictionaryName: DictionaryType.stopwords,
                 searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
             )
+
+            // >LOG
   /1/dictionaries/*/settings:
     get:
       tags:
@@ -10705,6 +11443,8 @@ paths:
             // Call the API
 
             var response = await client.GetDictionarySettingsAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -10717,6 +11457,8 @@ paths:
             // Call the API
 
             final response = await client.getDictionarySettings();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -10734,6 +11476,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -10748,6 +11491,8 @@ paths:
             // Call the API
 
             client.getDictionarySettings();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -10757,6 +11502,7 @@ paths:
             // Call the API
             const response = await client.getDictionarySettings();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -10773,6 +11519,8 @@ paths:
             var response = client.getDictionarySettings()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -10785,6 +11533,7 @@ paths:
             // Call the API
             $response = $client->getDictionarySettings();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -10796,6 +11545,7 @@ paths:
             # Call the API
             response = await _client.get_dictionary_settings()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -10810,6 +11560,7 @@ paths:
             # Call the API
             response = client.get_dictionary_settings
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -10831,6 +11582,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -10846,6 +11599,8 @@ paths:
             // Call the API
 
             let response = try await client.getDictionarySettings()
+
+            // >LOG
     put:
       tags:
         - Dictionaries
@@ -10909,6 +11664,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -10931,6 +11688,8 @@ paths:
                 ),
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -10958,6 +11717,8 @@ paths:
               panic(err)
             }
 
+
+            // >LOG
 
             // use the model directly
 
@@ -10988,6 +11749,8 @@ paths:
                     )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -10999,6 +11762,7 @@ paths:
               disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -11021,6 +11785,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11040,6 +11806,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -11061,6 +11828,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -11079,6 +11847,7 @@ paths:
               )
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -11104,6 +11873,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11126,6 +11897,7 @@ paths:
                         "ru": true,
                     ]))
                 )
+            // >LOG
   /1/dictionaries/*/languages:
     get:
       tags:
@@ -11173,6 +11945,8 @@ paths:
             // Call the API
 
             var response = await client.GetDictionaryLanguagesAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -11185,6 +11959,8 @@ paths:
             // Call the API
 
             final response = await client.getDictionaryLanguages();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -11202,6 +11978,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -11216,6 +11993,8 @@ paths:
             // Call the API
 
             client.getDictionaryLanguages();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -11225,6 +12004,7 @@ paths:
             // Call the API
             const response = await client.getDictionaryLanguages();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -11241,6 +12021,8 @@ paths:
             var response = client.getDictionaryLanguages()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11253,6 +12035,7 @@ paths:
             // Call the API
             $response = $client->getDictionaryLanguages();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -11264,6 +12047,7 @@ paths:
             # Call the API
             response = await _client.get_dictionary_languages()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -11278,6 +12062,7 @@ paths:
             # Call the API
             response = client.get_dictionary_languages
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -11299,6 +12084,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11314,6 +12101,8 @@ paths:
             // Call the API
 
             let response = try await client.getDictionaryLanguages()
+
+            // >LOG
   /1/clusters/mapping:
     post:
       tags:
@@ -11371,6 +12160,8 @@ paths:
               "userID",
               new AssignUserIdParams { Cluster = "theCluster", }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -11388,6 +12179,8 @@ paths:
                 cluster: "theCluster",
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11415,6 +12208,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11431,6 +12226,8 @@ paths:
 
             client.assignUserId("userID", new
             AssignUserIdParams().setCluster("theCluster"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -11443,6 +12240,7 @@ paths:
               assignUserIdParams: { cluster: 'theCluster' },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -11464,6 +12262,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11480,6 +12280,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -11496,6 +12297,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -11514,6 +12316,8 @@ paths:
             response = client.assign_user_id("userID",
             AssignUserIdParams.new(cluster: "theCluster"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -11542,6 +12346,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11560,6 +12366,8 @@ paths:
                 xAlgoliaUserID: "userID",
                 assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
             )
+
+            // >LOG
     get:
       tags:
         - Clusters
@@ -11616,6 +12424,8 @@ paths:
             // Call the API
 
             var response = await client.ListUserIdsAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -11628,6 +12438,8 @@ paths:
             // Call the API
 
             final response = await client.listUserIds();
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11652,6 +12464,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11667,6 +12481,8 @@ paths:
             // Call the API
 
             client.listUserIds();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -11676,6 +12492,7 @@ paths:
             // Call the API
             const response = await client.listUserIds();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -11692,6 +12509,8 @@ paths:
             var response = client.listUserIds()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11704,6 +12523,7 @@ paths:
             // Call the API
             $response = $client->listUserIds();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -11715,6 +12535,7 @@ paths:
             # Call the API
             response = await _client.list_user_ids()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -11729,6 +12550,7 @@ paths:
             # Call the API
             response = client.list_user_ids
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -11750,6 +12572,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -11765,6 +12589,8 @@ paths:
             // Call the API
 
             let response = try await client.listUserIds()
+
+            // >LOG
   /1/clusters/mapping/batch:
     post:
       tags:
@@ -11834,6 +12660,8 @@ paths:
                 Users = new List<string> { "user1", "user2" },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -11855,6 +12683,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -11883,6 +12713,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -11900,6 +12732,8 @@ paths:
             client.batchAssignUserIds("userID", new
             BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1",
             "user2")));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -11912,6 +12746,7 @@ paths:
               batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -11934,6 +12769,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -11955,6 +12792,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -11975,6 +12813,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -11992,6 +12831,7 @@ paths:
               BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -12017,6 +12857,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12035,6 +12877,8 @@ paths:
                 xAlgoliaUserID: "userID",
                 batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"])
             )
+
+            // >LOG
   /1/clusters/mapping/top:
     get:
       tags:
@@ -12098,6 +12942,8 @@ paths:
             // Call the API
 
             var response = await client.GetTopUserIdsAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -12110,6 +12956,8 @@ paths:
             // Call the API
 
             final response = await client.getTopUserIds();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -12127,6 +12975,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -12141,6 +12990,8 @@ paths:
             // Call the API
 
             client.getTopUserIds();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -12150,6 +13001,7 @@ paths:
             // Call the API
             const response = await client.getTopUserIds();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -12166,6 +13018,8 @@ paths:
             var response = client.getTopUserIds()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12178,6 +13032,7 @@ paths:
             // Call the API
             $response = $client->getTopUserIds();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -12189,6 +13044,7 @@ paths:
             # Call the API
             response = await _client.get_top_user_ids()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -12203,6 +13059,7 @@ paths:
             # Call the API
             response = client.get_top_user_ids
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -12224,6 +13081,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12239,6 +13098,8 @@ paths:
             // Call the API
 
             let response = try await client.getTopUserIds()
+
+            // >LOG
   /1/clusters/mapping/{userID}:
     get:
       tags:
@@ -12285,6 +13146,8 @@ paths:
             // Call the API
 
             var response = await client.GetUserIdAsync("uniqueID");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -12299,6 +13162,8 @@ paths:
             final response = await client.getUserId(
               userID: "uniqueID",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -12318,6 +13183,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -12332,6 +13198,8 @@ paths:
             // Call the API
 
             client.getUserId("uniqueID");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -12341,6 +13209,7 @@ paths:
             // Call the API
             const response = await client.getUserId({ userID: 'uniqueID' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -12359,6 +13228,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12373,6 +13244,7 @@ paths:
                 'uniqueID',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -12386,6 +13258,7 @@ paths:
                 user_id="uniqueID",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -12400,6 +13273,7 @@ paths:
             # Call the API
             response = client.get_user_id("uniqueID")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -12421,6 +13295,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12436,6 +13312,8 @@ paths:
             // Call the API
 
             let response = try await client.getUserId(userID: "uniqueID")
+
+            // >LOG
     delete:
       tags:
         - Clusters
@@ -12481,6 +13359,8 @@ paths:
             // Call the API
 
             var response = await client.RemoveUserIdAsync("uniqueID");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -12495,6 +13375,8 @@ paths:
             final response = await client.removeUserId(
               userID: "uniqueID",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -12521,6 +13403,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -12536,6 +13420,8 @@ paths:
             // Call the API
 
             client.removeUserId("uniqueID");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -12545,6 +13431,7 @@ paths:
             // Call the API
             const response = await client.removeUserId({ userID: 'uniqueID' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -12563,6 +13450,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12577,6 +13466,7 @@ paths:
                 'uniqueID',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -12590,6 +13480,7 @@ paths:
                 user_id="uniqueID",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -12604,6 +13495,7 @@ paths:
             # Call the API
             response = client.remove_user_id("uniqueID")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -12625,6 +13517,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12640,6 +13534,8 @@ paths:
             // Call the API
 
             let response = try await client.removeUserId(userID: "uniqueID")
+
+            // >LOG
   /1/clusters:
     get:
       tags:
@@ -12690,6 +13586,8 @@ paths:
             // Call the API
 
             var response = await client.ListClustersAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -12702,6 +13600,8 @@ paths:
             // Call the API
 
             final response = await client.listClusters();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -12719,6 +13619,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -12733,6 +13634,8 @@ paths:
             // Call the API
 
             client.listClusters();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -12742,6 +13645,7 @@ paths:
             // Call the API
             const response = await client.listClusters();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -12758,6 +13662,8 @@ paths:
             var response = client.listClusters()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -12770,6 +13676,7 @@ paths:
             // Call the API
             $response = $client->listClusters();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -12781,6 +13688,7 @@ paths:
             # Call the API
             response = await _client.list_clusters()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -12795,6 +13703,7 @@ paths:
             # Call the API
             response = client.list_clusters
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -12816,6 +13725,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -12831,6 +13742,8 @@ paths:
             // Call the API
 
             let response = try await client.listClusters()
+
+            // >LOG
   /1/clusters/mapping/search:
     post:
       tags:
@@ -12966,6 +13879,8 @@ paths:
                 HitsPerPage = 10,
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -12985,6 +13900,8 @@ paths:
                 hitsPerPage: 10,
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13012,6 +13929,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13028,6 +13947,8 @@ paths:
 
             client.searchUserIds(new
             SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -13042,6 +13963,7 @@ paths:
               hitsPerPage: 10,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -13065,6 +13987,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13083,6 +14007,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -13101,6 +14026,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -13117,6 +14043,7 @@ paths:
               SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -13143,6 +14070,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13164,6 +14093,8 @@ paths:
                 page: 5,
                 hitsPerPage: 10
             ))
+
+            // >LOG
   /1/clusters/mapping/pending:
     get:
       tags:
@@ -13231,6 +14162,8 @@ paths:
             // Call the API
 
             var response = await client.HasPendingMappingsAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -13243,6 +14176,8 @@ paths:
             // Call the API
 
             final response = await client.hasPendingMappings();
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13267,6 +14202,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13282,6 +14219,8 @@ paths:
             // Call the API
 
             client.hasPendingMappings();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -13291,6 +14230,7 @@ paths:
             // Call the API
             const response = await client.hasPendingMappings();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -13307,6 +14247,8 @@ paths:
             var response = client.hasPendingMappings()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13319,6 +14261,7 @@ paths:
             // Call the API
             $response = $client->hasPendingMappings();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -13330,6 +14273,7 @@ paths:
             # Call the API
             response = await _client.has_pending_mappings()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -13344,6 +14288,7 @@ paths:
             # Call the API
             response = client.has_pending_mappings
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -13365,6 +14310,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13380,6 +14327,8 @@ paths:
             // Call the API
 
             let response = try await client.hasPendingMappings()
+
+            // >LOG
   /1/security/sources:
     get:
       tags:
@@ -13417,6 +14366,8 @@ paths:
             // Call the API
 
             var response = await client.GetSourcesAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -13429,6 +14380,8 @@ paths:
             // Call the API
 
             final response = await client.getSources();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -13446,6 +14399,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -13460,6 +14414,8 @@ paths:
             // Call the API
 
             client.getSources();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -13469,6 +14425,7 @@ paths:
             // Call the API
             const response = await client.getSources();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -13485,6 +14442,8 @@ paths:
             var response = client.getSources()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13497,6 +14456,7 @@ paths:
             // Call the API
             $response = $client->getSources();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -13508,6 +14468,7 @@ paths:
             # Call the API
             response = await _client.get_sources()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -13522,6 +14483,7 @@ paths:
             # Call the API
             response = client.get_sources
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -13543,6 +14505,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13558,6 +14522,8 @@ paths:
             // Call the API
 
             let response = try await client.getSources()
+
+            // >LOG
     put:
       tags:
         - Vaults
@@ -13613,6 +14579,8 @@ paths:
                 new Source { VarSource = "theSource", Description = "theDescription", }
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -13632,6 +14600,8 @@ paths:
                 ),
               ],
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13659,6 +14629,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13675,6 +14647,8 @@ paths:
 
             client.replaceSources(Arrays.asList(new
             Source().setSource("theSource").setDescription("theDescription")));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13688,6 +14662,8 @@ paths:
             const response = await client.replaceSources({ source: [{ source:
             'theSource', description: 'theDescription' }] });
 
+
+            // >LOG
 
             // use typed response
 
@@ -13713,6 +14689,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13731,6 +14709,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -13749,6 +14728,7 @@ paths:
                 ],
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -13767,6 +14747,8 @@ paths:
             response = client.replace_sources([Source.new(source: "theSource",
             description: "theDescription")])
 
+
+            # >LOG
 
             # use the class directly
 
@@ -13797,6 +14779,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -13816,6 +14800,8 @@ paths:
                 source: "theSource",
                 description: "theDescription"
             )])
+
+            // >LOG
   /1/security/sources/append:
     post:
       tags:
@@ -13858,6 +14844,8 @@ paths:
             var response = await client.AppendSourceAsync(
               new Source { VarSource = "theSource", Description = "theDescription", }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -13875,6 +14863,8 @@ paths:
                 description: "theDescription",
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -13902,6 +14892,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -13918,6 +14910,8 @@ paths:
 
             client.appendSource(new
             Source().setSource("theSource").setDescription("theDescription"));
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -13931,6 +14925,8 @@ paths:
             const response = await client.appendSource({ source: 'theSource',
             description: 'theDescription' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -13954,6 +14950,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -13970,6 +14968,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -13986,6 +14985,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -14004,6 +15004,8 @@ paths:
             response = client.append_source(Source.new(source: "theSource",
             description: "theDescription"))
 
+
+            # >LOG
 
             # use the class directly
 
@@ -14032,6 +15034,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -14050,6 +15054,8 @@ paths:
                 source: "theSource",
                 description: "theDescription"
             ))
+
+            // >LOG
   /1/security/sources/{source}:
     delete:
       tags:
@@ -14102,6 +15108,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteSourceAsync("theSource");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -14116,6 +15124,8 @@ paths:
             final response = await client.deleteSource(
               source: "theSource",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -14142,6 +15152,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -14157,6 +15169,8 @@ paths:
             // Call the API
 
             client.deleteSource("theSource");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -14166,6 +15180,7 @@ paths:
             // Call the API
             const response = await client.deleteSource({ source: 'theSource' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -14184,6 +15199,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -14198,6 +15215,7 @@ paths:
                 'theSource',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -14211,6 +15229,7 @@ paths:
                 source="theSource",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -14225,6 +15244,7 @@ paths:
             # Call the API
             response = client.delete_source("theSource")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -14246,6 +15266,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -14261,6 +15283,8 @@ paths:
             // Call the API
 
             let response = try await client.deleteSource(source: "theSource")
+
+            // >LOG
   /1/logs:
     get:
       tags:
@@ -14481,6 +15505,8 @@ paths:
             // Call the API
 
             var response = await client.GetLogsAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -14493,6 +15519,8 @@ paths:
             // Call the API
 
             final response = await client.getLogs();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -14510,6 +15538,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -14524,6 +15553,8 @@ paths:
             // Call the API
 
             client.getLogs();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -14533,6 +15564,7 @@ paths:
             // Call the API
             const response = await client.getLogs();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -14549,6 +15581,8 @@ paths:
             var response = client.getLogs()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -14561,6 +15595,7 @@ paths:
             // Call the API
             $response = $client->getLogs();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -14572,6 +15607,7 @@ paths:
             # Call the API
             response = await _client.get_logs()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -14586,6 +15622,7 @@ paths:
             # Call the API
             response = client.get_logs
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -14607,6 +15644,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -14622,6 +15661,8 @@ paths:
             // Call the API
 
             let response = try await client.getLogs()
+
+            // >LOG
   /1/task/{taskID}:
     get:
       tags:
@@ -14667,6 +15708,8 @@ paths:
             // Call the API
 
             var response = await client.GetAppTaskAsync(123L);
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -14681,6 +15724,8 @@ paths:
             final response = await client.getAppTask(
               taskID: 123,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -14700,6 +15745,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -14714,6 +15760,8 @@ paths:
             // Call the API
 
             client.getAppTask(123L);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -14723,6 +15771,7 @@ paths:
             // Call the API
             const response = await client.getAppTask({ taskID: 123 });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -14741,6 +15790,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -14755,6 +15806,7 @@ paths:
                 123,
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -14768,6 +15820,7 @@ paths:
                 task_id=123,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -14782,6 +15835,7 @@ paths:
             # Call the API
             response = client.get_app_task(123)
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -14803,6 +15857,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -14818,6 +15874,8 @@ paths:
             // Call the API
 
             let response = try await client.getAppTask(taskID: Int64(123))
+
+            // >LOG
   /1/indexes/{indexName}/task/{taskID}:
     get:
       tags:
@@ -14878,6 +15936,8 @@ paths:
             // Call the API
 
             var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -14893,6 +15953,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               taskID: 123,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -14912,6 +15974,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -14926,6 +15989,8 @@ paths:
             // Call the API
 
             client.getTask("<YOUR_INDEX_NAME>", 123L);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -14939,6 +16004,8 @@ paths:
             const response = await client.getTask({ indexName: 'theIndexName',
             taskID: 123 });
 
+
+            // >LOG
 
             // use typed response
 
@@ -14960,6 +16027,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -14975,6 +16044,7 @@ paths:
                 123,
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -14989,6 +16059,7 @@ paths:
                 task_id=123,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -15003,6 +16074,7 @@ paths:
             # Call the API
             response = client.get_task("<YOUR_INDEX_NAME>", 123)
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -15025,6 +16097,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -15041,6 +16115,8 @@ paths:
 
             let response = try await client.getTask(indexName:
             "<YOUR_INDEX_NAME>", taskID: Int64(123))
+
+            // >LOG
   /1/indexes/{indexName}/operation:
     post:
       tags:
@@ -15160,6 +16236,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -15182,6 +16260,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -15210,6 +16290,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -15231,6 +16313,8 @@ paths:
                 .setDestination("<DESTINATION_INDEX_NAME>")
                 .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -15243,6 +16327,7 @@ paths:
               operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>', scope: ['rules', 'settings'] },
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -15266,6 +16351,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -15288,6 +16375,7 @@ paths:
                 ],
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -15309,6 +16397,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -15326,6 +16415,7 @@ paths:
               OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
             )
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -15352,6 +16442,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -15374,6 +16466,8 @@ paths:
                     scope: [ScopeType.rules, ScopeType.settings]
                 )
             )
+
+            // >LOG
   /1/indexes:
     get:
       tags:
@@ -15419,6 +16513,8 @@ paths:
             // Call the API
 
             var response = await client.ListIndicesAsync();
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -15431,6 +16527,8 @@ paths:
             // Call the API
 
             final response = await client.listIndices();
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -15455,6 +16553,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -15470,6 +16570,8 @@ paths:
             // Call the API
 
             client.listIndices();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -15479,6 +16581,7 @@ paths:
             // Call the API
             const response = await client.listIndices();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -15495,6 +16598,8 @@ paths:
             var response = client.listIndices()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -15507,6 +16612,7 @@ paths:
             // Call the API
             $response = $client->listIndices();
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -15518,6 +16624,7 @@ paths:
             # Call the API
             response = await _client.list_indices()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -15532,6 +16639,7 @@ paths:
             # Call the API
             response = client.list_indices
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -15553,6 +16661,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -15568,6 +16678,8 @@ paths:
             // Call the API
 
             let response = try await client.listIndices()
+
+            // >LOG
 components:
   securitySchemes:
     appId:

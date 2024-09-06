@@ -19,6 +19,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -89,6 +93,7 @@ class SnippetRecommendClient {
       objectID = "objectID",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -108,6 +113,7 @@ class SnippetRecommendClient {
       objectID = "objectID",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -127,6 +133,7 @@ class SnippetRecommendClient {
       taskID = 12345L,
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -153,6 +160,7 @@ class SnippetRecommendClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -171,8 +179,25 @@ class SnippetRecommendClient {
       model = RecommendModels.entries.first { it.value == "related-products" },
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

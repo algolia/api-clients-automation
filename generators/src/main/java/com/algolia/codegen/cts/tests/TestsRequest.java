@@ -170,11 +170,11 @@ public class TestsRequest extends TestsGenerator {
 
           // Determines whether the endpoint is expected to return a response payload deserialized
           // and therefore a variable to store it into.
-          test.put("hasResponsePayload", true);
+          test.put("hasResponse", true);
 
           for (CodegenResponse response : ope.responses) {
             if (response.code.equals("204")) {
-              test.put("hasResponsePayload", false);
+              test.put("hasResponse", false);
             }
           }
 

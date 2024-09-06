@@ -183,6 +183,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -197,6 +199,8 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -216,6 +220,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -230,6 +235,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -239,6 +246,7 @@ paths:
             // Call the API
             const response = await client.customGet({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -256,6 +264,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -276,6 +286,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -290,6 +302,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -308,6 +321,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -333,6 +348,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -348,6 +365,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -389,6 +408,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -403,6 +424,8 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -422,6 +445,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -436,6 +460,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -445,6 +471,7 @@ paths:
             // Call the API
             const response = await client.customPost({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -462,6 +489,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -482,6 +511,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -496,6 +527,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -514,6 +546,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -539,6 +573,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -554,6 +590,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -595,6 +633,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -609,6 +649,8 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -628,6 +670,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -642,6 +685,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -651,6 +696,7 @@ paths:
             // Call the API
             const response = await client.customPut({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -668,6 +714,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -688,6 +736,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -702,6 +752,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -720,6 +771,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -745,6 +798,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -760,6 +815,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -795,6 +852,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -809,6 +868,8 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -835,6 +896,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -850,6 +913,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -863,6 +928,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -883,6 +950,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -902,6 +971,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -916,6 +987,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -934,6 +1006,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -959,6 +1033,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -974,6 +1050,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/indexes/*/recommendations:
     post:
       tags:
@@ -1059,6 +1137,8 @@ paths:
                 },
               }
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1082,6 +1162,8 @@ paths:
                 ],
               ),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1111,6 +1193,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1137,6 +1221,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1148,6 +1234,7 @@ paths:
               requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1175,6 +1262,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1201,6 +1290,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1224,6 +1315,7 @@ paths:
                 },
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1253,6 +1345,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1287,6 +1381,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1311,6 +1407,7 @@ paths:
                             objectID: "objectID"
                         )),
                 ]))
+            // >LOG
   /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
     get:
       tags:
@@ -1358,6 +1455,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1374,6 +1473,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1400,6 +1501,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1416,6 +1519,8 @@ paths:
 
             client.getRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1429,6 +1534,7 @@ paths:
               objectID: 'objectID',
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1448,6 +1554,8 @@ paths:
               objectID = "objectID",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1470,6 +1578,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1486,6 +1596,7 @@ paths:
                 object_id="objectID",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1505,6 +1616,8 @@ paths:
             response = client.get_recommend_rule("<YOUR_INDEX_NAME>",
             "related-products", "objectID")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1532,6 +1645,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1551,6 +1666,8 @@ paths:
                 model: RecommendModels.relatedProducts,
                 objectID: "objectID"
             )
+
+            // >LOG
     delete:
       tags:
         - rules
@@ -1591,6 +1708,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1607,6 +1726,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1633,6 +1754,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1649,6 +1772,8 @@ paths:
 
             client.deleteRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1662,6 +1787,7 @@ paths:
               objectID: 'objectID',
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1681,6 +1807,8 @@ paths:
               objectID = "objectID",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1703,6 +1831,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1719,6 +1849,7 @@ paths:
                 object_id="objectID",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1738,6 +1869,8 @@ paths:
             response = client.delete_recommend_rule("<YOUR_INDEX_NAME>",
             "related-products", "objectID")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1765,6 +1898,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1784,6 +1919,8 @@ paths:
                 model: RecommendModels.relatedProducts,
                 objectID: "objectID"
             )
+
+            // >LOG
   /1/indexes/{indexName}/{model}/task/{taskID}:
     get:
       tags:
@@ -1851,6 +1988,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               12345L
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -1867,6 +2006,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               taskID: 12345,
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1893,6 +2034,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1909,6 +2052,8 @@ paths:
 
             client.getRecommendStatus("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, 12345L);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1922,6 +2067,7 @@ paths:
               taskID: 12345,
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1941,6 +2087,8 @@ paths:
               taskID = 12345L,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1963,6 +2111,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1979,6 +2129,7 @@ paths:
                 task_id=12345,
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1998,6 +2149,8 @@ paths:
             response = client.get_recommend_status("<YOUR_INDEX_NAME>",
             "related-products", 12345)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2025,6 +2178,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2044,6 +2199,8 @@ paths:
                 model: RecommendModels.relatedProducts,
                 taskID: Int64(12345)
             )
+
+            // >LOG
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     post:
       tags:
@@ -2160,6 +2317,8 @@ paths:
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
+
+            // >LOG
         - lang: dart
           label: Dart
           source: >
@@ -2175,6 +2334,8 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2201,6 +2362,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2217,6 +2380,8 @@ paths:
 
             client.searchRecommendRules("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2230,6 +2395,8 @@ paths:
             const response = await client.searchRecommendRules({ indexName:
             'indexName', model: 'related-products' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2251,6 +2418,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2271,6 +2440,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2286,6 +2457,7 @@ paths:
                 model="related-products",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2305,6 +2477,8 @@ paths:
             response = client.search_recommend_rules("<YOUR_INDEX_NAME>",
             "related-products")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2331,6 +2505,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2349,6 +2525,8 @@ paths:
                 indexName: "<YOUR_INDEX_NAME>",
                 model: RecommendModels.relatedProducts
             )
+
+            // >LOG
 components:
   securitySchemes:
     appId:

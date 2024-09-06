@@ -36,6 +36,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -60,6 +61,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -83,6 +85,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -106,6 +109,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -141,6 +145,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -169,6 +174,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -197,6 +203,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -225,6 +232,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -253,6 +261,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -281,6 +290,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -309,6 +319,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -337,6 +348,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -379,6 +391,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -408,6 +421,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -438,6 +452,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -459,6 +474,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -480,6 +496,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -501,6 +518,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -522,6 +540,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -543,6 +562,7 @@ class SnippetSearchClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -564,6 +584,7 @@ class SnippetSearchClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -585,6 +606,7 @@ class SnippetSearchClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -606,6 +628,7 @@ class SnippetSearchClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -627,6 +650,7 @@ class SnippetSearchClient
             'myTestApiKey',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -650,6 +674,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -671,6 +696,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -693,6 +719,7 @@ class SnippetSearchClient
             'uniqueID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -719,6 +746,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -741,6 +769,7 @@ class SnippetSearchClient
             'id1',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -762,6 +791,7 @@ class SnippetSearchClient
             'theSource',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -784,6 +814,7 @@ class SnippetSearchClient
             'id1',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -810,6 +841,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -852,6 +884,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -873,6 +906,7 @@ class SnippetSearchClient
             'myTestApiKey',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -894,6 +928,7 @@ class SnippetSearchClient
             123,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -913,6 +948,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getDictionaryLanguages();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -932,6 +968,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getDictionarySettings();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -951,6 +988,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getLogs();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -978,6 +1016,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1009,6 +1048,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1031,6 +1071,7 @@ class SnippetSearchClient
             'qr-1725004648916',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1052,6 +1093,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1071,6 +1113,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getSources();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1093,6 +1136,7 @@ class SnippetSearchClient
             'id1',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1115,6 +1159,7 @@ class SnippetSearchClient
             123,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1134,6 +1179,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getTopUserIds();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1155,6 +1201,7 @@ class SnippetSearchClient
             'uniqueID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1174,6 +1221,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->hasPendingMappings();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1195,6 +1243,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1216,6 +1265,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1237,6 +1287,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1256,6 +1307,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->listApiKeys();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1275,6 +1327,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->listClusters();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1294,6 +1347,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->listIndices();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1313,6 +1367,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->listUserIds();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1341,6 +1396,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1370,6 +1426,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1394,6 +1451,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1418,6 +1476,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1442,6 +1501,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1473,6 +1533,7 @@ class SnippetSearchClient
             true,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1504,6 +1565,7 @@ class SnippetSearchClient
             false,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1525,6 +1587,7 @@ class SnippetSearchClient
             'uniqueID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1588,6 +1651,7 @@ class SnippetSearchClient
             3,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1613,6 +1677,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1634,6 +1699,7 @@ class SnippetSearchClient
             'myApiKey',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1658,6 +1724,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1688,6 +1755,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1718,6 +1786,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1747,6 +1816,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1787,6 +1857,7 @@ class SnippetSearchClient
             true,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1820,6 +1891,7 @@ class SnippetSearchClient
             true,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1867,6 +1939,7 @@ class SnippetSearchClient
             true,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1894,6 +1967,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1921,6 +1995,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1948,6 +2023,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1975,6 +2051,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2006,6 +2083,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2035,6 +2113,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2058,6 +2137,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2080,6 +2160,7 @@ class SnippetSearchClient
             'facetName',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2103,6 +2184,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2124,6 +2206,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2145,6 +2228,7 @@ class SnippetSearchClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2170,8 +2254,29 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -2196,6 +2301,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2225,6 +2331,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2255,6 +2362,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2277,6 +2385,7 @@ class SnippetSearchClient
             'add',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2321,6 +2430,7 @@ class SnippetSearchClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2343,6 +2453,7 @@ class SnippetSearchClient
             'delete',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2364,6 +2475,7 @@ class SnippetSearchClient
             123,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -2386,6 +2498,7 @@ class SnippetSearchClient
             123,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

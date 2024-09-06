@@ -21,6 +21,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -37,6 +38,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -53,6 +55,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -69,6 +72,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -85,6 +89,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetClusterIncidentsAsync("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -101,6 +106,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetClusterStatusAsync("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -117,6 +123,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetIncidentsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -133,6 +140,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetIndexingTimeAsync("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -149,6 +157,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetLatencyAsync("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -168,6 +177,7 @@ public class SnippetMonitoringClient
       Enum.Parse<Metric>("AvgBuildTime"),
       Enum.Parse<Period>("Minute")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -184,6 +194,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetReachabilityAsync("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -200,6 +211,7 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetServersAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -216,6 +228,24 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetStatusAsync();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForMonitoringClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

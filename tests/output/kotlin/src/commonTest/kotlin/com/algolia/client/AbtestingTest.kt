@@ -9,6 +9,7 @@ import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
@@ -115,5 +116,43 @@ class AbtestingTest {
     assertFails {
       val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
     }.let { error -> assertError(error, "`region` must be one of the following: de, us") }
+  }
+
+  @Test
+  fun `switch API key`() = runTest {
+    val client = AbtestingClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/1",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+      },
+    )
+    client.runTest(
+      call = {
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
+      },
+      intercept = {
+      },
+    )
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/2",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+      },
+    )
   }
 }

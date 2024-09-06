@@ -23,6 +23,7 @@ def snippet_for_add_api_key
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -42,6 +43,7 @@ def snippet_for_add_or_update_object
   # Call the API
   response = client.add_or_update_object("<YOUR_INDEX_NAME>", "uniqueID", {key: "value"})
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -61,6 +63,7 @@ def snippet_for_append_source
   # Call the API
   response = client.append_source(Source.new(source: "theSource", description: "theDescription"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -80,6 +83,7 @@ def snippet_for_assign_user_id
   # Call the API
   response = client.assign_user_id("userID", AssignUserIdParams.new(cluster: "theCluster"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -107,6 +111,7 @@ def snippet_for_batch
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -129,6 +134,7 @@ def snippet_for_batch1
     BatchWriteParams.new(requests: [BatchRequest.new(action: "clear", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -151,6 +157,7 @@ def snippet_for_batch2
     BatchWriteParams.new(requests: [BatchRequest.new(action: "delete", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -173,6 +180,7 @@ def snippet_for_batch3
     BatchWriteParams.new(requests: [BatchRequest.new(action: "deleteObject", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -195,6 +203,7 @@ def snippet_for_batch4
     BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObject", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -217,6 +226,7 @@ def snippet_for_batch5
     BatchWriteParams.new(requests: [BatchRequest.new(action: "partialUpdateObjectNoCreate", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -239,6 +249,7 @@ def snippet_for_batch6
     BatchWriteParams.new(requests: [BatchRequest.new(action: "updateObject", body: {key: "value"})])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -261,6 +272,7 @@ def snippet_for_batch_assign_user_ids
     BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -298,6 +310,7 @@ def snippet_for_batch_dictionary_entries
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -323,6 +336,7 @@ def snippet_for_batch_dictionary_entries1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -352,6 +366,7 @@ def snippet_for_batch_dictionary_entries2
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -371,6 +386,7 @@ def snippet_for_browse
   # Call the API
   response = client.browse("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -390,6 +406,7 @@ def snippet_for_clear_objects
   # Call the API
   response = client.clear_objects("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -409,6 +426,7 @@ def snippet_for_clear_rules
   # Call the API
   response = client.clear_rules("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -428,6 +446,7 @@ def snippet_for_clear_synonyms
   # Call the API
   response = client.clear_synonyms("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -447,6 +466,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -466,6 +486,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -485,6 +506,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -504,6 +526,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -523,6 +546,7 @@ def snippet_for_delete_api_key
   # Call the API
   response = client.delete_api_key("myTestApiKey")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -542,6 +566,7 @@ def snippet_for_delete_by
   # Call the API
   response = client.delete_by("<YOUR_INDEX_NAME>", DeleteByParams.new(filters: "brand:brandName"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -561,6 +586,7 @@ def snippet_for_delete_index
   # Call the API
   response = client.delete_index("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -580,6 +606,7 @@ def snippet_for_delete_object
   # Call the API
   response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -599,6 +626,7 @@ def snippet_for_delete_objects
   # Call the API
   response = client.delete_objects("<YOUR_INDEX_NAME>", ["1", "2"])
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -618,6 +646,7 @@ def snippet_for_delete_rule
   # Call the API
   response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -637,6 +666,7 @@ def snippet_for_delete_source
   # Call the API
   response = client.delete_source("theSource")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -656,6 +686,7 @@ def snippet_for_delete_synonym
   # Call the API
   response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -678,6 +709,7 @@ def snippet_for_generate_secured_api_key
     SecuredApiKeyRestrictions.new(valid_until: 2524604400, restrict_indices: ["Movies"])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -714,6 +746,7 @@ def snippet_for_generate_secured_api_key1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -733,6 +766,7 @@ def snippet_for_get_api_key
   # Call the API
   response = client.get_api_key("myTestApiKey")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -752,6 +786,7 @@ def snippet_for_get_app_task
   # Call the API
   response = client.get_app_task(123)
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -771,6 +806,7 @@ def snippet_for_get_dictionary_languages
   # Call the API
   response = client.get_dictionary_languages
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -790,6 +826,7 @@ def snippet_for_get_dictionary_settings
   # Call the API
   response = client.get_dictionary_settings
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -809,6 +846,7 @@ def snippet_for_get_logs
   # Call the API
   response = client.get_logs
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -828,6 +866,7 @@ def snippet_for_get_object
   # Call the API
   response = client.get_object("<YOUR_INDEX_NAME>", "uniqueID", ["attr1", "attr2"])
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -857,6 +896,7 @@ def snippet_for_get_objects
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -876,6 +916,7 @@ def snippet_for_get_rule
   # Call the API
   response = client.get_rule("<YOUR_INDEX_NAME>", "qr-1725004648916")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -895,6 +936,7 @@ def snippet_for_get_settings
   # Call the API
   response = client.get_settings("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -914,6 +956,7 @@ def snippet_for_get_sources
   # Call the API
   response = client.get_sources
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -933,6 +976,7 @@ def snippet_for_get_synonym
   # Call the API
   response = client.get_synonym("<YOUR_INDEX_NAME>", "id1")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -952,6 +996,7 @@ def snippet_for_get_task
   # Call the API
   response = client.get_task("<YOUR_INDEX_NAME>", 123)
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -971,6 +1016,7 @@ def snippet_for_get_top_user_ids
   # Call the API
   response = client.get_top_user_ids
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -990,6 +1036,7 @@ def snippet_for_get_user_id
   # Call the API
   response = client.get_user_id("uniqueID")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1009,6 +1056,7 @@ def snippet_for_has_pending_mappings
   # Call the API
   response = client.has_pending_mappings
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1028,6 +1076,7 @@ def snippet_for_index_exists
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1047,6 +1096,7 @@ def snippet_for_index_exists1
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1066,6 +1116,7 @@ def snippet_for_index_exists2
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1085,6 +1136,7 @@ def snippet_for_list_api_keys
   # Call the API
   response = client.list_api_keys
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1104,6 +1156,7 @@ def snippet_for_list_clusters
   # Call the API
   response = client.list_clusters
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1123,6 +1176,7 @@ def snippet_for_list_indices
   # Call the API
   response = client.list_indices
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1142,6 +1196,7 @@ def snippet_for_list_user_ids
   # Call the API
   response = client.list_user_ids
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1165,6 +1220,7 @@ def snippet_for_multiple_batch
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1187,6 +1243,7 @@ def snippet_for_operation_index
     OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1209,6 +1266,7 @@ def snippet_for_operation_index1
     OperationIndexParams.new(operation: "copy", destination: "<DESTINATION_INDEX_NAME>")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1231,6 +1289,7 @@ def snippet_for_operation_index2
     OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>")
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1250,6 +1309,7 @@ def snippet_for_partial_update_object
   # Call the API
   response = client.partial_update_object("<YOUR_INDEX_NAME>", "uniqueID", {attributeId: "new value"})
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1273,6 +1333,7 @@ def snippet_for_partial_update_objects
     true
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1296,6 +1357,7 @@ def snippet_for_partial_update_objects1
     false
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1315,6 +1377,7 @@ def snippet_for_remove_user_id
   # Call the API
   response = client.remove_user_id("uniqueID")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1349,6 +1412,7 @@ def snippet_for_replace_all_objects
     3
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1368,6 +1432,7 @@ def snippet_for_replace_sources
   # Call the API
   response = client.replace_sources([Source.new(source: "theSource", description: "theDescription")])
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1387,6 +1452,7 @@ def snippet_for_restore_api_key
   # Call the API
   response = client.restore_api_key("myApiKey")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1406,6 +1472,7 @@ def snippet_for_save_object
   # Call the API
   response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id", test: "val"})
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1428,6 +1495,7 @@ def snippet_for_save_objects
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1450,6 +1518,7 @@ def snippet_for_save_objects1
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1473,6 +1542,7 @@ def snippet_for_save_rule
     Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1500,6 +1570,7 @@ def snippet_for_save_rules
     true
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1524,6 +1595,7 @@ def snippet_for_save_synonym
     true
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1551,6 +1623,7 @@ def snippet_for_save_synonyms
     true
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1574,6 +1647,7 @@ def snippet_for_search
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1599,6 +1673,7 @@ def snippet_for_search1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1628,6 +1703,7 @@ def snippet_for_search2
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1653,6 +1729,7 @@ def snippet_for_search3
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1676,6 +1753,7 @@ def snippet_for_search4
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1699,6 +1777,7 @@ def snippet_for_search5
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1718,6 +1797,7 @@ def snippet_for_search_dictionary_entries
   # Call the API
   response = client.search_dictionary_entries("stopwords", SearchDictionaryEntriesParams.new(query: "about"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1737,6 +1817,7 @@ def snippet_for_search_for_facet_values
   # Call the API
   response = client.search_for_facet_values("<YOUR_INDEX_NAME>", "facetName")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1756,6 +1837,7 @@ def snippet_for_search_rules
   # Call the API
   response = client.search_rules("<YOUR_INDEX_NAME>", SearchRulesParams.new(query: "zorro"))
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1775,6 +1857,7 @@ def snippet_for_search_single_index
   # Call the API
   response = client.search_single_index("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1794,6 +1877,7 @@ def snippet_for_search_synonyms
   # Call the API
   response = client.search_synonyms("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1815,11 +1899,26 @@ def snippet_for_search_user_ids
     SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end
 
@@ -1838,6 +1937,7 @@ def snippet_for_set_dictionary_settings
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1860,6 +1960,7 @@ def snippet_for_set_settings
     IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1882,6 +1983,7 @@ def snippet_for_update_api_key
     ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1901,6 +2003,7 @@ def snippet_for_wait_for_api_key
   # Call the API
   response = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1932,6 +2035,7 @@ def snippet_for_wait_for_api_key1
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1951,6 +2055,7 @@ def snippet_for_wait_for_api_key2
   # Call the API
   response = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1970,6 +2075,7 @@ def snippet_for_wait_for_app_task
   # Call the API
   response = client.wait_for_app_task(123)
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -1989,6 +2095,7 @@ def snippet_for_wait_for_task
   # Call the API
   response = client.wait_for_task("<YOUR_INDEX_NAME>", 123)
 
+  # >LOG
   # use the class directly
   puts(response)
 

@@ -30,6 +30,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -108,6 +112,7 @@ class SnippetRecommendClient {
       objectID = "objectID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -129,6 +134,7 @@ class SnippetRecommendClient {
       objectID = "objectID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -150,6 +156,7 @@ class SnippetRecommendClient {
       taskID = 12345L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -178,6 +185,7 @@ class SnippetRecommendClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -198,6 +206,7 @@ class SnippetRecommendClient {
       model = RecommendModels.withName("related-products")
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

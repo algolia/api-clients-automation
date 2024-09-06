@@ -31,6 +31,7 @@ class SnippetQuerySuggestionsClient {
         .setLanguages(Languages.of(Arrays.asList("french")))
         .setExclude(Arrays.asList("test"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +45,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +59,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +73,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +87,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -96,6 +101,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.deleteConfig("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -109,6 +115,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.getAllConfigs();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -122,6 +129,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.getConfig("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -135,6 +143,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.getConfigStatus("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -148,6 +157,21 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.getLogFile("<YOUR_INDEX_NAME>");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -174,6 +198,7 @@ class SnippetQuerySuggestionsClient {
         .setLanguages(Languages.of(Arrays.asList("french")))
         .setExclude(Arrays.asList("test"))
     );
+    // >LOG
     // SEPARATOR<
   }
 }

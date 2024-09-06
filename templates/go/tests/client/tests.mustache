@@ -23,6 +23,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   require.EqualError(t, err, "{{{expectedError}}}")
   {{/isError}}
   {{^isError}}
+  {{#shouldScope}}
+  {
+  {{/shouldScope}}
   {{#dynamicTemplate}}{{/dynamicTemplate}}
   require.NoError(t, err)
   {{#testUserAgent}}
@@ -50,6 +53,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
       require.JSONEq(t, `{{{match.value}}}`, string(rawBody))
     {{/match.isPrimitive}}
   {{/testResponse}}
+  {{#shouldScope}}
+  }
+  {{/shouldScope}}
   {{/isError}}
   {{#times}}
   }

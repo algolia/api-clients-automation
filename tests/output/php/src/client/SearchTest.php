@@ -190,6 +190,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     public function test0generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
+
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
             ['validUntil' => 2524604400,
@@ -208,6 +209,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     public function test1generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
+
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
             ['validUntil' => 2524604400,
@@ -521,6 +523,32 @@ class SearchTest extends TestCase implements HttpClientInterface
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
         }
+    }
+
+    #[TestDox('switch API key')]
+    public function test0setClientApiKey(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6683']));
+
+        $res = $client->customGet(
+            'check-api-key/1',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"test-api-key"}',
+            json_encode($res)
+        );
+
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        $res = $client->customGet(
+            'check-api-key/2',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"updated-api-key"}',
+            json_encode($res)
+        );
     }
 
     #[TestDox('wait for api key helper - add')]

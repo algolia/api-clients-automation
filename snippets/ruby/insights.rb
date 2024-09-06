@@ -15,6 +15,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -34,6 +35,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -53,6 +55,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -72,6 +75,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -89,13 +93,8 @@ def snippet_for_delete_user_token
   client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.delete_user_token("test-user-1")
-
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
+  client.delete_user_token("test-user-1")
+  # >LOG
   # SEPARATOR<
 end
 
@@ -126,10 +125,25 @@ def snippet_for_push_events
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

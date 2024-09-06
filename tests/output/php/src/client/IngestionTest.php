@@ -138,6 +138,32 @@ class IngestionTest extends TestCase implements HttpClientInterface
         }
     }
 
+    #[TestDox('switch API key')]
+    public function test0setClientApiKey(): void
+    {
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://localhost:6683']));
+
+        $res = $client->customGet(
+            'check-api-key/1',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"test-api-key"}',
+            json_encode($res)
+        );
+
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        $res = $client->customGet(
+            'check-api-key/2',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"updated-api-key"}',
+            json_encode($res)
+        );
+    }
+
     /**
      * @param mixed $appId
      * @param mixed $apiKey

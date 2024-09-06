@@ -148,6 +148,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -175,6 +176,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -190,6 +193,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -203,6 +208,8 @@ paths:
 
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -223,6 +230,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -242,6 +251,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -260,6 +271,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -282,6 +295,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -307,6 +322,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -322,6 +339,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -361,6 +380,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -388,6 +408,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -403,6 +425,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -416,6 +440,8 @@ paths:
 
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -436,6 +462,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -455,6 +483,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -473,6 +503,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -495,6 +527,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -520,6 +554,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -535,6 +571,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -574,6 +612,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -601,6 +640,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -616,6 +657,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -629,6 +672,8 @@ paths:
 
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -649,6 +694,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -668,6 +715,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -686,6 +735,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -708,6 +759,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -733,6 +786,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -748,6 +803,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -781,6 +838,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -809,6 +867,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -824,6 +884,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -838,6 +900,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -858,6 +922,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -877,6 +943,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -895,6 +963,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -917,6 +987,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -942,6 +1014,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -957,6 +1031,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /2/abtests:
     post:
       tags:
@@ -1036,6 +1112,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1067,6 +1144,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1092,6 +1171,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1112,6 +1193,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1145,6 +1228,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1174,6 +1259,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -1207,6 +1294,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -1237,6 +1326,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1275,6 +1366,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1298,6 +1391,8 @@ paths:
                 ],
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
+
+            // >LOG
     get:
       tags:
         - abtest
@@ -1375,6 +1470,7 @@ paths:
 
             // Call the API
             var response = await client.ListABTestsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1401,6 +1497,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1416,6 +1514,8 @@ paths:
             // Call the API
 
             client.listABTests();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1429,6 +1529,8 @@ paths:
 
             const response = await client.listABTests();
 
+
+            // >LOG
 
             // use typed response
 
@@ -1447,6 +1549,8 @@ paths:
             var response = client.listABTests()
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1464,6 +1568,8 @@ paths:
             $response = $client->listABTests();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1480,6 +1586,8 @@ paths:
 
             response = await _client.list_ab_tests()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1502,6 +1610,8 @@ paths:
 
             response = client.list_ab_tests
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1527,6 +1637,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1542,6 +1654,8 @@ paths:
             // Call the API
 
             let response = try await client.listABTests()
+
+            // >LOG
   /2/abtests/{id}:
     get:
       tags:
@@ -1586,6 +1700,7 @@ paths:
 
             // Call the API
             var response = await client.GetABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1613,6 +1728,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1628,6 +1745,8 @@ paths:
             // Call the API
 
             client.getABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1641,6 +1760,8 @@ paths:
 
             const response = await client.getABTest({ id: 42 });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1661,6 +1782,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1680,6 +1803,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1698,6 +1823,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1720,6 +1847,8 @@ paths:
 
             response = client.get_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1745,6 +1874,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1760,6 +1891,8 @@ paths:
             // Call the API
 
             let response = try await client.getABTest(id: 42)
+
+            // >LOG
     delete:
       tags:
         - abtest
@@ -1803,6 +1936,7 @@ paths:
 
             // Call the API
             var response = await client.DeleteABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1831,6 +1965,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1846,6 +1982,8 @@ paths:
             // Call the API
 
             client.deleteABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1859,6 +1997,8 @@ paths:
 
             const response = await client.deleteABTest({ id: 42 });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1879,6 +2019,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1898,6 +2040,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1916,6 +2060,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1938,6 +2084,8 @@ paths:
 
             response = client.delete_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1963,6 +2111,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1978,6 +2128,8 @@ paths:
             // Call the API
 
             let response = try await client.deleteABTest(id: 42)
+
+            // >LOG
   /2/abtests/{id}/stop:
     post:
       tags:
@@ -2025,6 +2177,7 @@ paths:
 
             // Call the API
             var response = await client.StopABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2052,6 +2205,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2067,6 +2222,8 @@ paths:
             // Call the API
 
             client.stopABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2080,6 +2237,8 @@ paths:
 
             const response = await client.stopABTest({ id: 42 });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2100,6 +2259,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2119,6 +2280,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2137,6 +2300,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2159,6 +2324,8 @@ paths:
 
             response = client.stop_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2184,6 +2351,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2199,6 +2368,8 @@ paths:
             // Call the API
 
             let response = try await client.stopABTest(id: 42)
+
+            // >LOG
   /2/abtests/schedule:
     post:
       tags:
@@ -2283,6 +2454,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2315,6 +2487,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2341,6 +2515,8 @@ paths:
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2362,6 +2538,8 @@ paths:
               ],
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2396,6 +2574,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2426,6 +2606,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -2460,6 +2642,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -2491,6 +2675,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2530,6 +2716,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2555,6 +2743,8 @@ paths:
                 scheduledAt: "2022-11-31T00:00:00.000Z",
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
+
+            // >LOG
 components:
   securitySchemes:
     appId:

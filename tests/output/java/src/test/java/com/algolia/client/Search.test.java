@@ -197,12 +197,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call deleteObjects without error")
   void deleteObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
-      );
       List res = client.deleteObjects("cts_e2e_deleteObjects_java", Arrays.asList("1", "2"));
 
       assertDoesNotThrow(() ->
@@ -264,12 +264,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("indexExists")
   void indexExistsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       Boolean res = client.indexExists("indexExistsYES");
 
       assertEquals(true, res);
@@ -279,12 +279,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("indexNotExists")
   void indexExistsTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       Boolean res = client.indexExists("indexExistsNO");
 
       assertEquals(false, res);
@@ -294,19 +294,17 @@ class SearchClientClientTests {
   @Test
   @DisplayName("indexExistsWithError")
   void indexExistsTest2() {
-    assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
-      {
-        Exception exception = assertThrows(Exception.class, () -> {
-          Boolean res = client.indexExists("indexExistsERROR");
-        });
-        assertEquals("Status Code: 403 - {\"message\":\"Invalid API key\"}", exception.getMessage());
-      }
-    });
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        Boolean res = client.indexExists("indexExistsERROR");
+      });
+      assertEquals("Status Code: 403 - {\"message\":\"Invalid API key\"}", exception.getMessage());
+    }
   }
 
   @Test
@@ -389,12 +387,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call partialUpdateObjects with createIfNotExists=true")
   void partialUpdateObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
-      );
       List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
         Arrays.asList(
@@ -423,12 +421,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call partialUpdateObjects with createIfNotExists=false")
   void partialUpdateObjectsTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
-      );
       List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
         Arrays.asList(
@@ -457,12 +455,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call replaceAllObjects without error")
   void replaceAllObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
-      );
       ReplaceAllObjectsResponse res = client.replaceAllObjects(
         "cts_e2e_replace_all_objects_java",
         Arrays.asList(
@@ -543,12 +541,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("call saveObjects without error")
   void saveObjectsTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
-      );
       List res = client.saveObjects(
         "cts_e2e_saveObjects_java",
         Arrays.asList(
@@ -576,46 +574,71 @@ class SearchClientClientTests {
   @Test
   @DisplayName("saveObjects should report errors")
   void saveObjectsTest1() {
-    assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "wrong-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
-      );
-      {
-        Exception exception = assertThrows(Exception.class, () -> {
-          List res = client.saveObjects(
-            "cts_e2e_saveObjects_java",
-            Arrays.asList(
-              new HashMap() {
-                {
-                  put("objectID", "1");
-                  put("name", "Adam");
-                }
-              },
-              new HashMap() {
-                {
-                  put("objectID", "2");
-                  put("name", "Benoit");
-                }
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "wrong-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+    );
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        List res = client.saveObjects(
+          "cts_e2e_saveObjects_java",
+          Arrays.asList(
+            new HashMap() {
+              {
+                put("objectID", "1");
+                put("name", "Adam");
               }
-            )
-          );
-        });
-        assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API" + " key\",\"status\":403}", exception.getMessage());
-      }
+            },
+            new HashMap() {
+              {
+                put("objectID", "2");
+                put("name", "Benoit");
+              }
+            }
+          )
+        );
+      });
+      assertEquals("Status Code: 403 - {\"message\":\"Invalid Application-ID or API key\",\"status\":403}", exception.getMessage());
+    }
+  }
+
+  @Test
+  @DisplayName("switch API key")
+  void setClientApiKeyTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+    );
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/1");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+    assertDoesNotThrow(() -> {
+      client.setClientApiKey("updated-api-key");
+    });
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/2");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
     });
   }
 
   @Test
   @DisplayName("wait for api key helper - add")
   void waitForApiKeyTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       GetApiKeyResponse res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
 
       assertDoesNotThrow(() ->
@@ -632,12 +655,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("wait for api key - update")
   void waitForApiKeyTest1() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       GetApiKeyResponse res = client.waitForApiKey(
         "api-key-update-operation-test-java",
         ApiKeyOperation.UPDATE,
@@ -666,12 +689,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("wait for api key - delete")
   void waitForApiKeyTest2() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       GetApiKeyResponse res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
 
       assertEquals(null, res);
@@ -681,12 +704,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("wait for an application-level task")
   void waitForAppTaskTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       GetTaskResponse res = client.waitForAppTask(123L);
 
       assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"published\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
@@ -696,12 +719,12 @@ class SearchClientClientTests {
   @Test
   @DisplayName("wait for task")
   void waitForTaskTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+    );
     assertDoesNotThrow(() -> {
-      SearchClient client = new SearchClient(
-        "test-app-id",
-        "test-api-key",
-        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
-      );
       GetTaskResponse res = client.waitForTask("wait-task-java", 123L);
 
       assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"published\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));

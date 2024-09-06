@@ -16,7 +16,8 @@ import 'package:dio/dio.dart';
 /// response conversion and error handling.
 class DioRequester implements Requester {
   /// The underlying Dio client.
-  final Dio _client;
+  final AuthInterceptor _authInterceptor;
+  late final Dio _client;
 
   /// Constructs a [DioRequester] with the given [appId], [apiKey], and [options].
   DioRequester({
@@ -28,29 +29,30 @@ class DioRequester implements Requester {
     Function(Object?)? logger,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
-  }) : _client = Dio(
-          BaseOptions(
-            headers: headers,
-            connectTimeout: connectTimeout,
+  }) : _authInterceptor = AuthInterceptor(
+          appId: appId,
+          apiKey: apiKey,
+        ) {
+    _client = Dio(
+      BaseOptions(
+        headers: headers,
+        connectTimeout: connectTimeout,
+      ),
+    )..interceptors.addAll([
+        _authInterceptor,
+        AgentInterceptor(
+          agent: AlgoliaAgent(packageVersion)
+            ..addAll(clientSegments ?? const [])
+            ..addAll(Platform.agentSegments()),
+        ),
+        if (logger != null)
+          LogInterceptor(
+            requestBody: true,
+            responseBody: true,
+            logPrint: logger,
           ),
-        )..interceptors.addAll([
-            AuthInterceptor(
-              appId: appId,
-              apiKey: apiKey,
-            ),
-            AgentInterceptor(
-              agent: AlgoliaAgent(packageVersion)
-                ..addAll(clientSegments ?? const [])
-                ..addAll(Platform.agentSegments()),
-            ),
-            if (logger != null)
-              LogInterceptor(
-                requestBody: true,
-                responseBody: true,
-                logPrint: logger,
-              ),
-            if (interceptors != null) ...interceptors,
-          ]) {
+        if (interceptors != null) ...interceptors,
+      ]);
     if (httpClientAdapter != null) {
       _client.httpClientAdapter = httpClientAdapter;
     }
@@ -114,4 +116,9 @@ class DioRequester implements Requester {
 
   @override
   void close() => _client.close();
+
+  @override
+  void setClientApiKey(String apiKey) {
+    _authInterceptor.apiKey = apiKey;
+  }
 }

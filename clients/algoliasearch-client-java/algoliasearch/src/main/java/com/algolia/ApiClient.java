@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -26,6 +27,7 @@ public abstract class ApiClient implements Closeable {
 
   private final Requester requester;
   private final ExecutorService executor;
+  private AuthInterceptor authInterceptor;
 
   /** Constructs a new instance of the {@link ApiClient}. */
   protected ApiClient(String appId, String apiKey, String clientName, @Nullable ClientOptions options, List<Host> defaultHosts) {
@@ -52,14 +54,24 @@ public abstract class ApiClient implements Closeable {
     List<StatefulHost> statefulHosts = hosts.stream().map(StatefulHost::new).collect(Collectors.toList());
 
     JsonSerializer serializer = JsonSerializer.builder().setCustomConfig(options.getMapperConfig()).build();
+    this.authInterceptor = new AuthInterceptor(appId, apiKey);
     HttpRequester.Builder builder = new HttpRequester.Builder(serializer)
-      .addInterceptor(new AuthInterceptor(appId, apiKey))
+      .addInterceptor(authInterceptor)
       .addInterceptor(new UserAgentInterceptor(algoliaAgent))
       .addInterceptor(new RetryStrategy(statefulHosts));
     if (options.getRequesterConfig() != null) {
       options.getRequesterConfig().accept(builder);
     }
     return builder.build(options);
+  }
+
+  /**
+   * Helper method to switch the API key used to authenticate the requests.
+   *
+   * @param apiKey The new API key to be used from now on.
+   */
+  public void setClientApiKey(@Nonnull String apiKey) {
+    this.authInterceptor.setApiKey(apiKey);
   }
 
   /**

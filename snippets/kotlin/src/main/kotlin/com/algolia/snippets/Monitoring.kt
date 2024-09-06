@@ -19,6 +19,7 @@ class SnippetMonitoringClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -36,6 +37,7 @@ class SnippetMonitoringClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -53,6 +55,7 @@ class SnippetMonitoringClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -70,6 +73,7 @@ class SnippetMonitoringClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -87,6 +91,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -104,6 +109,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -119,6 +125,7 @@ class SnippetMonitoringClient {
     // Call the API
     var response = client.getIncidents()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -136,6 +143,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -153,6 +161,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -171,6 +180,7 @@ class SnippetMonitoringClient {
       period = Period.entries.first { it.value == "minute" },
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -188,6 +198,7 @@ class SnippetMonitoringClient {
       clusters = "c1-de",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -203,6 +214,7 @@ class SnippetMonitoringClient {
     // Call the API
     var response = client.getServers()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -218,8 +230,25 @@ class SnippetMonitoringClient {
     // Call the API
     var response = client.getStatus()
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

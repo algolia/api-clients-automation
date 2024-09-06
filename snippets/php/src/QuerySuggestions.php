@@ -53,6 +53,7 @@ class SnippetQuerySuggestionsClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -74,6 +75,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -95,6 +97,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -116,6 +119,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -137,6 +141,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -158,6 +163,7 @@ class SnippetQuerySuggestionsClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -177,6 +183,7 @@ class SnippetQuerySuggestionsClient
         // Call the API
         $response = $client->getAllConfigs();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -198,6 +205,7 @@ class SnippetQuerySuggestionsClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -219,6 +227,7 @@ class SnippetQuerySuggestionsClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -240,8 +249,29 @@ class SnippetQuerySuggestionsClient
             '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -287,6 +317,7 @@ class SnippetQuerySuggestionsClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

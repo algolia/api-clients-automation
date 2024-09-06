@@ -22,41 +22,53 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{> visibility}} interface {{interfacePrefix}}{{classname}}
+  {{> visibility}} {{#isSearchClient}}partial {{/isSearchClient}}interface {{interfacePrefix}}{{classname}}
   {
       {{#operation}}
       /// <summary>
       /// {{{notes}}}
-      /// </summary>
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+      ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
       {{#allParams}}
       /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}
       /// <param name="options">Add extra http header or query parameters to Algolia.</param>
       /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-      {{#isDeprecated}}
-      [Obsolete]
-      {{/isDeprecated}}
       /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
       /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
       /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
       /// <returns>Task of {{> return_type_doc}}</returns>
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
       Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// {{{notes}}} (Synchronous version)
-        /// </summary>
+      /// <summary>
+      /// {{{notes}}} (Synchronous version)
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+        ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
       {{#allParams}}
-          /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
       {{/allParams}}
-        /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+      /// <returns>{{> return_type_doc}}</returns>
       {{#isDeprecated}}
-          [Obsolete]
+      [Obsolete]
       {{/isDeprecated}}
-        /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-        /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-        /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-        /// <returns>{{> return_type_doc}}</returns>
       {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
 
       {{/operation}}
@@ -70,7 +82,7 @@ namespace Algolia.Search.Clients;
   /// </summary>
   {{> visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
   {
-      private readonly HttpTransport _transport;
+      internal HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
 
       /// <summary>
@@ -128,30 +140,24 @@ namespace Algolia.Search.Clients;
         }
       }
 
+      /// <summary>
+      /// Helper to switch the API key sent with each request
+      /// </summary>
+      /// <param name="apiKey">Your new API Key</param>
+      /// <returns></returns>
+      public void SetClientApiKey(string apiKey)
+      {
+        _transport._algoliaConfig.SetClientApiKey(apiKey);
+      }
+  
+
       {{#operation}}
       {{#supportsAsync}}
 
-      /// <summary>
-      /// {{{notes}}}
-      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
-      ///
-      /// Required API Key ACLs:{{/x-acl.0}}
-      {{#x-acl}}
-      ///   - {{.}}
-      {{/x-acl}}
-      {{/vendorExtensions}}
-      {{#allParams}}
-      /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-      {{/allParams}}
-      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      /// <inheritdoc />
       {{#isDeprecated}}
       [Obsolete]
       {{/isDeprecated}}
-      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-      /// <returns>Task of {{> return_type_doc}}</returns>
       public async Task{{#returnType}}<{{> return_type}}>{{/returnType}} {{operationId}}Async{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
       {
           {{#allParams}}
@@ -225,32 +231,14 @@ namespace Algolia.Search.Clients;
       }
 
 
-          /// <summary>
-          /// {{{notes}}} (Synchronous version)
-          /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
-            ///
-            /// Required API Key ACLs:{{/x-acl.0}}
-        {{#x-acl}}
-            ///   - {{.}}
-        {{/x-acl}}
-        {{/vendorExtensions}}
-        {{#allParams}}
-            /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
-        {{/allParams}}
-          /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-          /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        {{#isDeprecated}}
-            [Obsolete]
-        {{/isDeprecated}}
-          /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-          /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-          /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-          /// <returns>{{> return_type_doc}}</returns>
-          public {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
-            AsyncHelper.RunSync(() => {{operationId}}Async{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
+      /// <inheritdoc />
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      public {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
+        AsyncHelper.RunSync(() => {{operationId}}Async{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
 
       {{/supportsAsync}}
       {{/operation}}
   }
   {{/operations}}
-

@@ -140,4 +140,44 @@ class InsightsTest extends AnyFunSuite {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "not_a_region")
     }
   }
+
+  test("switch API key") {
+
+    val client = InsightsClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = Option("us"),
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/1"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+    }
+
+    {
+
+      client.setClientApiKey(
+        apiKey = "updated-api-key"
+      )
+    }
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/2"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+    }
+  }
 }

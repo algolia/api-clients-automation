@@ -17,6 +17,7 @@ final class UsageClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class UsageClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class UsageClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class UsageClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -74,6 +78,7 @@ final class UsageClientSnippet {
             startDate: "2024-04-03T12:46:43Z",
             endDate: "2024-04-05T12:46:43Z"
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -91,6 +96,21 @@ final class UsageClientSnippet {
             startDate: "2024-04-03T12:46:43Z",
             endDate: "2024-04-05T12:46:43Z"
         )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 }

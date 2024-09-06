@@ -101,3 +101,9 @@ paths:
 
   /1/usertokens/{userToken}:
     $ref: 'paths/deleteUserToken.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
