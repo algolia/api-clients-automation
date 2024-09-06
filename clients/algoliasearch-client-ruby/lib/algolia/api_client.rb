@@ -51,7 +51,7 @@ module Algolia
       return body.to_s if return_type == "String"
 
       begin
-        data = JSON.parse("[#{body}]", symbolize_names: true)[0]
+        data = JSON.parse("[#{body}]", :symbolize_names => true)[0]
       rescue JSON::ParserError => e
         raise e unless %w[String Date Time].include?(return_type)
 
