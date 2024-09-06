@@ -266,15 +266,12 @@ abstract class Configuration
     }
 
     /**
-     * Sets the user agent of the api client.
+     * Switch the API key used to authenticate requessts.
      *
-     * @param string $algoliaAgent the user agent of the api client
+     * @param string $apiKey The new API key to be used
      *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException
+     * @return void
      */
-
     public function setClientApiKey($apiKey)
     {
         $this->config['apiKey'] = $apiKey;
@@ -292,6 +289,15 @@ abstract class Configuration
         return $this->setClientApiKey($apiKey);
     }
 
+    /**
+     * Sets the user agent of the api client.
+     *
+     * @param string $algoliaAgent the user agent of the api client
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     */
     public function setAlgoliaAgent($algoliaAgent)
     {
         if (!is_string($algoliaAgent)) {
