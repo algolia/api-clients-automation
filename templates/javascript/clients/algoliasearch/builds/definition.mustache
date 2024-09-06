@@ -38,6 +38,12 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
 
   return {
     ...searchClient(appId, apiKey, options),
+    /**
+     * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
+     */
+    get _ua(): string {
+      return this.transporter.algoliaAgent.value;
+    },
     initRecommend: (initOptions: InitClientOptions = {}): RecommendClient => {
       return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
     },
