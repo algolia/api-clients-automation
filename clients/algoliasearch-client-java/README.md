@@ -43,7 +43,7 @@ or [Gradle](https://gradle.org/):
 
 ```java
 dependencies {
-  implementation 'com.algolia:algoliasearch:4.0.0'
+  implementation 'com.algolia:algoliasearch:4.+'
 }
 ```
 
