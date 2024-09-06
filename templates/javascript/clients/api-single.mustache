@@ -21,27 +21,26 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     ...options
   }: CreateClientOptions{{#hasRegionalHost}} & {region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region }{{/hasRegionalHost}}) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts({{#hostWithAppID}}appIdOption{{/hostWithAppID}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: '{{{algoliaAgent}}}',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts({{#hostWithAppID}}appIdOption{{/hostWithAppID}}{{#hasRegionalHost}}regionOption{{/hasRegionalHost}}),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: '{{{algoliaAgent}}}',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -53,8 +52,8 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
      */
     clearCache(): Promise<void> {
       return Promise.all([
-        transporter.requestsCache.clear(),
-        transporter.responsesCache.clear(),
+        this.transporter.requestsCache.clear(),
+        this.transporter.responsesCache.clear(),
       ]).then(() => undefined);
     },
 
@@ -62,7 +61,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -72,7 +71,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -82,7 +81,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     * @param params.apiKey - The new API Key to use.
     */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     {{#isSearchClient}}
@@ -153,7 +152,7 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
         {{/vendorExtensions}}
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     {{/operation}}

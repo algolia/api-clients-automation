@@ -1,5 +1,7 @@
 // {{{generationBanner}}}
 
+export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
+
 {{> client/builds/definition}}
   return {
     ...create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
@@ -17,9 +19,8 @@
       hostsCache: createMemoryCache(),
       ...options,
     }),
-
     {{#nodeSearchHelpers}}
     {{> client/api/nodeHelpers}}
     {{/nodeSearchHelpers}}
-  };
+  }
 }
