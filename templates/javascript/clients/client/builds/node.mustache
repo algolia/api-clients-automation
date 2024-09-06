@@ -1,8 +1,5 @@
 // {{{generationBanner}}}
 
-/**
- * The client type.
- */
 export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
 
 {{> client/builds/definition}}
