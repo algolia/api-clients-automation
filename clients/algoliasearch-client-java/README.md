@@ -35,7 +35,7 @@ To get started, add the algoliasearch-client-java dependency to your project, ei
 <dependency>
   <groupId>com.algolia</groupId>
   <artifactId>algoliasearch</artifactId>
-  <version>4.0.0</version>
+  <version>[4,)</version>
 </dependency>
 ```
 
