@@ -25,13 +25,13 @@
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
           "require": "./dist/node.d.cts",
-          "workerd": "./dist/node.d.ts",
+          "workerd": "./dist/fetch.d.ts",
           "default": "./dist/node.d.cts"
         },
         "import": "./dist/builds/node.js",
         "module": "./dist/builds/node.js",
         "require": "./dist/builds/node.cjs",
-        "workerd": "./dist/builds/node.fetch.js",
+        "workerd": "./dist/builds/fetch.js",
         "default": "./dist/builds/node.cjs"
       },
       "default": {
@@ -54,7 +54,8 @@
   "dependencies": {
     "@algolia/client-common": "{{utilsPackageVersion}}",
     "@algolia/requester-browser-xhr": "{{utilsPackageVersion}}",
-    "@algolia/requester-node-http": "{{utilsPackageVersion}}"
+    "@algolia/requester-node-http": "{{utilsPackageVersion}}",
+    "@algolia/requester-fetch": "{{utilsPackageVersion}}"
   },
   {{/isAlgoliasearchClient}}
   {{#isAlgoliasearchClient}}
@@ -66,13 +67,13 @@
         "types": {
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
-          "workerd": "./dist/node.d.ts",
+          "workerd": "./dist/fetch.d.ts",
           "require": "./dist/node.d.cts",
           "default": "./dist/node.d.cts"
         },
         "import": "./dist/node.js",
         "module": "./dist/node.js",
-        "workerd": "./dist/node.fetch.js",
+        "workerd": "./dist/fetch.js",
         "require": "./dist/node.cjs",
         "default": "./dist/node.cjs"
       },
@@ -123,7 +124,8 @@
     "@algolia/client-common": "{{utilsPackageVersion}}",
     "@algolia/recommend": "{{recommendVersion}}",
     "@algolia/requester-browser-xhr": "{{utilsPackageVersion}}",
-    "@algolia/requester-node-http": "{{utilsPackageVersion}}"
+    "@algolia/requester-node-http": "{{utilsPackageVersion}}",
+    "@algolia/requester-fetch": "{{utilsPackageVersion}}"
   },
   {{/isAlgoliasearchClient}}
   "devDependencies": {

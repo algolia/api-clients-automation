@@ -29,10 +29,10 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'esm',
-    name: `node ${pkg.name} fetch esm`,
-    dts: false,
+    name: `fetch ${pkg.name} esm`,
+    dts: { entry: { 'fetch': 'builds/fetch.ts' } },
     external: getDependencies(pkg, 'fetch'),
-    entry: { 'builds/node.fetch': 'builds/node.ts' },
+    entry: ['builds/fetch.ts', 'src/*.ts'],
   },
   {{/isAlgoliasearchClient}}
   {{#isAlgoliasearchClient}}
@@ -55,9 +55,9 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node algoliasearch fetch esm',
-    dts: false,
-    entry: { 'node.fetch': 'builds/node.ts' },
+    name: 'fetch algoliasearch esm',
+    dts: { entry: { 'fetch': 'builds/fetch.ts' } },
+    entry: ['builds/fetch.ts'],
     outDir: 'dist',
     external: getDependencies(pkg, 'fetch'),
   },

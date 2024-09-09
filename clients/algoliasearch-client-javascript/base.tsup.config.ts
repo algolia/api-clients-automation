@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import path from 'path';
 
 import type { Options } from 'tsup';
@@ -8,7 +7,13 @@ type PKG = {
   name: string;
 };
 
-type Requester = 'fetch' | 'http' | 'xhr';
+const requesters = {
+  fetch: '@algolia/requester-fetch',
+  http: '@algolia/requester-node-http',
+  xhr: '@algolia/requester-browser-xhr',
+};
+
+type Requester = keyof typeof requesters;
 
 export function getBaseConfig(cwd: string): Options {
   return {
@@ -28,15 +33,11 @@ export function getDependencies(pkg: PKG, requester: Requester): string[] {
 
   switch (requester) {
     case 'http':
-      return deps.filter((dep) => dep !== '@algolia/requester-browser-xhr');
+      return deps.filter((dep) => dep !== requesters.fetch && dep !== requesters.xhr);
     case 'xhr':
-      return deps.filter((dep) => dep !== '@algolia/requester-node-http');
+      return deps.filter((dep) => dep !== requesters.fetch && dep !== requesters.http);
     case 'fetch':
-      const fetchDeps = deps.filter(
-        (dep) => dep !== '@algolia/requester-browser-xhr' && dep !== '@algolia/requester-node-http',
-      );
-      fetchDeps.push('@algolia/requester-fetch');
-      return fetchDeps;
+      return deps.filter((dep) => dep !== requesters.xhr && dep !== requesters.http);
     default:
       throw new Error('unknown requester', requester);
   }
