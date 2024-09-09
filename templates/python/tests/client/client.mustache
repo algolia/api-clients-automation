@@ -12,10 +12,10 @@ from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPref
 
 
 {{#modes}}
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
-    def create_client(self) -> {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}:
+    def create_client(self) -> {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("appId", "apiKey"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
-        return {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config))
+        return {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config))
 
     {{#blocksClient}}
 {{> tests/client/tests}}

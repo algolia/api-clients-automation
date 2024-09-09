@@ -12,17 +12,17 @@ from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
 from algoliasearch.search.models.get_task_response import GetTaskResponse
 
 {{#modes}}
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}:
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("test_app_id", "test_api_key"{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}})
-    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSync}}Sync{{/isSync}}(_config))
+    _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config))
 
     {{#blocksRequests}}
     {{#tests}}
-    {{^isSync}}async {{/isSync}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
         """
-        _req = {{^isSync}}await {{/isSync}}self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _req = {{^isSyncClient}}await {{/isSyncClient}}self._client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
         {{#request}}
         assert _req.path == "{{{path}}}"

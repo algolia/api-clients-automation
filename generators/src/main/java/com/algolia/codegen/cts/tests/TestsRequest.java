@@ -147,7 +147,7 @@ public class TestsRequest extends TestsGenerator {
           }
 
           test.put("request", req.request);
-          test.put("isAsync", true);
+          test.put("isAsyncMethod", true);
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
@@ -205,7 +205,7 @@ public class TestsRequest extends TestsGenerator {
 
       if (!blocksE2E.isEmpty()) {
         Map<String, Object> sync = new HashMap<>();
-        sync.put("isSync", true);
+        sync.put("isSyncClient", true);
         sync.put("blocksE2E", blocksE2E);
 
         Map<String, Object> async = new HashMap<>();
@@ -216,7 +216,7 @@ public class TestsRequest extends TestsGenerator {
       }
 
       Map<String, Object> sync = new HashMap<>();
-      sync.put("isSync", true);
+      sync.put("isSyncClient", true);
       sync.put("blocksRequests", blocks);
 
       Map<String, Object> async = new HashMap<>();

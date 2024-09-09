@@ -137,7 +137,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     List<OperationsMap> modes = new ArrayList<>();
     modes.add(operations);
     OperationsMap operationsSync = (OperationsMap) operations.clone();
-    operationsSync.put("isSync", true);
+    operationsSync.put("isSyncClient", true);
     modes.add(operationsSync);
 
     additionalProperties.put("modes", modes);

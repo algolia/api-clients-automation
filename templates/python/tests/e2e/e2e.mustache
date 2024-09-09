@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv("../../.env")
 
 {{#modes}}
-class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Sync{{/isSync}}E2E:
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}E2E:
     _helpers = Helpers()
     _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
     if _e2e_app_id is None:
@@ -26,11 +26,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Syn
 
     {{#blocksE2E}}
     {{#tests}}
-    {{^isSync}}async {{/isSync}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
         """
-        raw_resp = {{^isSync}}await {{/isSync}}{{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        raw_resp = {{^isSyncClient}}await {{/isSyncClient}}{{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
         {{#response}}
         {{#statusCode}}
         assert raw_resp.status_code == {{statusCode}}
@@ -38,7 +38,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSync}}Syn
 
 
         {{#body}}
-        resp = {{^isSync}}await {{/isSync}}{{#lambda.pascalcase}}{{{client}}}{{#isSync}}Sync{{/isSync}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        resp = {{^isSyncClient}}await {{/isSyncClient}}{{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
         _expected_body = loads("""{{{.}}}""")
         assert self._helpers.union(_expected_body, resp) == _expected_body
         {{/body}}

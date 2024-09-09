@@ -124,7 +124,7 @@ public class SnippetsGenerator extends TestsGenerator {
         try {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
           test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
-          test.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+          test.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
