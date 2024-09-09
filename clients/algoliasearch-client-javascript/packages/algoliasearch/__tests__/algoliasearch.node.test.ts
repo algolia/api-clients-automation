@@ -24,14 +24,14 @@ describe('api', () => {
   });
 
   it('provides a `setClientApiKey` method', () => {
-      const _client = algoliasearch('foo', 'bar', {
-        requester: echoRequester(),
-      });
+    const _client = algoliasearch('foo', 'bar', {
+      requester: echoRequester(),
+    });
 
-    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('bar')
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('bar');
     expect(_client.setClientApiKey).not.toBeUndefined();
-    _client.setClientApiKey({apiKey:'tabac'})
-    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('tabac')
+    _client.setClientApiKey({ apiKey: 'tabac' });
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('tabac');
   });
 
   it('sets the user agent', async () => {
