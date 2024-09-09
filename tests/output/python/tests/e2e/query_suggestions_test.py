@@ -2,6 +2,7 @@
 from os import environ
 from json import loads
 from algoliasearch.query_suggestions.client import QuerySuggestionsClient
+from algoliasearch.query_suggestions.client import QuerySuggestionsClientSync
 from ..helpers import Helpers
 from dotenv import load_dotenv
 
@@ -32,6 +33,40 @@ class TestQuerySuggestionsClientE2E:
         assert raw_resp.status_code == 200
 
         resp = await QuerySuggestionsClient(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_config(
+            index_name="cts_e2e_browse_query_suggestions",
+        )
+        _expected_body = loads(
+            """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+
+class TestQuerySuggestionsClientSyncE2E:
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+
+    def test_get_config_(self):
+        """
+        Retrieve QS config e2e
+        """
+        raw_resp = QuerySuggestionsClientSync(
+            self._e2e_app_id, self._e2e_api_key, "us"
+        ).get_config_with_http_info(
+            index_name="cts_e2e_browse_query_suggestions",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = QuerySuggestionsClientSync(
             self._e2e_app_id, self._e2e_api_key, "us"
         ).get_config(
             index_name="cts_e2e_browse_query_suggestions",

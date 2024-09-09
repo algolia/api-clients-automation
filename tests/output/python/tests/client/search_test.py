@@ -3,17 +3,17 @@ from re import compile
 from json import loads
 
 from algoliasearch.http.transporter import EchoTransporter
+from algoliasearch.http.transporter_sync import EchoTransporterSync
 from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.search.client import SearchClient
+from algoliasearch.search.client import SearchClientSync
 from algoliasearch.search.config import SearchConfig
 
 
 class TestSearchClient:
-    _client: SearchClient
-
     def create_client(self) -> SearchClient:
         _config = SearchConfig("appId", "apiKey")
-        self._client = SearchClient.create_with_config(
+        return SearchClient.create_with_config(
             config=_config, transporter=EchoTransporter(_config)
         )
 
@@ -23,10 +23,10 @@ class TestSearchClient:
         """
 
         _config = SearchConfig("test-app-id", "test-api-key")
-        self._client = SearchClient.create_with_config(
+        _client = SearchClient.create_with_config(
             config=_config, transporter=EchoTransporter(_config)
         )
-        _req = await self._client.custom_get_with_http_info(
+        _req = await _client.custom_get_with_http_info(
             path="test",
         )
         assert _req.host == "test-app-id-dsn.algolia.net"
@@ -37,10 +37,10 @@ class TestSearchClient:
         """
 
         _config = SearchConfig("test-app-id", "test-api-key")
-        self._client = SearchClient.create_with_config(
+        _client = SearchClient.create_with_config(
             config=_config, transporter=EchoTransporter(_config)
         )
-        _req = await self._client.custom_post_with_http_info(
+        _req = await _client.custom_post_with_http_info(
             path="test",
         )
         assert _req.host == "test-app-id.algolia.net"
@@ -58,8 +58,8 @@ class TestSearchClient:
                 Host(url="localhost", scheme="http", port=6678),
             ]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.custom_get(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
             path="1/test/retry/python",
         )
         assert (
@@ -79,9 +79,9 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6676)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
+        _client = SearchClient.create_with_config(config=_config)
         try:
-            await self._client.custom_get(
+            await _client.custom_get(
                 path="1/test/hang/python",
             )
             assert False
@@ -92,9 +92,9 @@ class TestSearchClient:
         """
         calls api with correct user agent
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = await self._client.custom_post_with_http_info(
+        _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
         regex_user_agent = compile(
@@ -106,9 +106,9 @@ class TestSearchClient:
         """
         the user agent contains the latest version
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = await self._client.custom_post_with_http_info(
+        _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
         regex_user_agent = compile("^Algolia for Python \\(4.3.0\\).*")
@@ -118,9 +118,9 @@ class TestSearchClient:
         """
         calls api with default read timeouts
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = await self._client.custom_get_with_http_info(
+        _req = await _client.custom_get_with_http_info(
             path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
@@ -130,9 +130,9 @@ class TestSearchClient:
         """
         calls api with default write timeouts
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = await self._client.custom_post_with_http_info(
+        _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
@@ -147,8 +147,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6680)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.delete_objects(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.delete_objects(
             index_name="cts_e2e_deleteObjects_python",
             object_ids=[
                 "1",
@@ -167,9 +167,9 @@ class TestSearchClient:
         """
         generate secured api key basic
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = self._client.generate_secured_api_key(
+        _req = await _client.generate_secured_api_key(
             parent_api_key="2640659426d5107b6e47d75db9cbaef8",
             restrictions={
                 "validUntil": 2524604400,
@@ -187,9 +187,9 @@ class TestSearchClient:
         """
         generate secured api key with searchParams
         """
-        self.create_client()
+        _client = self.create_client()
 
-        _req = self._client.generate_secured_api_key(
+        _req = await _client.generate_secured_api_key(
             parent_api_key="2640659426d5107b6e47d75db9cbaef8",
             restrictions={
                 "validUntil": 2524604400,
@@ -227,8 +227,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.index_exists(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.index_exists(
             index_name="indexExistsYES",
         )
         assert _req is True
@@ -242,8 +242,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.index_exists(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.index_exists(
             index_name="indexExistsNO",
         )
         assert _req is False
@@ -257,9 +257,9 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
+        _client = SearchClient.create_with_config(config=_config)
         try:
-            await self._client.index_exists(
+            await _client.index_exists(
                 index_name="indexExistsERROR",
             )
             assert False
@@ -273,7 +273,7 @@ class TestSearchClient:
 
         try:
             _config = SearchConfig("", "")
-            self._client = SearchClient.create_with_config(
+            _client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
             assert False
@@ -281,7 +281,7 @@ class TestSearchClient:
             assert str(e) == "`app_id` is missing."
         try:
             _config = SearchConfig("", "my-api-key")
-            self._client = SearchClient.create_with_config(
+            _client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
             assert False
@@ -289,7 +289,7 @@ class TestSearchClient:
             assert str(e) == "`app_id` is missing."
         try:
             _config = SearchConfig("my-app-id", "")
-            self._client = SearchClient.create_with_config(
+            _client = SearchClient.create_with_config(
                 config=_config, transporter=EchoTransporter(_config)
             )
             assert False
@@ -300,10 +300,10 @@ class TestSearchClient:
         """
         `addApiKey` throws with invalid parameters
         """
-        self.create_client()
+        _client = self.create_client()
 
         try:
-            await self._client.add_api_key_with_http_info(
+            await _client.add_api_key_with_http_info(
                 api_key=None,
             )
             assert False
@@ -316,10 +316,10 @@ class TestSearchClient:
         """
         `addOrUpdateObject` throws with invalid parameters
         """
-        self.create_client()
+        _client = self.create_client()
 
         try:
-            await self._client.add_or_update_object_with_http_info(
+            await _client.add_or_update_object_with_http_info(
                 index_name=None,
                 object_id="my-object-id",
                 body={},
@@ -331,7 +331,7 @@ class TestSearchClient:
                 == "Parameter `index_name` is required when calling `add_or_update_object`."
             )
         try:
-            await self._client.add_or_update_object_with_http_info(
+            await _client.add_or_update_object_with_http_info(
                 index_name="my-index-name",
                 object_id=None,
                 body={},
@@ -343,7 +343,7 @@ class TestSearchClient:
                 == "Parameter `object_id` is required when calling `add_or_update_object`."
             )
         try:
-            await self._client.add_or_update_object_with_http_info(
+            await _client.add_or_update_object_with_http_info(
                 index_name="my-index-name",
                 object_id="my-object-id",
                 body=None,
@@ -364,8 +364,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6680)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.partial_update_objects(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.partial_update_objects(
             index_name="cts_e2e_partialUpdateObjects_python",
             objects=[
                 {
@@ -396,8 +396,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6680)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.partial_update_objects(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.partial_update_objects(
             index_name="cts_e2e_partialUpdateObjects_python",
             objects=[
                 {
@@ -428,8 +428,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6679)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.replace_all_objects(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.replace_all_objects(
             index_name="cts_e2e_replace_all_objects_python",
             objects=[
                 {
@@ -494,8 +494,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6680)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.save_objects(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.save_objects(
             index_name="cts_e2e_saveObjects_python",
             objects=[
                 {
@@ -525,9 +525,9 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6680)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
+        _client = SearchClient.create_with_config(config=_config)
         try:
-            await self._client.save_objects(
+            await _client.save_objects(
                 index_name="cts_e2e_saveObjects_python",
                 objects=[
                     {
@@ -553,8 +553,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6683)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.custom_get(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
             path="check-api-key/1",
         )
         assert (
@@ -564,10 +564,10 @@ class TestSearchClient:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads("""{"headerAPIKeyValue":"test-api-key"}""")
-        self._client.set_client_api_key(
+        await _client.set_client_api_key(
             api_key="updated-api-key",
         )
-        _req = await self._client.custom_get(
+        _req = await _client.custom_get(
             path="check-api-key/2",
         )
         assert (
@@ -587,8 +587,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.wait_for_api_key(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.wait_for_api_key(
             key="api-key-add-operation-test-python",
             operation="add",
         )
@@ -611,8 +611,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.wait_for_api_key(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.wait_for_api_key(
             key="api-key-update-operation-test-python",
             operation="update",
             api_key={
@@ -654,8 +654,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.wait_for_api_key(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.wait_for_api_key(
             key="api-key-delete-operation-test-python",
             operation="delete",
         )
@@ -670,8 +670,8 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.wait_for_app_task(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.wait_for_app_task(
             task_id=123,
         )
         assert (
@@ -691,8 +691,703 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6681)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
-        _req = await self._client.wait_for_task(
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.wait_for_task(
+            index_name="wait-task-python",
+            task_id=123,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"published"}""")
+
+
+class TestSearchClientSync:
+    def create_client(self) -> SearchClientSync:
+        _config = SearchConfig("appId", "apiKey")
+        return SearchClientSync.create_with_config(
+            config=_config, transporter=EchoTransporterSync(_config)
+        )
+
+    def test_api_0(self):
+        """
+        calls api with correct read host
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _client = SearchClientSync.create_with_config(
+            config=_config, transporter=EchoTransporterSync(_config)
+        )
+        _req = _client.custom_get_with_http_info(
+            path="test",
+        )
+        assert _req.host == "test-app-id-dsn.algolia.net"
+
+    def test_api_1(self):
+        """
+        calls api with correct write host
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _client = SearchClientSync.create_with_config(
+            config=_config, transporter=EchoTransporterSync(_config)
+        )
+        _req = _client.custom_post_with_http_info(
+            path="test",
+        )
+        assert _req.host == "test-app-id.algolia.net"
+
+    def test_api_2(self):
+        """
+        tests the retry strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(url="localhost", scheme="http", port=6676),
+                Host(url="localhost", scheme="http", port=6677),
+                Host(url="localhost", scheme="http", port=6678),
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/retry/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok test server response"}""")
+
+    def test_api_3(self):
+        """
+        tests the retry strategy error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6676)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.custom_get(
+                path="1/test/hang/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Unreachable hosts"
+
+    def test_common_api_0(self):
+        """
+        calls api with correct user agent
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_post_with_http_info(
+            path="1/test",
+        )
+        regex_user_agent = compile(
+            "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
+        )
+        assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    def test_common_api_1(self):
+        """
+        the user agent contains the latest version
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_post_with_http_info(
+            path="1/test",
+        )
+        regex_user_agent = compile("^Algolia for Python \\(4.3.0\\).*")
+        assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    def test_common_api_2(self):
+        """
+        calls api with default read timeouts
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_get_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 5000
+
+    def test_common_api_3(self):
+        """
+        calls api with default write timeouts
+        """
+        _client = self.create_client()
+
+        _req = _client.custom_post_with_http_info(
+            path="1/test",
+        )
+        assert _req.timeouts.get("connect") == 2000
+        assert _req.timeouts.get("response") == 30000
+
+    def test_delete_objects_0(self):
+        """
+        call deleteObjects without error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.delete_objects(
+            index_name="cts_e2e_deleteObjects_python",
+            object_ids=[
+                "1",
+                "2",
+            ],
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""[{"taskID":666,"objectIDs":["1","2"]}]""")
+
+    def test_generate_secured_api_key_0(self):
+        """
+        generate secured api key basic
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "validUntil": 2524604400,
+                "restrictIndices": [
+                    "Movies",
+                ],
+            },
+        )
+        assert (
+            _req
+            == "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+        )
+
+    def test_generate_secured_api_key_1(self):
+        """
+        generate secured api key with searchParams
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "validUntil": 2524604400,
+                "restrictIndices": [
+                    "Movies",
+                    "cts_e2e_settings",
+                ],
+                "restrictSources": "192.168.1.0/24",
+                "filters": "category:Book OR category:Ebook AND _tags:published",
+                "userToken": "user123",
+                "searchParams": {
+                    "query": "batman",
+                    "typoTolerance": "strict",
+                    "aroundRadius": "all",
+                    "mode": "neuralSearch",
+                    "hitsPerPage": 10,
+                    "optionalWords": [
+                        "one",
+                        "two",
+                    ],
+                },
+            },
+        )
+        assert (
+            _req
+            == "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+        )
+
+    def test_index_exists_0(self):
+        """
+        indexExists
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.index_exists(
+            index_name="indexExistsYES",
+        )
+        assert _req is True
+
+    def test_index_exists_1(self):
+        """
+        indexNotExists
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.index_exists(
+            index_name="indexExistsNO",
+        )
+        assert _req is False
+
+    def test_index_exists_2(self):
+        """
+        indexExistsWithError
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.index_exists(
+                index_name="indexExistsERROR",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Invalid API key"
+
+    def test_parameters_0(self):
+        """
+        client throws with invalid parameters
+        """
+
+        try:
+            _config = SearchConfig("", "")
+            _client = SearchClientSync.create_with_config(
+                config=_config, transporter=EchoTransporterSync(_config)
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "`app_id` is missing."
+        try:
+            _config = SearchConfig("", "my-api-key")
+            _client = SearchClientSync.create_with_config(
+                config=_config, transporter=EchoTransporterSync(_config)
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "`app_id` is missing."
+        try:
+            _config = SearchConfig("my-app-id", "")
+            _client = SearchClientSync.create_with_config(
+                config=_config, transporter=EchoTransporterSync(_config)
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "`api_key` is missing."
+
+    def test_parameters_1(self):
+        """
+        `addApiKey` throws with invalid parameters
+        """
+        _client = self.create_client()
+
+        try:
+            _client.add_api_key_with_http_info(
+                api_key=None,
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e) == "Parameter `api_key` is required when calling `add_api_key`."
+            )
+
+    def test_parameters_2(self):
+        """
+        `addOrUpdateObject` throws with invalid parameters
+        """
+        _client = self.create_client()
+
+        try:
+            _client.add_or_update_object_with_http_info(
+                index_name=None,
+                object_id="my-object-id",
+                body={},
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e)
+                == "Parameter `index_name` is required when calling `add_or_update_object`."
+            )
+        try:
+            _client.add_or_update_object_with_http_info(
+                index_name="my-index-name",
+                object_id=None,
+                body={},
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e)
+                == "Parameter `object_id` is required when calling `add_or_update_object`."
+            )
+        try:
+            _client.add_or_update_object_with_http_info(
+                index_name="my-index-name",
+                object_id="my-object-id",
+                body=None,
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e)
+                == "Parameter `body` is required when calling `add_or_update_object`."
+            )
+
+    def test_partial_update_objects_0(self):
+        """
+        call partialUpdateObjects with createIfNotExists=true
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.partial_update_objects(
+            index_name="cts_e2e_partialUpdateObjects_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+            ],
+            create_if_not_exists=True,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""[{"taskID":444,"objectIDs":["1","2"]}]""")
+
+    def test_partial_update_objects_1(self):
+        """
+        call partialUpdateObjects with createIfNotExists=false
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.partial_update_objects(
+            index_name="cts_e2e_partialUpdateObjects_python",
+            objects=[
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+            ],
+            create_if_not_exists=False,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""[{"taskID":555,"objectIDs":["3","4"]}]""")
+
+    def test_replace_all_objects_0(self):
+        """
+        call replaceAllObjects without error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6679)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.replace_all_objects(
+            index_name="cts_e2e_replace_all_objects_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+                {
+                    "objectID": "5",
+                    "name": "Eva",
+                },
+                {
+                    "objectID": "6",
+                    "name": "Fiona",
+                },
+                {
+                    "objectID": "7",
+                    "name": "Gael",
+                },
+                {
+                    "objectID": "8",
+                    "name": "Hugo",
+                },
+                {
+                    "objectID": "9",
+                    "name": "Igor",
+                },
+                {
+                    "objectID": "10",
+                    "name": "Julia",
+                },
+            ],
+            batch_size=3,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
+        )
+
+    def test_save_objects_0(self):
+        """
+        call saveObjects without error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.save_objects(
+            index_name="cts_e2e_saveObjects_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+            ],
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""[{"taskID":333,"objectIDs":["1","2"]}]""")
+
+    def test_save_objects_1(self):
+        """
+        saveObjects should report errors
+        """
+
+        _config = SearchConfig("test-app-id", "wrong-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6680)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.save_objects(
+                index_name="cts_e2e_saveObjects_python",
+                objects=[
+                    {
+                        "objectID": "1",
+                        "name": "Adam",
+                    },
+                    {
+                        "objectID": "2",
+                        "name": "Benoit",
+                    },
+                ],
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Invalid Application-ID or API key"
+
+    def test_set_client_api_key_0(self):
+        """
+        switch API key
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6683)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="check-api-key/1",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"headerAPIKeyValue":"test-api-key"}""")
+        _client.set_client_api_key(
+            api_key="updated-api-key",
+        )
+        _req = _client.custom_get(
+            path="check-api-key/2",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"headerAPIKeyValue":"updated-api-key"}""")
+
+    def test_wait_for_api_key_0(self):
+        """
+        wait for api key helper - add
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.wait_for_api_key(
+            key="api-key-add-operation-test-python",
+            operation="add",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"value":"api-key-add-operation-test-python","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+        )
+
+    def test_wait_for_api_key_1(self):
+        """
+        wait for api key - update
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.wait_for_api_key(
+            key="api-key-update-operation-test-python",
+            operation="update",
+            api_key={
+                "description": "my updated api key",
+                "acl": [
+                    "search",
+                    "addObject",
+                    "deleteObject",
+                ],
+                "indexes": [
+                    "Movies",
+                    "Books",
+                ],
+                "referers": [
+                    "*google.com",
+                    "*algolia.com",
+                ],
+                "validity": 305,
+                "maxQueriesPerIPPerHour": 95,
+                "maxHitsPerQuery": 20,
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"value":"api-key-update-operation-test-python","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+        )
+
+    def test_wait_for_api_key_2(self):
+        """
+        wait for api key - delete
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.wait_for_api_key(
+            key="api-key-delete-operation-test-python",
+            operation="delete",
+        )
+        assert _req is None
+
+    def test_wait_for_app_task_0(self):
+        """
+        wait for an application-level task
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.wait_for_app_task(
+            task_id=123,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"published"}""")
+
+    def test_wait_for_task_0(self):
+        """
+        wait for task
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.wait_for_task(
             index_name="wait-task-python",
             task_id=123,
         )
