@@ -20,6 +20,18 @@ describe('api', () => {
 
   it('provides a `clearCache` method', () => {
     expect(client.clearCache).not.toBeUndefined();
+    expect(() => client.clearCache()).not.toThrow();
+  });
+
+  it('provides a `setClientApiKey` method', () => {
+    const _client = algoliasearch('foo', 'bar', {
+      requester: echoRequester(),
+    });
+
+    expect(_client.transporter.baseQueryParameters['x-algolia-api-key']).toEqual('bar');
+    expect(_client.setClientApiKey).not.toBeUndefined();
+    _client.setClientApiKey({ apiKey: 'tabac' });
+    expect(_client.transporter.baseQueryParameters['x-algolia-api-key']).toEqual('tabac');
   });
 
   it('sets the user agent', async () => {
@@ -145,10 +157,11 @@ describe('api', () => {
     });
 
     it('default `init` clients to the root `algoliasearch` credentials', async () => {
-      const abtestingClient = client.initAbtesting();
-      const analyticsClient = client.initAnalytics();
+      const abtestingClient = client.initAbtesting({ options: { requester: echoRequester() } });
+      const analyticsClient = client.initAnalytics({ options: { requester: echoRequester() } });
       const personalizationClient = client.initPersonalization({
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({
@@ -185,15 +198,18 @@ describe('api', () => {
       const abtestingClient = client.initAbtesting({
         appId: 'appId1',
         apiKey: 'apiKey1',
+        options: { requester: echoRequester() },
       });
       const analyticsClient = client.initAnalytics({
         appId: 'appId2',
         apiKey: 'apiKey2',
+        options: { requester: echoRequester() },
       });
       const personalizationClient = client.initPersonalization({
         appId: 'appId3',
         apiKey: 'apiKey3',
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({

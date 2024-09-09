@@ -2,6 +2,7 @@
 from os import environ
 from json import loads
 from algoliasearch.search.client import SearchClient
+from algoliasearch.search.client import SearchClientSync
 from ..helpers import Helpers
 from dotenv import load_dotenv
 
@@ -36,6 +37,27 @@ class TestSearchClientE2E:
         )
         _expected_body = loads(
             """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    async def test_get_rule_(self):
+        """
+        getRule
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_rule_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).get_rule(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        _expected_body = loads(
+            """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}"""
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
@@ -293,6 +315,31 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
+    async def test_search_rules_(self):
+        """
+        searchRules
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search_rules(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        _expected_body = loads(
+            """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
     async def test_search_single_index_1(self):
         """
         search with special characters in indexName
@@ -348,6 +395,403 @@ class TestSearchClientE2E:
         setSettings with minimal parameters
         """
         raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).set_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            index_settings={
+                "paginationLimitedTo": 10,
+            },
+            forward_to_replicas=True,
+        )
+        assert raw_resp.status_code == 200
+
+
+class TestSearchClientSyncE2E:
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception(
+            "please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests"
+        )
+
+    _e2e_api_key = environ.get("ALGOLIA_ADMIN_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
+
+    def test_browse_(self):
+        """
+        browse with minimal parameters
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).browse_with_http_info(
+            index_name="cts_e2e_browse",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).browse(
+            index_name="cts_e2e_browse",
+        )
+        _expected_body = loads(
+            """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_get_rule_(self):
+        """
+        getRule
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_rule_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).get_rule(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        _expected_body = loads(
+            """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_get_settings_(self):
+        """
+        getSettings
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_settings_with_http_info(
+            index_name="cts_e2e_settings",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).get_settings(
+            index_name="cts_e2e_settings",
+        )
+        _expected_body = loads(
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_4(self):
+        """
+        search for a single hits request with minimal parameters
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_empty_index",
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_empty_index",
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_5(self):
+        """
+        search with highlight and snippet results
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_8(self):
+        """
+        search for a single facet request with minimal parameters
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "type": "facet",
+                        "facet": "editor",
+                    },
+                ],
+                "strategy": "stopIfEnoughMatches",
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "type": "facet",
+                        "facet": "editor",
+                    },
+                ],
+                "strategy": "stopIfEnoughMatches",
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_14(self):
+        """
+        search filters end to end
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "filters": "editor:'visual studio' OR editor:neovim",
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            "editor:neovim",
+                        ],
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            [
+                                "editor:neovim",
+                            ],
+                        ],
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            [
+                                "editor:neovim",
+                                [
+                                    "editor:goland",
+                                ],
+                            ],
+                        ],
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "filters": "editor:'visual studio' OR editor:neovim",
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            "editor:neovim",
+                        ],
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            [
+                                "editor:neovim",
+                            ],
+                        ],
+                    },
+                    {
+                        "indexName": "cts_e2e_search_facet",
+                        "facetFilters": [
+                            "editor:'visual studio'",
+                            [
+                                "editor:neovim",
+                                [
+                                    "editor:goland",
+                                ],
+                            ],
+                        ],
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_dictionary_entries_(self):
+        """
+        get searchDictionaryEntries results with minimal parameters
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_dictionary_entries_with_http_info(
+            dictionary_name="stopwords",
+            search_dictionary_entries_params={
+                "query": "about",
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_dictionary_entries(
+            dictionary_name="stopwords",
+            search_dictionary_entries_params={
+                "query": "about",
+            },
+        )
+        _expected_body = loads(
+            """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_rules_(self):
+        """
+        searchRules
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search_rules(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        _expected_body = loads(
+            """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_search_single_index_1(self):
+        """
+        search with special characters in indexName
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index_with_http_info(
+            index_name="cts_e2e_space in index",
+        )
+        assert raw_resp.status_code == 200
+
+    def test_search_single_index_3(self):
+        """
+        single search retrieve snippets
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index_with_http_info(
+            index_name="cts_e2e_browse",
+            search_params={
+                "query": "batman mask of the phantasm",
+                "attributesToRetrieve": [
+                    "*",
+                ],
+                "attributesToSnippet": [
+                    "*:20",
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_single_index(
+            index_name="cts_e2e_browse",
+            search_params={
+                "query": "batman mask of the phantasm",
+                "attributesToRetrieve": [
+                    "*",
+                ],
+                "attributesToSnippet": [
+                    "*:20",
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    def test_set_settings_1(self):
+        """
+        setSettings with minimal parameters
+        """
+        raw_resp = SearchClientSync(
             self._e2e_app_id, self._e2e_api_key
         ).set_settings_with_http_info(
             index_name="cts_e2e_settings",

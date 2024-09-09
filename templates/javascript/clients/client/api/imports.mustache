@@ -4,6 +4,7 @@ import {
   getAlgoliaAgent,
   shuffle,
   {{#isSearchClient}}
+  ApiError,
   serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
@@ -16,7 +17,6 @@ import type {
   Request,
   RequestOptions,
   {{#isSearchClient}}
-  ApiError,
   IterableOptions,
   {{/isSearchClient}}
 } from '@algolia/client-common';

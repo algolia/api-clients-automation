@@ -1044,11 +1044,11 @@ func TestSearch_GetRule(t *testing.T) {
 
 	t.Run("getRule", func(t *testing.T) {
 		_, err := client.GetRule(client.NewApiGetRuleRequest(
-			"indexName", "id1",
+			"cts_e2e_browse", "qr-1725004648916",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_browse/rules/qr-1725004648916", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1343,29 +1343,9 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("Partial update with string value", func(t *testing.T) {
+	t.Run("Partial update with a new value for a string attribute", func(t *testing.T) {
 		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
-				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue(search.StringAsBuiltInOperationValue("test2")))},
-		).WithCreateIfNotExists(true))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}`)
-		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"createIfNotExists":"true"}`), &queryParams))
-		require.Len(t, queryParams, len(echo.Query))
-		for k, v := range queryParams {
-			require.Equal(t, v, echo.Query.Get(k))
-		}
-	})
-	t.Run("Partial update with integer value", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"attributeId": *search.BuiltInOperationAsAttributeToUpdate(
-				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("Increment")).SetValue(search.Int32AsBuiltInOperationValue(2)))},
+			"theIndexName", "uniqueID", map[string]any{"attributeId": "new value"},
 		))
 		require.NoError(t, err)
 
@@ -1373,7 +1353,55 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"attributeId":{"_operation":"Increment","value":2}}`)
+		ja.Assertf(*echo.Body, `{"attributeId":"new value"}`)
+	})
+	t.Run("Partial update with a new value for an integer attribute", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]any{"attributeId": 1},
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeId":1}`)
+	})
+	t.Run("Partial update with a new value for a boolean attribute", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]any{"attributeId": true},
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeId":true}`)
+	})
+	t.Run("Partial update with a new value for an array attribute", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]any{"attributeId": []string{"one", "two", "three"}},
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeId":["one","two","three"]}`)
+	})
+	t.Run("Partial update with a new value for an object attribute", func(t *testing.T) {
+		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
+			"theIndexName", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}},
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributeId":{"nested":"value"}}`)
 	})
 }
 
@@ -1987,16 +2015,16 @@ func TestSearch_SearchRules(t *testing.T) {
 
 	t.Run("searchRules", func(t *testing.T) {
 		_, err := client.SearchRules(client.NewApiSearchRulesRequest(
-			"indexName",
+			"cts_e2e_browse",
 		).WithSearchRulesParams(
-			search.NewEmptySearchRulesParams().SetQuery("something")))
+			search.NewEmptySearchRulesParams().SetQuery("zorro")))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/indexName/rules/search", echo.Path)
+		require.Equal(t, "/1/indexes/cts_e2e_browse/rules/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"something"}`)
+		ja.Assertf(*echo.Body, `{"query":"zorro"}`)
 	})
 }
 

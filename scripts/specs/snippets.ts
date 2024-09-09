@@ -3,8 +3,6 @@ import fsp from 'fs/promises';
 import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
-/* eslint import/namespace: ['error', { allowComputed: true }]*/
-import * as helperSnippets from './helper-snippets.js';
 import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
 
 export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
@@ -20,16 +18,6 @@ export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   }
 }
 
-function getHelperSnippet(helperName: keyof typeof helperSnippets, language: string): Record<string, string> | string {
-  if (typeof helperSnippets[helperName][language] === 'string') {
-    return {
-      default: helperSnippets[helperName][language],
-    };
-  }
-
-  return helperSnippets[helperName][language];
-}
-
 // Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
 export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
   for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
@@ -39,7 +27,9 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
       }
 
       for (const [sampleName, sample] of Object.entries(samples)) {
-        const sampleMatch = sample.match(/.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/);
+        const sampleMatch = sample.match(
+          /.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)(#|\/\/) >LOG/,
+        );
         if (!sampleMatch) {
           continue;
         }
@@ -49,18 +39,13 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
         if (!('init' in snippetSamples[language])) {
           snippetSamples[language].init = {
-            default: initLine.replace(/\n$/, ''),
+            default: initLine.trim(),
           };
         }
 
-        snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
+        snippetSamples[language][operation][sampleName] = callLine.trim();
       }
     }
-
-    // add specific helper snippets to the current language
-    snippetSamples[language].waitForAppTask = getHelperSnippet('waitForAppTask', language);
-    snippetSamples[language].waitForApiKey = getHelperSnippet('waitForApiKey', language);
-    snippetSamples[language].waitForTask = getHelperSnippet('waitForTask', language);
   }
 
   return JSON.stringify(snippetSamples, null, 2);
@@ -89,7 +74,7 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
       snippetSamples[gen.language].import = {
-        default: importMatch[1].replace(/\n$/, ''),
+        default: importMatch[1].trim(),
       };
     }
 

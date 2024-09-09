@@ -28,10 +28,10 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     val response = client.createConfig(
       configurationWithIndex = ConfigurationWithIndex(
-        indexName = "theIndexName",
+        indexName = "<YOUR_INDEX_NAME>",
         sourceIndices = Seq(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = Some(
               Seq(
                 Facet(
@@ -47,6 +47,7 @@ class SnippetQuerySuggestionsClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -66,6 +67,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -85,6 +87,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -104,6 +107,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -123,6 +127,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -139,9 +144,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.deleteConfig(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -160,6 +166,7 @@ class SnippetQuerySuggestionsClient {
     val response = client.getAllConfigs(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -176,9 +183,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.getConfig(
-      indexName = "cts_e2e_browse_query_suggestions"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -195,9 +203,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.getConfigStatus(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -214,9 +223,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.getLogFile(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -233,11 +243,11 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.updateConfig(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       configuration = Configuration(
         sourceIndices = Seq(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = Some(
               Seq(
                 Facet(
@@ -253,6 +263,7 @@ class SnippetQuerySuggestionsClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

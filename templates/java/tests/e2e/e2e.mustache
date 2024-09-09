@@ -26,7 +26,7 @@ class {{client}}RequestsTestsE2E {
         if ("true".equals(System.getenv("CI"))) {
           this.client = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
         } else {
-          var dotenv = Dotenv.configure().directory("../../").load();
+          Dotenv dotenv = Dotenv.configure().directory("../../").load();
           this.client = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
         }
     }
@@ -41,7 +41,7 @@ class {{client}}RequestsTestsE2E {
     @Test
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
-        var res = {{> tests/method}};
+        {{returnType}} res = {{> tests/method}};
         {{#response}}
         {{#body}}
         assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));

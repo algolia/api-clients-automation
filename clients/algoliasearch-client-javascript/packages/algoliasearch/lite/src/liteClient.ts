@@ -22,7 +22,7 @@ import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.1.1';
+export const apiClientVersion = '5.3.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -117,6 +117,20 @@ export function createLiteClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
     /**
      * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.

@@ -25,6 +25,26 @@ void main() {
     }
   });
 
+  test('the user agent contains the latest version', () async {
+    final requester = RequestInterceptor();
+    final client = InsightsClient(
+      appId: 'appId',
+      apiKey: 'apiKey',
+      region: 'us',
+      options: ClientOptions(requester: requester),
+    );
+    requester.setOnRequest((request) {
+      TestHandle.current.markSkipped('User agent added using an interceptor');
+    });
+    try {
+      final res = await client.customPost(
+        path: "1/test",
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('calls api with default read timeouts', () async {
     final requester = RequestInterceptor();
     final client = InsightsClient(
@@ -72,7 +92,7 @@ void main() {
         apiKey: "my-api-key",
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'insights.algolia.io');
+      expect(request.host.url, "insights.algolia.io");
     });
     try {
       final res = await client.pushEvents(
@@ -111,7 +131,7 @@ void main() {
         region: 'us',
         options: ClientOptions(requester: requester));
     requester.setOnRequest((request) {
-      expect(request.host.url, 'insights.us.algolia.io');
+      expect(request.host.url, "insights.us.algolia.io");
     });
     try {
       final res = await client.customDelete(
@@ -134,5 +154,47 @@ void main() {
             options: ClientOptions(requester: requester));
       },
     );
+  });
+
+  test('switch API key', () async {
+    final requester = RequestInterceptor();
+    final client = InsightsClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        region: 'us',
+        options: ClientOptions(hosts: [
+          Host.create(url: 'localhost:6683', scheme: 'http'),
+        ]));
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "check-api-key/1",
+        );
+        expectBody(res, """{"headerAPIKeyValue":"test-api-key"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      try {
+        client.setClientApiKey(
+          apiKey: "updated-api-key",
+        );
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "check-api-key/2",
+        );
+        expectBody(res, """{"headerAPIKeyValue":"updated-api-key"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
   });
 }

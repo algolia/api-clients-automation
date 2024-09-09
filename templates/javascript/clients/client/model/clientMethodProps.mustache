@@ -107,6 +107,7 @@ export type WaitForApiKeyOptions = WaitForOptions & {
       }
   );
 
+{{#isSearchClient}}
 export type GenerateSecuredApiKeyOptions = {
   /**
    * The base API key from which to generate the new secured one.
@@ -125,6 +126,12 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
    */
   securedApiKey: string;
 }
+
+export type SearchClientNodeHelpers = {
+  generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => string;
+  getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
+}
+{{/isSearchClient}}
 
 export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
   /**

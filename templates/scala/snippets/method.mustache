@@ -5,6 +5,9 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.{{client}}
+{{#isSearchClient}}
+import algoliasearch.extension.SearchClientExtensions
+{{/isSearchClient}}
 // IMPORT<
 import algoliasearch.{{import}}.*
 
@@ -18,6 +21,7 @@ class Snippet{{client}} {
 
   {{#blocksRequests}}
   {{#snippets}}
+  {{^isHelper}} {{! Helper tests are not supported yet}}
   /** Snippet for the {{method}} method.
     *
     * {{{description}}}
@@ -28,13 +32,17 @@ class Snippet{{client}} {
     val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"YOUR_APP_ID_REGION"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}}{{/hasRegionalHost}})
 
     // Call the API
-    val response = {{> tests/method}}
-
+    {{#hasResponse}}val response = {{/hasResponse}}{{> tests/method}}
+    
+    // >LOG
+    {{#hasResponse}}
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
+    {{/hasResponse}}
     // SEPARATOR<
   }
 
+  {{/isHelper}}
   {{/snippets}}
   {{/blocksRequests}}
 }

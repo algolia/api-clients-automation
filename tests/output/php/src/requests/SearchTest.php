@@ -24,7 +24,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
@@ -32,7 +32,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('addApiKey')]
-    public function testAddApiKey()
+    public function testAddApiKey(): void
     {
         $client = $this->getClient();
         $client->addApiKey(
@@ -58,7 +58,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('addOrUpdateObject')]
-    public function testAddOrUpdateObject()
+    public function testAddOrUpdateObject(): void
     {
         $client = $this->getClient();
         $client->addOrUpdateObject(
@@ -78,7 +78,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('appendSource')]
-    public function testAppendSource()
+    public function testAppendSource(): void
     {
         $client = $this->getClient();
         $client->appendSource(
@@ -97,7 +97,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('assignUserId')]
-    public function testAssignUserId()
+    public function testAssignUserId(): void
     {
         $client = $this->getClient();
         $client->assignUserId(
@@ -117,7 +117,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('it should not encode the userID')]
-    public function testAssignUserId1()
+    public function testAssignUserId1(): void
     {
         $client = $this->getClient();
         $client->assignUserId(
@@ -137,7 +137,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('addObject')]
-    public function testBatch()
+    public function testBatch(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -168,7 +168,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clear')]
-    public function testBatch1()
+    public function testBatch1(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -192,7 +192,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('delete')]
-    public function testBatch2()
+    public function testBatch2(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -216,7 +216,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteObject')]
-    public function testBatch3()
+    public function testBatch3(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -240,7 +240,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('partialUpdateObject')]
-    public function testBatch4()
+    public function testBatch4(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -264,7 +264,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('partialUpdateObjectNoCreate')]
-    public function testBatch5()
+    public function testBatch5(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -288,7 +288,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateObject')]
-    public function testBatch6()
+    public function testBatch6(): void
     {
         $client = $this->getClient();
         $client->batch(
@@ -312,7 +312,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('batchAssignUserIds')]
-    public function testBatchAssignUserIds()
+    public function testBatchAssignUserIds(): void
     {
         $client = $this->getClient();
         $client->batchAssignUserIds(
@@ -337,7 +337,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('replace')]
-    public function testBatchDictionaryEntries()
+    public function testBatchDictionaryEntries(): void
     {
         $client = $this->getClient();
         $client->batchDictionaryEntries(
@@ -375,7 +375,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('delete')]
-    public function testBatchDictionaryEntries1()
+    public function testBatchDictionaryEntries1(): void
     {
         $client = $this->getClient();
         $client->batchDictionaryEntries(
@@ -400,7 +400,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('append')]
-    public function testBatchDictionaryEntries2()
+    public function testBatchDictionaryEntries2(): void
     {
         $client = $this->getClient();
         $client->batchDictionaryEntries(
@@ -426,7 +426,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('browse with minimal parameters')]
-    public function testBrowse()
+    public function testBrowse(): void
     {
         $client = $this->getClient();
         $client->browse(
@@ -443,7 +443,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('browse with search parameters')]
-    public function testBrowse1()
+    public function testBrowse1(): void
     {
         $client = $this->getClient();
         $client->browse(
@@ -465,7 +465,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('browse allow a cursor in parameters')]
-    public function testBrowse2()
+    public function testBrowse2(): void
     {
         $client = $this->getClient();
         $client->browse(
@@ -484,7 +484,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clearObjects')]
-    public function testClearObjects()
+    public function testClearObjects(): void
     {
         $client = $this->getClient();
         $client->clearObjects(
@@ -501,7 +501,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clearRules')]
-    public function testClearRules()
+    public function testClearRules(): void
     {
         $client = $this->getClient();
         $client->clearRules(
@@ -518,7 +518,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('clearSynonyms')]
-    public function testClearSynonyms()
+    public function testClearSynonyms(): void
     {
         $client = $this->getClient();
         $client->clearSynonyms(
@@ -535,7 +535,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete()
+    public function testCustomDelete(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -552,7 +552,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1()
+    public function testCustomDelete1(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -572,7 +572,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet()
+    public function testCustomGet(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -589,7 +589,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1()
+    public function testCustomGet1(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -609,7 +609,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2()
+    public function testCustomGet2(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -640,7 +640,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost()
+    public function testCustomPost(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -657,7 +657,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1()
+    public function testCustomPost1(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -679,7 +679,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2()
+    public function testCustomPost2(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -706,7 +706,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3()
+    public function testCustomPost3(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -733,7 +733,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4()
+    public function testCustomPost4(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -761,7 +761,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5()
+    public function testCustomPost5(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -789,7 +789,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6()
+    public function testCustomPost6(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -816,7 +816,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7()
+    public function testCustomPost7(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -843,7 +843,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8()
+    public function testCustomPost8(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -871,7 +871,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9()
+    public function testCustomPost9(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -899,7 +899,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10()
+    public function testCustomPost10(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -927,7 +927,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut()
+    public function testCustomPut(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -944,7 +944,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1()
+    public function testCustomPut1(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -966,7 +966,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteApiKey')]
-    public function testDeleteApiKey()
+    public function testDeleteApiKey(): void
     {
         $client = $this->getClient();
         $client->deleteApiKey(
@@ -983,7 +983,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteBy')]
-    public function testDeleteBy()
+    public function testDeleteBy(): void
     {
         $client = $this->getClient();
         $client->deleteBy(
@@ -1002,7 +1002,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteIndex')]
-    public function testDeleteIndex()
+    public function testDeleteIndex(): void
     {
         $client = $this->getClient();
         $client->deleteIndex(
@@ -1019,7 +1019,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteObject')]
-    public function testDeleteObject()
+    public function testDeleteObject(): void
     {
         $client = $this->getClient();
         $client->deleteObject(
@@ -1037,7 +1037,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('delete rule simple case')]
-    public function testDeleteRule()
+    public function testDeleteRule(): void
     {
         $client = $this->getClient();
         $client->deleteRule(
@@ -1055,7 +1055,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('delete rule with simple characters to encode in objectID')]
-    public function testDeleteRule1()
+    public function testDeleteRule1(): void
     {
         $client = $this->getClient();
         $client->deleteRule(
@@ -1073,7 +1073,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteSource')]
-    public function testDeleteSource()
+    public function testDeleteSource(): void
     {
         $client = $this->getClient();
         $client->deleteSource(
@@ -1090,7 +1090,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteSynonym')]
-    public function testDeleteSynonym()
+    public function testDeleteSynonym(): void
     {
         $client = $this->getClient();
         $client->deleteSynonym(
@@ -1108,7 +1108,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getApiKey')]
-    public function testGetApiKey()
+    public function testGetApiKey(): void
     {
         $client = $this->getClient();
         $client->getApiKey(
@@ -1125,7 +1125,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getAppTask')]
-    public function testGetAppTask()
+    public function testGetAppTask(): void
     {
         $client = $this->getClient();
         $client->getAppTask(
@@ -1142,7 +1142,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getDictionaryLanguages')]
-    public function testGetDictionaryLanguages()
+    public function testGetDictionaryLanguages(): void
     {
         $client = $this->getClient();
         $client->getDictionaryLanguages();
@@ -1157,7 +1157,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get getDictionarySettings results')]
-    public function testGetDictionarySettings()
+    public function testGetDictionarySettings(): void
     {
         $client = $this->getClient();
         $client->getDictionarySettings();
@@ -1172,7 +1172,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getLogs with minimal parameters')]
-    public function testGetLogs()
+    public function testGetLogs(): void
     {
         $client = $this->getClient();
         $client->getLogs();
@@ -1187,7 +1187,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getLogs with parameters')]
-    public function testGetLogs1()
+    public function testGetLogs1(): void
     {
         $client = $this->getClient();
         $client->getLogs(
@@ -1208,7 +1208,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getObject')]
-    public function testGetObject()
+    public function testGetObject(): void
     {
         $client = $this->getClient();
         $client->getObject(
@@ -1232,7 +1232,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getObjects')]
-    public function testGetObjects()
+    public function testGetObjects(): void
     {
         $client = $this->getClient();
         $client->getObjects(
@@ -1259,17 +1259,17 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRule')]
-    public function testGetRule()
+    public function testGetRule(): void
     {
         $client = $this->getClient();
         $client->getRule(
-            'indexName',
-            'id1',
+            'cts_e2e_browse',
+            'qr-1725004648916',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/indexName/rules/id1',
+                'path' => '/1/indexes/cts_e2e_browse/rules/qr-1725004648916',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -1277,7 +1277,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getSettings')]
-    public function testGetSettings()
+    public function testGetSettings(): void
     {
         $client = $this->getClient();
         $client->getSettings(
@@ -1294,7 +1294,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getSources')]
-    public function testGetSources()
+    public function testGetSources(): void
     {
         $client = $this->getClient();
         $client->getSources();
@@ -1309,7 +1309,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getSynonym')]
-    public function testGetSynonym()
+    public function testGetSynonym(): void
     {
         $client = $this->getClient();
         $client->getSynonym(
@@ -1327,7 +1327,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getTask')]
-    public function testGetTask()
+    public function testGetTask(): void
     {
         $client = $this->getClient();
         $client->getTask(
@@ -1345,7 +1345,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getTopUserIds')]
-    public function testGetTopUserIds()
+    public function testGetTopUserIds(): void
     {
         $client = $this->getClient();
         $client->getTopUserIds();
@@ -1360,7 +1360,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getUserId')]
-    public function testGetUserId()
+    public function testGetUserId(): void
     {
         $client = $this->getClient();
         $client->getUserId(
@@ -1377,7 +1377,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('hasPendingMappings with minimal parameters')]
-    public function testHasPendingMappings()
+    public function testHasPendingMappings(): void
     {
         $client = $this->getClient();
         $client->hasPendingMappings();
@@ -1392,7 +1392,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('hasPendingMappings with parameters')]
-    public function testHasPendingMappings1()
+    public function testHasPendingMappings1(): void
     {
         $client = $this->getClient();
         $client->hasPendingMappings(
@@ -1410,7 +1410,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listApiKeys')]
-    public function testListApiKeys()
+    public function testListApiKeys(): void
     {
         $client = $this->getClient();
         $client->listApiKeys();
@@ -1425,7 +1425,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listClusters')]
-    public function testListClusters()
+    public function testListClusters(): void
     {
         $client = $this->getClient();
         $client->listClusters();
@@ -1440,7 +1440,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listIndices with minimal parameters')]
-    public function testListIndices()
+    public function testListIndices(): void
     {
         $client = $this->getClient();
         $client->listIndices();
@@ -1455,7 +1455,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listIndices with parameters')]
-    public function testListIndices1()
+    public function testListIndices1(): void
     {
         $client = $this->getClient();
         $client->listIndices(
@@ -1474,7 +1474,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listUserIds with minimal parameters')]
-    public function testListUserIds()
+    public function testListUserIds(): void
     {
         $client = $this->getClient();
         $client->listUserIds();
@@ -1489,7 +1489,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listUserIds with parameters')]
-    public function testListUserIds1()
+    public function testListUserIds1(): void
     {
         $client = $this->getClient();
         $client->listUserIds(
@@ -1508,7 +1508,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('multipleBatch')]
-    public function testMultipleBatch()
+    public function testMultipleBatch(): void
     {
         $client = $this->getClient();
         $client->multipleBatch(
@@ -1532,7 +1532,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('scopes')]
-    public function testOperationIndex()
+    public function testOperationIndex(): void
     {
         $client = $this->getClient();
         $client->operationIndex(
@@ -1557,7 +1557,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('copy')]
-    public function testOperationIndex1()
+    public function testOperationIndex1(): void
     {
         $client = $this->getClient();
         $client->operationIndex(
@@ -1577,7 +1577,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('move')]
-    public function testOperationIndex2()
+    public function testOperationIndex2(): void
     {
         $client = $this->getClient();
         $client->operationIndex(
@@ -1596,40 +1596,79 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('Partial update with string value')]
-    public function testPartialUpdateObject()
+    #[TestDox('Partial update with a new value for a string attribute')]
+    public function testPartialUpdateObject(): void
     {
         $client = $this->getClient();
         $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
-            ['id1' => 'test',
-                'id2' => ['_operation' => 'AddUnique',
-                    'value' => 'test2',
-                ],
+            ['attributeId' => 'new value',
             ],
-            true,
         );
 
         $this->assertRequests([
             [
                 'path' => '/1/indexes/theIndexName/uniqueID/partial',
                 'method' => 'POST',
-                'body' => json_decode('{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}'),
-                'queryParameters' => json_decode('{"createIfNotExists":"true"}', true),
+                'body' => json_decode('{"attributeId":"new value"}'),
             ],
         ]);
     }
 
-    #[TestDox('Partial update with integer value')]
-    public function testPartialUpdateObject1()
+    #[TestDox('Partial update with a new value for an integer attribute')]
+    public function testPartialUpdateObject1(): void
     {
         $client = $this->getClient();
         $client->partialUpdateObject(
             'theIndexName',
             'uniqueID',
-            ['attributeId' => ['_operation' => 'Increment',
-                'value' => 2,
+            ['attributeId' => 1,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":1}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for a boolean attribute')]
+    public function testPartialUpdateObject2(): void
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for an array attribute')]
+    public function testPartialUpdateObject3(): void
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => [
+                'one',
+
+                'two',
+
+                'three',
             ],
             ],
         );
@@ -1638,13 +1677,34 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/theIndexName/uniqueID/partial',
                 'method' => 'POST',
-                'body' => json_decode('{"attributeId":{"_operation":"Increment","value":2}}'),
+                'body' => json_decode('{"attributeId":["one","two","three"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('Partial update with a new value for an object attribute')]
+    public function testPartialUpdateObject4(): void
+    {
+        $client = $this->getClient();
+        $client->partialUpdateObject(
+            'theIndexName',
+            'uniqueID',
+            ['attributeId' => ['nested' => 'value',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/theIndexName/uniqueID/partial',
+                'method' => 'POST',
+                'body' => json_decode('{"attributeId":{"nested":"value"}}'),
             ],
         ]);
     }
 
     #[TestDox('removeUserId')]
-    public function testRemoveUserId()
+    public function testRemoveUserId(): void
     {
         $client = $this->getClient();
         $client->removeUserId(
@@ -1661,7 +1721,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('replaceSources')]
-    public function testReplaceSources()
+    public function testReplaceSources(): void
     {
         $client = $this->getClient();
         $client->replaceSources(
@@ -1682,7 +1742,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('restoreApiKey')]
-    public function testRestoreApiKey()
+    public function testRestoreApiKey(): void
     {
         $client = $this->getClient();
         $client->restoreApiKey(
@@ -1699,7 +1759,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveObject')]
-    public function testSaveObject()
+    public function testSaveObject(): void
     {
         $client = $this->getClient();
         $client->saveObject(
@@ -1719,7 +1779,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveRule with minimal parameters')]
-    public function testSaveRule()
+    public function testSaveRule(): void
     {
         $client = $this->getClient();
         $client->saveRule(
@@ -1744,7 +1804,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveRule with all parameters')]
-    public function testSaveRule1()
+    public function testSaveRule1(): void
     {
         $client = $this->getClient();
         $client->saveRule(
@@ -1817,7 +1877,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveRules with minimal parameters')]
-    public function testSaveRules()
+    public function testSaveRules(): void
     {
         $client = $this->getClient();
         $client->saveRules(
@@ -1854,7 +1914,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveRules with all parameters')]
-    public function testSaveRules1()
+    public function testSaveRules1(): void
     {
         $client = $this->getClient();
         $client->saveRules(
@@ -1929,7 +1989,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveSynonym')]
-    public function testSaveSynonym()
+    public function testSaveSynonym(): void
     {
         $client = $this->getClient();
         $client->saveSynonym(
@@ -1959,7 +2019,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveSynonyms')]
-    public function testSaveSynonyms()
+    public function testSaveSynonyms(): void
     {
         $client = $this->getClient();
         $client->saveSynonyms(
@@ -2003,7 +2063,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('withHitsPerPage')]
-    public function testSearch()
+    public function testSearch(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2026,7 +2086,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filterOnly')]
-    public function testSearch1()
+    public function testSearch1(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2049,7 +2109,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filterOr')]
-    public function testSearch2()
+    public function testSearch2(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2072,7 +2132,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('filterNot')]
-    public function testSearch3()
+    public function testSearch3(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2095,7 +2155,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single hits request with minimal parameters')]
-    public function testSearch4()
+    public function testSearch4(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2116,7 +2176,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search with highlight and snippet results')]
-    public function testSearch5()
+    public function testSearch5(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2147,7 +2207,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('retrieveFacets')]
-    public function testSearch6()
+    public function testSearch6(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2174,7 +2234,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('retrieveFacetsWildcard')]
-    public function testSearch7()
+    public function testSearch7(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2199,7 +2259,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single facet request with minimal parameters')]
-    public function testSearch8()
+    public function testSearch8(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2223,7 +2283,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single hits request with all parameters')]
-    public function testSearch9()
+    public function testSearch9(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2247,7 +2307,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for a single facet request with all parameters')]
-    public function testSearch10()
+    public function testSearch10(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2274,7 +2334,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for multiple mixed requests in multiple indices with minimal parameters')]
-    public function testSearch11()
+    public function testSearch11(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2305,7 +2365,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search for multiple mixed requests in multiple indices with all parameters')]
-    public function testSearch12()
+    public function testSearch12(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2338,7 +2398,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search filters accept all of the possible shapes')]
-    public function testSearch13()
+    public function testSearch13(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2406,7 +2466,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search filters end to end')]
-    public function testSearch14()
+    public function testSearch14(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2460,7 +2520,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search with all search parameters')]
-    public function testSearch15()
+    public function testSearch15(): void
     {
         $client = $this->getClient();
         $client->search(
@@ -2660,7 +2720,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get searchDictionaryEntries results with minimal parameters')]
-    public function testSearchDictionaryEntries()
+    public function testSearchDictionaryEntries(): void
     {
         $client = $this->getClient();
         $client->searchDictionaryEntries(
@@ -2679,7 +2739,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get searchDictionaryEntries results with all parameters')]
-    public function testSearchDictionaryEntries1()
+    public function testSearchDictionaryEntries1(): void
     {
         $client = $this->getClient();
         $client->searchDictionaryEntries(
@@ -2701,7 +2761,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get searchForFacetValues results with minimal parameters')]
-    public function testSearchForFacetValues()
+    public function testSearchForFacetValues(): void
     {
         $client = $this->getClient();
         $client->searchForFacetValues(
@@ -2719,7 +2779,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get searchForFacetValues results with all parameters')]
-    public function testSearchForFacetValues1()
+    public function testSearchForFacetValues1(): void
     {
         $client = $this->getClient();
         $client->searchForFacetValues(
@@ -2741,26 +2801,26 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchRules')]
-    public function testSearchRules()
+    public function testSearchRules(): void
     {
         $client = $this->getClient();
         $client->searchRules(
-            'indexName',
-            ['query' => 'something',
+            'cts_e2e_browse',
+            ['query' => 'zorro',
             ],
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/indexes/indexName/rules/search',
+                'path' => '/1/indexes/cts_e2e_browse/rules/search',
                 'method' => 'POST',
-                'body' => json_decode('{"query":"something"}'),
+                'body' => json_decode('{"query":"zorro"}'),
             ],
         ]);
     }
 
     #[TestDox('search with minimal parameters')]
-    public function testSearchSingleIndex()
+    public function testSearchSingleIndex(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -2777,7 +2837,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search with special characters in indexName')]
-    public function testSearchSingleIndex1()
+    public function testSearchSingleIndex1(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -2794,7 +2854,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('search with searchParams')]
-    public function testSearchSingleIndex2()
+    public function testSearchSingleIndex2(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -2816,7 +2876,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('single search retrieve snippets')]
-    public function testSearchSingleIndex3()
+    public function testSearchSingleIndex3(): void
     {
         $client = $this->getClient();
         $client->searchSingleIndex(
@@ -2841,7 +2901,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchSynonyms with minimal parameters')]
-    public function testSearchSynonyms()
+    public function testSearchSynonyms(): void
     {
         $client = $this->getClient();
         $client->searchSynonyms(
@@ -2858,7 +2918,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchSynonyms with all parameters')]
-    public function testSearchSynonyms1()
+    public function testSearchSynonyms1(): void
     {
         $client = $this->getClient();
         $client->searchSynonyms(
@@ -2880,7 +2940,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchUserIds')]
-    public function testSearchUserIds()
+    public function testSearchUserIds(): void
     {
         $client = $this->getClient();
         $client->searchUserIds(
@@ -2901,7 +2961,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get setDictionarySettings results with minimal parameters')]
-    public function testSetDictionarySettings()
+    public function testSetDictionarySettings(): void
     {
         $client = $this->getClient();
         $client->setDictionarySettings(
@@ -2923,7 +2983,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get setDictionarySettings results with all parameters')]
-    public function testSetDictionarySettings1()
+    public function testSetDictionarySettings1(): void
     {
         $client = $this->getClient();
         $client->setDictionarySettings(
@@ -2949,7 +3009,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettingsAttributesForFaceting')]
-    public function testSetSettings()
+    public function testSetSettings(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -2974,7 +3034,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings with minimal parameters')]
-    public function testSetSettings1()
+    public function testSetSettings1(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -2995,7 +3055,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow boolean `typoTolerance`')]
-    public function testSetSettings2()
+    public function testSetSettings2(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3016,7 +3076,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow enum `typoTolerance`')]
-    public function testSetSettings3()
+    public function testSetSettings3(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3037,7 +3097,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow boolean `ignorePlurals`')]
-    public function testSetSettings4()
+    public function testSetSettings4(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3058,7 +3118,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow list of string `ignorePlurals`')]
-    public function testSetSettings5()
+    public function testSetSettings5(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3081,7 +3141,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow boolean `removeStopWords`')]
-    public function testSetSettings6()
+    public function testSetSettings6(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3102,7 +3162,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow list of string `removeStopWords`')]
-    public function testSetSettings7()
+    public function testSetSettings7(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3125,7 +3185,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow boolean `distinct`')]
-    public function testSetSettings8()
+    public function testSetSettings8(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3146,7 +3206,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow integers for `distinct`')]
-    public function testSetSettings9()
+    public function testSetSettings9(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3167,7 +3227,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('setSettings allow all `indexSettings`')]
-    public function testSetSettings10()
+    public function testSetSettings10(): void
     {
         $client = $this->getClient();
         $client->setSettings(
@@ -3310,7 +3370,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateApiKey')]
-    public function testUpdateApiKey()
+    public function testUpdateApiKey(): void
     {
         $client = $this->getClient();
         $client->updateApiKey(
@@ -3335,7 +3395,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -3376,7 +3436,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    protected function getClient()
+    protected function getClient(): SearchClient
     {
         $config = SearchConfig::create('appID', 'apiKey');
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));

@@ -9,7 +9,7 @@ class AuthInterceptor extends Interceptor {
   final String appId;
 
   /// The API key used for Algolia authentication.
-  final String apiKey;
+  String apiKey;
 
   /// Constructs an [AuthInterceptor] with the provided application id and API key.
   AuthInterceptor({

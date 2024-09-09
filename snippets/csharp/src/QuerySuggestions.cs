@@ -25,12 +25,12 @@ public class SnippetQuerySuggestionsClient
     var response = await client.CreateConfigAsync(
       new ConfigurationWithIndex
       {
-        IndexName = "theIndexName",
+        IndexName = "<YOUR_INDEX_NAME>",
         SourceIndices = new List<SourceIndex>
         {
           new SourceIndex
           {
-            IndexName = "testIndex",
+            IndexName = "<YOUR_INDEX_NAME>",
             Facets = new List<Facet> { new Facet { Attribute = "test", } },
             Generate = new List<List<string>>
             {
@@ -43,6 +43,7 @@ public class SnippetQuerySuggestionsClient
         Exclude = new List<string> { "test" },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -61,6 +62,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -79,6 +81,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -97,6 +100,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -115,6 +119,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -132,7 +137,8 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.DeleteConfigAsync("theIndexName");
+    var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -151,6 +157,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.GetAllConfigsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -168,7 +175,8 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+    var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -186,7 +194,8 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetConfigStatusAsync("theIndexName");
+    var response = await client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -204,7 +213,27 @@ public class SnippetQuerySuggestionsClient
     );
 
     // Call the API
-    var response = await client.GetLogFileAsync("theIndexName");
+    var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForQuerySuggestionsClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new QuerySuggestionsClient(
+      new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -223,14 +252,14 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.UpdateConfigAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new Configuration
       {
         SourceIndices = new List<SourceIndex>
         {
           new SourceIndex
           {
-            IndexName = "testIndex",
+            IndexName = "<YOUR_INDEX_NAME>",
             Facets = new List<Facet> { new Facet { Attribute = "test", } },
             Generate = new List<List<string>>
             {
@@ -243,6 +272,7 @@ public class SnippetQuerySuggestionsClient
         Exclude = new List<string> { "test" },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 }

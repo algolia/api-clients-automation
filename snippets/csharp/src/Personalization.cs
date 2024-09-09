@@ -23,6 +23,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -41,6 +42,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -59,6 +61,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -77,6 +80,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -95,6 +99,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.DeleteUserProfileAsync("UserToken");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -113,6 +118,7 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.GetPersonalizationStrategyAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -131,6 +137,26 @@ public class SnippetPersonalizationClient
 
     // Call the API
     var response = await client.GetUserTokenProfileAsync("UserToken");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForPersonalizationClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new PersonalizationClient(
+      new PersonalizationConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -167,6 +193,7 @@ public class SnippetPersonalizationClient
         PersonalizationImpact = 42,
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 }

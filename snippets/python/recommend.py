@@ -19,6 +19,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -42,6 +43,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -65,6 +67,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -88,6 +91,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -108,11 +112,12 @@ async def snippet_for_delete_recommend_rule():
 
     # Call the API
     response = await _client.delete_recommend_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -133,11 +138,12 @@ async def snippet_for_get_recommend_rule():
 
     # Call the API
     response = await _client.get_recommend_rule(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -158,11 +164,12 @@ async def snippet_for_get_recommend_status():
 
     # Call the API
     response = await _client.get_recommend_status(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         task_id=12345,
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -186,7 +193,7 @@ async def snippet_for_get_recommendations():
         get_recommendations_params={
             "requests": [
                 {
-                    "indexName": "indexName",
+                    "indexName": "<YOUR_INDEX_NAME>",
                     "objectID": "objectID",
                     "model": "related-products",
                     "threshold": 42.1,
@@ -195,6 +202,7 @@ async def snippet_for_get_recommendations():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -215,13 +223,33 @@ async def snippet_for_search_recommend_rules():
 
     # Call the API
     response = await _client.search_recommend_rules(
-        index_name="indexName",
+        index_name="<YOUR_INDEX_NAME>",
         model="related-products",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<

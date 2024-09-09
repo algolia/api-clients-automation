@@ -52,7 +52,7 @@ func TestIngestionE2E_EnableTask(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -81,7 +81,7 @@ func TestIngestionE2E_EnableTaskV1(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -110,7 +110,7 @@ func TestIngestionE2E_GetSource(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -139,7 +139,7 @@ func TestIngestionE2E_ListAuthentications(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -170,7 +170,7 @@ func TestIngestionE2E_SearchTasks(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -201,7 +201,7 @@ func TestIngestionE2E_SearchTasksV1(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 

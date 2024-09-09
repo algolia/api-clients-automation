@@ -2,7 +2,7 @@
   null
 {{/isNull}}
 {{#isString}}
-  "{{{value}}}"
+  "{{#lambda.escapeQuotes}}{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}{{/lambda.escapeQuotes}}"
 {{/isString}}
 {{#isInteger}}
   {{{value}}}
@@ -20,7 +20,7 @@
   {{{objectName}}}.{{#lambda.javaEnum}}{{{value}}}{{/lambda.javaEnum}}
 {{/isEnum}}
 {{#isArray}}
-  List.of({{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}})
+  Arrays.asList({{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}})
 {{/isArray}}
 {{#isObject}}
   new {{{objectName}}}()
@@ -28,9 +28,9 @@
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}
-  Map.of({{#value}}{{#entrySet}}"{{{key}}}", "{{{value}}}"{{^-last}},{{/-last}}{{/entrySet}}{{/value}})
+  new HashMap(){{ {{#value}}{{#entrySet}}put("{{{key}}}", "{{{value}}}");{{/entrySet}}{{/value}} }}
   {{/isAnyType}}
   {{^isAnyType}}
-  Map.of({{#value}}"{{{key}}}", {{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}})
+  new HashMap(){{ {{#value}}put("{{{key}}}", {{> tests/generateParams}});{{/value}} }}
   {{/isAnyType}}
 {{/isFreeFormObject}}

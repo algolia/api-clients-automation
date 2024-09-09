@@ -13,6 +13,7 @@ export 'src/model/base_recommend_request.dart';
 export 'src/model/base_search_params.dart';
 export 'src/model/base_search_params_without_query.dart';
 export 'src/model/base_search_response.dart';
+export 'src/model/boolean_string.dart';
 export 'src/model/bought_together_query.dart';
 export 'src/model/condition.dart';
 export 'src/model/consequence.dart';

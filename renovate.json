@@ -6,17 +6,19 @@
     ":preserveSemverRanges"
   ],
   "enabledManagers": [
+    "bundler",
     "dockerfile",
     "github-actions",
-    "npm",
-    "nvm",
-    "gradle",
-    "regex",
-    "pub",
     "gomod",
-    "pip_requirements",
     "gradle-wrapper",
-    "bundler",
+    "gradle",
+    "npm",
+    "nuget",
+    "nvm",
+    "pip_requirements",
+    "poetry",
+    "pub",
+    "regex",
     "sbt"
   ],
   "baseBranches": [
@@ -58,11 +60,12 @@
       "datasourceTemplate": "maven"
     },
     {
-      "description": "Update poetry.toml mustache devDeps",
+      "description": "Update pyproject.toml mustache devDeps",
       "fileMatch": [
         "pyproject.mustache"
       ],
       "matchStrings": [
+        "dependencies][^[]*",
         "(?<depName>.*?)=\\s*\"(?<currentValue>.*?)\""
       ],
       "matchStringsStrategy": "recursive",
@@ -121,16 +124,6 @@
       "datasourceTemplate": "github-releases"
     },
     {
-      "description": "Update composer.json for PHP",
-      "fileMatch": "composer.mustache",
-      "matchStrings": [
-        "\"require(-dev)?\":\\s*{[^}]*}",
-        "\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
-      ],
-      "matchStringsStrategy": "recursive",
-      "datasourceTemplate": "packagist"
-    },
-    {
       "description": "Update pubspec.yaml for Dart",
       "fileMatch": "pubspec.mustache",
       "matchStrings": [
@@ -140,6 +133,15 @@
       "matchStringsStrategy": "recursive",
       "datasourceTemplate": "dart",
       "versioningTemplate": "npm"
+    },
+    {
+      "description": "Update .csharp-version",
+      "fileMatch": ".csharp-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "dotnet-version",
+      "depNameTemplate": "dotnet-sdk"
     },
     {
       "description": "Update .java-version",
@@ -156,10 +158,8 @@
       "matchStrings": [
         "(?<currentValue>.*)"
       ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "dart-lang/sdk",
-      "versioningTemplate": "semver",
-      "extractVersionTemplate": "^[^-|+]*$"
+      "datasourceTemplate": "dart-version",
+      "depNameTemplate": "dart"
     },
     {
       "description": "Update .go-version",
@@ -177,7 +177,27 @@
         "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-tags",
-      "depNameTemplate": "php/php-src"
+      "depNameTemplate": "php/php-src",
+      "extractVersionTemplate": "^php-(?<version>.*)$"
+    },
+    {
+      "description": "Update .ruby-version",
+      "fileMatch": ".ruby-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "ruby-version",
+      "depNameTemplate": "ruby"
+    },
+    {
+      "description": "Update .swift-version",
+      "fileMatch": ".swift-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "swiftlang/swift",
+      "extractVersionTemplate": "^swift-(?<version>.*)-RELEASE$"
     },
     {
       "description": "Update swiftformat version",

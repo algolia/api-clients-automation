@@ -75,6 +75,20 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
       transporter.algoliaAgent.add({ segment, version });
     },
 
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
+    },
+
     {{#isSearchClient}}
     {{> client/api/helpers}}
     {{/isSearchClient}}

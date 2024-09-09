@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class QuerySuggestionsTest extends TestCase
 {
     #[TestDox('Retrieve QS config e2e')]
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
         $client = $this->getClient();
         $resp = $client->getConfig(
@@ -37,7 +37,7 @@ class QuerySuggestionsTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -52,7 +52,7 @@ class QuerySuggestionsTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): QuerySuggestionsClient
     {
         return QuerySuggestionsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }

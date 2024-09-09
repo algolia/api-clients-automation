@@ -9,6 +9,7 @@ import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
@@ -24,7 +25,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }
@@ -39,7 +40,7 @@ class UsageTest {
         )
       },
       intercept = {
-        assertEquals("test-app-id.algolia.net", it.url.host)
+        assertEquals("usage.algolia.com", it.url.host)
       },
     )
   }
@@ -55,6 +56,23 @@ class UsageTest {
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Usage (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
+  fun `the user agent contains the latest version`() = runTest {
+    val client = UsageClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(3.3.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -104,5 +122,43 @@ class UsageTest {
     assertFails {
       val client = UsageClient(appId = "my-app-id", apiKey = "")
     }.let { error -> assertError(error, "`apiKey` is missing.") }
+  }
+
+  @Test
+  fun `switch API key`() = runTest {
+    val client = UsageClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/1",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+      },
+    )
+    client.runTest(
+      call = {
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
+      },
+      intercept = {
+      },
+    )
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/2",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+      },
+    )
   }
 }

@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class PersonalizationClient
 {
-    public const VERSION = '4.2.0';
+    public const VERSION = '4.4.0';
 
     /**
      * @var ApiWrapperInterface
@@ -96,6 +96,16 @@ class PersonalizationClient
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     */
+    public function setClientApiKey($apiKey)
+    {
+        $this->config->setClientApiKey($apiKey);
     }
 
     /**

@@ -43,8 +43,23 @@ public class QuerySuggestionsClientTests
     }
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
+  [Fact(DisplayName = "the user agent contains the latest version")]
   public async Task CommonApiTest1()
+  {
+    var client = new QuerySuggestionsClient(
+      new QuerySuggestionsConfig("appId", "apiKey", "us"),
+      _echo
+    );
+    await client.CustomPostAsync("1/test");
+    EchoResponse result = _echo.LastResponse;
+    {
+      var regexp = new Regex("^Algolia for Csharp \\(7.3.0\\).*");
+      Assert.Matches(regexp, result.Headers["user-agent"]);
+    }
+  }
+
+  [Fact(DisplayName = "calls api with default read timeouts")]
+  public async Task CommonApiTest2()
   {
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("appId", "apiKey", "us"),
@@ -58,7 +73,7 @@ public class QuerySuggestionsClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest2()
+  public async Task CommonApiTest3()
   {
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("appId", "apiKey", "us"),
@@ -110,5 +125,48 @@ public class QuerySuggestionsClientTests
       new QuerySuggestionsConfig("my-app-id", "my-api-key", "us"),
       _echo
     );
+  }
+
+  [Fact(DisplayName = "switch API key")]
+  public async Task SetClientApiKeyTest0()
+  {
+    QuerySuggestionsConfig _config = new QuerySuggestionsConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6683,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new QuerySuggestionsClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("check-api-key/1");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"test-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      client.SetClientApiKey("updated-api-key");
+    }
+    {
+      var res = await client.CustomGetAsync("check-api-key/2");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"updated-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 }

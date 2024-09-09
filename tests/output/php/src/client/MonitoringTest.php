@@ -27,7 +27,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
 
     private $recordedRequest;
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequest = [
             'request' => $request,
@@ -39,7 +39,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct user agent')]
-    public function test0commonApi()
+    public function test0commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -53,8 +53,23 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('the user agent contains the latest version')]
+    public function test1commonApi(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertTrue(
+            (bool) preg_match(
+                '/^Algolia for PHP \(4.4.0\).*/',
+                $this->recordedRequest['request']->getHeader('User-Agent')[0]
+            )
+        );
+    }
+
     #[TestDox('calls api with default read timeouts')]
-    public function test1commonApi()
+    public function test2commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -72,7 +87,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test2commonApi()
+    public function test3commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -90,12 +105,11 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('use the correct host')]
-    public function test0parameters()
+    public function test0parameters(): void
     {
         $client = $this->createClient(
             'my-app-id',
-            'my-api-key',
-            null
+            'my-api-key'
         );
         $this->assertIsObject($client);
         $client->customDelete(
@@ -107,13 +121,37 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('switch API key')]
+    public function test0setClientApiKey(): void
+    {
+        $client = MonitoringClient::createWithConfig(MonitoringConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6683']));
+
+        $res = $client->customGet(
+            'check-api-key/1',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"test-api-key"}',
+            json_encode($res)
+        );
+
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        $res = $client->customGet(
+            'check-api-key/2',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"updated-api-key"}',
+            json_encode($res)
+        );
+    }
+
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     *
-     * @return MonitoringClient
      */
-    private function createClient($appId, $apiKey)
+    private function createClient($appId, $apiKey): MonitoringClient
     {
         $config = MonitoringConfig::create($appId, $apiKey);
         $clusterHosts = MonitoringClient::getClusterHosts($config);

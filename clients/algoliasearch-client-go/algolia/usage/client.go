@@ -51,7 +51,7 @@ func NewClientWithConfig(cfg UsageConfiguration) (*APIClient, error) {
 		return nil, errors.New("`apiKey` is missing.")
 	}
 	if len(cfg.Hosts) == 0 {
-		cfg.Hosts = getDefaultHosts(cfg.AppID)
+		cfg.Hosts = getDefaultHosts()
 	}
 	if cfg.UserAgent == "" {
 		cfg.UserAgent = getUserAgent()
@@ -66,23 +66,14 @@ func NewClientWithConfig(cfg UsageConfiguration) (*APIClient, error) {
 	}, nil
 }
 
-func getDefaultHosts(appID string) []transport.StatefulHost {
-	hosts := []transport.StatefulHost{
-		transport.NewStatefulHost("https", appID+"-dsn.algolia.net", call.IsRead),
-		transport.NewStatefulHost("https", appID+".algolia.net", call.IsWrite),
+func getDefaultHosts() []transport.StatefulHost {
+	return []transport.StatefulHost{
+		transport.NewStatefulHost("https", "usage.algolia.com", call.IsReadWrite),
 	}
-	hosts = append(hosts, transport.Shuffle(
-		[]transport.StatefulHost{
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-1.algolianet.com", appID), call.IsReadWrite),
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-2.algolianet.com", appID), call.IsReadWrite),
-			transport.NewStatefulHost("https", fmt.Sprintf("%s-3.algolianet.com", appID), call.IsReadWrite),
-		},
-	)...)
-	return hosts
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.1.1); Go (%s); Usage (4.1.1)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.3.0); Go (%s); Usage (4.3.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -109,6 +100,17 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*ht
 // Caution: modifying the configuration while live can cause data races and potentially unwanted behavior.
 func (c *APIClient) GetConfiguration() *UsageConfiguration {
 	return c.cfg
+}
+
+// Allow update of stored API key used to authenticate requests.
+func (c *APIClient) SetClientApiKey(apiKey string) error {
+	if c.cfg == nil {
+		return errors.New("client config is not set")
+	}
+
+	c.cfg.ApiKey = apiKey
+
+	return nil
 }
 
 // prepareRequest build the request.

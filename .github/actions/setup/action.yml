@@ -9,6 +9,9 @@ inputs:
   language:
     description: the language for which to install deps
     required: false
+  version:
+    description: the version of the language to setup
+    required: false
 
 runs:
   using: composite
@@ -48,19 +51,6 @@ runs:
       shell: bash
       run: yarn workspace scripts build:cli
 
-    - name: Get all languages versions
-      id: versions
-      shell: bash
-      run: |
-        # remove patch from php version
-        echo "CSHARP_VERSION=$(cat config/.csharp-version)" >> $GITHUB_OUTPUT
-        echo "DART_VERSION=$(cat config/.dart-version)" >> $GITHUB_OUTPUT
-        echo "GO_VERSION=$(cat config/.go-version)" >> $GITHUB_OUTPUT
-        echo "PHP_VERSION=$(cat config/.php-version | cut -d '.' -f 1,2)" >> $GITHUB_OUTPUT
-        echo "PYTHON_VERSION=$(cat config/.python-version)" >> $GITHUB_OUTPUT
-        echo "RUBY_VERSION=$(cat config/.ruby-version)" >> $GITHUB_OUTPUT
-        echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
-
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
       if: ${{ inputs.language == 'javascript' }}
@@ -92,7 +82,7 @@ runs:
       if: ${{ inputs.language == 'php' }}
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ steps.versions.outputs.PHP_VERSION }}
+        php-version: ${{ inputs.version }}
         tools: composer
 
     - name: Run composer install
@@ -108,7 +98,7 @@ runs:
       uses: actions/setup-go@v5
       with:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
-        go-version: ${{ steps.versions.outputs.GO_VERSION }}
+        go-version: ${{ inputs.version }}
 
     - name: Install golangci-lint
       if: ${{ inputs.language == 'go' }}
@@ -123,7 +113,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/golangci-lint
-        key: golangci-lint-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
+        key: golangci-lint-${{ inputs.version }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
 
     # Kotlin
     - name: Cache spotless
@@ -138,7 +128,7 @@ runs:
       if: ${{ inputs.language == 'dart' }}
       uses: dart-lang/setup-dart@v1
       with:
-        sdk: ${{ steps.versions.outputs.DART_VERSION }}
+        sdk: ${{ inputs.version }}
 
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
@@ -154,7 +144,7 @@ runs:
     - uses: actions/setup-python@v5
       if: ${{ inputs.language == 'python' }}
       with:
-        python-version: ${{ steps.versions.outputs.PYTHON_VERSION }}
+        python-version: ${{ inputs.version }}
         cache: 'poetry'
 
     - run: poetry install
@@ -167,7 +157,7 @@ runs:
       if: ${{ inputs.language == 'ruby' }}
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ steps.versions.outputs.RUBY_VERSION }}
+        ruby-version: ${{ inputs.version }}
         bundler-cache: true
 
     - name: Install Ruby formatter
@@ -184,7 +174,7 @@ runs:
       if: ${{ inputs.language == 'csharp' }}
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ steps.versions.outputs.CSHARP_VERSION }}
+        dotnet-version: ${{ inputs.version }}
 
     # Swift deps
     - name: Install swift
@@ -195,7 +185,7 @@ runs:
       # uses: swift-actions/setup-swift@v2
       uses: redsun82/setup-swift@b2b6f77ab14f6a9b136b520dc53ec8eca27d2b99
       with:
-        swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
+        swift-version: ${{ inputs.version }}
 
     - name: Cache the build folder
       id: cache-swift-build
@@ -205,13 +195,13 @@ runs:
         path: |
           clients/algoliasearch-client-swift/.build
           tests/output/swift/.build
-        key: swift-build-${{ steps.versions.outputs.SWIFT_VERSION }}-${{ runner.os }}
+        key: swift-build-${{ inputs.version }}-${{ runner.os }}
 
     - name: Set swiftformat version
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.54.3" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.54.4" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}

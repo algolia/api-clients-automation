@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class InsightsTest extends TestCase
 {
     #[TestDox('Many events type')]
-    public function testPushEvents1()
+    public function testPushEvents1(): void
     {
         $client = $this->getClient();
         $resp = $client->pushEvents(
@@ -35,7 +35,7 @@ class InsightsTest extends TestCase
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1724716800000,
+                    'timestamp' => 1725753600000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -49,7 +49,7 @@ class InsightsTest extends TestCase
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1724716800000,
+                    'timestamp' => 1725753600000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -65,7 +65,7 @@ class InsightsTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -80,7 +80,7 @@ class InsightsTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): InsightsClient
     {
         return InsightsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
     }

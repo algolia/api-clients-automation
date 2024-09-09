@@ -1284,14 +1284,14 @@ class SearchTest extends AnyFunSuite {
   test("getRule") {
     val (client, echo) = testClient()
     val future = client.getRule(
-      indexName = "indexName",
-      objectID = "id1"
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/id1")
+    assert(res.path == "/1/indexes/cts_e2e_browse/rules/qr-1725004648916")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
@@ -1597,19 +1597,12 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("Partial update with string value") {
+  test("Partial update with a new value for a string attribute") {
     val (client, echo) = testClient()
     val future = client.partialUpdateObject(
       indexName = "theIndexName",
       objectID = "uniqueID",
-      attributesToUpdate = Map(
-        "id1" -> AttributeToUpdate("test"),
-        "id2" -> BuiltInOperation(
-          _operation = BuiltInOperationType.withName("AddUnique"),
-          value = BuiltInOperationValue("test2")
-        )
-      ),
-      createIfNotExists = Some(true)
+      attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
     )
 
     Await.ready(future, Duration.Inf)
@@ -1617,29 +1610,17 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""")
+    val expectedBody = parse("""{"attributeId":"new value"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"createIfNotExists":"true"}""").asInstanceOf[JObject].obj.toMap
-    val actualQuery = res.queryParameters
-    assert(actualQuery.size == expectedQuery.size)
-    for ((k, v) <- actualQuery) {
-      assert(expectedQuery.contains(k))
-      assert(expectedQuery(k).values == v)
-    }
   }
 
-  test("Partial update with integer value1") {
+  test("Partial update with a new value for an integer attribute1") {
     val (client, echo) = testClient()
     val future = client.partialUpdateObject(
       indexName = "theIndexName",
       objectID = "uniqueID",
-      attributesToUpdate = Map(
-        "attributeId" -> BuiltInOperation(
-          _operation = BuiltInOperationType.withName("Increment"),
-          value = BuiltInOperationValue(2)
-        )
-      )
+      attributesToUpdate = JObject(List(JField("attributeId", JInt(1))))
     )
 
     Await.ready(future, Duration.Inf)
@@ -1647,7 +1628,62 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"attributeId":{"_operation":"Increment","value":2}}""")
+    val expectedBody = parse("""{"attributeId":1}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("Partial update with a new value for a boolean attribute2") {
+    val (client, echo) = testClient()
+    val future = client.partialUpdateObject(
+      indexName = "theIndexName",
+      objectID = "uniqueID",
+      attributesToUpdate = JObject(List(JField("attributeId", JBool(true))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"attributeId":true}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("Partial update with a new value for an array attribute3") {
+    val (client, echo) = testClient()
+    val future = client.partialUpdateObject(
+      indexName = "theIndexName",
+      objectID = "uniqueID",
+      attributesToUpdate =
+        JObject(List(JField("attributeId", JArray(List(JString("one"), JString("two"), JString("three"))))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"attributeId":["one","two","three"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("Partial update with a new value for an object attribute4") {
+    val (client, echo) = testClient()
+    val future = client.partialUpdateObject(
+      indexName = "theIndexName",
+      objectID = "uniqueID",
+      attributesToUpdate = JObject(List(JField("attributeId", JObject(List(JField("nested", JString("value")))))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/uniqueID/partial")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"attributeId":{"nested":"value"}}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -2757,10 +2793,10 @@ class SearchTest extends AnyFunSuite {
   test("searchRules") {
     val (client, echo) = testClient()
     val future = client.searchRules(
-      indexName = "indexName",
+      indexName = "cts_e2e_browse",
       searchRulesParams = Some(
         SearchRulesParams(
-          query = Some("something")
+          query = Some("zorro")
         )
       )
     )
@@ -2768,9 +2804,9 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/search")
+    assert(res.path == "/1/indexes/cts_e2e_browse/rules/search")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"something"}""")
+    val expectedBody = parse("""{"query":"zorro"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

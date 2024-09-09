@@ -20,7 +20,7 @@ import type {
 import type { EventsResponse } from '../model/eventsResponse';
 import type { InsightsEvents } from '../model/insightsEvents';
 
-export const apiClientVersion = '5.1.1';
+export const apiClientVersion = '5.3.1';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -90,6 +90,20 @@ export function createInsightsClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**
@@ -214,7 +228,7 @@ export function createInsightsClient({
     },
 
     /**
-     * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+     * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
      *
      * @param deleteUserToken - The deleteUserToken object.
      * @param deleteUserToken.userToken - User token for which to delete all associated events.

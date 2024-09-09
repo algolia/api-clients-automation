@@ -12,7 +12,7 @@ import kotlinx.serialization.json.*
 {{#operations}}
 public class {{classname}}(
   override val appId: String,
-  override val apiKey: String,
+  override var apiKey: String,
   {{#hasRegionalHost}}
   public val region: String{{#fallbackToAliasHost}}? = null{{/fallbackToAliasHost}},
   {{/hasRegionalHost}}
@@ -46,9 +46,13 @@ public class {{classname}}(
     val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
     listOf(Host(url)) 
   {{/hasRegionalHost}}
-  {{#uniqueHost}}
-  listOf(Host("{{.}}"))
-  {{/uniqueHost}}
+  {{#hostsWithoutVariables.size}}
+  listOf(
+  {{#hostsWithoutVariables}}
+  Host("{{.}}"),
+  {{/hostsWithoutVariables}}
+  )
+  {{/hostsWithoutVariables.size}}
   }
 
   {{#operation}}

@@ -24,6 +24,7 @@ void snippetForaddApiKey() async {
       maxHitsPerQuery: 20,
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -37,12 +38,13 @@ void snippetForaddOrUpdateObject() async {
 
   // Call the API
   final response = await client.addOrUpdateObject(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "uniqueID",
     body: {
       'key': "value",
     },
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -61,6 +63,7 @@ void snippetForappendSource() async {
       description: "theDescription",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -79,6 +82,7 @@ void snippetForassignUserId() async {
       cluster: "theCluster",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -112,6 +116,7 @@ void snippetForbatch() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -137,6 +142,7 @@ void snippetForbatch1() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -162,6 +168,7 @@ void snippetForbatch2() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -187,6 +194,7 @@ void snippetForbatch3() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -212,6 +220,7 @@ void snippetForbatch4() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -237,6 +246,7 @@ void snippetForbatch5() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -262,6 +272,7 @@ void snippetForbatch6() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -284,6 +295,7 @@ void snippetForbatchAssignUserIds() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -321,6 +333,7 @@ void snippetForbatchDictionaryEntries() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -347,6 +360,7 @@ void snippetForbatchDictionaryEntries1() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -374,6 +388,7 @@ void snippetForbatchDictionaryEntries2() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -387,8 +402,9 @@ void snippetForbrowse() async {
 
   // Call the API
   final response = await client.browse(
-    indexName: "cts_e2e_browse",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -402,8 +418,9 @@ void snippetForclearObjects() async {
 
   // Call the API
   final response = await client.clearObjects(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -417,8 +434,9 @@ void snippetForclearRules() async {
 
   // Call the API
   final response = await client.clearRules(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -432,8 +450,9 @@ void snippetForclearSynonyms() async {
 
   // Call the API
   final response = await client.clearSynonyms(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -449,6 +468,7 @@ void snippetForcustomDelete() async {
   final response = await client.customDelete(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -464,6 +484,7 @@ void snippetForcustomGet() async {
   final response = await client.customGet(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -479,6 +500,7 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -494,6 +516,7 @@ void snippetForcustomPut() async {
   final response = await client.customPut(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -509,6 +532,7 @@ void snippetFordeleteApiKey() async {
   final response = await client.deleteApiKey(
     key: "myTestApiKey",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -522,11 +546,12 @@ void snippetFordeleteBy() async {
 
   // Call the API
   final response = await client.deleteBy(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
     deleteByParams: DeleteByParams(
       filters: "brand:brandName",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -540,8 +565,9 @@ void snippetFordeleteIndex() async {
 
   // Call the API
   final response = await client.deleteIndex(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -558,6 +584,27 @@ void snippetFordeleteObject() async {
     indexName: "<YOUR_INDEX_NAME>",
     objectID: "uniqueID",
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the deleteObjects method.
+//
+// call deleteObjects without error
+void snippetFordeleteObjects() async {
+  // >SEPARATOR deleteObjects default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.deleteObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectIDs: [
+      "1",
+      "2",
+    ],
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -571,9 +618,10 @@ void snippetFordeleteRule() async {
 
   // Call the API
   final response = await client.deleteRule(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -589,6 +637,7 @@ void snippetFordeleteSource() async {
   final response = await client.deleteSource(
     source: "theSource",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -602,9 +651,69 @@ void snippetFordeleteSynonym() async {
 
   // Call the API
   final response = await client.deleteSynonym(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key basic
+void snippetForgenerateSecuredApiKey() async {
+  // >SEPARATOR generateSecuredApiKey generate secured api key basic
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+    restrictions: SecuredApiKeyRestrictions(
+      validUntil: 2524604400,
+      restrictIndices: [
+        "Movies",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key with searchParams
+void snippetForgenerateSecuredApiKey1() async {
+  // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+    restrictions: SecuredApiKeyRestrictions(
+      validUntil: 2524604400,
+      restrictIndices: [
+        "Movies",
+        "cts_e2e_settings",
+      ],
+      restrictSources: "192.168.1.0/24",
+      filters: "category:Book OR category:Ebook AND _tags:published",
+      userToken: "user123",
+      searchParams: SearchParamsObject(
+        query: "batman",
+        typoTolerance: TypoToleranceEnum.fromJson("strict"),
+        aroundRadius: AroundRadiusAll.fromJson("all"),
+        mode: Mode.fromJson("neuralSearch"),
+        hitsPerPage: 10,
+        optionalWords: [
+          "one",
+          "two",
+        ],
+      ),
+    ),
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -620,6 +729,7 @@ void snippetForgetApiKey() async {
   final response = await client.getApiKey(
     key: "myTestApiKey",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -635,6 +745,7 @@ void snippetForgetAppTask() async {
   final response = await client.getAppTask(
     taskID: 123,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -648,6 +759,7 @@ void snippetForgetDictionaryLanguages() async {
 
   // Call the API
   final response = await client.getDictionaryLanguages();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -661,6 +773,7 @@ void snippetForgetDictionarySettings() async {
 
   // Call the API
   final response = await client.getDictionarySettings();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -674,6 +787,7 @@ void snippetForgetLogs() async {
 
   // Call the API
   final response = await client.getLogs();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -687,13 +801,14 @@ void snippetForgetObject() async {
 
   // Call the API
   final response = await client.getObject(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "uniqueID",
     attributesToRetrieve: [
       "attr1",
       "attr2",
     ],
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -715,11 +830,12 @@ void snippetForgetObjects() async {
             "attr2",
           ],
           objectID: "uniqueID",
-          indexName: "theIndexName",
+          indexName: "<YOUR_INDEX_NAME>",
         ),
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -733,9 +849,10 @@ void snippetForgetRule() async {
 
   // Call the API
   final response = await client.getRule(
-    indexName: "indexName",
-    objectID: "id1",
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "qr-1725004648916",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -749,8 +866,9 @@ void snippetForgetSettings() async {
 
   // Call the API
   final response = await client.getSettings(
-    indexName: "cts_e2e_settings",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -764,6 +882,7 @@ void snippetForgetSources() async {
 
   // Call the API
   final response = await client.getSources();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -777,9 +896,10 @@ void snippetForgetSynonym() async {
 
   // Call the API
   final response = await client.getSynonym(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -793,9 +913,10 @@ void snippetForgetTask() async {
 
   // Call the API
   final response = await client.getTask(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
     taskID: 123,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -809,6 +930,7 @@ void snippetForgetTopUserIds() async {
 
   // Call the API
   final response = await client.getTopUserIds();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -824,6 +946,7 @@ void snippetForgetUserId() async {
   final response = await client.getUserId(
     userID: "uniqueID",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -837,6 +960,55 @@ void snippetForhasPendingMappings() async {
 
   // Call the API
   final response = await client.hasPendingMappings();
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExists
+void snippetForindexExists() async {
+  // >SEPARATOR indexExists indexExists
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexNotExists
+void snippetForindexExists1() async {
+  // >SEPARATOR indexExists indexNotExists
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExistsWithError
+void snippetForindexExists2() async {
+  // >SEPARATOR indexExists indexExistsWithError
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.indexExists(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -850,6 +1022,7 @@ void snippetForlistApiKeys() async {
 
   // Call the API
   final response = await client.listApiKeys();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -863,6 +1036,7 @@ void snippetForlistClusters() async {
 
   // Call the API
   final response = await client.listClusters();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -876,6 +1050,7 @@ void snippetForlistIndices() async {
 
   // Call the API
   final response = await client.listIndices();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -889,6 +1064,7 @@ void snippetForlistUserIds() async {
 
   // Call the API
   final response = await client.listUserIds();
+  // >LOG
   // SEPARATOR<
 }
 
@@ -909,11 +1085,12 @@ void snippetFormultipleBatch() async {
           body: {
             'key': "value",
           },
-          indexName: "theIndexName",
+          indexName: "<YOUR_INDEX_NAME>",
         ),
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -937,6 +1114,7 @@ void snippetForoperationIndex() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -956,6 +1134,7 @@ void snippetForoperationIndex1() async {
       destination: "<DESTINATION_INDEX_NAME>",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -975,12 +1154,13 @@ void snippetForoperationIndex2() async {
       destination: "<DESTINATION_INDEX_NAME>",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with string value
+// Partial update with a new value for a string attribute
 void snippetForpartialUpdateObject() async {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
@@ -988,17 +1168,67 @@ void snippetForpartialUpdateObject() async {
 
   // Call the API
   final response = await client.partialUpdateObject(
-    indexName: "theIndexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "uniqueID",
     attributesToUpdate: {
-      'id1': "test",
-      'id2': BuiltInOperation(
-        operation: BuiltInOperationType.fromJson("AddUnique"),
-        value: "test2",
-      ),
+      'attributeId': "new value",
     },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=true
+void snippetForpartialUpdateObjects() async {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
     createIfNotExists: true,
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=false
+void snippetForpartialUpdateObjects1() async {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "3",
+        'name': "Cyril",
+      },
+      {
+        'objectID': "4",
+        'name': "David",
+      },
+    ],
+    createIfNotExists: false,
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1014,6 +1244,66 @@ void snippetForremoveUserId() async {
   final response = await client.removeUserId(
     userID: "uniqueID",
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// call replaceAllObjects without error
+void snippetForreplaceAllObjects() async {
+  // >SEPARATOR replaceAllObjects default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+      {
+        'objectID': "3",
+        'name': "Cyril",
+      },
+      {
+        'objectID': "4",
+        'name': "David",
+      },
+      {
+        'objectID': "5",
+        'name': "Eva",
+      },
+      {
+        'objectID': "6",
+        'name': "Fiona",
+      },
+      {
+        'objectID': "7",
+        'name': "Gael",
+      },
+      {
+        'objectID': "8",
+        'name': "Hugo",
+      },
+      {
+        'objectID': "9",
+        'name': "Igor",
+      },
+      {
+        'objectID': "10",
+        'name': "Julia",
+      },
+    ],
+    batchSize: 3,
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1034,6 +1324,7 @@ void snippetForreplaceSources() async {
       ),
     ],
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1049,6 +1340,7 @@ void snippetForrestoreApiKey() async {
   final response = await client.restoreApiKey(
     key: "myApiKey",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1068,6 +1360,59 @@ void snippetForsaveObject() async {
       'test': "val",
     },
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// call saveObjects without error
+void snippetForsaveObjects() async {
+  // >SEPARATOR saveObjects call saveObjects without error
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.saveObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// saveObjects should report errors
+void snippetForsaveObjects1() async {
+  // >SEPARATOR saveObjects saveObjects should report errors
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.saveObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1081,7 +1426,7 @@ void snippetForsaveRule() async {
 
   // Call the API
   final response = await client.saveRule(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
     rule: Rule(
       objectID: "id1",
@@ -1093,6 +1438,7 @@ void snippetForsaveRule() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1130,6 +1476,7 @@ void snippetForsaveRules() async {
     forwardToReplicas: false,
     clearExistingRules: true,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1143,7 +1490,7 @@ void snippetForsaveSynonym() async {
 
   // Call the API
   final response = await client.saveSynonym(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
     synonymHit: SynonymHit(
       objectID: "id1",
@@ -1156,6 +1503,7 @@ void snippetForsaveSynonym() async {
     ),
     forwardToReplicas: true,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1194,6 +1542,7 @@ void snippetForsaveSynonyms() async {
     forwardToReplicas: true,
     replaceExistingSynonyms: true,
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1217,6 +1566,7 @@ void snippetForsearch() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1240,6 +1590,7 @@ void snippetForsearch1() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1263,6 +1614,7 @@ void snippetForsearch2() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1286,13 +1638,14 @@ void snippetForsearch3() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // retrieveFacets
-void snippetForsearch6() async {
+void snippetForsearch4() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
@@ -1312,13 +1665,14 @@ void snippetForsearch6() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-void snippetForsearch7() async {
+void snippetForsearch5() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
@@ -1337,6 +1691,7 @@ void snippetForsearch7() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1355,6 +1710,7 @@ void snippetForsearchDictionaryEntries() async {
       query: "about",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1368,9 +1724,10 @@ void snippetForsearchForFacetValues() async {
 
   // Call the API
   final response = await client.searchForFacetValues(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     facetName: "facetName",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1384,11 +1741,12 @@ void snippetForsearchRules() async {
 
   // Call the API
   final response = await client.searchRules(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
     searchRulesParams: SearchRulesParams(
-      query: "something",
+      query: "zorro",
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1402,8 +1760,9 @@ void snippetForsearchSingleIndex() async {
 
   // Call the API
   final response = await client.searchSingleIndex(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1417,8 +1776,9 @@ void snippetForsearchSynonyms() async {
 
   // Call the API
   final response = await client.searchSynonyms(
-    indexName: "indexName",
+    indexName: "<YOUR_INDEX_NAME>",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1439,6 +1799,23 @@ void snippetForsearchUserIds() async {
       hitsPerPage: 10,
     ),
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+void snippetForsetClientApiKey() async {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  client.setClientApiKey(
+    apiKey: "updated-api-key",
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1462,6 +1839,7 @@ void snippetForsetDictionarySettings() async {
       ),
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1469,7 +1847,7 @@ void snippetForsetDictionarySettings() async {
 //
 // setSettingsAttributesForFaceting
 void snippetForsetSettings() async {
-  // >SEPARATOR setSettings setSettingsAttributesForFaceting
+  // >SEPARATOR setSettings default
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -1484,6 +1862,7 @@ void snippetForsetSettings() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1508,5 +1887,109 @@ void snippetForupdateApiKey() async {
       maxHitsPerQuery: 20,
     ),
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key helper - add
+void snippetForwaitForApiKey() async {
+  // >SEPARATOR waitForApiKey wait for api key helper - add
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForApiKey(
+    key: "api-key-add-operation-test-dart",
+    operation: ApiKeyOperation.fromJson("add"),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - update
+void snippetForwaitForApiKey1() async {
+  // >SEPARATOR waitForApiKey wait for api key - update
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForApiKey(
+    key: "api-key-update-operation-test-dart",
+    operation: ApiKeyOperation.fromJson("update"),
+    apiKey: ApiKey(
+      description: "my updated api key",
+      acl: [
+        Acl.fromJson("search"),
+        Acl.fromJson("addObject"),
+        Acl.fromJson("deleteObject"),
+      ],
+      indexes: [
+        "Movies",
+        "Books",
+      ],
+      referers: [
+        "*google.com",
+        "*algolia.com",
+      ],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - delete
+void snippetForwaitForApiKey2() async {
+  // >SEPARATOR waitForApiKey wait for api key - delete
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForApiKey(
+    key: "api-key-delete-operation-test-dart",
+    operation: ApiKeyOperation.fromJson("delete"),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the waitForAppTask method.
+//
+// wait for an application-level task
+void snippetForwaitForAppTask() async {
+  // >SEPARATOR waitForAppTask default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForAppTask(
+    taskID: 123,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the waitForTask method.
+//
+// wait for task
+void snippetForwaitForTask() async {
+  // >SEPARATOR waitForTask default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.waitForTask(
+    indexName: "<YOUR_INDEX_NAME>",
+    taskID: 123,
+  );
+  // >LOG
   // SEPARATOR<
 }

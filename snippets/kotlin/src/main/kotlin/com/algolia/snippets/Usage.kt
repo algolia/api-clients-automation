@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.UsageClient
 // IMPORT<
 import com.algolia.client.model.usage.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -20,6 +19,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -37,6 +37,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -54,6 +55,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -71,6 +73,7 @@ class SnippetUsageClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -86,11 +89,12 @@ class SnippetUsageClient {
     // Call the API
     var response = client.getIndexUsage(
       statistic = Statistic.entries.first { it.value == "queries_operations" },
-      indexName = "myIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       startDate = "2024-04-03T12:46:43Z",
       endDate = "2024-04-05T12:46:43Z",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -110,8 +114,25 @@ class SnippetUsageClient {
       endDate = "2024-04-05T12:46:43Z",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

@@ -1,0 +1,100 @@
+[
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=true",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "createIfNotExists": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 444,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=false",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{language}}",
+          "objects": [
+            {
+              "objectID": "3",
+              "name": "Cyril"
+            },
+            {
+              "objectID": "4",
+              "name": "David"
+            }
+          ],
+          "createIfNotExists": false
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 555,
+              "objectIDs": [
+                "3",
+                "4"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

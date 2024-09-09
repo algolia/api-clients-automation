@@ -22,6 +22,7 @@ export async function snippetForAddApiKey(): Promise<void> {
     maxHitsPerQuery: 20,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -42,6 +43,7 @@ export async function snippetForAddOrUpdateObject(): Promise<void> {
     body: { key: 'value' },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -58,6 +60,7 @@ export async function snippetForAppendSource(): Promise<void> {
   // Call the API
   const response = await client.appendSource({ source: 'theSource', description: 'theDescription' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -77,6 +80,7 @@ export async function snippetForAssignUserId(): Promise<void> {
     assignUserIdParams: { cluster: 'theCluster' },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -101,6 +105,7 @@ export async function snippetForBatch(): Promise<void> {
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -120,6 +125,7 @@ export async function snippetForBatch1(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'clear', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -139,6 +145,7 @@ export async function snippetForBatch2(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'delete', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -158,6 +165,7 @@ export async function snippetForBatch3(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'deleteObject', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -177,6 +185,7 @@ export async function snippetForBatch4(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -196,6 +205,7 @@ export async function snippetForBatch5(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'partialUpdateObjectNoCreate', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -215,6 +225,7 @@ export async function snippetForBatch6(): Promise<void> {
     batchWriteParams: { requests: [{ action: 'updateObject', body: { key: 'value' } }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -234,6 +245,7 @@ export async function snippetForBatchAssignUserIds(): Promise<void> {
     batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -268,6 +280,7 @@ export async function snippetForBatchDictionaryEntries(): Promise<void> {
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -290,6 +303,7 @@ export async function snippetForBatchDictionaryEntries1(): Promise<void> {
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -311,6 +325,7 @@ export async function snippetForBatchDictionaryEntries2(): Promise<void> {
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -327,6 +342,7 @@ export async function snippetForBrowse(): Promise<void> {
   // Call the API
   const response = await client.browse({ indexName: 'cts_e2e_browse' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -343,6 +359,7 @@ export async function snippetForClearObjects(): Promise<void> {
   // Call the API
   const response = await client.clearObjects({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -359,6 +376,7 @@ export async function snippetForClearRules(): Promise<void> {
   // Call the API
   const response = await client.clearRules({ indexName: 'indexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -375,6 +393,7 @@ export async function snippetForClearSynonyms(): Promise<void> {
   // Call the API
   const response = await client.clearSynonyms({ indexName: 'indexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -391,6 +410,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -407,6 +427,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -423,6 +444,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -439,6 +461,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -455,6 +478,7 @@ export async function snippetForDeleteApiKey(): Promise<void> {
   // Call the API
   const response = await client.deleteApiKey({ key: 'myTestApiKey' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -471,6 +495,7 @@ export async function snippetForDeleteBy(): Promise<void> {
   // Call the API
   const response = await client.deleteBy({ indexName: 'theIndexName', deleteByParams: { filters: 'brand:brandName' } });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -487,6 +512,7 @@ export async function snippetForDeleteIndex(): Promise<void> {
   // Call the API
   const response = await client.deleteIndex({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -503,6 +529,24 @@ export async function snippetForDeleteObject(): Promise<void> {
   // Call the API
   const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the deleteObjects method.
+//
+// call deleteObjects without error
+export async function snippetForDeleteObjects(): Promise<void> {
+  // >SEPARATOR deleteObjects default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -519,6 +563,7 @@ export async function snippetForDeleteRule(): Promise<void> {
   // Call the API
   const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -535,6 +580,7 @@ export async function snippetForDeleteSource(): Promise<void> {
   // Call the API
   const response = await client.deleteSource({ source: 'theSource' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -551,6 +597,61 @@ export async function snippetForDeleteSynonym(): Promise<void> {
   // Call the API
   const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key basic
+export function snippetForGenerateSecuredApiKey(): void {
+  // >SEPARATOR generateSecuredApiKey generate secured api key basic
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: { validUntil: 2524604400, restrictIndices: ['Movies'] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// generate secured api key with searchParams
+export function snippetForGenerateSecuredApiKey1(): void {
+  // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+    restrictions: {
+      validUntil: 2524604400,
+      restrictIndices: ['Movies', 'cts_e2e_settings'],
+      restrictSources: '192.168.1.0/24',
+      filters: 'category:Book OR category:Ebook AND _tags:published',
+      userToken: 'user123',
+      searchParams: {
+        query: 'batman',
+        typoTolerance: 'strict',
+        aroundRadius: 'all',
+        mode: 'neuralSearch',
+        hitsPerPage: 10,
+        optionalWords: ['one', 'two'],
+      },
+    },
+  });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -567,6 +668,7 @@ export async function snippetForGetApiKey(): Promise<void> {
   // Call the API
   const response = await client.getApiKey({ key: 'myTestApiKey' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -583,6 +685,7 @@ export async function snippetForGetAppTask(): Promise<void> {
   // Call the API
   const response = await client.getAppTask({ taskID: 123 });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -599,6 +702,7 @@ export async function snippetForGetDictionaryLanguages(): Promise<void> {
   // Call the API
   const response = await client.getDictionaryLanguages();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -615,6 +719,7 @@ export async function snippetForGetDictionarySettings(): Promise<void> {
   // Call the API
   const response = await client.getDictionarySettings();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -631,6 +736,7 @@ export async function snippetForGetLogs(): Promise<void> {
   // Call the API
   const response = await client.getLogs();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -651,6 +757,7 @@ export async function snippetForGetObject(): Promise<void> {
     attributesToRetrieve: ['attr1', 'attr2'],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -669,6 +776,7 @@ export async function snippetForGetObjects(): Promise<void> {
     requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -683,8 +791,9 @@ export async function snippetForGetRule(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.getRule({ indexName: 'indexName', objectID: 'id1' });
+  const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -701,6 +810,7 @@ export async function snippetForGetSettings(): Promise<void> {
   // Call the API
   const response = await client.getSettings({ indexName: 'cts_e2e_settings' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -717,6 +827,7 @@ export async function snippetForGetSources(): Promise<void> {
   // Call the API
   const response = await client.getSources();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -733,6 +844,7 @@ export async function snippetForGetSynonym(): Promise<void> {
   // Call the API
   const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -749,6 +861,7 @@ export async function snippetForGetTask(): Promise<void> {
   // Call the API
   const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -765,6 +878,7 @@ export async function snippetForGetTopUserIds(): Promise<void> {
   // Call the API
   const response = await client.getTopUserIds();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -781,6 +895,7 @@ export async function snippetForGetUserId(): Promise<void> {
   // Call the API
   const response = await client.getUserId({ userID: 'uniqueID' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -797,6 +912,58 @@ export async function snippetForHasPendingMappings(): Promise<void> {
   // Call the API
   const response = await client.hasPendingMappings();
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExists
+export async function snippetForIndexExists(): Promise<void> {
+  // >SEPARATOR indexExists indexExists
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsYES' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexNotExists
+export async function snippetForIndexExists1(): Promise<void> {
+  // >SEPARATOR indexExists indexNotExists
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsNO' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the indexExists method.
+//
+// indexExistsWithError
+export async function snippetForIndexExists2(): Promise<void> {
+  // >SEPARATOR indexExists indexExistsWithError
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.indexExists({ indexName: 'indexExistsERROR' });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -813,6 +980,7 @@ export async function snippetForListApiKeys(): Promise<void> {
   // Call the API
   const response = await client.listApiKeys();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -829,6 +997,7 @@ export async function snippetForListClusters(): Promise<void> {
   // Call the API
   const response = await client.listClusters();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -845,6 +1014,7 @@ export async function snippetForListIndices(): Promise<void> {
   // Call the API
   const response = await client.listIndices();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -861,6 +1031,7 @@ export async function snippetForListUserIds(): Promise<void> {
   // Call the API
   const response = await client.listUserIds();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -879,6 +1050,7 @@ export async function snippetForMultipleBatch(): Promise<void> {
     requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -898,6 +1070,7 @@ export async function snippetForOperationIndex(): Promise<void> {
     operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>', scope: ['rules', 'settings'] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -917,6 +1090,7 @@ export async function snippetForOperationIndex1(): Promise<void> {
     operationIndexParams: { operation: 'copy', destination: '<DESTINATION_INDEX_NAME>' },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -936,6 +1110,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
     operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>' },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -943,7 +1118,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
 
 // Snippet for the partialUpdateObject method.
 //
-// Partial update with string value
+// Partial update with a new value for a string attribute
 export async function snippetForPartialUpdateObject(): Promise<void> {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
@@ -953,10 +1128,58 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   const response = await client.partialUpdateObject({
     indexName: 'theIndexName',
     objectID: 'uniqueID',
-    attributesToUpdate: { id1: 'test', id2: { _operation: 'AddUnique', value: 'test2' } },
+    attributesToUpdate: { attributeId: 'new value' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=true
+export async function snippetForPartialUpdateObjects(): Promise<void> {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObjects({
+    indexName: 'cts_e2e_partialUpdateObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
     createIfNotExists: true,
   });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObjects method.
+//
+// call partialUpdateObjects with createIfNotExists=false
+export async function snippetForPartialUpdateObjects1(): Promise<void> {
+  // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObjects({
+    indexName: 'cts_e2e_partialUpdateObjects_javascript',
+    objects: [
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+    ],
+    createIfNotExists: false,
+  });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -973,6 +1196,39 @@ export async function snippetForRemoveUserId(): Promise<void> {
   // Call the API
   const response = await client.removeUserId({ userID: 'uniqueID' });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjects method.
+//
+// call replaceAllObjects without error
+export async function snippetForReplaceAllObjects(): Promise<void> {
+  // >SEPARATOR replaceAllObjects default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.replaceAllObjects({
+    indexName: 'cts_e2e_replace_all_objects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+      { objectID: '5', name: 'Eva' },
+      { objectID: '6', name: 'Fiona' },
+      { objectID: '7', name: 'Gael' },
+      { objectID: '8', name: 'Hugo' },
+      { objectID: '9', name: 'Igor' },
+      { objectID: '10', name: 'Julia' },
+    ],
+    batchSize: 3,
+  });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -989,6 +1245,7 @@ export async function snippetForReplaceSources(): Promise<void> {
   // Call the API
   const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1005,6 +1262,7 @@ export async function snippetForRestoreApiKey(): Promise<void> {
   // Call the API
   const response = await client.restoreApiKey({ key: 'myApiKey' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1021,6 +1279,53 @@ export async function snippetForSaveObject(): Promise<void> {
   // Call the API
   const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// call saveObjects without error
+export async function snippetForSaveObjects(): Promise<void> {
+  // >SEPARATOR saveObjects call saveObjects without error
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'cts_e2e_saveObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// saveObjects should report errors
+export async function snippetForSaveObjects1(): Promise<void> {
+  // >SEPARATOR saveObjects saveObjects should report errors
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjects({
+    indexName: 'cts_e2e_saveObjects_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+  });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1041,6 +1346,7 @@ export async function snippetForSaveRule(): Promise<void> {
     rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1065,6 +1371,7 @@ export async function snippetForSaveRules(): Promise<void> {
     clearExistingRules: true,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1086,6 +1393,7 @@ export async function snippetForSaveSynonym(): Promise<void> {
     forwardToReplicas: true,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1110,6 +1418,7 @@ export async function snippetForSaveSynonyms(): Promise<void> {
     replaceExistingSynonyms: true,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1128,6 +1437,7 @@ export async function snippetForSearch(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1146,6 +1456,7 @@ export async function snippetForSearch1(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1170,6 +1481,7 @@ export async function snippetForSearch2(): Promise<void> {
     ],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1188,6 +1500,7 @@ export async function snippetForSearch3(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1196,7 +1509,7 @@ export async function snippetForSearch3(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacets
-export async function snippetForSearch6(): Promise<void> {
+export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1206,6 +1519,7 @@ export async function snippetForSearch6(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1214,7 +1528,7 @@ export async function snippetForSearch6(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch7(): Promise<void> {
+export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1224,6 +1538,7 @@ export async function snippetForSearch7(): Promise<void> {
     requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1243,6 +1558,7 @@ export async function snippetForSearchDictionaryEntries(): Promise<void> {
     searchDictionaryEntriesParams: { query: 'about' },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1259,6 +1575,7 @@ export async function snippetForSearchForFacetValues(): Promise<void> {
   // Call the API
   const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1273,8 +1590,9 @@ export async function snippetForSearchRules(): Promise<void> {
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchRules({ indexName: 'indexName', searchRulesParams: { query: 'something' } });
+  const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1291,6 +1609,7 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
   // Call the API
   const response = await client.searchSingleIndex({ indexName: 'indexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1307,6 +1626,7 @@ export async function snippetForSearchSynonyms(): Promise<void> {
   // Call the API
   const response = await client.searchSynonyms({ indexName: 'indexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1328,8 +1648,24 @@ export async function snippetForSearchUserIds(): Promise<void> {
     hitsPerPage: 10,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -1346,6 +1682,7 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
     disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1355,7 +1692,7 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
 //
 // setSettingsAttributesForFaceting
 export async function snippetForSetSettings(): Promise<void> {
-  // >SEPARATOR setSettings setSettingsAttributesForFaceting
+  // >SEPARATOR setSettings default
   // Initialize the client
   const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -1365,6 +1702,7 @@ export async function snippetForSetSettings(): Promise<void> {
     indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -1384,6 +1722,104 @@ export async function snippetForUpdateApiKey(): Promise<void> {
     apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
   });
 
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key helper - add
+export async function snippetForWaitForApiKey(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key helper - add
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - update
+export async function snippetForWaitForApiKey1(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key - update
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({
+    key: 'api-key-update-operation-test-javascript',
+    operation: 'update',
+    apiKey: {
+      description: 'my updated api key',
+      acl: ['search', 'addObject', 'deleteObject'],
+      indexes: ['Movies', 'Books'],
+      referers: ['*google.com', '*algolia.com'],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForApiKey method.
+//
+// wait for api key - delete
+export async function snippetForWaitForApiKey2(): Promise<void> {
+  // >SEPARATOR waitForApiKey wait for api key - delete
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForAppTask method.
+//
+// wait for an application-level task
+export async function snippetForWaitForAppTask(): Promise<void> {
+  // >SEPARATOR waitForAppTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForAppTask({ taskID: 123 });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the waitForTask method.
+//
+// wait for task
+export async function snippetForWaitForTask(): Promise<void> {
+  // >SEPARATOR waitForTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });
+
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

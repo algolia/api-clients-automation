@@ -40,8 +40,20 @@ public class AnalyticsClientTests
     }
   }
 
-  [Fact(DisplayName = "calls api with default read timeouts")]
+  [Fact(DisplayName = "the user agent contains the latest version")]
   public async Task CommonApiTest1()
+  {
+    var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
+    await client.CustomPostAsync("1/test");
+    EchoResponse result = _echo.LastResponse;
+    {
+      var regexp = new Regex("^Algolia for Csharp \\(7.3.0\\).*");
+      Assert.Matches(regexp, result.Headers["user-agent"]);
+    }
+  }
+
+  [Fact(DisplayName = "calls api with default read timeouts")]
+  public async Task CommonApiTest2()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
     await client.CustomGetAsync("1/test");
@@ -52,7 +64,7 @@ public class AnalyticsClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task CommonApiTest2()
+  public async Task CommonApiTest3()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
     await client.CustomPostAsync("1/test");
@@ -66,6 +78,7 @@ public class AnalyticsClientTests
   public async Task ParametersTest0()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("my-app-id", "my-api-key"), _echo);
+
     await client.GetAverageClickPositionAsync("my-index");
     EchoResponse result = _echo.LastResponse;
 
@@ -76,6 +89,7 @@ public class AnalyticsClientTests
   public async Task ParametersTest1()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("my-app-id", "my-api-key", "de"), _echo);
+
     await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
@@ -111,5 +125,48 @@ public class AnalyticsClientTests
       "Parameter `index` is required when calling `getClickPositions`.".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
     );
+  }
+
+  [Fact(DisplayName = "switch API key")]
+  public async Task SetClientApiKeyTest0()
+  {
+    AnalyticsConfig _config = new AnalyticsConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6683,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new AnalyticsClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("check-api-key/1");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"test-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      client.SetClientApiKey("updated-api-key");
+    }
+    {
+      var res = await client.CustomGetAsync("check-api-key/2");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"updated-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 }

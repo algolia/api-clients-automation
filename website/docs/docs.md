@@ -28,7 +28,10 @@ To make using the specs in these contexts easier, follow these guidelines:
 - Don't use headings, except in [API descriptions](#api-descriptions).
 - Prefer using `externalDocs` objects over inline Markdown links.
 - Use inline Markdown links judiciously.
-  Don't link to readily searchable information, such as internet RFCs or Wikipedia.
+  They don't render in CLI/code environments.
+
+  - Don't link to readily searchable information, such as internet RFCs or Wikipedia.
+  - Don't link to endpoints of other Algolia APIs. These links won't be portable.
 
 ### Markdown in long descriptions
 

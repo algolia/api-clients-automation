@@ -2,21 +2,18 @@
   {
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "batchWriteParams": {
-        "requests": [
+      "pushTaskPayload": {
+        "action": "addObject",
+        "records": [
           {
-            "action": "addObject",
-            "body": {
-              "key": "bar",
-              "foo": "1"
-            }
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
           },
           {
-            "action": "addObject",
-            "body": {
-              "key": "baz",
-              "foo": "2"
-            }
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
           }
         ]
       }
@@ -25,20 +22,17 @@
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push",
       "method": "POST",
       "body": {
-        "requests": [
+        "action": "addObject",
+        "records": [
           {
-            "action": "addObject",
-            "body": {
-              "key": "bar",
-              "foo": "1"
-            }
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
           },
           {
-            "action": "addObject",
-            "body": {
-              "key": "baz",
-              "foo": "2"
-            }
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
           }
         ]
       }

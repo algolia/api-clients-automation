@@ -94,6 +94,15 @@ public interface IgnorePlurals {
           );
         }
       }
+      // deserialize BooleanString
+      if (tree.isTextual()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(BooleanString.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf BooleanString (error: " + e.getMessage() + ") (type: BooleanString)");
+        }
+      }
       // deserialize Boolean
       if (tree.isBoolean()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

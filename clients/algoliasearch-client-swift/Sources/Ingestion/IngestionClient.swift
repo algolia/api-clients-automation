@@ -27,6 +27,11 @@ open class IngestionClient {
         try self.init(configuration: IngestionClientConfiguration(appID: appID, apiKey: apiKey, region: region))
     }
 
+    open func setClientApiKey(apiKey: String) {
+        self.configuration.apiKey = apiKey
+        self.transporter.setClientApiKey(apiKey: apiKey)
+    }
+
     /// - parameter authenticationCreate: (body)
     /// - returns: AuthenticationCreateResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -2486,18 +2491,18 @@ open class IngestionClient {
     }
 
     /// - parameter taskID: (path) Unique identifier of a task.
-    /// - parameter batchWriteParams: (body) Request body of a Search API `batch` request that will be pushed in the
+    /// - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     /// Connectors pipeline.
     /// - returns: RunResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func pushTask(
         taskID: String,
-        batchWriteParams: IngestionBatchWriteParams,
+        pushTaskPayload: PushTaskPayload,
         requestOptions: RequestOptions? = nil
     ) async throws -> RunResponse {
         let response: Response<RunResponse> = try await pushTaskWithHTTPInfo(
             taskID: taskID,
-            batchWriteParams: batchWriteParams,
+            pushTaskPayload: pushTaskPayload,
             requestOptions: requestOptions
         )
 
@@ -2517,13 +2522,13 @@ open class IngestionClient {
     //
     // - parameter taskID: (path) Unique identifier of a task.
     //
-    // - parameter batchWriteParams: (body) Request body of a Search API `batch` request that will be pushed in the
+    // - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     // Connectors pipeline.
     // - returns: RequestBuilder<RunResponse>
 
     open func pushTaskWithHTTPInfo(
         taskID: String,
-        batchWriteParams: IngestionBatchWriteParams,
+        pushTaskPayload: PushTaskPayload,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<RunResponse> {
         guard !taskID.isEmpty else {
@@ -2540,7 +2545,7 @@ open class IngestionClient {
             options: .literal,
             range: nil
         )
-        let body = batchWriteParams
+        let body = pushTaskPayload
         let queryParameters: [String: Any?]? = nil
 
         let nillableHeaders: [String: Any?]? = nil

@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.2.0';
+    public const VERSION = '4.4.0';
 
     /**
      * @var ApiWrapperInterface
@@ -96,6 +96,16 @@ class InsightsClient
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     */
+    public function setClientApiKey($apiKey)
+    {
+        $this->config->setClientApiKey($apiKey);
     }
 
     /**
@@ -257,7 +267,7 @@ class InsightsClient
     }
 
     /**
-     * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+     * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
      *
      * @param string $userToken      User token for which to delete all associated events. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions

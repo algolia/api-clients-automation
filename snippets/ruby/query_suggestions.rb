@@ -15,10 +15,10 @@ def snippet_for_create_config
   # Call the API
   response = client.create_config(
     ConfigurationWithIndex.new(
-      index_name: "theIndexName",
+      index_name: "<YOUR_INDEX_NAME>",
       source_indices: [
         SourceIndex.new(
-          index_name: "testIndex",
+          index_name: "<YOUR_INDEX_NAME>",
           facets: [Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )
@@ -28,6 +28,7 @@ def snippet_for_create_config
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -47,6 +48,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -66,6 +68,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -85,6 +88,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -104,6 +108,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -121,8 +126,9 @@ def snippet_for_delete_config
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.delete_config("theIndexName")
+  response = client.delete_config("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -142,6 +148,7 @@ def snippet_for_get_all_configs
   # Call the API
   response = client.get_all_configs
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -159,8 +166,9 @@ def snippet_for_get_config
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_config("cts_e2e_browse_query_suggestions")
+  response = client.get_config("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -178,8 +186,9 @@ def snippet_for_get_config_status
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_config_status("theIndexName")
+  response = client.get_config_status("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -197,13 +206,28 @@ def snippet_for_get_log_file
   client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
   # Call the API
-  response = client.get_log_file("theIndexName")
+  response = client.get_log_file("<YOUR_INDEX_NAME>")
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end
 
@@ -217,11 +241,11 @@ def snippet_for_update_config
 
   # Call the API
   response = client.update_config(
-    "theIndexName",
+    "<YOUR_INDEX_NAME>",
     Configuration.new(
       source_indices: [
         SourceIndex.new(
-          index_name: "testIndex",
+          index_name: "<YOUR_INDEX_NAME>",
           facets: [Facet.new(attribute: "test")],
           generate: [["facetA", "facetB"], ["facetC"]]
         )
@@ -231,6 +255,7 @@ def snippet_for_update_config
     )
   )
 
+  # >LOG
   # use the class directly
   puts(response)
 

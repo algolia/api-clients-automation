@@ -1297,15 +1297,16 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.pushTask(
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
           ),
-          BatchRequest(
-            action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
           )
         )
       )
@@ -1317,7 +1318,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

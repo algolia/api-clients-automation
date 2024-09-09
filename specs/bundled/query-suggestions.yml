@@ -345,8 +345,7 @@ paths:
         Suggestions index.
 
         To delete the Query Suggestions index itself, use the Search API and the
-        [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
-        operation.
+        `Delete an index` operation.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -463,6 +462,26 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - query-suggestions
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -509,6 +528,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:

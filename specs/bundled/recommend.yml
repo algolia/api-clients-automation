@@ -515,6 +515,26 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - recommend
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -578,6 +598,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -1320,6 +1341,11 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    booleanString:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -1334,6 +1360,7 @@ components:
             This overrides languages you set with `queryLanguages`.
           items:
             $ref: '#/components/schemas/supportedLanguage'
+        - $ref: '#/components/schemas/booleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in

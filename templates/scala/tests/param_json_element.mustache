@@ -20,7 +20,7 @@ JBool({{{value}}})
 JString("{{{value}}}")
 {{/isEnum}}
 {{#isArray}}
-JArray({{#value}}{{> tests/param_json_element}}{{^-last}},{{/-last}}{{/value}})
+JArray(List({{#value}}{{> tests/param_json_element}}{{^-last}},{{/-last}}{{/value}}))
 {{/isArray}}
 {{#isFreeFormObject}}
 JObject(List({{#value}}JField("{{{key}}}", {{> tests/param_json_element}}){{^-last}},{{/-last}}{{/value}}))

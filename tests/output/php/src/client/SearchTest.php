@@ -27,7 +27,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
     private $recordedRequest;
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequest = [
             'request' => $request,
@@ -39,12 +39,11 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct read host')]
-    public function test0api()
+    public function test0api(): void
     {
         $client = $this->createClient(
             'test-app-id',
-            'test-api-key',
-            null
+            'test-api-key'
         );
         $this->assertIsObject($client);
         $client->customGet(
@@ -57,12 +56,11 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct write host')]
-    public function test1api()
+    public function test1api(): void
     {
         $client = $this->createClient(
             'test-app-id',
-            'test-api-key',
-            null
+            'test-api-key'
         );
         $this->assertIsObject($client);
         $client->customPost(
@@ -75,7 +73,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy')]
-    public function test2api()
+    public function test2api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
 
@@ -89,7 +87,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy error')]
-    public function test3api()
+    public function test3api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676']));
 
@@ -104,7 +102,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with correct user agent')]
-    public function test0commonApi()
+    public function test0commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -118,8 +116,23 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('the user agent contains the latest version')]
+    public function test1commonApi(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertTrue(
+            (bool) preg_match(
+                '/^Algolia for PHP \(4.4.0\).*/',
+                $this->recordedRequest['request']->getHeader('User-Agent')[0]
+            )
+        );
+    }
+
     #[TestDox('calls api with default read timeouts')]
-    public function test1commonApi()
+    public function test2commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
@@ -137,7 +150,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('calls api with default write timeouts')]
-    public function test2commonApi()
+    public function test3commonApi(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
@@ -154,10 +167,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('call deleteObjects without error')]
+    public function test0deleteObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->deleteObjects(
+            'cts_e2e_deleteObjects_php',
+            [
+                '1',
+
+                '2',
+            ],
+        );
+        $this->assertEquals(
+            '[{"taskID":666,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('generate secured api key basic')]
-    public function test0helpers()
+    public function test0generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
+
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
             ['validUntil' => 2524604400,
@@ -173,9 +206,10 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('generate secured api key with searchParams')]
-    public function test1helpers()
+    public function test1generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
+
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
             ['validUntil' => 2524604400,
@@ -206,8 +240,190 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('indexExists')]
+    public function test0indexExists(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->indexExists(
+            'indexExistsYES',
+        );
+        $this->assertEquals(
+            true,
+            $res
+        );
+    }
+
+    #[TestDox('indexNotExists')]
+    public function test1indexExists(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->indexExists(
+            'indexExistsNO',
+        );
+        $this->assertEquals(
+            false,
+            $res
+        );
+    }
+
+    #[TestDox('indexExistsWithError')]
+    public function test2indexExists(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        try {
+            $res = $client->indexExists(
+                'indexExistsERROR',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Invalid API key');
+        }
+    }
+
+    #[TestDox('client throws with invalid parameters')]
+    public function test0parameters(): void
+    {
+        try {
+            $client = $this->createClient(
+                null,
+                null
+            );
+
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+        }
+
+        try {
+            $client = $this->createClient(
+                null,
+                'my-api-key'
+            );
+
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+        }
+
+        try {
+            $client = $this->createClient(
+                'my-app-id',
+                null
+            );
+
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
+        }
+    }
+
+    #[TestDox('`addApiKey` throws with invalid parameters')]
+    public function test1parameters(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        try {
+            $client->addApiKey(
+                null,
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
+        }
+    }
+
+    #[TestDox('`addOrUpdateObject` throws with invalid parameters')]
+    public function test2parameters(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        try {
+            $client->addOrUpdateObject(
+                null,
+                'my-object-id',
+                [],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
+        }
+
+        try {
+            $client->addOrUpdateObject(
+                'my-index-name',
+                null,
+                [],
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
+        }
+
+        try {
+            $client->addOrUpdateObject(
+                'my-index-name',
+                'my-object-id',
+                null,
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
+        }
+    }
+
+    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
+    public function test0partialUpdateObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+        $this->assertEquals(
+            '[{"taskID":444,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
+    public function test1partialUpdateObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_php',
+            [
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            false,
+        );
+        $this->assertEquals(
+            '[{"taskID":555,"objectIDs":["3","4"]}]',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('call replaceAllObjects without error')]
-    public function test2helpers()
+    public function test0replaceAllObjects(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
 
@@ -263,7 +479,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('call saveObjects without error')]
-    public function test3helpers()
+    public function test0saveObjects(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
 
@@ -286,7 +502,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('saveObjects should report errors')]
-    public function test4helpers()
+    public function test1saveObjects(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://localhost:6680']));
 
@@ -309,75 +525,34 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
-    public function test5helpers()
+    #[TestDox('switch API key')]
+    public function test0setClientApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6683']));
 
-        $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
-
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-            true,
+        $res = $client->customGet(
+            'check-api-key/1',
         );
         $this->assertEquals(
-            '[{"taskID":444,"objectIDs":["1","2"]}]',
+            '{"headerAPIKeyValue":"test-api-key"}',
             json_encode($res)
         );
-    }
 
-    #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
-    public function test6helpers()
-    {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
 
-        $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_php',
-            [
-                ['objectID' => '3',
-                    'name' => 'Cyril',
-                ],
-
-                ['objectID' => '4',
-                    'name' => 'David',
-                ],
-            ],
-            false,
+        $res = $client->customGet(
+            'check-api-key/2',
         );
         $this->assertEquals(
-            '[{"taskID":555,"objectIDs":["3","4"]}]',
-            json_encode($res)
-        );
-    }
-
-    #[TestDox('call deleteObjects without error')]
-    public function test7helpers()
-    {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
-
-        $res = $client->deleteObjects(
-            'cts_e2e_deleteObjects_php',
-            [
-                '1',
-
-                '2',
-            ],
-        );
-        $this->assertEquals(
-            '[{"taskID":666,"objectIDs":["1","2"]}]',
+            '{"headerAPIKeyValue":"updated-api-key"}',
             json_encode($res)
         );
     }
 
     #[TestDox('wait for api key helper - add')]
-    public function test8helpers()
+    public function test0waitForApiKey(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
@@ -392,7 +567,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('wait for api key - update')]
-    public function test9helpers()
+    public function test1waitForApiKey(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
@@ -429,7 +604,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('wait for api key - delete')]
-    public function test10helpers()
+    public function test2waitForApiKey(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
@@ -437,110 +612,46 @@ class SearchTest extends TestCase implements HttpClientInterface
             'api-key-delete-operation-test-php',
             'delete',
         );
-        $this->assertNull($res);
+        $this->assertEquals(
+            null,
+            $res
+        );
     }
 
-    #[TestDox('client throws with invalid parameters')]
-    public function test0parameters()
+    #[TestDox('wait for an application-level task')]
+    public function test0waitForAppTask(): void
     {
-        try {
-            $client = $this->createClient(
-                null,
-                null,
-                null
-            );
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
-        }
-
-        try {
-            $client = $this->createClient(
-                null,
-                'my-api-key',
-                null
-            );
-
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
-        }
-
-        try {
-            $client = $this->createClient(
-                'my-app-id',
-                null,
-                null
-            );
-
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
-        }
+        $res = $client->waitForAppTask(
+            123,
+        );
+        $this->assertEquals(
+            '{"status":"published"}',
+            json_encode($res)
+        );
     }
 
-    #[TestDox('`addApiKey` throws with invalid parameters')]
-    public function test1parameters()
+    #[TestDox('wait for task')]
+    public function test0waitForTask(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
 
-        try {
-            $client->addApiKey(
-                null,
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
-        }
-    }
-
-    #[TestDox('`addOrUpdateObject` throws with invalid parameters')]
-    public function test2parameters()
-    {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-
-        try {
-            $client->addOrUpdateObject(
-                null,
-                'my-object-id',
-                [],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
-        }
-
-        try {
-            $client->addOrUpdateObject(
-                'my-index-name',
-                null,
-                [],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
-        }
-
-        try {
-            $client->addOrUpdateObject(
-                'my-index-name',
-                'my-object-id',
-                null,
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
-        }
+        $res = $client->waitForTask(
+            'wait-task-php',
+            123,
+        );
+        $this->assertEquals(
+            '{"status":"published"}',
+            json_encode($res)
+        );
     }
 
     /**
      * @param mixed $appId
      * @param mixed $apiKey
-     *
-     * @return SearchClient
      */
-    private function createClient($appId, $apiKey)
+    private function createClient($appId, $apiKey): SearchClient
     {
         $config = SearchConfig::create($appId, $apiKey);
         $clusterHosts = SearchClient::getClusterHosts($config);

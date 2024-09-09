@@ -17,6 +17,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -69,10 +73,11 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.deleteRecommendRule(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -86,10 +91,11 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.getRecommendRule(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -103,10 +109,11 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.getRecommendStatus(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
             taskID: Int64(12345)
         )
+        // >LOG
         // SEPARATOR<
     }
 
@@ -123,12 +130,13 @@ final class RecommendClientSnippet {
             .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                 RecommendationsRequest
                     .relatedQuery(RelatedQuery(
-                        indexName: "indexName",
+                        indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
                         model: RelatedModel.relatedProducts,
                         objectID: "objectID"
                     )),
             ]))
+        // >LOG
         // SEPARATOR<
     }
 
@@ -142,9 +150,24 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client.searchRecommendRules(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts
         )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 }

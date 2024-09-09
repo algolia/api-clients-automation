@@ -103,6 +103,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
 
     supportingFiles.add(new SupportingFile("LICENSE", "../client_core/", "LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", "../../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
     supportingFiles.add(new SupportingFile("LICENSE", "../chopper_requester/", "LICENSE"));
 
     // Search config

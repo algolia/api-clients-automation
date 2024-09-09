@@ -31,7 +31,7 @@ class InsightsClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new InsightsClient("appId", "apiKey", "us", options);
   }
 
@@ -56,7 +56,14 @@ class InsightsClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("test/all", Map.of("query", "parameters"));
+      client.customDelete(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -92,7 +99,14 @@ class InsightsClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("test/all", Map.of("query", "parameters with space"));
+      client.customGet(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters with space");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -121,10 +135,14 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customGet(
         "test/all",
-        Map.of("query", "to be overriden"),
+        new HashMap() {
+          {
+            put("query", "to be overriden");
+          }
+        },
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
-          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
           .addExtraHeader("x-header-1", "spaces are left alone")
       );
     });
@@ -179,7 +197,19 @@ class InsightsClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -205,8 +235,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
@@ -237,8 +275,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
@@ -269,8 +315,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -312,8 +366,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -355,8 +417,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
@@ -387,8 +457,16 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
@@ -419,9 +497,17 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -451,9 +537,17 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -483,9 +577,17 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -525,7 +627,19 @@ class InsightsClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -564,7 +678,7 @@ class InsightsClientRequestsTests {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
-            List.of(
+            Arrays.asList(
               new ClickedObjectIDsAfterSearch()
                 .setEventType(ClickEvent.CLICK)
                 .setEventName("Product Clicked")
@@ -572,9 +686,9 @@ class InsightsClientRequestsTests {
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
                 .setTimestamp(1641290601962L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-                .setPositions(List.of(7, 6))
+                .setPositions(Arrays.asList(7, 6))
             )
           )
       );
@@ -599,15 +713,15 @@ class InsightsClientRequestsTests {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
-            List.of(
+            Arrays.asList(
               new ConvertedObjectIDsAfterSearch()
                 .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1724716800000L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setTimestamp(1725753600000L)
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
                 .setEventType(ViewEvent.VIEW)
@@ -615,8 +729,8 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1724716800000L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setTimestamp(1725753600000L)
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
             )
           )
       );
@@ -627,9 +741,9 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1724716800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1725753600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1724716800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1725753600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -643,7 +757,7 @@ class InsightsClientRequestsTests {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
-            List.of(
+            Arrays.asList(
               new ConvertedObjectIDsAfterSearch()
                 .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
@@ -651,7 +765,7 @@ class InsightsClientRequestsTests {
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
                 .setTimestamp(1641290601962L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
             )
           )
@@ -677,7 +791,7 @@ class InsightsClientRequestsTests {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
-            List.of(
+            Arrays.asList(
               new ViewedObjectIDs()
                 .setEventType(ViewEvent.VIEW)
                 .setEventName("Product Detail Page Viewed")
@@ -685,7 +799,7 @@ class InsightsClientRequestsTests {
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
                 .setTimestamp(1641290601962L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
             )
           )
       );
@@ -710,7 +824,7 @@ class InsightsClientRequestsTests {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
-            List.of(
+            Arrays.asList(
               new AddedToCartObjectIDsAfterSearch()
                 .setEventType(ConversionEvent.CONVERSION)
                 .setEventSubtype(AddToCartEvent.ADD_TO_CART)
@@ -720,9 +834,9 @@ class InsightsClientRequestsTests {
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
                 .setTimestamp(1641290601962L)
-                .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
                 .setObjectData(
-                  List.of(
+                  Arrays.asList(
                     new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
                     new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
                   )

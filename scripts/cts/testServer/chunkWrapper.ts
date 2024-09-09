@@ -12,8 +12,18 @@ export function assertChunkWrapperValid(expectedCount: number): void {
   if (Object.values(chunkWrapperState).length !== expectedCount) {
     throw new Error('unexpected number of call to chunkWrapper');
   }
-  for (const state of Object.values(chunkWrapperState)) {
-    expect(state).to.deep.equal({ saveObjects: 1, partialUpdateObjects: 2, deleteObjects: 1 });
+  for (const [lang, state] of Object.entries(chunkWrapperState)) {
+    let numberOfTestSuites = 1;
+
+    if (lang === 'python') {
+      numberOfTestSuites = 2;
+    }
+
+    expect(state).to.deep.equal({
+      saveObjects: Number(numberOfTestSuites),
+      partialUpdateObjects: 2 * numberOfTestSuites,
+      deleteObjects: Number(numberOfTestSuites),
+    });
   }
 }
 

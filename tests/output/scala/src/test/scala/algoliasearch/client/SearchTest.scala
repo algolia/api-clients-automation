@@ -149,6 +149,20 @@ class SearchTest extends AnyFunSuite {
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
 
+  test("the user agent contains the latest version") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp = """^Algolia for Scala \(2.3.0\).*""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
   test("calls api with default read timeouts") {
     val (client, echo) = testClient()
 
@@ -237,6 +251,45 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
+    }
+  }
+
+  test("switch API key") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/1"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+    }
+
+    {
+
+      client.setClientApiKey(
+        apiKey = "updated-api-key"
+      )
+    }
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/2"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
     }
   }
 }

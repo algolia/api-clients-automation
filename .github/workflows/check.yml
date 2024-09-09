@@ -108,6 +108,8 @@ jobs:
     outputs:
       RUN_SCRIPTS: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
+      RUN_WEBSITE: ${{ steps.diff.outputs.WEBSITE_CHANGED > 0 }}
+
       SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
       RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
@@ -118,6 +120,7 @@ jobs:
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
+      KOTLIN_DATA: ${{ steps.gen-matrix.outputs.KOTLIN_DATA }}
       RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
 
   scripts:
@@ -183,6 +186,7 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -203,6 +207,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           language: javascript
+          version: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version }}
 
       - name: Generate clients
         run: yarn cli generate javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -222,6 +227,10 @@ jobs:
       - name: Test JavaScript bundle size
         if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
+
+      - name: Test JavaScript bundle and types
+        if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
+        run: cd clients/algoliasearch-client-javascript && yarn test:bundle
 
       - name: Remove previous CTS output
         run: rm -rf ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToDelete }}
@@ -253,7 +262,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -295,6 +304,7 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -307,16 +317,17 @@ jobs:
         uses: ./.github/actions/setup
         with:
           language: ${{ matrix.client.language }}
+          version: ${{ matrix.client.version }}
 
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Update composer.lock
-        if: ${{ matrix.client.language == 'php' && startsWith(env.head_ref, 'chore/renovateBaseBranch') }}
+        if: ${{ matrix.client.language == 'php' && startsWith(env.head_ref, 'chore/renovateBaseBranch')  && matrix.client.isMainVersion }}
         run: cd ${{ matrix.client.path }} && composer update
 
       - name: Check for file duplicates in Swift
-        if: ${{ matrix.client.language == 'swift' }}
+        if: ${{ matrix.client.language == 'swift' && matrix.client.isMainVersion }}
         run: |
           set -eo pipefail
           cd clients/algoliasearch-client-swift
@@ -330,22 +341,25 @@ jobs:
         run: yarn cli build playground ${{ matrix.client.language }}
 
       - name: Run Java 'algoliasearch' public API validation
-        if: ${{ matrix.client.language == 'java' }}
+        if: ${{ matrix.client.language == 'java' && matrix.client.isMainVersion && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-bc]') }}
         run: |
           cd ${{ matrix.client.path }}
-          ./gradlew :api:japicmp || exit 0
+          exit_code=0
+          ./gradlew :api:japicmp || exit_code=$?
 
-          FILE=${{ matrix.client.path }}/api/build/reports/japi.txt
+          FILE=./api/build/reports/japi.txt
 
           if [[ -f "$FILE" ]]; then
             cat $FILE
           fi
 
+          exit $exit_code
+
       - name: Remove previous CTS output
         run: rm -rf ${{ matrix.client.testsToDelete }} || true
 
       - name: Generate CTS
-        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-e2e
@@ -353,7 +367,7 @@ jobs:
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -361,15 +375,21 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Run benchmarks
+        if: ${{ matrix.client.isMainVersion }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --benchmark --no-client --no-requests --no-e2e
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
+      - name: Build the snippets to check validity
+        run: yarn cli build snippets ${{ matrix.client.language }}
+
       - name: Zip artifact before storing
+        if: ${{ matrix.client.isMainVersion }}
         run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.snippetsToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/.build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
 
       - name: Store ${{ matrix.client.language }} clients
+        if: ${{ matrix.client.isMainVersion }}
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
@@ -390,6 +410,7 @@ jobs:
       !contains(needs.*.result, 'failure')
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
+    name: client kotlin${{ needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' && format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) || '' }} macos
     steps:
       - uses: actions/checkout@v4
 
@@ -405,6 +426,12 @@ jobs:
         with:
           type: minimal
           language: kotlin
+
+      - name: remove previous build from linux
+        run: |
+          rm -rf clients/algoliasearch-client-kotlin/build || true
+          rm -rf clients/algoliasearch-client-kotlin/.kotlin || true
+          rm -rf clients/algoliasearch-client-kotlin/.gradle || true
 
       - run: yarn cli build clients kotlin
 
@@ -430,6 +457,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
+    name: client swift${{ needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' && format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) || '' }} macos
     steps:
       - uses: actions/checkout@v4
 
@@ -445,8 +473,9 @@ jobs:
         with:
           type: minimal
           language: swift
+          version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
 
-      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
 
       - name: Set output
         id: setoutput
@@ -549,11 +578,11 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: Build website
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
         run: yarn website:build
 
       - name: Deploy documentation
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
         uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: 'website/build'

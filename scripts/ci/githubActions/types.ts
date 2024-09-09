@@ -43,6 +43,14 @@ export type ClientMatrix = {
      * The snippets output path to store in the artifact.
      */
     snippetsToStore: string;
+    /**
+     * The version of the language to run, used for the setup step.
+     */
+    version?: string;
+    /**
+     * Whether the current matrix version is the main version, this allows us to skip CI steps that should run only once (e.g. Store artifact).
+     */
+    isMainVersion: boolean;
   }>;
 };
 

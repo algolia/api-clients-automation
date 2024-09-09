@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,7 @@ import (
 	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -43,8 +45,22 @@ func TestAnalyticscommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestAnalyticscommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.0\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestAnalyticscommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -59,7 +75,7 @@ func TestAnalyticscommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestAnalyticscommonApi2(t *testing.T) {
+func TestAnalyticscommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -159,4 +175,50 @@ func TestAnalyticsparameters3(t *testing.T) {
 		tests.ZeroValue[string](),
 	))
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")
+}
+
+// switch API key
+func TestAnalyticssetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *analytics.APIClient
+	var cfg analytics.AnalyticsConfiguration
+	_ = client
+	_ = echo
+	cfg = analytics.AnalyticsConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+		Region: analytics.Region("us"),
+	}
+	client, err = analytics.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

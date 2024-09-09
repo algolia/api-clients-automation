@@ -32,6 +32,8 @@ class SearchTest {
             ),
           )
         },
+        intercept = {
+        },
       )
     }
   }

@@ -118,6 +118,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -137,6 +139,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -151,6 +154,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -160,6 +165,7 @@ paths:
             // Call the API
             const response = await client.customGet({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -177,6 +183,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -197,6 +205,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -211,6 +221,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -229,6 +240,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -254,6 +267,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -269,6 +284,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -310,6 +327,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -329,6 +348,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -343,6 +363,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -352,6 +374,7 @@ paths:
             // Call the API
             const response = await client.customPost({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -369,6 +392,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -389,6 +414,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -403,6 +430,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -421,6 +449,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -446,6 +476,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -461,6 +493,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -502,6 +536,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -521,6 +557,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -535,6 +572,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -544,6 +583,7 @@ paths:
             // Call the API
             const response = await client.customPut({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -561,6 +601,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -581,6 +623,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -595,6 +639,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -613,6 +658,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -638,6 +685,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -653,6 +702,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -688,6 +739,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -714,6 +767,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -729,6 +784,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -742,6 +799,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -762,6 +821,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -781,6 +842,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -795,6 +858,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -813,6 +877,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -838,6 +904,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -853,6 +921,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/status:
     get:
       operationId: getStatus
@@ -879,6 +949,8 @@ paths:
             // Call the API
 
             var response = await client.GetStatusAsync();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -896,6 +968,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -910,6 +983,8 @@ paths:
             // Call the API
 
             client.getStatus();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -919,6 +994,7 @@ paths:
             // Call the API
             const response = await client.getStatus();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -934,6 +1010,8 @@ paths:
 
             var response = client.getStatus()
 
+
+            // >LOG
 
             // Use the response
 
@@ -952,6 +1030,8 @@ paths:
             $response = $client->getStatus();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -964,6 +1044,7 @@ paths:
             # Call the API
             response = await _client.get_status()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -982,6 +1063,8 @@ paths:
 
             response = client.get_status
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1007,6 +1090,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1022,6 +1107,8 @@ paths:
             // Call the API
 
             let response = try await client.getStatus()
+
+            // >LOG
   /1/status/{clusters}:
     get:
       summary: Retrieve cluster status
@@ -1052,6 +1139,8 @@ paths:
             // Call the API
 
             var response = await client.GetClusterStatusAsync("c1-de");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1078,6 +1167,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1093,6 +1184,8 @@ paths:
             // Call the API
 
             client.getClusterStatus("c1-de");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1106,6 +1199,8 @@ paths:
             const response = await client.getClusterStatus({ clusters: 'c1-de'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1126,6 +1221,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1145,6 +1242,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1159,6 +1258,7 @@ paths:
                 clusters="c1-de",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1177,6 +1277,8 @@ paths:
 
             response = client.get_cluster_status("c1-de")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1202,6 +1304,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1217,6 +1321,8 @@ paths:
             // Call the API
 
             let response = try await client.getClusterStatus(clusters: "c1-de")
+
+            // >LOG
   /1/incidents:
     get:
       summary: Retrieve all incidents
@@ -1243,6 +1349,8 @@ paths:
             // Call the API
 
             var response = await client.GetIncidentsAsync();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -1260,6 +1368,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -1274,6 +1383,8 @@ paths:
             // Call the API
 
             client.getIncidents();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1283,6 +1394,7 @@ paths:
             // Call the API
             const response = await client.getIncidents();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1298,6 +1410,8 @@ paths:
 
             var response = client.getIncidents()
 
+
+            // >LOG
 
             // Use the response
 
@@ -1316,6 +1430,8 @@ paths:
             $response = $client->getIncidents();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1328,6 +1444,7 @@ paths:
             # Call the API
             response = await _client.get_incidents()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1346,6 +1463,8 @@ paths:
 
             response = client.get_incidents
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1371,6 +1490,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1386,6 +1507,8 @@ paths:
             // Call the API
 
             let response = try await client.getIncidents()
+
+            // >LOG
   /1/incidents/{clusters}:
     get:
       summary: Retrieve cluster incidents
@@ -1416,6 +1539,8 @@ paths:
             // Call the API
 
             var response = await client.GetClusterIncidentsAsync("c1-de");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1442,6 +1567,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1457,6 +1584,8 @@ paths:
             // Call the API
 
             client.getClusterIncidents("c1-de");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -1470,6 +1599,8 @@ paths:
             const response = await client.getClusterIncidents({ clusters:
             'c1-de' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1490,6 +1621,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1509,6 +1642,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1523,6 +1658,7 @@ paths:
                 clusters="c1-de",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1541,6 +1677,8 @@ paths:
 
             response = client.get_cluster_incidents("c1-de")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1566,6 +1704,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1582,6 +1722,8 @@ paths:
 
             let response = try await client.getClusterIncidents(clusters:
             "c1-de")
+
+            // >LOG
   /1/inventory/servers:
     get:
       summary: Retrieve servers
@@ -1619,6 +1761,8 @@ paths:
             // Call the API
 
             var response = await client.GetServersAsync();
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -1636,6 +1780,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -1650,6 +1795,8 @@ paths:
             // Call the API
 
             client.getServers();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1659,6 +1806,7 @@ paths:
             // Call the API
             const response = await client.getServers();
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1674,6 +1822,8 @@ paths:
 
             var response = client.getServers()
 
+
+            // >LOG
 
             // Use the response
 
@@ -1692,6 +1842,8 @@ paths:
             $response = $client->getServers();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1704,6 +1856,7 @@ paths:
             # Call the API
             response = await _client.get_servers()
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1722,6 +1875,8 @@ paths:
 
             response = client.get_servers
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1747,6 +1902,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1762,6 +1919,8 @@ paths:
             // Call the API
 
             let response = try await client.getServers()
+
+            // >LOG
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times
@@ -1790,6 +1949,8 @@ paths:
             // Call the API
 
             var response = await client.GetLatencyAsync("c1-de");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -1809,6 +1970,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -1823,6 +1985,8 @@ paths:
             // Call the API
 
             client.getLatency("c1-de");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1832,6 +1996,7 @@ paths:
             // Call the API
             const response = await client.getLatency({ clusters: 'c1-de' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1849,6 +2014,8 @@ paths:
               clusters = "c1-de",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1869,6 +2036,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1883,6 +2052,7 @@ paths:
                 clusters="c1-de",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1901,6 +2071,8 @@ paths:
 
             response = client.get_latency("c1-de")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1926,6 +2098,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1941,6 +2115,8 @@ paths:
             // Call the API
 
             let response = try await client.getLatency(clusters: "c1-de")
+
+            // >LOG
   /1/indexing/{clusters}:
     get:
       summary: Retrieve indexing times
@@ -1969,6 +2145,8 @@ paths:
             // Call the API
 
             var response = await client.GetIndexingTimeAsync("c1-de");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1995,6 +2173,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2010,6 +2190,8 @@ paths:
             // Call the API
 
             client.getIndexingTime("c1-de");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2023,6 +2205,8 @@ paths:
             const response = await client.getIndexingTime({ clusters: 'c1-de'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2043,6 +2227,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2062,6 +2248,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2076,6 +2264,7 @@ paths:
                 clusters="c1-de",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2094,6 +2283,8 @@ paths:
 
             response = client.get_indexing_time("c1-de")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2119,6 +2310,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2134,6 +2327,8 @@ paths:
             // Call the API
 
             let response = try await client.getIndexingTime(clusters: "c1-de")
+
+            // >LOG
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters
@@ -2162,6 +2357,8 @@ paths:
             // Call the API
 
             var response = await client.GetReachabilityAsync("c1-de");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2188,6 +2385,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2203,6 +2402,8 @@ paths:
             // Call the API
 
             client.getReachability("c1-de");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2216,6 +2417,8 @@ paths:
             const response = await client.getReachability({ clusters: 'c1-de'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2236,6 +2439,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2255,6 +2460,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2269,6 +2476,7 @@ paths:
                 clusters="c1-de",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2287,6 +2495,8 @@ paths:
 
             response = client.get_reachability("c1-de")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2312,6 +2522,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2327,6 +2539,8 @@ paths:
             // Call the API
 
             let response = try await client.getReachability(clusters: "c1-de")
+
+            // >LOG
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
@@ -2367,6 +2581,8 @@ paths:
               Enum.Parse<Metric>("AvgBuildTime"),
               Enum.Parse<Period>("Minute")
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -2386,6 +2602,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -2400,6 +2617,8 @@ paths:
             // Call the API
 
             client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -2413,6 +2632,8 @@ paths:
             const response = await client.getMetrics({ metric: 'avg_build_time',
             period: 'minute' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -2434,6 +2655,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -2454,6 +2677,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2469,6 +2694,7 @@ paths:
                 period="minute",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -2487,6 +2713,8 @@ paths:
 
             response = client.get_metrics("avg_build_time", "minute")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2513,6 +2741,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2529,6 +2759,8 @@ paths:
 
             let response = try await client.getMetrics(metric:
             Metric.avgBuildTime, period: Period.minute)
+
+            // >LOG
 components:
   securitySchemes:
     appId:
@@ -2597,6 +2829,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:

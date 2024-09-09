@@ -1,8 +1,9 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds } from '../buildClients.js';
-import { CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
@@ -39,6 +40,13 @@ const flags = {
 };
 
 program.name('cli');
+
+program.hook('preAction', () => {
+  if (!CI) {
+    // restore the cursor because sometime it's broken
+    process.stdout.write('\x1B[?25h');
+  }
+});
 
 program
   .command('generate')
@@ -88,6 +96,17 @@ buildCommand
   });
 
 buildCommand
+  .command('snippets')
+  .description('Build a specified snippets')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(args.clients)
@@ -119,7 +138,8 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .option('-lv, --language-version <version>', 'the version of the language to use')
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -127,7 +147,7 @@ ctsCommand
 
     setVerbose(Boolean(verbose));
 
-    await ctsGenerateMany(generatorList({ language, client, clientList }));
+    await ctsGenerateMany(generatorList({ language, client, clientList }), languageVersion);
   });
 
 ctsCommand
@@ -136,9 +156,9 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-e, --no-e2e', 'run the e2e tests, that requires internet connection')
-  .option('-c, --no-client', 'run the client tests')
-  .option('-r, --no-requests', 'run the requests tests')
+  .option('-e, --no-e2e', 'skip the e2e tests, that requires internet connection')
+  .option('-c, --no-client', 'skip the client tests')
+  .option('-r, --no-requests', 'skip the requests tests')
   .option('-b, --benchmark', 'run the benchmarks')
   .action(
     async (langArg: LangArg, clientArg: string[], { verbose, e2e, client: includeClient, requests, benchmark }) => {
@@ -237,7 +257,8 @@ program
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-sla, --sla-only', 'only generates the sla policy', false)
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, slaOnly }) => {
+  .option('-b --breaking', 'allow breaking change on the CI', false)
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, slaOnly, breaking }) => {
     setVerbose(Boolean(verbose));
 
     if (slaOnly) {
@@ -254,6 +275,7 @@ program
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
       releaseType,
       dryRun,
+      breaking,
     });
   });
 
@@ -262,9 +284,10 @@ program
   .description('Executes a command inside the correct docker image')
   .addArgument(args.requiredLanguage)
   .argument('command...', 'The command to execute')
-  .action(async (language: Language, command: string[]) => {
+  .option('-c, --client', "Run the command in the client's folder")
+  .action(async (language: Language, command: string[], { client }) => {
     setVerbose(true);
-    await run(command.join(' '), { language });
+    await run(command.join(' '), { language, cwd: client ? getLanguageFolder(language) : undefined });
   });
 
 program.parse();

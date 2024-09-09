@@ -21,7 +21,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AbtestingClient
 {
-    public const VERSION = '4.2.0';
+    public const VERSION = '4.4.0';
 
     /**
      * @var ApiWrapperInterface
@@ -97,6 +97,16 @@ class AbtestingClient
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     */
+    public function setClientApiKey($apiKey)
+    {
+        $this->config->setClientApiKey($apiKey);
     }
 
     /**
