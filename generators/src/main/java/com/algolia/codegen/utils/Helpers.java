@@ -1,7 +1,7 @@
 package com.algolia.codegen.utils;
 
 import com.algolia.codegen.exceptions.*;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.swagger.v3.core.util.Json;
 import java.io.File;
@@ -263,5 +263,10 @@ public class Helpers {
       ? ".nvmrc"
       : "config/." + (language.equals("kotlin") || language.equals("scala") ? "java" : language) + "-version";
     return Files.readString(new File(versionFile).toPath()).trim();
+  }
+
+  public static List<Object> deepCopy(List<Object> obj) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readValue(mapper.writeValueAsString(obj), List.class);
   }
 }

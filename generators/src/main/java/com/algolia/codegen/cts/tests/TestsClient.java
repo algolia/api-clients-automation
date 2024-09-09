@@ -16,11 +16,13 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsClient extends TestsGenerator {
 
   private final boolean withBenchmark;
+  private final boolean withSyncTests;
   private final String testType;
 
   public TestsClient(CTSManager ctsManager, boolean withBenchmark) {
     super(ctsManager);
     this.withBenchmark = withBenchmark;
+    this.withSyncTests = language.equals("python") && !withBenchmark;
     this.testType = withBenchmark ? "benchmark" : "client";
   }
 
@@ -119,7 +121,7 @@ public class TestsClient extends TestsGenerator {
               boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
               stepOut.put("isHelper", isHelper);
               // default to true because most api calls are asynchronous
-              stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+              stepOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
               // Determines whether the endpoint is expected to return a response payload
               // deserialized and therefore a variable to store it into.
@@ -134,7 +136,7 @@ public class TestsClient extends TestsGenerator {
               testOut.put("isHelper", isHelper);
 
               // default to true because most api calls are asynchronous
-              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
+              testOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
               methodCount++;
             }
@@ -213,10 +215,31 @@ public class TestsClient extends TestsGenerator {
           throw e;
         }
       }
+      testObj.put("isSyncClient", false);
       testObj.put("tests", tests);
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
+    if (this.withSyncTests) {
+      List<Object> modes = new ArrayList<>();
+
+      Map<String, Object> async = new HashMap<>();
+      async.put(withBenchmark ? "blocksBenchmark" : "blocksClient", Helpers.deepCopy(blocks));
+      modes.add(async);
+
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSyncClient", true);
+      List<Object> blocksSync = Helpers.deepCopy(blocks);
+      for (Object block : blocksSync) {
+        Map<String, Object> testObj = (Map<String, Object>) block;
+        testObj.put("isSyncClient", true);
+      }
+      sync.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocksSync);
+      modes.add(sync);
+
+      bundle.put("modes", modes);
+    } else {
+      bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
+    }
   }
 }

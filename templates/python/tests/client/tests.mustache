@@ -1,10 +1,10 @@
     {{#tests}}
-    async def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
         """
         {{#autoCreateClient}}
-        self.create_client()
+        _client = self.create_client()
         {{/autoCreateClient}}
 
         {{#steps}}

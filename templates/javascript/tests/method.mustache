@@ -1,3 +1,3 @@
-{{#isAsync}}await {{/isAsync}}client.{{method}}({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
+{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
   {{#requestOptions.queryParameters.parameters}}queryParameters: {{{.}}},{{/requestOptions.queryParameters.parameters}}
   {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}}{{/hasRequestOptions}})

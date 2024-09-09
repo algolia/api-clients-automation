@@ -1,4 +1,4 @@
-{{#isAsync}}await {{/isAsync}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsync}}Async{{/isAsync}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
+{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsyncMethod}}Async{{/isAsyncMethod}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
 {{#requestOptions.queryParameters.parametersWithDataType}}
     .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
 {{/requestOptions.queryParameters.parametersWithDataType}}

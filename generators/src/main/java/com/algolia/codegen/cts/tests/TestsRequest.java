@@ -14,10 +14,12 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
+  private final boolean withSyncTests;
   private List<SupportingFile> supportingFiles;
 
   public TestsRequest(CTSManager ctsManager) {
     super(ctsManager);
+    this.withSyncTests = false;
   }
 
   @Override
@@ -145,7 +147,7 @@ public class TestsRequest extends TestsGenerator {
           }
 
           test.put("request", req.request);
-          test.put("isAsync", true);
+          test.put("isAsyncMethod", true);
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
@@ -198,11 +200,39 @@ public class TestsRequest extends TestsGenerator {
         blocksE2E.add(e2eObj);
       }
     }
-    bundle.put("blocksRequests", blocks);
-    if (!blocksE2E.isEmpty()) {
-      bundle.put("blocksE2E", blocksE2E);
-    } else if (supportingFiles != null) {
-      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+    if (this.withSyncTests) {
+      List<Object> modes = new ArrayList<>();
+
+      if (!blocksE2E.isEmpty()) {
+        Map<String, Object> sync = new HashMap<>();
+        sync.put("isSyncClient", true);
+        sync.put("blocksE2E", blocksE2E);
+
+        Map<String, Object> async = new HashMap<>();
+        sync.put("blocksE2E", blocksE2E);
+
+        modes.add(sync);
+        modes.add(async);
+      }
+
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSyncClient", true);
+      sync.put("blocksRequests", blocks);
+
+      Map<String, Object> async = new HashMap<>();
+      async.put("blocksRequests", blocks);
+
+      modes.add(sync);
+      modes.add(async);
+
+      bundle.put("modes", modes);
+    } else {
+      bundle.put("blocksRequests", blocks);
+      if (!blocksE2E.isEmpty()) {
+        bundle.put("blocksE2E", blocksE2E);
+      } else if (supportingFiles != null) {
+        supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+      }
     }
   }
 }
