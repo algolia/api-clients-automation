@@ -64,6 +64,7 @@
         "pyproject.mustache"
       ],
       "matchStrings": [
+        "dependencies][^[]*",
         "(?<depName>.*?)=\\s*\"(?<currentValue>.*?)\""
       ],
       "matchStringsStrategy": "recursive",

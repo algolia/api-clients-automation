@@ -85,5 +85,5 @@ Running renovate on github can be tidious because it only works on the branch `m
 ```sh
 npm install -g renovate
 
-LOG_LEVEL=debug renovate --dry-run --platform local
+GITHUB_COM_TOKEN="<github token>" LOG_LEVEL=debug renovate --dry-run --platform local
 ```
