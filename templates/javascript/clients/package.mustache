@@ -25,14 +25,16 @@
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
           "require": "./dist/node.d.cts",
-          "workerd": "./dist/fetch.d.ts",
           "default": "./dist/node.d.cts"
         },
         "import": "./dist/builds/node.js",
         "module": "./dist/builds/node.js",
         "require": "./dist/builds/node.cjs",
-        "workerd": "./dist/builds/fetch.js",
         "default": "./dist/builds/node.cjs"
+      },
+      "worker": {
+        "types": "./dist/fetch.d.ts",
+        "default": "./dist/builds/fetch.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -67,15 +69,17 @@
         "types": {
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
-          "workerd": "./dist/fetch.d.ts",
           "require": "./dist/node.d.cts",
           "default": "./dist/node.d.cts"
         },
         "import": "./dist/node.js",
         "module": "./dist/node.js",
-        "workerd": "./dist/fetch.js",
         "require": "./dist/node.cjs",
         "default": "./dist/node.cjs"
+      },
+      "worker": {
+        "types": "./dist/fetch.d.ts",
+        "default": "./dist/fetch.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -134,6 +138,7 @@
     "@babel/preset-typescript": "7.24.7",
     "@types/jest": "29.5.12",
     "jest": "29.7.0",
+    "jest-environment-miniflare": "2.14.3",
     {{/isAlgoliasearchClient}}
     "@arethetypeswrong/cli": "0.15.4",
     "@types/node": "22.5.1",
