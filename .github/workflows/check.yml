@@ -425,6 +425,12 @@ jobs:
           type: minimal
           language: kotlin
 
+      - name: remove previous build from linux
+        run: |
+          rm -rf clients/algoliasearch-client-kotlin/build || true
+          rm -rf clients/algoliasearch-client-kotlin/.kotlin || true
+          rm -rf clients/algoliasearch-client-kotlin/.gradle || true
+
       - run: yarn cli build clients kotlin
 
       - name: Set output
