@@ -158,7 +158,8 @@
       "matchStrings": [
         "(?<currentValue>.*)"
       ],
-      "datasourceTemplate": "dart-version"
+      "datasourceTemplate": "dart-version",
+      "depNameTemplate": "dart"
     },
     {
       "description": "Update .go-version",
@@ -176,7 +177,27 @@
         "(?<currentValue>.*)"
       ],
       "datasourceTemplate": "github-tags",
-      "depNameTemplate": "php/php-src"
+      "depNameTemplate": "php/php-src",
+      "extractVersionTemplate": "^php-(?<version>.*)$"
+    },
+    {
+      "description": "Update .ruby-version",
+      "fileMatch": ".ruby-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "ruby-version",
+      "depNameTemplate": "ruby"
+    },
+    {
+      "description": "Update .swift-version",
+      "fileMatch": ".swift-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "swiftlang/swift",
+      "extractVersionTemplate": "^swift-(?<version>.*)-RELEASE$"
     },
     {
       "description": "Update swiftformat version",
