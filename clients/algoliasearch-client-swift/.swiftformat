@@ -40,7 +40,7 @@
 --semicolons never
 --shortoptionals always
 --stripunusedargs always
---swiftversion 5.9
+--swiftversion 5.10
 --trimwhitespace always
 --typeattributes prev-line
 --typeblanklines remove
