@@ -13,6 +13,7 @@
     "gradle-wrapper",
     "gradle",
     "npm",
+    "nuget",
     "nvm",
     "pip_requirements",
     "poetry",
@@ -134,6 +135,15 @@
       "versioningTemplate": "npm"
     },
     {
+      "description": "Update .csharp-version",
+      "fileMatch": ".csharp-version",
+      "matchStrings": [
+        "(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "dotnet-version",
+      "depNameTemplate": "dotnet-sdk"
+    },
+    {
       "description": "Update .java-version",
       "fileMatch": ".java-version",
       "matchStrings": [
@@ -148,10 +158,7 @@
       "matchStrings": [
         "(?<currentValue>.*)"
       ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "dart-lang/sdk",
-      "versioningTemplate": "semver",
-      "extractVersionTemplate": "^[^-|+]*$"
+      "datasourceTemplate": "dart-version"
     },
     {
       "description": "Update .go-version",
