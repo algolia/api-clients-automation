@@ -15,7 +15,8 @@ import 'package:logging/logging.dart' show Logger;
 /// response conversion and error handling.
 class ChopperRequester implements Requester {
   /// The underlying Chopper client.
-  final ChopperClient _client;
+  AuthInterceptor _authInterceptor;
+  late final ChopperClient _client;
 
   /// Constructs a [ChopperClient] with the given [appId] and [apiKey].
   ChopperRequester({
@@ -27,30 +28,32 @@ class ChopperRequester implements Requester {
     Iterable<Interceptor>? interceptors,
     http.Client? client,
     JsonConverter? converter,
-  }) : _client = ChopperClient(
-          client: client,
-          converter: converter ?? JsonConverter(),
-          interceptors: [
-            AuthInterceptor(
-              appId: appId,
-              apiKey: apiKey,
-            ),
-            AgentInterceptor(
-              agent: AlgoliaAgent(packageVersion)
-                ..addAll([
-                  ...?clientSegments,
-                  ...Platform.agentSegments(),
-                ]),
-            ),
-            if (logger != null)
-              HttpLoggingInterceptor(
-                level: Level.body,
-                onlyErrors: false,
-                logger: logger,
-              ),
-            ...?interceptors,
-          ],
-        );
+  }) : _authInterceptor = AuthInterceptor(
+          appId: appId,
+          apiKey: apiKey,
+        ) {
+    _client = ChopperClient(
+      client: client,
+      converter: converter ?? JsonConverter(),
+      interceptors: [
+        _authInterceptor,
+        AgentInterceptor(
+          agent: AlgoliaAgent(packageVersion)
+            ..addAll([
+              ...?clientSegments,
+              ...Platform.agentSegments(),
+            ]),
+        ),
+        if (logger != null)
+          HttpLoggingInterceptor(
+            level: Level.body,
+            onlyErrors: false,
+            logger: logger,
+          ),
+        ...?interceptors,
+      ],
+    );
+  }
 
   @override
   Future<HttpResponse> perform(HttpRequest request) async {
@@ -114,4 +117,12 @@ class ChopperRequester implements Requester {
 
   @override
   void close() => _client.dispose();
+
+  @override
+  void setClientApiKey(String apiKey) {
+    _authInterceptor = AuthInterceptor(
+      appId: _authInterceptor.appId,
+      apiKey: apiKey,
+    );
+  }
 }

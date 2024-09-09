@@ -11,13 +11,13 @@ class AuthInterceptor implements Interceptor {
   final String appId;
 
   /// The API key used for Algolia authentication.
-  final String apiKey;
+  final String _apiKey;
 
   /// Constructs an [AuthInterceptor] with the provided application id and API key.
   const AuthInterceptor({
     required this.appId,
-    required this.apiKey,
-  });
+    required String apiKey,
+  }) : _apiKey = apiKey;
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) =>
@@ -26,7 +26,7 @@ class AuthInterceptor implements Interceptor {
           chain.request,
           {
             'x-algolia-application-id': appId,
-            'x-algolia-api-key': apiKey,
+            'x-algolia-api-key': _apiKey,
           },
         ),
       );
