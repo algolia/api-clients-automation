@@ -108,6 +108,8 @@ jobs:
     outputs:
       RUN_SCRIPTS: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
+      RUN_WEBSITE: ${{ steps.diff.outputs.WEBSITE_CHANGED > 0 }}
+
       SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
       RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
@@ -576,11 +578,11 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: Build website
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
         run: yarn website:build
 
       - name: Deploy documentation
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
         uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: 'website/build'
