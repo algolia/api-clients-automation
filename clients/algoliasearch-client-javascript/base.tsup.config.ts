@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import path from 'path';
 
 import type { Options } from 'tsup';
@@ -6,6 +7,8 @@ type PKG = {
   dependencies?: Record<string, string>;
   name: string;
 };
+
+type Requester = 'fetch' | 'http' | 'xhr';
 
 export function getBaseConfig(cwd: string): Options {
   return {
@@ -16,35 +19,44 @@ export function getBaseConfig(cwd: string): Options {
   };
 }
 
-export function getDependencies(pkg: PKG, env: 'browser' | 'node'): string[] {
+export function getDependencies(pkg: PKG, requester: Requester): string[] {
   const deps = Object.keys(pkg.dependencies || {}) || [];
 
   if (pkg.name !== 'algoliasearch') {
     return deps;
   }
 
-  if (env === 'node') {
-    return deps.filter((dep) => dep !== '@algolia/requester-browser-xhr');
+  switch (requester) {
+    case 'http':
+      return deps.filter((dep) => dep !== '@algolia/requester-browser-xhr');
+    case 'xhr':
+      return deps.filter((dep) => dep !== '@algolia/requester-node-http');
+    case 'fetch':
+      const fetchDeps = deps.filter(
+        (dep) => dep !== '@algolia/requester-browser-xhr' && dep !== '@algolia/requester-node-http',
+      );
+      fetchDeps.push('@algolia/requester-fetch');
+      return fetchDeps;
+    default:
+      throw new Error('unknown requester', requester);
   }
-
-  return deps.filter((dep) => dep !== '@algolia/requester-node-http');
 }
 
-export function getBaseNodeOptions(pkg: PKG, cwd: string): Options {
+export function getBaseNodeOptions(pkg: PKG, cwd: string, requester: Requester = 'http'): Options {
   return {
     ...getBaseConfig(cwd),
     platform: 'node',
     target: 'node14',
-    external: [...getDependencies(pkg, 'node'), 'node:crypto'],
+    external: [...getDependencies(pkg, requester), 'node:crypto'],
   };
 }
 
-export function getBaseBrowserOptions(pkg: PKG, cwd: string): Options {
+export function getBaseBrowserOptions(pkg: PKG, cwd: string, requester: Requester = 'xhr'): Options {
   return {
     ...getBaseConfig(cwd),
     platform: 'browser',
     format: ['esm'],
     target: ['chrome109', 'safari15.6', 'firefox115', 'edge126'],
-    external: [...getDependencies(pkg, 'browser'), 'dom'],
+    external: [...getDependencies(pkg, requester), 'dom'],
   };
 }

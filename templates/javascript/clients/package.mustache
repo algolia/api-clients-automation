@@ -24,11 +24,15 @@
         "types": {
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
-          "require": "./dist/node.d.cts"
+          "require": "./dist/node.d.cts",
+          "workerd": "./dist/node.d.ts",
+          "default": "./dist/node.d.cts"
         },
         "import": "./dist/builds/node.js",
         "module": "./dist/builds/node.js",
-        "require": "./dist/builds/node.cjs"
+        "require": "./dist/builds/node.cjs",
+        "workerd": "./dist/builds/node.fetch.js",
+        "default": "./dist/builds/node.cjs"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -62,11 +66,15 @@
         "types": {
           "import": "./dist/node.d.ts",
           "module": "./dist/node.d.ts",
-          "require": "./dist/node.d.cts"
+          "workerd": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts",
+          "default": "./dist/node.d.cts"
         },
         "import": "./dist/node.js",
         "module": "./dist/node.js",
-        "require": "./dist/node.cjs"
+        "workerd": "./dist/node.fetch.js",
+        "require": "./dist/node.cjs",
+        "default": "./dist/node.cjs"
       },
       "default": {
         "types": "./dist/browser.d.ts",
@@ -80,11 +88,13 @@
         "types": {
           "import": "./dist/lite/node.d.ts",
           "module": "./dist/lite/node.d.ts",
-          "require": "./dist/lite/node.d.cts"
+          "require": "./dist/lite/node.d.cts",
+          "default": "./dist/lite/node.d.cts"
         },
         "import": "./dist/lite/builds/node.js",
         "module": "./dist/lite/builds/node.js",
-        "require": "./dist/lite/builds/node.cjs"
+        "require": "./dist/lite/builds/node.cjs",
+        "default": "./dist/lite/builds/node.cjs"
       },
       "default": {
         "types": "./dist/lite/browser.d.ts",
