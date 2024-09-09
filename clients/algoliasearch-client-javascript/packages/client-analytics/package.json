@@ -1,54 +1,59 @@
 {
-  "name": "@algolia/client-analytics",
-  "version": "5.0.0-beta.13",
-  "description": "JavaScript client for client-analytics",
+  "version": "5.3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "scripts": {
+    "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
+    "clean": "rm -rf ./dist || true",
+    "test:bundle": "publint . && attw --pack ."
+  },
+  "name": "@algolia/client-analytics",
+  "description": "JavaScript client for client-analytics",
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/client-analytics.esm.node.js",
-        "module": "./dist/client-analytics.esm.node.js",
-        "require": "./dist/client-analytics.cjs",
-        "default": "./dist/client-analytics.cjs"
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/builds/node.js",
+        "module": "./dist/builds/node.js",
+        "require": "./dist/builds/node.cjs"
       },
       "default": {
-        "umd": "./dist/client-analytics.umd.js",
-        "module": "./dist/client-analytics.esm.browser.js",
-        "import": "./dist/client-analytics.esm.browser.js",
-        "default": "./dist/client-analytics.umd.js"
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/builds/browser.js",
+        "import": "./dist/builds/browser.js",
+        "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./src/*": "./src/*.ts",
-    "./model": "./model/index.ts"
+    "./src/*": "./src/*.ts"
   },
-  "jsdelivr": "./dist/client-analytics.umd.js",
-  "unpkg": "./dist/client-analytics.umd.js",
-  "browser": "./dist/client-analytics.umd.js",
-  "types": "./index.d.ts",
+  "jsdelivr": "./dist/builds/browser.umd.js",
+  "unpkg": "./dist/builds/browser.umd.js",
   "files": [
     "dist",
     "model",
     "index.js",
     "index.d.ts"
   ],
-  "scripts": {
-    "build": "yarn clean && rollup --config",
-    "clean": "rm -rf ./dist || true"
-  },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.14",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.14",
-    "@algolia/requester-node-http": "5.0.0-beta.14"
+    "@algolia/client-common": "5.3.0",
+    "@algolia/requester-browser-xhr": "5.3.0",
+    "@algolia/requester-node-http": "5.3.0"
   },
   "devDependencies": {
-    "@types/node": "22.1.0",
-    "rollup": "4.20.0",
+    "@arethetypeswrong/cli": "0.15.4",
+    "@types/node": "22.5.1",
+    "publint": "0.2.10",
+    "rollup": "4.21.2",
+    "tsup": "8.2.4",
     "typescript": "5.5.4"
   },
   "engines": {

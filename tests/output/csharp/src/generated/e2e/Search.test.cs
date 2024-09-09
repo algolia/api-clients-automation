@@ -66,6 +66,27 @@ public class SearchClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "getRule")]
+  public async Task GetRuleTest()
+  {
+    try
+    {
+      var resp = await client.GetRuleAsync("cts_e2e_browse", "qr-1725004648916");
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "getSettings")]
   public async Task GetSettingsTest()
   {
@@ -116,8 +137,46 @@ public class SearchClientRequestTestsE2E
     }
   }
 
+  [Fact(DisplayName = "search with highlight and snippet results")]
+  public async Task SearchTest5()
+  {
+    try
+    {
+      var resp = await client.SearchAsync<Hit>(
+        new SearchMethodParams
+        {
+          Requests = new List<SearchQuery>
+          {
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_highlight_snippet_results",
+                Query = "vim",
+                AttributesToSnippet = new List<string> { "*:20" },
+                AttributesToHighlight = new List<string> { "*" },
+                AttributesToRetrieve = new List<string> { "*" },
+              }
+            )
+          },
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
-  public async Task SearchTest7()
+  public async Task SearchTest8()
   {
     try
     {
@@ -154,7 +213,7 @@ public class SearchClientRequestTestsE2E
   }
 
   [Fact(DisplayName = "search filters end to end")]
-  public async Task SearchTest13()
+  public async Task SearchTest14()
   {
     try
     {
@@ -249,6 +308,30 @@ public class SearchClientRequestTestsE2E
 
       JsonAssert.EqualOverrideDefault(
         "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
+  [Fact(DisplayName = "searchRules")]
+  public async Task SearchRulesTest()
+  {
+    try
+    {
+      var resp = await client.SearchRulesAsync(
+        "cts_e2e_browse",
+        new SearchRulesParams { Query = "zorro", }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}",
         JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );

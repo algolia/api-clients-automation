@@ -50,6 +50,7 @@ object BuiltInOperationValue {
   def apply(value: Int): BuiltInOperationValue = {
     BuiltInOperationValue.IntValue(value)
   }
+
 }
 
 object BuiltInOperationValueSerializer extends Serializer[BuiltInOperationValue] {

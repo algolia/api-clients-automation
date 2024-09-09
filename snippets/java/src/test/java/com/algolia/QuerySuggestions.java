@@ -19,18 +19,19 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     client.createConfig(
       new ConfigurationWithIndex()
-        .setIndexName("theIndexName")
+        .setIndexName("<YOUR_INDEX_NAME>")
         .setSourceIndices(
-          List.of(
+          Arrays.asList(
             new SourceIndex()
-              .setIndexName("testIndex")
-              .setFacets(List.of(new Facet().setAttribute("test")))
-              .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+              .setIndexName("<YOUR_INDEX_NAME>")
+              .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+              .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
           )
         )
-        .setLanguages(Languages.of(List.of("french")))
-        .setExclude(List.of("test"))
+        .setLanguages(Languages.of(Arrays.asList("french")))
+        .setExclude(Arrays.asList("test"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +45,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +59,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +73,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +87,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -95,7 +100,8 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.deleteConfig("theIndexName");
+    client.deleteConfig("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -109,6 +115,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.getAllConfigs();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -121,7 +128,8 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConfig("cts_e2e_browse_query_suggestions");
+    client.getConfig("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -134,7 +142,8 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConfigStatus("theIndexName");
+    client.getConfigStatus("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -147,7 +156,22 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getLogFile("theIndexName");
+    client.getLogFile("<YOUR_INDEX_NAME>");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -161,19 +185,20 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.updateConfig(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new Configuration()
         .setSourceIndices(
-          List.of(
+          Arrays.asList(
             new SourceIndex()
-              .setIndexName("testIndex")
-              .setFacets(List.of(new Facet().setAttribute("test")))
-              .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+              .setIndexName("<YOUR_INDEX_NAME>")
+              .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+              .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
           )
         )
-        .setLanguages(Languages.of(List.of("french")))
-        .setExclude(List.of("test"))
+        .setLanguages(Languages.of(Arrays.asList("french")))
+        .setExclude(Arrays.asList("test"))
     );
+    // >LOG
     // SEPARATOR<
   }
 }

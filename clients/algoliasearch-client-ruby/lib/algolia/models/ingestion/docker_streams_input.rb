@@ -24,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :streams => :"Object"
+          :streams => :"Array<DockerStreams>"
         }
       end
 
@@ -59,7 +59,9 @@ module Algolia
         }
 
         if attributes.key?(:streams)
-          self.streams = attributes[:streams]
+          if (value = attributes[:streams]).is_a?(Array)
+            self.streams = value
+          end
         else
           self.streams = nil
         end

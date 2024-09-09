@@ -55,10 +55,7 @@ describe('appendSource', () => {
 
     expect(req.path).toEqual('/1/security/sources/append');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      source: 'theSource',
-      description: 'theDescription',
-    });
+    expect(req.data).toEqual({ source: 'theSource', description: 'theDescription' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -74,9 +71,7 @@ describe('assignUserId', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ cluster: 'theCluster' });
     expect(req.searchParams).toStrictEqual(undefined);
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-user-id': 'userID' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-user-id': 'userID' }));
   });
 
   test('it should not encode the userID', async () => {
@@ -89,9 +84,7 @@ describe('assignUserId', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ cluster: 'cluster with spaces' });
     expect(req.searchParams).toStrictEqual(undefined);
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-user-id': 'user id with spaces' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-user-id': 'user id with spaces' }));
   });
 });
 
@@ -121,100 +114,72 @@ describe('batch', () => {
   test('clear', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [{ action: 'clear', body: { key: 'value' } }],
-      },
+      batchWriteParams: { requests: [{ action: 'clear', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [{ action: 'clear', body: { key: 'value' } }],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'clear', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('delete', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [{ action: 'delete', body: { key: 'value' } }],
-      },
+      batchWriteParams: { requests: [{ action: 'delete', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [{ action: 'delete', body: { key: 'value' } }],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'delete', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('deleteObject', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [{ action: 'deleteObject', body: { key: 'value' } }],
-      },
+      batchWriteParams: { requests: [{ action: 'deleteObject', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [{ action: 'deleteObject', body: { key: 'value' } }],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'deleteObject', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('partialUpdateObject', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],
-      },
+      batchWriteParams: { requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('partialUpdateObjectNoCreate', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [
-          { action: 'partialUpdateObjectNoCreate', body: { key: 'value' } },
-        ],
-      },
+      batchWriteParams: { requests: [{ action: 'partialUpdateObjectNoCreate', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [
-        { action: 'partialUpdateObjectNoCreate', body: { key: 'value' } },
-      ],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'partialUpdateObjectNoCreate', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('updateObject', async () => {
     const req = (await client.batch({
       indexName: '<YOUR_INDEX_NAME>',
-      batchWriteParams: {
-        requests: [{ action: 'updateObject', body: { key: 'value' } }],
-      },
+      batchWriteParams: { requests: [{ action: 'updateObject', body: { key: 'value' } }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [{ action: 'updateObject', body: { key: 'value' } }],
-    });
+    expect(req.data).toEqual({ requests: [{ action: 'updateObject', body: { key: 'value' } }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -223,22 +188,14 @@ describe('batchAssignUserIds', () => {
   test('batchAssignUserIds', async () => {
     const req = (await client.batchAssignUserIds({
       xAlgoliaUserID: 'userID',
-      batchAssignUserIdsParams: {
-        cluster: 'theCluster',
-        users: ['user1', 'user2'],
-      },
+      batchAssignUserIdsParams: { cluster: 'theCluster', users: ['user1', 'user2'] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/batch');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      cluster: 'theCluster',
-      users: ['user1', 'user2'],
-    });
+    expect(req.data).toEqual({ cluster: 'theCluster', users: ['user1', 'user2'] });
     expect(req.searchParams).toStrictEqual(undefined);
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-user-id': 'userID' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-user-id': 'userID' }));
   });
 });
 
@@ -307,24 +264,14 @@ describe('batchDictionaryEntries', () => {
     const req = (await client.batchDictionaryEntries({
       dictionaryName: 'stopwords',
       batchDictionaryEntriesParams: {
-        requests: [
-          {
-            action: 'addEntry',
-            body: { objectID: '1', language: 'en', additional: 'try me' },
-          },
-        ],
+        requests: [{ action: 'addEntry', body: { objectID: '1', language: 'en', additional: 'try me' } }],
       },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/stopwords/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          action: 'addEntry',
-          body: { objectID: '1', language: 'en', additional: 'try me' },
-        },
-      ],
+      requests: [{ action: 'addEntry', body: { objectID: '1', language: 'en', additional: 'try me' } }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -332,9 +279,7 @@ describe('batchDictionaryEntries', () => {
 
 describe('browse', () => {
   test('browse with minimal parameters', async () => {
-    const req = (await client.browse({
-      indexName: 'cts_e2e_browse',
-    })) as unknown as EchoResponse;
+    const req = (await client.browse({ indexName: 'cts_e2e_browse' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/cts_e2e_browse/browse');
     expect(req.method).toEqual('POST');
@@ -350,10 +295,7 @@ describe('browse', () => {
 
     expect(req.path).toEqual('/1/indexes/indexName/browse');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      query: 'myQuery',
-      facetFilters: ['tags:algolia'],
-    });
+    expect(req.data).toEqual({ query: 'myQuery', facetFilters: ['tags:algolia'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -372,9 +314,7 @@ describe('browse', () => {
 
 describe('clearObjects', () => {
   test('clearObjects', async () => {
-    const req = (await client.clearObjects({
-      indexName: 'theIndexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.clearObjects({ indexName: 'theIndexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/clear');
     expect(req.method).toEqual('POST');
@@ -385,9 +325,7 @@ describe('clearObjects', () => {
 
 describe('clearRules', () => {
   test('clearRules', async () => {
-    const req = (await client.clearRules({
-      indexName: 'indexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.clearRules({ indexName: 'indexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/rules/clear');
     expect(req.method).toEqual('POST');
@@ -398,9 +336,7 @@ describe('clearRules', () => {
 
 describe('clearSynonyms', () => {
   test('clearSynonyms', async () => {
-    const req = (await client.clearSynonyms({
-      indexName: 'indexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.clearSynonyms({ indexName: 'indexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/clear');
     expect(req.method).toEqual('POST');
@@ -411,9 +347,7 @@ describe('clearSynonyms', () => {
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
-    const req = (await client.customDelete({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('DELETE');
@@ -436,9 +370,7 @@ describe('customDelete', () => {
 
 describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
-    const req = (await client.customGet({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customGet({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('GET');
@@ -455,21 +387,16 @@ describe('customGet', () => {
     expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters%20with%20space',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters%20with%20space' });
   });
 
   test('requestOptions should be escaped too', async () => {
     const req = (await client.customGet(
       { path: 'test/all', parameters: { query: 'to be overriden' } },
       {
-        queryParameters: {
-          query: 'parameters with space',
-          'and an array': ['array', 'with spaces'],
-        },
+        queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
         headers: { 'x-header-1': 'spaces are left alone' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/all');
@@ -479,17 +406,13 @@ describe('customGet', () => {
       query: 'parameters%20with%20space',
       'and%20an%20array': 'array%2Cwith%20spaces',
     });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-header-1': 'spaces are left alone' }));
   });
 });
 
 describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPost({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPost({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('POST');
@@ -512,14 +435,10 @@ describe('customPost', () => {
 
   test('requestOptions can override default query parameters', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
@@ -530,178 +449,122 @@ describe('customPost', () => {
 
   test('requestOptions merges query parameters with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query2: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      query2: 'myQueryParameter',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', query2: 'myQueryParameter' });
   });
 
   test('requestOptions can override default headers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { isItWorking: true },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      isItWorking: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', isItWorking: 'true' });
   });
 
   test('requestOptions queryParameters accepts integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: 2 },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '2' });
   });
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: ['b and c', 'd'] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'b%20and%20c%2Cd',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'b%20and%20c%2Cd' });
   });
 
   test('requestOptions queryParameters accepts list of booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [true, true, false] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'true%2Ctrue%2Cfalse',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'true%2Ctrue%2Cfalse' });
   });
 
   test('requestOptions queryParameters accepts list of integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [1, 2] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '1%2C2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '1%2C2' });
   });
 });
 
 describe('customPut', () => {
   test('allow put method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPut({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPut({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('PUT');
@@ -725,9 +588,7 @@ describe('customPut', () => {
 
 describe('deleteApiKey', () => {
   test('deleteApiKey', async () => {
-    const req = (await client.deleteApiKey({
-      key: 'myTestApiKey',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteApiKey({ key: 'myTestApiKey' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys/myTestApiKey');
     expect(req.method).toEqual('DELETE');
@@ -752,9 +613,7 @@ describe('deleteBy', () => {
 
 describe('deleteIndex', () => {
   test('deleteIndex', async () => {
-    const req = (await client.deleteIndex({
-      indexName: 'theIndexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteIndex({ indexName: 'theIndexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName');
     expect(req.method).toEqual('DELETE');
@@ -779,10 +638,7 @@ describe('deleteObject', () => {
 
 describe('deleteRule', () => {
   test('delete rule simple case', async () => {
-    const req = (await client.deleteRule({
-      indexName: 'indexName',
-      objectID: 'id1',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteRule({ indexName: 'indexName', objectID: 'id1' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
     expect(req.method).toEqual('DELETE');
@@ -805,9 +661,7 @@ describe('deleteRule', () => {
 
 describe('deleteSource', () => {
   test('deleteSource', async () => {
-    const req = (await client.deleteSource({
-      source: 'theSource',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteSource({ source: 'theSource' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/security/sources/theSource');
     expect(req.method).toEqual('DELETE');
@@ -818,10 +672,7 @@ describe('deleteSource', () => {
 
 describe('deleteSynonym', () => {
   test('deleteSynonym', async () => {
-    const req = (await client.deleteSynonym({
-      indexName: 'indexName',
-      objectID: 'id1',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/id1');
     expect(req.method).toEqual('DELETE');
@@ -832,9 +683,7 @@ describe('deleteSynonym', () => {
 
 describe('getApiKey', () => {
   test('getApiKey', async () => {
-    const req = (await client.getApiKey({
-      key: 'myTestApiKey',
-    })) as unknown as EchoResponse;
+    const req = (await client.getApiKey({ key: 'myTestApiKey' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys/myTestApiKey');
     expect(req.method).toEqual('GET');
@@ -845,9 +694,7 @@ describe('getApiKey', () => {
 
 describe('getAppTask', () => {
   test('getAppTask', async () => {
-    const req = (await client.getAppTask({
-      taskID: 123,
-    })) as unknown as EchoResponse;
+    const req = (await client.getAppTask({ taskID: 123 })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/task/123');
     expect(req.method).toEqual('GET');
@@ -858,8 +705,7 @@ describe('getAppTask', () => {
 
 describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
-    const req =
-      (await client.getDictionaryLanguages()) as unknown as EchoResponse;
+    const req = (await client.getDictionaryLanguages()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/*/languages');
     expect(req.method).toEqual('GET');
@@ -870,8 +716,7 @@ describe('getDictionaryLanguages', () => {
 
 describe('getDictionarySettings', () => {
   test('get getDictionarySettings results', async () => {
-    const req =
-      (await client.getDictionarySettings()) as unknown as EchoResponse;
+    const req = (await client.getDictionarySettings()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/*/settings');
     expect(req.method).toEqual('GET');
@@ -901,12 +746,7 @@ describe('getLogs', () => {
     expect(req.path).toEqual('/1/logs');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      offset: '5',
-      length: '10',
-      indexName: 'theIndexName',
-      type: 'all',
-    });
+    expect(req.searchParams).toStrictEqual({ offset: '5', length: '10', indexName: 'theIndexName', type: 'all' });
   });
 });
 
@@ -921,34 +761,20 @@ describe('getObject', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      attributesToRetrieve: 'attr1%2Cattr2',
-    });
+    expect(req.searchParams).toStrictEqual({ attributesToRetrieve: 'attr1%2Cattr2' });
   });
 });
 
 describe('getObjects', () => {
   test('getObjects', async () => {
     const req = (await client.getObjects({
-      requests: [
-        {
-          attributesToRetrieve: ['attr1', 'attr2'],
-          objectID: 'uniqueID',
-          indexName: 'theIndexName',
-        },
-      ],
+      requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/objects');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          attributesToRetrieve: ['attr1', 'attr2'],
-          objectID: 'uniqueID',
-          indexName: 'theIndexName',
-        },
-      ],
+      requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -957,11 +783,11 @@ describe('getObjects', () => {
 describe('getRule', () => {
   test('getRule', async () => {
     const req = (await client.getRule({
-      indexName: 'indexName',
-      objectID: 'id1',
+      indexName: 'cts_e2e_browse',
+      objectID: 'qr-1725004648916',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/rules/qr-1725004648916');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -970,9 +796,7 @@ describe('getRule', () => {
 
 describe('getSettings', () => {
   test('getSettings', async () => {
-    const req = (await client.getSettings({
-      indexName: 'cts_e2e_settings',
-    })) as unknown as EchoResponse;
+    const req = (await client.getSettings({ indexName: 'cts_e2e_settings' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/cts_e2e_settings/settings');
     expect(req.method).toEqual('GET');
@@ -994,10 +818,7 @@ describe('getSources', () => {
 
 describe('getSynonym', () => {
   test('getSynonym', async () => {
-    const req = (await client.getSynonym({
-      indexName: 'indexName',
-      objectID: 'id1',
-    })) as unknown as EchoResponse;
+    const req = (await client.getSynonym({ indexName: 'indexName', objectID: 'id1' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/id1');
     expect(req.method).toEqual('GET');
@@ -1008,10 +829,7 @@ describe('getSynonym', () => {
 
 describe('getTask', () => {
   test('getTask', async () => {
-    const req = (await client.getTask({
-      indexName: 'theIndexName',
-      taskID: 123,
-    })) as unknown as EchoResponse;
+    const req = (await client.getTask({ indexName: 'theIndexName', taskID: 123 })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/task/123');
     expect(req.method).toEqual('GET');
@@ -1033,9 +851,7 @@ describe('getTopUserIds', () => {
 
 describe('getUserId', () => {
   test('getUserId', async () => {
-    const req = (await client.getUserId({
-      userID: 'uniqueID',
-    })) as unknown as EchoResponse;
+    const req = (await client.getUserId({ userID: 'uniqueID' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/uniqueID');
     expect(req.method).toEqual('GET');
@@ -1055,9 +871,7 @@ describe('hasPendingMappings', () => {
   });
 
   test('hasPendingMappings with parameters', async () => {
-    const req = (await client.hasPendingMappings({
-      getClusters: true,
-    })) as unknown as EchoResponse;
+    const req = (await client.hasPendingMappings({ getClusters: true })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/pending');
     expect(req.method).toEqual('GET');
@@ -1099,10 +913,7 @@ describe('listIndices', () => {
   });
 
   test('listIndices with parameters', async () => {
-    const req = (await client.listIndices({
-      page: 8,
-      hitsPerPage: 3,
-    })) as unknown as EchoResponse;
+    const req = (await client.listIndices({ page: 8, hitsPerPage: 3 })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes');
     expect(req.method).toEqual('GET');
@@ -1122,10 +933,7 @@ describe('listUserIds', () => {
   });
 
   test('listUserIds with parameters', async () => {
-    const req = (await client.listUserIds({
-      page: 8,
-      hitsPerPage: 100,
-    })) as unknown as EchoResponse;
+    const req = (await client.listUserIds({ page: 8, hitsPerPage: 100 })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping');
     expect(req.method).toEqual('GET');
@@ -1137,25 +945,13 @@ describe('listUserIds', () => {
 describe('multipleBatch', () => {
   test('multipleBatch', async () => {
     const req = (await client.multipleBatch({
-      requests: [
-        {
-          action: 'addObject',
-          body: { key: 'value' },
-          indexName: 'theIndexName',
-        },
-      ],
+      requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          action: 'addObject',
-          body: { key: 'value' },
-          indexName: 'theIndexName',
-        },
-      ],
+      requests: [{ action: 'addObject', body: { key: 'value' }, indexName: 'theIndexName' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1185,84 +981,98 @@ describe('operationIndex', () => {
   test('copy', async () => {
     const req = (await client.operationIndex({
       indexName: '<SOURCE_INDEX_NAME>',
-      operationIndexParams: {
-        operation: 'copy',
-        destination: '<DESTINATION_INDEX_NAME>',
-      },
+      operationIndexParams: { operation: 'copy', destination: '<DESTINATION_INDEX_NAME>' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      operation: 'copy',
-      destination: '<DESTINATION_INDEX_NAME>',
-    });
+    expect(req.data).toEqual({ operation: 'copy', destination: '<DESTINATION_INDEX_NAME>' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('move', async () => {
     const req = (await client.operationIndex({
       indexName: '<SOURCE_INDEX_NAME>',
-      operationIndexParams: {
-        operation: 'move',
-        destination: '<DESTINATION_INDEX_NAME>',
-      },
+      operationIndexParams: { operation: 'move', destination: '<DESTINATION_INDEX_NAME>' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      operation: 'move',
-      destination: '<DESTINATION_INDEX_NAME>',
-    });
+    expect(req.data).toEqual({ operation: 'move', destination: '<DESTINATION_INDEX_NAME>' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('partialUpdateObject', () => {
-  test('Partial update with string value', async () => {
+  test('Partial update with a new value for a string attribute', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      attributesToUpdate: {
-        id1: 'test',
-        id2: { _operation: 'AddUnique', value: 'test2' },
-      },
-      createIfNotExists: true,
+      attributesToUpdate: { attributeId: 'new value' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      id1: 'test',
-      id2: { _operation: 'AddUnique', value: 'test2' },
-    });
-    expect(req.searchParams).toStrictEqual({ createIfNotExists: 'true' });
+    expect(req.data).toEqual({ attributeId: 'new value' });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('Partial update with integer value', async () => {
+  test('Partial update with a new value for an integer attribute', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
-      attributesToUpdate: {
-        attributeId: { _operation: 'Increment', value: 2 },
-      },
+      attributesToUpdate: { attributeId: 1 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      attributeId: { _operation: 'Increment', value: 2 },
-    });
+    expect(req.data).toEqual({ attributeId: 1 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for a boolean attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for an array attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: ['one', 'two', 'three'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: ['one', 'two', 'three'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('Partial update with a new value for an object attribute', async () => {
+    const req = (await client.partialUpdateObject({
+      indexName: 'theIndexName',
+      objectID: 'uniqueID',
+      attributesToUpdate: { attributeId: { nested: 'value' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID/partial');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ attributeId: { nested: 'value' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('removeUserId', () => {
   test('removeUserId', async () => {
-    const req = (await client.removeUserId({
-      userID: 'uniqueID',
-    })) as unknown as EchoResponse;
+    const req = (await client.removeUserId({ userID: 'uniqueID' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/uniqueID');
     expect(req.method).toEqual('DELETE');
@@ -1279,18 +1089,14 @@ describe('replaceSources', () => {
 
     expect(req.path).toEqual('/1/security/sources');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual([
-      { source: 'theSource', description: 'theDescription' },
-    ]);
+    expect(req.data).toEqual([{ source: 'theSource', description: 'theDescription' }]);
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = (await client.restoreApiKey({
-      key: 'myApiKey',
-    })) as unknown as EchoResponse;
+    const req = (await client.restoreApiKey({ key: 'myApiKey' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys/myApiKey/restore');
     expect(req.method).toEqual('POST');
@@ -1318,18 +1124,12 @@ describe('saveRule', () => {
     const req = (await client.saveRule({
       indexName: 'indexName',
       objectID: 'id1',
-      rule: {
-        objectID: 'id1',
-        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-      },
+      rule: { objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/rules/id1');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      objectID: 'id1',
-      conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-    });
+    expect(req.data).toEqual({ objectID: 'id1', conditions: [{ pattern: 'apple', anchoring: 'contains' }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -1339,14 +1139,7 @@ describe('saveRule', () => {
       objectID: 'id1',
       rule: {
         objectID: 'id1',
-        conditions: [
-          {
-            pattern: 'apple',
-            anchoring: 'contains',
-            alternatives: false,
-            context: 'search',
-          },
-        ],
+        conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
         consequence: {
           params: {
             filters: 'brand:apple',
@@ -1377,14 +1170,7 @@ describe('saveRule', () => {
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({
       objectID: 'id1',
-      conditions: [
-        {
-          pattern: 'apple',
-          anchoring: 'contains',
-          alternatives: false,
-          context: 'search',
-        },
-      ],
+      conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
       consequence: {
         params: {
           filters: 'brand:apple',
@@ -1417,14 +1203,8 @@ describe('saveRules', () => {
     const req = (await client.saveRules({
       indexName: '<YOUR_INDEX_NAME>',
       rules: [
-        {
-          objectID: 'a-rule-id',
-          conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
-        },
-        {
-          objectID: 'a-second-rule-id',
-          conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-        },
+        { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
+        { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
       ],
       forwardToReplicas: false,
       clearExistingRules: true,
@@ -1433,19 +1213,10 @@ describe('saveRules', () => {
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      {
-        objectID: 'a-rule-id',
-        conditions: [{ pattern: 'smartphone', anchoring: 'contains' }],
-      },
-      {
-        objectID: 'a-second-rule-id',
-        conditions: [{ pattern: 'apple', anchoring: 'contains' }],
-      },
+      { objectID: 'a-rule-id', conditions: [{ pattern: 'smartphone', anchoring: 'contains' }] },
+      { objectID: 'a-second-rule-id', conditions: [{ pattern: 'apple', anchoring: 'contains' }] },
     ]);
-    expect(req.searchParams).toStrictEqual({
-      forwardToReplicas: 'false',
-      clearExistingRules: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'false', clearExistingRules: 'true' });
   });
 
   test('saveRules with all parameters', async () => {
@@ -1454,14 +1225,7 @@ describe('saveRules', () => {
       rules: [
         {
           objectID: 'id1',
-          conditions: [
-            {
-              pattern: 'apple',
-              anchoring: 'contains',
-              alternatives: false,
-              context: 'search',
-            },
-          ],
+          conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
           consequence: {
             params: {
               filters: 'brand:apple',
@@ -1495,14 +1259,7 @@ describe('saveRules', () => {
     expect(req.data).toEqual([
       {
         objectID: 'id1',
-        conditions: [
-          {
-            pattern: 'apple',
-            anchoring: 'contains',
-            alternatives: false,
-            context: 'search',
-          },
-        ],
+        conditions: [{ pattern: 'apple', anchoring: 'contains', alternatives: false, context: 'search' }],
         consequence: {
           params: {
             filters: 'brand:apple',
@@ -1527,10 +1284,7 @@ describe('saveRules', () => {
         validity: [{ from: 1656670273, until: 1656670277 }],
       },
     ]);
-    expect(req.searchParams).toStrictEqual({
-      forwardToReplicas: 'true',
-      clearExistingRules: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true', clearExistingRules: 'true' });
   });
 });
 
@@ -1539,21 +1293,13 @@ describe('saveSynonym', () => {
     const req = (await client.saveSynonym({
       indexName: 'indexName',
       objectID: 'id1',
-      synonymHit: {
-        objectID: 'id1',
-        type: 'synonym',
-        synonyms: ['car', 'vehicule', 'auto'],
-      },
+      synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
       forwardToReplicas: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/id1');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      objectID: 'id1',
-      type: 'synonym',
-      synonyms: ['car', 'vehicule', 'auto'],
-    });
+    expect(req.data).toEqual({ objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 });
@@ -1563,17 +1309,8 @@ describe('saveSynonyms', () => {
     const req = (await client.saveSynonyms({
       indexName: '<YOUR_INDEX_NAME>',
       synonymHit: [
-        {
-          objectID: 'id1',
-          type: 'synonym',
-          synonyms: ['car', 'vehicule', 'auto'],
-        },
-        {
-          objectID: 'id2',
-          type: 'onewaysynonym',
-          input: 'iphone',
-          synonyms: ['ephone', 'aphone', 'yphone'],
-        },
+        { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
+        { objectID: 'id2', type: 'onewaysynonym', input: 'iphone', synonyms: ['ephone', 'aphone', 'yphone'] },
       ],
       forwardToReplicas: true,
       replaceExistingSynonyms: true,
@@ -1582,72 +1319,36 @@ describe('saveSynonyms', () => {
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
-      {
-        objectID: 'id1',
-        type: 'synonym',
-        synonyms: ['car', 'vehicule', 'auto'],
-      },
-      {
-        objectID: 'id2',
-        type: 'onewaysynonym',
-        input: 'iphone',
-        synonyms: ['ephone', 'aphone', 'yphone'],
-      },
+      { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
+      { objectID: 'id2', type: 'onewaysynonym', input: 'iphone', synonyms: ['ephone', 'aphone', 'yphone'] },
     ]);
-    expect(req.searchParams).toStrictEqual({
-      forwardToReplicas: 'true',
-      replaceExistingSynonyms: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true', replaceExistingSynonyms: 'true' });
   });
 });
 
 describe('search', () => {
   test('withHitsPerPage', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          hitsPerPage: 50,
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          hitsPerPage: 50,
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('filterOnly', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          filters: 'actor:Scarlett Johansson',
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          filters: 'actor:Scarlett Johansson',
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1679,25 +1380,13 @@ describe('search', () => {
 
   test('filterNot', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          filters: 'NOT actor:Nicolas Cage',
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          filters: 'NOT actor:Nicolas Cage',
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1709,76 +1398,73 @@ describe('search', () => {
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search with highlight and snippet results', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_highlight_snippet_results',
+          query: 'vim',
+          attributesToSnippet: ['*:20'],
+          attributesToHighlight: ['*'],
+          attributesToRetrieve: ['*'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [{ indexName: 'cts_e2e_search_empty_index' }],
+      requests: [
+        {
+          indexName: 'cts_e2e_highlight_snippet_results',
+          query: 'vim',
+          attributesToSnippet: ['*:20'],
+          attributesToHighlight: ['*'],
+          attributesToRetrieve: ['*'],
+        },
+      ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('retrieveFacets', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          facets: ['author', 'genre'],
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          facets: ['author', 'genre'],
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('retrieveFacetsWildcard', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          facets: ['*'],
-        },
-      ],
+      requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: '<YOUR_INDEX_NAME>',
-          query: '<YOUR_QUERY>',
-          facets: ['*'],
-        },
-      ],
-    });
+    expect(req.data).toEqual({ requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('search for a single facet request with minimal parameters', async () => {
     const req = (await client.search({
-      requests: [
-        { indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' },
-      ],
+      requests: [{ indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' }],
       strategy: 'stopIfEnoughMatches',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        { indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' },
-      ],
+      requests: [{ indexName: 'cts_e2e_search_facet', type: 'facet', facet: 'editor' }],
       strategy: 'stopIfEnoughMatches',
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1786,27 +1472,13 @@ describe('search', () => {
 
   test('search for a single hits request with all parameters', async () => {
     const req = (await client.search({
-      requests: [
-        {
-          indexName: 'theIndexName',
-          query: 'myQuery',
-          hitsPerPage: 50,
-          type: 'default',
-        },
-      ],
+      requests: [{ indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: 'theIndexName',
-          query: 'myQuery',
-          hitsPerPage: 50,
-          type: 'default',
-        },
-      ],
+      requests: [{ indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1878,12 +1550,7 @@ describe('search', () => {
           query: 'theQuery',
           maxFacetHits: 50,
         },
-        {
-          indexName: 'theIndexName',
-          query: 'myQuery',
-          hitsPerPage: 50,
-          type: 'default',
-        },
+        { indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' },
       ],
       strategy: 'stopIfEnoughMatches',
     })) as unknown as EchoResponse;
@@ -1900,12 +1567,7 @@ describe('search', () => {
           query: 'theQuery',
           maxFacetHits: 50,
         },
-        {
-          indexName: 'theIndexName',
-          query: 'myQuery',
-          hitsPerPage: 50,
-          type: 'default',
-        },
+        { indexName: 'theIndexName', query: 'myQuery', hitsPerPage: 50, type: 'default' },
       ],
       strategy: 'stopIfEnoughMatches',
     });
@@ -1925,10 +1587,7 @@ describe('search', () => {
         },
         {
           indexName: 'theIndexName',
-          facetFilters: [
-            'mySearch:filters',
-            ['mySearch:filters', ['mySearch:filters']],
-          ],
+          facetFilters: ['mySearch:filters', ['mySearch:filters', ['mySearch:filters']]],
           reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
           tagFilters: ['mySearch:filters', ['mySearch:filters']],
           numericFilters: ['mySearch:filters', ['mySearch:filters']],
@@ -1951,10 +1610,7 @@ describe('search', () => {
         },
         {
           indexName: 'theIndexName',
-          facetFilters: [
-            'mySearch:filters',
-            ['mySearch:filters', ['mySearch:filters']],
-          ],
+          facetFilters: ['mySearch:filters', ['mySearch:filters', ['mySearch:filters']]],
           reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
           tagFilters: ['mySearch:filters', ['mySearch:filters']],
           numericFilters: ['mySearch:filters', ['mySearch:filters']],
@@ -1968,24 +1624,12 @@ describe('search', () => {
   test('search filters end to end', async () => {
     const req = (await client.search({
       requests: [
+        { indexName: 'cts_e2e_search_facet', filters: "editor:'visual studio' OR editor:neovim" },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", 'editor:neovim'] },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", ['editor:neovim']] },
         {
           indexName: 'cts_e2e_search_facet',
-          filters: "editor:'visual studio' OR editor:neovim",
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: [
-            "editor:'visual studio'",
-            ['editor:neovim', ['editor:goland']],
-          ],
+          facetFilters: ["editor:'visual studio'", ['editor:neovim', ['editor:goland']]],
         },
       ],
     })) as unknown as EchoResponse;
@@ -1994,24 +1638,12 @@ describe('search', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
+        { indexName: 'cts_e2e_search_facet', filters: "editor:'visual studio' OR editor:neovim" },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", 'editor:neovim'] },
+        { indexName: 'cts_e2e_search_facet', facetFilters: ["editor:'visual studio'", ['editor:neovim']] },
         {
           indexName: 'cts_e2e_search_facet',
-          filters: "editor:'visual studio' OR editor:neovim",
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
-        },
-        {
-          indexName: 'cts_e2e_search_facet',
-          facetFilters: [
-            "editor:'visual studio'",
-            ['editor:neovim', ['editor:goland']],
-          ],
+          facetFilters: ["editor:'visual studio'", ['editor:neovim', ['editor:goland']]],
         },
       ],
     });
@@ -2089,10 +1721,7 @@ describe('search', () => {
           removeStopWords: true,
           removeWordsIfNoResults: 'allOptional',
           renderingContent: {
-            facetOrdering: {
-              facets: { order: ['a', 'b'] },
-              values: { a: { order: ['b'], sortRemainingBy: 'count' } },
-            },
+            facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
           },
           replaceSynonymsInHighlight: true,
           responseFields: [''],
@@ -2184,10 +1813,7 @@ describe('search', () => {
           removeStopWords: true,
           removeWordsIfNoResults: 'allOptional',
           renderingContent: {
-            facetOrdering: {
-              facets: { order: ['a', 'b'] },
-              values: { a: { order: ['b'], sortRemainingBy: 'count' } },
-            },
+            facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
           },
           replaceSynonymsInHighlight: true,
           responseFields: [''],
@@ -2226,22 +1852,12 @@ describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with all parameters', async () => {
     const req = (await client.searchDictionaryEntries({
       dictionaryName: 'compounds',
-      searchDictionaryEntriesParams: {
-        query: 'foo',
-        page: 4,
-        hitsPerPage: 2,
-        language: 'fr',
-      },
+      searchDictionaryEntriesParams: { query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/compounds/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      query: 'foo',
-      page: 4,
-      hitsPerPage: 2,
-      language: 'fr',
-    });
+    expect(req.data).toEqual({ query: 'foo', page: 4, hitsPerPage: 2, language: 'fr' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -2263,20 +1879,12 @@ describe('searchForFacetValues', () => {
     const req = (await client.searchForFacetValues({
       indexName: 'indexName',
       facetName: 'facetName',
-      searchForFacetValuesRequest: {
-        params: "query=foo&facetFilters=['bar']",
-        facetQuery: 'foo',
-        maxFacetHits: 42,
-      },
+      searchForFacetValuesRequest: { params: "query=foo&facetFilters=['bar']", facetQuery: 'foo', maxFacetHits: 42 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/facets/facetName/query');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      params: "query=foo&facetFilters=['bar']",
-      facetQuery: 'foo',
-      maxFacetHits: 42,
-    });
+    expect(req.data).toEqual({ params: "query=foo&facetFilters=['bar']", facetQuery: 'foo', maxFacetHits: 42 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -2284,22 +1892,20 @@ describe('searchForFacetValues', () => {
 describe('searchRules', () => {
   test('searchRules', async () => {
     const req = (await client.searchRules({
-      indexName: 'indexName',
-      searchRulesParams: { query: 'something' },
+      indexName: 'cts_e2e_browse',
+      searchRulesParams: { query: 'zorro' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/search');
+    expect(req.path).toEqual('/1/indexes/cts_e2e_browse/rules/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'something' });
+    expect(req.data).toEqual({ query: 'zorro' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('searchSingleIndex', () => {
   test('search with minimal parameters', async () => {
-    const req = (await client.searchSingleIndex({
-      indexName: 'indexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.searchSingleIndex({ indexName: 'indexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
@@ -2308,9 +1914,7 @@ describe('searchSingleIndex', () => {
   });
 
   test('search with special characters in indexName', async () => {
-    const req = (await client.searchSingleIndex({
-      indexName: 'cts_e2e_space in index',
-    })) as unknown as EchoResponse;
+    const req = (await client.searchSingleIndex({ indexName: 'cts_e2e_space in index' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/cts_e2e_space%20in%20index/query');
     expect(req.method).toEqual('POST');
@@ -2326,10 +1930,7 @@ describe('searchSingleIndex', () => {
 
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      query: 'myQuery',
-      facetFilters: ['tags:algolia'],
-    });
+    expect(req.data).toEqual({ query: 'myQuery', facetFilters: ['tags:algolia'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -2356,9 +1957,7 @@ describe('searchSingleIndex', () => {
 
 describe('searchSynonyms', () => {
   test('searchSynonyms with minimal parameters', async () => {
-    const req = (await client.searchSynonyms({
-      indexName: 'indexName',
-    })) as unknown as EchoResponse;
+    const req = (await client.searchSynonyms({ indexName: 'indexName' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
@@ -2369,22 +1968,12 @@ describe('searchSynonyms', () => {
   test('searchSynonyms with all parameters', async () => {
     const req = (await client.searchSynonyms({
       indexName: 'indexName',
-      searchSynonymsParams: {
-        query: 'myQuery',
-        type: 'altcorrection1',
-        page: 10,
-        hitsPerPage: 10,
-      },
+      searchSynonymsParams: { query: 'myQuery', type: 'altcorrection1', page: 10, hitsPerPage: 10 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/synonyms/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      query: 'myQuery',
-      type: 'altcorrection1',
-      page: 10,
-      hitsPerPage: 10,
-    });
+    expect(req.data).toEqual({ query: 'myQuery', type: 'altcorrection1', page: 10, hitsPerPage: 10 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -2400,12 +1989,7 @@ describe('searchUserIds', () => {
 
     expect(req.path).toEqual('/1/clusters/mapping/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      query: 'test',
-      clusterName: 'theClusterName',
-      page: 5,
-      hitsPerPage: 10,
-    });
+    expect(req.data).toEqual({ query: 'test', clusterName: 'theClusterName', page: 5, hitsPerPage: 10 });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -2418,9 +2002,7 @@ describe('setDictionarySettings', () => {
 
     expect(req.path).toEqual('/1/dictionaries/*/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
-    });
+    expect(req.data).toEqual({ disableStandardEntries: { plurals: { fr: false, en: false, ru: true } } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -2450,24 +2032,12 @@ describe('setSettings', () => {
   test('setSettingsAttributesForFaceting', async () => {
     const req = (await client.setSettings({
       indexName: '<YOUR_INDEX_NAME>',
-      indexSettings: {
-        attributesForFaceting: [
-          'actor',
-          'filterOnly(category)',
-          'searchable(publisher)',
-        ],
-      },
+      indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      attributesForFaceting: [
-        'actor',
-        'filterOnly(category)',
-        'searchable(publisher)',
-      ],
-    });
+    expect(req.data).toEqual({ attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -2641,10 +2211,7 @@ describe('setSettings', () => {
         removeStopWords: false,
         removeWordsIfNoResults: 'lastWords',
         renderingContent: {
-          facetOrdering: {
-            facets: { order: ['a', 'b'] },
-            values: { a: { order: ['b'], sortRemainingBy: 'count' } },
-          },
+          facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
         },
         replaceSynonymsInHighlight: true,
         replicas: [''],
@@ -2713,10 +2280,7 @@ describe('setSettings', () => {
       removeStopWords: false,
       removeWordsIfNoResults: 'lastWords',
       renderingContent: {
-        facetOrdering: {
-          facets: { order: ['a', 'b'] },
-          values: { a: { order: ['b'], sortRemainingBy: 'count' } },
-        },
+        facetOrdering: { facets: { order: ['a', 'b'] }, values: { a: { order: ['b'], sortRemainingBy: 'count' } } },
       },
       replaceSynonymsInHighlight: true,
       replicas: [''],
@@ -2739,12 +2303,7 @@ describe('updateApiKey', () => {
   test('updateApiKey', async () => {
     const req = (await client.updateApiKey({
       key: 'myApiKey',
-      apiKey: {
-        acl: ['search', 'addObject'],
-        validity: 300,
-        maxQueriesPerIPPerHour: 100,
-        maxHitsPerQuery: 20,
-      },
+      apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys/myApiKey');
@@ -2766,7 +2325,7 @@ describe('getSecuredApiKeyRemainingValidity', () => {
       restrictions: { validUntil: 42 },
     });
     expect(resp).toEqual(
-      'NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI='
+      'NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI=',
     );
 
     const validity = client.getSecuredApiKeyRemainingValidity({
@@ -2780,9 +2339,7 @@ describe('getSecuredApiKeyRemainingValidity', () => {
       client.getSecuredApiKeyRemainingValidity({ securedApiKey: 'foo' });
       throw new Error('test is expected to throw error');
     } catch (e) {
-      expect((e as Error).message).toMatch(
-        'validUntil not found in given secured api key.'
-      );
+      expect((e as Error).message).toMatch('validUntil not found in given secured api key.');
     }
   });
 });

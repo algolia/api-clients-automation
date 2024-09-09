@@ -57,15 +57,11 @@ info:
 servers:
   - url: https://usage.algolia.com
     description: Base URL of the Usage API.
-  - url: https://usage-dev.algolia.com
-    description: >-
-      Base URL for the development version of the Usage API (Algolia employees
-      only).
 security:
   - appId: []
     apiKey: []
 tags:
-  - name: usage
+  - name: statistics
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
 paths:
@@ -184,6 +180,8 @@ paths:
       summary: Retrieve usage information
       description: |
         Retrieves usage statistics evaluated over a specified period.
+      tags:
+        - usage
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
         - $ref: '#/components/parameters/StartDateRequired'
@@ -202,14 +200,14 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
-      tags:
-        - usage
   /1/usage/{statistic}/{indexName}:
     get:
       operationId: getIndexUsage
       summary: Retrieve usage information for one index
       description: |
         Retrieves the selected usage statistics for one index.
+      tags:
+        - usage
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
         - $ref: '#/components/parameters/IndexName'
@@ -229,8 +227,26 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
       tags:
         - usage
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -577,19 +593,19 @@ components:
     StartDateRequired:
       in: query
       name: startDate
-      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      description: Start date of the period to analyze, in RFC 3339 format.
       required: true
       schema:
         type: string
-        example: '2022-09-19'
+        example: '2024-08-30T00:00:00Z'
     EndDateRequired:
       in: query
       name: endDate
-      description: End date of the period to analyze, in `YYYY-MM-DD` format.
+      description: End date of the period to analyze, in RFC 3339 format.
       required: true
       schema:
         type: string
-        example: '2023-01-21'
+        example: '2024-08-30T00:00:00Z'
     granularityParameter:
       name: granularity
       in: query
@@ -612,6 +628,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:

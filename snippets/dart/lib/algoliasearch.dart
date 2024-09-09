@@ -15,6 +15,7 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -31,7 +32,7 @@ void snippetForgetRecommendations() async {
     getRecommendationsParams: GetRecommendationsParams(
       requests: [
         RelatedQuery(
-          indexName: "indexName",
+          indexName: "<YOUR_INDEX_NAME>",
           objectID: "objectID",
           model: RelatedModel.fromJson("related-products"),
           threshold: 42.1,
@@ -39,6 +40,7 @@ void snippetForgetRecommendations() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -62,6 +64,7 @@ void snippetForsearch() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -85,6 +88,7 @@ void snippetForsearch1() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -108,6 +112,7 @@ void snippetForsearch2() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -131,13 +136,14 @@ void snippetForsearch3() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // retrieveFacets
-void snippetForsearch5() async {
+void snippetForsearch4() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
@@ -157,13 +163,14 @@ void snippetForsearch5() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-void snippetForsearch6() async {
+void snippetForsearch5() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
@@ -182,5 +189,6 @@ void snippetForsearch6() async {
       ],
     ),
   );
+  // >LOG
   // SEPARATOR<
 }

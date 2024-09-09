@@ -11,25 +11,14 @@ import {
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import {
-  createMonitoringClient,
-  apiClientVersion,
-} from '../src/monitoringClient';
+import { createMonitoringClient, apiClientVersion } from '../src/monitoringClient';
+
+export type MonitoringClient = ReturnType<typeof createMonitoringClient>;
 
 export { apiClientVersion } from '../src/monitoringClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type MonitoringClient = ReturnType<typeof monitoringClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function monitoringClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function monitoringClient(appId: string, apiKey: string, options?: ClientOptions): MonitoringClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -52,10 +41,7 @@ export function monitoringClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

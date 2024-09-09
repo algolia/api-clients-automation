@@ -43,6 +43,7 @@ class SnippetAbtestingClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -62,6 +63,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -81,6 +83,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -100,6 +103,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -119,6 +123,7 @@ class SnippetAbtestingClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -138,6 +143,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -157,6 +163,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -175,6 +182,41 @@ class SnippetAbtestingClient {
     val response = client.listABTests(
     )
 
+    // >LOG
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the scheduleABTest method.
+    *
+    * scheduleABTest with minimal parameters
+    */
+  def snippetForAbtestingClientScheduleABTest(): Unit = {
+    // >SEPARATOR scheduleABTest default
+    // Initialize the client
+    val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+    // Call the API
+    val response = client.scheduleABTest(
+      scheduleABTestsRequest = ScheduleABTestsRequest(
+        endAt = "2022-12-31T00:00:00.000Z",
+        scheduledAt = "2022-11-31T00:00:00.000Z",
+        name = "myABTest",
+        variants = Seq(
+          AbTestsVariant(
+            index = "AB_TEST_1",
+            trafficPercentage = 30
+          ),
+          AbTestsVariant(
+            index = "AB_TEST_2",
+            trafficPercentage = 50
+          )
+        )
+      )
+    )
+
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -194,6 +236,7 @@ class SnippetAbtestingClient {
       id = 42
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

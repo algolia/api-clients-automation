@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 
 	"gotests/tests"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
@@ -43,8 +45,22 @@ func TestPersonalizationcommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Personalization (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestPersonalizationcommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createPersonalizationClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.0\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestPersonalizationcommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -59,7 +75,7 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestPersonalizationcommonApi2(t *testing.T) {
+func TestPersonalizationcommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -137,4 +153,50 @@ func TestPersonalizationparameters2(t *testing.T) {
 	}
 	client, err = personalization.NewClientWithConfig(cfg)
 	require.NoError(t, err)
+}
+
+// switch API key
+func TestPersonalizationsetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *personalization.APIClient
+	var cfg personalization.PersonalizationConfiguration
+	_ = client
+	_ = echo
+	cfg = personalization.PersonalizationConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+		Region: personalization.Region("us"),
+	}
+	client, err = personalization.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

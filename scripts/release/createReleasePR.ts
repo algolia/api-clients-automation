@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import fsp from 'fs/promises';
-
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
@@ -21,22 +19,14 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
-  fullReleaseConfig,
-  toAbsolutePath,
 } from '../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
 import { getLastReleasedTag } from './common.js';
+import { generateSLA } from './sla.js';
 import TEXT from './text.js';
-import type {
-  Versions,
-  VersionsBeforeBump,
-  PassedCommit,
-  Commit,
-  Scope,
-  Changelog,
-} from './types.js';
+import type { Versions, VersionsBeforeBump, PassedCommit, Commit, Scope, Changelog } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 
 dotenv.config({ path: ROOT_ENV_PATH });
@@ -46,15 +36,13 @@ export const COMMON_SCOPES = ['specs', 'clients'];
 // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
 // see https://peps.python.org/pep-0440/
 // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
-const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
+export const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
 
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
 
 export function readVersions(): VersionsBeforeBump {
-  return Object.fromEntries(
-    LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]),
-  );
+  return Object.fromEntries(LANGUAGES.map((lang) => [lang, { current: getPackageVersionDefault(lang) }]));
 }
 
 export function getVersionChangesText(versions: Versions): string {
@@ -240,9 +228,7 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    const commitsPerLang = commits.filter(
-      (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
-    );
+    const commitsPerLang = commits.filter((commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope));
 
     let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
@@ -269,9 +255,7 @@ export async function decideReleaseStrategy({
       const msg =
         commitsPerLang.length === 0
           ? 'no commits found'
-          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${
-              commitsPerLang.length
-            }' commits`;
+          : `no changes found in '${getLanguageFolder(lang as Language)}' in '${commitsPerLang.length}' commits`;
 
       console.log(`    > Skipping, ${msg}`);
 
@@ -325,9 +309,7 @@ async function getCommits(force?: boolean): Promise<{
   skippedCommits: string;
 }> {
   // Reading commits since last release
-  const latestCommits = (
-    await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
-  )
+  const latestCommits = (await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`))
     .split('\n')
     .filter(Boolean);
 
@@ -356,7 +338,7 @@ async function getCommits(force?: boolean): Promise<{
   if (!force && validCommits.length === 0) {
     console.log(
       chalk.black.bgYellow('[INFO]'),
-      `Skipping release because no valid commit has been added since \`released\` tag.`,
+      'Skipping release because no valid commit has been added since `released` tag.',
     );
     // eslint-disable-next-line no-process-exit
     process.exit(0);
@@ -393,99 +375,24 @@ async function prepareGitEnvironment(): Promise<void> {
     errorMessage: '`released` tag is missing in this repository.',
   });
 
-  console.log('Pulling from origin...');
-  await run('git fetch origin');
-  await run('git fetch --tags --force');
-  await run('git pull origin $(git branch --show-current)');
-}
-
-// updates the release.config.json file for the sla field, which contains a release history of start and end date support
-// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule
-export async function updateSLA(versions: Versions): Promise<void> {
-  const start = new Date();
-  const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
-
-  let queryStart = start;
-  let queryEnd = end;
-
-  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.sla)) {
-    const next = versions[lang].next;
-    const current = versions[lang].current;
-
-    // no ongoing release for this client, nothing changes
-    if (!next || current === next) {
-      continue;
-    }
-
-    // update the previously supported SLA version fields
-    if (current in supportedVersions) {
-      const nextMinor = next.match(/.+\.(.+)\..*/);
-      const currentMinor = current.match(/.+\.(.+)\..*/);
-
-      if (!currentMinor || !nextMinor) {
-        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
-      }
-
-      // if it's not a major release, and we are on the same minor, we remove the current
-      // patch because we support SLA at minor level
-      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
-        delete supportedVersions[current];
-        // if it's a major or not the same minor, it means we release a new latest versions, so the
-        // current SLA goes in maintenance mode
-      } else {
-        supportedVersions[current].status = 'maintenance';
-
-        // any other release cases make the previous version enter in maintenance
-        supportedVersions[current].start = start.toISOString().split('T')[0];
-      }
-    }
-
-    // we don't support SLA for pre-releases, so we will:
-    // - set them as `prerelease`
-    // - not the set `lts` field, the gen script will set the as `unstable`
-    const isPreRelease = next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
-
-    supportedVersions[next] = {
-      start: start.toISOString().split('T')[0],
-      status: isPreRelease ? 'prerelease' : 'active',
-      end: end.toISOString().split('T')[0],
-    };
-
-    // define the boundaries of the graph by searching for older and newest dates
-    for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
-      // delete maintenance versions that are not supported anymore
-      if (dates.status === 'maintenance' && new Date(dates.end as string) < start) {
-        delete supportedVersions[supportedVersion];
-
-        continue;
-      }
-
-      const versionStart = new Date(dates.start);
-      if (versionStart < queryStart) {
-        queryStart = versionStart;
-      }
-
-      const versionEnd = new Date(dates.end);
-      if (versionEnd > queryEnd) {
-        queryEnd = versionEnd;
-      }
-    }
+  if (!process.env.FORCE) {
+    console.log('Pulling from origin...');
+    await run('git fetch origin');
+    await run('git fetch --tags --force');
+    await run('git pull origin $(git branch --show-current)');
   }
-
-  await fsp.writeFile(
-    toAbsolutePath('config/release.config.json'),
-    JSON.stringify(fullReleaseConfig, null, 2),
-  );
 }
 
 export async function createReleasePR({
   languages,
   releaseType,
   dryRun,
+  breaking,
 }: {
   languages: Language[];
   releaseType?: semver.ReleaseType;
   dryRun?: boolean;
+  breaking?: boolean;
 }): Promise<void> {
   if (!dryRun) {
     await prepareGitEnvironment();
@@ -501,7 +408,10 @@ export async function createReleasePR({
     releaseType,
   });
 
-  await updateSLA(versions);
+  // skip anything sla related for now
+  if (process.env.SLA) {
+    await generateSLA(versions);
+  }
 
   const versionChanges = getVersionChangesText(versions);
 
@@ -557,12 +467,12 @@ export async function createReleasePR({
 
   setVerbose(true);
   console.log(`Pushing updated changes to: ${headBranch}`);
-  const commitMessage = generationCommitText.commitPrepareReleaseMessage;
+  const commitMessage = `${generationCommitText.commitPrepareReleaseMessage}${breaking ? ' [skip-bc]' : ''}`;
   await run('git add .');
   await run(`CI=true git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
-  await run(`git checkout .`);
+  await run('git checkout .');
 
   await run(`git push origin ${headBranch}`);
   await run(`git checkout ${MAIN_BRANCH}`);
@@ -572,7 +482,7 @@ export async function createReleasePR({
   const { data } = await octokit.pulls.create({
     owner: OWNER,
     repo: REPO,
-    title: generationCommitText.commitPrepareReleaseMessage,
+    title: commitMessage,
     body: [
       TEXT.header,
       TEXT.summary,

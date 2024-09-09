@@ -11,7 +11,7 @@ import kotlinx.serialization.json.*
 
 public class IngestionClient(
   override val appId: String,
-  override val apiKey: String,
+  override var apiKey: String,
   public val region: String,
   override val options: ClientOptions = ClientOptions(),
 ) : ApiClient {
@@ -439,6 +439,28 @@ public class IngestionClient(
   }
 
   /**
+   * Generates code for the selected model based on the given prompt.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param generateTransformationCodePayload
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload, requestOptions: RequestOptions? = null): GenerateTransformationCodeResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "transformations", "models"),
+      body = generateTransformationCodePayload,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
    * Retrieves an authentication resource by its ID.
    *
    * Required API Key ACLs:
@@ -734,6 +756,7 @@ public class IngestionClient(
    * @param itemsPerPage Number of items per page. (default to 10)
    * @param page Page number of the paginated API response.
    * @param status Run status for filtering the list of task runs.
+   * @param type Run type for filtering the list of task runs.
    * @param taskID Task ID for filtering the list of task runs.
    * @param sort Property by which to sort the list of task runs. (default to createdAt)
    * @param order Sort order of the response, ascending or descending. (default to desc)
@@ -741,7 +764,7 @@ public class IngestionClient(
    * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun listRuns(itemsPerPage: Int? = null, page: Int? = null, status: List<RunStatus>? = null, taskID: String? = null, sort: RunSortKeys? = null, order: OrderKeys? = null, startDate: String? = null, endDate: String? = null, requestOptions: RequestOptions? = null): RunListResponse {
+  public suspend fun listRuns(itemsPerPage: Int? = null, page: Int? = null, status: List<RunStatus>? = null, type: List<RunType>? = null, taskID: String? = null, sort: RunSortKeys? = null, order: OrderKeys? = null, startDate: String? = null, endDate: String? = null, requestOptions: RequestOptions? = null): RunListResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.GET,
       path = listOf("1", "runs"),
@@ -749,6 +772,7 @@ public class IngestionClient(
         itemsPerPage?.let { put("itemsPerPage", it) }
         page?.let { put("page", it) }
         status?.let { put("status", it.joinToString(",")) }
+        type?.let { put("type", it.joinToString(",")) }
         taskID?.let { put("taskID", it) }
         sort?.let { put("sort", it) }
         order?.let { put("order", it) }
@@ -888,7 +912,7 @@ public class IngestionClient(
   public suspend fun listTransformationModels(requestOptions: RequestOptions? = null): TransformationModels {
     val requestConfig = RequestConfig(
       method = RequestMethod.GET,
-      path = listOf("1", "transformations", "copilot"),
+      path = listOf("1", "transformations", "models"),
     )
     return requester.execute(
       requestConfig = requestConfig,
@@ -934,15 +958,15 @@ public class IngestionClient(
    *   - deleteIndex
    *   - editSettings
    * @param taskID Unique identifier of a task.
-   * @param batchWriteParams Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun pushTask(taskID: String, batchWriteParams: BatchWriteParams, requestOptions: RequestOptions? = null): RunResponse {
+  public suspend fun pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: RequestOptions? = null): RunResponse {
     require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `pushTask`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("2", "tasks", "$taskID", "push"),
-      body = batchWriteParams,
+      body = pushTaskPayload,
     )
     return requester.execute(
       requestConfig = requestConfig,
@@ -1173,7 +1197,7 @@ public class IngestionClient(
   }
 
   /**
-   * Try a transformation.
+   * Try a transformation before creating it.
    *
    * Required API Key ACLs:
    *   - addObject
@@ -1182,10 +1206,34 @@ public class IngestionClient(
    * @param transformationTry
    * @param requestOptions additional request configuration.
    */
-  public suspend fun tryTransformations(transformationTry: TransformationTry, requestOptions: RequestOptions? = null): TransformationTryResponse {
+  public suspend fun tryTransformation(transformationTry: TransformationTry, requestOptions: RequestOptions? = null): TransformationTryResponse {
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("1", "transformations", "try"),
+      body = transformationTry,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Try a transformation before updating it.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param transformationID Unique identifier of a transformation.
+   * @param transformationTry
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun tryTransformationBeforeUpdate(transformationID: String, transformationTry: TransformationTry, requestOptions: RequestOptions? = null): TransformationTryResponse {
+    require(transformationID.isNotBlank()) { "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "transformations", "$transformationID", "try"),
       body = transformationTry,
     )
     return requester.execute(

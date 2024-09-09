@@ -31,7 +31,7 @@ class IngestionClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    var options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
     this.client = new IngestionClient("appId", "apiKey", "us", options);
   }
 
@@ -119,7 +119,7 @@ class IngestionClientRequestsTests {
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
           .setInput(new DestinationIndexName().setIndexName("full_name______"))
-          .setTransformationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+          .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -144,8 +144,8 @@ class IngestionClientRequestsTests {
           .setName("sourceName")
           .setInput(
             new SourceCommercetools()
-              .setStoreKeys(List.of("myStore"))
-              .setLocales(List.of("de"))
+              .setStoreKeys(Arrays.asList("myStore"))
+              .setLocales(Arrays.asList("de"))
               .setUrl("http://commercetools.com")
               .setProjectKey("keyID")
           )
@@ -161,6 +161,19 @@ class IngestionClientRequestsTests {
         req.body,
         JSONCompareMode.STRICT
       )
+    );
+  }
+
+  @Test
+  @DisplayName("push")
+  void createSourceTest1() {
+    assertDoesNotThrow(() -> {
+      client.createSource(new SourceCreate().setType(SourceType.PUSH).setName("pushezpourentrer"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/sources", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -196,6 +209,35 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" + " *\",\"action\":\"replace\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("task shopify")
+  void createTaskTest2() {
+    assertDoesNotThrow(() -> {
+      client.createTask(
+        new TaskCreate()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput()
+              .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -276,6 +318,34 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("task shopify")
+  void createTaskV1Test3() {
+    assertDoesNotThrow(() -> {
+      client.createTaskV1(
+        new TaskCreateV1()
+          .setSourceID("search")
+          .setDestinationID("destinationName")
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput()
+              .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("createTransformation")
   void createTransformationTest() {
     assertDoesNotThrow(() -> {
@@ -305,7 +375,14 @@ class IngestionClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("test/all", Map.of("query", "parameters"));
+      client.customDelete(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -341,7 +418,14 @@ class IngestionClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("test/all", Map.of("query", "parameters with space"));
+      client.customGet(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters with space");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -370,10 +454,14 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customGet(
         "test/all",
-        Map.of("query", "to be overriden"),
+        new HashMap() {
+          {
+            put("query", "to be overriden");
+          }
+        },
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
-          .addExtraQueryParameters("and an array", List.of("array", "with spaces"))
+          .addExtraQueryParameters("and an array", Arrays.asList("array", "with spaces"))
           .addExtraHeader("x-header-1", "spaces are left alone")
       );
     });
@@ -428,7 +516,19 @@ class IngestionClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -454,8 +554,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
@@ -486,8 +594,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
@@ -518,8 +634,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -561,8 +685,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
@@ -604,8 +736,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
@@ -636,8 +776,16 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
@@ -668,9 +816,17 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -700,9 +856,17 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -732,9 +896,17 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.customPost(
         "test/requestOptions",
-        Map.of("query", "parameters"),
-        Map.of("facet", "filters"),
-        new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("facet", "filters");
+          }
+        },
+        new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -774,7 +946,19 @@ class IngestionClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut(
+        "test/all",
+        new HashMap() {
+          {
+            put("query", "parameters");
+          }
+        },
+        new HashMap() {
+          {
+            put("body", "parameters");
+          }
+        }
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/test/all", req.path);
@@ -915,6 +1099,29 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("generateTransformationCode")
+  void generateTransformationCodeTest() {
+    assertDoesNotThrow(() -> {
+      client.generateTransformationCode(
+        new GenerateTransformationCodePayload()
+          .setId("foo")
+          .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH" + " LINE of code is doing")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/models", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of" +
+        " comments that describe what EACH LINE of code is doing\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getAuthentication")
   void getAuthenticationTest() {
     assertDoesNotThrow(() -> {
@@ -1029,8 +1236,8 @@ class IngestionClientRequestsTests {
       client.listAuthentications(
         2,
         1,
-        List.of(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
-        List.of(PlatformNone.NONE),
+        Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
+        Arrays.asList(PlatformNone.NONE),
         AuthenticationSortKeys.CREATED_AT,
         OrderKeys.ASC
       );
@@ -1135,7 +1342,7 @@ class IngestionClientRequestsTests {
       client.listTransformationModels();
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/transformations/copilot", req.path);
+    assertEquals("/1/transformations/models", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
@@ -1158,11 +1365,12 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.pushTask(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        new BatchWriteParams()
-          .setRequests(
-            List.of(
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
             )
           )
       );
@@ -1172,7 +1380,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1186,8 +1394,8 @@ class IngestionClientRequestsTests {
       client.runSource(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         new RunSourcePayload()
-          .setIndexToInclude(List.of("products_us", "products eu"))
-          .setEntityIDs(List.of("1234", "5678"))
+          .setIndexToInclude(Arrays.asList("products_us", "products eu"))
+          .setEntityIDs(Arrays.asList("1234", "5678"))
           .setEntityType(EntityType.PRODUCT)
       );
     });
@@ -1233,7 +1441,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchAuthentications(
         new AuthenticationSearch()
-          .setAuthenticationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+          .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1253,7 +1461,8 @@ class IngestionClientRequestsTests {
   void searchDestinationsTest() {
     assertDoesNotThrow(() -> {
       client.searchDestinations(
-        new DestinationSearch().setDestinationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+        new DestinationSearch()
+          .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1273,7 +1482,7 @@ class IngestionClientRequestsTests {
   void searchSourcesTest() {
     assertDoesNotThrow(() -> {
       client.searchSources(
-        new SourceSearch().setSourceIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+        new SourceSearch().setSourceIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1295,7 +1504,11 @@ class IngestionClientRequestsTests {
       client.searchTasks(
         new TaskSearch()
           .setTaskIDs(
-            List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+            Arrays.asList(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            )
           )
       );
     });
@@ -1318,7 +1531,11 @@ class IngestionClientRequestsTests {
       client.searchTasksV1(
         new TaskSearch()
           .setTaskIDs(
-            List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+            Arrays.asList(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            )
           )
       );
     });
@@ -1340,8 +1557,12 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchTransformations(
         new TransformationSearch()
-          .setTransformationsIDs(
-            List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          .setTransformationIDs(
+            Arrays.asList(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            )
           )
       );
     });
@@ -1350,7 +1571,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+        "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1370,16 +1591,124 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("tryTransformations")
-  void tryTransformationsTest() {
+  @DisplayName("tryTransformation")
+  void tryTransformationTest() {
     assertDoesNotThrow(() -> {
-      client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+      client.tryTransformation(
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(
+            new HashMap() {
+              {
+                put("bar", "baz");
+              }
+            }
+          )
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations/try", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("with authentications")
+  void tryTransformationTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformation(
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(
+            new HashMap() {
+              {
+                put("bar", "baz");
+              }
+            }
+          )
+          .setAuthentications(
+            Arrays.asList(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("tryTransformationBeforeUpdate")
+  void tryTransformationBeforeUpdateTest() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(
+            new HashMap() {
+              {
+                put("bar", "baz");
+              }
+            }
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("existing with authentications")
+  void tryTransformationBeforeUpdateTest1() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformationBeforeUpdate(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationTry()
+          .setCode("foo")
+          .setSampleRecord(
+            new HashMap() {
+              {
+                put("bar", "baz");
+              }
+            }
+          )
+          .setAuthentications(
+            Arrays.asList(
+              new AuthenticationCreate()
+                .setType(AuthenticationType.OAUTH)
+                .setName("authName")
+                .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
@@ -1470,8 +1799,8 @@ class IngestionClientRequestsTests {
           .setName("sourceName")
           .setInput(
             new SourceCommercetools()
-              .setStoreKeys(List.of("myStore"))
-              .setLocales(List.of("de"))
+              .setStoreKeys(Arrays.asList("myStore"))
+              .setLocales(Arrays.asList("de"))
               .setUrl("http://commercetools.com")
               .setProjectKey("keyID")
           )

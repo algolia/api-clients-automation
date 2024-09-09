@@ -12,6 +12,7 @@ import 'package:algolia_client_search/src/model/batch_dictionary_entries_params.
 import 'package:algolia_client_search/src/model/batch_params.dart';
 import 'package:algolia_client_search/src/model/batch_response.dart';
 import 'package:algolia_client_search/src/model/batch_write_params.dart';
+import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
 import 'package:algolia_client_search/src/model/created_at_response.dart';
 import 'package:algolia_client_search/src/model/delete_api_key_response.dart';
@@ -66,19 +67,13 @@ import 'package:algolia_client_search/src/model/user_id.dart';
 
 final class SearchClient implements ApiClient {
   @override
-  final String apiKey;
-
-  @override
-  final String appId;
-
-  @override
   final ClientOptions options;
 
   final RetryStrategy _retryStrategy;
 
   SearchClient({
-    required this.appId,
-    required this.apiKey,
+    required String appId,
+    required String apiKey,
     this.options = const ClientOptions(),
   }) : _retryStrategy = RetryStrategy.create(
           segment: AgentSegment(value: "Search", version: packageVersion),
@@ -98,6 +93,12 @@ final class SearchClient implements ApiClient {
         ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
+  }
+
+  /// Allows to switch the API key used to authenticate requests.
+  @override
+  void setClientApiKey({required String apiKey}) {
+    _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
   /// Creates a new API key with specific permissions and restrictions.
@@ -662,7 +663,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+  /// This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
   ///
   /// Required API Key ACLs:
   ///   - deleteIndex
@@ -1556,7 +1557,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+  /// Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
   ///
   /// Required API Key ACLs:
   ///   - addObject
@@ -1564,13 +1565,13 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
   /// * [objectID] Unique record identifier.
-  /// * [attributesToUpdate] Attributes with their values. - one of types: [BuiltInOperation], [String],
+  /// * [attributesToUpdate] Attributes with their values.
   /// * [createIfNotExists] Whether to create a new record if it doesn't exist.
   /// * [requestOptions] additional request configuration.
   Future<UpdatedAtWithObjectIdResponse> partialUpdateObject({
     required String indexName,
     required String objectID,
-    required Map<String, dynamic> attributesToUpdate,
+    required Object attributesToUpdate,
     bool? createIfNotExists,
     RequestOptions? requestOptions,
   }) async {
@@ -1582,6 +1583,18 @@ final class SearchClient implements ApiClient {
       objectID.isNotEmpty,
       'Parameter `objectID` is required when calling `partialUpdateObject`.',
     );
+    if (attributesToUpdate is Map) {
+      assert(
+        attributesToUpdate.isNotEmpty,
+        'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.',
+      );
+    }
+    if (attributesToUpdate is Map) {
+      assert(
+        attributesToUpdate.isNotEmpty,
+        'Parameter `attributesToUpdate ` is required when calling `partialUpdateObject`.',
+      );
+    }
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/indexes/{indexName}/{objectID}/partial'
@@ -1698,7 +1711,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+  /// Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
   ///
   /// Required API Key ACLs:
   ///   - addObject

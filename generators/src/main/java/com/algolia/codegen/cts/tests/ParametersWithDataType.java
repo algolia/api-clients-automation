@@ -18,16 +18,32 @@ public class ParametersWithDataType {
   private final Map<String, CodegenModel> models;
   private final String language;
   private final String client;
+  private final boolean prettyIndexName;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client) {
+  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client, boolean prettyIndexName) {
     this.models = models;
     this.language = language;
     this.client = client;
+    this.prettyIndexName = prettyIndexName;
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
     throws CTSException, JsonMappingException, JsonProcessingException {
     this.enhanceParameters(parameters, bundle, null);
+  }
+
+  public Map<String, Object> enhanceParameter(Object param) throws CTSException, JsonMappingException, JsonProcessingException {
+    Map<String, Object> testOutput = createDefaultOutput();
+    testOutput.put("isRoot", true);
+    if (param == null) {
+      handleNull(null, testOutput);
+    } else if (param instanceof List || param instanceof Map) {
+      testOutput.put("isString", true);
+      testOutput.put("value", Json.mapper().writeValueAsString(param));
+    } else {
+      handlePrimitive(param, testOutput, null);
+    }
+    return testOutput;
   }
 
   /**
@@ -124,10 +140,8 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
-    String finalParamName = getFinalParamName(paramName);
-
-    testOutput.put("key", finalParamName);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("key", paramName);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
@@ -157,16 +171,19 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, spec);
     }
 
+    // for snippets, we want pretty index names, unless they are already pretty
+    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+      testOutput.put("value", "<YOUR_INDEX_NAME>");
+    }
+
     return testOutput;
   }
 
   /** Same method but with inference only */
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int depth) throws CTSException {
-    String finalParamName = getFinalParamName(paramName);
-
     Map<String, Object> testOutput = createDefaultOutput();
-    testOutput.put("key", finalParamName);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("key", paramName);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     // try to infer the type
@@ -187,17 +204,6 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, null);
     }
     return testOutput;
-  }
-
-  private String getFinalParamName(String paramName) {
-    switch (language) {
-      case "java":
-        return paramName.startsWith("_") ? paramName.substring(1) : paramName;
-      case "go":
-        return paramName.equals("type") ? "type_" : paramName;
-    }
-
-    return paramName;
   }
 
   private Map<String, Object> createDefaultOutput() {
@@ -222,13 +228,15 @@ public class ParametersWithDataType {
     testOutput.put("isSimpleObject", false);
     testOutput.put("oneOfModel", false);
     testOutput.put("isAdditionalProperty", false);
+    testOutput.put("isPrimitive", false);
 
     return testOutput;
   }
 
   private void handleNull(IJsonSchemaValidationProperties spec, Map<String, Object> testOutput) {
+    testOutput.put("isPrimitive", true);
     testOutput.put("isNull", true);
-    if (spec.getIsModel() || spec instanceof CodegenModel) {
+    if (spec != null && (spec.getIsModel() || spec instanceof CodegenModel)) {
       testOutput.put("isNullObject", true);
     }
   }
@@ -466,6 +474,7 @@ public class ParametersWithDataType {
         testOutput.put("isAnyType", true);
       }
     }
+    testOutput.put("isPrimitive", true);
     testOutput.put("value", param);
   }
 
@@ -530,6 +539,11 @@ public class ParametersWithDataType {
   }
 
   private String inferDataType(Object param, CodegenParameter spec, Map<String, Object> output) throws CTSException {
+    if (param == null) {
+      if (spec != null) spec.setIsNull(true);
+      if (output != null) output.put("isNull", true);
+      return "null";
+    }
     switch (param.getClass().getSimpleName()) {
       case "String":
         if (spec != null) spec.setIsString(true);
@@ -642,28 +656,16 @@ public class ParametersWithDataType {
       }
       return bestOneOf;
     }
-    if (param instanceof List) {
-      CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
 
-      if (composedSchemas != null) {
-        List<CodegenProperty> oneOf = composedSchemas.getOneOf();
-
-        // Somehow this is not yet enough
-        if (oneOf != null && !oneOf.isEmpty()) {
-          System.out.println("Choosing the first oneOf by default: " + oneOf.get(0).baseName + " (this won't stay correct forever)");
-          return oneOf.get(0);
-        }
+    for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
+      // find the correct list
+      if (param instanceof List && prop.getIsArray()) {
+        return prop;
       }
 
-      return null;
-    }
-
-    // find the correct enum
-    if (param instanceof String) {
-      for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
-        if (prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
-          return prop;
-        }
+      // find the correct enum
+      if (param instanceof String && prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
+        return prop;
       }
     }
 
@@ -693,7 +695,8 @@ public class ParametersWithDataType {
         return oneOf;
       }
     }
-    return null;
+
+    return maybeMatch;
   }
 
   // If the model is an enum and contains a valid list of allowed values,

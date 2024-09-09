@@ -86,7 +86,10 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     supportingFiles.add(new SupportingFile("__init__.mustache", packageName + "/models", "__init__.py"));
     supportingFiles.add(new SupportingFile("__init__.mustache", "http", "__init__.py"));
     supportingFiles.add(new SupportingFile("config.mustache", packageName, "config.py"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../.github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", "../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
   }
 
   @Override

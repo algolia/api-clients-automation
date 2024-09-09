@@ -13,6 +13,14 @@ public class PythonCTSManager implements CTSManager {
     this.client = client;
   }
 
+  public String getLanguage() {
+    return "python";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("tests/__init__.mustache", "tests/output/python/tests/", "__init__.py"));

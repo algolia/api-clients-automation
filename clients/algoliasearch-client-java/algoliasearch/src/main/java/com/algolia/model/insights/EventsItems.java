@@ -21,17 +21,6 @@ public interface EventsItems {
     @Override
     public EventsItems deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize ClickedObjectIDsAfterSearch
-      if (tree.isObject() && tree.has("positions") && tree.has("queryID") && tree.has("eventType")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ClickedObjectIDsAfterSearch.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf ClickedObjectIDsAfterSearch (error: " + e.getMessage() + ") (type: ClickedObjectIDsAfterSearch)"
-          );
-        }
-      }
       // deserialize AddedToCartObjectIDsAfterSearch
       if (tree.isObject() && tree.has("eventType") && tree.has("eventSubtype") && tree.has("queryID") && tree.has("objectIDs")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -58,6 +47,35 @@ public interface EventsItems {
           );
         }
       }
+      // deserialize ClickedObjectIDsAfterSearch
+      if (tree.isObject() && tree.has("positions") && tree.has("queryID") && tree.has("eventType")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ClickedObjectIDsAfterSearch.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf ClickedObjectIDsAfterSearch (error: " + e.getMessage() + ") (type: ClickedObjectIDsAfterSearch)"
+          );
+        }
+      }
+      // deserialize PurchasedObjectIDs
+      if (tree.isObject() && tree.has("eventType") && tree.has("eventSubtype") && tree.has("objectIDs")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(PurchasedObjectIDs.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf PurchasedObjectIDs (error: " + e.getMessage() + ") (type: PurchasedObjectIDs)");
+        }
+      }
+      // deserialize AddedToCartObjectIDs
+      if (tree.isObject() && tree.has("eventType") && tree.has("eventSubtype") && tree.has("objectIDs")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AddedToCartObjectIDs.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf AddedToCartObjectIDs (error: " + e.getMessage() + ") (type: AddedToCartObjectIDs)");
+        }
+      }
       // deserialize ConvertedObjectIDsAfterSearch
       if (tree.isObject() && tree.has("queryID") && tree.has("eventType")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -78,24 +96,6 @@ public interface EventsItems {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf ClickedObjectIDs (error: " + e.getMessage() + ") (type: ClickedObjectIDs)");
-        }
-      }
-      // deserialize PurchasedObjectIDs
-      if (tree.isObject() && tree.has("eventType") && tree.has("eventSubtype") && tree.has("objectIDs")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(PurchasedObjectIDs.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf PurchasedObjectIDs (error: " + e.getMessage() + ") (type: PurchasedObjectIDs)");
-        }
-      }
-      // deserialize AddedToCartObjectIDs
-      if (tree.isObject() && tree.has("eventType") && tree.has("eventSubtype") && tree.has("objectIDs")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AddedToCartObjectIDs.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf AddedToCartObjectIDs (error: " + e.getMessage() + ") (type: AddedToCartObjectIDs)");
         }
       }
       // deserialize ConvertedObjectIDs

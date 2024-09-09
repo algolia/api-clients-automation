@@ -32,6 +32,16 @@ public partial class IgnorePlurals : AbstractSchema
 
   /// <summary>
   /// Initializes a new instance of the IgnorePlurals class
+  /// with a BooleanString
+  /// </summary>
+  /// <param name="actualInstance">An instance of BooleanString.</param>
+  public IgnorePlurals(BooleanString actualInstance)
+  {
+    ActualInstance = actualInstance;
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the IgnorePlurals class
   /// with a bool
   /// </summary>
   /// <param name="actualInstance">An instance of bool.</param>
@@ -51,9 +61,19 @@ public partial class IgnorePlurals : AbstractSchema
   /// the InvalidClassException will be thrown
   /// </summary>
   /// <returns>An instance of List&lt;SupportedLanguage&gt;</returns>
-  public List<SupportedLanguage> AsList()
+  public List<SupportedLanguage> AsListSupportedLanguage()
   {
     return (List<SupportedLanguage>)ActualInstance;
+  }
+
+  /// <summary>
+  /// Get the actual instance of `BooleanString`. If the actual instance is not `BooleanString`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of BooleanString</returns>
+  public BooleanString AsBooleanString()
+  {
+    return (BooleanString)ActualInstance;
   }
 
   /// <summary>
@@ -71,9 +91,18 @@ public partial class IgnorePlurals : AbstractSchema
   /// Check if the actual instance is of `List{SupportedLanguage}` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
-  public bool IsList()
+  public bool IsListSupportedLanguage()
   {
     return ActualInstance.GetType() == typeof(List<SupportedLanguage>);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `BooleanString` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsBooleanString()
+  {
+    return ActualInstance.GetType() == typeof(BooleanString);
   }
 
   /// <summary>
@@ -179,6 +208,18 @@ public class IgnorePluralsJsonConverter : JsonConverter<IgnorePlurals>
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine($"Failed to deserialize into List<SupportedLanguage>: {exception}");
+      }
+    }
+    if (root.ValueKind == JsonValueKind.String)
+    {
+      try
+      {
+        return new IgnorePlurals(jsonDocument.Deserialize<BooleanString>(JsonConfig.Options));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine($"Failed to deserialize into BooleanString: {exception}");
       }
     }
     if (root.ValueKind == JsonValueKind.True || root.ValueKind == JsonValueKind.False)

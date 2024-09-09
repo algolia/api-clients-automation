@@ -52,7 +52,36 @@ func TestSearchE2E_Browse(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+	})
+}
+
+func TestSearchE2E_GetRule(t *testing.T) {
+	t.Run("getRule", func(t *testing.T) {
+		client := createE2ESearchClient(t)
+		res, err := client.GetRule(client.NewApiGetRuleRequest(
+			"cts_e2e_browse", "qr-1725004648916",
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -81,7 +110,7 @@ func TestSearchE2E_GetSettings(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -113,7 +142,39 @@ func TestSearchE2E_Search(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+	})
+	t.Run("search with highlight and snippet results", func(t *testing.T) {
+		client := createE2ESearchClient(t)
+		res, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_highlight_snippet_results").SetQuery("vim").SetAttributesToSnippet(
+						[]string{"*:20"}).SetAttributesToHighlight(
+						[]string{"*"}).SetAttributesToRetrieve(
+						[]string{"*"}))}),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -142,7 +203,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -180,7 +241,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -210,7 +271,37 @@ func TestSearchE2E_SearchDictionaryEntries(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+	})
+}
+
+func TestSearchE2E_SearchRules(t *testing.T) {
+	t.Run("searchRules", func(t *testing.T) {
+		client := createE2ESearchClient(t)
+		res, err := client.SearchRules(client.NewApiSearchRulesRequest(
+			"cts_e2e_browse",
+		).WithSearchRulesParams(
+			search.NewEmptySearchRulesParams().SetQuery("zorro")))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
@@ -251,7 +342,7 @@ func TestSearchE2E_SearchSingleIndex(t *testing.T) {
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 
-		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBody := tests.Union(t, expectedBody, rawBodyMap)
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 

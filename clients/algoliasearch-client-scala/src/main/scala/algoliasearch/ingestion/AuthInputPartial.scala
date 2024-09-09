@@ -38,11 +38,12 @@ object AuthInputPartialSerializer extends Serializer[AuthInputPartial] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AuthInputPartial] =>
       json match {
-        case value: JObject => Extraction.extract[AuthGoogleServiceAccountPartial](value)
-        case value: JObject => Extraction.extract[AuthBasicPartial](value)
-        case value: JObject => Extraction.extract[AuthAPIKeyPartial](value)
-        case value: JObject => Extraction.extract[AuthOAuthPartial](value)
-        case value: JObject => Extraction.extract[AuthAlgoliaPartial](value)
+        case value: JObject if value.obj.exists(_._1 == "clientEmail") =>
+          Extraction.extract[AuthGoogleServiceAccountPartial](value)
+        case value: JObject if value.obj.exists(_._1 == "username") => Extraction.extract[AuthBasicPartial](value)
+        case value: JObject if value.obj.exists(_._1 == "key")      => Extraction.extract[AuthAPIKeyPartial](value)
+        case value: JObject if value.obj.exists(_._1 == "url")      => Extraction.extract[AuthOAuthPartial](value)
+        case value: JObject                                         => Extraction.extract[AuthAlgoliaPartial](value)
         case value: JObject => Extraction.extract[AuthAlgoliaInsightsPartial](value)
         case _              => throw new MappingException("Can't convert " + json + " to AuthInputPartial")
       }

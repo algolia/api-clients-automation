@@ -21,14 +21,13 @@
   },
   "dependencies": {
     "@algolia/ui-library": "6.4.0",
-    "@docusaurus/core": "3.4.0",
-    "@docusaurus/preset-classic": "3.4.0",
-    "@docusaurus/types": "3.4.0",
+    "@docusaurus/core": "3.5.2",
+    "@docusaurus/preset-classic": "3.5.2",
+    "@docusaurus/types": "3.5.2",
     "@mdx-js/react": "3.0.1",
     "clsx": "2.1.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "redocusaurus": "2.1.1",
     "remark-smartypants": "3.0.2"
   }
 }

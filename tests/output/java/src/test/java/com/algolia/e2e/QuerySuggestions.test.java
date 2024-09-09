@@ -27,7 +27,7 @@ class QuerySuggestionsClientRequestsTestsE2E {
     if ("true".equals(System.getenv("CI"))) {
       this.client = new QuerySuggestionsClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
     } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
+      Dotenv dotenv = Dotenv.configure().directory("../../").load();
       this.client = new QuerySuggestionsClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
     }
   }
@@ -40,7 +40,7 @@ class QuerySuggestionsClientRequestsTestsE2E {
   @Test
   @DisplayName("Retrieve QS config e2e")
   void getConfigTest() {
-    var res = client.getConfig("cts_e2e_browse_query_suggestions");
+    ConfigurationResponse res = client.getConfig("cts_e2e_browse_query_suggestions");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",

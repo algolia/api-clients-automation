@@ -527,7 +527,7 @@ public extension SearchClient {
 
     /// Replace all objects in an index
     ///
-    /// See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation
+    /// See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
     /// details.
     /// - parameter indexName: The name of the index where to replace the objects
     /// - parameter objects: The new objects
@@ -541,7 +541,7 @@ public extension SearchClient {
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> ReplaceAllObjectsResponse {
-        let tmpIndexName = try "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
+        let tmpIndexName = "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         var copyOperationResponse = try await operationIndex(
             indexName: indexName,
@@ -626,5 +626,15 @@ public extension SearchClient {
         let timestampDate = Date(timeIntervalSince1970: timestamp)
 
         return timestampDate.timeIntervalSince1970 - Date().timeIntervalSince1970
+    }
+
+    func indexExists(indexName: String) async throws -> Bool {
+        do {
+            _ = try await self.getSettings(indexName: indexName)
+        } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
+            return false
+        }
+
+        return true
     }
 }

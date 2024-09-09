@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * TransformationTry Class Doc Comment.
@@ -21,6 +22,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     protected static $modelTypes = [
         'code' => 'string',
         'sampleRecord' => 'object',
+        'authentications' => '\Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationCreate[]',
     ];
 
     /**
@@ -31,6 +33,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     protected static $modelFormats = [
         'code' => null,
         'sampleRecord' => null,
+        'authentications' => null,
     ];
 
     /**
@@ -42,6 +45,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     protected static $attributeMap = [
         'code' => 'code',
         'sampleRecord' => 'sampleRecord',
+        'authentications' => 'authentications',
     ];
 
     /**
@@ -52,6 +56,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     protected static $setters = [
         'code' => 'setCode',
         'sampleRecord' => 'setSampleRecord',
+        'authentications' => 'setAuthentications',
     ];
 
     /**
@@ -62,6 +67,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     protected static $getters = [
         'code' => 'getCode',
         'sampleRecord' => 'getSampleRecord',
+        'authentications' => 'getAuthentications',
     ];
 
     /**
@@ -83,6 +89,9 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
         }
         if (isset($data['sampleRecord'])) {
             $this->container['sampleRecord'] = $data['sampleRecord'];
+        }
+        if (isset($data['authentications'])) {
+            $this->container['authentications'] = $data['authentications'];
         }
     }
 
@@ -216,13 +225,35 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     }
 
     /**
+     * Gets authentications.
+     *
+     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationCreate[]
+     */
+    public function getAuthentications()
+    {
+        return $this->container['authentications'] ?? null;
+    }
+
+    /**
+     * Sets authentications.
+     *
+     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationCreate[] $authentications authentications
+     *
+     * @return self
+     */
+    public function setAuthentications($authentications)
+    {
+        $this->container['authentications'] = $authentications;
+
+        return $this;
+    }
+
+    /**
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -234,7 +265,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -245,7 +276,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -259,7 +290,7 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

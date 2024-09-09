@@ -6,6 +6,7 @@ package com.algolia.model.abtesting;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -113,6 +114,9 @@ public class ABTest {
   }
 
   public ABTest putRevenueSignificance(String key, Double revenueSignificanceItem) {
+    if (this.revenueSignificance == null) {
+      this.revenueSignificance = new HashMap<>();
+    }
     this.revenueSignificance.put(key, revenueSignificanceItem);
     return this;
   }

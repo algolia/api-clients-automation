@@ -1160,11 +1160,11 @@ class TestSearchClient:
         getRule
         """
         _req = await self._client.get_rule_with_http_info(
-            index_name="indexName",
-            object_id="id1",
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/id1"
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/qr-1725004648916"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -1452,40 +1452,90 @@ class TestSearchClient:
 
     async def test_partial_update_object_(self):
         """
-        Partial update with string value
+        Partial update with a new value for a string attribute
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
             object_id="uniqueID",
             attributes_to_update={
-                "id1": "test",
-                "id2": {
-                    "_operation": "AddUnique",
-                    "value": "test2",
-                },
+                "attributeId": "new value",
             },
-            create_if_not_exists=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {"createIfNotExists": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}"""
-        )
+        assert loads(_req.data) == loads("""{"attributeId":"new value"}""")
 
     async def test_partial_update_object_1(self):
         """
-        Partial update with integer value
+        Partial update with a new value for an integer attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": 1,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":1}""")
+
+    async def test_partial_update_object_2(self):
+        """
+        Partial update with a new value for a boolean attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":true}""")
+
+    async def test_partial_update_object_3(self):
+        """
+        Partial update with a new value for an array attribute
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "attributeId": [
+                    "one",
+                    "two",
+                    "three",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeId":["one","two","three"]}""")
+
+    async def test_partial_update_object_4(self):
+        """
+        Partial update with a new value for an object attribute
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
             object_id="uniqueID",
             attributes_to_update={
                 "attributeId": {
-                    "_operation": "Increment",
-                    "value": 2,
+                    "nested": "value",
                 },
             },
         )
@@ -1494,9 +1544,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"attributeId":{"_operation":"Increment","value":2}}"""
-        )
+        assert loads(_req.data) == loads("""{"attributeId":{"nested":"value"}}""")
 
     async def test_remove_user_id_(self):
         """
@@ -1983,6 +2031,38 @@ class TestSearchClient:
 
     async def test_search_5(self):
         """
+        search with highlight and snippet results
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}"""
+        )
+
+    async def test_search_6(self):
+        """
         retrieveFacets
         """
         _req = await self._client.search_with_http_info(
@@ -2008,7 +2088,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}"""
         )
 
-    async def test_search_6(self):
+    async def test_search_7(self):
         """
         retrieveFacetsWildcard
         """
@@ -2034,7 +2114,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}"""
         )
 
-    async def test_search_7(self):
+    async def test_search_8(self):
         """
         search for a single facet request with minimal parameters
         """
@@ -2059,7 +2139,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_8(self):
+    async def test_search_9(self):
         """
         search for a single hits request with all parameters
         """
@@ -2084,7 +2164,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}"""
         )
 
-    async def test_search_9(self):
+    async def test_search_10(self):
         """
         search for a single facet request with all parameters
         """
@@ -2112,7 +2192,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_10(self):
+    async def test_search_11(self):
         """
         search for multiple mixed requests in multiple indices with minimal parameters
         """
@@ -2144,7 +2224,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_11(self):
+    async def test_search_12(self):
         """
         search for multiple mixed requests in multiple indices with all parameters
         """
@@ -2178,7 +2258,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_12(self):
+    async def test_search_13(self):
         """
         search filters accept all of the possible shapes
         """
@@ -2241,7 +2321,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
         )
 
-    async def test_search_13(self):
+    async def test_search_14(self):
         """
         search filters end to end
         """
@@ -2292,7 +2372,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}"""
         )
 
-    async def test_search_14(self):
+    async def test_search_15(self):
         """
         search with all search parameters
         """
@@ -2560,17 +2640,17 @@ class TestSearchClient:
         searchRules
         """
         _req = await self._client.search_rules_with_http_info(
-            index_name="indexName",
+            index_name="cts_e2e_browse",
             search_rules_params={
-                "query": "something",
+                "query": "zorro",
             },
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/search"
+        assert _req.path == "/1/indexes/cts_e2e_browse/rules/search"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"query":"something"}""")
+        assert loads(_req.data) == loads("""{"query":"zorro"}""")
 
     async def test_search_single_index_(self):
         """

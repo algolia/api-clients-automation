@@ -17,6 +17,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -69,6 +73,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getAddToCartRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -82,6 +87,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getAverageClickPosition(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -95,6 +101,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getClickPositions(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -108,6 +115,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getClickThroughRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -121,6 +129,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getConversionRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -134,6 +143,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getNoClickRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -147,6 +157,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getNoResultsRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -160,6 +171,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getPurchaseRate(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -173,6 +185,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getRevenue(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -186,6 +199,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getSearchesCount(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -199,6 +213,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getSearchesNoClicks(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -212,6 +227,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getSearchesNoResults(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -225,6 +241,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getStatus(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -238,6 +255,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopCountries(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -251,6 +269,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopFilterAttributes(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -264,6 +283,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -277,6 +297,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopFiltersNoResults(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -290,6 +311,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopHits(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -303,6 +325,7 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getTopSearches(index: "index")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -316,6 +339,21 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         let response = try await client.getUsersCount(index: "index")
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 }

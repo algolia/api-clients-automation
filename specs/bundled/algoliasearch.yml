@@ -442,26 +442,11 @@ components:
 
         The required ACL to make a request is listed in each endpoint's
         reference.
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
   schemas:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -1023,7 +1008,7 @@ components:
         length:
           type: integer
           description: Number of hits to retrieve (used in combination with `offset`).
-          minimum: 1
+          minimum: 0
           maximum: 1000
           x-categories:
             - Pagination
@@ -1200,6 +1185,11 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    booleanString:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -1214,6 +1204,7 @@ components:
             This overrides languages you set with `queryLanguages`.
           items:
             $ref: '#/components/schemas/supportedLanguage'
+        - $ref: '#/components/schemas/booleanString'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -2363,7 +2354,6 @@ components:
               food: 1
               tech: 42
         facets_stats:
-          title: facetsStats
           type: object
           description: Statistics for numerical facets.
           additionalProperties:
@@ -2481,6 +2471,12 @@ components:
       type: string
       description: Unique record identifier.
       example: test-record-123
+    highlightResultMap:
+      type: object
+      description: Surround words that match the query with HTML tags for highlighting.
+      additionalProperties:
+        x-additionalPropertiesName: attribute
+        $ref: '#/components/schemas/highlightResult'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -2515,6 +2511,9 @@ components:
         - value
         - matchLevel
         - matchedWords
+      x-discriminator-fields:
+        - matchLevel
+        - matchedWords
     highlightResultOptionMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
@@ -2528,15 +2527,16 @@ components:
         $ref: '#/components/schemas/highlightResultOption'
     highlightResult:
       oneOf:
+        - $ref: '#/components/schemas/highlightResultMap'
         - $ref: '#/components/schemas/highlightResultOption'
         - $ref: '#/components/schemas/highlightResultOptionMap'
         - $ref: '#/components/schemas/highlightResultOptionArray'
-    highlightResultMap:
+    snippetResultMap:
       type: object
-      description: Surround words that match the query with HTML tags for highlighting.
+      description: Snippets that show the context around a matching search query.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
+        $ref: '#/components/schemas/snippetResult'
     snippetResultOption:
       type: object
       description: Snippets that show the context around a matching search query.
@@ -2548,6 +2548,8 @@ components:
           $ref: '#/components/schemas/matchLevel'
       required:
         - value
+        - matchLevel
+      x-discriminator-fields:
         - matchLevel
     snippetResultOptionMap:
       type: object
@@ -2562,15 +2564,10 @@ components:
         $ref: '#/components/schemas/snippetResultOption'
     snippetResult:
       oneOf:
+        - $ref: '#/components/schemas/snippetResultMap'
         - $ref: '#/components/schemas/snippetResultOption'
         - $ref: '#/components/schemas/snippetResultOptionMap'
         - $ref: '#/components/schemas/snippetResultOptionArray'
-    snippetResultMap:
-      type: object
-      description: Snippets that show the context around a matching search query.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
     matchedGeoLocation:
       type: object
       properties:
@@ -3866,6 +3863,22 @@ components:
         - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/SearchPagination'
         - $ref: '#/components/schemas/recommendationsHits'
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
   responses:
     BadRequest:
       description: Bad request or request arguments.

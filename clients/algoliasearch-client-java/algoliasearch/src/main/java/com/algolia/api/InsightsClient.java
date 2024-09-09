@@ -477,9 +477,9 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Deletes all events related to the specified user token from events metrics and analytics. To
-   * delete a personalization user profile, see [Delete a user
-   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+   * Deletes all events related to the specified user token from events metrics and analytics. The
+   * deletion is asynchronous, and processed within 48 hours. To delete a personalization user
+   * profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -492,9 +492,9 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Deletes all events related to the specified user token from events metrics and analytics. To
-   * delete a personalization user profile, see [Delete a user
-   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+   * Deletes all events related to the specified user token from events metrics and analytics. The
+   * deletion is asynchronous, and processed within 48 hours. To delete a personalization user
+   * profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -505,8 +505,8 @@ public class InsightsClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes all events related to the specified user token from events metrics and
-   * analytics. To delete a personalization user profile, see [Delete a user
-   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+   * analytics. The deletion is asynchronous, and processed within 48 hours. To delete a
+   * personalization user profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -523,8 +523,8 @@ public class InsightsClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes all events related to the specified user token from events metrics and
-   * analytics. To delete a personalization user profile, see [Delete a user
-   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+   * analytics. The deletion is asynchronous, and processed within 48 hours. To delete a
+   * personalization user profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

@@ -9,10 +9,11 @@ use Algolia\AlgoliaSearch\Configuration\IngestionConfig;
 use Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationSearch;
 use Algolia\AlgoliaSearch\Model\Ingestion\AuthenticationUpdate;
-use Algolia\AlgoliaSearch\Model\Ingestion\BatchWriteParams;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationSearch;
 use Algolia\AlgoliaSearch\Model\Ingestion\DestinationUpdate;
+use Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodePayload;
+use Algolia\AlgoliaSearch\Model\Ingestion\PushTaskPayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\RunSourcePayload;
 use Algolia\AlgoliaSearch\Model\Ingestion\SourceCreate;
 use Algolia\AlgoliaSearch\Model\Ingestion\SourceSearch;
@@ -39,7 +40,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.0.0-beta.12';
+    public const VERSION = '4.4.0';
 
     /**
      * @var ApiWrapperInterface
@@ -115,6 +116,16 @@ class IngestionClient
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     */
+    public function setClientApiKey($apiKey)
+    {
+        $this->config->setClientApiKey($apiKey);
     }
 
     /**
@@ -203,7 +214,7 @@ class IngestionClient
      * @param array $sourceCreate (required)
      *                            - $sourceCreate['type'] => (array)  (required)
      *                            - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
-     *                            - $sourceCreate['input'] => (array)  (required)
+     *                            - $sourceCreate['input'] => (array)
      *                            - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceCreate
@@ -308,6 +319,7 @@ class IngestionClient
      *                                    - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                    - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                    - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                    - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
      *
      * @see TransformationCreate
      *
@@ -865,6 +877,42 @@ class IngestionClient
         }
 
         return $this->sendRequest('PUT', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Generates code for the selected model based on the given prompt.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $generateTransformationCodePayload generateTransformationCodePayload (required)
+     *                                                 - $generateTransformationCodePayload['id'] => (string)  (required)
+     *                                                 - $generateTransformationCodePayload['systemPrompt'] => (string)
+     *                                                 - $generateTransformationCodePayload['userPrompt'] => (string)  (required)
+     *
+     * @see GenerateTransformationCodePayload
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\GenerateTransformationCodeResponse|array<string, mixed>
+     */
+    public function generateTransformationCode($generateTransformationCodePayload, $requestOptions = [])
+    {
+        // verify the required parameter 'generateTransformationCodePayload' is set
+        if (!isset($generateTransformationCodePayload)) {
+            throw new \InvalidArgumentException(
+                'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/models';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $generateTransformationCodePayload;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
 
     /**
@@ -1433,6 +1481,7 @@ class IngestionClient
      * @param int    $itemsPerPage   Number of items per page. (optional, default to 10)
      * @param int    $page           Page number of the paginated API response. (optional)
      * @param array  $status         Run status for filtering the list of task runs. (optional)
+     * @param array  $type           Run type for filtering the list of task runs. (optional)
      * @param string $taskID         Task ID for filtering the list of task runs. (optional)
      * @param array  $sort           Property by which to sort the list of task runs. (optional)
      * @param array  $order          Sort order of the response, ascending or descending. (optional)
@@ -1442,7 +1491,7 @@ class IngestionClient
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\RunListResponse|array<string, mixed>
      */
-    public function listRuns($itemsPerPage = null, $page = null, $status = null, $taskID = null, $sort = null, $order = null, $startDate = null, $endDate = null, $requestOptions = [])
+    public function listRuns($itemsPerPage = null, $page = null, $status = null, $type = null, $taskID = null, $sort = null, $order = null, $startDate = null, $endDate = null, $requestOptions = [])
     {
         if (null !== $itemsPerPage && $itemsPerPage > 100) {
             throw new \InvalidArgumentException('invalid value for "$itemsPerPage" when calling IngestionClient.listRuns, must be smaller than or equal to 100.');
@@ -1470,6 +1519,10 @@ class IngestionClient
 
         if (null !== $status) {
             $queryParameters['status'] = $status;
+        }
+
+        if (null !== $type) {
+            $queryParameters['type'] = $type;
         }
 
         if (null !== $taskID) {
@@ -1758,7 +1811,7 @@ class IngestionClient
      */
     public function listTransformationModels($requestOptions = [])
     {
-        $resourcePath = '/1/transformations/copilot';
+        $resourcePath = '/1/transformations/models';
         $queryParameters = [];
         $headers = [];
         $httpBody = null;
@@ -1827,17 +1880,18 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $taskID           Unique identifier of a task. (required)
-     * @param array  $batchWriteParams Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
-     *                                 - $batchWriteParams['requests'] => (array)  (required)
+     * @param string $taskID          Unique identifier of a task. (required)
+     * @param array  $pushTaskPayload Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+     *                                - $pushTaskPayload['action'] => (array)  (required)
+     *                                - $pushTaskPayload['records'] => (array)  (required)
      *
-     * @see BatchWriteParams
+     * @see PushTaskPayload
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\RunResponse|array<string, mixed>
      */
-    public function pushTask($taskID, $batchWriteParams, $requestOptions = [])
+    public function pushTask($taskID, $pushTaskPayload, $requestOptions = [])
     {
         // verify the required parameter 'taskID' is set
         if (!isset($taskID)) {
@@ -1845,17 +1899,17 @@ class IngestionClient
                 'Parameter `taskID` is required when calling `pushTask`.'
             );
         }
-        // verify the required parameter 'batchWriteParams' is set
-        if (!isset($batchWriteParams)) {
+        // verify the required parameter 'pushTaskPayload' is set
+        if (!isset($pushTaskPayload)) {
             throw new \InvalidArgumentException(
-                'Parameter `batchWriteParams` is required when calling `pushTask`.'
+                'Parameter `pushTaskPayload` is required when calling `pushTask`.'
             );
         }
 
         $resourcePath = '/2/tasks/{taskID}/push';
         $queryParameters = [];
         $headers = [];
-        $httpBody = $batchWriteParams;
+        $httpBody = $pushTaskPayload;
 
         // path params
         if (null !== $taskID) {
@@ -2173,7 +2227,7 @@ class IngestionClient
      *  - editSettings
      *
      * @param array $transformationSearch transformationSearch (required)
-     *                                    - $transformationSearch['transformationsIDs'] => (array)  (required)
+     *                                    - $transformationSearch['transformationIDs'] => (array)  (required)
      *
      * @see TransformationSearch
      *
@@ -2238,7 +2292,7 @@ class IngestionClient
     }
 
     /**
-     * Try a transformation.
+     * Try a transformation before creating it.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2248,6 +2302,7 @@ class IngestionClient
      * @param array $transformationTry transformationTry (required)
      *                                 - $transformationTry['code'] => (string) The source code of the transformation. (required)
      *                                 - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                 - $transformationTry['authentications'] => (array)
      *
      * @see TransformationTry
      *
@@ -2255,12 +2310,12 @@ class IngestionClient
      *
      * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTryResponse|array<string, mixed>
      */
-    public function tryTransformations($transformationTry, $requestOptions = [])
+    public function tryTransformation($transformationTry, $requestOptions = [])
     {
         // verify the required parameter 'transformationTry' is set
         if (!isset($transformationTry)) {
             throw new \InvalidArgumentException(
-                'Parameter `transformationTry` is required when calling `tryTransformations`.'
+                'Parameter `transformationTry` is required when calling `tryTransformation`.'
             );
         }
 
@@ -2268,6 +2323,58 @@ class IngestionClient
         $queryParameters = [];
         $headers = [];
         $httpBody = $transformationTry;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Try a transformation before updating it.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param string $transformationID  Unique identifier of a transformation. (required)
+     * @param array  $transformationTry transformationTry (required)
+     *                                  - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                  - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                  - $transformationTry['authentications'] => (array)
+     *
+     * @see TransformationTry
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTryResponse|array<string, mixed>
+     */
+    public function tryTransformationBeforeUpdate($transformationID, $transformationTry, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationID' is set
+        if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
+            );
+        }
+        // verify the required parameter 'transformationTry' is set
+        if (!isset($transformationTry)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/{transformationID}/try';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationTry;
+
+        // path params
+        if (null !== $transformationID) {
+            $resourcePath = str_replace(
+                '{transformationID}',
+                ObjectSerializer::toPathValue($transformationID),
+                $resourcePath
+            );
+        }
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
@@ -2537,6 +2644,7 @@ class IngestionClient
      *                                     - $transformationCreate['code'] => (string) The source code of the transformation. (required)
      *                                     - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
      *                                     - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                     - $transformationCreate['authenticationIDs'] => (array) The authentications associated for the current transformation.
      *
      * @see TransformationCreate
      *
@@ -2587,7 +2695,7 @@ class IngestionClient
      * @param array $sourceCreate (optional)
      *                            - $sourceCreate['type'] => (array)  (required)
      *                            - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
-     *                            - $sourceCreate['input'] => (array)  (required)
+     *                            - $sourceCreate['input'] => (array)
      *                            - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceCreate

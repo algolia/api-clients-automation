@@ -1311,7 +1311,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/batchWriteParams'
+              title: pushTaskPayload
+              type: object
+              properties:
+                action:
+                  $ref: '#/components/schemas/action'
+                records:
+                  type: array
+                  items:
+                    title: pushTaskRecords
+                    type: object
+                    additionalProperties: true
+                    required:
+                      - objectID
+                    properties:
+                      objectID:
+                        $ref: '#/components/schemas/objectID'
+              required:
+                - action
+                - records
         required: true
       responses:
         '200':
@@ -1431,8 +1449,8 @@ paths:
       tags:
         - ingestion
       summary: Try a transformation
-      description: Try a transformation.
-      operationId: tryTransformations
+      description: Try a transformation before creating it.
+      operationId: tryTransformation
       x-acl:
         - addObject
         - deleteIndex
@@ -1481,7 +1499,7 @@ paths:
                   $ref: '#/components/schemas/Transformation'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/transformations/copilot:
+  /1/transformations/models:
     get:
       tags:
         - ingestion
@@ -1509,6 +1527,48 @@ paths:
                       $ref: '#/components/schemas/Model'
                 required:
                   - llms
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Generates code for the selected model based on the given prompt
+      description: Generates code for the selected model based on the given prompt.
+      operationId: generateTransformationCode
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: generateTransformationCodePayload
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                systemPrompt:
+                  type: string
+                userPrompt:
+                  type: string
+              required:
+                - id
+                - userPrompt
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: generateTransformationCodeResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  generatedCode:
+                    type: string
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/transformations/{transformationID}:
@@ -1573,6 +1633,34 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}/try:
+    post:
+      tags:
+        - ingestion
+      summary: Try a transformation
+      description: Try a transformation before updating it.
+      operationId: tryTransformationBeforeUpdate
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/runs:
     get:
       tags:
@@ -1588,6 +1676,7 @@ paths:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/runStatus'
+        - $ref: '#/components/parameters/runType'
         - $ref: '#/components/parameters/taskID'
         - $ref: '#/components/parameters/runSort'
         - $ref: '#/components/parameters/order'
@@ -1716,6 +1805,26 @@ paths:
                 $ref: '#/components/schemas/Event'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - ingestion
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -1980,6 +2089,14 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/RunStatus'
+    runType:
+      name: type
+      in: query
+      description: Run type for filtering the list of task runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunType'
     taskID:
       name: taskID
       in: query
@@ -2034,6 +2151,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -2124,6 +2242,8 @@ components:
           description: >-
             Private key of the Google service account. This field is `null` in
             the API response.
+      x-discriminator-fields:
+        - clientEmail
     AuthBasicPartial:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2135,6 +2255,8 @@ components:
         password:
           type: string
           description: Password. This field is `null` in the API response.
+      x-discriminator-fields:
+        - username
     AuthAPIKeyPartial:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2143,6 +2265,8 @@ components:
         key:
           type: string
           description: API key. This field is `null` in the API response.
+      x-discriminator-fields:
+        - key
     AuthOAuthPartial:
       type: object
       description: Credentials for authenticating with OAuth 2.0.
@@ -2161,6 +2285,8 @@ components:
           type: string
           default: ''
           description: OAuth scope.
+      x-discriminator-fields:
+        - url
     AuthAlgoliaPartial:
       type: object
       description: Credentials for authenticating with Algolia.
@@ -2271,6 +2397,9 @@ components:
       required:
         - clientEmail
         - privateKey
+      x-discriminator-fields:
+        - clientEmail
+        - privateKey
     AuthBasic:
       type: object
       description: Credentials for authenticating with user name and password.
@@ -2285,6 +2414,9 @@ components:
       required:
         - username
         - password
+      x-discriminator-fields:
+        - username
+        - password
     AuthAPIKey:
       type: object
       description: Credentials for authenticating with an API key.
@@ -2294,6 +2426,8 @@ components:
           type: string
           description: API key. This field is `null` in the API response.
       required:
+        - key
+      x-discriminator-fields:
         - key
     AuthOAuth:
       type: object
@@ -2314,6 +2448,10 @@ components:
           default: ''
           description: OAuth scope.
       required:
+        - url
+        - client_id
+        - client_secret
+      x-discriminator-fields:
         - url
         - client_id
         - client_secret
@@ -2630,6 +2768,7 @@ components:
         - json
         - shopify
         - sfcc
+        - push
     sourceSortKeys:
       type: string
       description: Property by which to sort the list of sources.
@@ -2920,6 +3059,11 @@ components:
         - image
         - imageType
         - configuration
+      x-discriminator-fields:
+        - registry
+        - image
+        - imageType
+        - configuration
     SourceUpdateShopify:
       type: object
       additionalProperties: false
@@ -2975,7 +3119,6 @@ components:
         - sourceID
         - type
         - name
-        - input
         - createdAt
     SourceCreate:
       type: object
@@ -2993,7 +3136,6 @@ components:
       required:
         - type
         - name
-        - input
     SourceCreateResponse:
       type: object
       additionalProperties: false
@@ -3153,6 +3295,8 @@ components:
           type: object
           description: Configuration of the spec.
       required:
+        - configuration
+      x-discriminator-fields:
         - configuration
     SourceUpdateInput:
       oneOf:
@@ -3405,6 +3549,9 @@ components:
       required:
         - format
         - actions
+      x-discriminator-fields:
+        - format
+        - actions
     StreamingInput:
       type: object
       additionalProperties: false
@@ -3416,13 +3563,41 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+      x-discriminator-fields:
+        - mapping
+    DockerStreamsSyncMode:
+      type: string
+      description: The strategy to use to fetch the data.
+      enum:
+        - incremental
+        - fullTable
+    DockerStreams:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the stream to fetch the data from (e.g. table name).
+        properties:
+          type: array
+          description: The properties of the stream to select (e.g. column).
+          items:
+            type: string
+        syncMode:
+          $ref: '#/components/schemas/DockerStreamsSyncMode'
+      required:
+        - name
+        - syncMode
     DockerStreamsInput:
       description: The selected streams of a singer or airbyte connector.
       type: object
       properties:
         streams:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/DockerStreams'
       required:
+        - streams
+      x-discriminator-fields:
         - streams
     ShopifyMetafield:
       type: object
@@ -3552,6 +3727,8 @@ components:
           $ref: '#/components/schemas/Cron'
       required:
         - type
+        - cron
+      x-discriminator-fields:
         - cron
     TaskCreateTrigger:
       oneOf:
@@ -3755,48 +3932,10 @@ components:
         - delete
         - clear
       description: Type of indexing operation.
-    batchWriteParams:
-      title: batchWriteParams
-      description: Batch parameters.
-      type: object
-      additionalProperties: false
-      properties:
-        requests:
-          type: array
-          items:
-            title: batchRequest
-            type: object
-            additionalProperties: false
-            properties:
-              action:
-                $ref: '#/components/schemas/action'
-              body:
-                type: object
-                description: Operation arguments (varies with specified `action`).
-                example:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-            required:
-              - action
-              - body
-      required:
-        - requests
-      example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
     sortKeys:
       type: string
       description: Property by which to sort the list.
@@ -3806,6 +3945,11 @@ components:
         - type
         - updatedAt
         - createdAt
+    AuthenticationIDs:
+      description: The authentications associated for the current transformation.
+      type: array
+      items:
+        $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
       description: The source code of the transformation.
@@ -3821,6 +3965,8 @@ components:
       properties:
         transformationID:
           $ref: '#/components/schemas/transformationID'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
         name:
@@ -3847,6 +3993,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        authenticationIDs:
+          $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - code
         - name
@@ -3871,6 +4019,10 @@ components:
         sampleRecord:
           description: The record to apply the given code to.
           type: object
+        authentications:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationCreate'
       required:
         - code
         - sampleRecord
@@ -3900,12 +4052,12 @@ components:
       type: object
       additionalProperties: false
       properties:
-        transformationsIDs:
+        transformationIDs:
           type: array
           items:
             $ref: '#/components/schemas/transformationID'
       required:
-        - transformationsIDs
+        - transformationIDs
     Model:
       type: object
       additionalProperties: false
@@ -3947,6 +4099,15 @@ components:
         - idled
         - finished
         - skipped
+    RunType:
+      type: string
+      description: Task run type.
+      enum:
+        - reindex
+        - update
+        - discover
+        - validate
+        - push
     runSortKeys:
       type: string
       description: Property by which to sort the list of task runs.
@@ -3975,13 +4136,6 @@ components:
         - ok
         - discarded
         - blocking
-    RunType:
-      type: string
-      description: Task run type.
-      enum:
-        - reindex
-        - update
-        - discover
     startedAt:
       type: string
       description: Date of start in RFC 3339 format.

@@ -18,6 +18,7 @@ class SnippetRecommendClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetRecommendClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetRecommendClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetRecommendClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -69,7 +73,8 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
+    client.deleteRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -82,7 +87,8 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
+    client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -95,7 +101,8 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRecommendStatus("indexName", RecommendModels.RELATED_PRODUCTS, 12345L);
+    client.getRecommendStatus("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, 12345L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -111,11 +118,16 @@ class SnippetRecommendClient {
     client.getRecommendations(
       new GetRecommendationsParams()
         .setRequests(
-          List.of(
-            new RelatedQuery().setIndexName("indexName").setObjectID("objectID").setModel(RelatedModel.RELATED_PRODUCTS).setThreshold(42.1)
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("<YOUR_INDEX_NAME>")
+              .setObjectID("objectID")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(42.1)
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -128,7 +140,22 @@ class SnippetRecommendClient {
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchRecommendRules("indexName", RecommendModels.RELATED_PRODUCTS);
+    client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

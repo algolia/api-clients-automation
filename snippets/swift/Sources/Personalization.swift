@@ -17,6 +17,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -69,6 +73,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.deleteUserProfile(userToken: "UserToken")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -82,6 +87,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.getPersonalizationStrategy()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -95,6 +101,21 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         let response = try await client.getUserTokenProfile(userToken: "UserToken")
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try PersonalizationClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -117,6 +138,7 @@ final class PersonalizationClientSnippet {
                 facetScoring: [FacetScoring(score: 42, facetName: "Event")],
                 personalizationImpact: 42
             ))
+        // >LOG
         // SEPARATOR<
     }
 }

@@ -57,15 +57,11 @@ info:
 servers:
   - url: https://usage.algolia.com
     description: Base URL of the Usage API.
-  - url: https://usage-dev.algolia.com
-    description: >-
-      Base URL for the development version of the Usage API (Algolia employees
-      only).
 security:
   - appId: []
     apiKey: []
 tags:
-  - name: usage
+  - name: statistics
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
 paths:
@@ -105,6 +101,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -124,6 +122,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -134,6 +133,7 @@ paths:
 
             // Call the API
             client.customGet("test/minimal");
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -143,6 +143,7 @@ paths:
             // Call the API
             const response = await client.customGet({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -161,6 +162,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -175,6 +178,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -188,6 +192,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -202,6 +207,7 @@ paths:
             # Call the API
             response = client.custom_get("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -223,6 +229,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -238,6 +246,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -279,6 +289,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -298,6 +310,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -308,6 +321,7 @@ paths:
 
             // Call the API
             client.customPost("test/minimal");
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -317,6 +331,7 @@ paths:
             // Call the API
             const response = await client.customPost({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -335,6 +350,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -349,6 +366,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -362,6 +380,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -376,6 +395,7 @@ paths:
             # Call the API
             response = client.custom_post("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -397,6 +417,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -412,6 +434,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -453,6 +477,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -472,6 +498,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -482,6 +509,7 @@ paths:
 
             // Call the API
             client.customPut("test/minimal");
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -491,6 +519,7 @@ paths:
             // Call the API
             const response = await client.customPut({ path: 'test/minimal' });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -509,6 +538,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -523,6 +554,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -536,6 +568,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -550,6 +583,7 @@ paths:
             # Call the API
             response = client.custom_put("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -571,6 +605,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -586,6 +622,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -621,6 +659,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -647,6 +687,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -658,6 +700,7 @@ paths:
 
             // Call the API
             client.customDelete("test/minimal");
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -671,6 +714,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -691,6 +736,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -705,6 +752,7 @@ paths:
                 'test/minimal',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -718,6 +766,7 @@ paths:
                 path="test/minimal",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -732,6 +781,7 @@ paths:
             # Call the API
             response = client.custom_delete("test/minimal")
 
+            # >LOG
             # use the class directly
             puts(response)
 
@@ -753,6 +803,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -768,12 +820,16 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /1/usage/{statistic}:
     get:
       operationId: getUsage
       summary: Retrieve usage information
       description: |
         Retrieves usage statistics evaluated over a specified period.
+      tags:
+        - statistics
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
         - $ref: '#/components/parameters/StartDateRequired'
@@ -809,6 +865,8 @@ paths:
               "2024-04-03T12:46:43Z",
               "2024-04-05T12:46:43Z"
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: |
@@ -828,6 +886,7 @@ paths:
               panic(err)
             }
 
+            // >LOG
             // use the model directly
             print(response)
         - lang: java
@@ -842,6 +901,8 @@ paths:
 
             client.getUsage(Statistic.QUERIES_OPERATIONS,
             "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -855,6 +916,7 @@ paths:
               endDate: '2024-04-05T12:46:43Z',
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -875,6 +937,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -891,6 +955,7 @@ paths:
                 '2024-04-05T12:46:43Z',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -906,6 +971,7 @@ paths:
                 end_date="2024-04-05T12:46:43Z",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -924,6 +990,8 @@ paths:
             response = client.get_usage("queries_operations",
             "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -951,6 +1019,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -970,12 +1040,16 @@ paths:
                 startDate: "2024-04-03T12:46:43Z",
                 endDate: "2024-04-05T12:46:43Z"
             )
+
+            // >LOG
   /1/usage/{statistic}/{indexName}:
     get:
       operationId: getIndexUsage
       summary: Retrieve usage information for one index
       description: |
         Retrieves the selected usage statistics for one index.
+      tags:
+        - statistics
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
         - $ref: '#/components/parameters/IndexName'
@@ -1009,10 +1083,12 @@ paths:
 
             var response = await client.GetIndexUsageAsync(
               Enum.Parse<Statistic>("QueriesOperations"),
-              "myIndexName",
+              "<YOUR_INDEX_NAME>",
               "2024-04-03T12:46:43Z",
               "2024-04-05T12:46:43Z"
             );
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1030,7 +1106,7 @@ paths:
 
             response, err :=
             client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
-              usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+              usage.Statistic("queries_operations"), "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
             ))
 
             if err != nil {
@@ -1038,6 +1114,8 @@ paths:
               panic(err)
             }
 
+
+            // >LOG
 
             // use the model directly
 
@@ -1052,8 +1130,11 @@ paths:
 
             // Call the API
 
-            client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName",
-            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+            client.getIndexUsage(Statistic.QUERIES_OPERATIONS,
+            "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z",
+            "2024-04-05T12:46:43Z");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: |
@@ -1068,6 +1149,7 @@ paths:
               endDate: '2024-04-05T12:46:43Z',
             });
 
+            // >LOG
             // use typed response
             console.log(response);
         - lang: kotlin
@@ -1083,11 +1165,13 @@ paths:
 
             var response = client.getIndexUsage(
               statistic = Statistic.entries.first { it.value == "queries_operations" },
-              indexName = "myIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               startDate = "2024-04-03T12:46:43Z",
               endDate = "2024-04-05T12:46:43Z",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1101,11 +1185,12 @@ paths:
             // Call the API
             $response = $client->getIndexUsage(
                 'queries_operations',
-                'myIndexName',
+                '<YOUR_INDEX_NAME>',
                 '2024-04-03T12:46:43Z',
                 '2024-04-05T12:46:43Z',
             );
 
+            // >LOG
             // play with the response
             var_dump($response);
         - lang: python
@@ -1117,11 +1202,12 @@ paths:
             # Call the API
             response = await _client.get_index_usage(
                 statistic="queries_operations",
-                index_name="myIndexName",
+                index_name="<YOUR_INDEX_NAME>",
                 start_date="2024-04-03T12:46:43Z",
                 end_date="2024-04-05T12:46:43Z",
             )
 
+            # >LOG
             # use the class directly
             print(response)
 
@@ -1129,25 +1215,23 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
             client = Algolia::UsageClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
-
             # Call the API
+            response = client.get_index_usage(
+              "queries_operations",
+              "<YOUR_INDEX_NAME>",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            )
 
-            response = client.get_index_usage("queries_operations",
-            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
-
-
+            # >LOG
             # use the class directly
-
             puts(response)
 
-
             # print the JSON response
-
             puts(response.to_json)
         - lang: scala
           label: Scala
@@ -1162,11 +1246,13 @@ paths:
 
             val response = client.getIndexUsage(
               statistic = Statistic.withName("queries_operations"),
-              indexName = "myIndexName",
+              indexName = "<YOUR_INDEX_NAME>",
               startDate = "2024-04-03T12:46:43Z",
               endDate = "2024-04-05T12:46:43Z"
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1184,10 +1270,12 @@ paths:
 
             let response = try await client.getIndexUsage(
                 statistic: Statistic.queriesOperations,
-                indexName: "myIndexName",
+                indexName: "<YOUR_INDEX_NAME>",
                 startDate: "2024-04-03T12:46:43Z",
                 endDate: "2024-04-05T12:46:43Z"
             )
+
+            // >LOG
 components:
   securitySchemes:
     appId:
@@ -1534,19 +1622,19 @@ components:
     StartDateRequired:
       in: query
       name: startDate
-      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      description: Start date of the period to analyze, in RFC 3339 format.
       required: true
       schema:
         type: string
-        example: '2022-09-19'
+        example: '2024-08-30T00:00:00Z'
     EndDateRequired:
       in: query
       name: endDate
-      description: End date of the period to analyze, in `YYYY-MM-DD` format.
+      description: End date of the period to analyze, in RFC 3339 format.
       required: true
       schema:
         type: string
-        example: '2023-01-21'
+        example: '2024-08-30T00:00:00Z'
     granularityParameter:
       name: granularity
       in: query
@@ -1569,6 +1657,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:

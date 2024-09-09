@@ -17,10 +17,7 @@ export const noNewLine: Rule.RuleModule = {
 
     const code = context.sourceCode;
 
-    if (
-      code.lines.length < 2 ||
-      code.lines[code.lines.length - 1].trim().length > 0
-    ) {
+    if (code.lines.length < 2 || code.lines[code.lines.length - 1].trim().length > 0) {
       return {};
     }
 
@@ -29,10 +26,7 @@ export const noNewLine: Rule.RuleModule = {
       messageId: 'noNewLine',
       fix(fixer) {
         const toRemove = code.text.length - code.text.trimEnd().length;
-        return fixer.removeRange([
-          code.text.length - toRemove,
-          code.text.length,
-        ]);
+        return fixer.removeRange([code.text.length - toRemove, code.text.length]);
       },
     });
 

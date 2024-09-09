@@ -71,6 +71,28 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// getRule
+    func testGetRuleTest() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.getRuleWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "qr-1725004648916")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// getSettings
     func testGetSettingsTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
@@ -119,8 +141,40 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// search with highlight and snippet results
+    func testSearchTest5() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "vim",
+                        attributesToRetrieve: ["*"],
+                        attributesToHighlight: ["*"],
+                        attributesToSnippet: ["*:20"],
+                        indexName: "cts_e2e_highlight_snippet_results"
+                    )),
+            ]))
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// search for a single facet request with minimal parameters
-    func testSearchTest7() async throws {
+    func testSearchTest8() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return
@@ -150,7 +204,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
     }
 
     /// search filters end to end
-    func testSearchTest13() async throws {
+    func testSearchTest14() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return
@@ -218,6 +272,31 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         let expectedBodyData =
             try XCTUnwrap(
                 "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
+    /// searchRules
+    func testSearchRulesTest() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.searchRulesWithHTTPInfo(
+            indexName: "cts_e2e_browse",
+            searchRulesParams: SearchRulesParams(query: "zorro")
+        )
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
                     .data(using: .utf8)
             )
 

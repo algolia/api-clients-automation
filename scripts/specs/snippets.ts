@@ -3,7 +3,6 @@ import fsp from 'fs/promises';
 import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
-import { waitForTask, waitForAppTask, waitForApiKey } from './helper-snippets.js';
 import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
 
 export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
@@ -29,7 +28,7 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
       for (const [sampleName, sample] of Object.entries(samples)) {
         const sampleMatch = sample.match(
-          /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
+          /.*Initialize the client.*\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)(#|\/\/) >LOG/,
         );
         if (!sampleMatch) {
           continue;
@@ -40,26 +39,13 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
 
         if (!('init' in snippetSamples[language])) {
           snippetSamples[language].init = {
-            default: initLine.replace(/\n$/, ''),
+            default: initLine.trim(),
           };
         }
 
-        snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
+        snippetSamples[language][operation][sampleName] = callLine.trim();
       }
     }
-
-    // add specific helper snippets to the current language
-    snippetSamples[language].waitForAppTask = {
-      default: waitForAppTask[language],
-    };
-
-    snippetSamples[language].waitForApiKey = {
-      default: waitForApiKey[language],
-    };
-
-    snippetSamples[language].waitForTask = {
-      default: waitForTask[language],
-    };
   }
 
   return JSON.stringify(snippetSamples, null, 2);
@@ -88,14 +74,12 @@ export async function transformSnippetsToCodeSamples(clientName: string): Promis
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
       snippetSamples[gen.language].import = {
-        default: importMatch[1].replace(/\n$/, ''),
+        default: importMatch[1].trim(),
       };
     }
 
     // iterate over every matches (operationId) and store it in the hashmap for later use
-    for (const match of snippetFileContent.matchAll(
-      />SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g,
-    )) {
+    for (const match of snippetFileContent.matchAll(/>SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g)) {
       const lines: string[] = match[0].split('\n').slice(1, -1);
       if (!lines.length) {
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);

@@ -34,3 +34,5 @@ customSearchParams:
       type: object
   required:
     - customSearchParameters
+  x-discriminator-fields:
+    - customSearchParameters

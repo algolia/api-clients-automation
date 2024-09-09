@@ -861,10 +861,10 @@ class TestSearchClient < Test::Unit::TestCase
 
   # getRule
   def test_get_rule
-    req = @client.get_rule_with_http_info("indexName", "id1")
+    req = @client.get_rule_with_http_info("cts_e2e_browse", "qr-1725004648916")
 
     assert_equal(:get, req.method)
-    assert_equal("/1/indexes/indexName/rules/id1", req.path)
+    assert_equal("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -1112,38 +1112,63 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # Partial update with string value
+  # Partial update with a new value for a string attribute
   def test_partial_update_object
-    req = @client.partial_update_object_with_http_info(
-      "theIndexName",
-      "uniqueID",
-      {id1: "test", id2: BuiltInOperation.new(_operation: "AddUnique", value: "test2")},
-      true
-    )
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: "new value"})
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
-    assert_equal({:"createIfNotExists" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(
-      JSON.parse("{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}"),
-      JSON.parse(req.body)
-    )
+    assert_equal(JSON.parse("{\"attributeId\":\"new value\"}"), JSON.parse(req.body))
   end
 
-  # Partial update with integer value
+  # Partial update with a new value for an integer attribute
   def test_partial_update_object1
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: 1})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":1}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for a boolean attribute
+  def test_partial_update_object2
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: true})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":true}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for an array attribute
+  def test_partial_update_object3
     req = @client.partial_update_object_with_http_info(
       "theIndexName",
       "uniqueID",
-      {attributeId: BuiltInOperation.new(_operation: "Increment", value: 2)}
+      {attributeId: ["one", "two", "three"]}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"attributeId\":[\"one\",\"two\",\"three\"]}"), JSON.parse(req.body))
+  end
+
+  # Partial update with a new value for an object attribute
+  def test_partial_update_object4
+    req = @client.partial_update_object_with_http_info("theIndexName", "uniqueID", {attributeId: {nested: "value"}})
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/theIndexName/uniqueID/partial", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"attributeId\":{\"nested\":\"value\"}}"), JSON.parse(req.body))
   end
 
   # removeUserId
@@ -1475,8 +1500,36 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"requests\":[{\"indexName\":\"cts_e2e_search_empty_index\"}]}"), JSON.parse(req.body))
   end
 
-  # retrieveFacets
+  # search with highlight and snippet results
   def test_search5
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_highlight_snippet_results",
+            query: "vim",
+            attributes_to_snippet: ["*:20"],
+            attributes_to_highlight: ["*"],
+            attributes_to_retrieve: ["*"]
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/*/queries", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # retrieveFacets
+  def test_search6
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1498,7 +1551,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # retrieveFacetsWildcard
-  def test_search6
+  def test_search7
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"])]
@@ -1516,7 +1569,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single facet request with minimal parameters
-  def test_search7
+  def test_search8
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForFacets.new(index_name: "cts_e2e_search_facet", type: "facet", facet: "editor")],
@@ -1537,7 +1590,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single hits request with all parameters
-  def test_search8
+  def test_search9
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(index_name: "theIndexName", query: "myQuery", hits_per_page: 50, type: "default")]
@@ -1557,7 +1610,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single facet request with all parameters
-  def test_search9
+  def test_search10
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1587,7 +1640,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with minimal parameters
-  def test_search10
+  def test_search11
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1612,7 +1665,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with all parameters
-  def test_search11
+  def test_search12
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1643,7 +1696,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters accept all of the possible shapes
-  def test_search12
+  def test_search13
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1680,7 +1733,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters end to end
-  def test_search13
+  def test_search14
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1714,7 +1767,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search with all search parameters
-  def test_search14
+  def test_search15
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1881,13 +1934,13 @@ class TestSearchClient < Test::Unit::TestCase
 
   # searchRules
   def test_search_rules
-    req = @client.search_rules_with_http_info("indexName", SearchRulesParams.new(query: "something"))
+    req = @client.search_rules_with_http_info("cts_e2e_browse", SearchRulesParams.new(query: "zorro"))
 
     assert_equal(:post, req.method)
-    assert_equal("/1/indexes/indexName/rules/search", req.path)
+    assert_equal("/1/indexes/cts_e2e_browse/rules/search", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"query\":\"something\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"query\":\"zorro\"}"), JSON.parse(req.body))
   end
 
   # search with minimal parameters

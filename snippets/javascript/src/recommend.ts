@@ -16,6 +16,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -32,6 +33,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -48,6 +50,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -64,6 +67,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -84,6 +88,7 @@ export async function snippetForDeleteRecommendRule(): Promise<void> {
     objectID: 'objectID',
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -104,6 +109,7 @@ export async function snippetForGetRecommendRule(): Promise<void> {
     objectID: 'objectID',
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -124,6 +130,7 @@ export async function snippetForGetRecommendStatus(): Promise<void> {
     taskID: 12345,
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -139,16 +146,10 @@ export async function snippetForGetRecommendations(): Promise<void> {
 
   // Call the API
   const response = await client.getRecommendations({
-    requests: [
-      {
-        indexName: 'indexName',
-        objectID: 'objectID',
-        model: 'related-products',
-        threshold: 42.1,
-      },
-    ],
+    requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -163,12 +164,25 @@ export async function snippetForSearchRecommendRules(): Promise<void> {
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.searchRecommendRules({
-    indexName: 'indexName',
-    model: 'related-products',
-  });
+  const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }

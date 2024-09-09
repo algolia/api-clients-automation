@@ -6,17 +6,16 @@ import type { Express } from 'express';
 import { createSpinner } from '../../spinners';
 import type { CTSType } from '../runCts';
 
+import { apiKeyServer } from './apiKey';
 import { benchmarkServer } from './benchmark';
 import { chunkWrapperServer } from './chunkWrapper';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
-import { waitForApiKeyServer } from './waitForApiKey';
+import { waitForApiKeyServer } from './waitFor';
 
-export async function startTestServer(
-  suites: Record<CTSType, boolean>,
-): Promise<() => Promise<void>> {
+export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];
   if (suites.client) {
     toStart.push(
@@ -26,6 +25,7 @@ export async function startTestServer(
       replaceAllObjectsServer(),
       chunkWrapperServer(),
       waitForApiKeyServer(),
+      apiKeyServer(),
     );
   }
   if (suites.benchmark) {
@@ -49,11 +49,7 @@ export async function startTestServer(
   };
 }
 
-export async function setupServer(
-  name: string,
-  port: number,
-  addRoutes: (app: Express) => void,
-): Promise<Server> {
+export async function setupServer(name: string, port: number, addRoutes: (app: Express) => void): Promise<Server> {
   const spinner = createSpinner(`starting ${name} test server`);
   const app = express();
 
@@ -67,7 +63,7 @@ export async function setupServer(
   });
 
   // catch all error handler
-  app.use((err, req, res, _) => {
+  app.use((err, _req, res, _) => {
     // eslint-disable-next-line no-console
     console.error(err.message);
     res.status(500).send({ message: err.message });

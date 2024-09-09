@@ -25,7 +25,7 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
 class SearchTest extends TestCase
 {
     #[TestDox('browse with minimal parameters')]
-    public function testBrowse()
+    public function testBrowse(): void
     {
         $client = $this->getClient();
         $resp = $client->browse(
@@ -37,8 +37,22 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('getRule')]
+    public function testGetRule(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getRule(
+            'cts_e2e_browse',
+            'qr-1725004648916',
+        );
+
+        $expected = json_decode('{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('getSettings')]
-    public function testGetSettings()
+    public function testGetSettings(): void
     {
         $client = $this->getClient();
         $resp = $client->getSettings(
@@ -51,7 +65,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search for a single hits request with minimal parameters')]
-    public function testSearch4()
+    public function testSearch4(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -67,8 +81,35 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('search with highlight and snippet results')]
+    public function testSearch5(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->search(
+            ['requests' => [
+                ['indexName' => 'cts_e2e_highlight_snippet_results',
+                    'query' => 'vim',
+                    'attributesToSnippet' => [
+                        '*:20',
+                    ],
+                    'attributesToHighlight' => [
+                        '*',
+                    ],
+                    'attributesToRetrieve' => [
+                        '*',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $expected = json_decode('{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('search for a single facet request with minimal parameters')]
-    public function testSearch7()
+    public function testSearch8(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -88,7 +129,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('search filters end to end')]
-    public function testSearch13()
+    public function testSearch14(): void
     {
         $client = $this->getClient();
         $resp = $client->search(
@@ -138,7 +179,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('get searchDictionaryEntries results with minimal parameters')]
-    public function testSearchDictionaryEntries()
+    public function testSearchDictionaryEntries(): void
     {
         $client = $this->getClient();
         $resp = $client->searchDictionaryEntries(
@@ -152,8 +193,23 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
+    #[TestDox('searchRules')]
+    public function testSearchRules(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->searchRules(
+            'cts_e2e_browse',
+            ['query' => 'zorro',
+            ],
+        );
+
+        $expected = json_decode('{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
     #[TestDox('search with special characters in indexName')]
-    public function testSearchSingleIndex1()
+    public function testSearchSingleIndex1(): void
     {
         $client = $this->getClient();
         $resp = $client->searchSingleIndex(
@@ -162,7 +218,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('single search retrieve snippets')]
-    public function testSearchSingleIndex3()
+    public function testSearchSingleIndex3(): void
     {
         $client = $this->getClient();
         $resp = $client->searchSingleIndex(
@@ -183,7 +239,7 @@ class SearchTest extends TestCase
     }
 
     #[TestDox('setSettings with minimal parameters')]
-    public function testSetSettings1()
+    public function testSetSettings1(): void
     {
         $client = $this->getClient();
         $resp = $client->setSettings(
@@ -194,7 +250,7 @@ class SearchTest extends TestCase
         );
     }
 
-    protected function union($expected, $received)
+    protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
             $res = [];
@@ -209,7 +265,7 @@ class SearchTest extends TestCase
         return $received;
     }
 
-    protected function getClient()
+    protected function getClient(): SearchClient
     {
         return SearchClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
     }

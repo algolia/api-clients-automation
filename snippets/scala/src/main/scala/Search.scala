@@ -5,6 +5,7 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.SearchClient
+import algoliasearch.extension.SearchClientExtensions
 // IMPORT<
 import algoliasearch.search.*
 
@@ -36,6 +37,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -52,11 +54,12 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.addOrUpdateObject(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       body = JObject(List(JField("key", JString("value"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -79,6 +82,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -101,6 +105,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -132,6 +137,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -159,6 +165,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -186,6 +193,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -213,6 +221,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -240,6 +249,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -267,6 +277,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -294,6 +305,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -317,6 +329,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -352,6 +365,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -382,6 +396,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -413,6 +428,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -429,9 +445,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.browse(
-      indexName = "cts_e2e_browse"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -448,9 +465,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearObjects(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -467,9 +485,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearRules(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -486,9 +505,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.clearSynonyms(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -508,6 +528,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -527,6 +548,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -546,6 +568,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -565,6 +588,7 @@ class SnippetSearchClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -584,6 +608,7 @@ class SnippetSearchClient {
       key = "myTestApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -600,12 +625,13 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteBy(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       deleteByParams = DeleteByParams(
         filters = Some("brand:brandName")
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -622,9 +648,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteIndex(
-      indexName = "theIndexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -645,6 +672,7 @@ class SnippetSearchClient {
       objectID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -661,10 +689,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -684,6 +713,7 @@ class SnippetSearchClient {
       source = "theSource"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -700,10 +730,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.deleteSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -723,6 +754,7 @@ class SnippetSearchClient {
       key = "myTestApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -742,6 +774,7 @@ class SnippetSearchClient {
       taskID = 123L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -760,6 +793,7 @@ class SnippetSearchClient {
     val response = client.getDictionaryLanguages(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -778,6 +812,7 @@ class SnippetSearchClient {
     val response = client.getDictionarySettings(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -796,6 +831,7 @@ class SnippetSearchClient {
     val response = client.getLogs(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -812,11 +848,12 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToRetrieve = Some(Seq("attr1", "attr2"))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -838,12 +875,13 @@ class SnippetSearchClient {
           GetObjectsRequest(
             attributesToRetrieve = Some(Seq("attr1", "attr2")),
             objectID = "uniqueID",
-            indexName = "theIndexName"
+            indexName = "<YOUR_INDEX_NAME>"
           )
         )
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -860,10 +898,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getRule(
-      indexName = "indexName",
-      objectID = "id1"
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "qr-1725004648916"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -880,9 +919,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getSettings(
-      indexName = "cts_e2e_settings"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -901,6 +941,7 @@ class SnippetSearchClient {
     val response = client.getSources(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -917,10 +958,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -937,10 +979,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.getTask(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       taskID = 123L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -959,6 +1002,7 @@ class SnippetSearchClient {
     val response = client.getTopUserIds(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -978,6 +1022,7 @@ class SnippetSearchClient {
       userID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -996,6 +1041,7 @@ class SnippetSearchClient {
     val response = client.hasPendingMappings(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1014,6 +1060,7 @@ class SnippetSearchClient {
     val response = client.listApiKeys(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1032,6 +1079,7 @@ class SnippetSearchClient {
     val response = client.listClusters(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1050,6 +1098,7 @@ class SnippetSearchClient {
     val response = client.listIndices(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1068,6 +1117,7 @@ class SnippetSearchClient {
     val response = client.listUserIds(
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1089,12 +1139,13 @@ class SnippetSearchClient {
           MultipleBatchRequest(
             action = Action.withName("addObject"),
             body = Some(JObject(List(JField("key", JString("value"))))),
-            indexName = "theIndexName"
+            indexName = "<YOUR_INDEX_NAME>"
           )
         )
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1119,6 +1170,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1142,6 +1194,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1165,6 +1218,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1172,7 +1226,7 @@ class SnippetSearchClient {
 
   /** Snippet for the partialUpdateObject method.
     *
-    * Partial update with string value
+    * Partial update with a new value for a string attribute
     */
   def snippetForSearchClientPartialUpdateObject(): Unit = {
     // >SEPARATOR partialUpdateObject default
@@ -1181,18 +1235,12 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.partialUpdateObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
-      attributesToUpdate = Map(
-        "id1" -> AttributeToUpdate("test"),
-        "id2" -> BuiltInOperation(
-          _operation = BuiltInOperationType.withName("AddUnique"),
-          value = BuiltInOperationValue("test2")
-        )
-      ),
-      createIfNotExists = Some(true)
+      attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1212,6 +1260,7 @@ class SnippetSearchClient {
       userID = "uniqueID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1236,6 +1285,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1255,6 +1305,7 @@ class SnippetSearchClient {
       key = "myApiKey"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1275,6 +1326,7 @@ class SnippetSearchClient {
       body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1291,7 +1343,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.saveRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       rule = Rule(
         objectID = "id1",
@@ -1306,6 +1358,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1351,6 +1404,7 @@ class SnippetSearchClient {
       clearExistingRules = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1367,7 +1421,7 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.saveSynonym(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "id1",
       synonymHit = SynonymHit(
         objectID = "id1",
@@ -1377,6 +1431,7 @@ class SnippetSearchClient {
       forwardToReplicas = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1411,6 +1466,7 @@ class SnippetSearchClient {
       replaceExistingSynonyms = Some(true)
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1438,6 +1494,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1465,6 +1522,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1492,6 +1550,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1519,6 +1578,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1528,7 +1588,7 @@ class SnippetSearchClient {
     *
     * retrieveFacets
     */
-  def snippetForSearchClientSearch5(): Unit = {
+  def snippetForSearchClientSearch4(): Unit = {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1546,6 +1606,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1555,7 +1616,7 @@ class SnippetSearchClient {
     *
     * retrieveFacetsWildcard
     */
-  def snippetForSearchClientSearch6(): Unit = {
+  def snippetForSearchClientSearch5(): Unit = {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
@@ -1573,6 +1634,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1595,6 +1657,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1611,10 +1674,11 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchForFacetValues(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       facetName = "facetName"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1631,14 +1695,15 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       searchRulesParams = Some(
         SearchRulesParams(
-          query = Some("something")
+          query = Some("zorro")
         )
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1655,9 +1720,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchSingleIndex(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1674,9 +1740,10 @@ class SnippetSearchClient {
 
     // Call the API
     val response = client.searchSynonyms(
-      indexName = "indexName"
+      indexName = "<YOUR_INDEX_NAME>"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1701,6 +1768,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1724,6 +1792,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1734,7 +1803,7 @@ class SnippetSearchClient {
     * setSettingsAttributesForFaceting
     */
   def snippetForSearchClientSetSettings(): Unit = {
-    // >SEPARATOR setSettings setSettingsAttributesForFaceting
+    // >SEPARATOR setSettings default
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1746,6 +1815,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -1771,6 +1841,7 @@ class SnippetSearchClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

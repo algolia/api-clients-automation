@@ -2,6 +2,7 @@ package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
+import java.io.IOException;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
@@ -11,6 +12,23 @@ public class JavaCTSManager implements CTSManager {
 
   public JavaCTSManager(String client) {
     this.client = client;
+  }
+
+  public String getLanguage() {
+    return "java";
+  }
+
+  public String getClient() {
+    return client;
+  }
+
+  @Override
+  public String getLanguageVersion(String override) throws IOException {
+    if (override != null && !override.isEmpty()) {
+      return override.split("\\.")[0];
+    }
+
+    return Helpers.getLanguageVersion(getLanguage()).split("\\.")[0];
   }
 
   @Override
@@ -25,7 +43,7 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
+    bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 }

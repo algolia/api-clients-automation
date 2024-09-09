@@ -16,7 +16,7 @@ class SnippetAnalyticsClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -27,6 +27,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -37,7 +38,7 @@ class SnippetAnalyticsClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -48,6 +49,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -58,7 +60,7 @@ class SnippetAnalyticsClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -69,6 +71,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -79,7 +82,7 @@ class SnippetAnalyticsClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -90,6 +93,7 @@ class SnippetAnalyticsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -100,7 +104,7 @@ class SnippetAnalyticsClient
      *
      * get getAddToCartRate with minimal parameters
      */
-    public function snippetForGetAddToCartRate()
+    public function snippetForGetAddToCartRate(): void
     {
         // >SEPARATOR getAddToCartRate default
         // Initialize the client
@@ -111,6 +115,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -121,7 +126,7 @@ class SnippetAnalyticsClient
      *
      * get getAverageClickPosition with minimal parameters
      */
-    public function snippetForGetAverageClickPosition()
+    public function snippetForGetAverageClickPosition(): void
     {
         // >SEPARATOR getAverageClickPosition default
         // Initialize the client
@@ -132,6 +137,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -142,7 +148,7 @@ class SnippetAnalyticsClient
      *
      * get getClickPositions with minimal parameters
      */
-    public function snippetForGetClickPositions()
+    public function snippetForGetClickPositions(): void
     {
         // >SEPARATOR getClickPositions default
         // Initialize the client
@@ -153,6 +159,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -163,7 +170,7 @@ class SnippetAnalyticsClient
      *
      * get getClickThroughRate with minimal parameters
      */
-    public function snippetForGetClickThroughRate()
+    public function snippetForGetClickThroughRate(): void
     {
         // >SEPARATOR getClickThroughRate default
         // Initialize the client
@@ -174,6 +181,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -184,7 +192,7 @@ class SnippetAnalyticsClient
      *
      * get getConversationRate with minimal parameters
      */
-    public function snippetForGetConversionRate()
+    public function snippetForGetConversionRate(): void
     {
         // >SEPARATOR getConversionRate default
         // Initialize the client
@@ -195,6 +203,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -205,7 +214,7 @@ class SnippetAnalyticsClient
      *
      * get getNoClickRate with minimal parameters
      */
-    public function snippetForGetNoClickRate()
+    public function snippetForGetNoClickRate(): void
     {
         // >SEPARATOR getNoClickRate default
         // Initialize the client
@@ -216,6 +225,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -226,7 +236,7 @@ class SnippetAnalyticsClient
      *
      * get getNoResultsRate with minimal parameters
      */
-    public function snippetForGetNoResultsRate()
+    public function snippetForGetNoResultsRate(): void
     {
         // >SEPARATOR getNoResultsRate default
         // Initialize the client
@@ -237,6 +247,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -247,7 +258,7 @@ class SnippetAnalyticsClient
      *
      * get getPurchaseRate with minimal parameters
      */
-    public function snippetForGetPurchaseRate()
+    public function snippetForGetPurchaseRate(): void
     {
         // >SEPARATOR getPurchaseRate default
         // Initialize the client
@@ -258,6 +269,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -268,7 +280,7 @@ class SnippetAnalyticsClient
      *
      * get getRevenue with minimal parameters
      */
-    public function snippetForGetRevenue()
+    public function snippetForGetRevenue(): void
     {
         // >SEPARATOR getRevenue default
         // Initialize the client
@@ -279,6 +291,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -289,7 +302,7 @@ class SnippetAnalyticsClient
      *
      * get getSearchesCount with minimal parameters
      */
-    public function snippetForGetSearchesCount()
+    public function snippetForGetSearchesCount(): void
     {
         // >SEPARATOR getSearchesCount default
         // Initialize the client
@@ -300,6 +313,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -310,7 +324,7 @@ class SnippetAnalyticsClient
      *
      * get getSearchesNoClicks with minimal parameters
      */
-    public function snippetForGetSearchesNoClicks()
+    public function snippetForGetSearchesNoClicks(): void
     {
         // >SEPARATOR getSearchesNoClicks default
         // Initialize the client
@@ -321,6 +335,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -331,7 +346,7 @@ class SnippetAnalyticsClient
      *
      * get getSearchesNoResults with minimal parameters
      */
-    public function snippetForGetSearchesNoResults()
+    public function snippetForGetSearchesNoResults(): void
     {
         // >SEPARATOR getSearchesNoResults default
         // Initialize the client
@@ -342,6 +357,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -352,7 +368,7 @@ class SnippetAnalyticsClient
      *
      * get getStatus with minimal parameters
      */
-    public function snippetForGetStatus()
+    public function snippetForGetStatus(): void
     {
         // >SEPARATOR getStatus default
         // Initialize the client
@@ -363,6 +379,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -373,7 +390,7 @@ class SnippetAnalyticsClient
      *
      * get getTopCountries with minimal parameters
      */
-    public function snippetForGetTopCountries()
+    public function snippetForGetTopCountries(): void
     {
         // >SEPARATOR getTopCountries default
         // Initialize the client
@@ -384,6 +401,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -394,7 +412,7 @@ class SnippetAnalyticsClient
      *
      * get getTopFilterAttributes with minimal parameters
      */
-    public function snippetForGetTopFilterAttributes()
+    public function snippetForGetTopFilterAttributes(): void
     {
         // >SEPARATOR getTopFilterAttributes default
         // Initialize the client
@@ -405,6 +423,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -415,7 +434,7 @@ class SnippetAnalyticsClient
      *
      * get getTopFilterForAttribute with minimal parameters
      */
-    public function snippetForGetTopFilterForAttribute()
+    public function snippetForGetTopFilterForAttribute(): void
     {
         // >SEPARATOR getTopFilterForAttribute default
         // Initialize the client
@@ -427,6 +446,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -437,7 +457,7 @@ class SnippetAnalyticsClient
      *
      * get getTopFiltersNoResults with minimal parameters
      */
-    public function snippetForGetTopFiltersNoResults()
+    public function snippetForGetTopFiltersNoResults(): void
     {
         // >SEPARATOR getTopFiltersNoResults default
         // Initialize the client
@@ -448,6 +468,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -458,7 +479,7 @@ class SnippetAnalyticsClient
      *
      * get getTopHits with minimal parameters
      */
-    public function snippetForGetTopHits()
+    public function snippetForGetTopHits(): void
     {
         // >SEPARATOR getTopHits default
         // Initialize the client
@@ -469,6 +490,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -479,7 +501,7 @@ class SnippetAnalyticsClient
      *
      * get getTopSearches with minimal parameters
      */
-    public function snippetForGetTopSearches()
+    public function snippetForGetTopSearches(): void
     {
         // >SEPARATOR getTopSearches default
         // Initialize the client
@@ -490,6 +512,7 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -500,7 +523,7 @@ class SnippetAnalyticsClient
      *
      * get getUsersCount with minimal parameters
      */
-    public function snippetForGetUsersCount()
+    public function snippetForGetUsersCount(): void
     {
         // >SEPARATOR getUsersCount default
         // Initialize the client
@@ -511,8 +534,29 @@ class SnippetAnalyticsClient
             'index',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

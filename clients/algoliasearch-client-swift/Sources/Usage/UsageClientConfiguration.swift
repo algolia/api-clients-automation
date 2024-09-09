@@ -8,7 +8,7 @@ import Foundation
 
 public struct UsageClientConfiguration: BaseConfiguration, Credentials {
     public let appID: String
-    public let apiKey: String
+    public var apiKey: String
     public var writeTimeout: TimeInterval
     public var readTimeout: TimeInterval
     public var logLevel: LogLevel
@@ -48,28 +48,9 @@ public struct UsageClientConfiguration: BaseConfiguration, Credentials {
         UserAgentController.append(UserAgent(title: "Usage", version: Version.current.description))
 
         guard let hosts else {
-            func buildHost(_ components: (suffix: String, callType: RetryableHost.CallTypeSupport)) throws
-            -> RetryableHost {
-                guard let url = URL(string: "https://\(appID)\(components.suffix)") else {
-                    throw AlgoliaError.runtimeError("Malformed URL")
-                }
-
-                return RetryableHost(url: url, callType: components.callType)
-            }
-
-            let hosts = try [
-                ("-dsn.algolia.net", .read),
-                (".algolia.net", .write),
-            ].map(buildHost)
-
-            let commonHosts = try [
-                ("-1.algolianet.com", .universal),
-                ("-2.algolianet.com", .universal),
-                ("-3.algolianet.com", .universal),
-            ].map(buildHost).shuffled()
-
-            self.hosts = hosts + commonHosts
-
+            self.hosts = [
+                .init(url: URL(string: "https://usage.algolia.com")!),
+            ]
             return
         }
 

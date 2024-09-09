@@ -22,7 +22,7 @@ public interface AuthInputPartial {
     public AuthInputPartial deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize AuthGoogleServiceAccountPartial
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("clientEmail")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthGoogleServiceAccountPartial.class);
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public interface AuthInputPartial {
         }
       }
       // deserialize AuthBasicPartial
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("username")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthBasicPartial.class);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public interface AuthInputPartial {
         }
       }
       // deserialize AuthAPIKeyPartial
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("key")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthAPIKeyPartial.class);
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public interface AuthInputPartial {
         }
       }
       // deserialize AuthOAuthPartial
-      if (tree.isObject()) {
+      if (tree.isObject() && tree.has("url")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(AuthOAuthPartial.class);
         } catch (Exception e) {

@@ -11,15 +11,12 @@ import { analyticsClient } from '@algolia/client-analytics';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -31,15 +28,12 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -51,15 +45,12 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -71,15 +62,12 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -91,15 +79,12 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForGetAddToCartRate(): Promise<void> {
   // >SEPARATOR getAddToCartRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getAddToCartRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -111,15 +96,12 @@ export async function snippetForGetAddToCartRate(): Promise<void> {
 export async function snippetForGetAverageClickPosition(): Promise<void> {
   // >SEPARATOR getAverageClickPosition default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getAverageClickPosition({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -131,15 +113,12 @@ export async function snippetForGetAverageClickPosition(): Promise<void> {
 export async function snippetForGetClickPositions(): Promise<void> {
   // >SEPARATOR getClickPositions default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getClickPositions({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -151,15 +130,12 @@ export async function snippetForGetClickPositions(): Promise<void> {
 export async function snippetForGetClickThroughRate(): Promise<void> {
   // >SEPARATOR getClickThroughRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getClickThroughRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -171,15 +147,12 @@ export async function snippetForGetClickThroughRate(): Promise<void> {
 export async function snippetForGetConversionRate(): Promise<void> {
   // >SEPARATOR getConversionRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getConversionRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -191,15 +164,12 @@ export async function snippetForGetConversionRate(): Promise<void> {
 export async function snippetForGetNoClickRate(): Promise<void> {
   // >SEPARATOR getNoClickRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getNoClickRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -211,15 +181,12 @@ export async function snippetForGetNoClickRate(): Promise<void> {
 export async function snippetForGetNoResultsRate(): Promise<void> {
   // >SEPARATOR getNoResultsRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getNoResultsRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -231,15 +198,12 @@ export async function snippetForGetNoResultsRate(): Promise<void> {
 export async function snippetForGetPurchaseRate(): Promise<void> {
   // >SEPARATOR getPurchaseRate default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getPurchaseRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -251,15 +215,12 @@ export async function snippetForGetPurchaseRate(): Promise<void> {
 export async function snippetForGetRevenue(): Promise<void> {
   // >SEPARATOR getRevenue default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getRevenue({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -271,15 +232,12 @@ export async function snippetForGetRevenue(): Promise<void> {
 export async function snippetForGetSearchesCount(): Promise<void> {
   // >SEPARATOR getSearchesCount default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getSearchesCount({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -291,15 +249,12 @@ export async function snippetForGetSearchesCount(): Promise<void> {
 export async function snippetForGetSearchesNoClicks(): Promise<void> {
   // >SEPARATOR getSearchesNoClicks default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getSearchesNoClicks({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -311,15 +266,12 @@ export async function snippetForGetSearchesNoClicks(): Promise<void> {
 export async function snippetForGetSearchesNoResults(): Promise<void> {
   // >SEPARATOR getSearchesNoResults default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getSearchesNoResults({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -331,15 +283,12 @@ export async function snippetForGetSearchesNoResults(): Promise<void> {
 export async function snippetForGetStatus(): Promise<void> {
   // >SEPARATOR getStatus default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getStatus({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -351,15 +300,12 @@ export async function snippetForGetStatus(): Promise<void> {
 export async function snippetForGetTopCountries(): Promise<void> {
   // >SEPARATOR getTopCountries default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getTopCountries({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -371,15 +317,12 @@ export async function snippetForGetTopCountries(): Promise<void> {
 export async function snippetForGetTopFilterAttributes(): Promise<void> {
   // >SEPARATOR getTopFilterAttributes default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getTopFilterAttributes({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -391,18 +334,12 @@ export async function snippetForGetTopFilterAttributes(): Promise<void> {
 export async function snippetForGetTopFilterForAttribute(): Promise<void> {
   // >SEPARATOR getTopFilterForAttribute default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
-  const response = await client.getTopFilterForAttribute({
-    attribute: 'myAttribute',
-    index: 'index',
-  });
+  const response = await client.getTopFilterForAttribute({ attribute: 'myAttribute', index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -414,15 +351,12 @@ export async function snippetForGetTopFilterForAttribute(): Promise<void> {
 export async function snippetForGetTopFiltersNoResults(): Promise<void> {
   // >SEPARATOR getTopFiltersNoResults default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getTopFiltersNoResults({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -434,15 +368,12 @@ export async function snippetForGetTopFiltersNoResults(): Promise<void> {
 export async function snippetForGetTopHits(): Promise<void> {
   // >SEPARATOR getTopHits default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getTopHits({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -454,15 +385,12 @@ export async function snippetForGetTopHits(): Promise<void> {
 export async function snippetForGetTopSearches(): Promise<void> {
   // >SEPARATOR getTopSearches default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getTopSearches({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -474,16 +402,28 @@ export async function snippetForGetTopSearches(): Promise<void> {
 export async function snippetForGetUsersCount(): Promise<void> {
   // >SEPARATOR getUsersCount default
   // Initialize the client
-  const client = analyticsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getUsersCount({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }

@@ -24,50 +24,52 @@
         }
       {{/isError}}
       {{^isError}}
+        {{#shouldScope}}
+        do {
+        {{/shouldScope}}
         {{#dynamicTemplate}}{{/dynamicTemplate}}
-        {{#match}}
-          {{#testUserAgent}}
+        {{#testUserAgent}}
 
-            let pattern = "{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}"
-            let rule = StringRule(pattern: pattern)
-            let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
-            guard let userAgent = userAgent else {
-              XCTFail("Expected user-agent header")
-              return
-            }
+          let pattern = "{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}"
+          let rule = StringRule(pattern: pattern)
+          let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
+          guard let userAgent = userAgent else {
+            XCTFail("Expected user-agent header")
+            return
+          }
 
-            XCTAssertNoThrow(try Validator.validate(userAgent, against: rule), "Expected " + userAgent + " to match the following regex: " + pattern);
-          {{/testUserAgent}}
-
-          {{#testTimeouts}}
-
-            XCTAssertEqual(TimeInterval({{{match.parametersWithDataTypeMap.responseTimeout.value}}} / 1000), echoResponse.timeout);
-          {{/testTimeouts}}
-          {{#testHost}}
-            XCTAssertEqual("{{{match}}}", echoResponse.host);
-          {{/testHost}}
-          {{#testResponse}}
-            {{#isHelper}}
-              {{#matchIsJSON}}
-                let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
-                try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
-              {{/matchIsJSON}}
-              {{^matchIsJSON}}
-                {{#matchIsNull}}
-                  XCTAssertNil(response)
-                {{/matchIsNull}}
-                {{^matchIsNull}}
-                  XCTAssertEqual("{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}", response)
-                {{/matchIsNull}}
-              {{/matchIsJSON}}
-            {{/isHelper}}
-            {{^isHelper}}
-              let comparableData = "{{#lambda.escapeQuotes}}{{#matchIsJSON}}{{{match.parameters}}}{{/matchIsJSON}}{{^matchIsJSON}}{{{match}}}{{/matchIsJSON}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-              let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-              XCTAssertEqual(comparableJSON, responseBodyJSON);
-            {{/isHelper}}
-          {{/testResponse}}
-        {{/match}}
+          XCTAssertNoThrow(try Validator.validate(userAgent, against: rule), "Expected " + userAgent + " to match the following regex: " + pattern);
+        {{/testUserAgent}}
+        {{#testTimeouts}}
+          XCTAssertEqual(TimeInterval({{{matchResponseTimeout}}} / 1000), echoResponse.timeout);
+        {{/testTimeouts}}
+        {{#testHost}}
+          XCTAssertEqual("{{{match.value}}}", echoResponse.host);
+        {{/testHost}}
+        {{#testResponse}}
+          {{#isHelper}}
+            {{^match.isPrimitive}}
+              let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+              try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            {{/match.isPrimitive}}
+            {{#match.isPrimitive}}
+              {{#match.isNull}}
+                XCTAssertNil(response)
+              {{/match.isNull}}
+              {{^match.isNull}}
+                XCTAssertEqual({{#match}}{{> tests/paramValue}}{{/match}}, response)
+              {{/match.isNull}}
+            {{/match.isPrimitive}}
+          {{/isHelper}}
+          {{^isHelper}}
+            let comparableData = "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+            XCTAssertEqual(comparableJSON, responseBodyJSON);
+          {{/isHelper}}
+        {{/testResponse}}
+        {{#shouldScope}}
+        }
+        {{/shouldScope}}
       {{/isError}}
     {{#times}}
     }

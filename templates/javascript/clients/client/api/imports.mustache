@@ -4,6 +4,7 @@ import {
   getAlgoliaAgent,
   shuffle,
   {{#isSearchClient}}
+  ApiError,
   serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
@@ -16,7 +17,6 @@ import type {
   Request,
   RequestOptions,
   {{#isSearchClient}}
-  ApiError,
   IterableOptions,
   {{/isSearchClient}}
 } from '@algolia/client-common';
@@ -57,6 +57,11 @@ import type {
 {{#isSearchClient}}
   import type { BatchRequest } from '../model/batchRequest';
 {{/isSearchClient}}
+
+{{#isAlgoliasearchClient}}
+  import type { SearchResponse } from '../model/searchResponse';
+  import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
+{{/isAlgoliasearchClient}}
 
 {{#isIngestionClient}}
   import type { OnDemandTrigger } from '../model/onDemandTrigger';

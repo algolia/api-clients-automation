@@ -45,9 +45,11 @@ module {{moduleName}}
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
       {{/hostWithAppID}}
-      {{#uniqueHost}}
+      {{#hostsWithoutVariables.size}}
+      {{#hostsWithoutVariables}}
       hosts << Transport::StatefulHost.new('{{.}}', accept: CallType::READ | CallType::WRITE)
-      {{/uniqueHost}}
+      {{/hostsWithoutVariables}}
+      {{/hostsWithoutVariables.size}}
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, '{{{baseName}}}', opts)
       create_with_config(config)
@@ -55,6 +57,14 @@ module {{moduleName}}
 
     def self.create_with_config(config)
       new(config)
+    end
+
+    # Helper method to switch the API key used to authenticate the requests.
+    #
+    # @param api_key [String] the new API key to use.
+    # @return [void]
+    def set_client_api_key(api_key)
+      @api_client.set_client_api_key(api_key)
     end
 
 {{#operation}}

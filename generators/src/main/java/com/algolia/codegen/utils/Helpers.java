@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
@@ -92,6 +93,7 @@ public class Helpers {
     try {
       boolean hasRegionalHost = false;
       boolean fallbackToAliasHost = false;
+      boolean hasVariables = false;
       String regionalHost = "";
       String hostWithFallback = "";
       Set<String> allowedRegions = new HashSet<>();
@@ -117,6 +119,7 @@ public class Helpers {
         if (server.variables == null || server.variables.isEmpty()) {
           continue;
         }
+        hasVariables = true;
         CodegenServerVariable regionVar = server.variables.stream().filter(v -> v.name.equals("region")).findFirst().orElse(null);
         if (regionVar == null || regionVar.enumValues == null || regionVar.enumValues.isEmpty()) {
           continue;
@@ -133,9 +136,13 @@ public class Helpers {
       }
 
       if (!hasRegionalHost) {
-        if (servers.size() == 1 && hostWithFallback.isEmpty()) {
-          URL url = new URL(servers.get(0).url);
-          bundle.put("uniqueHost", url.getHost());
+        if (!hasVariables && hostWithFallback.isEmpty()) {
+          List<String> hostsWithoutVariables = new ArrayList<>();
+          for (CodegenServer otherServer : servers) {
+            URL url = new URL(otherServer.url);
+            hostsWithoutVariables.add(url.getHost());
+          }
+          bundle.put("hostsWithoutVariables", hostsWithoutVariables);
         } else {
           bundle.put("hostWithAppID", true);
         }
@@ -249,5 +256,12 @@ public class Helpers {
 
   public static void prettyPrint(Object o) {
     Json.prettyPrint(o);
+  }
+
+  public static String getLanguageVersion(String language) throws IOException {
+    String versionFile = language.equals("javascript")
+      ? ".nvmrc"
+      : "config/." + (language.equals("kotlin") || language.equals("scala") ? "java" : language) + "-version";
+    return Files.readString(new File(versionFile).toPath()).trim();
   }
 }

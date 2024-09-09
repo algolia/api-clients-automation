@@ -1331,12 +1331,12 @@ class SearchTest {
     client.runTest(
       call = {
         getRule(
-          indexName = "indexName",
-          objectID = "id1",
+          indexName = "cts_e2e_browse",
+          objectID = "qr-1725004648916",
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_browse/rules/qr-1725004648916".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -1679,50 +1679,127 @@ class SearchTest {
   // partialUpdateObject
 
   @Test
-  fun `Partial update with string value`() = runTest {
+  fun `Partial update with a new value for a string attribute`() = runTest {
     client.runTest(
       call = {
         partialUpdateObject(
           indexName = "theIndexName",
           objectID = "uniqueID",
-          attributesToUpdate = mapOf(
-            "id1" to AttributeToUpdate.of("test"),
-            "id2" to BuiltInOperation(
-              operation = BuiltInOperationType.entries.first { it.value == "AddUnique" },
-              value = BuiltInOperationValue.of("test2"),
-            ),
-          ),
-          createIfNotExists = true,
+          attributesToUpdate = buildJsonObject {
+            put(
+              "attributeId",
+              JsonPrimitive("new value"),
+            )
+          },
         )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertQueryParams("""{"createIfNotExists":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}""", it.body)
+        assertJsonBody("""{"attributeId":"new value"}""", it.body)
       },
     )
   }
 
   @Test
-  fun `Partial update with integer value1`() = runTest {
+  fun `Partial update with a new value for an integer attribute1`() = runTest {
     client.runTest(
       call = {
         partialUpdateObject(
           indexName = "theIndexName",
           objectID = "uniqueID",
-          attributesToUpdate = mapOf(
-            "attributeId" to BuiltInOperation(
-              operation = BuiltInOperationType.entries.first { it.value == "Increment" },
-              value = BuiltInOperationValue.of(2),
-            ),
-          ),
+          attributesToUpdate = buildJsonObject {
+            put(
+              "attributeId",
+              JsonPrimitive(1),
+            )
+          },
         )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"attributeId":{"_operation":"Increment","value":2}}""", it.body)
+        assertJsonBody("""{"attributeId":1}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `Partial update with a new value for a boolean attribute2`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "uniqueID",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "attributeId",
+              JsonPrimitive(true),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"attributeId":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `Partial update with a new value for an array attribute3`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "uniqueID",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "attributeId",
+              JsonArray(
+                listOf(
+                  JsonPrimitive("one"),
+                  JsonPrimitive("two"),
+                  JsonPrimitive("three"),
+                ),
+              ),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"attributeId":["one","two","three"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `Partial update with a new value for an object attribute4`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "uniqueID",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "attributeId",
+              buildJsonObject {
+                put(
+                  "nested",
+                  JsonPrimitive("value"),
+                )
+              },
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"attributeId":{"nested":"value"}}""", it.body)
       },
     )
   }
@@ -2220,7 +2297,33 @@ class SearchTest {
   }
 
   @Test
-  fun `retrieveFacets5`() = runTest {
+  fun `search with highlight and snippet results5`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "cts_e2e_highlight_snippet_results",
+                query = "vim",
+                attributesToSnippet = listOf("*:20"),
+                attributesToHighlight = listOf("*"),
+                attributesToRetrieve = listOf("*"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `retrieveFacets6`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2244,7 +2347,7 @@ class SearchTest {
   }
 
   @Test
-  fun `retrieveFacetsWildcard6`() = runTest {
+  fun `retrieveFacetsWildcard7`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2268,7 +2371,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with minimal parameters7`() = runTest {
+  fun `search for a single facet request with minimal parameters8`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2293,7 +2396,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single hits request with all parameters8`() = runTest {
+  fun `search for a single hits request with all parameters9`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2318,7 +2421,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with all parameters9`() = runTest {
+  fun `search for a single facet request with all parameters10`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2346,7 +2449,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with minimal parameters10`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with minimal parameters11`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2378,7 +2481,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with all parameters11`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with all parameters12`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2412,7 +2515,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters accept all of the possible shapes12`() = runTest {
+  fun `search filters accept all of the possible shapes13`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2447,7 +2550,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters end to end13`() = runTest {
+  fun `search filters end to end14`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2482,7 +2585,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search with all search parameters14`() = runTest {
+  fun `search with all search parameters15`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2680,16 +2783,16 @@ class SearchTest {
     client.runTest(
       call = {
         searchRules(
-          indexName = "indexName",
+          indexName = "cts_e2e_browse",
           searchRulesParams = SearchRulesParams(
-            query = "something",
+            query = "zorro",
           ),
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/search".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/cts_e2e_browse/rules/search".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"query":"something"}""", it.body)
+        assertJsonBody("""{"query":"zorro"}""", it.body)
       },
     )
   }

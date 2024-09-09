@@ -1,4 +1,5 @@
 <?php
+
 // {{{generationBanner}}}
 
 namespace {{apiPackage}};
@@ -16,6 +17,8 @@ use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 use {{invokerPackage}}\Support\Helpers;
+
+use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
 /**
  * {{classname}} Class Doc Comment
@@ -128,14 +131,18 @@ use {{invokerPackage}}\Support\Helpers;
         }
         {{/hasRegionalHost}}
 
-        {{#uniqueHost}}
+        {{#hostsWithoutVariables.size}}
         if ($hosts = $config->getHosts()) {
             // If a list of hosts was passed, we ignore the cache
             $clusterHosts = ClusterHosts::create($hosts);
         } else {
-            $clusterHosts = ClusterHosts::create('{{.}}');
+            $clusterHosts = ClusterHosts::create([
+            {{#hostsWithoutVariables}}
+            '{{.}}',
+            {{/hostsWithoutVariables}}
+            ]);
         }
-        {{/uniqueHost}}
+        {{/hostsWithoutVariables.size}}
 
         return $clusterHosts;
     }
@@ -146,6 +153,18 @@ use {{invokerPackage}}\Support\Helpers;
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     *
+     * @return void
+     *
+     */
+    public function setClientApiKey($apiKey) {
+      $this->config->setClientApiKey($apiKey);
     }
 
 {{#operation}}
@@ -303,6 +322,8 @@ use {{invokerPackage}}\Support\Helpers;
      * @param int|null $maxRetries Maximum number of retries
      * @param int|null $timeout Timeout
      *
+     * @return \Algolia\AlgoliaSearch\Model\Search\GetTaskResponse
+     *
      * @throws ExceededRetriesException
      *
      * @return void
@@ -317,7 +338,7 @@ use {{invokerPackage}}\Support\Helpers;
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
 
-        Helpers::retryUntil(
+        return Helpers::retryUntil(
             $this,
             'getTask',
             [$indexName, $taskId, $requestOptions],
@@ -335,6 +356,8 @@ use {{invokerPackage}}\Support\Helpers;
      * @param int|null $maxRetries Maximum number of retries
      * @param int|null $timeout Timeout
      *
+     * @return \Algolia\AlgoliaSearch\Model\Search\GetTaskResponse
+     *
      * @throws ExceededRetriesException
      *
      * @return void
@@ -349,7 +372,7 @@ use {{invokerPackage}}\Support\Helpers;
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
 
-        Helpers::retryUntil(
+        return Helpers::retryUntil(
             $this,
             'getAppTask',
             [$taskId, $requestOptions],
@@ -442,7 +465,7 @@ use {{invokerPackage}}\Support\Helpers;
 
     /**
     * Helper: Replace all objects in an index using a temporary one.
-    * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+    * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
     *
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
@@ -503,9 +526,10 @@ use {{invokerPackage}}\Support\Helpers;
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $requestOptions Request options
+    * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     */
-    public function saveObjects($indexName, $objects, $requestOptions = []) {
-      return $this->chunkedBatch($indexName, $objects, 'addObject', false, 1000, $requestOptions);
+    public function saveObjects($indexName, $objects, $requestOptions = [], $waitForTasks = false) {
+      return $this->chunkedBatch($indexName, $objects, 'addObject', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -514,8 +538,9 @@ use {{invokerPackage}}\Support\Helpers;
     * @param string $indexName      The `indexName` to delete `objectIDs` from.
     * @param array  $objectIDs      The `objectIDs` to delete.
     * @param array  $requestOptions Request options
+    * @param bool   $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     */
-    public function deleteObjects($indexName, $objectIDs, $requestOptions = [])
+    public function deleteObjects($indexName, $objectIDs, $requestOptions = [], $waitForTasks = false)
     {
         $objects = [];
 
@@ -523,7 +548,7 @@ use {{invokerPackage}}\Support\Helpers;
             $objects[] = ['objectID' => $id];
         }
 
-        return $this->chunkedBatch($indexName, $objects, 'deleteObject', false, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -532,10 +557,11 @@ use {{invokerPackage}}\Support\Helpers;
     * @param string $indexName         The `indexName` to replace `objects` in.
     * @param array  $objects           The array of `objects` to store in the given Algolia `indexName`.
     * @param bool   $createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
-    * @param array  $requestOptions Request options
+    * @param array  $requestOptions    Request options
+    * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = []) {
-      return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = [], $waitForTasks = false) {
+      return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, 1000, $requestOptions);
     }
 
     /**
@@ -544,7 +570,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param string $indexName      the `indexName` to replace `objects` in
     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
     * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
-    * @param array  $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+    * @param bool   $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
     * @param array  $requestOptions Request options
     */
@@ -633,6 +659,19 @@ use {{invokerPackage}}\Support\Helpers;
         $validUntil = (int) $matches[1];
 
         return $validUntil - time();
+    }
+    
+    public function indexExists($indexName)
+    {
+        try {
+            $this->getSettings($indexName);
+        } catch (NotFoundException $e) {
+            return false;
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return true;
     }
     {{/isSearchClient}}
 

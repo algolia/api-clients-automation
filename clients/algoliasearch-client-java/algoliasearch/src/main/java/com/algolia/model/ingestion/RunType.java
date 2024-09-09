@@ -12,7 +12,11 @@ public enum RunType {
 
   UPDATE("update"),
 
-  DISCOVER("discover");
+  DISCOVER("discover"),
+
+  VALIDATE("validate"),
+
+  PUSH("push");
 
   private final String value;
 

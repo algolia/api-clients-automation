@@ -3,6 +3,8 @@ get:
   summary: Retrieve usage information
   description: |
     Retrieves usage statistics evaluated over a specified period.
+  tags:
+    - statistics
   parameters:
     - $ref: '../common/parameters.yml#/statisticParameter'
     - $ref: '../../common/parameters.yml#/StartDateRequired'

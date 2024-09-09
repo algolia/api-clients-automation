@@ -21,7 +21,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class RecommendClient
 {
-    public const VERSION = '4.0.0-beta.12';
+    public const VERSION = '4.4.0';
 
     /**
      * @var ApiWrapperInterface
@@ -97,6 +97,16 @@ class RecommendClient
     public function getClientConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Stub method setting a new API key to authenticate requests.
+     *
+     * @param string $apiKey
+     */
+    public function setClientApiKey($apiKey)
+    {
+        $this->config->setClientApiKey($apiKey);
     }
 
     /**

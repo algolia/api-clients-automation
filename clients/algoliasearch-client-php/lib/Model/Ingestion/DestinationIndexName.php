@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * DestinationIndexName Class Doc Comment.
@@ -248,10 +249,8 @@ class DestinationIndexName extends AbstractModel implements ModelInterface, \Arr
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -263,7 +262,7 @@ class DestinationIndexName extends AbstractModel implements ModelInterface, \Arr
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -274,7 +273,7 @@ class DestinationIndexName extends AbstractModel implements ModelInterface, \Arr
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -288,7 +287,7 @@ class DestinationIndexName extends AbstractModel implements ModelInterface, \Arr
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

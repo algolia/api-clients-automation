@@ -154,6 +154,23 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "push")]
+  public async Task CreateSourceTest1()
+  {
+    await client.CreateSourceAsync(
+      new SourceCreate { Type = Enum.Parse<SourceType>("Push"), Name = "pushezpourentrer", }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"type\":\"push\",\"name\":\"pushezpourentrer\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "task without cron")]
   public async Task CreateTaskTest()
   {
@@ -194,6 +211,42 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "task shopify")]
+  public async Task CreateTaskTest2()
+  {
+    await client.CreateTaskAsync(
+      new TaskCreate
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              }
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -273,6 +326,44 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "task shopify")]
+  public async Task CreateTaskV1Test3()
+  {
+    await client.CreateTaskV1Async(
+      new TaskCreateV1
+      {
+        SourceID = "search",
+        DestinationID = "destinationName",
+        Trigger = new TaskCreateTrigger(
+          new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>("OnDemand"), }
+        ),
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              }
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -901,6 +992,28 @@ public class IngestionClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
+  [Fact(DisplayName = "generateTransformationCode")]
+  public async Task GenerateTransformationCodeTest()
+  {
+    await client.GenerateTransformationCodeAsync(
+      new GenerateTransformationCodePayload
+      {
+        Id = "foo",
+        UserPrompt =
+          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/models", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "getAuthentication")]
   public async Task GetAuthenticationTest()
   {
@@ -1113,7 +1226,7 @@ public class IngestionClientRequestTests
     await client.ListTransformationModelsAsync();
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/copilot", req.Path);
+    Assert.Equal("/1/transformations/models", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -1134,19 +1247,28 @@ public class IngestionClientRequestTests
   {
     await client.PushTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new BatchWriteParams
+      new PushTaskPayload
       {
-        Requests = new List<BatchRequest>
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
         {
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            }
           },
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            }
           }
         },
       }
@@ -1156,7 +1278,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1335,7 +1457,7 @@ public class IngestionClientRequestTests
     await client.SearchTransformationsAsync(
       new TransformationSearch
       {
-        TransformationsIDs = new List<string>
+        TransformationIDs = new List<string>
         {
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
@@ -1348,7 +1470,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+      "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1365,10 +1487,10 @@ public class IngestionClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "tryTransformations")]
-  public async Task TryTransformationsTest()
+  [Fact(DisplayName = "tryTransformation")]
+  public async Task TryTransformationTest()
   {
-    await client.TryTransformationsAsync(
+    await client.TryTransformationAsync(
       new TransformationTry
       {
         Code = "foo",
@@ -1381,6 +1503,103 @@ public class IngestionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "with authentications")]
+  public async Task TryTransformationTest1()
+  {
+    await client.TryTransformationAsync(
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+        Authentications = new List<AuthenticationCreate>
+        {
+          new AuthenticationCreate
+          {
+            Type = Enum.Parse<AuthenticationType>("Oauth"),
+            Name = "authName",
+            Input = new AuthInput(
+              new AuthOAuth
+              {
+                Url = "http://test.oauth",
+                ClientId = "myID",
+                ClientSecret = "mySecret",
+              }
+            ),
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "tryTransformationBeforeUpdate")]
+  public async Task TryTransformationBeforeUpdateTest()
+  {
+    await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "existing with authentications")]
+  public async Task TryTransformationBeforeUpdateTest1()
+  {
+    await client.TryTransformationBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+        Authentications = new List<AuthenticationCreate>
+        {
+          new AuthenticationCreate
+          {
+            Type = Enum.Parse<AuthenticationType>("Oauth"),
+            Name = "authName",
+            Input = new AuthInput(
+              new AuthOAuth
+              {
+                Url = "http://test.oauth",
+                ClientId = "myID",
+                ClientSecret = "mySecret",
+              }
+            ),
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

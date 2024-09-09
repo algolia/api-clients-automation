@@ -24,7 +24,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
@@ -32,7 +32,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete()
+    public function testCustomDelete(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -49,7 +49,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1()
+    public function testCustomDelete1(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -69,7 +69,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet()
+    public function testCustomGet(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -86,7 +86,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1()
+    public function testCustomGet1(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -106,7 +106,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2()
+    public function testCustomGet2(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -137,7 +137,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost()
+    public function testCustomPost(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -154,7 +154,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1()
+    public function testCustomPost1(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -176,7 +176,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2()
+    public function testCustomPost2(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -203,7 +203,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3()
+    public function testCustomPost3(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -230,7 +230,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4()
+    public function testCustomPost4(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -258,7 +258,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5()
+    public function testCustomPost5(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -286,7 +286,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6()
+    public function testCustomPost6(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -313,7 +313,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7()
+    public function testCustomPost7(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -340,7 +340,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8()
+    public function testCustomPost8(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -368,7 +368,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9()
+    public function testCustomPost9(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -396,7 +396,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10()
+    public function testCustomPost10(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -424,7 +424,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut()
+    public function testCustomPut(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -441,7 +441,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1()
+    public function testCustomPut1(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -463,7 +463,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteRecommendRule')]
-    public function testDeleteRecommendRule()
+    public function testDeleteRecommendRule(): void
     {
         $client = $this->getClient();
         $client->deleteRecommendRule(
@@ -482,7 +482,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRecommendRule')]
-    public function testGetRecommendRule()
+    public function testGetRecommendRule(): void
     {
         $client = $this->getClient();
         $client->getRecommendRule(
@@ -501,7 +501,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRecommendStatus')]
-    public function testGetRecommendStatus()
+    public function testGetRecommendStatus(): void
     {
         $client = $this->getClient();
         $client->getRecommendStatus(
@@ -520,7 +520,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for recommend model with minimal parameters')]
-    public function testGetRecommendations()
+    public function testGetRecommendations(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -544,7 +544,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for recommend model with all parameters')]
-    public function testGetRecommendations1()
+    public function testGetRecommendations1(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -579,7 +579,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for trending model with minimal parameters')]
-    public function testGetRecommendations2()
+    public function testGetRecommendations2(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -604,7 +604,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get recommendations for trending model with all parameters')]
-    public function testGetRecommendations3()
+    public function testGetRecommendations3(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -640,7 +640,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get multiple recommendations with minimal parameters')]
-    public function testGetRecommendations4()
+    public function testGetRecommendations4(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -670,7 +670,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get multiple recommendations with all parameters')]
-    public function testGetRecommendations5()
+    public function testGetRecommendations5(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -722,7 +722,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('get frequently bought together recommendations')]
-    public function testGetRecommendations6()
+    public function testGetRecommendations6(): void
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -746,7 +746,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchRecommendRules')]
-    public function testSearchRecommendRules()
+    public function testSearchRecommendRules(): void
     {
         $client = $this->getClient();
         $client->searchRecommendRules(
@@ -763,7 +763,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -804,7 +804,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         }
     }
 
-    protected function getClient()
+    protected function getClient(): RecommendClient
     {
         $config = RecommendConfig::create('appID', 'apiKey');
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));

@@ -1,8 +1,9 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds } from '../buildClients.js';
-import { LANGUAGES, setVerbose } from '../common.js';
+import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
+import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
@@ -10,25 +11,21 @@ import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
+import { generateSLA } from '../release/sla.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
-import {
-  ALL,
-  getClientChoices,
-  generatorList,
-  transformSelection,
-  PROMPT_CLIENTS,
-  PROMPT_LANGUAGES,
-} from './utils.js';
+import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.js';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
+  requiredLanguage: new Argument('language', 'The language').choices(LANGUAGES),
   languages: new Argument('[language...]', 'The language').choices(PROMPT_LANGUAGES),
   clients: new Argument('[client...]', 'The client').choices(getClientChoices('all')),
   client: new Argument('[client]', 'The client').choices(PROMPT_CLIENTS),
+  requiredClient: new Argument('client', 'The client').choices(CLIENTS),
 };
 
 const flags = {
@@ -43,6 +40,13 @@ const flags = {
 };
 
 program.name('cli');
+
+program.hook('preAction', () => {
+  if (!CI) {
+    // restore the cursor because sometime it's broken
+    process.stdout.write('\x1B[?25h');
+  }
+});
 
 program
   .command('generate')
@@ -92,6 +96,17 @@ buildCommand
   });
 
 buildCommand
+  .command('snippets')
+  .description('Build a specified snippets')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(args.clients)
@@ -123,7 +138,8 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .option('-lv, --language-version <version>', 'the version of the language to use')
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -131,7 +147,7 @@ ctsCommand
 
     setVerbose(Boolean(verbose));
 
-    await ctsGenerateMany(generatorList({ language, client, clientList }));
+    await ctsGenerateMany(generatorList({ language, client, clientList }), languageVersion);
   });
 
 ctsCommand
@@ -140,16 +156,12 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-e, --no-e2e', 'run the e2e tests, that requires internet connection')
-  .option('-c, --no-client', 'run the client tests')
-  .option('-r, --no-requests', 'run the requests tests')
+  .option('-e, --no-e2e', 'skip the e2e tests, that requires internet connection')
+  .option('-c, --no-client', 'skip the client tests')
+  .option('-r, --no-requests', 'skip the requests tests')
   .option('-b, --benchmark', 'run the benchmarks')
   .action(
-    async (
-      langArg: LangArg,
-      clientArg: string[],
-      { verbose, e2e, client: includeClient, requests, benchmark },
-    ) => {
+    async (langArg: LangArg, clientArg: string[], { verbose, e2e, client: includeClient, requests, benchmark }) => {
       const { language, client } = transformSelection({
         langArg,
         clientArg,
@@ -182,8 +194,8 @@ ctsCommand
 program
   .command('playground')
   .description('Run the playground')
-  .addArgument(args.language)
-  .addArgument(args.client)
+  .addArgument(args.requiredLanguage)
+  .addArgument(args.requiredClient)
   .action(async (langArg: LangArg, cliClient: string) => {
     const { language, client } = transformSelection({
       langArg,
@@ -201,7 +213,7 @@ program
 program
   .command('format')
   .description('Format the specified folder for a specific language')
-  .addArgument(args.language)
+  .addArgument(args.requiredLanguage)
   .argument('folder', 'The folder to format')
   .option(flags.verbose.flag, flags.verbose.description)
   .action(async (language: string, folder: string, { verbose }) => {
@@ -244,8 +256,16 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun }) => {
+  .option('-sla, --sla-only', 'only generates the sla policy', false)
+  .option('-b --breaking', 'allow breaking change on the CI', false)
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, slaOnly, breaking }) => {
     setVerbose(Boolean(verbose));
+
+    if (slaOnly) {
+      await generateSLA({});
+
+      return;
+    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];
@@ -255,7 +275,19 @@ program
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
       releaseType,
       dryRun,
+      breaking,
     });
+  });
+
+program
+  .command('exec')
+  .description('Executes a command inside the correct docker image')
+  .addArgument(args.requiredLanguage)
+  .argument('command...', 'The command to execute')
+  .option('-c, --client', "Run the command in the client's folder")
+  .action(async (language: Language, command: string[], { client }) => {
+    setVerbose(true);
+    await run(command.join(' '), { language, cwd: client ? getLanguageFolder(language) : undefined });
   });
 
 program.parse();

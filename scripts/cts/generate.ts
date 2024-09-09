@@ -3,12 +3,19 @@ import { getTestOutputFolder } from '../config.js';
 import { formatter } from '../formatter.js';
 import type { Generator } from '../types.js';
 
-export async function ctsGenerateMany(generators: Generator[]): Promise<void> {
-  await setupAndGen(generators, 'tests', async (gen) => {
-    if (getTestOutputFolder(gen.language)) {
-      await callGenerator(gen);
-    }
-  });
+export async function ctsGenerateMany(generators: Generator[], languageVersion = ''): Promise<void> {
+  await setupAndGen(
+    generators,
+    'tests',
+    async (gen) => {
+      if (getTestOutputFolder(gen.language)) {
+        await callGenerator(gen);
+      }
+    },
+    {
+      languageVersion,
+    },
+  );
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {

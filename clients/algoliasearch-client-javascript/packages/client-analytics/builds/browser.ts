@@ -12,27 +12,19 @@ import {
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { Region } from '../src/analyticsClient';
-import {
-  createAnalyticsClient,
-  apiClientVersion,
-  REGIONS,
-} from '../src/analyticsClient';
+import { createAnalyticsClient, apiClientVersion, REGIONS } from '../src/analyticsClient';
+
+export type AnalyticsClient = ReturnType<typeof createAnalyticsClient>;
 
 export { apiClientVersion, Region } from '../src/analyticsClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type AnalyticsClient = ReturnType<typeof analyticsClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function analyticsClient(
   appId: string,
   apiKey: string,
   region?: Region,
-  options?: ClientOptions
-) {
+  options?: ClientOptions,
+): AnalyticsClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -42,9 +34,7 @@ export function analyticsClient(
   }
 
   if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
-    throw new Error(
-      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
-    );
+    throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
   return createAnalyticsClient({
@@ -62,10 +52,7 @@ export function analyticsClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

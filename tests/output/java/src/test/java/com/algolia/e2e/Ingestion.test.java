@@ -27,7 +27,7 @@ class IngestionClientRequestsTestsE2E {
     if ("true".equals(System.getenv("CI"))) {
       this.client = new IngestionClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
     } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
+      Dotenv dotenv = Dotenv.configure().directory("../../").load();
       this.client = new IngestionClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
     }
   }
@@ -40,7 +40,7 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("enableTask")
   void enableTaskTest() {
-    var res = client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    TaskUpdateResponse res = client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
@@ -53,7 +53,7 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("enableTaskV1")
   void enableTaskV1Test() {
-    var res = client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    TaskUpdateResponse res = client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
@@ -66,7 +66,7 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("getSource")
   void getSourceTest() {
-    var res = client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    Source res = client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",
@@ -79,11 +79,11 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("getAuthentications with query params")
   void listAuthenticationsTest1() {
-    var res = client.listAuthentications(
+    ListAuthenticationsResponse res = client.listAuthentications(
       2,
       1,
-      List.of(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
-      List.of(PlatformNone.NONE),
+      Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
+      Arrays.asList(PlatformNone.NONE),
       AuthenticationSortKeys.CREATED_AT,
       OrderKeys.ASC
     );
@@ -99,10 +99,14 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("searchTasks")
   void searchTasksTest() {
-    var res = client.searchTasks(
+    List res = client.searchTasks(
       new TaskSearch()
         .setTaskIDs(
-          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          )
         )
     );
     assertDoesNotThrow(() ->
@@ -117,10 +121,14 @@ class IngestionClientRequestsTestsE2E {
   @Test
   @DisplayName("searchTasksV1")
   void searchTasksV1Test() {
-    var res = client.searchTasksV1(
+    List res = client.searchTasksV1(
       new TaskSearch()
         .setTaskIDs(
-          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          )
         )
     );
     assertDoesNotThrow(() ->

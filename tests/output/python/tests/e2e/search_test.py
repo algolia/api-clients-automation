@@ -39,6 +39,27 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
+    async def test_get_rule_(self):
+        """
+        getRule
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_rule_with_http_info(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).get_rule(
+            index_name="cts_e2e_browse",
+            object_id="qr-1725004648916",
+        )
+        _expected_body = loads(
+            """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
     async def test_get_settings_(self):
         """
         getSettings
@@ -89,7 +110,58 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_7(self):
+    async def test_search_5(self):
+        """
+        search with highlight and snippet results
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "cts_e2e_highlight_snippet_results",
+                        "query": "vim",
+                        "attributesToSnippet": [
+                            "*:20",
+                        ],
+                        "attributesToHighlight": [
+                            "*",
+                        ],
+                        "attributesToRetrieve": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+        _expected_body = loads(
+            """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    async def test_search_8(self):
         """
         search for a single facet request with minimal parameters
         """
@@ -126,7 +198,7 @@ class TestSearchClientE2E:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_13(self):
+    async def test_search_14(self):
         """
         search filters end to end
         """
@@ -239,6 +311,31 @@ class TestSearchClientE2E:
         )
         _expected_body = loads(
             """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}"""
+        )
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+
+    async def test_search_rules_(self):
+        """
+        searchRules
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search_rules(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+        )
+        _expected_body = loads(
+            """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}"""
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 

@@ -8,31 +8,18 @@ import { union } from '../helpers';
 dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
-  throw new Error(
-    'please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');
 }
 
 if (!process.env.ALGOLIA_ADMIN_KEY) {
-  throw new Error(
-    'please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests'
-  );
+  throw new Error('please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests');
 }
 
-const client = abtestingClient(
-  process.env.ALGOLIA_APPLICATION_ID,
-  process.env.ALGOLIA_ADMIN_KEY,
-  'us'
-);
+const client = abtestingClient(process.env.ALGOLIA_APPLICATION_ID, process.env.ALGOLIA_ADMIN_KEY, 'us');
 
 describe('listABTests', () => {
   test('listABTests with parameters', async () => {
-    const resp = await client.listABTests({
-      offset: 0,
-      limit: 21,
-      indexPrefix: 'cts_e2e ab',
-      indexSuffix: 't',
-    });
+    const resp = await client.listABTests({ offset: 0, limit: 21, indexPrefix: 'cts_e2e ab', indexSuffix: 't' });
 
     const expectedBody = {
       abtests: [
@@ -47,8 +34,7 @@ describe('listABTests', () => {
               addToCartCount: 0,
               clickCount: 0,
               conversionCount: 0,
-              description:
-                'this abtest is used for api client automation tests and will expire in 2124',
+              description: 'this abtest is used for api client automation tests and will expire in 2124',
               index: 'cts_e2e_search_facet',
               purchaseCount: 0,
               trafficPercentage: 25,

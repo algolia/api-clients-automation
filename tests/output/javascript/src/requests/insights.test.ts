@@ -6,15 +6,11 @@ import { echoRequester } from '@algolia/requester-node-http';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = insightsClient(appId, apiKey, 'us', {
-  requester: echoRequester(),
-});
+const client = insightsClient(appId, apiKey, 'us', { requester: echoRequester() });
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
-    const req = (await client.customDelete({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('DELETE');
@@ -37,9 +33,7 @@ describe('customDelete', () => {
 
 describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
-    const req = (await client.customGet({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customGet({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('GET');
@@ -56,21 +50,16 @@ describe('customGet', () => {
     expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters%20with%20space',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters%20with%20space' });
   });
 
   test('requestOptions should be escaped too', async () => {
     const req = (await client.customGet(
       { path: 'test/all', parameters: { query: 'to be overriden' } },
       {
-        queryParameters: {
-          query: 'parameters with space',
-          'and an array': ['array', 'with spaces'],
-        },
+        queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
         headers: { 'x-header-1': 'spaces are left alone' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/all');
@@ -80,17 +69,13 @@ describe('customGet', () => {
       query: 'parameters%20with%20space',
       'and%20an%20array': 'array%2Cwith%20spaces',
     });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-header-1': 'spaces are left alone' }));
   });
 });
 
 describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPost({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPost({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('POST');
@@ -113,14 +98,10 @@ describe('customPost', () => {
 
   test('requestOptions can override default query parameters', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
@@ -131,178 +112,122 @@ describe('customPost', () => {
 
   test('requestOptions merges query parameters with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query2: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      query2: 'myQueryParameter',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', query2: 'myQueryParameter' });
   });
 
   test('requestOptions can override default headers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { isItWorking: true },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      isItWorking: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', isItWorking: 'true' });
   });
 
   test('requestOptions queryParameters accepts integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: 2 },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '2' });
   });
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: ['b and c', 'd'] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'b%20and%20c%2Cd',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'b%20and%20c%2Cd' });
   });
 
   test('requestOptions queryParameters accepts list of booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [true, true, false] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'true%2Ctrue%2Cfalse',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'true%2Ctrue%2Cfalse' });
   });
 
   test('requestOptions queryParameters accepts list of integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [1, 2] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '1%2C2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '1%2C2' });
   });
 });
 
 describe('customPut', () => {
   test('allow put method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPut({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPut({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('PUT');
@@ -326,9 +251,7 @@ describe('customPut', () => {
 
 describe('deleteUserToken', () => {
   test('deleteUserToken', async () => {
-    const req = (await client.deleteUserToken({
-      userToken: 'test-user-1',
-    })) as unknown as EchoResponse;
+    const req = (await client.deleteUserToken({ userToken: 'test-user-1' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/usertokens/test-user-1');
     expect(req.method).toEqual('DELETE');
@@ -384,7 +307,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1722902400000,
+          timestamp: 1725753600000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -394,7 +317,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1722902400000,
+          timestamp: 1725753600000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -410,7 +333,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1722902400000,
+          timestamp: 1725753600000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -420,7 +343,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1722902400000,
+          timestamp: 1725753600000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

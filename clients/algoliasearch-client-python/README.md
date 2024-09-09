@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/api-client/getting-started/install/python/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/python/" target="_blank">Documentation</a>  •
   <a href="https://github.com/algolia/algoliasearch-django" target="_blank">Django</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
@@ -80,7 +80,7 @@ print(response)
 print(response.to_json())
 ```
 
-For full documentation, visit the **[Algolia Python API Client](https://www.algolia.com/doc/api-client/getting-started/install/python/)**.
+For full documentation, visit the **[Algolia Python API Client](https://www.algolia.com/doc/libraries/python/)**.
 
 ## ❓ Troubleshooting
 
@@ -88,7 +88,7 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 
 ## Contributing
 
-This repository hosts the code of the generated Algolia API client for Python, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
+This repository hosts the code of the generated Algolia API client for Python, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/introduction).
 
 ## 📄 License
 

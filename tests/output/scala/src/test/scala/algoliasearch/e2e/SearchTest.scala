@@ -49,6 +49,21 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
+  test("getRule") {
+    val client = testClient()
+    val future = client.getRule(
+      indexName = "cts_e2e_browse",
+      objectID = "qr-1725004648916"
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
   test("getSettings") {
     val client = testClient()
     val future = client.getSettings(
@@ -83,7 +98,31 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
-  test("search for a single facet request with minimal parameters7") {
+  test("search with highlight and snippet results5") {
+    val client = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_highlight_snippet_results",
+            query = Some("vim"),
+            attributesToSnippet = Some(Seq("*:20")),
+            attributesToHighlight = Some(Seq("*")),
+            attributesToRetrieve = Some(Seq("*"))
+          )
+        )
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
+  test("search for a single facet request with minimal parameters8") {
     val client = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -106,7 +145,7 @@ class SearchTestE2E extends AnyFunSuite {
     )
   }
 
-  test("search filters end to end13") {
+  test("search filters end to end14") {
     val client = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -163,6 +202,25 @@ class SearchTestE2E extends AnyFunSuite {
     val response = Await.result(future, Duration.Inf)
     compareJSON(
       """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
+  }
+
+  test("searchRules") {
+    val client = testClient()
+    val future = client.searchRules(
+      indexName = "cts_e2e_browse",
+      searchRulesParams = Some(
+        SearchRulesParams(
+          query = Some("zorro")
+        )
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    compareJSON(
+      """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}""",
       write(response),
       JSONCompareMode.LENIENT
     )

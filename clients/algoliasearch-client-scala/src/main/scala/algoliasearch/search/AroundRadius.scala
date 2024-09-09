@@ -53,6 +53,7 @@ object AroundRadius {
   def apply(value: Int): AroundRadius = {
     AroundRadius.IntValue(value)
   }
+
 }
 
 object AroundRadiusSerializer extends Serializer[AroundRadius] {

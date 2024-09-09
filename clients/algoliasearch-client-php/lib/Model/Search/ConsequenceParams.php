@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Search;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * ConsequenceParams Class Doc Comment.
@@ -762,8 +763,8 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
             $invalidProperties[] = "invalid value for 'length', must be smaller than or equal to 1000.";
         }
 
-        if (isset($this->container['length']) && ($this->container['length'] < 1)) {
-            $invalidProperties[] = "invalid value for 'length', must be bigger than or equal to 1.";
+        if (isset($this->container['length']) && ($this->container['length'] < 0)) {
+            $invalidProperties[] = "invalid value for 'length', must be bigger than or equal to 0.";
         }
 
         if (isset($this->container['minimumAroundRadius']) && ($this->container['minimumAroundRadius'] < 1)) {
@@ -1130,8 +1131,8 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
         if (!is_null($length) && ($length > 1000)) {
             throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be smaller than or equal to 1000.');
         }
-        if (!is_null($length) && ($length < 1)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be bigger than or equal to 1.');
+        if (!is_null($length) && ($length < 0)) {
+            throw new \InvalidArgumentException('invalid value for $length when calling ConsequenceParams., must be bigger than or equal to 0.');
         }
 
         $this->container['length'] = $length;
@@ -2736,10 +2737,8 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -2751,7 +2750,7 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -2762,7 +2761,7 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -2776,7 +2775,7 @@ class ConsequenceParams extends AbstractModel implements ModelInterface, \ArrayA
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

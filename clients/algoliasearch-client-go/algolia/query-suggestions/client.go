@@ -76,7 +76,7 @@ func getDefaultHosts(r Region) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.0.0-beta.26); Go (%s); QuerySuggestions (4.0.0-beta.26)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.3.0); Go (%s); QuerySuggestions (4.3.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -103,6 +103,17 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*ht
 // Caution: modifying the configuration while live can cause data races and potentially unwanted behavior.
 func (c *APIClient) GetConfiguration() *QuerySuggestionsConfiguration {
 	return c.cfg
+}
+
+// Allow update of stored API key used to authenticate requests.
+func (c *APIClient) SetClientApiKey(apiKey string) error {
+	if c.cfg == nil {
+		return errors.New("client config is not set")
+	}
+
+	c.cfg.ApiKey = apiKey
+
+	return nil
 }
 
 // prepareRequest build the request.

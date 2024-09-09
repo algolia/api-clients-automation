@@ -43,7 +43,7 @@ body:
     id: client
     attributes:
       label: Client
-      description: What API are you targetting?
+      description: Which API are you targetting?
       options:
         - All
         - AB testing

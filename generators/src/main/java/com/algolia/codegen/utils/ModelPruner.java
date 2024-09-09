@@ -72,6 +72,10 @@ public class ModelPruner {
   private void exploreGraph(OperationsMap operations) {
     for (CodegenModel model : models.values()) {
       visitModelRecursive(model);
+
+      if ((boolean) model.vendorExtensions.getOrDefault("x-keep-model", false)) {
+        visitedModels.add(model.name);
+      }
     }
 
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
@@ -95,20 +99,20 @@ public class ModelPruner {
   }
 
   /** remove all the unused models, most likely the sub models of allOf */
-  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels, boolean keepError) {
+  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
     // visit all the models that are accessible from:
     // - the properties of a model (needs recursive search)
     // - the return type of an operation
     // - the parameters of an operation
+    //
+    // If you really want a model to be generated, you can add x-keep-model: true to the model, and
+    // add it to the components/schemas in the root spec.
 
     ModelPruner modelPruner = new ModelPruner(convertToMap(config, allModels));
     modelPruner.exploreGraph(operations);
 
     List<String> toRemove = new ArrayList<>();
     for (String modelName : modelPruner.models.keySet()) {
-      if (keepError && modelName.equals("ErrorBase")) {
-        continue;
-      }
       if (!modelPruner.visitedModels.contains(modelName)) {
         toRemove.add(modelName);
       }
@@ -123,9 +127,5 @@ public class ModelPruner {
         file.delete();
       }
     }
-  }
-
-  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
-    removeOrphans(config, operations, allModels, false);
   }
 }

@@ -10,6 +10,7 @@ import 'package:algoliasearch/src/model/base_recommend_request.dart';
 import 'package:algoliasearch/src/model/base_search_params.dart';
 import 'package:algoliasearch/src/model/base_search_params_without_query.dart';
 import 'package:algoliasearch/src/model/base_search_response.dart';
+import 'package:algoliasearch/src/model/boolean_string.dart';
 import 'package:algoliasearch/src/model/bought_together_query.dart';
 import 'package:algoliasearch/src/model/browse_pagination.dart';
 import 'package:algoliasearch/src/model/browse_params_object.dart';
@@ -24,8 +25,8 @@ import 'package:algoliasearch/src/model/exact_on_single_word_query.dart';
 import 'package:algoliasearch/src/model/exhaustive.dart';
 import 'package:algoliasearch/src/model/facet_hits.dart';
 import 'package:algoliasearch/src/model/facet_ordering.dart';
+import 'package:algoliasearch/src/model/facet_stats.dart';
 import 'package:algoliasearch/src/model/facets.dart';
-import 'package:algoliasearch/src/model/facets_stats.dart';
 import 'package:algoliasearch/src/model/fallback_params.dart';
 import 'package:algoliasearch/src/model/fbt_model.dart';
 import 'package:algoliasearch/src/model/frequently_bought_together.dart';
@@ -144,6 +145,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BaseSearchResponse':
       return BaseSearchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BooleanString':
+      return BooleanString.fromJson(value) as ReturnType;
     case 'BoughtTogetherQuery':
       return BoughtTogetherQuery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -179,10 +182,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FacetOrdering':
       return FacetOrdering.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'FacetStats':
+      return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Facets':
       return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'FacetsStats':
-      return FacetsStats.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FallbackParams':
       return FallbackParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;

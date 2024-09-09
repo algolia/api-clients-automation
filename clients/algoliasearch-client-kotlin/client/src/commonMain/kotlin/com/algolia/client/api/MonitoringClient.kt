@@ -11,7 +11,7 @@ import kotlinx.serialization.json.*
 
 public class MonitoringClient(
   override val appId: String,
-  override val apiKey: String,
+  override var apiKey: String,
   override val options: ClientOptions = ClientOptions(),
 ) : ApiClient {
 
@@ -21,7 +21,9 @@ public class MonitoringClient(
   }
 
   override val requester: Requester = requesterOf(clientName = "Monitoring", appId = appId, apiKey = apiKey, options = options) {
-    listOf(Host("status.algolia.com"))
+    listOf(
+      Host("status.algolia.com"),
+    )
   }
 
   /**

@@ -27,7 +27,7 @@ class AbtestingClientRequestsTestsE2E {
     if ("true".equals(System.getenv("CI"))) {
       this.client = new AbtestingClient(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("ALGOLIA_ADMIN_KEY"), "us");
     } else {
-      var dotenv = Dotenv.configure().directory("../../").load();
+      Dotenv dotenv = Dotenv.configure().directory("../../").load();
       this.client = new AbtestingClient(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_ADMIN_KEY"), "us");
     }
   }
@@ -40,7 +40,7 @@ class AbtestingClientRequestsTestsE2E {
   @Test
   @DisplayName("listABTests with parameters")
   void listABTestsTest1() {
-    var res = client.listABTests(0, 21, "cts_e2e ab", "t");
+    ListABTestsResponse res = client.listABTests(0, 21, "cts_e2e ab", "t");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"abtests\":[{\"abTestID\":85635,\"createdAt\":\"2024-05-13T10:12:27.739233Z\",\"endAt\":\"2124-05-13T00:00:00Z\",\"name\":\"cts_e2e_abtest\",\"status\":\"active\",\"variants\":[{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"this" +

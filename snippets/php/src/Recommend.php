@@ -16,7 +16,7 @@ class SnippetRecommendClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -27,6 +27,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -37,7 +38,7 @@ class SnippetRecommendClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -48,6 +49,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -58,7 +60,7 @@ class SnippetRecommendClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -69,6 +71,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -79,7 +82,7 @@ class SnippetRecommendClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -90,6 +93,7 @@ class SnippetRecommendClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -100,7 +104,7 @@ class SnippetRecommendClient
      *
      * deleteRecommendRule
      */
-    public function snippetForDeleteRecommendRule()
+    public function snippetForDeleteRecommendRule(): void
     {
         // >SEPARATOR deleteRecommendRule default
         // Initialize the client
@@ -108,11 +112,12 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->deleteRecommendRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             'objectID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -123,7 +128,7 @@ class SnippetRecommendClient
      *
      * getRecommendRule
      */
-    public function snippetForGetRecommendRule()
+    public function snippetForGetRecommendRule(): void
     {
         // >SEPARATOR getRecommendRule default
         // Initialize the client
@@ -131,11 +136,12 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->getRecommendRule(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             'objectID',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -146,7 +152,7 @@ class SnippetRecommendClient
      *
      * getRecommendStatus
      */
-    public function snippetForGetRecommendStatus()
+    public function snippetForGetRecommendStatus(): void
     {
         // >SEPARATOR getRecommendStatus default
         // Initialize the client
@@ -154,11 +160,12 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->getRecommendStatus(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
             12345,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -169,7 +176,7 @@ class SnippetRecommendClient
      *
      * get recommendations for recommend model with minimal parameters
      */
-    public function snippetForGetRecommendations()
+    public function snippetForGetRecommendations(): void
     {
         // >SEPARATOR getRecommendations default
         // Initialize the client
@@ -178,7 +185,7 @@ class SnippetRecommendClient
         // Call the API
         $response = $client->getRecommendations(
             ['requests' => [
-                ['indexName' => 'indexName',
+                ['indexName' => '<YOUR_INDEX_NAME>',
                     'objectID' => 'objectID',
                     'model' => 'related-products',
                     'threshold' => 42.1,
@@ -187,6 +194,7 @@ class SnippetRecommendClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -197,7 +205,7 @@ class SnippetRecommendClient
      *
      * searchRecommendRules
      */
-    public function snippetForSearchRecommendRules()
+    public function snippetForSearchRecommendRules(): void
     {
         // >SEPARATOR searchRecommendRules default
         // Initialize the client
@@ -205,12 +213,33 @@ class SnippetRecommendClient
 
         // Call the API
         $response = $client->searchRecommendRules(
-            'indexName',
+            '<YOUR_INDEX_NAME>',
             'related-products',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

@@ -39,6 +39,14 @@ module Algolia
       new(config)
     end
 
+    # Helper method to switch the API key used to authenticate the requests.
+    #
+    # @param api_key [String] the new API key to use.
+    # @return [void]
+    def set_client_api_key(api_key)
+      @api_client.set_client_api_key(api_key)
+    end
+
     # Creates a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
     #
     # Required API Key ACLs:
@@ -259,7 +267,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the &#x60;Delete an index&#x60; operation.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -291,7 +299,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the `Delete an index` operation.
     #
     # Required API Key ACLs:
     #   - editSettings

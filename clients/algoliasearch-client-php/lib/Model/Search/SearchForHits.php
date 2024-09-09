@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Search;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * SearchForHits Class Doc Comment.
@@ -770,8 +771,8 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
             $invalidProperties[] = "invalid value for 'length', must be smaller than or equal to 1000.";
         }
 
-        if (isset($this->container['length']) && ($this->container['length'] < 1)) {
-            $invalidProperties[] = "invalid value for 'length', must be bigger than or equal to 1.";
+        if (isset($this->container['length']) && ($this->container['length'] < 0)) {
+            $invalidProperties[] = "invalid value for 'length', must be bigger than or equal to 0.";
         }
 
         if (isset($this->container['minimumAroundRadius']) && ($this->container['minimumAroundRadius'] < 1)) {
@@ -1190,8 +1191,8 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
         if (!is_null($length) && ($length > 1000)) {
             throw new \InvalidArgumentException('invalid value for $length when calling SearchForHits., must be smaller than or equal to 1000.');
         }
-        if (!is_null($length) && ($length < 1)) {
-            throw new \InvalidArgumentException('invalid value for $length when calling SearchForHits., must be bigger than or equal to 1.');
+        if (!is_null($length) && ($length < 0)) {
+            throw new \InvalidArgumentException('invalid value for $length when calling SearchForHits., must be bigger than or equal to 0.');
         }
 
         $this->container['length'] = $length;
@@ -2772,10 +2773,8 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -2787,7 +2786,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -2798,7 +2797,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -2812,7 +2811,7 @@ class SearchForHits extends AbstractModel implements ModelInterface, \ArrayAcces
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

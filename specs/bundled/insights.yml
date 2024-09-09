@@ -29,10 +29,12 @@ info:
     The base URLs for making requests to the Insights API are:
 
 
-    - `https://insights.us.algolia.io` (`https://insights.algolia.io` is an
-    alias)
+    - `https://insights.us.algolia.io`
 
     - `https://insights.de.algolia.io`
+
+    - `https//insights.algolia.io` (routes requests to the closest of the above
+    servers, based on your geographical location)
 
 
     **All requests must use HTTPS.**
@@ -681,8 +683,10 @@ paths:
         Deletes all events related to the specified user token from events
         metrics and analytics.
 
-        To delete a personalization user profile, see [Delete a user
-        profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+        The deletion is asynchronous, and processed within 48 hours.
+
+        To delete a personalization user profile, see `Delete a user profile` in
+        the Personalization API.
       parameters:
         - name: userToken
           in: path
@@ -714,6 +718,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventsResponse'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - insights
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -753,6 +777,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -772,7 +797,6 @@ components:
         [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
 
         framework.
-      example: Product Clicked
     ClickEvent:
       type: string
       enum:

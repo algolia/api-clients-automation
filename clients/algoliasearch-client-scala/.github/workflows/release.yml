@@ -3,7 +3,7 @@ name: Publish jar
 on:
   push:
     branches:
-      - next
+      - main
 
 jobs:
   release:

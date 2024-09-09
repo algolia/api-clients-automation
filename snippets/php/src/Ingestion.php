@@ -16,7 +16,7 @@ class SnippetIngestionClient
      *
      * createAuthenticationOAuth
      */
-    public function snippetForCreateAuthentication()
+    public function snippetForCreateAuthentication(): void
     {
         // >SEPARATOR createAuthentication default
         // Initialize the client
@@ -33,6 +33,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -43,7 +44,7 @@ class SnippetIngestionClient
      *
      * createDestination
      */
-    public function snippetForCreateDestination()
+    public function snippetForCreateDestination(): void
     {
         // >SEPARATOR createDestination default
         // Initialize the client
@@ -53,12 +54,13 @@ class SnippetIngestionClient
         $response = $client->createDestination(
             ['type' => 'search',
                 'name' => 'destinationName',
-                'input' => ['indexName' => 'full_name______',
+                'input' => ['indexName' => '<YOUR_INDEX_NAME>',
                 ],
                 'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,7 +71,7 @@ class SnippetIngestionClient
      *
      * createSource
      */
-    public function snippetForCreateSource()
+    public function snippetForCreateSource(): void
     {
         // >SEPARATOR createSource default
         // Initialize the client
@@ -92,6 +94,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -102,7 +105,7 @@ class SnippetIngestionClient
      *
      * task without cron
      */
-    public function snippetForCreateTask()
+    public function snippetForCreateTask(): void
     {
         // >SEPARATOR createTask default
         // Initialize the client
@@ -116,6 +119,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -126,7 +130,7 @@ class SnippetIngestionClient
      *
      * createTaskOnDemand
      */
-    public function snippetForCreateTaskV1()
+    public function snippetForCreateTaskV1(): void
     {
         // >SEPARATOR createTaskV1 default
         // Initialize the client
@@ -142,6 +146,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -152,7 +157,7 @@ class SnippetIngestionClient
      *
      * createTransformation
      */
-    public function snippetForCreateTransformation()
+    public function snippetForCreateTransformation(): void
     {
         // >SEPARATOR createTransformation default
         // Initialize the client
@@ -166,6 +171,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -176,7 +182,7 @@ class SnippetIngestionClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -187,6 +193,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -197,7 +204,7 @@ class SnippetIngestionClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -208,6 +215,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -218,7 +226,7 @@ class SnippetIngestionClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -229,6 +237,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -239,7 +248,7 @@ class SnippetIngestionClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -250,6 +259,7 @@ class SnippetIngestionClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -260,7 +270,7 @@ class SnippetIngestionClient
      *
      * deleteAuthentication
      */
-    public function snippetForDeleteAuthentication()
+    public function snippetForDeleteAuthentication(): void
     {
         // >SEPARATOR deleteAuthentication default
         // Initialize the client
@@ -271,6 +281,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -281,7 +292,7 @@ class SnippetIngestionClient
      *
      * deleteDestination
      */
-    public function snippetForDeleteDestination()
+    public function snippetForDeleteDestination(): void
     {
         // >SEPARATOR deleteDestination default
         // Initialize the client
@@ -292,6 +303,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -302,7 +314,7 @@ class SnippetIngestionClient
      *
      * deleteSource
      */
-    public function snippetForDeleteSource()
+    public function snippetForDeleteSource(): void
     {
         // >SEPARATOR deleteSource default
         // Initialize the client
@@ -313,6 +325,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -323,7 +336,7 @@ class SnippetIngestionClient
      *
      * deleteTask
      */
-    public function snippetForDeleteTask()
+    public function snippetForDeleteTask(): void
     {
         // >SEPARATOR deleteTask default
         // Initialize the client
@@ -334,6 +347,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -344,7 +358,7 @@ class SnippetIngestionClient
      *
      * deleteTaskV1
      */
-    public function snippetForDeleteTaskV1()
+    public function snippetForDeleteTaskV1(): void
     {
         // >SEPARATOR deleteTaskV1 default
         // Initialize the client
@@ -355,6 +369,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -365,7 +380,7 @@ class SnippetIngestionClient
      *
      * deleteTransformation
      */
-    public function snippetForDeleteTransformation()
+    public function snippetForDeleteTransformation(): void
     {
         // >SEPARATOR deleteTransformation default
         // Initialize the client
@@ -376,6 +391,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -386,7 +402,7 @@ class SnippetIngestionClient
      *
      * disableTask
      */
-    public function snippetForDisableTask()
+    public function snippetForDisableTask(): void
     {
         // >SEPARATOR disableTask default
         // Initialize the client
@@ -397,6 +413,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -407,7 +424,7 @@ class SnippetIngestionClient
      *
      * disableTaskV1
      */
-    public function snippetForDisableTaskV1()
+    public function snippetForDisableTaskV1(): void
     {
         // >SEPARATOR disableTaskV1 default
         // Initialize the client
@@ -418,6 +435,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -428,7 +446,7 @@ class SnippetIngestionClient
      *
      * enableTask
      */
-    public function snippetForEnableTask()
+    public function snippetForEnableTask(): void
     {
         // >SEPARATOR enableTask default
         // Initialize the client
@@ -439,6 +457,7 @@ class SnippetIngestionClient
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -449,7 +468,7 @@ class SnippetIngestionClient
      *
      * enableTaskV1
      */
-    public function snippetForEnableTaskV1()
+    public function snippetForEnableTaskV1(): void
     {
         // >SEPARATOR enableTaskV1 default
         // Initialize the client
@@ -460,6 +479,31 @@ class SnippetIngestionClient
             '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
         );
 
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateTransformationCode method.
+     *
+     * generateTransformationCode
+     */
+    public function snippetForGenerateTransformationCode(): void
+    {
+        // >SEPARATOR generateTransformationCode default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->generateTransformationCode(
+            ['id' => 'foo',
+                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            ],
+        );
+
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -470,7 +514,7 @@ class SnippetIngestionClient
      *
      * getAuthentication
      */
-    public function snippetForGetAuthentication()
+    public function snippetForGetAuthentication(): void
     {
         // >SEPARATOR getAuthentication default
         // Initialize the client
@@ -481,6 +525,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -491,7 +536,7 @@ class SnippetIngestionClient
      *
      * getDestination
      */
-    public function snippetForGetDestination()
+    public function snippetForGetDestination(): void
     {
         // >SEPARATOR getDestination default
         // Initialize the client
@@ -502,6 +547,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -512,7 +558,7 @@ class SnippetIngestionClient
      *
      * getEvent
      */
-    public function snippetForGetEvent()
+    public function snippetForGetEvent(): void
     {
         // >SEPARATOR getEvent default
         // Initialize the client
@@ -524,6 +570,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -534,7 +581,7 @@ class SnippetIngestionClient
      *
      * getRun
      */
-    public function snippetForGetRun()
+    public function snippetForGetRun(): void
     {
         // >SEPARATOR getRun default
         // Initialize the client
@@ -545,6 +592,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -555,7 +603,7 @@ class SnippetIngestionClient
      *
      * getSource
      */
-    public function snippetForGetSource()
+    public function snippetForGetSource(): void
     {
         // >SEPARATOR getSource default
         // Initialize the client
@@ -566,6 +614,7 @@ class SnippetIngestionClient
             '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -576,7 +625,7 @@ class SnippetIngestionClient
      *
      * getTask
      */
-    public function snippetForGetTask()
+    public function snippetForGetTask(): void
     {
         // >SEPARATOR getTask default
         // Initialize the client
@@ -587,6 +636,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -597,7 +647,7 @@ class SnippetIngestionClient
      *
      * getTaskV1
      */
-    public function snippetForGetTaskV1()
+    public function snippetForGetTaskV1(): void
     {
         // >SEPARATOR getTaskV1 default
         // Initialize the client
@@ -608,6 +658,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -618,7 +669,7 @@ class SnippetIngestionClient
      *
      * getTransformation
      */
-    public function snippetForGetTransformation()
+    public function snippetForGetTransformation(): void
     {
         // >SEPARATOR getTransformation default
         // Initialize the client
@@ -629,6 +680,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -639,7 +691,7 @@ class SnippetIngestionClient
      *
      * getAuthentications
      */
-    public function snippetForListAuthentications()
+    public function snippetForListAuthentications(): void
     {
         // >SEPARATOR listAuthentications default
         // Initialize the client
@@ -648,6 +700,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listAuthentications();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -658,7 +711,7 @@ class SnippetIngestionClient
      *
      * getDestinations
      */
-    public function snippetForListDestinations()
+    public function snippetForListDestinations(): void
     {
         // >SEPARATOR listDestinations default
         // Initialize the client
@@ -667,6 +720,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listDestinations();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -677,7 +731,7 @@ class SnippetIngestionClient
      *
      * getEvents
      */
-    public function snippetForListEvents()
+    public function snippetForListEvents(): void
     {
         // >SEPARATOR listEvents default
         // Initialize the client
@@ -688,6 +742,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -698,7 +753,7 @@ class SnippetIngestionClient
      *
      * listRuns
      */
-    public function snippetForListRuns()
+    public function snippetForListRuns(): void
     {
         // >SEPARATOR listRuns default
         // Initialize the client
@@ -707,6 +762,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listRuns();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -717,7 +773,7 @@ class SnippetIngestionClient
      *
      * listSources
      */
-    public function snippetForListSources()
+    public function snippetForListSources(): void
     {
         // >SEPARATOR listSources default
         // Initialize the client
@@ -726,6 +782,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listSources();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -736,7 +793,7 @@ class SnippetIngestionClient
      *
      * listTasks
      */
-    public function snippetForListTasks()
+    public function snippetForListTasks(): void
     {
         // >SEPARATOR listTasks default
         // Initialize the client
@@ -745,6 +802,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTasks();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -755,7 +813,7 @@ class SnippetIngestionClient
      *
      * listTasksV1
      */
-    public function snippetForListTasksV1()
+    public function snippetForListTasksV1(): void
     {
         // >SEPARATOR listTasksV1 default
         // Initialize the client
@@ -764,6 +822,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTasksV1();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -774,7 +833,7 @@ class SnippetIngestionClient
      *
      * listTransformationModels
      */
-    public function snippetForListTransformationModels()
+    public function snippetForListTransformationModels(): void
     {
         // >SEPARATOR listTransformationModels default
         // Initialize the client
@@ -783,6 +842,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTransformationModels();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -793,7 +853,7 @@ class SnippetIngestionClient
      *
      * listTransformations
      */
-    public function snippetForListTransformations()
+    public function snippetForListTransformations(): void
     {
         // >SEPARATOR listTransformations default
         // Initialize the client
@@ -802,6 +862,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->listTransformations();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -812,7 +873,7 @@ class SnippetIngestionClient
      *
      * pushTask
      */
-    public function snippetForPushTask()
+    public function snippetForPushTask(): void
     {
         // >SEPARATOR pushTask default
         // Initialize the client
@@ -821,22 +882,22 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->pushTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['requests' => [
-                ['action' => 'addObject',
-                    'body' => ['key' => 'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
                         'foo' => '1',
+                        'objectID' => 'o',
                     ],
-                ],
 
-                ['action' => 'addObject',
-                    'body' => ['key' => 'baz',
+                    ['key' => 'baz',
                         'foo' => '2',
+                        'objectID' => 'k',
                     ],
                 ],
-            ],
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -847,7 +908,7 @@ class SnippetIngestionClient
      *
      * runSource
      */
-    public function snippetForRunSource()
+    public function snippetForRunSource(): void
     {
         // >SEPARATOR runSource default
         // Initialize the client
@@ -870,6 +931,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -880,7 +942,7 @@ class SnippetIngestionClient
      *
      * runTask
      */
-    public function snippetForRunTask()
+    public function snippetForRunTask(): void
     {
         // >SEPARATOR runTask default
         // Initialize the client
@@ -891,6 +953,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -901,7 +964,7 @@ class SnippetIngestionClient
      *
      * runTaskV1
      */
-    public function snippetForRunTaskV1()
+    public function snippetForRunTaskV1(): void
     {
         // >SEPARATOR runTaskV1 default
         // Initialize the client
@@ -912,6 +975,7 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -922,7 +986,7 @@ class SnippetIngestionClient
      *
      * searchAuthentications
      */
-    public function snippetForSearchAuthentications()
+    public function snippetForSearchAuthentications(): void
     {
         // >SEPARATOR searchAuthentications default
         // Initialize the client
@@ -938,6 +1002,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -948,7 +1013,7 @@ class SnippetIngestionClient
      *
      * searchDestinations
      */
-    public function snippetForSearchDestinations()
+    public function snippetForSearchDestinations(): void
     {
         // >SEPARATOR searchDestinations default
         // Initialize the client
@@ -964,6 +1029,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -974,7 +1040,7 @@ class SnippetIngestionClient
      *
      * searchSources
      */
-    public function snippetForSearchSources()
+    public function snippetForSearchSources(): void
     {
         // >SEPARATOR searchSources default
         // Initialize the client
@@ -990,6 +1056,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1000,7 +1067,7 @@ class SnippetIngestionClient
      *
      * searchTasks
      */
-    public function snippetForSearchTasks()
+    public function snippetForSearchTasks(): void
     {
         // >SEPARATOR searchTasks default
         // Initialize the client
@@ -1018,6 +1085,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1028,7 +1096,7 @@ class SnippetIngestionClient
      *
      * searchTasksV1
      */
-    public function snippetForSearchTasksV1()
+    public function snippetForSearchTasksV1(): void
     {
         // >SEPARATOR searchTasksV1 default
         // Initialize the client
@@ -1046,6 +1114,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1056,7 +1125,7 @@ class SnippetIngestionClient
      *
      * searchTransformations
      */
-    public function snippetForSearchTransformations()
+    public function snippetForSearchTransformations(): void
     {
         // >SEPARATOR searchTransformations default
         // Initialize the client
@@ -1064,7 +1133,7 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->searchTransformations(
-            ['transformationsIDs' => [
+            ['transformationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -1074,8 +1143,29 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -1084,7 +1174,7 @@ class SnippetIngestionClient
      *
      * triggerDockerSourceDiscover
      */
-    public function snippetForTriggerDockerSourceDiscover()
+    public function snippetForTriggerDockerSourceDiscover(): void
     {
         // >SEPARATOR triggerDockerSourceDiscover default
         // Initialize the client
@@ -1095,30 +1185,58 @@ class SnippetIngestionClient
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
     }
 
     /**
-     * Snippet for the TryTransformations method.
+     * Snippet for the TryTransformation method.
      *
-     * tryTransformations
+     * tryTransformation
      */
-    public function snippetForTryTransformations()
+    public function snippetForTryTransformation(): void
     {
-        // >SEPARATOR tryTransformations default
+        // >SEPARATOR tryTransformation default
         // Initialize the client
         $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
-        $response = $client->tryTransformations(
+        $response = $client->tryTransformation(
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
                 ],
             ],
         );
 
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the TryTransformationBeforeUpdate method.
+     *
+     * tryTransformationBeforeUpdate
+     */
+    public function snippetForTryTransformationBeforeUpdate(): void
+    {
+        // >SEPARATOR tryTransformationBeforeUpdate default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1129,7 +1247,7 @@ class SnippetIngestionClient
      *
      * updateAuthentication
      */
-    public function snippetForUpdateAuthentication()
+    public function snippetForUpdateAuthentication(): void
     {
         // >SEPARATOR updateAuthentication default
         // Initialize the client
@@ -1142,6 +1260,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1152,7 +1271,7 @@ class SnippetIngestionClient
      *
      * updateDestination
      */
-    public function snippetForUpdateDestination()
+    public function snippetForUpdateDestination(): void
     {
         // >SEPARATOR updateDestination default
         // Initialize the client
@@ -1165,6 +1284,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1175,7 +1295,7 @@ class SnippetIngestionClient
      *
      * updateSource
      */
-    public function snippetForUpdateSource()
+    public function snippetForUpdateSource(): void
     {
         // >SEPARATOR updateSource default
         // Initialize the client
@@ -1188,6 +1308,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1198,7 +1319,7 @@ class SnippetIngestionClient
      *
      * updateTask
      */
-    public function snippetForUpdateTask()
+    public function snippetForUpdateTask(): void
     {
         // >SEPARATOR updateTask default
         // Initialize the client
@@ -1212,6 +1333,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1222,7 +1344,7 @@ class SnippetIngestionClient
      *
      * updateTaskV1
      */
-    public function snippetForUpdateTaskV1()
+    public function snippetForUpdateTaskV1(): void
     {
         // >SEPARATOR updateTaskV1 default
         // Initialize the client
@@ -1235,6 +1357,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1245,7 +1368,7 @@ class SnippetIngestionClient
      *
      * updateTransformation
      */
-    public function snippetForUpdateTransformation()
+    public function snippetForUpdateTransformation(): void
     {
         // >SEPARATOR updateTransformation default
         // Initialize the client
@@ -1260,6 +1383,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1270,7 +1394,7 @@ class SnippetIngestionClient
      *
      * validateSource
      */
-    public function snippetForValidateSource()
+    public function snippetForValidateSource(): void
     {
         // >SEPARATOR validateSource default
         // Initialize the client
@@ -1293,6 +1417,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -1303,7 +1428,7 @@ class SnippetIngestionClient
      *
      * validateSourceBeforeUpdate
      */
-    public function snippetForValidateSourceBeforeUpdate()
+    public function snippetForValidateSourceBeforeUpdate(): void
     {
         // >SEPARATOR validateSourceBeforeUpdate default
         // Initialize the client
@@ -1316,6 +1441,7 @@ class SnippetIngestionClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

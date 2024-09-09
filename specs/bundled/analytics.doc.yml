@@ -12,10 +12,12 @@ info:
     The base URLs for requests to the Analytics API are:
 
 
-    - `https://analytics.us.algolia.com` (alias:
-    `https://analytics.algolia.com`)
+    - `https://analytics.us.algolia.com`
 
     - `https://analytics.de.algolia.com`
+
+    - `https://analytics.algolia.com` (routes requests to the closest of the
+    above servers, based on your geographical location)
 
 
     Use the URL that matches your [analytics
@@ -159,6 +161,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -186,6 +189,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -201,20 +206,26 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -231,6 +242,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -251,6 +264,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -269,6 +284,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -291,6 +308,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -316,6 +335,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -331,6 +352,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -370,6 +393,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -397,6 +421,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -412,20 +438,26 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -442,6 +474,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -462,6 +496,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -480,6 +516,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -502,6 +540,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -527,6 +567,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -542,6 +584,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -581,6 +625,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -608,6 +653,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -623,20 +670,26 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -653,6 +706,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -673,6 +728,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -691,6 +748,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -713,6 +772,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -738,6 +799,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -753,6 +816,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -786,6 +851,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -814,6 +880,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -829,16 +897,15 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -846,6 +913,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -866,6 +935,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -885,6 +956,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -903,6 +976,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -925,6 +1000,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -950,6 +1027,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -965,6 +1044,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /2/searches:
     get:
       tags:
@@ -1018,6 +1099,7 @@ paths:
 
             // Call the API
             var response = await client.GetTopSearchesAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1046,6 +1128,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1061,20 +1145,26 @@ paths:
             // Call the API
 
             client.getTopSearches("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopSearches({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1091,6 +1181,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1111,6 +1203,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1129,6 +1223,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1151,6 +1247,8 @@ paths:
 
             response = client.get_top_searches("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1176,6 +1274,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1191,6 +1291,8 @@ paths:
             // Call the API
 
             let response = try await client.getTopSearches(index: "index")
+
+            // >LOG
   /2/searches/count:
     get:
       tags:
@@ -1267,6 +1369,7 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesCountAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1295,6 +1398,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1310,20 +1415,26 @@ paths:
             // Call the API
 
             client.getSearchesCount("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getSearchesCount({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1340,6 +1451,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1360,6 +1473,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1378,6 +1493,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1400,6 +1517,8 @@ paths:
 
             response = client.get_searches_count("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1425,6 +1544,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1440,6 +1561,8 @@ paths:
             // Call the API
 
             let response = try await client.getSearchesCount(index: "index")
+
+            // >LOG
   /2/searches/noResults:
     get:
       tags:
@@ -1512,6 +1635,7 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesNoResultsAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1540,6 +1664,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1555,16 +1681,15 @@ paths:
             // Call the API
 
             client.getSearchesNoResults("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1572,6 +1697,8 @@ paths:
             const response = await client.getSearchesNoResults({ index: 'index'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1592,6 +1719,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1611,6 +1740,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1629,6 +1760,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1651,6 +1784,8 @@ paths:
 
             response = client.get_searches_no_results("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1676,6 +1811,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1691,6 +1828,8 @@ paths:
             // Call the API
 
             let response = try await client.getSearchesNoResults(index: "index")
+
+            // >LOG
   /2/searches/noClicks:
     get:
       tags:
@@ -1768,6 +1907,7 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesNoClicksAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1796,6 +1936,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1811,16 +1953,15 @@ paths:
             // Call the API
 
             client.getSearchesNoClicks("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1828,6 +1969,8 @@ paths:
             const response = await client.getSearchesNoClicks({ index: 'index'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -1848,6 +1991,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1867,6 +2012,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1885,6 +2032,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1907,6 +2056,8 @@ paths:
 
             response = client.get_searches_no_clicks("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1932,6 +2083,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1947,6 +2100,8 @@ paths:
             // Call the API
 
             let response = try await client.getSearchesNoClicks(index: "index")
+
+            // >LOG
   /2/searches/noResultRate:
     get:
       tags:
@@ -2035,6 +2190,7 @@ paths:
 
             // Call the API
             var response = await client.GetNoResultsRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2063,6 +2219,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2078,20 +2236,26 @@ paths:
             // Call the API
 
             client.getNoResultsRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getNoResultsRate({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2108,6 +2272,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2128,6 +2294,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2146,6 +2314,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2168,6 +2338,8 @@ paths:
 
             response = client.get_no_results_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2193,6 +2365,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2208,6 +2382,8 @@ paths:
             // Call the API
 
             let response = try await client.getNoResultsRate(index: "index")
+
+            // >LOG
   /2/searches/noClickRate:
     get:
       tags:
@@ -2296,6 +2472,7 @@ paths:
 
             // Call the API
             var response = await client.GetNoClickRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2324,6 +2501,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2339,20 +2518,26 @@ paths:
             // Call the API
 
             client.getNoClickRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getNoClickRate({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2369,6 +2554,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2389,6 +2576,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2407,6 +2596,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2429,6 +2620,8 @@ paths:
 
             response = client.get_no_click_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2454,6 +2647,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2469,6 +2664,8 @@ paths:
             // Call the API
 
             let response = try await client.getNoClickRate(index: "index")
+
+            // >LOG
   /2/hits:
     get:
       tags:
@@ -2521,6 +2718,7 @@ paths:
 
             // Call the API
             var response = await client.GetTopHitsAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2548,6 +2746,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2563,20 +2763,26 @@ paths:
             // Call the API
 
             client.getTopHits("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopHits({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2593,6 +2799,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2613,6 +2821,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2631,6 +2841,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2653,6 +2865,8 @@ paths:
 
             response = client.get_top_hits("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2678,6 +2892,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2693,6 +2909,8 @@ paths:
             // Call the API
 
             let response = try await client.getTopHits(index: "index")
+
+            // >LOG
   /2/users/count:
     get:
       tags:
@@ -2784,6 +3002,7 @@ paths:
 
             // Call the API
             var response = await client.GetUsersCountAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2812,6 +3031,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2827,20 +3048,26 @@ paths:
             // Call the API
 
             client.getUsersCount("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getUsersCount({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2857,6 +3084,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2877,6 +3106,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2895,6 +3126,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2917,6 +3150,8 @@ paths:
 
             response = client.get_users_count("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2942,6 +3177,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2957,6 +3194,8 @@ paths:
             // Call the API
 
             let response = try await client.getUsersCount(index: "index")
+
+            // >LOG
   /2/filters:
     get:
       tags:
@@ -3012,6 +3251,7 @@ paths:
 
             // Call the API
             var response = await client.GetTopFilterAttributesAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3040,6 +3280,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3055,16 +3297,15 @@ paths:
             // Call the API
 
             client.getTopFilterAttributes("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3072,6 +3313,8 @@ paths:
             const response = await client.getTopFilterAttributes({ index:
             'index' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3092,6 +3335,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3111,6 +3356,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3129,6 +3376,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3151,6 +3400,8 @@ paths:
 
             response = client.get_top_filter_attributes("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3176,6 +3427,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3192,6 +3445,8 @@ paths:
 
             let response = try await client.getTopFilterAttributes(index:
             "index")
+
+            // >LOG
   /2/filters/{attribute}:
     get:
       tags:
@@ -3253,6 +3508,8 @@ paths:
 
             var response = await
             client.GetTopFilterForAttributeAsync("myAttribute", "index");
+
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3281,6 +3538,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3296,23 +3555,27 @@ paths:
             // Call the API
 
             client.getTopFilterForAttribute("myAttribute", "index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
-            const response = await client.getTopFilterForAttribute({
-              attribute: 'myAttribute',
-              index: 'index',
-            });
+
+            const response = await client.getTopFilterForAttribute({ attribute:
+            'myAttribute', index: 'index' });
+
+
+            // >LOG
 
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3330,6 +3593,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -3351,6 +3616,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3370,6 +3637,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3393,6 +3662,8 @@ paths:
             response = client.get_top_filter_for_attribute("myAttribute",
             "index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3419,6 +3690,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3435,6 +3708,8 @@ paths:
 
             let response = try await client.getTopFilterForAttribute(attribute:
             "myAttribute", index: "index")
+
+            // >LOG
   /2/filters/noResults:
     get:
       tags:
@@ -3492,6 +3767,7 @@ paths:
 
             // Call the API
             var response = await client.GetTopFiltersNoResultsAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3520,6 +3796,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3535,16 +3813,15 @@ paths:
             // Call the API
 
             client.getTopFiltersNoResults("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3552,6 +3829,8 @@ paths:
             const response = await client.getTopFiltersNoResults({ index:
             'index' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -3572,6 +3851,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -3591,6 +3872,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3609,6 +3892,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3631,6 +3916,8 @@ paths:
 
             response = client.get_top_filters_no_results("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3656,6 +3943,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3672,6 +3961,8 @@ paths:
 
             let response = try await client.getTopFiltersNoResults(index:
             "index")
+
+            // >LOG
   /2/countries:
     get:
       tags:
@@ -3743,6 +4034,7 @@ paths:
 
             // Call the API
             var response = await client.GetTopCountriesAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -3771,6 +4063,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -3786,20 +4080,26 @@ paths:
             // Call the API
 
             client.getTopCountries("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getTopCountries({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -3816,6 +4116,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -3836,6 +4138,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -3854,6 +4158,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3876,6 +4182,8 @@ paths:
 
             response = client.get_top_countries("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -3901,6 +4209,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -3916,6 +4226,8 @@ paths:
             // Call the API
 
             let response = try await client.getTopCountries(index: "index")
+
+            // >LOG
   /2/clicks/averageClickPosition:
     get:
       tags:
@@ -4004,6 +4316,7 @@ paths:
 
             // Call the API
             var response = await client.GetAverageClickPositionAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4032,6 +4345,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4047,16 +4362,15 @@ paths:
             // Call the API
 
             client.getAverageClickPosition("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4064,6 +4378,8 @@ paths:
             const response = await client.getAverageClickPosition({ index:
             'index' });
 
+
+            // >LOG
 
             // use typed response
 
@@ -4084,6 +4400,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -4103,6 +4421,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -4121,6 +4441,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4143,6 +4465,8 @@ paths:
 
             response = client.get_average_click_position("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4168,6 +4492,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4184,6 +4510,8 @@ paths:
 
             let response = try await client.getAverageClickPosition(index:
             "index")
+
+            // >LOG
   /2/clicks/positions:
     get:
       tags:
@@ -4244,6 +4572,7 @@ paths:
 
             // Call the API
             var response = await client.GetClickPositionsAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4272,6 +4601,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4287,20 +4618,26 @@ paths:
             // Call the API
 
             client.getClickPositions("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getClickPositions({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4317,6 +4654,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -4337,6 +4676,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -4355,6 +4696,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4377,6 +4720,8 @@ paths:
 
             response = client.get_click_positions("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4402,6 +4747,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4417,6 +4764,8 @@ paths:
             // Call the API
 
             let response = try await client.getClickPositions(index: "index")
+
+            // >LOG
   /2/clicks/clickThroughRate:
     get:
       tags:
@@ -4505,6 +4854,7 @@ paths:
 
             // Call the API
             var response = await client.GetClickThroughRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4533,6 +4883,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4548,16 +4900,15 @@ paths:
             // Call the API
 
             client.getClickThroughRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4565,6 +4916,8 @@ paths:
             const response = await client.getClickThroughRate({ index: 'index'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -4585,6 +4938,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -4604,6 +4959,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -4622,6 +4979,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4644,6 +5003,8 @@ paths:
 
             response = client.get_click_through_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4669,6 +5030,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4684,6 +5047,8 @@ paths:
             // Call the API
 
             let response = try await client.getClickThroughRate(index: "index")
+
+            // >LOG
   /2/conversions/conversionRate:
     get:
       tags:
@@ -4772,6 +5137,7 @@ paths:
 
             // Call the API
             var response = await client.GetConversionRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -4800,6 +5166,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -4815,20 +5183,26 @@ paths:
             // Call the API
 
             client.getConversionRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getConversionRate({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -4845,6 +5219,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -4865,6 +5241,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -4883,6 +5261,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4905,6 +5285,8 @@ paths:
 
             response = client.get_conversion_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -4930,6 +5312,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -4945,6 +5329,8 @@ paths:
             // Call the API
 
             let response = try await client.getConversionRate(index: "index")
+
+            // >LOG
   /2/conversions/addToCartRate:
     get:
       tags:
@@ -5033,6 +5419,7 @@ paths:
 
             // Call the API
             var response = await client.GetAddToCartRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5061,6 +5448,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5076,20 +5465,26 @@ paths:
             // Call the API
 
             client.getAddToCartRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getAddToCartRate({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5106,6 +5501,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5126,6 +5523,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5144,6 +5543,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5166,6 +5567,8 @@ paths:
 
             response = client.get_add_to_cart_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5191,6 +5594,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5206,6 +5611,8 @@ paths:
             // Call the API
 
             let response = try await client.getAddToCartRate(index: "index")
+
+            // >LOG
   /2/conversions/purchaseRate:
     get:
       tags:
@@ -5294,6 +5701,7 @@ paths:
 
             // Call the API
             var response = await client.GetPurchaseRateAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5322,6 +5730,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5337,20 +5747,26 @@ paths:
             // Call the API
 
             client.getPurchaseRate("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getPurchaseRate({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5367,6 +5783,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5387,6 +5805,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5405,6 +5825,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5427,6 +5849,8 @@ paths:
 
             response = client.get_purchase_rate("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5452,6 +5876,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5467,6 +5893,8 @@ paths:
             // Call the API
 
             let response = try await client.getPurchaseRate(index: "index")
+
+            // >LOG
   /2/conversions/revenue:
     get:
       tags:
@@ -5538,6 +5966,7 @@ paths:
 
             // Call the API
             var response = await client.GetRevenueAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5565,6 +5994,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5580,20 +6011,26 @@ paths:
             // Call the API
 
             client.getRevenue("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getRevenue({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5610,6 +6047,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5630,6 +6069,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5648,6 +6089,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5670,6 +6113,8 @@ paths:
 
             response = client.get_revenue("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5695,6 +6140,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5710,6 +6157,8 @@ paths:
             // Call the API
 
             let response = try await client.getRevenue(index: "index")
+
+            // >LOG
   /2/status:
     get:
       tags:
@@ -5759,6 +6208,7 @@ paths:
 
             // Call the API
             var response = await client.GetStatusAsync("index");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -5786,6 +6236,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -5801,20 +6253,26 @@ paths:
             // Call the API
 
             client.getStatus("index");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = analyticsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getStatus({ index: 'index' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -5831,6 +6289,8 @@ paths:
               index = "index",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -5851,6 +6311,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -5869,6 +6331,8 @@ paths:
                 index="index",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5891,6 +6355,8 @@ paths:
 
             response = client.get_status("index")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -5916,6 +6382,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -5931,6 +6399,8 @@ paths:
             // Call the API
 
             let response = try await client.getStatus(index: "index")
+
+            // >LOG
 components:
   securitySchemes:
     appId:
@@ -6079,6 +6549,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -6286,7 +6757,6 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     currencies:
-      title: currenciesValue
       type: object
       description: Revenue associated with this search, broken-down by currencies.
       default: {}

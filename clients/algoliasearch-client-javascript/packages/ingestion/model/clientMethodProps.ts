@@ -4,7 +4,6 @@ import type { ActionType } from './actionType';
 import type { AuthenticationSortKeys } from './authenticationSortKeys';
 import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
-import type { BatchWriteParams } from './batchWriteParams';
 import type { DestinationSortKeys } from './destinationSortKeys';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
@@ -13,9 +12,11 @@ import type { EventStatus } from './eventStatus';
 import type { EventType } from './eventType';
 import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
+import type { PushTaskPayload } from './pushTaskPayload';
 import type { RunSortKeys } from './runSortKeys';
 import type { RunSourcePayload } from './runSourcePayload';
 import type { RunStatus } from './runStatus';
+import type { RunType } from './runType';
 import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
@@ -24,6 +25,7 @@ import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
 import type { TaskUpdateV1 } from './taskUpdateV1';
 import type { TransformationCreate } from './transformationCreate';
+import type { TransformationTry } from './transformationTry';
 import type { TriggerType } from './triggerType';
 
 /**
@@ -69,7 +71,7 @@ export type CustomPostProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**
@@ -87,7 +89,7 @@ export type CustomPutProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**
@@ -393,6 +395,10 @@ export type ListRunsProps = {
    */
   status?: RunStatus[];
   /**
+   * Run type for filtering the list of task runs.
+   */
+  type?: RunType[];
+  /**
    * Task ID for filtering the list of task runs.
    */
   taskID?: string;
@@ -561,7 +567,7 @@ export type PushTaskProps = {
   /**
    * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
    */
-  batchWriteParams: BatchWriteParams;
+  pushTaskPayload: PushTaskPayload;
 };
 
 /**
@@ -606,6 +612,17 @@ export type TriggerDockerSourceDiscoverProps = {
    * Unique identifier of a source.
    */
   sourceID: string;
+};
+
+/**
+ * Properties for the `tryTransformationBeforeUpdate` method.
+ */
+export type TryTransformationBeforeUpdateProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+  transformationTry: TransformationTry;
 };
 
 /**

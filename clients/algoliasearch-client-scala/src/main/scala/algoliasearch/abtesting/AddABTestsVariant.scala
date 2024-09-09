@@ -1,8 +1,9 @@
 /** A/B Testing API The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search
   * experience. ## Base URLs The base URLs for requests to the A/B testing API are: - `https://analytics.us.algolia.com`
-  * (alias: `https://analytics.algolia.com`) - `https://analytics.de.algolia.com` Use the URL that matches your
-  * [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.**
-  * ## Availability and authentication Access to the A/B testing API is available as part of the [Premium or Elevate
+  * \- `https://analytics.de.algolia.com` - `https://analytics.algolia.com` (routes requests to the closest of the above
+  * servers, based on your geographical location) Use the URL that matches your [analytics
+  * region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.** ##
+  * Availability and authentication Access to the A/B testing API is available as part of the [Premium or Elevate
   * plans](https://www.algolia.com/pricing). To authenticate your API requests, add these headers: -
   * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
   * permissions to make the request. The required access control list (ACL) to make a request is listed in each
@@ -38,16 +39,17 @@ object AddABTestsVariantSerializer extends Serializer[AddABTestsVariant] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AddABTestsVariant] =>
       json match {
+        case value: JObject if value.obj.exists(_._1 == "customSearchParameters") =>
+          Extraction.extract[AbTestsVariantSearchParams](value)
         case value: JObject => Extraction.extract[AbTestsVariant](value)
-        case value: JObject => Extraction.extract[AbTestsVariantSearchParams](value)
         case _              => throw new MappingException("Can't convert " + json + " to AddABTestsVariant")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AddABTestsVariant =>
     value match {
-      case value: AbTestsVariant             => Extraction.decompose(value)(format - this)
       case value: AbTestsVariantSearchParams => Extraction.decompose(value)(format - this)
+      case value: AbTestsVariant             => Extraction.decompose(value)(format - this)
     }
   }
 }

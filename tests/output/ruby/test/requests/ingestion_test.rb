@@ -131,6 +131,17 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # push
+  def test_create_source1
+    req = @client.create_source_with_http_info(SourceCreate.new(type: "push", name: "pushezpourentrer"))
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/sources", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}"), JSON.parse(req.body))
+  end
+
   # task without cron
   def test_create_task
     req = @client.create_task_with_http_info(
@@ -160,6 +171,30 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # task shopify
+  def test_create_task2
+    req = @client.create_task_with_http_info(
+      TaskCreate.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        cron: "* * * * *",
+        action: "replace",
+        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/2/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
       ),
       JSON.parse(req.body)
     )
@@ -229,6 +264,30 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # task shopify
+  def test_create_task_v13
+    req = @client.create_task_v1_with_http_info(
+      TaskCreateV1.new(
+        source_id: "search",
+        destination_id: "destinationName",
+        trigger: OnDemandTriggerInput.new(type: "onDemand"),
+        action: "replace",
+        input: DockerStreamsInput.new(streams: [DockerStreams.new(name: "foo", sync_mode: "incremental")])
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
       ),
       JSON.parse(req.body)
     )
@@ -629,6 +688,27 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
+  # generateTransformationCode
+  def test_generate_transformation_code
+    req = @client.generate_transformation_code_with_http_info(
+      GenerateTransformationCodePayload.new(
+        id: "foo",
+        user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/models", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # getAuthentication
   def test_get_authentication
     req = @client.get_authentication_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -839,7 +919,7 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.list_transformation_models_with_http_info
 
     assert_equal(:get, req.method)
-    assert_equal("/1/transformations/copilot", req.path)
+    assert_equal("/1/transformations/models", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -862,10 +942,11 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_push_task
     req = @client.push_task_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      BatchWriteParams.new(
-        requests: [
-          BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-          BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+      PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+          PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
         ]
       )
     )
@@ -876,7 +957,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
       ),
       JSON.parse(req.body)
     )
@@ -1033,7 +1114,7 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_search_transformations
     req = @client.search_transformations_with_http_info(
       TransformationSearch.new(
-        transformations_ids: [
+        transformation_ids: [
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
           "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
@@ -1047,7 +1128,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+        "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
       ),
       JSON.parse(req.body)
     )
@@ -1063,15 +1144,86 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # tryTransformations
-  def test_try_transformations
-    req = @client.try_transformations_with_http_info(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
+  # tryTransformation
+  def test_try_transformation
+    req = @client.try_transformation_with_http_info(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations/try", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
+  end
+
+  # with authentications
+  def test_try_transformation1
+    req = @client.try_transformation_with_http_info(
+      TransformationTry.new(
+        code: "foo",
+        sample_record: {bar: "baz"},
+        authentications: [
+          AuthenticationCreate.new(
+            type: "oauth",
+            name: "authName",
+            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # tryTransformationBeforeUpdate
+  def test_try_transformation_before_update
+    req = @client.try_transformation_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
+  end
+
+  # existing with authentications
+  def test_try_transformation_before_update1
+    req = @client.try_transformation_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TransformationTry.new(
+        code: "foo",
+        sample_record: {bar: "baz"},
+        authentications: [
+          AuthenticationCreate.new(
+            type: "oauth",
+            name: "authName",
+            input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
   # updateAuthentication

@@ -6,20 +6,14 @@ import { echoRequester } from '@algolia/requester-node-http';
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = ingestionClient(appId, apiKey, 'us', {
-  requester: echoRequester(),
-});
+const client = ingestionClient(appId, apiKey, 'us', { requester: echoRequester() });
 
 describe('createAuthentication', () => {
   test('createAuthenticationOAuth', async () => {
     const req = (await client.createAuthentication({
       type: 'oauth',
       name: 'authName',
-      input: {
-        url: 'http://test.oauth',
-        client_id: 'myID',
-        client_secret: 'mySecret',
-      },
+      input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/authentications');
@@ -27,11 +21,7 @@ describe('createAuthentication', () => {
     expect(req.data).toEqual({
       type: 'oauth',
       name: 'authName',
-      input: {
-        url: 'http://test.oauth',
-        client_id: 'myID',
-        client_secret: 'mySecret',
-      },
+      input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -99,12 +89,7 @@ describe('createSource', () => {
     const req = (await client.createSource({
       type: 'commercetools',
       name: 'sourceName',
-      input: {
-        storeKeys: ['myStore'],
-        locales: ['de'],
-        url: 'http://commercetools.com',
-        projectKey: 'keyID',
-      },
+      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -113,14 +98,18 @@ describe('createSource', () => {
     expect(req.data).toEqual({
       type: 'commercetools',
       name: 'sourceName',
-      input: {
-        storeKeys: ['myStore'],
-        locales: ['de'],
-        url: 'http://commercetools.com',
-        projectKey: 'keyID',
-      },
+      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('push', async () => {
+    const req = (await client.createSource({ type: 'push', name: 'pushezpourentrer' })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/sources');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ type: 'push', name: 'pushezpourentrer' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -135,11 +124,7 @@ describe('createTask', () => {
 
     expect(req.path).toEqual('/2/tasks');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      sourceID: 'search',
-      destinationID: 'destinationName',
-      action: 'replace',
-    });
+    expect(req.data).toEqual({ sourceID: 'search', destinationID: 'destinationName', action: 'replace' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -158,6 +143,27 @@ describe('createTask', () => {
       destinationID: 'destinationName',
       cron: '* * * * *',
       action: 'replace',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('task shopify', async () => {
+    const req = (await client.createTask({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -220,6 +226,27 @@ describe('createTaskV1', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('task shopify', async () => {
+    const req = (await client.createTaskV1({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      trigger: { type: 'onDemand' },
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      sourceID: 'search',
+      destinationID: 'destinationName',
+      trigger: { type: 'onDemand' },
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('createTransformation', () => {
@@ -239,9 +266,7 @@ describe('createTransformation', () => {
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
-    const req = (await client.customDelete({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('DELETE');
@@ -264,9 +289,7 @@ describe('customDelete', () => {
 
 describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
-    const req = (await client.customGet({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customGet({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('GET');
@@ -283,21 +306,16 @@ describe('customGet', () => {
     expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters%20with%20space',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters%20with%20space' });
   });
 
   test('requestOptions should be escaped too', async () => {
     const req = (await client.customGet(
       { path: 'test/all', parameters: { query: 'to be overriden' } },
       {
-        queryParameters: {
-          query: 'parameters with space',
-          'and an array': ['array', 'with spaces'],
-        },
+        queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
         headers: { 'x-header-1': 'spaces are left alone' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/all');
@@ -307,17 +325,13 @@ describe('customGet', () => {
       query: 'parameters%20with%20space',
       'and%20an%20array': 'array%2Cwith%20spaces',
     });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-header-1': 'spaces are left alone' }));
   });
 });
 
 describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPost({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPost({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('POST');
@@ -340,14 +354,10 @@ describe('customPost', () => {
 
   test('requestOptions can override default query parameters', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
@@ -358,178 +368,122 @@ describe('customPost', () => {
 
   test('requestOptions merges query parameters with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query2: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      query2: 'myQueryParameter',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', query2: 'myQueryParameter' });
   });
 
   test('requestOptions can override default headers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { isItWorking: true },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      isItWorking: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', isItWorking: 'true' });
   });
 
   test('requestOptions queryParameters accepts integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: 2 },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '2' });
   });
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: ['b and c', 'd'] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'b%20and%20c%2Cd',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'b%20and%20c%2Cd' });
   });
 
   test('requestOptions queryParameters accepts list of booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [true, true, false] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'true%2Ctrue%2Cfalse',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'true%2Ctrue%2Cfalse' });
   });
 
   test('requestOptions queryParameters accepts list of integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [1, 2] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '1%2C2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '1%2C2' });
   });
 });
 
 describe('customPut', () => {
   test('allow put method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPut({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPut({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('PUT');
@@ -557,9 +511,7 @@ describe('deleteAuthentication', () => {
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -572,9 +524,7 @@ describe('deleteDestination', () => {
       destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -626,9 +576,7 @@ describe('deleteTransformation', () => {
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -641,9 +589,7 @@ describe('disableTask', () => {
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable'
-    );
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -656,9 +602,7 @@ describe('disableTaskV1', () => {
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable'
-    );
+    expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -671,9 +615,7 @@ describe('enableTask', () => {
       taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable'
-    );
+    expect(req.path).toEqual('/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -686,11 +628,26 @@ describe('enableTaskV1', () => {
       taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable'
-    );
+    expect(req.path).toEqual('/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('generateTransformationCode', () => {
+  test('generateTransformationCode', async () => {
+    const req = (await client.generateTransformationCode({
+      id: 'foo',
+      userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/models');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      id: 'foo',
+      userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -701,9 +658,7 @@ describe('getAuthentication', () => {
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -716,9 +671,7 @@ describe('getDestination', () => {
       destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -733,7 +686,7 @@ describe('getEvent', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual(
-      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c'
+      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c',
     );
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
@@ -743,9 +696,7 @@ describe('getEvent', () => {
 
 describe('getRun', () => {
   test('getRun', async () => {
-    const req = (await client.getRun({
-      runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.getRun({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
@@ -769,9 +720,7 @@ describe('getSource', () => {
 
 describe('getTask', () => {
   test('getTask', async () => {
-    const req = (await client.getTask({
-      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.getTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
@@ -782,9 +731,7 @@ describe('getTask', () => {
 
 describe('getTaskV1', () => {
   test('getTaskV1', async () => {
-    const req = (await client.getTaskV1({
-      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.getTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
@@ -799,9 +746,7 @@ describe('getTransformation', () => {
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -855,13 +800,9 @@ describe('listDestinations', () => {
 
 describe('listEvents', () => {
   test('getEvents', async () => {
-    const req = (await client.listEvents({
-      runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.listEvents({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events'
-    );
+    expect(req.path).toEqual('/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -914,10 +855,9 @@ describe('listTasksV1', () => {
 
 describe('listTransformationModels', () => {
   test('listTransformationModels', async () => {
-    const req =
-      (await client.listTransformationModels()) as unknown as EchoResponse;
+    const req = (await client.listTransformationModels()) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/transformations/copilot');
+    expect(req.path).toEqual('/1/transformations/models');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -939,22 +879,22 @@ describe('pushTask', () => {
   test('pushTask', async () => {
     const req = (await client.pushTask({
       taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-      batchWriteParams: {
-        requests: [
-          { action: 'addObject', body: { key: 'bar', foo: '1' } },
-          { action: 'addObject', body: { key: 'baz', foo: '2' } },
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
         ],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push'
-    );
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        { action: 'addObject', body: { key: 'bar', foo: '1' } },
-        { action: 'addObject', body: { key: 'baz', foo: '2' } },
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -972,9 +912,7 @@ describe('runSource', () => {
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run'
-    );
+    expect(req.path).toEqual('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       indexToInclude: ['products_us', 'products eu'],
@@ -987,13 +925,9 @@ describe('runSource', () => {
 
 describe('runTask', () => {
   test('runTask', async () => {
-    const req = (await client.runTask({
-      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.runTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run'
-    );
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1002,13 +936,9 @@ describe('runTask', () => {
 
 describe('runTaskV1', () => {
   test('runTaskV1', async () => {
-    const req = (await client.runTaskV1({
-      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
+    const req = (await client.runTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run'
-    );
+    expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1018,19 +948,13 @@ describe('runTaskV1', () => {
 describe('searchAuthentications', () => {
   test('searchAuthentications', async () => {
     const req = (await client.searchAuthentications({
-      authenticationIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      authenticationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/authentications/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      authenticationIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      authenticationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1039,19 +963,13 @@ describe('searchAuthentications', () => {
 describe('searchDestinations', () => {
   test('searchDestinations', async () => {
     const req = (await client.searchDestinations({
-      destinationIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      destinationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/destinations/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      destinationIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      destinationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1060,19 +978,13 @@ describe('searchDestinations', () => {
 describe('searchSources', () => {
   test('searchSources', async () => {
     const req = (await client.searchSources({
-      sourceIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      sourceIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/sources/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      sourceIDs: [
-        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-      ],
+      sourceIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f', '947ac9c4-7e58-4c87-b1e7-14a68e99699a'],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1127,7 +1039,7 @@ describe('searchTasksV1', () => {
 describe('searchTransformations', () => {
   test('searchTransformations', async () => {
     const req = (await client.searchTransformations({
-      transformationsIDs: [
+      transformationIDs: [
         '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
         '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
@@ -1137,7 +1049,7 @@ describe('searchTransformations', () => {
     expect(req.path).toEqual('/1/transformations/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      transformationsIDs: [
+      transformationIDs: [
         '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
         '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
         '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
@@ -1153,18 +1065,16 @@ describe('triggerDockerSourceDiscover', () => {
       sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover'
-    );
+    expect(req.path).toEqual('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
-describe('tryTransformations', () => {
-  test('tryTransformations', async () => {
-    const req = (await client.tryTransformations({
+describe('tryTransformation', () => {
+  test('tryTransformation', async () => {
+    const req = (await client.tryTransformation({
       code: 'foo',
       sampleRecord: { bar: 'baz' },
     })) as unknown as EchoResponse;
@@ -1172,6 +1082,81 @@ describe('tryTransformations', () => {
     expect(req.path).toEqual('/1/transformations/try');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('with authentications', async () => {
+    const req = (await client.tryTransformation({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/try');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('tryTransformationBeforeUpdate', () => {
+  test('tryTransformationBeforeUpdate', async () => {
+    const req = (await client.tryTransformationBeforeUpdate({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('existing with authentications', async () => {
+    const req = (await client.tryTransformationBeforeUpdate({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      transformationTry: {
+        code: 'foo',
+        sampleRecord: { bar: 'baz' },
+        authentications: [
+          {
+            type: 'oauth',
+            name: 'authName',
+            input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+        },
+      ],
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -1183,9 +1168,7 @@ describe('updateAuthentication', () => {
       authenticationUpdate: { name: 'newName' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PATCH');
     expect(req.data).toEqual({ name: 'newName' });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1199,9 +1182,7 @@ describe('updateDestination', () => {
       destinationUpdate: { name: 'newName' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PATCH');
     expect(req.data).toEqual({ name: 'newName' });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1257,9 +1238,7 @@ describe('updateTransformation', () => {
       transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
-    );
+    expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ code: 'foo', name: 'bar', description: 'baz' });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1271,12 +1250,7 @@ describe('validateSource', () => {
     const req = (await client.validateSource({
       type: 'commercetools',
       name: 'sourceName',
-      input: {
-        storeKeys: ['myStore'],
-        locales: ['de'],
-        url: 'http://commercetools.com',
-        projectKey: 'keyID',
-      },
+      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -1285,12 +1259,7 @@ describe('validateSource', () => {
     expect(req.data).toEqual({
       type: 'commercetools',
       name: 'sourceName',
-      input: {
-        storeKeys: ['myStore'],
-        locales: ['de'],
-        url: 'http://commercetools.com',
-        projectKey: 'keyID',
-      },
+      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1304,9 +1273,7 @@ describe('validateSourceBeforeUpdate', () => {
       sourceUpdate: { name: 'newName' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate'
-    );
+    expect(req.path).toEqual('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ name: 'newName' });
     expect(req.searchParams).toStrictEqual(undefined);

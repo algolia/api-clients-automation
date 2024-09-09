@@ -11,26 +11,19 @@ import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 export async function snippetForCreateConfig(): Promise<void> {
   // >SEPARATOR createConfig default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.createConfig({
     indexName: 'theIndexName',
     sourceIndices: [
-      {
-        indexName: 'testIndex',
-        facets: [{ attribute: 'test' }],
-        generate: [['facetA', 'facetB'], ['facetC']],
-      },
+      { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },
     ],
     languages: ['french'],
     exclude: ['test'],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -42,15 +35,12 @@ export async function snippetForCreateConfig(): Promise<void> {
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -62,15 +52,12 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -82,15 +69,12 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -102,15 +86,12 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -122,15 +103,12 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteConfig(): Promise<void> {
   // >SEPARATOR deleteConfig default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.deleteConfig({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -142,15 +120,12 @@ export async function snippetForDeleteConfig(): Promise<void> {
 export async function snippetForGetAllConfigs(): Promise<void> {
   // >SEPARATOR getAllConfigs default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getAllConfigs();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -162,17 +137,12 @@ export async function snippetForGetAllConfigs(): Promise<void> {
 export async function snippetForGetConfig(): Promise<void> {
   // >SEPARATOR getConfig default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
-  const response = await client.getConfig({
-    indexName: 'cts_e2e_browse_query_suggestions',
-  });
+  const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -184,15 +154,12 @@ export async function snippetForGetConfig(): Promise<void> {
 export async function snippetForGetConfigStatus(): Promise<void> {
   // >SEPARATOR getConfigStatus default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getConfigStatus({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -204,17 +171,29 @@ export async function snippetForGetConfigStatus(): Promise<void> {
 export async function snippetForGetLogFile(): Promise<void> {
   // >SEPARATOR getLogFile default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.getLogFile({ indexName: 'theIndexName' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -224,28 +203,21 @@ export async function snippetForGetLogFile(): Promise<void> {
 export async function snippetForUpdateConfig(): Promise<void> {
   // >SEPARATOR updateConfig default
   // Initialize the client
-  const client = querySuggestionsClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
+  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
 
   // Call the API
   const response = await client.updateConfig({
     indexName: 'theIndexName',
     configuration: {
       sourceIndices: [
-        {
-          indexName: 'testIndex',
-          facets: [{ attribute: 'test' }],
-          generate: [['facetA', 'facetB'], ['facetC']],
-        },
+        { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },
       ],
       languages: ['french'],
       exclude: ['test'],
     },
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

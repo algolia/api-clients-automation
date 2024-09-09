@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Search;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * SearchRulesResponse Class Doc Comment.
@@ -289,10 +290,8 @@ class SearchRulesResponse extends AbstractModel implements ModelInterface, \Arra
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -304,7 +303,7 @@ class SearchRulesResponse extends AbstractModel implements ModelInterface, \Arra
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -315,7 +314,7 @@ class SearchRulesResponse extends AbstractModel implements ModelInterface, \Arra
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -329,7 +328,7 @@ class SearchRulesResponse extends AbstractModel implements ModelInterface, \Arra
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

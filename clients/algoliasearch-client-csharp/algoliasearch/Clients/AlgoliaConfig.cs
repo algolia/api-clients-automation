@@ -19,11 +19,12 @@ namespace Algolia.Search.Clients
     /// <param name="appId">Your application ID</param>
     /// <param name="apiKey">Your API Key</param>
     /// <param name="clientName">The client name</param>
-    protected AlgoliaConfig(string appId, string apiKey, string clientName)
+    /// <param name="clientVersion">The client version</param>
+    protected AlgoliaConfig(string appId, string apiKey, string clientName, string clientVersion)
     {
       AppId = appId;
       ApiKey = apiKey;
-      UserAgent = new AlgoliaUserAgent(clientName);
+      UserAgent = new AlgoliaUserAgent(clientName, clientVersion);
       DefaultHeaders = new Dictionary<string, string>
       {
         { Defaults.AlgoliaApplicationHeader.ToLowerInvariant(), AppId },
@@ -44,7 +45,7 @@ namespace Algolia.Search.Clients
     /// The admin API Key
     /// </summary>
     /// <returns></returns>
-    public string ApiKey { get; }
+    public string ApiKey { get; set; }
 
     /// <summary>
     /// Configurations hosts
@@ -95,6 +96,17 @@ namespace Algolia.Search.Clients
     {
       DefaultHeaders[Defaults.UserAgentHeader.ToLowerInvariant()] = UserAgent.ToString();
       return DefaultHeaders;
+    }
+
+    /// <summary>
+    /// Helper to switch the API key sent with each request
+    /// </summary>
+    /// <param name="apiKey">Your API Key</param>
+    /// <returns></returns>
+    public void SetClientApiKey(string apiKey)
+    {
+      ApiKey = apiKey;
+      DefaultHeaders[Defaults.AlgoliaApiKeyHeader.ToLowerInvariant()] = apiKey;
     }
   }
 }

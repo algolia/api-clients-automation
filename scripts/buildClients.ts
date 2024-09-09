@@ -3,23 +3,24 @@ import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
 
+type BuildType = 'client' | 'playground' | 'snippets';
+
 /**
  * Build code for a specific language.
  */
-async function buildLanguage(
-  language: Language,
-  gens: Generator[],
-  playground: boolean,
-): Promise<void> {
-  const cwd = playground ? `playground/${language}` : getLanguageFolder(language);
-  const spinner = createSpinner(`building ${playground ? 'playground' : 'client'} '${language}'`);
+async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
+  const cwd = buildType === 'client' ? getLanguageFolder(language) : `./${buildType}/${language}`;
+  const spinner = createSpinner(`building ${buildType} for '${language}'`);
   switch (language) {
     case 'csharp':
       await run('dotnet build --configuration Release', { cwd, language });
       break;
+    case 'go':
+      await run('go build ./...', { cwd, language });
+      break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
-      if (!playground) {
+      if (buildType === 'client') {
         const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
@@ -31,16 +32,26 @@ async function buildLanguage(
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
       break;
+    case 'php':
+      // await runComposerInstall();
+      // await run(
+      //   `clients/algoliasearch-client-php/vendor/bin/phpstan analyse --memory-limit 512M -c clients/algoliasearch-client-php/phpstan.neon ${cwd}`,
+      //   { language },
+      // );
+      break;
     case 'python':
-      await run('poetry build', { cwd, language });
+      // there is no type checking for the playground or snippets
+      if (buildType === 'client') {
+        await run('poetry build', { cwd, language });
+      }
       break;
     case 'scala':
-      await run(`sbt --batch -Dsbt.server.forcestart=true +compile`, { cwd, language });
+      await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });
       break;
     case 'swift':
       // make this work in the playground
-      if (!playground) {
-        await run(`swift build -Xswiftc -suppress-warnings`, { cwd, language });
+      if (buildType === 'client') {
+        await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
       }
       break;
     default:
@@ -63,9 +74,13 @@ export async function buildClients(generators: Generator[]): Promise<void> {
     {} as Record<Language, Generator[]>,
   );
 
-  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], false)));
+  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], 'client')));
 }
 
 export async function buildPlaygrounds(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], true)));
+  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'playground')));
+}
+
+export async function buildSnippets(languages: Language[]): Promise<void> {
+  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'snippets')));
 }

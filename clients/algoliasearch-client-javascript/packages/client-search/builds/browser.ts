@@ -13,20 +13,12 @@ import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createSearchClient, apiClientVersion } from '../src/searchClient';
 
+export type SearchClient = ReturnType<typeof createSearchClient>;
+
 export { apiClientVersion } from '../src/searchClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type SearchClient = ReturnType<typeof searchClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function searchClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -49,10 +41,7 @@ export function searchClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

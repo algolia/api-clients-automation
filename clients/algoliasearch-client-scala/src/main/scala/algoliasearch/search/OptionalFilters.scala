@@ -54,6 +54,7 @@ object OptionalFilters {
   def apply(value: String): OptionalFilters = {
     OptionalFilters.StringValue(value)
   }
+
 }
 
 object OptionalFiltersSerializer extends Serializer[OptionalFilters] {

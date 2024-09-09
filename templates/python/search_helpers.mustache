@@ -313,7 +313,7 @@
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
-        See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+        See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
         """
         tmp_index_name = self.create_temporary_name(index_name)
 
@@ -368,3 +368,16 @@
             batch_responses=batch_responses,
             move_operation_response=move_operation_response,
         )
+
+    async def index_exists(self, index_name: str) -> bool:
+        """
+        Helper: Checks if the given `index_name` exists.
+        """
+        try:
+            await self.get_settings(index_name)
+        except Exception as e:
+            if isinstance(e, RequestException) and e.status_code == 404:
+                return False
+            raise e
+
+        return True

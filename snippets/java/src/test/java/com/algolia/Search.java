@@ -19,12 +19,13 @@ class SnippetSearchClient {
     // Call the API
     client.addApiKey(
       new ApiKey()
-        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
+        .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
         .setDescription("my new api key")
         .setValidity(300)
         .setMaxQueriesPerIPPerHour(100)
         .setMaxHitsPerQuery(20)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -37,7 +38,16 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.addOrUpdateObject("indexName", "uniqueID", Map.of("key", "value"));
+    client.addOrUpdateObject(
+      "<YOUR_INDEX_NAME>",
+      "uniqueID",
+      new HashMap() {
+        {
+          put("key", "value");
+        }
+      }
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -51,6 +61,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -64,6 +75,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.assignUserId("userID", new AssignUserIdParams().setCluster("theCluster"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -80,12 +92,31 @@ class SnippetSearchClient {
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
         .setRequests(
-          List.of(
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "bar");
+                    put("foo", "1");
+                  }
+                }
+              ),
+            new BatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "baz");
+                    put("foo", "2");
+                  }
+                }
+              )
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -100,8 +131,22 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of("key", "value"))))
+      new BatchWriteParams()
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.CLEAR)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -116,8 +161,22 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of("key", "value"))))
+      new BatchWriteParams()
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.DELETE)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -132,8 +191,22 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of("key", "value"))))
+      new BatchWriteParams()
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.DELETE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -149,8 +222,21 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of("key", "value"))))
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.PARTIAL_UPDATE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -166,8 +252,21 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of("key", "value"))))
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -182,8 +281,22 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of("key", "value"))))
+      new BatchWriteParams()
+        .setRequests(
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.UPDATE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+          )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -196,7 +309,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(List.of("user1", "user2")));
+    client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2")));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -214,7 +328,7 @@ class SnippetSearchClient {
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
         .setRequests(
-          List.of(
+          Arrays.asList(
             new BatchDictionaryEntriesRequest()
               .setAction(DictionaryAction.ADD_ENTRY)
               .setBody(
@@ -222,13 +336,14 @@ class SnippetSearchClient {
                   .setObjectID("1")
                   .setLanguage(SupportedLanguage.EN)
                   .setWord("fancy")
-                  .setWords(List.of("believe", "algolia"))
-                  .setDecomposition(List.of("trust", "algolia"))
+                  .setWords(Arrays.asList("believe", "algolia"))
+                  .setDecomposition(Arrays.asList("trust", "algolia"))
                   .setState(DictionaryEntryState.ENABLED)
               )
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -246,11 +361,12 @@ class SnippetSearchClient {
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
         .setRequests(
-          List.of(
+          Arrays.asList(
             new BatchDictionaryEntriesRequest().setAction(DictionaryAction.DELETE_ENTRY).setBody(new DictionaryEntry().setObjectID("1"))
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -267,7 +383,7 @@ class SnippetSearchClient {
       DictionaryType.STOPWORDS,
       new BatchDictionaryEntriesParams()
         .setRequests(
-          List.of(
+          Arrays.asList(
             new BatchDictionaryEntriesRequest()
               .setAction(DictionaryAction.ADD_ENTRY)
               .setBody(
@@ -276,6 +392,7 @@ class SnippetSearchClient {
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -288,7 +405,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.browse("cts_e2e_browse", Hit.class);
+    client.browse("<YOUR_INDEX_NAME>", Hit.class);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -301,7 +419,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.clearObjects("theIndexName");
+    client.clearObjects("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -314,7 +433,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.clearRules("indexName");
+    client.clearRules("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -327,7 +447,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.clearSynonyms("indexName");
+    client.clearSynonyms("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -341,6 +462,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -354,6 +476,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -367,6 +490,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -380,6 +504,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -393,6 +518,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteApiKey("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -405,7 +531,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteBy("theIndexName", new DeleteByParams().setFilters("brand:brandName"));
+    client.deleteBy("<YOUR_INDEX_NAME>", new DeleteByParams().setFilters("brand:brandName"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -418,7 +545,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteIndex("theIndexName");
+    client.deleteIndex("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -432,6 +560,21 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the deleteObjects method.
+  //
+  // call deleteObjects without error
+  void snippetForDeleteObjects() {
+    // >SEPARATOR deleteObjects default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -444,7 +587,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteRule("indexName", "id1");
+    client.deleteRule("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -458,6 +602,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.deleteSource("theSource");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -470,7 +615,56 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteSynonym("indexName", "id1");
+    client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the generateSecuredApiKey method.
+  //
+  // generate secured api key basic
+  void snippetForGenerateSecuredApiKey() {
+    // >SEPARATOR generateSecuredApiKey generate secured api key basic
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.generateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(Arrays.asList("Movies"))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the generateSecuredApiKey method.
+  //
+  // generate secured api key with searchParams
+  void snippetForGenerateSecuredApiKey1() {
+    // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.generateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions()
+        .setValidUntil(2524604400L)
+        .setRestrictIndices(Arrays.asList("Movies", "cts_e2e_settings"))
+        .setRestrictSources("192.168.1.0/24")
+        .setFilters("category:Book OR category:Ebook AND _tags:published")
+        .setUserToken("user123")
+        .setSearchParams(
+          new SearchParamsObject()
+            .setQuery("batman")
+            .setTypoTolerance(TypoToleranceEnum.STRICT)
+            .setAroundRadius(AroundRadiusAll.ALL)
+            .setMode(Mode.NEURAL_SEARCH)
+            .setHitsPerPage(10)
+            .setOptionalWords(Arrays.asList("one", "two"))
+        )
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -484,6 +678,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getApiKey("myTestApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -497,6 +692,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getAppTask(123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -510,6 +706,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getDictionaryLanguages();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -523,6 +720,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getDictionarySettings();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -536,6 +734,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getLogs();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -548,7 +747,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getObject("theIndexName", "uniqueID", List.of("attr1", "attr2"));
+    client.getObject("<YOUR_INDEX_NAME>", "uniqueID", Arrays.asList("attr1", "attr2"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -564,12 +764,16 @@ class SnippetSearchClient {
     client.getObjects(
       new GetObjectsParams()
         .setRequests(
-          List.of(
-            new GetObjectsRequest().setAttributesToRetrieve(List.of("attr1", "attr2")).setObjectID("uniqueID").setIndexName("theIndexName")
+          Arrays.asList(
+            new GetObjectsRequest()
+              .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
+              .setObjectID("uniqueID")
+              .setIndexName("<YOUR_INDEX_NAME>")
           )
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -582,7 +786,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getRule("indexName", "id1");
+    client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -595,7 +800,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getSettings("cts_e2e_settings");
+    client.getSettings("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -609,6 +815,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getSources();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -621,7 +828,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getSynonym("indexName", "id1");
+    client.getSynonym("<YOUR_INDEX_NAME>", "id1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -634,7 +842,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getTask("theIndexName", 123L);
+    client.getTask("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -648,6 +857,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getTopUserIds();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -661,6 +871,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.getUserId("uniqueID");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -674,6 +885,49 @@ class SnippetSearchClient {
 
     // Call the API
     client.hasPendingMappings();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the indexExists method.
+  //
+  // indexExists
+  void snippetForIndexExists() {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the indexExists method.
+  //
+  // indexNotExists
+  void snippetForIndexExists1() {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the indexExists method.
+  //
+  // indexExistsWithError
+  void snippetForIndexExists2() {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.indexExists("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -687,6 +941,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listApiKeys();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -700,6 +955,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listClusters();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -713,6 +969,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listIndices();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -726,6 +983,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.listUserIds();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -741,9 +999,21 @@ class SnippetSearchClient {
     client.multipleBatch(
       new BatchParams()
         .setRequests(
-          List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
+          Arrays.asList(
+            new MultipleBatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
+                  }
+                }
+              )
+              .setIndexName("<YOUR_INDEX_NAME>")
+          )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -761,8 +1031,9 @@ class SnippetSearchClient {
       new OperationIndexParams()
         .setOperation(OperationType.MOVE)
         .setDestination("<DESTINATION_INDEX_NAME>")
-        .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
+        .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -779,6 +1050,7 @@ class SnippetSearchClient {
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -795,12 +1067,13 @@ class SnippetSearchClient {
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
     );
+    // >LOG
     // SEPARATOR<
   }
 
   // Snippet for the partialUpdateObject method.
   //
-  // Partial update with string value
+  // Partial update with a new value for a string attribute
   void snippetForPartialUpdateObject() {
     // >SEPARATOR partialUpdateObject default
     // Initialize the client
@@ -808,16 +1081,77 @@ class SnippetSearchClient {
 
     // Call the API
     client.partialUpdateObject(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       "uniqueID",
-      Map.of(
-        "id1",
-        AttributeToUpdate.of("test"),
-        "id2",
-        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue(BuiltInOperationValue.of("test2"))
+      new HashMap() {
+        {
+          put("attributeId", "new value");
+        }
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the partialUpdateObjects method.
+  //
+  // call partialUpdateObjects with createIfNotExists=true
+  void snippetForPartialUpdateObjects() {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.partialUpdateObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
       ),
       true
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the partialUpdateObjects method.
+  //
+  // call partialUpdateObjects with createIfNotExists=false
+  void snippetForPartialUpdateObjects1() {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.partialUpdateObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "3");
+            put("name", "Cyril");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "4");
+            put("name", "David");
+          }
+        }
+      ),
+      false
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -831,6 +1165,86 @@ class SnippetSearchClient {
 
     // Call the API
     client.removeUserId("uniqueID");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceAllObjects method.
+  //
+  // call replaceAllObjects without error
+  void snippetForReplaceAllObjects() {
+    // >SEPARATOR replaceAllObjects default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.replaceAllObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "3");
+            put("name", "Cyril");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "4");
+            put("name", "David");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "5");
+            put("name", "Eva");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "6");
+            put("name", "Fiona");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "7");
+            put("name", "Gael");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "8");
+            put("name", "Hugo");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "9");
+            put("name", "Igor");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "10");
+            put("name", "Julia");
+          }
+        }
+      ),
+      3
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -843,7 +1257,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.replaceSources(List.of(new Source().setSource("theSource").setDescription("theDescription")));
+    client.replaceSources(Arrays.asList(new Source().setSource("theSource").setDescription("theDescription")));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -857,6 +1272,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.restoreApiKey("myApiKey");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -869,7 +1285,76 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
+    client.saveObject(
+      "<YOUR_INDEX_NAME>",
+      new HashMap() {
+        {
+          put("objectID", "id");
+          put("test", "val");
+        }
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjects method.
+  //
+  // call saveObjects without error
+  void snippetForSaveObjects() {
+    // >SEPARATOR saveObjects call saveObjects without error
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.saveObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjects method.
+  //
+  // saveObjects should report errors
+  void snippetForSaveObjects1() {
+    // >SEPARATOR saveObjects saveObjects should report errors
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.saveObjects(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      )
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -883,10 +1368,11 @@ class SnippetSearchClient {
 
     // Call the API
     client.saveRule(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       "id1",
-      new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+      new Rule().setObjectID("id1").setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -901,17 +1387,18 @@ class SnippetSearchClient {
     // Call the API
     client.saveRules(
       "<YOUR_INDEX_NAME>",
-      List.of(
+      Arrays.asList(
         new Rule()
           .setObjectID("a-rule-id")
-          .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
+          .setConditions(Arrays.asList(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
         new Rule()
           .setObjectID("a-second-rule-id")
-          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+          .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
       ),
       false,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -925,11 +1412,12 @@ class SnippetSearchClient {
 
     // Call the API
     client.saveSynonym(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       "id1",
-      new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+      new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -944,17 +1432,18 @@ class SnippetSearchClient {
     // Call the API
     client.saveSynonyms(
       "<YOUR_INDEX_NAME>",
-      List.of(
-        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
+      Arrays.asList(
+        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
         new SynonymHit()
           .setObjectID("id2")
           .setType(SynonymType.ONEWAYSYNONYM)
           .setInput("iphone")
-          .setSynonyms(List.of("ephone", "aphone", "yphone"))
+          .setSynonyms(Arrays.asList("ephone", "aphone", "yphone"))
       ),
       true,
       true
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -969,9 +1458,10 @@ class SnippetSearchClient {
     // Call the API
     client.search(
       new SearchMethodParams()
-        .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+        .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -987,10 +1477,13 @@ class SnippetSearchClient {
     client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
+          Arrays.asList(
+            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson")
+          )
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1006,7 +1499,7 @@ class SnippetSearchClient {
     client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(
+          Arrays.asList(
             new SearchForHits()
               .setIndexName("<YOUR_INDEX_NAME>")
               .setQuery("<YOUR_QUERY>")
@@ -1015,6 +1508,7 @@ class SnippetSearchClient {
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1030,17 +1524,18 @@ class SnippetSearchClient {
     client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
+          Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
   // Snippet for the search method.
   //
   // retrieveFacets
-  void snippetForSearch5() {
+  void snippetForSearch4() {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
@@ -1049,17 +1544,20 @@ class SnippetSearchClient {
     client.search(
       new SearchMethodParams()
         .setRequests(
-          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("author", "genre")))
+          Arrays.asList(
+            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("author", "genre"))
+          )
         ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
   // Snippet for the search method.
   //
   // retrieveFacetsWildcard
-  void snippetForSearch6() {
+  void snippetForSearch5() {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
@@ -1067,9 +1565,12 @@ class SnippetSearchClient {
     // Call the API
     client.search(
       new SearchMethodParams()
-        .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("*")))),
+        .setRequests(
+          Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("*")))
+        ),
       Hit.class
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1083,6 +1584,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1095,7 +1597,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchForFacetValues("indexName", "facetName");
+    client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1108,7 +1611,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchRules("indexName", new SearchRulesParams().setQuery("something"));
+    client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1121,7 +1625,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("indexName", Hit.class);
+    client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1134,7 +1639,8 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchSynonyms("indexName");
+    client.searchSynonyms("<YOUR_INDEX_NAME>");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1148,6 +1654,21 @@ class SnippetSearchClient {
 
     // Call the API
     client.searchUserIds(new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1162,8 +1683,20 @@ class SnippetSearchClient {
     // Call the API
     client.setDictionarySettings(
       new DictionarySettingsParams()
-        .setDisableStandardEntries(new StandardEntries().setPlurals(Map.of("fr", false, "en", false, "ru", true)))
+        .setDisableStandardEntries(
+          new StandardEntries()
+            .setPlurals(
+              new HashMap() {
+                {
+                  put("fr", false);
+                  put("en", false);
+                  put("ru", true);
+                }
+              }
+            )
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1171,15 +1704,16 @@ class SnippetSearchClient {
   //
   // setSettingsAttributesForFaceting
   void snippetForSetSettings() {
-    // >SEPARATOR setSettings setSettingsAttributesForFaceting
+    // >SEPARATOR setSettings default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings().setAttributesForFaceting(List.of("actor", "filterOnly(category)", "searchable(publisher)"))
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1194,8 +1728,90 @@ class SnippetSearchClient {
     // Call the API
     client.updateApiKey(
       "myApiKey",
-      new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
+      new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForApiKey method.
+  //
+  // wait for api key helper - add
+  void snippetForWaitForApiKey() {
+    // >SEPARATOR waitForApiKey wait for api key helper - add
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForApiKey method.
+  //
+  // wait for api key - update
+  void snippetForWaitForApiKey1() {
+    // >SEPARATOR waitForApiKey wait for api key - update
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForApiKey(
+      "api-key-update-operation-test-java",
+      ApiKeyOperation.UPDATE,
+      new ApiKey()
+        .setDescription("my updated api key")
+        .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.DELETE_OBJECT))
+        .setIndexes(Arrays.asList("Movies", "Books"))
+        .setReferers(Arrays.asList("*google.com", "*algolia.com"))
+        .setValidity(305)
+        .setMaxQueriesPerIPPerHour(95)
+        .setMaxHitsPerQuery(20)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForApiKey method.
+  //
+  // wait for api key - delete
+  void snippetForWaitForApiKey2() {
+    // >SEPARATOR waitForApiKey wait for api key - delete
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForAppTask method.
+  //
+  // wait for an application-level task
+  void snippetForWaitForAppTask() {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForAppTask(123L);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the waitForTask method.
+  //
+  // wait for task
+  void snippetForWaitForTask() {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.waitForTask("<YOUR_INDEX_NAME>", 123L);
+    // >LOG
     // SEPARATOR<
   }
 }

@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 
 	"gotests/tests"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/usage"
 )
@@ -51,7 +53,7 @@ func TestUsageapi0(t *testing.T) {
 		"test",
 	))
 	require.NoError(t, err)
-	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
+	require.Equal(t, "usage.algolia.com", echo.Host)
 }
 
 // calls api with correct write host
@@ -77,7 +79,7 @@ func TestUsageapi1(t *testing.T) {
 		"test",
 	))
 	require.NoError(t, err)
-	require.Equal(t, "test-app-id.algolia.net", echo.Host)
+	require.Equal(t, "usage.algolia.com", echo.Host)
 }
 
 // calls api with correct user agent
@@ -94,8 +96,22 @@ func TestUsagecommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Usage (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestUsagecommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createUsageClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.0\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestUsagecommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -110,7 +126,7 @@ func TestUsagecommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestUsagecommonApi2(t *testing.T) {
+func TestUsagecommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -161,4 +177,49 @@ func TestUsageparameters0(t *testing.T) {
 	}
 	client, err = usage.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`apiKey` is missing.")
+}
+
+// switch API key
+func TestUsagesetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *usage.APIClient
+	var cfg usage.UsageConfiguration
+	_ = client
+	_ = echo
+	cfg = usage.UsageConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+	}
+	client, err = usage.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

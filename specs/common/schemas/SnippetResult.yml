@@ -10,6 +10,8 @@ snippetResultOption:
   required:
     - value
     - matchLevel
+  x-discriminator-fields:
+    - matchLevel
 
 snippetResultOptionMap:
   type: object
@@ -26,6 +28,7 @@ snippetResultOptionArray:
 
 snippetResult:
   oneOf:
+    - $ref: '#/snippetResultMap'
     - $ref: '#/snippetResultOption'
     - $ref: '#/snippetResultOptionMap'
     - $ref: '#/snippetResultOptionArray'

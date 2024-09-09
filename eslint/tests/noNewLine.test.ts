@@ -10,8 +10,8 @@ ruleTester.run('no-new-line', noNewLine, {
   valid: [
     `a simple file
 with multiples lines.`,
-    `single line.`,
-    ``,
+    'single line.',
+    '',
   ],
   invalid: [
     {
@@ -26,7 +26,7 @@ multiple lines`,
       code: `single line
     `,
       errors: [{ messageId: 'noNewLine' }],
-      output: `single line`,
+      output: 'single line',
     },
     {
       code: `multiple new lines
@@ -34,7 +34,7 @@ multiple lines`,
 
       `,
       errors: [{ messageId: 'noNewLine' }],
-      output: `multiple new lines`,
+      output: 'multiple new lines',
     },
   ],
 });

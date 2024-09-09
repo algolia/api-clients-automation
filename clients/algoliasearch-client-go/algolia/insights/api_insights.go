@@ -699,7 +699,8 @@ DeleteUserToken calls the API and returns the raw response from it.
 
 	Deletes all events related to the specified user token from events metrics and analytics.
 
-To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+The deletion is asynchronous, and processed within 48 hours.
+To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
 	Request can be constructed by NewApiDeleteUserTokenRequest with parameters below.
 	  @param userToken string - User token for which to delete all associated events.
@@ -747,7 +748,8 @@ func (c *APIClient) DeleteUserTokenWithHTTPInfo(r ApiDeleteUserTokenRequest, opt
 DeleteUserToken casts the HTTP response body to a defined struct.
 
 Deletes all events related to the specified user token from events metrics and analytics.
-To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+The deletion is asynchronous, and processed within 48 hours.
+To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
 Request can be constructed by NewApiDeleteUserTokenRequest with parameters below.
 

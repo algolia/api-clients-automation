@@ -24,6 +24,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Creates a new A/B test.
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="addABTestsRequest"></param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -36,6 +39,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Creates a new A/B test. (Synchronous version)
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="addABTestsRequest"></param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -156,6 +162,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Deletes an A/B test by its ID.
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -168,6 +177,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Deletes an A/B test by its ID. (Synchronous version)
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -180,6 +192,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Retrieves the details for an A/B test by its ID.
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -192,6 +207,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Retrieves the details for an A/B test by its ID. (Synchronous version)
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -204,6 +222,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Lists all A/B tests you configured for this application.
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
   /// <param name="offset">Position of the first item to return. (optional, default to 0)</param>
   /// <param name="limit">Number of items to return. (optional, default to 10)</param>
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
@@ -219,6 +240,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Lists all A/B tests you configured for this application. (Synchronous version)
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
   /// <param name="offset">Position of the first item to return. (optional, default to 0)</param>
   /// <param name="limit">Number of items to return. (optional, default to 10)</param>
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
@@ -232,8 +256,41 @@ public interface IAbtestingClient
   ListABTestsResponse ListABTests(int? offset = default, int? limit = default, string indexPrefix = default, string indexSuffix = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
+  /// Schedule an A/B test to be started at a later time. 
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="scheduleABTestsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of ScheduleABTestResponse</returns>
+  Task<ScheduleABTestResponse> ScheduleABTestAsync(ScheduleABTestsRequest scheduleABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default);
+
+  /// <summary>
+  /// Schedule an A/B test to be started at a later time.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  /// <param name="scheduleABTestsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>ScheduleABTestResponse</returns>
+  ScheduleABTestResponse ScheduleABTest(ScheduleABTestsRequest scheduleABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default);
+
+  /// <summary>
   /// Stops an A/B test by its ID.  You can't restart stopped A/B tests. 
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -246,6 +303,9 @@ public interface IAbtestingClient
   /// <summary>
   /// Stops an A/B test by its ID.  You can't restart stopped A/B tests.  (Synchronous version)
   /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
   /// <param name="id">Unique A/B test identifier.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -264,7 +324,7 @@ public interface IAbtestingClient
 /// </summary>
 public partial class AbtestingClient : IAbtestingClient
 {
-  private readonly HttpTransport _transport;
+  internal HttpTransport _transport;
   private readonly ILogger<AbtestingClient> _logger;
 
   /// <summary>
@@ -322,20 +382,19 @@ public partial class AbtestingClient : IAbtestingClient
     }
   }
 
-
   /// <summary>
-  /// Creates a new A/B test.
+  /// Helper to switch the API key sent with each request
   /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="addABTestsRequest"></param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of ABTestResponse</returns>
+  /// <param name="apiKey">Your new API Key</param>
+  /// <returns></returns>
+  public void SetClientApiKey(string apiKey)
+  {
+    _transport._algoliaConfig.SetClientApiKey(apiKey);
+  }
+
+
+
+  /// <inheritdoc />
   public async Task<ABTestResponse> AddABTestsAsync(AddABTestsRequest addABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -350,34 +409,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// Creates a new A/B test. (Synchronous version)
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="addABTestsRequest"></param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>ABTestResponse</returns>
+  /// <inheritdoc />
   public ABTestResponse AddABTests(AddABTestsRequest addABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => AddABTestsAsync(addABTestsRequest, options, cancellationToken));
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of object</returns>
+  /// <inheritdoc />
   public async Task<object> CustomDeleteAsync(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -392,32 +429,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>object</returns>
+  /// <inheritdoc />
   public object CustomDelete(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => CustomDeleteAsync(path, parameters, options, cancellationToken));
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of object</returns>
+  /// <inheritdoc />
   public async Task<object> CustomGetAsync(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -432,33 +449,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>object</returns>
+  /// <inheritdoc />
   public object CustomGet(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => CustomGetAsync(path, parameters, options, cancellationToken));
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="body">Parameters to send with the custom request. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of object</returns>
+  /// <inheritdoc />
   public async Task<object> CustomPostAsync(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -474,34 +470,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="body">Parameters to send with the custom request. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>object</returns>
+  /// <inheritdoc />
   public object CustomPost(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => CustomPostAsync(path, parameters, body, options, cancellationToken));
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="body">Parameters to send with the custom request. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of object</returns>
+  /// <inheritdoc />
   public async Task<object> CustomPutAsync(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -517,35 +491,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
-  /// </summary>
-  /// <param name="path">Path of the endpoint, anything after \&quot;/1\&quot; must be specified.</param>
-  /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
-  /// <param name="body">Parameters to send with the custom request. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>object</returns>
+  /// <inheritdoc />
   public object CustomPut(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => CustomPutAsync(path, parameters, body, options, cancellationToken));
 
 
-  /// <summary>
-  /// Deletes an A/B test by its ID.
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of ABTestResponse</returns>
+  /// <inheritdoc />
   public async Task<ABTestResponse> DeleteABTestAsync(int id, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -557,36 +508,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// Deletes an A/B test by its ID. (Synchronous version)
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>ABTestResponse</returns>
+  /// <inheritdoc />
   public ABTestResponse DeleteABTest(int id, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => DeleteABTestAsync(id, options, cancellationToken));
 
 
-  /// <summary>
-  /// Retrieves the details for an A/B test by its ID.
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - analytics
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of ABTest</returns>
+  /// <inheritdoc />
   public async Task<ABTest> GetABTestAsync(int id, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -598,39 +525,12 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// Retrieves the details for an A/B test by its ID. (Synchronous version)
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - analytics
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>ABTest</returns>
+  /// <inheritdoc />
   public ABTest GetABTest(int id, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => GetABTestAsync(id, options, cancellationToken));
 
 
-  /// <summary>
-  /// Lists all A/B tests you configured for this application.
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - analytics
-  /// <param name="offset">Position of the first item to return. (optional, default to 0)</param>
-  /// <param name="limit">Number of items to return. (optional, default to 10)</param>
-  /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
-  /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of ListABTestsResponse</returns>
+  /// <inheritdoc />
   public async Task<ListABTestsResponse> ListABTestsAsync(int? offset = default, int? limit = default, string indexPrefix = default, string indexSuffix = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -644,39 +544,32 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// Lists all A/B tests you configured for this application. (Synchronous version)
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - analytics
-  /// <param name="offset">Position of the first item to return. (optional, default to 0)</param>
-  /// <param name="limit">Number of items to return. (optional, default to 10)</param>
-  /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
-  /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>ListABTestsResponse</returns>
+  /// <inheritdoc />
   public ListABTestsResponse ListABTests(int? offset = default, int? limit = default, string indexPrefix = default, string indexSuffix = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => ListABTestsAsync(offset, limit, indexPrefix, indexSuffix, options, cancellationToken));
 
 
-  /// <summary>
-  /// Stops an A/B test by its ID.  You can't restart stopped A/B tests. 
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>Task of ABTestResponse</returns>
+  /// <inheritdoc />
+  public async Task<ScheduleABTestResponse> ScheduleABTestAsync(ScheduleABTestsRequest scheduleABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default)
+  {
+
+    if (scheduleABTestsRequest == null)
+      throw new ArgumentException("Parameter `scheduleABTestsRequest` is required when calling `ScheduleABTest`.");
+
+    var requestOptions = new InternalRequestOptions(options);
+
+
+    requestOptions.Data = scheduleABTestsRequest;
+    return await _transport.ExecuteRequestAsync<ScheduleABTestResponse>(new HttpMethod("POST"), "/2/abtests/schedule", requestOptions, cancellationToken).ConfigureAwait(false);
+  }
+
+
+  /// <inheritdoc />
+  public ScheduleABTestResponse ScheduleABTest(ScheduleABTestsRequest scheduleABTestsRequest, RequestOptions options = null, CancellationToken cancellationToken = default) =>
+    AsyncHelper.RunSync(() => ScheduleABTestAsync(scheduleABTestsRequest, options, cancellationToken));
+
+
+  /// <inheritdoc />
   public async Task<ABTestResponse> StopABTestAsync(int id, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -688,21 +581,8 @@ public partial class AbtestingClient : IAbtestingClient
   }
 
 
-  /// <summary>
-  /// Stops an A/B test by its ID.  You can't restart stopped A/B tests.  (Synchronous version)
-  /// </summary>
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  /// <param name="id">Unique A/B test identifier.</param>
-  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
-  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
-  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
-  /// <returns>ABTestResponse</returns>
+  /// <inheritdoc />
   public ABTestResponse StopABTest(int id, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => StopABTestAsync(id, options, cancellationToken));
 
 }
-

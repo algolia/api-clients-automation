@@ -12,11 +12,17 @@ import hmac
 from json import dumps
 from random import randint
 from re import search
+from sys import version_info
 from time import time
-from typing import Annotated, Any, Callable, Dict, List, Optional, Self, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from pydantic import Field, StrictBool, StrictInt, StrictStr
+
+if version_info >= (3, 11):
+    from typing import Annotated, Self
+else:
+    from typing_extensions import Annotated, Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.exceptions import RequestException, ValidUntilNotFoundException
@@ -30,7 +36,6 @@ from algoliasearch.search.models.action import Action
 from algoliasearch.search.models.add_api_key_response import AddApiKeyResponse
 from algoliasearch.search.models.api_key import ApiKey
 from algoliasearch.search.models.assign_user_id_params import AssignUserIdParams
-from algoliasearch.search.models.attribute_to_update import AttributeToUpdate
 from algoliasearch.search.models.batch_assign_user_ids_params import (
     BatchAssignUserIdsParams,
 )
@@ -197,6 +202,10 @@ class SearchClient:
     async def close(self) -> None:
         """Closes the underlying `transporter` of the API client."""
         return await self._transporter.close()
+
+    def set_client_api_key(self, api_key: str) -> None:
+        """Sets a new API key to authenticate requests."""
+        self._transporter._config.set_client_api_key(api_key)
 
     async def wait_for_task(
         self,
@@ -535,7 +544,7 @@ class SearchClient:
         """
         Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
 
-        See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+        See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
         """
         tmp_index_name = self.create_temporary_name(index_name)
 
@@ -590,6 +599,19 @@ class SearchClient:
             batch_responses=batch_responses,
             move_operation_response=move_operation_response,
         )
+
+    async def index_exists(self, index_name: str) -> bool:
+        """
+        Helper: Checks if the given `index_name` exists.
+        """
+        try:
+            await self.get_settings(index_name)
+        except Exception as e:
+            if isinstance(e, RequestException) and e.status_code == 404:
+                return False
+            raise e
+
+        return True
 
     async def add_api_key_with_http_info(
         self,
@@ -1805,7 +1827,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+        This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
 
         Required API Key ACLs:
           - deleteIndex
@@ -1854,7 +1876,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> DeletedAtResponse:
         """
-        This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+        This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
 
         Required API Key ACLs:
           - deleteIndex
@@ -3533,8 +3555,7 @@ class SearchClient:
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         attributes_to_update: Annotated[
-            Dict[str, AttributeToUpdate],
-            Field(description="Attributes with their values."),
+            Dict[str, Any], Field(description="Attributes with their values.")
         ],
         create_if_not_exists: Annotated[
             Optional[StrictBool],
@@ -3543,7 +3564,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -3553,7 +3574,7 @@ class SearchClient:
         :param object_id: Unique record identifier. (required)
         :type object_id: str
         :param attributes_to_update: Attributes with their values. (required)
-        :type attributes_to_update: Dict[str, AttributeToUpdate]
+        :type attributes_to_update: object
         :param create_if_not_exists: Whether to create a new record if it doesn't exist.
         :type create_if_not_exists: bool
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3605,8 +3626,7 @@ class SearchClient:
         ],
         object_id: Annotated[StrictStr, Field(description="Unique record identifier.")],
         attributes_to_update: Annotated[
-            Dict[str, AttributeToUpdate],
-            Field(description="Attributes with their values."),
+            Dict[str, Any], Field(description="Attributes with their values.")
         ],
         create_if_not_exists: Annotated[
             Optional[StrictBool],
@@ -3615,7 +3635,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> UpdatedAtWithObjectIdResponse:
         """
-        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+        Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
 
         Required API Key ACLs:
           - addObject
@@ -3625,7 +3645,7 @@ class SearchClient:
         :param object_id: Unique record identifier. (required)
         :type object_id: str
         :param attributes_to_update: Attributes with their values. (required)
-        :type attributes_to_update: Dict[str, AttributeToUpdate]
+        :type attributes_to_update: object
         :param create_if_not_exists: Whether to create a new record if it doesn't exist.
         :type create_if_not_exists: bool
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3828,7 +3848,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+        Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
 
         Required API Key ACLs:
           - addObject
@@ -3880,7 +3900,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> SaveObjectResponse:
         """
-        Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+        Adds a record to an index or replace it.  - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index. - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
 
         Required API Key ACLs:
           - addObject

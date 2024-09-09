@@ -11,7 +11,7 @@ import kotlinx.serialization.json.*
 
 public class AbtestingClient(
   override val appId: String,
-  override val apiKey: String,
+  override var apiKey: String,
   public val region: String? = null,
   override val options: ClientOptions = ClientOptions(),
 ) : ApiClient {
@@ -195,6 +195,26 @@ public class AbtestingClient(
         indexPrefix?.let { put("indexPrefix", it) }
         indexSuffix?.let { put("indexSuffix", it) }
       },
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Schedule an A/B test to be started at a later time.
+   *
+   * Required API Key ACLs:
+   *   - editSettings
+   * @param scheduleABTestsRequest
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest, requestOptions: RequestOptions? = null): ScheduleABTestResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("2", "abtests", "schedule"),
+      body = scheduleABTestsRequest,
     )
     return requester.execute(
       requestConfig = requestConfig,

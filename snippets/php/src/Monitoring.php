@@ -16,7 +16,7 @@ class SnippetMonitoringClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -27,6 +27,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -37,7 +38,7 @@ class SnippetMonitoringClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -48,6 +49,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -58,7 +60,7 @@ class SnippetMonitoringClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -69,6 +71,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -79,7 +82,7 @@ class SnippetMonitoringClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -90,6 +93,7 @@ class SnippetMonitoringClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -100,7 +104,7 @@ class SnippetMonitoringClient
      *
      * getClusterIncidents
      */
-    public function snippetForGetClusterIncidents()
+    public function snippetForGetClusterIncidents(): void
     {
         // >SEPARATOR getClusterIncidents default
         // Initialize the client
@@ -111,6 +115,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -121,7 +126,7 @@ class SnippetMonitoringClient
      *
      * getClusterStatus
      */
-    public function snippetForGetClusterStatus()
+    public function snippetForGetClusterStatus(): void
     {
         // >SEPARATOR getClusterStatus default
         // Initialize the client
@@ -132,6 +137,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -142,7 +148,7 @@ class SnippetMonitoringClient
      *
      * getIncidents
      */
-    public function snippetForGetIncidents()
+    public function snippetForGetIncidents(): void
     {
         // >SEPARATOR getIncidents default
         // Initialize the client
@@ -151,6 +157,7 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getIncidents();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -161,7 +168,7 @@ class SnippetMonitoringClient
      *
      * getIndexingTime
      */
-    public function snippetForGetIndexingTime()
+    public function snippetForGetIndexingTime(): void
     {
         // >SEPARATOR getIndexingTime default
         // Initialize the client
@@ -172,6 +179,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -182,7 +190,7 @@ class SnippetMonitoringClient
      *
      * getLatency
      */
-    public function snippetForGetLatency()
+    public function snippetForGetLatency(): void
     {
         // >SEPARATOR getLatency default
         // Initialize the client
@@ -193,6 +201,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -203,7 +212,7 @@ class SnippetMonitoringClient
      *
      * getMetrics
      */
-    public function snippetForGetMetrics()
+    public function snippetForGetMetrics(): void
     {
         // >SEPARATOR getMetrics default
         // Initialize the client
@@ -215,6 +224,7 @@ class SnippetMonitoringClient
             'minute',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -225,7 +235,7 @@ class SnippetMonitoringClient
      *
      * getReachability
      */
-    public function snippetForGetReachability()
+    public function snippetForGetReachability(): void
     {
         // >SEPARATOR getReachability default
         // Initialize the client
@@ -236,6 +246,7 @@ class SnippetMonitoringClient
             'c1-de',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -246,7 +257,7 @@ class SnippetMonitoringClient
      *
      * getInventory
      */
-    public function snippetForGetServers()
+    public function snippetForGetServers(): void
     {
         // >SEPARATOR getServers default
         // Initialize the client
@@ -255,6 +266,7 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getServers();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -265,7 +277,7 @@ class SnippetMonitoringClient
      *
      * getStatus
      */
-    public function snippetForGetStatus()
+    public function snippetForGetStatus(): void
     {
         // >SEPARATOR getStatus default
         // Initialize the client
@@ -274,8 +286,29 @@ class SnippetMonitoringClient
         // Call the API
         $response = $client->getStatus();
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

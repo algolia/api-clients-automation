@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * TransformationCreate Class Doc Comment.
@@ -24,6 +25,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         'code' => 'string',
         'name' => 'string',
         'description' => 'string',
+        'authenticationIDs' => 'string[]',
     ];
 
     /**
@@ -35,6 +37,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         'code' => null,
         'name' => null,
         'description' => null,
+        'authenticationIDs' => null,
     ];
 
     /**
@@ -47,6 +50,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         'code' => 'code',
         'name' => 'name',
         'description' => 'description',
+        'authenticationIDs' => 'authenticationIDs',
     ];
 
     /**
@@ -58,6 +62,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         'code' => 'setCode',
         'name' => 'setName',
         'description' => 'setDescription',
+        'authenticationIDs' => 'setAuthenticationIDs',
     ];
 
     /**
@@ -69,6 +74,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         'code' => 'getCode',
         'name' => 'getName',
         'description' => 'getDescription',
+        'authenticationIDs' => 'getAuthenticationIDs',
     ];
 
     /**
@@ -93,6 +99,9 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
         }
         if (isset($data['description'])) {
             $this->container['description'] = $data['description'];
+        }
+        if (isset($data['authenticationIDs'])) {
+            $this->container['authenticationIDs'] = $data['authenticationIDs'];
         }
     }
 
@@ -250,13 +259,35 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
     }
 
     /**
+     * Gets authenticationIDs.
+     *
+     * @return null|string[]
+     */
+    public function getAuthenticationIDs()
+    {
+        return $this->container['authenticationIDs'] ?? null;
+    }
+
+    /**
+     * Sets authenticationIDs.
+     *
+     * @param null|string[] $authenticationIDs the authentications associated for the current transformation
+     *
+     * @return self
+     */
+    public function setAuthenticationIDs($authenticationIDs)
+    {
+        $this->container['authenticationIDs'] = $authenticationIDs;
+
+        return $this;
+    }
+
+    /**
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -268,7 +299,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -279,7 +310,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -293,7 +324,7 @@ class TransformationCreate extends AbstractModel implements ModelInterface, \Arr
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Abtesting;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * ABTest Class Doc Comment.
@@ -241,21 +242,6 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         if (!isset($this->container['abTestID']) || null === $this->container['abTestID']) {
             $invalidProperties[] = "'abTestID' can't be null";
         }
-        if (!isset($this->container['clickSignificance']) || null === $this->container['clickSignificance']) {
-            $invalidProperties[] = "'clickSignificance' can't be null";
-        }
-        if (!isset($this->container['conversionSignificance']) || null === $this->container['conversionSignificance']) {
-            $invalidProperties[] = "'conversionSignificance' can't be null";
-        }
-        if (!isset($this->container['addToCartSignificance']) || null === $this->container['addToCartSignificance']) {
-            $invalidProperties[] = "'addToCartSignificance' can't be null";
-        }
-        if (!isset($this->container['purchaseSignificance']) || null === $this->container['purchaseSignificance']) {
-            $invalidProperties[] = "'purchaseSignificance' can't be null";
-        }
-        if (!isset($this->container['revenueSignificance']) || null === $this->container['revenueSignificance']) {
-            $invalidProperties[] = "'revenueSignificance' can't be null";
-        }
         if (!isset($this->container['updatedAt']) || null === $this->container['updatedAt']) {
             $invalidProperties[] = "'updatedAt' can't be null";
         }
@@ -316,7 +302,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Gets clickSignificance.
      *
-     * @return float
+     * @return null|float
      */
     public function getClickSignificance()
     {
@@ -326,7 +312,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets clickSignificance.
      *
-     * @param float $clickSignificance clickSignificance
+     * @param null|float $clickSignificance clickSignificance
      *
      * @return self
      */
@@ -340,7 +326,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Gets conversionSignificance.
      *
-     * @return float
+     * @return null|float
      */
     public function getConversionSignificance()
     {
@@ -350,7 +336,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets conversionSignificance.
      *
-     * @param float $conversionSignificance conversionSignificance
+     * @param null|float $conversionSignificance conversionSignificance
      *
      * @return self
      */
@@ -364,7 +350,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Gets addToCartSignificance.
      *
-     * @return float
+     * @return null|float
      */
     public function getAddToCartSignificance()
     {
@@ -374,7 +360,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets addToCartSignificance.
      *
-     * @param float $addToCartSignificance addToCartSignificance
+     * @param null|float $addToCartSignificance addToCartSignificance
      *
      * @return self
      */
@@ -388,7 +374,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Gets purchaseSignificance.
      *
-     * @return float
+     * @return null|float
      */
     public function getPurchaseSignificance()
     {
@@ -398,7 +384,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets purchaseSignificance.
      *
-     * @param float $purchaseSignificance purchaseSignificance
+     * @param null|float $purchaseSignificance purchaseSignificance
      *
      * @return self
      */
@@ -412,7 +398,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Gets revenueSignificance.
      *
-     * @return array<string,float>
+     * @return null|array<string,float>
      */
     public function getRevenueSignificance()
     {
@@ -422,7 +408,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     /**
      * Sets revenueSignificance.
      *
-     * @param array<string,float> $revenueSignificance revenueSignificance
+     * @param null|array<string,float> $revenueSignificance revenueSignificance
      *
      * @return self
      */
@@ -605,10 +591,8 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -620,7 +604,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -631,7 +615,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -645,7 +629,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Search;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * AutomaticFacetFilters Class Doc Comment.
@@ -65,10 +66,8 @@ class AutomaticFacetFilters extends AbstractModel implements ModelInterface, \Ar
 
     /**
      * Constructor.
-     *
-     * @param mixed[] $data Associated array of property values
      */
-    public function __construct(?array $data = null) {}
+    public function __construct() {}
 
     /**
      * Array of attributes where the key is the local name,
@@ -146,10 +145,8 @@ class AutomaticFacetFilters extends AbstractModel implements ModelInterface, \Ar
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -161,7 +158,7 @@ class AutomaticFacetFilters extends AbstractModel implements ModelInterface, \Ar
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -172,7 +169,7 @@ class AutomaticFacetFilters extends AbstractModel implements ModelInterface, \Ar
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -186,7 +183,7 @@ class AutomaticFacetFilters extends AbstractModel implements ModelInterface, \Ar
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

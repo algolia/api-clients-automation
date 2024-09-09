@@ -450,7 +450,7 @@ public class SearchClientRequestTests
             {
               ObjectID = "1",
               Language = Enum.Parse<SupportedLanguage>("En"),
-              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" } }
+              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" }, }
             },
           }
         },
@@ -1268,10 +1268,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getRule")]
   public async Task GetRuleTest()
   {
-    await client.GetRuleAsync("indexName", "id1");
+    await client.GetRuleAsync("cts_e2e_browse", "qr-1725004648916");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/id1", req.Path);
+    Assert.Equal("/1/indexes/cts_e2e_browse/rules/qr-1725004648916", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -1568,69 +1568,66 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "Partial update with string value")]
+  [Fact(DisplayName = "Partial update with a new value for a string attribute")]
   public async Task PartialUpdateObjectTest()
   {
     await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
-      new Dictionary<string, AttributeToUpdate>
-      {
-        { "id1", new AttributeToUpdate("test") },
-        {
-          "id2",
-          new AttributeToUpdate(
-            new BuiltInOperation
-            {
-              Operation = Enum.Parse<BuiltInOperationType>("AddUnique"),
-              Value = new BuiltInOperationValue("test2"),
-            }
-          )
-        }
-      },
-      true
+      new Dictionary<string, string> { { "attributeId", "new value" } }
     );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}",
+      "{\"attributeId\":\"new value\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
-    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"createIfNotExists\":\"true\"}"
-    );
-    Assert.NotNull(expectedQuery);
-
-    var actualQuery = req.QueryParameters;
-    Assert.Equal(expectedQuery.Count, actualQuery.Count);
-
-    foreach (var actual in actualQuery)
-    {
-      expectedQuery.TryGetValue(actual.Key, out var expected);
-      Assert.Equal(expected, actual.Value);
-    }
   }
 
-  [Fact(DisplayName = "Partial update with integer value")]
+  [Fact(DisplayName = "Partial update with a new value for an integer attribute")]
   public async Task PartialUpdateObjectTest1()
   {
     await client.PartialUpdateObjectAsync(
       "theIndexName",
       "uniqueID",
-      new Dictionary<string, AttributeToUpdate>
+      new Dictionary<string, int> { { "attributeId", 1 } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"attributeId\":1}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for a boolean attribute")]
+  public async Task PartialUpdateObjectTest2()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, Boolean> { { "attributeId", true } }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"attributeId\":true}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for an array attribute")]
+  public async Task PartialUpdateObjectTest3()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, List<string>>
       {
         {
           "attributeId",
-          new AttributeToUpdate(
-            new BuiltInOperation
-            {
-              Operation = Enum.Parse<BuiltInOperationType>("Increment"),
-              Value = new BuiltInOperationValue(2),
-            }
-          )
+          new List<string> { "one", "two", "three" }
         }
       }
     );
@@ -1639,7 +1636,32 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}",
+      "{\"attributeId\":[\"one\",\"two\",\"three\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "Partial update with a new value for an object attribute")]
+  public async Task PartialUpdateObjectTest4()
+  {
+    await client.PartialUpdateObjectAsync(
+      "theIndexName",
+      "uniqueID",
+      new Dictionary<string, Object>
+      {
+        {
+          "attributeId",
+          new Dictionary<string, string> { { "nested", "value" } }
+        }
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/uniqueID/partial", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributeId\":{\"nested\":\"value\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1779,7 +1801,7 @@ public class SearchClientRequestTests
           },
           Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
           FilterPromotes = false,
-          UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
+          UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
           Promote = new List<Promote>
           {
             new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),
@@ -1925,7 +1947,7 @@ public class SearchClientRequestTests
             },
             Hide = new List<ConsequenceHide> { new ConsequenceHide { ObjectID = "321", } },
             FilterPromotes = false,
-            UserData = new Dictionary<string, string> { { "algolia", "aloglia" } },
+            UserData = new Dictionary<string, object> { { "algolia", "aloglia" } },
             Promote = new List<Promote>
             {
               new Promote(new PromoteObjectID { ObjectID = "abc", Position = 3, }),
@@ -2202,8 +2224,40 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "retrieveFacets")]
+  [Fact(DisplayName = "search with highlight and snippet results")]
   public async Task SearchTest5()
+  {
+    await client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_highlight_snippet_results",
+              Query = "vim",
+              AttributesToSnippet = new List<string> { "*:20" },
+              AttributesToHighlight = new List<string> { "*" },
+              AttributesToRetrieve = new List<string> { "*" },
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retrieveFacets")]
+  public async Task SearchTest6()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2233,7 +2287,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "retrieveFacetsWildcard")]
-  public async Task SearchTest6()
+  public async Task SearchTest7()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2263,7 +2317,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
-  public async Task SearchTest7()
+  public async Task SearchTest8()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2294,7 +2348,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single hits request with all parameters")]
-  public async Task SearchTest8()
+  public async Task SearchTest9()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2325,7 +2379,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single facet request with all parameters")]
-  public async Task SearchTest9()
+  public async Task SearchTest10()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2361,7 +2415,7 @@ public class SearchClientRequestTests
   [Fact(
     DisplayName = "search for multiple mixed requests in multiple indices with minimal parameters"
   )]
-  public async Task SearchTest10()
+  public async Task SearchTest11()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2400,7 +2454,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for multiple mixed requests in multiple indices with all parameters")]
-  public async Task SearchTest11()
+  public async Task SearchTest12()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2443,7 +2497,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters accept all of the possible shapes")]
-  public async Task SearchTest12()
+  public async Task SearchTest13()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2531,7 +2585,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters end to end")]
-  public async Task SearchTest13()
+  public async Task SearchTest14()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2605,7 +2659,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search with all search parameters")]
-  public async Task SearchTest14()
+  public async Task SearchTest15()
   {
     await client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2825,16 +2879,12 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "searchRules")]
   public async Task SearchRulesTest()
   {
-    await client.SearchRulesAsync("indexName", new SearchRulesParams { Query = "something", });
+    await client.SearchRulesAsync("cts_e2e_browse", new SearchRulesParams { Query = "zorro", });
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/search", req.Path);
+    Assert.Equal("/1/indexes/cts_e2e_browse/rules/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"query\":\"something\"}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
+    JsonAssert.EqualOverrideDefault("{\"query\":\"zorro\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "search with minimal parameters")]

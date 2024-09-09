@@ -27,6 +27,11 @@ open class SearchClient {
         try self.init(configuration: SearchClientConfiguration(appID: appID, apiKey: apiKey))
     }
 
+    open func setClientApiKey(apiKey: String) {
+        self.configuration.apiKey = apiKey
+        self.transporter.setClientApiKey(apiKey: apiKey)
+    }
+
     /// - parameter apiKey: (body)
     /// - returns: AddApiKeyResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1043,7 +1048,7 @@ open class SearchClient {
 
     // This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the
     // [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-    // operation](tag/Records/operation/batch).
+    // operation](#tag/Records/operation/batch).
     // Required API Key ACLs:
     //  - deleteIndex
     //
@@ -2646,7 +2651,7 @@ open class SearchClient {
     open func partialUpdateObject(
         indexName: String,
         objectID: String,
-        attributesToUpdate: [String: AttributeToUpdate],
+        attributesToUpdate: Codable,
         createIfNotExists: Bool? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws -> UpdatedAtWithObjectIdResponse {
@@ -2668,7 +2673,26 @@ open class SearchClient {
     // Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn't
     // exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet,
     // this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you
-    // specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+    // specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an
+    // attribute without pushing the entire record, you can use these built-in operations. These operations can be
+    // helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement:
+    // decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all
+    // matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number
+    // or
+    // string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+    // increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore
+    // the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+    // current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only
+    // creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if
+    // the provided value is greater than the current value, and otherwise ignore the whole object update. For example,
+    // if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
+    // the
+    // engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
+    // IncrementSet
+    // value that's greater than 0.  You can specify an operation by providing an object with the attribute to update as
+    // the key and its value being an object with the following properties:  - _operation: the operation to apply on the
+    // attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value
+    // to add or remove.
     // Required API Key ACLs:
     //  - addObject
     //
@@ -2685,7 +2709,7 @@ open class SearchClient {
     open func partialUpdateObjectWithHTTPInfo(
         indexName: String,
         objectID: String,
-        attributesToUpdate: [String: AttributeToUpdate],
+        attributesToUpdate: Codable,
         createIfNotExists: Bool? = nil,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<UpdatedAtWithObjectIdResponse> {
@@ -2920,8 +2944,8 @@ open class SearchClient {
     // record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your
     // index.
     // - If you add a record to an index that doesn't exist yet, a new index is created.  To update _some_ attributes of
-    // a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple
-    // records, use the [`batch` operation](#tag/Records/operation/batch).
+    // a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace
+    // multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     // Required API Key ACLs:
     //  - addObject
     //

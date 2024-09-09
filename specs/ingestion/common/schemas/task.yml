@@ -302,6 +302,8 @@ ScheduleTriggerInput:
   required:
     - type
     - cron
+  x-discriminator-fields:
+    - cron
 
 ScheduleTrigger:
   type: object
@@ -444,6 +446,9 @@ MappingInput:
   required:
     - format
     - actions
+  x-discriminator-fields:
+    - format
+    - actions
 
 StreamingInput:
   type: object
@@ -454,15 +459,43 @@ StreamingInput:
       $ref: '#/MappingInput'
   required:
     - mapping
+  x-discriminator-fields:
+    - mapping
 
 DockerStreamsInput:
   description: The selected streams of a singer or airbyte connector.
   type: object
   properties:
     streams:
-      type: object
+      type: array
+      items: 
+        $ref: '#/DockerStreams'
   required:
     - streams
+  x-discriminator-fields:
+    - streams
+
+DockerStreams:
+  type: object
+  properties:
+    name:
+      type: string
+      description: The name of the stream to fetch the data from (e.g. table name).
+    properties:
+      type: array
+      description: The properties of the stream to select (e.g. column).
+      items:
+        type: string
+    syncMode:
+      $ref: '#/DockerStreamsSyncMode'
+  required:
+    - name
+    - syncMode
+
+DockerStreamsSyncMode:
+  type: string
+  description: The strategy to use to fetch the data.
+  enum: [incremental, fullTable]
 
 failureThreshold:
   type: integer

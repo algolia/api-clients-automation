@@ -20,6 +20,18 @@ describe('api', () => {
 
   it('provides a `clearCache` method', () => {
     expect(client.clearCache).not.toBeUndefined();
+    expect(() => client.clearCache()).not.toThrow();
+  });
+
+  it('provides a `setClientApiKey` method', () => {
+    const _client = algoliasearch('foo', 'bar', {
+      requester: echoRequester(),
+    });
+
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('bar');
+    expect(_client.setClientApiKey).not.toBeUndefined();
+    _client.setClientApiKey({ apiKey: 'tabac' });
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('tabac');
   });
 
   it('sets the user agent', async () => {
@@ -28,7 +40,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(req.algoliaAgent).toMatchInlineSnapshot(
-      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`
+      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`,
     );
   });
 
@@ -47,22 +59,16 @@ describe('api', () => {
   describe('_ua', () => {
     it('provides a backward compatible `_ua` variable at the root of the client', () => {
       expect(client._ua).toEqual(
-        expect.stringContaining(
-          `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
-        )
+        expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`),
       );
     });
 
     it('keeps `_ua` updated with the transporter algolia agent', () => {
-      expect(client._ua).toEqual(
-        expect.stringMatching(/.*; Node\.js \(.*\)$/g)
-      );
+      expect(client._ua).toEqual(expect.stringMatching(/.*; Node\.js \(.*\)$/g));
 
       client.addAlgoliaAgent('Jest', '0.0.1');
 
-      expect(client._ua).toEqual(
-        expect.stringMatching(/.*; Jest \(0\.0\.1\)$/g)
-      );
+      expect(client._ua).toEqual(expect.stringMatching(/.*; Jest \(0\.0\.1\)$/g));
     });
   });
 
@@ -71,9 +77,7 @@ describe('api', () => {
     expect(client.transporter).toEqual({
       algoliaAgent: {
         add: expect.any(Function),
-        value: expect.stringContaining(
-          `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
-        ),
+        value: expect.stringContaining(`Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`),
       },
       baseHeaders: {
         'content-type': 'text/plain',
@@ -152,10 +156,11 @@ describe('api', () => {
     });
 
     it('default `init` clients to the root `algoliasearch` credentials', async () => {
-      const abtestingClient = client.initAbtesting();
-      const analyticsClient = client.initAnalytics();
+      const abtestingClient = client.initAbtesting({ options: { requester: echoRequester() } });
+      const analyticsClient = client.initAnalytics({ options: { requester: echoRequester() } });
       const personalizationClient = client.initPersonalization({
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({
@@ -172,19 +177,19 @@ describe('api', () => {
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
       expect(res2.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
       expect(res3.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
-        })
+        }),
       );
     });
 
@@ -192,15 +197,18 @@ describe('api', () => {
       const abtestingClient = client.initAbtesting({
         appId: 'appId1',
         apiKey: 'apiKey1',
+        options: { requester: echoRequester() },
       });
       const analyticsClient = client.initAnalytics({
         appId: 'appId2',
         apiKey: 'apiKey2',
+        options: { requester: echoRequester() },
       });
       const personalizationClient = client.initPersonalization({
         appId: 'appId3',
         apiKey: 'apiKey3',
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({
@@ -217,19 +225,19 @@ describe('api', () => {
         expect.objectContaining({
           'x-algolia-application-id': 'appId1',
           'x-algolia-api-key': 'apiKey1',
-        })
+        }),
       );
       expect(res2.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId2',
           'x-algolia-api-key': 'apiKey2',
-        })
+        }),
       );
       expect(res3.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId3',
           'x-algolia-api-key': 'apiKey3',
-        })
+        }),
       );
     });
   });
@@ -272,9 +280,7 @@ describe('search with legacy signature', () => {
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        { indexName: 'theIndexName', type: 'facet', facet: 'theFacet' },
-      ],
+      requests: [{ indexName: 'theIndexName', type: 'facet', facet: 'theFacet' }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });

@@ -27,6 +27,11 @@ open class IngestionClient {
         try self.init(configuration: IngestionClientConfiguration(appID: appID, apiKey: apiKey, region: region))
     }
 
+    open func setClientApiKey(apiKey: String) {
+        self.configuration.apiKey = apiKey
+        self.transporter.setClientApiKey(apiKey: apiKey)
+    }
+
     /// - parameter authenticationCreate: (body)
     /// - returns: AuthenticationCreateResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1149,6 +1154,54 @@ open class IngestionClient {
         )
     }
 
+    /// - parameter generateTransformationCodePayload: (body)
+    /// - returns: GenerateTransformationCodeResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func generateTransformationCode(
+        generateTransformationCodePayload: GenerateTransformationCodePayload,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GenerateTransformationCodeResponse {
+        let response: Response<GenerateTransformationCodeResponse> = try await generateTransformationCodeWithHTTPInfo(
+            generateTransformationCodePayload: generateTransformationCodePayload,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Generates code for the selected model based on the given prompt.
+    // Required API Key ACLs:
+    //  - addObject
+    //  - deleteIndex
+    //  - editSettings
+    //
+    // - parameter generateTransformationCodePayload: (body)
+    // - returns: RequestBuilder<GenerateTransformationCodeResponse>
+
+    open func generateTransformationCodeWithHTTPInfo(
+        generateTransformationCodePayload: GenerateTransformationCodePayload,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<GenerateTransformationCodeResponse> {
+        let resourcePath = "/1/transformations/models"
+        let body = generateTransformationCodePayload
+        let queryParameters: [String: Any?]? = nil
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
+        )
+    }
+
     /// - parameter authenticationID: (path) Unique identifier of an authentication resource.
     /// - returns: Authentication
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1920,6 +1973,7 @@ open class IngestionClient {
     /// - parameter itemsPerPage: (query) Number of items per page. (optional, default to 10)
     /// - parameter page: (query) Page number of the paginated API response. (optional)
     /// - parameter status: (query) Run status for filtering the list of task runs. (optional)
+    /// - parameter type: (query) Run type for filtering the list of task runs. (optional)
     /// - parameter taskID: (query) Task ID for filtering the list of task runs. (optional)
     /// - parameter sort: (query) Property by which to sort the list of task runs. (optional)
     /// - parameter order: (query) Sort order of the response, ascending or descending. (optional)
@@ -1933,6 +1987,7 @@ open class IngestionClient {
         itemsPerPage: Int? = nil,
         page: Int? = nil,
         status: [RunStatus]? = nil,
+        type: [RunType]? = nil,
         taskID: String? = nil,
         sort: RunSortKeys? = nil,
         order: OrderKeys? = nil,
@@ -1944,6 +1999,7 @@ open class IngestionClient {
             itemsPerPage: itemsPerPage,
             page: page,
             status: status,
+            type: type,
             taskID: taskID,
             sort: sort,
             order: order,
@@ -1971,6 +2027,8 @@ open class IngestionClient {
     //
     // - parameter status: (query) Run status for filtering the list of task runs. (optional)
     //
+    // - parameter type: (query) Run type for filtering the list of task runs. (optional)
+    //
     // - parameter taskID: (query) Task ID for filtering the list of task runs. (optional)
     //
     // - parameter sort: (query) Property by which to sort the list of task runs. (optional)
@@ -1988,6 +2046,7 @@ open class IngestionClient {
         itemsPerPage: Int? = nil,
         page: Int? = nil,
         status: [RunStatus]? = nil,
+        type: [RunType]? = nil,
         taskID: String? = nil,
         sort: RunSortKeys? = nil,
         order: OrderKeys? = nil,
@@ -2001,6 +2060,7 @@ open class IngestionClient {
             "itemsPerPage": itemsPerPage?.encodeToJSON(),
             "page": page?.encodeToJSON(),
             "status": status?.encodeToJSON(),
+            "type": type?.encodeToJSON(),
             "taskID": taskID?.encodeToJSON(),
             "sort": sort?.encodeToJSON(),
             "order": order?.encodeToJSON(),
@@ -2343,7 +2403,7 @@ open class IngestionClient {
         requestOptions userRequestOptions: RequestOptions? =
             nil
     ) async throws -> Response<TransformationModels> {
-        let resourcePath = "/1/transformations/copilot"
+        let resourcePath = "/1/transformations/models"
         let body: AnyCodable? = nil
         let queryParameters: [String: Any?]? = nil
 
@@ -2431,18 +2491,18 @@ open class IngestionClient {
     }
 
     /// - parameter taskID: (path) Unique identifier of a task.
-    /// - parameter batchWriteParams: (body) Request body of a Search API `batch` request that will be pushed in the
+    /// - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     /// Connectors pipeline.
     /// - returns: RunResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func pushTask(
         taskID: String,
-        batchWriteParams: IngestionBatchWriteParams,
+        pushTaskPayload: PushTaskPayload,
         requestOptions: RequestOptions? = nil
     ) async throws -> RunResponse {
         let response: Response<RunResponse> = try await pushTaskWithHTTPInfo(
             taskID: taskID,
-            batchWriteParams: batchWriteParams,
+            pushTaskPayload: pushTaskPayload,
             requestOptions: requestOptions
         )
 
@@ -2462,13 +2522,13 @@ open class IngestionClient {
     //
     // - parameter taskID: (path) Unique identifier of a task.
     //
-    // - parameter batchWriteParams: (body) Request body of a Search API `batch` request that will be pushed in the
+    // - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     // Connectors pipeline.
     // - returns: RequestBuilder<RunResponse>
 
     open func pushTaskWithHTTPInfo(
         taskID: String,
-        batchWriteParams: IngestionBatchWriteParams,
+        pushTaskPayload: PushTaskPayload,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<RunResponse> {
         guard !taskID.isEmpty else {
@@ -2485,7 +2545,7 @@ open class IngestionClient {
             options: .literal,
             range: nil
         )
-        let body = batchWriteParams
+        let body = pushTaskPayload
         let queryParameters: [String: Any?]? = nil
 
         let nillableHeaders: [String: Any?]? = nil
@@ -3031,11 +3091,11 @@ open class IngestionClient {
     /// - parameter transformationTry: (body)
     /// - returns: TransformationTryResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func tryTransformations(
+    open func tryTransformation(
         transformationTry: TransformationTry,
         requestOptions: RequestOptions? = nil
     ) async throws -> TransformationTryResponse {
-        let response: Response<TransformationTryResponse> = try await tryTransformationsWithHTTPInfo(
+        let response: Response<TransformationTryResponse> = try await tryTransformationWithHTTPInfo(
             transformationTry: transformationTry,
             requestOptions: requestOptions
         )
@@ -3047,7 +3107,7 @@ open class IngestionClient {
         return body
     }
 
-    // Try a transformation.
+    // Try a transformation before creating it.
     // Required API Key ACLs:
     //  - addObject
     //  - deleteIndex
@@ -3056,11 +3116,78 @@ open class IngestionClient {
     // - parameter transformationTry: (body)
     // - returns: RequestBuilder<TransformationTryResponse>
 
-    open func tryTransformationsWithHTTPInfo(
+    open func tryTransformationWithHTTPInfo(
         transformationTry: TransformationTry,
         requestOptions userRequestOptions: RequestOptions? = nil
     ) async throws -> Response<TransformationTryResponse> {
         let resourcePath = "/1/transformations/try"
+        let body = transformationTry
+        let queryParameters: [String: Any?]? = nil
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
+        )
+    }
+
+    /// - parameter transformationID: (path) Unique identifier of a transformation.
+    /// - parameter transformationTry: (body)
+    /// - returns: TransformationTryResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func tryTransformationBeforeUpdate(
+        transformationID: String,
+        transformationTry: TransformationTry,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TransformationTryResponse {
+        let response: Response<TransformationTryResponse> = try await tryTransformationBeforeUpdateWithHTTPInfo(
+            transformationID: transformationID,
+            transformationTry: transformationTry,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Try a transformation before updating it.
+    // Required API Key ACLs:
+    //  - addObject
+    //  - deleteIndex
+    //  - editSettings
+    //
+    // - parameter transformationID: (path) Unique identifier of a transformation.
+    //
+    // - parameter transformationTry: (body)
+    // - returns: RequestBuilder<TransformationTryResponse>
+
+    open func tryTransformationBeforeUpdateWithHTTPInfo(
+        transformationID: String,
+        transformationTry: TransformationTry,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<TransformationTryResponse> {
+        guard !transformationID.isEmpty else {
+            throw AlgoliaError.invalidArgument("transformationID", "tryTransformationBeforeUpdate")
+        }
+
+        var resourcePath = "/1/transformations/{transformationID}/try"
+        let transformationIDPreEscape = "\(APIHelper.mapValueToPathItem(transformationID))"
+        let transformationIDPostEscape = transformationIDPreEscape
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(
+            of: "{transformationID}",
+            with: transformationIDPostEscape,
+            options: .literal,
+            range: nil
+        )
         let body = transformationTry
         let queryParameters: [String: Any?]? = nil
 

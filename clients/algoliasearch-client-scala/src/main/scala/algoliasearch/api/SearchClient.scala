@@ -8,13 +8,13 @@ import algoliasearch.search.AddApiKeyResponse
 import algoliasearch.search.ApiKey
 import algoliasearch.search.ApiKeyOperation._
 import algoliasearch.search.AssignUserIdParams
-import algoliasearch.search.AttributeToUpdate
 import algoliasearch.search.BatchAssignUserIdsParams
 import algoliasearch.search.BatchDictionaryEntriesParams
 import algoliasearch.search.BatchParams
 import algoliasearch.search.BatchResponse
 import algoliasearch.search.BatchWriteParams
 import algoliasearch.search.BrowseParams
+import algoliasearch.search.BrowseParamsObject
 import algoliasearch.search.BrowseResponse
 import algoliasearch.search.CreatedAtResponse
 import algoliasearch.search.DeleteApiKeyResponse
@@ -535,7 +535,7 @@ class SearchClient(
 
   /** This operation doesn't accept empty queries or filters. It's more efficient to get a list of object IDs with the
     * [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-    * operation](tag/Records/operation/batch).
+    * operation](#tag/Records/operation/batch).
     *
     * Required API Key ACLs:
     *   - deleteIndex
@@ -1185,7 +1185,23 @@ class SearchClient(
   /** Adds new attributes to a record, or update existing ones. - If a record with the specified object ID doesn't
     * exist, a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet,
     * this method creates a new index. - You can use any first-level attribute but not nested attributes. If you specify
-    * a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+    * a nested attribute, the engine treats it as a replacement for its first-level ancestor. To update an attribute
+    * without pushing the entire record, you can use these built-in operations. These operations can be helpful if you
+    * don't have access to your initial data. - Increment: increment a numeric attribute - Decrement: decrement a
+    * numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching
+    * number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string
+    * element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+    * increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore
+    * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
+    * current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only
+    * creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if
+    * the provided value is greater than the current value, and otherwise ignore the whole object update. For example,
+    * if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the
+    * engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet
+    * value that's greater than 0. You can specify an operation by providing an object with the attribute to update as
+    * the key and its value being an object with the following properties: - _operation: the operation to apply on the
+    * attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value
+    * to add or remove.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1202,7 +1218,7 @@ class SearchClient(
   def partialUpdateObject(
       indexName: String,
       objectID: String,
-      attributesToUpdate: Map[String, AttributeToUpdate],
+      attributesToUpdate: Any,
       createIfNotExists: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[UpdatedAtWithObjectIdResponse] = Future {
@@ -1289,8 +1305,8 @@ class SearchClient(
     * auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing
     * record is replaced. - If a record with the specified object ID doesn't exist, a new record is added to your index.
     * \- If you add a record to an index that doesn't exist yet, a new index is created. To update _some_ attributes of
-    * a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple
-    * records, use the [`batch` operation](#tag/Records/operation/batch).
+    * a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace
+    * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
     *
     * Required API Key ACLs:
     *   - addObject

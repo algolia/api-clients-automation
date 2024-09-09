@@ -20,7 +20,6 @@ Source:
     - sourceID
     - type
     - name
-    - input
     - createdAt
 
 SourceCreate:
@@ -39,7 +38,6 @@ SourceCreate:
   required:
     - type
     - name
-    - input
 
 SourceCreateResponse:
   type: object
@@ -108,6 +106,7 @@ SourceType:
     - json
     - shopify
     - sfcc
+    - push
 
 SourceCommercetools:
   type: object
@@ -366,6 +365,11 @@ SourceDocker:
     - image
     - imageType
     - configuration
+  x-discriminator-fields:
+    - registry
+    - image
+    - imageType
+    - configuration
 
 SourceUpdateDocker:
   type: object
@@ -386,6 +390,8 @@ SourceUpdateDocker:
       type: object
       description: Configuration of the spec.
   required:
+    - configuration
+  x-discriminator-fields:
     - configuration
 
 DockerRegistry:

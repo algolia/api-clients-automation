@@ -12,10 +12,12 @@ info:
     The base URLs for requests to the A/B testing API are:
 
 
-    - `https://analytics.us.algolia.com` (alias:
-    `https://analytics.algolia.com`)
+    - `https://analytics.us.algolia.com`
 
     - `https://analytics.de.algolia.com`
+
+    - `https://analytics.algolia.com` (routes requests to the closest of the
+    above servers, based on your geographical location)
 
 
     Use the URL that matches your [analytics
@@ -146,6 +148,7 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -173,6 +176,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -188,20 +193,26 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -218,6 +229,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -238,6 +251,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -256,6 +271,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -278,6 +295,8 @@ paths:
 
             response = client.custom_get("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -303,6 +322,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -318,6 +339,8 @@ paths:
             // Call the API
 
             let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -357,6 +380,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -384,6 +408,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -399,20 +425,26 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -429,6 +461,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -449,6 +483,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -467,6 +503,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -489,6 +527,8 @@ paths:
 
             response = client.custom_post("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -514,6 +554,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -529,6 +571,8 @@ paths:
             // Call the API
 
             let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -568,6 +612,7 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -595,6 +640,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -610,20 +657,26 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -640,6 +693,8 @@ paths:
               path = "test/minimal",
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -660,6 +715,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -678,6 +735,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -700,6 +759,8 @@ paths:
 
             response = client.custom_put("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -725,6 +786,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -740,6 +803,8 @@ paths:
             // Call the API
 
             let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -773,6 +838,7 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -801,6 +867,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -816,16 +884,15 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
             // Initialize the client
 
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -833,6 +900,8 @@ paths:
             const response = await client.customDelete({ path: 'test/minimal'
             });
 
+
+            // >LOG
 
             // use typed response
 
@@ -853,6 +922,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -872,6 +943,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -890,6 +963,8 @@ paths:
                 path="test/minimal",
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -912,6 +987,8 @@ paths:
 
             response = client.custom_delete("test/minimal")
 
+
+            # >LOG
 
             # use the class directly
 
@@ -937,6 +1014,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -952,6 +1031,8 @@ paths:
             // Call the API
 
             let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /2/abtests:
     post:
       tags:
@@ -1031,6 +1112,7 @@ paths:
                 },
               }
             );
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1062,6 +1144,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1081,23 +1165,25 @@ paths:
                 .setEndAt("2022-12-31T00:00:00.000Z")
                 .setName("myABTest")
                 .setVariants(
-                  List.of(
+                  Arrays.asList(
                     new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
                 )
             );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.addABTests({
               endAt: '2022-12-31T00:00:00.000Z',
               name: 'myABTest',
@@ -1107,7 +1193,11 @@ paths:
               ],
             });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1138,6 +1228,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             println(response)
@@ -1167,6 +1259,8 @@ paths:
                 ],
             );
 
+
+            // >LOG
 
             // play with the response
 
@@ -1200,6 +1294,8 @@ paths:
             )
 
 
+            # >LOG
+
             # use the class directly
 
             print(response)
@@ -1230,6 +1326,8 @@ paths:
               )
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1268,6 +1366,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1291,6 +1391,8 @@ paths:
                 ],
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
+
+            // >LOG
     get:
       tags:
         - abtest
@@ -1368,6 +1470,7 @@ paths:
 
             // Call the API
             var response = await client.ListABTestsAsync();
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1394,6 +1497,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1409,20 +1514,26 @@ paths:
             // Call the API
 
             client.listABTests();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.listABTests();
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1437,6 +1548,8 @@ paths:
 
             var response = client.listABTests()
 
+
+            // >LOG
 
             // Use the response
 
@@ -1455,6 +1568,8 @@ paths:
             $response = $client->listABTests();
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1471,6 +1586,8 @@ paths:
 
             response = await _client.list_ab_tests()
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1493,6 +1610,8 @@ paths:
 
             response = client.list_ab_tests
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1518,6 +1637,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1533,6 +1654,8 @@ paths:
             // Call the API
 
             let response = try await client.listABTests()
+
+            // >LOG
   /2/abtests/{id}:
     get:
       tags:
@@ -1577,6 +1700,7 @@ paths:
 
             // Call the API
             var response = await client.GetABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1604,6 +1728,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1619,20 +1745,26 @@ paths:
             // Call the API
 
             client.getABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.getABTest({ id: 42 });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1649,6 +1781,8 @@ paths:
               id = 42,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1669,6 +1803,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1687,6 +1823,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1709,6 +1847,8 @@ paths:
 
             response = client.get_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1734,6 +1874,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1749,6 +1891,8 @@ paths:
             // Call the API
 
             let response = try await client.getABTest(id: 42)
+
+            // >LOG
     delete:
       tags:
         - abtest
@@ -1792,6 +1936,7 @@ paths:
 
             // Call the API
             var response = await client.DeleteABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -1820,6 +1965,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -1835,20 +1982,26 @@ paths:
             // Call the API
 
             client.deleteABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.deleteABTest({ id: 42 });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -1865,6 +2018,8 @@ paths:
               id = 42,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -1885,6 +2040,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -1903,6 +2060,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1925,6 +2084,8 @@ paths:
 
             response = client.delete_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -1950,6 +2111,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -1965,6 +2128,8 @@ paths:
             // Call the API
 
             let response = try await client.deleteABTest(id: 42)
+
+            // >LOG
   /2/abtests/{id}/stop:
     post:
       tags:
@@ -2012,6 +2177,7 @@ paths:
 
             // Call the API
             var response = await client.StopABTestAsync(42);
+            // >LOG
         - lang: go
           label: Go
           source: >
@@ -2039,6 +2205,8 @@ paths:
             }
 
 
+            // >LOG
+
             // use the model directly
 
             print(response)
@@ -2054,20 +2222,26 @@ paths:
             // Call the API
 
             client.stopABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = abtestingClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
 
             // Call the API
+
             const response = await client.stopABTest({ id: 42 });
 
+
+            // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
@@ -2084,6 +2258,8 @@ paths:
               id = 42,
             )
 
+
+            // >LOG
 
             // Use the response
 
@@ -2104,6 +2280,8 @@ paths:
             );
 
 
+            // >LOG
+
             // play with the response
 
             var_dump($response);
@@ -2122,6 +2300,8 @@ paths:
                 id=42,
             )
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2144,6 +2324,8 @@ paths:
 
             response = client.stop_ab_test(42)
 
+
+            # >LOG
 
             # use the class directly
 
@@ -2169,6 +2351,8 @@ paths:
             )
 
 
+            // >LOG
+
             // Use the response
 
             val value = Await.result(response, Duration(100, "sec"))
@@ -2184,6 +2368,383 @@ paths:
             // Call the API
 
             let response = try await client.stopABTest(id: 42)
+
+            // >LOG
+  /2/abtests/schedule:
+    post:
+      tags:
+        - abtest
+      operationId: scheduleABTest
+      x-acl:
+        - editSettings
+      summary: Schedule an A/B test
+      description: |
+        Schedule an A/B test to be started at a later time.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: scheduleABTestsRequest
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  $ref: '#/components/schemas/name'
+                variants:
+                  type: array
+                  description: A/B test variants.
+                  minItems: 2
+                  maxItems: 2
+                  items:
+                    $ref: '#/components/schemas/AddABTestsVariant'
+                scheduledAt:
+                  $ref: '#/components/schemas/scheduledAt'
+                endAt:
+                  $ref: '#/components/schemas/endAt'
+              required:
+                - name
+                - variants
+                - scheduledAt
+                - endAt
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.ScheduleABTestAsync(
+              new ScheduleABTestsRequest
+              {
+                EndAt = "2022-12-31T00:00:00.000Z",
+                ScheduledAt = "2022-11-31T00:00:00.000Z",
+                Name = "myABTest",
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(
+                    new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30, }
+                  ),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50, })
+                },
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.YOUR_APP_ID_REGION
+
+            client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.ScheduleABTest(client.NewApiScheduleABTestRequest(
+
+              abtesting.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetVariants(
+                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new AbtestingClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.scheduleABTest(
+              new ScheduleABTestsRequest()
+                .setEndAt("2022-12-31T00:00:00.000Z")
+                .setScheduledAt("2022-11-31T00:00:00.000Z")
+                .setName("myABTest")
+                .setVariants(
+                  Arrays.asList(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            const response = await client.scheduleABTest({
+              endAt: '2022-12-31T00:00:00.000Z',
+              scheduledAt: '2022-11-31T00:00:00.000Z',
+              name: 'myABTest',
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 30 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.scheduleABTest(
+              scheduleABTestsRequest = ScheduleABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                scheduledAt = "2022-11-31T00:00:00.000Z",
+                name = "myABTest",
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->scheduleABTest(
+                ['endAt' => '2022-12-31T00:00:00.000Z',
+                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                    'name' => 'myABTest',
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 30,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.schedule_ab_test(
+                schedule_ab_tests_request={
+                    "endAt": "2022-12-31T00:00:00.000Z",
+                    "scheduledAt": "2022-11-31T00:00:00.000Z",
+                    "name": "myABTest",
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 30,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = client.schedule_ab_test(
+              ScheduleABTestsRequest.new(
+                end_at: "2022-12-31T00:00:00.000Z",
+                scheduled_at: "2022-11-31T00:00:00.000Z",
+                name: "myABTest",
+                variants: [
+                  AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+                  AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val response = client.scheduleABTest(
+              scheduleABTestsRequest = ScheduleABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                scheduledAt = "2022-11-31T00:00:00.000Z",
+                name = "myABTest",
+                variants = Seq(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50
+                  )
+                )
+              )
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.scheduleABTest(scheduleABTestsRequest:
+            ScheduleABTestsRequest(
+                name: "myABTest",
+                variants: [
+                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
+                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                ],
+                scheduledAt: "2022-11-31T00:00:00.000Z",
+                endAt: "2022-12-31T00:00:00.000Z"
+            ))
+
+            // >LOG
 components:
   securitySchemes:
     appId:
@@ -2247,6 +2808,7 @@ components:
     ErrorBase:
       description: Error.
       type: object
+      x-keep-model: true
       additionalProperties: true
       properties:
         message:
@@ -2520,14 +3082,9 @@ components:
         - noResultCount
         - index
         - description
-        - conversionRate
         - conversionCount
-        - clickThroughRate
         - clickCount
-        - averageClickPosition
-        - addToCartRate
         - addToCartCount
-        - purchaseRate
         - purchaseCount
     variants:
       type: array
@@ -2699,11 +3256,6 @@ components:
         - createdAt
         - endAt
         - updatedAt
-        - conversionSignificance
-        - clickSignificance
-        - purchaseSignificance
-        - addToCartSignificance
-        - revenueSignificance
         - abTestID
         - variants
     ABTests:
@@ -2741,6 +3293,8 @@ components:
           type: object
       required:
         - customSearchParameters
+      x-discriminator-fields:
+        - customSearchParameters
     abTestsVariantSearchParams:
       allOf:
         - $ref: '#/components/schemas/abTestsVariant'
@@ -2774,6 +3328,24 @@ components:
         - abTestID
         - index
         - taskID
+    scheduledAt:
+      type: string
+      description: >-
+        Date and time when the A/B test is scheduled to start, in RFC 3339
+        format.
+      example: '2023-06-15T15:06:44.400601Z'
+    abTestScheduleID:
+      type: integer
+      description: Unique scheduled A/B test identifier.
+      example: 224
+    ScheduleABTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestScheduleID:
+          $ref: '#/components/schemas/abTestScheduleID'
+      required:
+        - abTestScheduleID
   responses:
     BadRequest:
       description: Bad request or request arguments.

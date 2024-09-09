@@ -21,6 +21,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -37,6 +38,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -53,6 +55,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -69,6 +72,7 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -85,10 +89,11 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.DeleteRecommendRuleAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -105,10 +110,11 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.GetRecommendRuleAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       "objectID"
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -125,10 +131,11 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.GetRecommendStatusAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
       12345L
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -152,7 +159,7 @@ public class SnippetRecommendClient
           new RecommendationsRequest(
             new RelatedQuery
             {
-              IndexName = "indexName",
+              IndexName = "<YOUR_INDEX_NAME>",
               ObjectID = "objectID",
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
@@ -161,6 +168,7 @@ public class SnippetRecommendClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -177,9 +185,27 @@ public class SnippetRecommendClient
 
     // Call the API
     var response = await client.SearchRecommendRulesAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts")
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForRecommendClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

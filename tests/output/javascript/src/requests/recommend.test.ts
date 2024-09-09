@@ -10,9 +10,7 @@ const client = recommendClient(appId, apiKey, { requester: echoRequester() });
 
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
-    const req = (await client.customDelete({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('DELETE');
@@ -35,9 +33,7 @@ describe('customDelete', () => {
 
 describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
-    const req = (await client.customGet({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customGet({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('GET');
@@ -54,21 +50,16 @@ describe('customGet', () => {
     expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters%20with%20space',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters%20with%20space' });
   });
 
   test('requestOptions should be escaped too', async () => {
     const req = (await client.customGet(
       { path: 'test/all', parameters: { query: 'to be overriden' } },
       {
-        queryParameters: {
-          query: 'parameters with space',
-          'and an array': ['array', 'with spaces'],
-        },
+        queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
         headers: { 'x-header-1': 'spaces are left alone' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/all');
@@ -78,17 +69,13 @@ describe('customGet', () => {
       query: 'parameters%20with%20space',
       'and%20an%20array': 'array%2Cwith%20spaces',
     });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-header-1': 'spaces are left alone' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-header-1': 'spaces are left alone' }));
   });
 });
 
 describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPost({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPost({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('POST');
@@ -111,14 +98,10 @@ describe('customPost', () => {
 
   test('requestOptions can override default query parameters', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
@@ -129,178 +112,122 @@ describe('customPost', () => {
 
   test('requestOptions merges query parameters with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { query2: 'myQueryParameter' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      query2: 'myQueryParameter',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', query2: 'myQueryParameter' });
   });
 
   test('requestOptions can override default headers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         headers: { 'x-algolia-api-key': 'myApiKey' },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(
-      expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' })
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { isItWorking: true },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      isItWorking: 'true',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', isItWorking: 'true' });
   });
 
   test('requestOptions queryParameters accepts integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: 2 },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '2' });
   });
 
   test('requestOptions queryParameters accepts list of string', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: ['b and c', 'd'] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'b%20and%20c%2Cd',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'b%20and%20c%2Cd' });
   });
 
   test('requestOptions queryParameters accepts list of booleans', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [true, true, false] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: 'true%2Ctrue%2Cfalse',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: 'true%2Ctrue%2Cfalse' });
   });
 
   test('requestOptions queryParameters accepts list of integers', async () => {
     const req = (await client.customPost(
-      {
-        path: 'test/requestOptions',
-        parameters: { query: 'parameters' },
-        body: { facet: 'filters' },
-      },
+      { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
         queryParameters: { myParam: [1, 2] },
-      }
+      },
     )) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
-    expect(req.searchParams).toStrictEqual({
-      query: 'parameters',
-      myParam: '1%2C2',
-    });
+    expect(req.searchParams).toStrictEqual({ query: 'parameters', myParam: '1%2C2' });
   });
 });
 
 describe('customPut', () => {
   test('allow put method for a custom path with minimal parameters', async () => {
-    const req = (await client.customPut({
-      path: 'test/minimal',
-    })) as unknown as EchoResponse;
+    const req = (await client.customPut({ path: 'test/minimal' })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('PUT');
@@ -330,9 +257,7 @@ describe('deleteRecommendRule', () => {
       objectID: 'objectID',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/indexes/indexName/related-products/recommend/rules/objectID'
-    );
+    expect(req.path).toEqual('/1/indexes/indexName/related-products/recommend/rules/objectID');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -347,9 +272,7 @@ describe('getRecommendRule', () => {
       objectID: 'objectID',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/indexes/indexName/related-products/recommend/rules/objectID'
-    );
+    expect(req.path).toEqual('/1/indexes/indexName/related-products/recommend/rules/objectID');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -364,9 +287,7 @@ describe('getRecommendStatus', () => {
       taskID: 12345,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/indexes/indexName/related-products/task/12345'
-    );
+    expect(req.path).toEqual('/1/indexes/indexName/related-products/task/12345');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -376,27 +297,13 @@ describe('getRecommendStatus', () => {
 describe('getRecommendations', () => {
   test('get recommendations for recommend model with minimal parameters', async () => {
     const req = (await client.getRecommendations({
-      requests: [
-        {
-          indexName: 'indexName',
-          objectID: 'objectID',
-          model: 'related-products',
-          threshold: 42.1,
-        },
-      ],
+      requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/recommendations');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: 'indexName',
-          objectID: 'objectID',
-          model: 'related-products',
-          threshold: 42.1,
-        },
-      ],
+      requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -437,13 +344,7 @@ describe('getRecommendations', () => {
   test('get recommendations for trending model with minimal parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
-        {
-          indexName: 'indexName',
-          model: 'trending-items',
-          threshold: 42.1,
-          facetName: 'facet',
-          facetValue: 'value',
-        },
+        { indexName: 'indexName', model: 'trending-items', threshold: 42.1, facetName: 'facet', facetValue: 'value' },
       ],
     })) as unknown as EchoResponse;
 
@@ -451,13 +352,7 @@ describe('getRecommendations', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
-        {
-          indexName: 'indexName',
-          model: 'trending-items',
-          threshold: 42.1,
-          facetName: 'facet',
-          facetValue: 'value',
-        },
+        { indexName: 'indexName', model: 'trending-items', threshold: 42.1, facetName: 'facet', facetValue: 'value' },
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -501,18 +396,8 @@ describe('getRecommendations', () => {
   test('get multiple recommendations with minimal parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
-        {
-          indexName: 'indexName1',
-          objectID: 'objectID1',
-          model: 'related-products',
-          threshold: 21.7,
-        },
-        {
-          indexName: 'indexName2',
-          objectID: 'objectID2',
-          model: 'related-products',
-          threshold: 21.7,
-        },
+        { indexName: 'indexName1', objectID: 'objectID1', model: 'related-products', threshold: 21.7 },
+        { indexName: 'indexName2', objectID: 'objectID2', model: 'related-products', threshold: 21.7 },
       ],
     })) as unknown as EchoResponse;
 
@@ -520,18 +405,8 @@ describe('getRecommendations', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
-        {
-          indexName: 'indexName1',
-          objectID: 'objectID1',
-          model: 'related-products',
-          threshold: 21.7,
-        },
-        {
-          indexName: 'indexName2',
-          objectID: 'objectID2',
-          model: 'related-products',
-          threshold: 21.7,
-        },
+        { indexName: 'indexName1', objectID: 'objectID1', model: 'related-products', threshold: 21.7 },
+        { indexName: 'indexName2', objectID: 'objectID2', model: 'related-products', threshold: 21.7 },
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -590,27 +465,13 @@ describe('getRecommendations', () => {
 
   test('get frequently bought together recommendations', async () => {
     const req = (await client.getRecommendations({
-      requests: [
-        {
-          indexName: 'indexName1',
-          objectID: 'objectID1',
-          model: 'bought-together',
-          threshold: 42.7,
-        },
-      ],
+      requests: [{ indexName: 'indexName1', objectID: 'objectID1', model: 'bought-together', threshold: 42.7 }],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/*/recommendations');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [
-        {
-          indexName: 'indexName1',
-          objectID: 'objectID1',
-          model: 'bought-together',
-          threshold: 42.7,
-        },
-      ],
+      requests: [{ indexName: 'indexName1', objectID: 'objectID1', model: 'bought-together', threshold: 42.7 }],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -623,9 +484,7 @@ describe('searchRecommendRules', () => {
       model: 'related-products',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual(
-      '/1/indexes/indexName/related-products/recommend/rules/search'
-    );
+    expect(req.path).toEqual('/1/indexes/indexName/related-products/recommend/rules/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);

@@ -16,6 +16,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -31,16 +32,10 @@ export async function snippetForGetRecommendations(): Promise<void> {
 
   // Call the API
   const response = await client.getRecommendations({
-    requests: [
-      {
-        indexName: 'indexName',
-        objectID: 'objectID',
-        model: 'related-products',
-        threshold: 42.1,
-      },
-    ],
+    requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -56,15 +51,10 @@ export async function snippetForSearch(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        hitsPerPage: 50,
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', hitsPerPage: 50 }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -80,15 +70,10 @@ export async function snippetForSearch1(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        filters: 'actor:Scarlett Johansson',
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'actor:Scarlett Johansson' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -113,6 +98,7 @@ export async function snippetForSearch2(): Promise<void> {
     ],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -128,15 +114,10 @@ export async function snippetForSearch3(): Promise<void> {
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        filters: 'NOT actor:Nicolas Cage',
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', filters: 'NOT actor:Nicolas Cage' }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -145,22 +126,17 @@ export async function snippetForSearch3(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacets
-export async function snippetForSearch5(): Promise<void> {
+export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.search({
-    requests: [
-      {
-        indexName: '<YOUR_INDEX_NAME>',
-        query: '<YOUR_QUERY>',
-        facets: ['author', 'genre'],
-      },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['author', 'genre'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -169,18 +145,17 @@ export async function snippetForSearch5(): Promise<void> {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-export async function snippetForSearch6(): Promise<void> {
+export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.search({
-    requests: [
-      { indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] },
-    ],
+    requests: [{ indexName: '<YOUR_INDEX_NAME>', query: '<YOUR_QUERY>', facets: ['*'] }],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

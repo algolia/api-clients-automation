@@ -24,8 +24,8 @@ func SnippetForCreateConfigOfSuggestions() {
 	// Call the API
 	response, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
-		suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
-			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+		suggestions.NewEmptyConfigurationWithIndex().SetIndexName("<YOUR_INDEX_NAME>").SetSourceIndices(
+			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{
 					[]string{"facetA", "facetB"},
@@ -38,6 +38,7 @@ func SnippetForCreateConfigOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -66,6 +67,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -94,6 +96,7 @@ func SnippetForCustomGetOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -122,6 +125,7 @@ func SnippetForCustomPostOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -150,6 +154,7 @@ func SnippetForCustomPutOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -171,13 +176,14 @@ func SnippetForDeleteConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -204,6 +210,7 @@ func SnippetForGetAllConfigsOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -225,13 +232,14 @@ func SnippetForGetConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfig(client.NewApiGetConfigRequest(
-		"cts_e2e_browse_query_suggestions",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -253,13 +261,14 @@ func SnippetForGetConfigStatusOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -281,15 +290,43 @@ func SnippetForGetLogFileOfSuggestions() {
 
 	// Call the API
 	response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetClientApiKeyOfSuggestions() {
+	/*
+	   Snippet for the setClientApiKey method.
+
+	   switch API key
+	*/
+
+	// >SEPARATOR setClientApiKey default
+	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
+	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SetClientApiKey(
+		"updated-api-key",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }
 func SnippetForUpdateConfigOfSuggestions() {
@@ -309,9 +346,9 @@ func SnippetForUpdateConfigOfSuggestions() {
 
 	// Call the API
 	response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
-		"theIndexName",
+		"<YOUR_INDEX_NAME>",
 		suggestions.NewEmptyConfiguration().SetSourceIndices(
-			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+			[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
 				[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 				[][]string{
 					[]string{"facetA", "facetB"},
@@ -324,6 +361,7 @@ func SnippetForUpdateConfigOfSuggestions() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<

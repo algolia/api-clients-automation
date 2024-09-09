@@ -5,6 +5,7 @@ import {
   createTransporter,
   getAlgoliaAgent,
   shuffle,
+  ApiError,
   createIterablePromise,
 } from '@algolia/client-common';
 import type {
@@ -14,7 +15,6 @@ import type {
   QueryParameters,
   Request,
   RequestOptions,
-  ApiError,
   IterableOptions,
 } from '@algolia/client-common';
 
@@ -128,7 +128,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-beta.13';
+export const apiClientVersion = '5.3.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -161,7 +161,7 @@ function getDefaultHosts(appId: string): Host[] {
         accept: 'readWrite',
         protocol: 'https',
       },
-    ])
+    ]),
   );
 }
 
@@ -174,27 +174,26 @@ export function createSearchClient({
   ...options
 }: CreateClientOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts(appIdOption),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: 'Search',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts(appIdOption),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: 'Search',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -205,17 +204,16 @@ export function createSearchClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([
-        transporter.requestsCache.clear(),
-        transporter.responsesCache.clear(),
-      ]).then(() => undefined);
+      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
+        () => undefined,
+      );
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -225,7 +223,21 @@ export function createSearchClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        this.transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**
@@ -244,10 +256,9 @@ export function createSearchClient({
         indexName,
         taskID,
         maxRetries = 50,
-        timeout = (retryCount: number): number =>
-          Math.min(retryCount * 200, 5000),
+        timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -257,8 +268,7 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () =>
-            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -278,10 +288,9 @@ export function createSearchClient({
       {
         taskID,
         maxRetries = 50,
-        timeout = (retryCount: number): number =>
-          Math.min(retryCount * 200, 5000),
+        timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForAppTaskOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -291,8 +300,7 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () =>
-            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -316,29 +324,23 @@ export function createSearchClient({
         key,
         apiKey,
         maxRetries = 50,
-        timeout = (retryCount: number): number =>
-          Math.min(retryCount * 200, 5000),
+        timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<GetApiKeyResponse | undefined> {
       let retryCount = 0;
-      const baseIteratorOptions: IterableOptions<
-        GetApiKeyResponse | undefined
-      > = {
+      const baseIteratorOptions: IterableOptions<GetApiKeyResponse | undefined> = {
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () =>
-            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
         },
         timeout: () => timeout(retryCount),
       };
 
       if (operation === 'update') {
         if (!apiKey) {
-          throw new Error(
-            '`apiKey` is required when waiting for an `update` operation.'
-          );
+          throw new Error('`apiKey` is required when waiting for an `update` operation.');
         }
 
         return createIterablePromise({
@@ -349,10 +351,7 @@ export function createSearchClient({
               const value = apiKey[field as keyof ApiKey];
               const resValue = response[field as keyof ApiKey];
               if (Array.isArray(value) && Array.isArray(resValue)) {
-                if (
-                  value.length !== resValue.length ||
-                  value.some((v, index) => v !== resValue[index])
-                ) {
+                if (value.length !== resValue.length || value.some((v, index) => v !== resValue[index])) {
                   return false;
                 }
               } else if (value !== resValue) {
@@ -374,8 +373,7 @@ export function createSearchClient({
 
             throw error;
           }),
-        validate: (response) =>
-          operation === 'add' ? response !== undefined : response === undefined,
+        validate: (response) => (operation === 'add' ? response !== undefined : response === undefined),
       });
     },
 
@@ -391,12 +389,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.
      */
     browseObjects<T>(
-      {
-        indexName,
-        browseParams,
-        ...browseObjectsOptions
-      }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
-      requestOptions?: RequestOptions
+      { indexName, browseParams, ...browseObjectsOptions }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
+      requestOptions?: RequestOptions,
     ): Promise<BrowseResponse<T>> {
       return createIterablePromise<BrowseResponse<T>>({
         func: (previousResponse) => {
@@ -408,7 +402,7 @@ export function createSearchClient({
                 ...browseParams,
               },
             },
-            requestOptions
+            requestOptions,
           );
         },
         validate: (response) => response.cursor === undefined,
@@ -428,12 +422,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchRules` method and merged with the transporter requestOptions.
      */
     browseRules(
-      {
-        indexName,
-        searchRulesParams,
-        ...browseRulesOptions
-      }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
-      requestOptions?: RequestOptions
+      { indexName, searchRulesParams, ...browseRulesOptions }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
+      requestOptions?: RequestOptions,
     ): Promise<SearchRulesResponse> {
       const params = {
         hitsPerPage: 1000,
@@ -447,12 +437,10 @@ export function createSearchClient({
               indexName,
               searchRulesParams: {
                 ...params,
-                page: previousResponse
-                  ? previousResponse.page + 1
-                  : params.page || 0,
+                page: previousResponse ? previousResponse.page + 1 : params.page || 0,
               },
             },
-            requestOptions
+            requestOptions,
           );
         },
         validate: (response) => response.nbHits < params.hitsPerPage,
@@ -477,7 +465,7 @@ export function createSearchClient({
         searchSynonymsParams,
         ...browseSynonymsOptions
       }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchSynonymsResponse> {
       const params = {
         page: 0,
@@ -495,7 +483,7 @@ export function createSearchClient({
                 page: params.page,
               },
             },
-            requestOptions
+            requestOptions,
           );
           params.page += 1;
           return resp;
@@ -503,40 +491,6 @@ export function createSearchClient({
         validate: (response) => response.nbHits < params.hitsPerPage,
         ...browseSynonymsOptions,
       });
-    },
-
-    /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `hits`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForHits<T>(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: Array<SearchResponse<T>> }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: Array<SearchResponse<T>>;
-      }>;
-    },
-
-    /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `facets`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForFacets(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: SearchForFacetValuesResponse[];
-      }>;
     },
 
     /**
@@ -552,14 +506,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async chunkedBatch(
-      {
-        indexName,
-        objects,
-        action = 'addObject',
-        waitForTasks,
-        batchSize = 1000,
-      }: ChunkedBatchOptions,
-      requestOptions?: RequestOptions
+      { indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000 }: ChunkedBatchOptions,
+      requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       let requests: BatchRequest[] = [];
       const responses: BatchResponse[] = [];
@@ -568,12 +516,7 @@ export function createSearchClient({
       for (const [i, obj] of objectEntries) {
         requests.push({ action, body: obj });
         if (requests.length === batchSize || i === objects.length - 1) {
-          responses.push(
-            await this.batch(
-              { indexName, batchWriteParams: { requests } },
-              requestOptions
-            )
-          );
+          responses.push(await this.batch({ indexName, batchWriteParams: { requests } }, requestOptions));
           requests = [];
         }
       }
@@ -598,12 +541,9 @@ export function createSearchClient({
      */
     async saveObjects(
       { indexName, objects }: SaveObjectsOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
-      return await this.chunkedBatch(
-        { indexName, objects, action: 'addObject' },
-        requestOptions
-      );
+      return await this.chunkedBatch({ indexName, objects, action: 'addObject' }, requestOptions);
     },
 
     /**
@@ -617,7 +557,7 @@ export function createSearchClient({
      */
     async deleteObjects(
       { indexName, objectIDs }: DeleteObjectsOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
@@ -625,7 +565,7 @@ export function createSearchClient({
           objects: objectIDs.map((objectID) => ({ objectID })),
           action: 'deleteObject',
         },
-        requestOptions
+        requestOptions,
       );
     },
 
@@ -641,23 +581,21 @@ export function createSearchClient({
      */
     async partialUpdateObjects(
       { indexName, objects, createIfNotExists }: PartialUpdateObjectsOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
           indexName,
           objects,
-          action: createIfNotExists
-            ? 'partialUpdateObject'
-            : 'partialUpdateObjectNoCreate',
+          action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
         },
-        requestOptions
+        requestOptions,
       );
     },
 
     /**
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
-     * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+     * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
      *
      * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * @param replaceAllObjects - The `replaceAllObjects` object.
@@ -668,7 +606,7 @@ export function createSearchClient({
      */
     async replaceAllObjects(
       { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
@@ -682,12 +620,12 @@ export function createSearchClient({
             scope: ['settings', 'rules', 'synonyms'],
           },
         },
-        requestOptions
+        requestOptions,
       );
 
       const batchResponses = await this.chunkedBatch(
         { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
-        requestOptions
+        requestOptions,
       );
 
       await this.waitForTask({
@@ -704,7 +642,7 @@ export function createSearchClient({
             scope: ['settings', 'rules', 'synonyms'],
           },
         },
-        requestOptions
+        requestOptions,
       );
       await this.waitForTask({
         indexName: tmpIndexName,
@@ -716,7 +654,7 @@ export function createSearchClient({
           indexName: tmpIndexName,
           operationIndexParams: { operation: 'move', destination: indexName },
         },
-        requestOptions
+        requestOptions,
       );
       await this.waitForTask({
         indexName: tmpIndexName,
@@ -724,6 +662,51 @@ export function createSearchClient({
       });
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
+    },
+
+    async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
+      try {
+        await this.getSettings({ indexName });
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 404) {
+          return false;
+        }
+        throw error;
+      }
+
+      return true;
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `hits`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForHits<T>(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions,
+    ): Promise<{ results: Array<SearchResponse<T>> }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{ results: Array<SearchResponse<T>> }>;
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `facets`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForFacets(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions,
+    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{
+        results: SearchForFacetValuesResponse[];
+      }>;
     },
     /**
      * Creates a new API key with specific permissions and restrictions.
@@ -734,20 +717,13 @@ export function createSearchClient({
      * @param apiKey - The apiKey object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    addApiKey(
-      apiKey: ApiKey,
-      requestOptions?: RequestOptions
-    ): Promise<AddApiKeyResponse> {
+    addApiKey(apiKey: ApiKey, requestOptions?: RequestOptions): Promise<AddApiKeyResponse> {
       if (!apiKey) {
-        throw new Error(
-          'Parameter `apiKey` is required when calling `addApiKey`.'
-        );
+        throw new Error('Parameter `apiKey` is required when calling `addApiKey`.');
       }
 
       if (!apiKey.acl) {
-        throw new Error(
-          'Parameter `apiKey.acl` is required when calling `addApiKey`.'
-        );
+        throw new Error('Parameter `apiKey.acl` is required when calling `addApiKey`.');
       }
 
       const requestPath = '/1/keys';
@@ -762,7 +738,7 @@ export function createSearchClient({
         data: apiKey,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -779,24 +755,18 @@ export function createSearchClient({
      */
     addOrUpdateObject(
       { indexName, objectID, body }: AddOrUpdateObjectProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `addOrUpdateObject`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `addOrUpdateObject`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `addOrUpdateObject`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `addOrUpdateObject`.');
       }
 
       if (!body) {
-        throw new Error(
-          'Parameter `body` is required when calling `addOrUpdateObject`.'
-        );
+        throw new Error('Parameter `body` is required when calling `addOrUpdateObject`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
@@ -813,7 +783,7 @@ export function createSearchClient({
         data: body,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -825,20 +795,13 @@ export function createSearchClient({
      * @param source - Source to add.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    appendSource(
-      source: Source,
-      requestOptions?: RequestOptions
-    ): Promise<CreatedAtResponse> {
+    appendSource(source: Source, requestOptions?: RequestOptions): Promise<CreatedAtResponse> {
       if (!source) {
-        throw new Error(
-          'Parameter `source` is required when calling `appendSource`.'
-        );
+        throw new Error('Parameter `source` is required when calling `appendSource`.');
       }
 
       if (!source.source) {
-        throw new Error(
-          'Parameter `source.source` is required when calling `appendSource`.'
-        );
+        throw new Error('Parameter `source.source` is required when calling `appendSource`.');
       }
 
       const requestPath = '/1/security/sources/append';
@@ -853,7 +816,7 @@ export function createSearchClient({
         data: source,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -869,24 +832,18 @@ export function createSearchClient({
      */
     assignUserId(
       { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<CreatedAtResponse> {
       if (!xAlgoliaUserID) {
-        throw new Error(
-          'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.'
-        );
+        throw new Error('Parameter `xAlgoliaUserID` is required when calling `assignUserId`.');
       }
 
       if (!assignUserIdParams) {
-        throw new Error(
-          'Parameter `assignUserIdParams` is required when calling `assignUserId`.'
-        );
+        throw new Error('Parameter `assignUserIdParams` is required when calling `assignUserId`.');
       }
 
       if (!assignUserIdParams.cluster) {
-        throw new Error(
-          'Parameter `assignUserIdParams.cluster` is required when calling `assignUserId`.'
-        );
+        throw new Error('Parameter `assignUserIdParams.cluster` is required when calling `assignUserId`.');
       }
 
       const requestPath = '/1/clusters/mapping';
@@ -905,7 +862,7 @@ export function createSearchClient({
         data: assignUserIdParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -916,32 +873,20 @@ export function createSearchClient({
      * @param batch.batchWriteParams - The batchWriteParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    batch(
-      { indexName, batchWriteParams }: BatchProps,
-      requestOptions?: RequestOptions
-    ): Promise<BatchResponse> {
+    batch({ indexName, batchWriteParams }: BatchProps, requestOptions?: RequestOptions): Promise<BatchResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `batch`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `batch`.');
       }
 
       if (!batchWriteParams) {
-        throw new Error(
-          'Parameter `batchWriteParams` is required when calling `batch`.'
-        );
+        throw new Error('Parameter `batchWriteParams` is required when calling `batch`.');
       }
 
       if (!batchWriteParams.requests) {
-        throw new Error(
-          'Parameter `batchWriteParams.requests` is required when calling `batch`.'
-        );
+        throw new Error('Parameter `batchWriteParams.requests` is required when calling `batch`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -953,7 +898,7 @@ export function createSearchClient({
         data: batchWriteParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -969,29 +914,21 @@ export function createSearchClient({
      */
     batchAssignUserIds(
       { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<CreatedAtResponse> {
       if (!xAlgoliaUserID) {
-        throw new Error(
-          'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.'
-        );
+        throw new Error('Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.');
       }
 
       if (!batchAssignUserIdsParams) {
-        throw new Error(
-          'Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`.'
-        );
+        throw new Error('Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`.');
       }
 
       if (!batchAssignUserIdsParams.cluster) {
-        throw new Error(
-          'Parameter `batchAssignUserIdsParams.cluster` is required when calling `batchAssignUserIds`.'
-        );
+        throw new Error('Parameter `batchAssignUserIdsParams.cluster` is required when calling `batchAssignUserIds`.');
       }
       if (!batchAssignUserIdsParams.users) {
-        throw new Error(
-          'Parameter `batchAssignUserIdsParams.users` is required when calling `batchAssignUserIds`.'
-        );
+        throw new Error('Parameter `batchAssignUserIdsParams.users` is required when calling `batchAssignUserIds`.');
       }
 
       const requestPath = '/1/clusters/mapping/batch';
@@ -1010,7 +947,7 @@ export function createSearchClient({
         data: batchAssignUserIdsParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1025,33 +962,26 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batchDictionaryEntries(
-      {
-        dictionaryName,
-        batchDictionaryEntriesParams,
-      }: BatchDictionaryEntriesProps,
-      requestOptions?: RequestOptions
+      { dictionaryName, batchDictionaryEntriesParams }: BatchDictionaryEntriesProps,
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!dictionaryName) {
-        throw new Error(
-          'Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.'
-        );
+        throw new Error('Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.');
       }
 
       if (!batchDictionaryEntriesParams) {
-        throw new Error(
-          'Parameter `batchDictionaryEntriesParams` is required when calling `batchDictionaryEntries`.'
-        );
+        throw new Error('Parameter `batchDictionaryEntriesParams` is required when calling `batchDictionaryEntries`.');
       }
 
       if (!batchDictionaryEntriesParams.requests) {
         throw new Error(
-          'Parameter `batchDictionaryEntriesParams.requests` is required when calling `batchDictionaryEntries`.'
+          'Parameter `batchDictionaryEntriesParams.requests` is required when calling `batchDictionaryEntries`.',
         );
       }
 
       const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
         '{dictionaryName}',
-        encodeURIComponent(dictionaryName)
+        encodeURIComponent(dictionaryName),
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1064,7 +994,7 @@ export function createSearchClient({
         data: batchDictionaryEntriesParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1078,20 +1008,12 @@ export function createSearchClient({
      * @param browse.browseParams - The browseParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    browse<T>(
-      { indexName, browseParams }: BrowseProps,
-      requestOptions?: RequestOptions
-    ): Promise<BrowseResponse<T>> {
+    browse<T>({ indexName, browseParams }: BrowseProps, requestOptions?: RequestOptions): Promise<BrowseResponse<T>> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `browse`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `browse`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/browse'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/browse'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1103,7 +1025,7 @@ export function createSearchClient({
         data: browseParams ? browseParams : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1116,20 +1038,12 @@ export function createSearchClient({
      * @param clearObjects.indexName - Name of the index on which to perform the operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    clearObjects(
-      { indexName }: ClearObjectsProps,
-      requestOptions?: RequestOptions
-    ): Promise<UpdatedAtResponse> {
+    clearObjects({ indexName }: ClearObjectsProps, requestOptions?: RequestOptions): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `clearObjects`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `clearObjects`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1140,7 +1054,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1156,21 +1070,15 @@ export function createSearchClient({
      */
     clearRules(
       { indexName, forwardToReplicas }: ClearRulesProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `clearRules`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `clearRules`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/rules/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1182,7 +1090,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1198,21 +1106,15 @@ export function createSearchClient({
      */
     clearSynonyms(
       { indexName, forwardToReplicas }: ClearSynonymsProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `clearSynonyms`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `clearSynonyms`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1224,7 +1126,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1237,12 +1139,10 @@ export function createSearchClient({
      */
     customDelete(
       { path, parameters }: CustomDeleteProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
       if (!path) {
-        throw new Error(
-          'Parameter `path` is required when calling `customDelete`.'
-        );
+        throw new Error('Parameter `path` is required when calling `customDelete`.');
       }
 
       const requestPath = '/{path}'.replace('{path}', path);
@@ -1256,7 +1156,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1267,14 +1167,9 @@ export function createSearchClient({
      * @param customGet.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    customGet(
-      { path, parameters }: CustomGetProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
+    customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
       if (!path) {
-        throw new Error(
-          'Parameter `path` is required when calling `customGet`.'
-        );
+        throw new Error('Parameter `path` is required when calling `customGet`.');
       }
 
       const requestPath = '/{path}'.replace('{path}', path);
@@ -1288,7 +1183,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1302,12 +1197,10 @@ export function createSearchClient({
      */
     customPost(
       { path, parameters, body }: CustomPostProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
       if (!path) {
-        throw new Error(
-          'Parameter `path` is required when calling `customPost`.'
-        );
+        throw new Error('Parameter `path` is required when calling `customPost`.');
       }
 
       const requestPath = '/{path}'.replace('{path}', path);
@@ -1322,7 +1215,7 @@ export function createSearchClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1336,12 +1229,10 @@ export function createSearchClient({
      */
     customPut(
       { path, parameters, body }: CustomPutProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
       if (!path) {
-        throw new Error(
-          'Parameter `path` is required when calling `customPut`.'
-        );
+        throw new Error('Parameter `path` is required when calling `customPut`.');
       }
 
       const requestPath = '/{path}'.replace('{path}', path);
@@ -1356,7 +1247,7 @@ export function createSearchClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1369,20 +1260,12 @@ export function createSearchClient({
      * @param deleteApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    deleteApiKey(
-      { key }: DeleteApiKeyProps,
-      requestOptions?: RequestOptions
-    ): Promise<DeleteApiKeyResponse> {
+    deleteApiKey({ key }: DeleteApiKeyProps, requestOptions?: RequestOptions): Promise<DeleteApiKeyResponse> {
       if (!key) {
-        throw new Error(
-          'Parameter `key` is required when calling `deleteApiKey`.'
-        );
+        throw new Error('Parameter `key` is required when calling `deleteApiKey`.');
       }
 
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(key)
-      );
+      const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1393,11 +1276,11 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
-     * This operation doesn\'t accept empty queries or filters.  It\'s more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+     * This operation doesn\'t accept empty queries or filters.  It\'s more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      * - deleteIndex.
@@ -1409,24 +1292,17 @@ export function createSearchClient({
      */
     deleteBy(
       { indexName, deleteByParams }: DeleteByProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `deleteBy`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `deleteBy`.');
       }
 
       if (!deleteByParams) {
-        throw new Error(
-          'Parameter `deleteByParams` is required when calling `deleteBy`.'
-        );
+        throw new Error('Parameter `deleteByParams` is required when calling `deleteBy`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1438,7 +1314,7 @@ export function createSearchClient({
         data: deleteByParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1451,20 +1327,12 @@ export function createSearchClient({
      * @param deleteIndex.indexName - Name of the index on which to perform the operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    deleteIndex(
-      { indexName }: DeleteIndexProps,
-      requestOptions?: RequestOptions
-    ): Promise<DeletedAtResponse> {
+    deleteIndex({ indexName }: DeleteIndexProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `deleteIndex`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `deleteIndex`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1475,7 +1343,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1491,18 +1359,14 @@ export function createSearchClient({
      */
     deleteObject(
       { indexName, objectID }: DeleteObjectProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `deleteObject`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `deleteObject`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `deleteObject`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `deleteObject`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
@@ -1518,7 +1382,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1535,18 +1399,14 @@ export function createSearchClient({
      */
     deleteRule(
       { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `deleteRule`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `deleteRule`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `deleteRule`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `deleteRule`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
@@ -1554,7 +1414,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1566,7 +1425,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1579,20 +1438,12 @@ export function createSearchClient({
      * @param deleteSource.source - IP address range of the source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    deleteSource(
-      { source }: DeleteSourceProps,
-      requestOptions?: RequestOptions
-    ): Promise<DeleteSourceResponse> {
+    deleteSource({ source }: DeleteSourceProps, requestOptions?: RequestOptions): Promise<DeleteSourceResponse> {
       if (!source) {
-        throw new Error(
-          'Parameter `source` is required when calling `deleteSource`.'
-        );
+        throw new Error('Parameter `source` is required when calling `deleteSource`.');
       }
 
-      const requestPath = '/1/security/sources/{source}'.replace(
-        '{source}',
-        encodeURIComponent(source)
-      );
+      const requestPath = '/1/security/sources/{source}'.replace('{source}', encodeURIComponent(source));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1603,7 +1454,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1620,18 +1471,14 @@ export function createSearchClient({
      */
     deleteSynonym(
       { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `deleteSynonym`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `deleteSynonym`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `deleteSynonym`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `deleteSynonym`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
@@ -1639,7 +1486,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1651,7 +1497,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1661,20 +1507,12 @@ export function createSearchClient({
      * @param getApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getApiKey(
-      { key }: GetApiKeyProps,
-      requestOptions?: RequestOptions
-    ): Promise<GetApiKeyResponse> {
+    getApiKey({ key }: GetApiKeyProps, requestOptions?: RequestOptions): Promise<GetApiKeyResponse> {
       if (!key) {
-        throw new Error(
-          'Parameter `key` is required when calling `getApiKey`.'
-        );
+        throw new Error('Parameter `key` is required when calling `getApiKey`.');
       }
 
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(key)
-      );
+      const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1685,7 +1523,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1698,20 +1536,12 @@ export function createSearchClient({
      * @param getAppTask.taskID - Unique task identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getAppTask(
-      { taskID }: GetAppTaskProps,
-      requestOptions?: RequestOptions
-    ): Promise<GetTaskResponse> {
+    getAppTask({ taskID }: GetAppTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
       if (!taskID) {
-        throw new Error(
-          'Parameter `taskID` is required when calling `getAppTask`.'
-        );
+        throw new Error('Parameter `taskID` is required when calling `getAppTask`.');
       }
 
-      const requestPath = '/1/task/{taskID}'.replace(
-        '{taskID}',
-        encodeURIComponent(taskID)
-      );
+      const requestPath = '/1/task/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1722,7 +1552,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1733,9 +1563,7 @@ export function createSearchClient({
      *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionaryLanguages(
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, Languages>> {
+    getDictionaryLanguages(requestOptions?: RequestOptions): Promise<Record<string, Languages>> {
       const requestPath = '/1/dictionaries/*/languages';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1747,7 +1575,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1758,9 +1586,7 @@ export function createSearchClient({
      *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionarySettings(
-      requestOptions?: RequestOptions
-    ): Promise<GetDictionarySettingsResponse> {
+    getDictionarySettings(requestOptions?: RequestOptions): Promise<GetDictionarySettingsResponse> {
       const requestPath = '/1/dictionaries/*/settings';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1772,7 +1598,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1790,16 +1616,14 @@ export function createSearchClient({
      */
     getLogs(
       { offset, length, indexName, type }: GetLogsProps = {},
-      requestOptions: RequestOptions | undefined = undefined
+      requestOptions: RequestOptions | undefined = undefined,
     ): Promise<GetLogsResponse> {
       const requestPath = '/1/logs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
-
       if (length !== undefined) {
         queryParameters.length = length.toString();
       }
@@ -1807,7 +1631,6 @@ export function createSearchClient({
       if (indexName !== undefined) {
         queryParameters.indexName = indexName.toString();
       }
-
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
@@ -1819,7 +1642,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1836,18 +1659,14 @@ export function createSearchClient({
      */
     getObject(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `getObject`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `getObject`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `getObject`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `getObject`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/{objectID}'
@@ -1855,7 +1674,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (attributesToRetrieve !== undefined) {
         queryParameters.attributesToRetrieve = attributesToRetrieve.toString();
       }
@@ -1867,7 +1685,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1879,20 +1697,13 @@ export function createSearchClient({
      * @param getObjectsParams - Request object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getObjects<T>(
-      getObjectsParams: GetObjectsParams,
-      requestOptions?: RequestOptions
-    ): Promise<GetObjectsResponse<T>> {
+    getObjects<T>(getObjectsParams: GetObjectsParams, requestOptions?: RequestOptions): Promise<GetObjectsResponse<T>> {
       if (!getObjectsParams) {
-        throw new Error(
-          'Parameter `getObjectsParams` is required when calling `getObjects`.'
-        );
+        throw new Error('Parameter `getObjectsParams` is required when calling `getObjects`.');
       }
 
       if (!getObjectsParams.requests) {
-        throw new Error(
-          'Parameter `getObjectsParams.requests` is required when calling `getObjects`.'
-        );
+        throw new Error('Parameter `getObjectsParams.requests` is required when calling `getObjects`.');
       }
 
       const requestPath = '/1/indexes/*/objects';
@@ -1909,7 +1720,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1923,20 +1734,13 @@ export function createSearchClient({
      * @param getRule.objectID - Unique identifier of a rule object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getRule(
-      { indexName, objectID }: GetRuleProps,
-      requestOptions?: RequestOptions
-    ): Promise<Rule> {
+    getRule({ indexName, objectID }: GetRuleProps, requestOptions?: RequestOptions): Promise<Rule> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `getRule`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `getRule`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `getRule`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `getRule`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
@@ -1952,7 +1756,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1965,20 +1769,12 @@ export function createSearchClient({
      * @param getSettings.indexName - Name of the index on which to perform the operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSettings(
-      { indexName }: GetSettingsProps,
-      requestOptions?: RequestOptions
-    ): Promise<SettingsResponse> {
+    getSettings({ indexName }: GetSettingsProps, requestOptions?: RequestOptions): Promise<SettingsResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `getSettings`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `getSettings`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/settings'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/settings'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -1989,7 +1785,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2012,7 +1808,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2026,20 +1822,13 @@ export function createSearchClient({
      * @param getSynonym.objectID - Unique identifier of a synonym object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSynonym(
-      { indexName, objectID }: GetSynonymProps,
-      requestOptions?: RequestOptions
-    ): Promise<SynonymHit> {
+    getSynonym({ indexName, objectID }: GetSynonymProps, requestOptions?: RequestOptions): Promise<SynonymHit> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `getSynonym`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `getSynonym`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `getSynonym`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `getSynonym`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
@@ -2055,7 +1844,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2069,20 +1858,13 @@ export function createSearchClient({
      * @param getTask.taskID - Unique task identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTask(
-      { indexName, taskID }: GetTaskProps,
-      requestOptions?: RequestOptions
-    ): Promise<GetTaskResponse> {
+    getTask({ indexName, taskID }: GetTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `getTask`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `getTask`.');
       }
 
       if (!taskID) {
-        throw new Error(
-          'Parameter `taskID` is required when calling `getTask`.'
-        );
+        throw new Error('Parameter `taskID` is required when calling `getTask`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/task/{taskID}'
@@ -2098,7 +1880,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2109,9 +1891,7 @@ export function createSearchClient({
      *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTopUserIds(
-      requestOptions?: RequestOptions
-    ): Promise<GetTopUserIdsResponse> {
+    getTopUserIds(requestOptions?: RequestOptions): Promise<GetTopUserIdsResponse> {
       const requestPath = '/1/clusters/mapping/top';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2123,7 +1903,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2136,20 +1916,12 @@ export function createSearchClient({
      * @param getUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getUserId(
-      { userID }: GetUserIdProps,
-      requestOptions?: RequestOptions
-    ): Promise<UserId> {
+    getUserId({ userID }: GetUserIdProps, requestOptions?: RequestOptions): Promise<UserId> {
       if (!userID) {
-        throw new Error(
-          'Parameter `userID` is required when calling `getUserId`.'
-        );
+        throw new Error('Parameter `userID` is required when calling `getUserId`.');
       }
 
-      const requestPath = '/1/clusters/mapping/{userID}'.replace(
-        '{userID}',
-        encodeURIComponent(userID)
-      );
+      const requestPath = '/1/clusters/mapping/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2160,7 +1932,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2175,12 +1947,11 @@ export function createSearchClient({
      */
     hasPendingMappings(
       { getClusters }: HasPendingMappingsProps = {},
-      requestOptions: RequestOptions | undefined = undefined
+      requestOptions: RequestOptions | undefined = undefined,
     ): Promise<HasPendingMappingsResponse> {
       const requestPath = '/1/clusters/mapping/pending';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (getClusters !== undefined) {
         queryParameters.getClusters = getClusters.toString();
       }
@@ -2192,7 +1963,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2215,7 +1986,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2226,9 +1997,7 @@ export function createSearchClient({
      *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    listClusters(
-      requestOptions?: RequestOptions
-    ): Promise<ListClustersResponse> {
+    listClusters(requestOptions?: RequestOptions): Promise<ListClustersResponse> {
       const requestPath = '/1/clusters';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2240,7 +2009,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2256,16 +2025,14 @@ export function createSearchClient({
      */
     listIndices(
       { page, hitsPerPage }: ListIndicesProps = {},
-      requestOptions: RequestOptions | undefined = undefined
+      requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListIndicesResponse> {
       const requestPath = '/1/indexes';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (hitsPerPage !== undefined) {
         queryParameters.hitsPerPage = hitsPerPage.toString();
       }
@@ -2277,7 +2044,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2293,12 +2060,11 @@ export function createSearchClient({
      */
     listUserIds(
       { page, hitsPerPage }: ListUserIdsProps = {},
-      requestOptions: RequestOptions | undefined = undefined
+      requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListUserIdsResponse> {
       const requestPath = '/1/clusters/mapping';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
@@ -2314,7 +2080,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2323,20 +2089,13 @@ export function createSearchClient({
      * @param batchParams - The batchParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    multipleBatch(
-      batchParams: BatchParams,
-      requestOptions?: RequestOptions
-    ): Promise<MultipleBatchResponse> {
+    multipleBatch(batchParams: BatchParams, requestOptions?: RequestOptions): Promise<MultipleBatchResponse> {
       if (!batchParams) {
-        throw new Error(
-          'Parameter `batchParams` is required when calling `multipleBatch`.'
-        );
+        throw new Error('Parameter `batchParams` is required when calling `multipleBatch`.');
       }
 
       if (!batchParams.requests) {
-        throw new Error(
-          'Parameter `batchParams.requests` is required when calling `multipleBatch`.'
-        );
+        throw new Error('Parameter `batchParams.requests` is required when calling `multipleBatch`.');
       }
 
       const requestPath = '/1/indexes/*/batch';
@@ -2351,7 +2110,7 @@ export function createSearchClient({
         data: batchParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2367,35 +2126,24 @@ export function createSearchClient({
      */
     operationIndex(
       { indexName, operationIndexParams }: OperationIndexProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `operationIndex`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `operationIndex`.');
       }
 
       if (!operationIndexParams) {
-        throw new Error(
-          'Parameter `operationIndexParams` is required when calling `operationIndex`.'
-        );
+        throw new Error('Parameter `operationIndexParams` is required when calling `operationIndex`.');
       }
 
       if (!operationIndexParams.operation) {
-        throw new Error(
-          'Parameter `operationIndexParams.operation` is required when calling `operationIndex`.'
-        );
+        throw new Error('Parameter `operationIndexParams.operation` is required when calling `operationIndex`.');
       }
       if (!operationIndexParams.destination) {
-        throw new Error(
-          'Parameter `operationIndexParams.destination` is required when calling `operationIndex`.'
-        );
+        throw new Error('Parameter `operationIndexParams.destination` is required when calling `operationIndex`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/operation'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/operation'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2407,11 +2155,11 @@ export function createSearchClient({
         data: operationIndexParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
-     * Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn\'t exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn\'t exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
+     * Adds new attributes to a record, or update existing ones.  - If a record with the specified object ID doesn\'t exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn\'t exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don\'t have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it\'s not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn\'t exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn\'t exist yet, the engine only creates it if you pass an IncrementSet value that\'s greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
      *
      * Required API Key ACLs:
      * - addObject.
@@ -2424,30 +2172,19 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     partialUpdateObject(
-      {
-        indexName,
-        objectID,
-        attributesToUpdate,
-        createIfNotExists,
-      }: PartialUpdateObjectProps,
-      requestOptions?: RequestOptions
+      { indexName, objectID, attributesToUpdate, createIfNotExists }: PartialUpdateObjectProps,
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `partialUpdateObject`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `partialUpdateObject`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `partialUpdateObject`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `partialUpdateObject`.');
       }
 
       if (!attributesToUpdate) {
-        throw new Error(
-          'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.'
-        );
+        throw new Error('Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
@@ -2468,7 +2205,7 @@ export function createSearchClient({
         data: attributesToUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2481,20 +2218,12 @@ export function createSearchClient({
      * @param removeUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    removeUserId(
-      { userID }: RemoveUserIdProps,
-      requestOptions?: RequestOptions
-    ): Promise<RemoveUserIdResponse> {
+    removeUserId({ userID }: RemoveUserIdProps, requestOptions?: RequestOptions): Promise<RemoveUserIdResponse> {
       if (!userID) {
-        throw new Error(
-          'Parameter `userID` is required when calling `removeUserId`.'
-        );
+        throw new Error('Parameter `userID` is required when calling `removeUserId`.');
       }
 
-      const requestPath = '/1/clusters/mapping/{userID}'.replace(
-        '{userID}',
-        encodeURIComponent(userID)
-      );
+      const requestPath = '/1/clusters/mapping/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2505,7 +2234,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2518,14 +2247,9 @@ export function createSearchClient({
      * @param replaceSources.source - Allowed sources.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    replaceSources(
-      { source }: ReplaceSourcesProps,
-      requestOptions?: RequestOptions
-    ): Promise<ReplaceSourceResponse> {
+    replaceSources({ source }: ReplaceSourcesProps, requestOptions?: RequestOptions): Promise<ReplaceSourceResponse> {
       if (!source) {
-        throw new Error(
-          'Parameter `source` is required when calling `replaceSources`.'
-        );
+        throw new Error('Parameter `source` is required when calling `replaceSources`.');
       }
 
       const requestPath = '/1/security/sources';
@@ -2540,7 +2264,7 @@ export function createSearchClient({
         data: source,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2553,20 +2277,12 @@ export function createSearchClient({
      * @param restoreApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    restoreApiKey(
-      { key }: RestoreApiKeyProps,
-      requestOptions?: RequestOptions
-    ): Promise<AddApiKeyResponse> {
+    restoreApiKey({ key }: RestoreApiKeyProps, requestOptions?: RequestOptions): Promise<AddApiKeyResponse> {
       if (!key) {
-        throw new Error(
-          'Parameter `key` is required when calling `restoreApiKey`.'
-        );
+        throw new Error('Parameter `key` is required when calling `restoreApiKey`.');
       }
 
-      const requestPath = '/1/keys/{key}/restore'.replace(
-        '{key}',
-        encodeURIComponent(key)
-      );
+      const requestPath = '/1/keys/{key}/restore'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2577,11 +2293,11 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
-     * Adds a record to an index or replace it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+     * Adds a record to an index or replace it.  - If the record doesn\'t have an object ID, a new record with an auto-generated object ID is added to your index. - If a record with the specified object ID exists, the existing record is replaced. - If a record with the specified object ID doesn\'t exist, a new record is added to your index. - If you add a record to an index that doesn\'t exist yet, a new index is created.  To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
      *
      * Required API Key ACLs:
      * - addObject.
@@ -2591,26 +2307,16 @@ export function createSearchClient({
      * @param saveObject.body - The record, a schemaless object with attributes that are useful in the context of search and discovery.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    saveObject(
-      { indexName, body }: SaveObjectProps,
-      requestOptions?: RequestOptions
-    ): Promise<SaveObjectResponse> {
+    saveObject({ indexName, body }: SaveObjectProps, requestOptions?: RequestOptions): Promise<SaveObjectResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `saveObject`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `saveObject`.');
       }
 
       if (!body) {
-        throw new Error(
-          'Parameter `body` is required when calling `saveObject`.'
-        );
+        throw new Error('Parameter `body` is required when calling `saveObject`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -2622,7 +2328,7 @@ export function createSearchClient({
         data: body,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2640,30 +2346,22 @@ export function createSearchClient({
      */
     saveRule(
       { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedRuleResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `saveRule`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `saveRule`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `saveRule`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `saveRule`.');
       }
 
       if (!rule) {
-        throw new Error(
-          'Parameter `rule` is required when calling `saveRule`.'
-        );
+        throw new Error('Parameter `rule` is required when calling `saveRule`.');
       }
 
       if (!rule.objectID) {
-        throw new Error(
-          'Parameter `rule.objectID` is required when calling `saveRule`.'
-        );
+        throw new Error('Parameter `rule.objectID` is required when calling `saveRule`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
@@ -2671,7 +2369,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2684,7 +2381,7 @@ export function createSearchClient({
         data: rule,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2701,33 +2398,20 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveRules(
-      {
-        indexName,
-        rules,
-        forwardToReplicas,
-        clearExistingRules,
-      }: SaveRulesProps,
-      requestOptions?: RequestOptions
+      { indexName, rules, forwardToReplicas, clearExistingRules }: SaveRulesProps,
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `saveRules`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `saveRules`.');
       }
 
       if (!rules) {
-        throw new Error(
-          'Parameter `rules` is required when calling `saveRules`.'
-        );
+        throw new Error('Parameter `rules` is required when calling `saveRules`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2744,7 +2428,7 @@ export function createSearchClient({
         data: rules,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2762,35 +2446,25 @@ export function createSearchClient({
      */
     saveSynonym(
       { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SaveSynonymResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `saveSynonym`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `saveSynonym`.');
       }
 
       if (!objectID) {
-        throw new Error(
-          'Parameter `objectID` is required when calling `saveSynonym`.'
-        );
+        throw new Error('Parameter `objectID` is required when calling `saveSynonym`.');
       }
 
       if (!synonymHit) {
-        throw new Error(
-          'Parameter `synonymHit` is required when calling `saveSynonym`.'
-        );
+        throw new Error('Parameter `synonymHit` is required when calling `saveSynonym`.');
       }
 
       if (!synonymHit.objectID) {
-        throw new Error(
-          'Parameter `synonymHit.objectID` is required when calling `saveSynonym`.'
-        );
+        throw new Error('Parameter `synonymHit.objectID` is required when calling `saveSynonym`.');
       }
       if (!synonymHit.type) {
-        throw new Error(
-          'Parameter `synonymHit.type` is required when calling `saveSynonym`.'
-        );
+        throw new Error('Parameter `synonymHit.type` is required when calling `saveSynonym`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
@@ -2798,7 +2472,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2811,7 +2484,7 @@ export function createSearchClient({
         data: synonymHit,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2828,40 +2501,25 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveSynonyms(
-      {
-        indexName,
-        synonymHit,
-        forwardToReplicas,
-        replaceExistingSynonyms,
-      }: SaveSynonymsProps,
-      requestOptions?: RequestOptions
+      { indexName, synonymHit, forwardToReplicas, replaceExistingSynonyms }: SaveSynonymsProps,
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `saveSynonyms`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `saveSynonyms`.');
       }
 
       if (!synonymHit) {
-        throw new Error(
-          'Parameter `synonymHit` is required when calling `saveSynonyms`.'
-        );
+        throw new Error('Parameter `synonymHit` is required when calling `saveSynonyms`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
-
       if (replaceExistingSynonyms !== undefined) {
-        queryParameters.replaceExistingSynonyms =
-          replaceExistingSynonyms.toString();
+        queryParameters.replaceExistingSynonyms = replaceExistingSynonyms.toString();
       }
 
       const request: Request = {
@@ -2872,7 +2530,7 @@ export function createSearchClient({
         data: synonymHit,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2886,7 +2544,7 @@ export function createSearchClient({
      */
     search<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchResponses<T>> {
       if (searchMethodParams && Array.isArray(searchMethodParams)) {
         const newSignatureRequest: SearchMethodParams = {
@@ -2914,15 +2572,11 @@ export function createSearchClient({
       }
 
       if (!searchMethodParams) {
-        throw new Error(
-          'Parameter `searchMethodParams` is required when calling `search`.'
-        );
+        throw new Error('Parameter `searchMethodParams` is required when calling `search`.');
       }
 
       if (!searchMethodParams.requests) {
-        throw new Error(
-          'Parameter `searchMethodParams.requests` is required when calling `search`.'
-        );
+        throw new Error('Parameter `searchMethodParams.requests` is required when calling `search`.');
       }
 
       const requestPath = '/1/indexes/*/queries';
@@ -2939,7 +2593,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2954,33 +2608,28 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchDictionaryEntries(
-      {
-        dictionaryName,
-        searchDictionaryEntriesParams,
-      }: SearchDictionaryEntriesProps,
-      requestOptions?: RequestOptions
+      { dictionaryName, searchDictionaryEntriesParams }: SearchDictionaryEntriesProps,
+      requestOptions?: RequestOptions,
     ): Promise<SearchDictionaryEntriesResponse> {
       if (!dictionaryName) {
-        throw new Error(
-          'Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.'
-        );
+        throw new Error('Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.');
       }
 
       if (!searchDictionaryEntriesParams) {
         throw new Error(
-          'Parameter `searchDictionaryEntriesParams` is required when calling `searchDictionaryEntries`.'
+          'Parameter `searchDictionaryEntriesParams` is required when calling `searchDictionaryEntries`.',
         );
       }
 
       if (!searchDictionaryEntriesParams.query) {
         throw new Error(
-          'Parameter `searchDictionaryEntriesParams.query` is required when calling `searchDictionaryEntries`.'
+          'Parameter `searchDictionaryEntriesParams.query` is required when calling `searchDictionaryEntries`.',
         );
       }
 
       const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
         '{dictionaryName}',
-        encodeURIComponent(dictionaryName)
+        encodeURIComponent(dictionaryName),
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2995,7 +2644,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3011,23 +2660,15 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchForFacetValues(
-      {
-        indexName,
-        facetName,
-        searchForFacetValuesRequest,
-      }: SearchForFacetValuesProps,
-      requestOptions?: RequestOptions
+      { indexName, facetName, searchForFacetValuesRequest }: SearchForFacetValuesProps,
+      requestOptions?: RequestOptions,
     ): Promise<SearchForFacetValuesResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `searchForFacetValues`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `searchForFacetValues`.');
       }
 
       if (!facetName) {
-        throw new Error(
-          'Parameter `facetName` is required when calling `searchForFacetValues`.'
-        );
+        throw new Error('Parameter `facetName` is required when calling `searchForFacetValues`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
@@ -3046,7 +2687,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3062,18 +2703,13 @@ export function createSearchClient({
      */
     searchRules(
       { indexName, searchRulesParams }: SearchRulesProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchRulesResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `searchRules`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `searchRules`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/rules/search'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -3087,7 +2723,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3103,18 +2739,13 @@ export function createSearchClient({
      */
     searchSingleIndex<T>(
       { indexName, searchParams }: SearchSingleIndexProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchResponse<T>> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `searchSingleIndex`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `searchSingleIndex`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/query'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/query'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -3128,7 +2759,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3144,17 +2775,15 @@ export function createSearchClient({
      */
     searchSynonyms(
       { indexName, searchSynonymsParams }: SearchSynonymsProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchSynonymsResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `searchSynonyms`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `searchSynonyms`.');
       }
 
       const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
         '{indexName}',
-        encodeURIComponent(indexName)
+        encodeURIComponent(indexName),
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -3169,7 +2798,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3183,18 +2812,14 @@ export function createSearchClient({
      */
     searchUserIds(
       searchUserIdsParams: SearchUserIdsParams,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<SearchUserIdsResponse> {
       if (!searchUserIdsParams) {
-        throw new Error(
-          'Parameter `searchUserIdsParams` is required when calling `searchUserIds`.'
-        );
+        throw new Error('Parameter `searchUserIdsParams` is required when calling `searchUserIds`.');
       }
 
       if (!searchUserIdsParams.query) {
-        throw new Error(
-          'Parameter `searchUserIdsParams.query` is required when calling `searchUserIds`.'
-        );
+        throw new Error('Parameter `searchUserIdsParams.query` is required when calling `searchUserIds`.');
       }
 
       const requestPath = '/1/clusters/mapping/search';
@@ -3211,7 +2836,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3225,17 +2850,15 @@ export function createSearchClient({
      */
     setDictionarySettings(
       dictionarySettingsParams: DictionarySettingsParams,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!dictionarySettingsParams) {
-        throw new Error(
-          'Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`.'
-        );
+        throw new Error('Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`.');
       }
 
       if (!dictionarySettingsParams.disableStandardEntries) {
         throw new Error(
-          'Parameter `dictionarySettingsParams.disableStandardEntries` is required when calling `setDictionarySettings`.'
+          'Parameter `dictionarySettingsParams.disableStandardEntries` is required when calling `setDictionarySettings`.',
         );
       }
 
@@ -3251,7 +2874,7 @@ export function createSearchClient({
         data: dictionarySettingsParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3268,27 +2891,19 @@ export function createSearchClient({
      */
     setSettings(
       { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
-      requestOptions?: RequestOptions
+      requestOptions?: RequestOptions,
     ): Promise<UpdatedAtResponse> {
       if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `setSettings`.'
-        );
+        throw new Error('Parameter `indexName` is required when calling `setSettings`.');
       }
 
       if (!indexSettings) {
-        throw new Error(
-          'Parameter `indexSettings` is required when calling `setSettings`.'
-        );
+        throw new Error('Parameter `indexSettings` is required when calling `setSettings`.');
       }
 
-      const requestPath = '/1/indexes/{indexName}/settings'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/{indexName}/settings'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -3301,7 +2916,7 @@ export function createSearchClient({
         data: indexSettings,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -3315,32 +2930,20 @@ export function createSearchClient({
      * @param updateApiKey.apiKey - The apiKey object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    updateApiKey(
-      { key, apiKey }: UpdateApiKeyProps,
-      requestOptions?: RequestOptions
-    ): Promise<UpdateApiKeyResponse> {
+    updateApiKey({ key, apiKey }: UpdateApiKeyProps, requestOptions?: RequestOptions): Promise<UpdateApiKeyResponse> {
       if (!key) {
-        throw new Error(
-          'Parameter `key` is required when calling `updateApiKey`.'
-        );
+        throw new Error('Parameter `key` is required when calling `updateApiKey`.');
       }
 
       if (!apiKey) {
-        throw new Error(
-          'Parameter `apiKey` is required when calling `updateApiKey`.'
-        );
+        throw new Error('Parameter `apiKey` is required when calling `updateApiKey`.');
       }
 
       if (!apiKey.acl) {
-        throw new Error(
-          'Parameter `apiKey.acl` is required when calling `updateApiKey`.'
-        );
+        throw new Error('Parameter `apiKey.acl` is required when calling `updateApiKey`.');
       }
 
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(key)
-      );
+      const requestPath = '/1/keys/{key}'.replace('{key}', encodeURIComponent(key));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -3352,7 +2955,7 @@ export function createSearchClient({
         data: apiKey,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
   };
 }

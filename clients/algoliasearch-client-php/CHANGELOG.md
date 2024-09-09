@@ -1,3 +1,92 @@
+## [4.4.0](https://github.com/algolia/algoliasearch-client-php/compare/4.3.5...4.4.0)
+
+- [a254f03ef](https://github.com/algolia/api-clients-automation/commit/a254f03ef) fix(php): assign value when normalising request options ([#3659](https://github.com/algolia/api-clients-automation/pull/3659)) by [@aykutersoy](https://github.com/aykutersoy/)
+- [2c65a8d11](https://github.com/algolia/api-clients-automation/commit/2c65a8d11) feat(clients): helper to switch API key in use ([#3616](https://github.com/algolia/api-clients-automation/pull/3616)) by [@Fluf22](https://github.com/Fluf22/)
+- [050501501](https://github.com/algolia/api-clients-automation/commit/050501501) fix(php): add PHPStan for static code analysis ([#3655](https://github.com/algolia/api-clients-automation/pull/3655)) by [@millotp](https://github.com/millotp/)
+- [365030a81](https://github.com/algolia/api-clients-automation/commit/365030a81) fix(php): put banner after php tag ([#3653](https://github.com/algolia/api-clients-automation/pull/3653)) by [@millotp](https://github.com/millotp/)
+- [f126366dc](https://github.com/algolia/api-clients-automation/commit/f126366dc) fix(specs): note on Analytics API server ([#3650](https://github.com/algolia/api-clients-automation/pull/3650)) by [@kai687](https://github.com/kai687/)
+- [3d02b3164](https://github.com/algolia/api-clients-automation/commit/3d02b3164) feat(clients): add helper to check if an index exists ([#3646](https://github.com/algolia/api-clients-automation/pull/3646)) by [@millotp](https://github.com/millotp/)
+- [a36746d65](https://github.com/algolia/api-clients-automation/commit/a36746d65) fix(specs): note on insights API server ([#3649](https://github.com/algolia/api-clients-automation/pull/3649)) by [@kai687](https://github.com/kai687/)
+- [1f53716c6](https://github.com/algolia/api-clients-automation/commit/1f53716c6) fix(specs): don't extend $ref objects ([#3623](https://github.com/algolia/api-clients-automation/pull/3623)) by [@kai687](https://github.com/kai687/)
+
+## [4.3.5](https://github.com/algolia/algoliasearch-client-php/compare/4.3.4...4.3.5)
+
+- [a9405b168](https://github.com/algolia/api-clients-automation/commit/a9405b168) fix(specs): usage api ([#3624](https://github.com/algolia/api-clients-automation/pull/3624)) by [@kai687](https://github.com/kai687/)
+- [e3af9554e](https://github.com/algolia/api-clients-automation/commit/e3af9554e) fix(specs): no links across API specs ([#3643](https://github.com/algolia/api-clients-automation/pull/3643)) by [@kai687](https://github.com/kai687/)
+
+## [4.3.4](https://github.com/algolia/algoliasearch-client-php/compare/4.3.3...4.3.4)
+
+- [3d07a1e4f](https://github.com/algolia/api-clients-automation/commit/3d07a1e4f) fix(specs): ignorePlurals can be a boolean string ([#3620](https://github.com/algolia/api-clients-automation/pull/3620)) by [@millotp](https://github.com/millotp/)
+- [c0675ff6b](https://github.com/algolia/api-clients-automation/commit/c0675ff6b) fix(clients): correly parse usage hosts ([#3622](https://github.com/algolia/api-clients-automation/pull/3622)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.3.3](https://github.com/algolia/algoliasearch-client-php/compare/4.3.2...4.3.3)
+
+- [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.3.2](https://github.com/algolia/algoliasearch-client-php/compare/4.3.1...4.3.2)
+
+- [d822b9783](https://github.com/algolia/api-clients-automation/commit/d822b9783) fix(php): type hint for setConnectTimeout ([#3605](https://github.com/algolia/api-clients-automation/pull/3605)) by [@millotp](https://github.com/millotp/)
+
+## [4.3.1](https://github.com/algolia/algoliasearch-client-php/compare/4.3.0...4.3.1)
+
+- [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)
+
+## [4.3.0](https://github.com/algolia/algoliasearch-client-php/compare/4.2.0...4.3.0)
+
+- [23a799f0e](https://github.com/algolia/api-clients-automation/commit/23a799f0e) feat(specs): push source type ([#3600](https://github.com/algolia/api-clients-automation/pull/3600)) by [@shortcuts](https://github.com/shortcuts/)
+- [536fdef01](https://github.com/algolia/api-clients-automation/commit/536fdef01) fix(specs): filter run list by type ([#3577](https://github.com/algolia/api-clients-automation/pull/3577)) by [@millotp](https://github.com/millotp/)
+- [9b6dc0b70](https://github.com/algolia/api-clients-automation/commit/9b6dc0b70) docs(specs): update api's length minimum value ([#3574](https://github.com/algolia/api-clients-automation/pull/3574)) by [@Jerska](https://github.com/Jerska/)
+
+## [4.2.0](https://github.com/algolia/algoliasearch-client-php/compare/4.1.0...4.2.0)
+
+- [4cbbce55c](https://github.com/algolia/api-clients-automation/commit/4cbbce55c) fix(clients): highlight and snippet results e2e ([#3567](https://github.com/algolia/api-clients-automation/pull/3567)) by [@shortcuts](https://github.com/shortcuts/)
+- [7c7de04ab](https://github.com/algolia/api-clients-automation/commit/7c7de04ab) fix(specs): another wrong link ([#3570](https://github.com/algolia/api-clients-automation/pull/3570)) by [@kai687](https://github.com/kai687/)
+- [f38a9ef12](https://github.com/algolia/api-clients-automation/commit/f38a9ef12) chore(specs): breaking change method names mapping table ([#3568](https://github.com/algolia/api-clients-automation/pull/3568)) by [@shortcuts](https://github.com/shortcuts/)
+- [d0e4f4ed4](https://github.com/algolia/api-clients-automation/commit/d0e4f4ed4) feat(php): waitForTasks param for various SearchClient methods ([#3565](https://github.com/algolia/api-clients-automation/pull/3565)) by [@aykutersoy](https://github.com/aykutersoy/)
+- [fbe8a2356](https://github.com/algolia/api-clients-automation/commit/fbe8a2356) fix(php): native return types for AbstractModel methods ([#3563](https://github.com/algolia/api-clients-automation/pull/3563)) by [@aykutersoy](https://github.com/aykutersoy/)
+- [9dedfc90f](https://github.com/algolia/api-clients-automation/commit/9dedfc90f) fix(clients): mention `main` branch instead of `master` ([#3566](https://github.com/algolia/api-clients-automation/pull/3566)) by [@shortcuts](https://github.com/shortcuts/)
+- [0e5ffb1e8](https://github.com/algolia/api-clients-automation/commit/0e5ffb1e8) fix(specs): broken link ([#3559](https://github.com/algolia/api-clients-automation/pull/3559)) by [@kai687](https://github.com/kai687/)
+- [675fc78d0](https://github.com/algolia/api-clients-automation/commit/675fc78d0) fix(php): Deprecation warning fix for PHP 8.1+ ([#3562](https://github.com/algolia/api-clients-automation/pull/3562)) by [@aykutersoy](https://github.com/aykutersoy/)
+
+## [4.1.0](https://github.com/algolia/algoliasearch-client-php/compare/4.0.2...4.1.0)
+
+- [d53060d96](https://github.com/algolia/api-clients-automation/commit/d53060d96) feat(specs): add /schedule endpoint ([#3350](https://github.com/algolia/api-clients-automation/pull/3350)) by [@febeck](https://github.com/febeck/)
+
+## [4.0.2](https://github.com/algolia/algoliasearch-client-php/compare/4.0.1...4.0.2)
+
+- [6cfc2d479](https://github.com/algolia/api-clients-automation/commit/6cfc2d479) chore(specs): update rendered title for search params ([#3553](https://github.com/algolia/api-clients-automation/pull/3553)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.1](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0...4.0.1)
+
+- [40c5d47bd](https://github.com/algolia/api-clients-automation/commit/40c5d47bd) fix(specs): delete user token processing time ([#3525](https://github.com/algolia/api-clients-automation/pull/3525)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.15...4.0.0)
+
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/php)
+
+- [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-beta.15](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.14...4.0.0-beta.15)
+
+- [7d2ab99ce](https://github.com/algolia/api-clients-automation/commit/7d2ab99ce) feat(specs): add authentications to ingestion transformations ([#3494](https://github.com/algolia/api-clients-automation/pull/3494)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-beta.14](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.13...4.0.0-beta.14)
+
+- [2c6147ee7](https://github.com/algolia/api-clients-automation/commit/2c6147ee7) feat(specs): add generate code endpoint to ingestion specs ([#3489](https://github.com/algolia/api-clients-automation/pull/3489)) by [@shortcuts](https://github.com/shortcuts/)
+- [6c62a81a7](https://github.com/algolia/api-clients-automation/commit/6c62a81a7) fix(specs): ingestion docker task input ([#3488](https://github.com/algolia/api-clients-automation/pull/3488)) by [@shortcuts](https://github.com/shortcuts/)
+- [eab2887f8](https://github.com/algolia/api-clients-automation/commit/eab2887f8) fix(specs): ingestion search endpoint ([#3487](https://github.com/algolia/api-clients-automation/pull/3487)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0-beta.13](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.12...4.0.0-beta.13)
+
+- [ac0cadb8a](https://github.com/algolia/api-clients-automation/commit/ac0cadb8a) feat(specs): add transformation copilot to ingestion ([#3479](https://github.com/algolia/api-clients-automation/pull/3479)) by [@Fluf22](https://github.com/Fluf22/)
+- [08a04dec8](https://github.com/algolia/api-clients-automation/commit/08a04dec8) fix(specs): ingestion destination reject indexPrefix ([#3478](https://github.com/algolia/api-clients-automation/pull/3478)) by [@shortcuts](https://github.com/shortcuts/)
+- [cdd673d33](https://github.com/algolia/api-clients-automation/commit/cdd673d33) fix(specs): ingestion destinations and transformations ([#3477](https://github.com/algolia/api-clients-automation/pull/3477)) by [@shortcuts](https://github.com/shortcuts/)
+- [b4742be76](https://github.com/algolia/api-clients-automation/commit/b4742be76) fix(clients): move the license to the root ([#3457](https://github.com/algolia/api-clients-automation/pull/3457)) by [@millotp](https://github.com/millotp/)
+- [e5d14171c](https://github.com/algolia/api-clients-automation/commit/e5d14171c) fix(specs): dictionary entry for stopwords has type property ([#3456](https://github.com/algolia/api-clients-automation/pull/3456)) by [@kai687](https://github.com/kai687/)
+- [7af1e75e9](https://github.com/algolia/api-clients-automation/commit/7af1e75e9) fix(specs): body is not required in multiple batch request ([#3454](https://github.com/algolia/api-clients-automation/pull/3454)) by [@kai687](https://github.com/kai687/)
+- [b90bef261](https://github.com/algolia/api-clients-automation/commit/b90bef261) feat(specs): add runSource endpoint ([#3453](https://github.com/algolia/api-clients-automation/pull/3453)) by [@millotp](https://github.com/millotp/)
+- [27679b7fd](https://github.com/algolia/api-clients-automation/commit/27679b7fd) chore(clients): remove mention of GA ([#3452](https://github.com/algolia/api-clients-automation/pull/3452)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0-beta.12](https://github.com/algolia/algoliasearch-client-php/compare/4.0.0-beta.11...4.0.0-beta.12)
 
 - [e982ddf0a](https://github.com/algolia/api-clients-automation/commit/e982ddf0a) fix(specs): built-in ops accept also int ([#3450](https://github.com/algolia/api-clients-automation/pull/3450)) by [@kai687](https://github.com/kai687/)

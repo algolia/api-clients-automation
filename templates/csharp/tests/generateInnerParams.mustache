@@ -2,7 +2,7 @@
   null
 {{/isNull}}
 {{#isString}}
-  "{{{value}}}"
+  "{{#lambda.escapeQuotes}}{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}{{/lambda.escapeQuotes}}"
 {{/isString}}
 {{#isInteger}}
   {{{value}}}
@@ -25,13 +25,18 @@
 {{#isObject}}
   {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}new {{{objectName}}}{
     {{#value}}
-      {{#isAdditionalProperty}}AdditionalProperties = new Dictionary<string, object>{ {"{{{key}}}", {{> tests/generateParams}} } }{{/isAdditionalProperty}}
       {{^isAdditionalProperty}}{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/generateParams}},{{/isAdditionalProperty}}{{/value}}
+    {{#hasAdditionalProperties}}
+    AdditionalProperties = new Dictionary<string, object>{
+    {{#value}}
+      {{#isAdditionalProperty}} {"{{{key}}}", {{> tests/generateParams}} },{{/isAdditionalProperty}}{{/value}}
+    }
+    {{/hasAdditionalProperties}}
   }{{#oneOfModel}}){{/oneOfModel}}
 {{/isObject}}
 {{#isFreeFormObject}}
   {{#isAnyType}}
-    new Dictionary<string, string> { {{#value}}{ {{#entrySet}}"{{{key}}}", "{{{value}}}" }{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }
+    new Dictionary<string, object> { {{#value}}{ {{#entrySet}}"{{{key}}}", "{{{value}}}" }{{^-last}},{{/-last}}{{/entrySet}}{{/value}} }
   {{/isAnyType}}
   {{^isAnyType}}
     new Dictionary{{> tests/forceMapGenerics}}{ {{#value}}{"{{{key}}}", {{> tests/generateParams}} }{{^-last}},{{/-last}}{{/value}} }

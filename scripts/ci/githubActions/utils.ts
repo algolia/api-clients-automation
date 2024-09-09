@@ -44,9 +44,13 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     finalDependencies[key] = [
       ':!**node_modules',
       `templates/${lang}`,
+      'templates/Bug_report.yml',
+      'templates/issue.yml',
+      'templates/LICENSE',
       // language related files
       langFolder,
       getVersionFileForLanguage(lang),
+      `tests/output/${lang}`,
       `:!${langFolder}/.github`,
       `:!${langFolder}/README.md`,
     ];

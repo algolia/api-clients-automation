@@ -16,7 +16,7 @@ class SnippetPersonalizationClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -27,6 +27,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -37,7 +38,7 @@ class SnippetPersonalizationClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -48,6 +49,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -58,7 +60,7 @@ class SnippetPersonalizationClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -69,6 +71,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -79,7 +82,7 @@ class SnippetPersonalizationClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -90,6 +93,7 @@ class SnippetPersonalizationClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -100,7 +104,7 @@ class SnippetPersonalizationClient
      *
      * delete deleteUserProfile
      */
-    public function snippetForDeleteUserProfile()
+    public function snippetForDeleteUserProfile(): void
     {
         // >SEPARATOR deleteUserProfile default
         // Initialize the client
@@ -111,6 +115,7 @@ class SnippetPersonalizationClient
             'UserToken',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -121,7 +126,7 @@ class SnippetPersonalizationClient
      *
      * get getPersonalizationStrategy
      */
-    public function snippetForGetPersonalizationStrategy()
+    public function snippetForGetPersonalizationStrategy(): void
     {
         // >SEPARATOR getPersonalizationStrategy default
         // Initialize the client
@@ -130,6 +135,7 @@ class SnippetPersonalizationClient
         // Call the API
         $response = $client->getPersonalizationStrategy();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -140,7 +146,7 @@ class SnippetPersonalizationClient
      *
      * get getUserTokenProfile
      */
-    public function snippetForGetUserTokenProfile()
+    public function snippetForGetUserTokenProfile(): void
     {
         // >SEPARATOR getUserTokenProfile default
         // Initialize the client
@@ -151,8 +157,29 @@ class SnippetPersonalizationClient
             'UserToken',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -161,7 +188,7 @@ class SnippetPersonalizationClient
      *
      * set setPersonalizationStrategy
      */
-    public function snippetForSetPersonalizationStrategy()
+    public function snippetForSetPersonalizationStrategy(): void
     {
         // >SEPARATOR setPersonalizationStrategy default
         // Initialize the client
@@ -184,6 +211,7 @@ class SnippetPersonalizationClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

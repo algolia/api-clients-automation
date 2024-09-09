@@ -1808,13 +1808,13 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRuleWithHTTPInfo(indexName: "indexName", objectID: "id1")
+        let response = try await client.getRuleWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "qr-1725004648916")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/id1")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/rules/qr-1725004648916")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -2270,7 +2270,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// Partial update with string value
+    /// Partial update with a new value for a string attribute
     func testPartialUpdateObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -2282,15 +2282,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.partialUpdateObjectWithHTTPInfo(
             indexName: "theIndexName",
             objectID: "uniqueID",
-            attributesToUpdate: [
-                "id1": AttributeToUpdate.string("test"),
-                "id2": AttributeToUpdate
-                    .builtInOperation(BuiltInOperation(
-                        operation: BuiltInOperationType.addUnique,
-                        value: BuiltInOperationValue.string("test2")
-                    )),
-            ],
-            createIfNotExists: true
+            attributesToUpdate: ["attributeId": "new value"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2298,8 +2290,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"id1\":\"test\",\"id2\":{\"_operation\":\"AddUnique\",\"value\":\"test2\"}}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"attributeId\":\"new value\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2307,16 +2298,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"createIfNotExists\":\"true\"}".data(using: .utf8))
-        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
-            [String: String?].self,
-            from: expectedQueryParameters
-        )
-
-        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// Partial update with integer value
+    /// Partial update with a new value for an integer attribute
     func testPartialUpdateObjectTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -2328,13 +2313,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.partialUpdateObjectWithHTTPInfo(
             indexName: "theIndexName",
             objectID: "uniqueID",
-            attributesToUpdate: [
-                "attributeId": AttributeToUpdate
-                    .builtInOperation(BuiltInOperation(
-                        operation: BuiltInOperationType.increment,
-                        value: BuiltInOperationValue.int(2)
-                    )),
-            ]
+            attributesToUpdate: ["attributeId": 1]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2342,7 +2321,100 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"attributeId\":{\"_operation\":\"Increment\",\"value\":2}}".data(using: .utf8)
+        let expectedBodyData = "{\"attributeId\":1}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// Partial update with a new value for a boolean attribute
+    func testPartialUpdateObjectTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "uniqueID",
+            attributesToUpdate: ["attributeId": true]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeId\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// Partial update with a new value for an array attribute
+    func testPartialUpdateObjectTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "uniqueID",
+            attributesToUpdate: ["attributeId": ["one", "two", "three"]]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeId\":[\"one\",\"two\",\"three\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// Partial update with a new value for an object attribute
+    func testPartialUpdateObjectTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "uniqueID",
+            attributesToUpdate: ["attributeId": ["nested": "value"]]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeId\":{\"nested\":\"value\"}}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2963,8 +3035,47 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// retrieveFacets
+    /// search with highlight and snippet results
     func testSearchTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "vim",
+                        attributesToRetrieve: ["*"],
+                        attributesToHighlight: ["*"],
+                        attributesToSnippet: ["*:20"],
+                        indexName: "cts_e2e_highlight_snippet_results"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// retrieveFacets
+    func testSearchTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3001,7 +3112,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// retrieveFacetsWildcard
-    func testSearchTest6() async throws {
+    func testSearchTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3038,7 +3149,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for a single facet request with minimal parameters
-    func testSearchTest7() async throws {
+    func testSearchTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3075,7 +3186,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for a single hits request with all parameters
-    func testSearchTest8() async throws {
+    func testSearchTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3113,7 +3224,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for a single facet request with all parameters
-    func testSearchTest9() async throws {
+    func testSearchTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3153,7 +3264,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for multiple mixed requests in multiple indices with minimal parameters
-    func testSearchTest10() async throws {
+    func testSearchTest11() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3197,7 +3308,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for multiple mixed requests in multiple indices with all parameters
-    func testSearchTest11() async throws {
+    func testSearchTest12() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3242,7 +3353,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search filters accept all of the possible shapes
-    func testSearchTest12() async throws {
+    func testSearchTest13() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3313,7 +3424,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search filters end to end
-    func testSearchTest13() async throws {
+    func testSearchTest14() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3372,7 +3483,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search with all search parameters
-    func testSearchTest14() async throws {
+    func testSearchTest15() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3629,8 +3740,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.searchRulesWithHTTPInfo(
-            indexName: "indexName",
-            searchRulesParams: SearchRulesParams(query: "something")
+            indexName: "cts_e2e_browse",
+            searchRulesParams: SearchRulesParams(query: "zorro")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -3638,12 +3749,12 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"something\"}".data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"zorro\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/search")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/rules/search")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)

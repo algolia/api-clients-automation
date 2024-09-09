@@ -40,18 +40,10 @@ object UsageClient {
     clientOptions = clientOptions
   )
 
-  private def hosts(appId: String): Seq[Host] = {
-    val commonHosts = Random.shuffle(
-      List(
-        Host(appId + "-1.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-2.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-3.algolianet.net", Set(CallType.Read, CallType.Write))
-      )
-    )
+  private def hosts(): Seq[Host] = {
     List(
-      Host(appId + "-dsn.algolia.net", Set(CallType.Read)),
-      Host(appId + ".algolia.net", Set(CallType.Write))
-    ) ++ commonHosts
+      Host("usage.algolia.com", Set(CallType.Read, CallType.Write))
+    )
   }
 }
 
@@ -63,7 +55,7 @@ class UsageClient(
       appId = appId,
       apiKey = apiKey,
       clientName = "Usage",
-      defaultHosts = hosts(appId),
+      defaultHosts = hosts(),
       formats = JsonSupport.format,
       options = clientOptions
     ) {
@@ -260,9 +252,9 @@ class UsageClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param startDate
-    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    *   Start date of the period to analyze, in RFC 3339 format.
     * @param endDate
-    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    *   End date of the period to analyze, in RFC 3339 format.
     * @param granularity
     *   Granularity of the aggregated metrics. - `hourly`: the maximum time range for hourly metrics is 7 days. -
     *   `daily`: the maximum time range for daily metrics is 365 days.
@@ -381,9 +373,9 @@ class UsageClient(
     *   degraded queries due to all search threads being used. - `degraded_queries_max_capacity_seconds_impacted`.
     *   Percentage of seconds affected by `max_capacity` degraded queries.
     * @param startDate
-    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
+    *   Start date of the period to analyze, in RFC 3339 format.
     * @param endDate
-    *   End date of the period to analyze, in `YYYY-MM-DD` format.
+    *   End date of the period to analyze, in RFC 3339 format.
     * @param granularity
     *   Granularity of the aggregated metrics. - `hourly`: the maximum time range for hourly metrics is 7 days. -
     *   `daily`: the maximum time range for daily metrics is 365 days.

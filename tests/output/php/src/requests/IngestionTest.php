@@ -24,7 +24,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
@@ -32,7 +32,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createAuthenticationOAuth')]
-    public function testCreateAuthentication()
+    public function testCreateAuthentication(): void
     {
         $client = $this->getClient();
         $client->createAuthentication(
@@ -55,7 +55,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createAuthenticationAlgolia')]
-    public function testCreateAuthentication1()
+    public function testCreateAuthentication1(): void
     {
         $client = $this->getClient();
         $client->createAuthentication(
@@ -77,7 +77,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createDestination')]
-    public function testCreateDestination()
+    public function testCreateDestination(): void
     {
         $client = $this->getClient();
         $client->createDestination(
@@ -99,7 +99,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('with transformationIDs')]
-    public function testCreateDestination1()
+    public function testCreateDestination1(): void
     {
         $client = $this->getClient();
         $client->createDestination(
@@ -123,7 +123,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createSource')]
-    public function testCreateSource()
+    public function testCreateSource(): void
     {
         $client = $this->getClient();
         $client->createSource(
@@ -151,8 +151,27 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('push')]
+    public function testCreateSource1(): void
+    {
+        $client = $this->getClient();
+        $client->createSource(
+            ['type' => 'push',
+                'name' => 'pushezpourentrer',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources',
+                'method' => 'POST',
+                'body' => json_decode('{"type":"push","name":"pushezpourentrer"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('task without cron')]
-    public function testCreateTask()
+    public function testCreateTask(): void
     {
         $client = $this->getClient();
         $client->createTask(
@@ -172,7 +191,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('task with cron')]
-    public function testCreateTask1()
+    public function testCreateTask1(): void
     {
         $client = $this->getClient();
         $client->createTask(
@@ -192,8 +211,35 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('task shopify')]
+    public function testCreateTask2(): void
+    {
+        $client = $this->getClient();
+        $client->createTask(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createTaskOnDemand')]
-    public function testCreateTaskV1()
+    public function testCreateTaskV1(): void
     {
         $client = $this->getClient();
         $client->createTaskV1(
@@ -215,7 +261,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createTaskSchedule')]
-    public function testCreateTaskV11()
+    public function testCreateTaskV11(): void
     {
         $client = $this->getClient();
         $client->createTaskV1(
@@ -238,7 +284,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('createTaskSubscription')]
-    public function testCreateTaskV12()
+    public function testCreateTaskV12(): void
     {
         $client = $this->getClient();
         $client->createTaskV1(
@@ -259,8 +305,36 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('task shopify')]
+    public function testCreateTaskV13(): void
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+            ['sourceID' => 'search',
+                'destinationID' => 'destinationName',
+                'trigger' => ['type' => 'onDemand',
+                ],
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createTransformation')]
-    public function testCreateTransformation()
+    public function testCreateTransformation(): void
     {
         $client = $this->getClient();
         $client->createTransformation(
@@ -280,7 +354,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete()
+    public function testCustomDelete(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -297,7 +371,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1()
+    public function testCustomDelete1(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -317,7 +391,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet()
+    public function testCustomGet(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -334,7 +408,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1()
+    public function testCustomGet1(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -354,7 +428,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2()
+    public function testCustomGet2(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -385,7 +459,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost()
+    public function testCustomPost(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -402,7 +476,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1()
+    public function testCustomPost1(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -424,7 +498,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2()
+    public function testCustomPost2(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -451,7 +525,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3()
+    public function testCustomPost3(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -478,7 +552,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4()
+    public function testCustomPost4(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -506,7 +580,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5()
+    public function testCustomPost5(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -534,7 +608,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6()
+    public function testCustomPost6(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -561,7 +635,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7()
+    public function testCustomPost7(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -588,7 +662,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8()
+    public function testCustomPost8(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -616,7 +690,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9()
+    public function testCustomPost9(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -644,7 +718,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10()
+    public function testCustomPost10(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -672,7 +746,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut()
+    public function testCustomPut(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -689,7 +763,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1()
+    public function testCustomPut1(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -711,7 +785,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteAuthentication')]
-    public function testDeleteAuthentication()
+    public function testDeleteAuthentication(): void
     {
         $client = $this->getClient();
         $client->deleteAuthentication(
@@ -728,7 +802,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteDestination')]
-    public function testDeleteDestination()
+    public function testDeleteDestination(): void
     {
         $client = $this->getClient();
         $client->deleteDestination(
@@ -745,7 +819,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteSource')]
-    public function testDeleteSource()
+    public function testDeleteSource(): void
     {
         $client = $this->getClient();
         $client->deleteSource(
@@ -762,7 +836,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteTask')]
-    public function testDeleteTask()
+    public function testDeleteTask(): void
     {
         $client = $this->getClient();
         $client->deleteTask(
@@ -779,7 +853,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteTaskV1')]
-    public function testDeleteTaskV1()
+    public function testDeleteTaskV1(): void
     {
         $client = $this->getClient();
         $client->deleteTaskV1(
@@ -796,7 +870,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('deleteTransformation')]
-    public function testDeleteTransformation()
+    public function testDeleteTransformation(): void
     {
         $client = $this->getClient();
         $client->deleteTransformation(
@@ -813,7 +887,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disableTask')]
-    public function testDisableTask()
+    public function testDisableTask(): void
     {
         $client = $this->getClient();
         $client->disableTask(
@@ -830,7 +904,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('disableTaskV1')]
-    public function testDisableTaskV1()
+    public function testDisableTaskV1(): void
     {
         $client = $this->getClient();
         $client->disableTaskV1(
@@ -847,7 +921,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enableTask')]
-    public function testEnableTask()
+    public function testEnableTask(): void
     {
         $client = $this->getClient();
         $client->enableTask(
@@ -864,7 +938,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('enableTaskV1')]
-    public function testEnableTaskV1()
+    public function testEnableTaskV1(): void
     {
         $client = $this->getClient();
         $client->enableTaskV1(
@@ -880,8 +954,27 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('generateTransformationCode')]
+    public function testGenerateTransformationCode(): void
+    {
+        $client = $this->getClient();
+        $client->generateTransformationCode(
+            ['id' => 'foo',
+                'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/models',
+                'method' => 'POST',
+                'body' => json_decode('{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('getAuthentication')]
-    public function testGetAuthentication()
+    public function testGetAuthentication(): void
     {
         $client = $this->getClient();
         $client->getAuthentication(
@@ -898,7 +991,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getDestination')]
-    public function testGetDestination()
+    public function testGetDestination(): void
     {
         $client = $this->getClient();
         $client->getDestination(
@@ -915,7 +1008,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getEvent')]
-    public function testGetEvent()
+    public function testGetEvent(): void
     {
         $client = $this->getClient();
         $client->getEvent(
@@ -933,7 +1026,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getRun')]
-    public function testGetRun()
+    public function testGetRun(): void
     {
         $client = $this->getClient();
         $client->getRun(
@@ -950,7 +1043,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getSource')]
-    public function testGetSource()
+    public function testGetSource(): void
     {
         $client = $this->getClient();
         $client->getSource(
@@ -967,7 +1060,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getTask')]
-    public function testGetTask()
+    public function testGetTask(): void
     {
         $client = $this->getClient();
         $client->getTask(
@@ -984,7 +1077,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getTaskV1')]
-    public function testGetTaskV1()
+    public function testGetTaskV1(): void
     {
         $client = $this->getClient();
         $client->getTaskV1(
@@ -1001,7 +1094,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getTransformation')]
-    public function testGetTransformation()
+    public function testGetTransformation(): void
     {
         $client = $this->getClient();
         $client->getTransformation(
@@ -1018,7 +1111,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getAuthentications')]
-    public function testListAuthentications()
+    public function testListAuthentications(): void
     {
         $client = $this->getClient();
         $client->listAuthentications();
@@ -1033,7 +1126,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getAuthentications with query params')]
-    public function testListAuthentications1()
+    public function testListAuthentications1(): void
     {
         $client = $this->getClient();
         $client->listAuthentications(
@@ -1062,7 +1155,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getDestinations')]
-    public function testListDestinations()
+    public function testListDestinations(): void
     {
         $client = $this->getClient();
         $client->listDestinations();
@@ -1077,7 +1170,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getEvents')]
-    public function testListEvents()
+    public function testListEvents(): void
     {
         $client = $this->getClient();
         $client->listEvents(
@@ -1094,7 +1187,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listRuns')]
-    public function testListRuns()
+    public function testListRuns(): void
     {
         $client = $this->getClient();
         $client->listRuns();
@@ -1109,7 +1202,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listSources')]
-    public function testListSources()
+    public function testListSources(): void
     {
         $client = $this->getClient();
         $client->listSources();
@@ -1124,7 +1217,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listTasks')]
-    public function testListTasks()
+    public function testListTasks(): void
     {
         $client = $this->getClient();
         $client->listTasks();
@@ -1139,7 +1232,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listTasksV1')]
-    public function testListTasksV1()
+    public function testListTasksV1(): void
     {
         $client = $this->getClient();
         $client->listTasksV1();
@@ -1154,14 +1247,14 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listTransformationModels')]
-    public function testListTransformationModels()
+    public function testListTransformationModels(): void
     {
         $client = $this->getClient();
         $client->listTransformationModels();
 
         $this->assertRequests([
             [
-                'path' => '/1/transformations/copilot',
+                'path' => '/1/transformations/models',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -1169,7 +1262,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('listTransformations')]
-    public function testListTransformations()
+    public function testListTransformations(): void
     {
         $client = $this->getClient();
         $client->listTransformations();
@@ -1184,24 +1277,23 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('pushTask')]
-    public function testPushTask()
+    public function testPushTask(): void
     {
         $client = $this->getClient();
         $client->pushTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['requests' => [
-                ['action' => 'addObject',
-                    'body' => ['key' => 'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
                         'foo' => '1',
+                        'objectID' => 'o',
                     ],
-                ],
 
-                ['action' => 'addObject',
-                    'body' => ['key' => 'baz',
+                    ['key' => 'baz',
                         'foo' => '2',
+                        'objectID' => 'k',
                     ],
                 ],
-            ],
             ],
         );
 
@@ -1209,13 +1301,13 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}'),
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
             ],
         ]);
     }
 
     #[TestDox('runSource')]
-    public function testRunSource()
+    public function testRunSource(): void
     {
         $client = $this->getClient();
         $client->runSource(
@@ -1244,7 +1336,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('runTask')]
-    public function testRunTask()
+    public function testRunTask(): void
     {
         $client = $this->getClient();
         $client->runTask(
@@ -1261,7 +1353,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('runTaskV1')]
-    public function testRunTaskV1()
+    public function testRunTaskV1(): void
     {
         $client = $this->getClient();
         $client->runTaskV1(
@@ -1278,7 +1370,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchAuthentications')]
-    public function testSearchAuthentications()
+    public function testSearchAuthentications(): void
     {
         $client = $this->getClient();
         $client->searchAuthentications(
@@ -1300,7 +1392,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchDestinations')]
-    public function testSearchDestinations()
+    public function testSearchDestinations(): void
     {
         $client = $this->getClient();
         $client->searchDestinations(
@@ -1322,7 +1414,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchSources')]
-    public function testSearchSources()
+    public function testSearchSources(): void
     {
         $client = $this->getClient();
         $client->searchSources(
@@ -1344,7 +1436,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchTasks')]
-    public function testSearchTasks()
+    public function testSearchTasks(): void
     {
         $client = $this->getClient();
         $client->searchTasks(
@@ -1368,7 +1460,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchTasksV1')]
-    public function testSearchTasksV1()
+    public function testSearchTasksV1(): void
     {
         $client = $this->getClient();
         $client->searchTasksV1(
@@ -1392,11 +1484,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('searchTransformations')]
-    public function testSearchTransformations()
+    public function testSearchTransformations(): void
     {
         $client = $this->getClient();
         $client->searchTransformations(
-            ['transformationsIDs' => [
+            ['transformationIDs' => [
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
 
                 '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
@@ -1410,13 +1502,13 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/search',
                 'method' => 'POST',
-                'body' => json_decode('{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
+                'body' => json_decode('{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
             ],
         ]);
     }
 
     #[TestDox('triggerDockerSourceDiscover')]
-    public function testTriggerDockerSourceDiscover()
+    public function testTriggerDockerSourceDiscover(): void
     {
         $client = $this->getClient();
         $client->triggerDockerSourceDiscover(
@@ -1432,11 +1524,11 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('tryTransformations')]
-    public function testTryTransformations()
+    #[TestDox('tryTransformation')]
+    public function testTryTransformation(): void
     {
         $client = $this->getClient();
-        $client->tryTransformations(
+        $client->tryTransformation(
             ['code' => 'foo',
                 'sampleRecord' => ['bar' => 'baz',
                 ],
@@ -1452,8 +1544,88 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('with authentications')]
+    public function testTryTransformation1(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformation(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('tryTransformationBeforeUpdate')]
+    public function testTryTransformationBeforeUpdate(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('existing with authentications')]
+    public function testTryTransformationBeforeUpdate1(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+                'authentications' => [
+                    ['type' => 'oauth',
+                        'name' => 'authName',
+                        'input' => ['url' => 'http://test.oauth',
+                            'client_id' => 'myID',
+                            'client_secret' => 'mySecret',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('updateAuthentication')]
-    public function testUpdateAuthentication()
+    public function testUpdateAuthentication(): void
     {
         $client = $this->getClient();
         $client->updateAuthentication(
@@ -1472,7 +1644,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateDestination')]
-    public function testUpdateDestination()
+    public function testUpdateDestination(): void
     {
         $client = $this->getClient();
         $client->updateDestination(
@@ -1491,7 +1663,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateSource')]
-    public function testUpdateSource()
+    public function testUpdateSource(): void
     {
         $client = $this->getClient();
         $client->updateSource(
@@ -1510,7 +1682,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateTask')]
-    public function testUpdateTask()
+    public function testUpdateTask(): void
     {
         $client = $this->getClient();
         $client->updateTask(
@@ -1530,7 +1702,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateTaskV1')]
-    public function testUpdateTaskV1()
+    public function testUpdateTaskV1(): void
     {
         $client = $this->getClient();
         $client->updateTaskV1(
@@ -1549,7 +1721,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('updateTransformation')]
-    public function testUpdateTransformation()
+    public function testUpdateTransformation(): void
     {
         $client = $this->getClient();
         $client->updateTransformation(
@@ -1570,7 +1742,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('validateSource')]
-    public function testValidateSource()
+    public function testValidateSource(): void
     {
         $client = $this->getClient();
         $client->validateSource(
@@ -1599,7 +1771,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('validateSourceBeforeUpdate')]
-    public function testValidateSourceBeforeUpdate()
+    public function testValidateSourceBeforeUpdate(): void
     {
         $client = $this->getClient();
         $client->validateSourceBeforeUpdate(
@@ -1617,7 +1789,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -1658,7 +1830,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         }
     }
 
-    protected function getClient()
+    protected function getClient(): IngestionClient
     {
         $config = IngestionConfig::create('appID', 'apiKey', 'us');
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));

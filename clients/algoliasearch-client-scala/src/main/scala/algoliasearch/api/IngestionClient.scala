@@ -12,7 +12,6 @@ import algoliasearch.ingestion.AuthenticationSortKeys._
 import algoliasearch.ingestion.AuthenticationType._
 import algoliasearch.ingestion.AuthenticationUpdate
 import algoliasearch.ingestion.AuthenticationUpdateResponse
-import algoliasearch.ingestion.BatchWriteParams
 import algoliasearch.ingestion.DeleteResponse
 import algoliasearch.ingestion.Destination
 import algoliasearch.ingestion.DestinationCreate
@@ -27,6 +26,8 @@ import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
+import algoliasearch.ingestion.GenerateTransformationCodePayload
+import algoliasearch.ingestion.GenerateTransformationCodeResponse
 import algoliasearch.ingestion.ListAuthenticationsResponse
 import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
@@ -36,6 +37,7 @@ import algoliasearch.ingestion.ListTasksResponseV1
 import algoliasearch.ingestion.ListTransformationsResponse
 import algoliasearch.ingestion.OrderKeys._
 import algoliasearch.ingestion.PlatformWithNone
+import algoliasearch.ingestion.PushTaskPayload
 import algoliasearch.ingestion.Run
 import algoliasearch.ingestion.RunListResponse
 import algoliasearch.ingestion.RunResponse
@@ -43,6 +45,7 @@ import algoliasearch.ingestion.RunSortKeys._
 import algoliasearch.ingestion.RunSourcePayload
 import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
+import algoliasearch.ingestion.RunType._
 import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
@@ -580,6 +583,31 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
+  /** Generates code for the selected model based on the given prompt.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GenerateTransformationCodeResponse] = Future {
+    requireNotNull(
+      generateTransformationCodePayload,
+      "Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/models")
+      .withBody(generateTransformationCodePayload)
+      .build()
+    execute[GenerateTransformationCodeResponse](request, requestOptions)
+  }
+
   /** Retrieves an authentication resource by its ID.
     *
     * Required API Key ACLs:
@@ -924,6 +952,8 @@ class IngestionClient(
     *   Page number of the paginated API response.
     * @param status
     *   Run status for filtering the list of task runs.
+    * @param `type`
+    *   Run type for filtering the list of task runs.
     * @param taskID
     *   Task ID for filtering the list of task runs.
     * @param sort
@@ -939,6 +969,7 @@ class IngestionClient(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       status: Option[Seq[RunStatus]] = None,
+      `type`: Option[Seq[RunType]] = None,
       taskID: Option[String] = None,
       sort: Option[RunSortKeys] = None,
       order: Option[OrderKeys] = None,
@@ -954,6 +985,7 @@ class IngestionClient(
       .withQueryParameter("itemsPerPage", itemsPerPage)
       .withQueryParameter("page", page)
       .withQueryParameter("status", status)
+      .withQueryParameter("type", `type`)
       .withQueryParameter("taskID", taskID)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
@@ -1134,7 +1166,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1/transformations/copilot")
+      .withPath(s"/1/transformations/models")
       .build()
     execute[TransformationModels](request, requestOptions)
   }
@@ -1185,20 +1217,20 @@ class IngestionClient(
     *
     * @param taskID
     *   Unique identifier of a task.
-    * @param batchWriteParams
+    * @param pushTaskPayload
     *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
     */
-  def pushTask(taskID: String, batchWriteParams: BatchWriteParams, requestOptions: Option[RequestOptions] = None)(
-      implicit ec: ExecutionContext
+  def pushTask(taskID: String, pushTaskPayload: PushTaskPayload, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
   ): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `pushTask`.")
-    requireNotNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `pushTask`.")
+    requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/push")
-      .withBody(batchWriteParams)
+      .withBody(pushTaskPayload)
       .build()
     execute[RunResponse](request, requestOptions)
   }
@@ -1433,22 +1465,55 @@ class IngestionClient(
     execute[SourceWatchResponse](request, requestOptions)
   }
 
-  /** Try a transformation.
+  /** Try a transformation before creating it.
     *
     * Required API Key ACLs:
     *   - addObject
     *   - deleteIndex
     *   - editSettings
     */
-  def tryTransformations(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
+  def tryTransformation(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[TransformationTryResponse] = Future {
-    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.")
+    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/transformations/try")
+      .withBody(transformationTry)
+      .build()
+    execute[TransformationTryResponse](request, requestOptions)
+  }
+
+  /** Try a transformation before updating it.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def tryTransformationBeforeUpdate(
+      transformationID: String,
+      transformationTry: TransformationTry,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationTryResponse] = Future {
+    requireNotNull(
+      transformationID,
+      "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
+    )
+    requireNotNull(
+      transformationTry,
+      "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/${escape(transformationID)}/try")
       .withBody(transformationTry)
       .build()
     execute[TransformationTryResponse](request, requestOptions)

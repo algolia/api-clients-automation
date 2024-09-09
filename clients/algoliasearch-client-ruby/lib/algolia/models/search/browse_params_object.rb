@@ -220,28 +220,6 @@ module Algolia
       # Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
       attr_accessor :cursor
 
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -823,8 +801,8 @@ module Algolia
           raise ArgumentError, "invalid value for \"length\", must be smaller than or equal to 1000."
         end
 
-        if length < 1
-          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 1."
+        if length < 0
+          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 0."
         end
 
         @length = length

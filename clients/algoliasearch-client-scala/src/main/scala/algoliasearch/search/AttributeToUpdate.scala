@@ -38,6 +38,7 @@ import algoliasearch.search.BuiltInOperationType._
 import org.json4s._
 
 /** AttributeToUpdate
+  * @deprecated
   */
 sealed trait AttributeToUpdate
 
@@ -50,6 +51,7 @@ object AttributeToUpdate {
   def apply(value: String): AttributeToUpdate = {
     AttributeToUpdate.StringValue(value)
   }
+
 }
 
 object AttributeToUpdateSerializer extends Serializer[AttributeToUpdate] {

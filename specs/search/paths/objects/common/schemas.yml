@@ -17,10 +17,6 @@ builtInOperationValue:
     - type: integer
       description: A number to add, remove, or append, depending on the operation.
 
-attribute:
-  type: string
-  description: Value of the attribute to update.
-
 builtInOperation:
   type: object
   description: Update to perform on the attribute.
@@ -35,8 +31,10 @@ builtInOperation:
     - value
 
 attributeToUpdate:
+  x-keep-model: true
+  deprecated: true
   oneOf:
-    - $ref: '#/attribute'
+    - type: string
     - $ref: '#/builtInOperation'
 
 batchResponse:

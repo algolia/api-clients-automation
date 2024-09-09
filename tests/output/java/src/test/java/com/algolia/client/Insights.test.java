@@ -1,5 +1,6 @@
 package com.algolia.client;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InsightsClientClientTests {
@@ -66,25 +69,39 @@ class InsightsClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with default read timeouts")
+  @DisplayName("the user agent contains the latest version")
   void commonApiTest1() {
+    InsightsClient client = createClient();
+
+    client.customPost("1/test");
+    EchoResponse result = echo.getLastResponse();
+    {
+      String regexp = "^Algolia for Java \\(4.3.0\\).*";
+      assertTrue(
+        result.headers.get("user-agent").matches(regexp),
+        "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
+      );
+    }
+  }
+
+  @Test
+  @DisplayName("calls api with default read timeouts")
+  void commonApiTest2() {
     InsightsClient client = createClient();
 
     client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(5000, result.responseTimeout);
   }
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void commonApiTest2() {
+  void commonApiTest3() {
     InsightsClient client = createClient();
 
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals(2000, result.connectTimeout);
     assertEquals(30000, result.responseTimeout);
   }
@@ -96,7 +113,7 @@ class InsightsClientClientTests {
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
-          List.of(
+          Arrays.asList(
             new ClickedObjectIDsAfterSearch()
               .setEventType(ClickEvent.CLICK)
               .setEventName("Product Clicked")
@@ -104,14 +121,13 @@ class InsightsClientClientTests {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1641290601962L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(List.of(7, 6))
+              .setPositions(Arrays.asList(7, 6))
           )
         )
     );
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.algolia.io", result.host);
   }
 
@@ -121,7 +137,6 @@ class InsightsClientClientTests {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
-
     assertEquals("insights.us.algolia.io", result.host);
   }
 
@@ -134,5 +149,33 @@ class InsightsClientClientTests {
       });
       assertEquals("`region` must be one of the following: de, us", exception.getMessage());
     }
+  }
+
+  @Test
+  @DisplayName("switch API key")
+  void setClientApiKeyTest0() {
+    InsightsClient client = new InsightsClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+    );
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/1");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+    assertDoesNotThrow(() -> {
+      client.setClientApiKey("updated-api-key");
+    });
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("check-api-key/2");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
   }
 }

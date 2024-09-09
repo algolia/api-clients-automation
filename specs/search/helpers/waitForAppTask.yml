@@ -1,0 +1,23 @@
+method:
+  get:
+    x-helper: true
+    operationId: waitForAppTask
+    summary: Wait for application-level operation to complete
+    description: Wait for a application-level task to complete.
+    parameters:
+      - in: query
+        name: taskID
+        description: The taskID returned by the operation.
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '../common/schemas/GetTaskResponse.yml'
+      '400':
+        $ref: '../../common/responses/IndexNotFound.yml'

@@ -24,7 +24,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
 
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
         $this->recordedRequests[] = $request;
 
@@ -32,7 +32,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete()
+    public function testCustomDelete(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -49,7 +49,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1()
+    public function testCustomDelete1(): void
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -69,7 +69,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet()
+    public function testCustomGet(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -86,7 +86,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1()
+    public function testCustomGet1(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -106,7 +106,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2()
+    public function testCustomGet2(): void
     {
         $client = $this->getClient();
         $client->customGet(
@@ -137,7 +137,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost()
+    public function testCustomPost(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -154,7 +154,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1()
+    public function testCustomPost1(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -176,7 +176,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2()
+    public function testCustomPost2(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -203,7 +203,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3()
+    public function testCustomPost3(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -230,7 +230,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4()
+    public function testCustomPost4(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -258,7 +258,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5()
+    public function testCustomPost5(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -286,7 +286,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6()
+    public function testCustomPost6(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -313,7 +313,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7()
+    public function testCustomPost7(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -340,7 +340,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8()
+    public function testCustomPost8(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -368,7 +368,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9()
+    public function testCustomPost9(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -396,7 +396,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10()
+    public function testCustomPost10(): void
     {
         $client = $this->getClient();
         $client->customPost(
@@ -424,7 +424,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut()
+    public function testCustomPut(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -441,7 +441,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1()
+    public function testCustomPut1(): void
     {
         $client = $this->getClient();
         $client->customPut(
@@ -463,7 +463,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getClusterIncidents')]
-    public function testGetClusterIncidents()
+    public function testGetClusterIncidents(): void
     {
         $client = $this->getClient();
         $client->getClusterIncidents(
@@ -480,7 +480,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getClusterStatus')]
-    public function testGetClusterStatus()
+    public function testGetClusterStatus(): void
     {
         $client = $this->getClient();
         $client->getClusterStatus(
@@ -497,7 +497,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getIncidents')]
-    public function testGetIncidents()
+    public function testGetIncidents(): void
     {
         $client = $this->getClient();
         $client->getIncidents();
@@ -512,7 +512,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getIndexingTime')]
-    public function testGetIndexingTime()
+    public function testGetIndexingTime(): void
     {
         $client = $this->getClient();
         $client->getIndexingTime(
@@ -529,7 +529,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getLatency')]
-    public function testGetLatency()
+    public function testGetLatency(): void
     {
         $client = $this->getClient();
         $client->getLatency(
@@ -546,7 +546,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getMetrics')]
-    public function testGetMetrics()
+    public function testGetMetrics(): void
     {
         $client = $this->getClient();
         $client->getMetrics(
@@ -564,7 +564,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getReachability')]
-    public function testGetReachability()
+    public function testGetReachability(): void
     {
         $client = $this->getClient();
         $client->getReachability(
@@ -581,7 +581,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getInventory')]
-    public function testGetServers()
+    public function testGetServers(): void
     {
         $client = $this->getClient();
         $client->getServers();
@@ -596,7 +596,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('getStatus')]
-    public function testGetStatus()
+    public function testGetStatus(): void
     {
         $client = $this->getClient();
         $client->getStatus();
@@ -610,7 +610,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    protected function assertRequests(array $requests)
+    protected function assertRequests(array $requests): void
     {
         $this->assertGreaterThan(0, count($requests));
         $this->assertEquals(count($requests), count($this->recordedRequests));
@@ -651,7 +651,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         }
     }
 
-    protected function getClient()
+    protected function getClient(): MonitoringClient
     {
         $config = MonitoringConfig::create('appID', 'apiKey');
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));

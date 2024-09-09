@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Ingestion;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * TaskInput Class Doc Comment.
@@ -22,7 +23,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
      */
     protected static $modelTypes = [
         'mapping' => '\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput',
-        'streams' => 'object',
+        'streams' => '\Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[]',
         'metafields' => '\Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMetafield[]',
         'market' => '\Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMarket',
     ];
@@ -218,7 +219,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
     /**
      * Gets streams.
      *
-     * @return object
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[]
      */
     public function getStreams()
     {
@@ -228,7 +229,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
     /**
      * Sets streams.
      *
-     * @param object $streams streams
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\DockerStreams[] $streams streams
      *
      * @return self
      */
@@ -291,10 +292,8 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -306,7 +305,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -317,7 +316,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -331,7 +330,7 @@ class TaskInput extends AbstractModel implements ModelInterface, \ArrayAccess, \
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

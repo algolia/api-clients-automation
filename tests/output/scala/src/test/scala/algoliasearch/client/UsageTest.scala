@@ -44,7 +44,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct write host") {
@@ -57,7 +57,7 @@ class UsageTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
+    assert(echo.lastResponse.get.host == "usage.algolia.com")
   }
 
   test("calls api with correct user agent") {
@@ -71,6 +71,20 @@ class UsageTest extends AnyFunSuite {
     )
     val regexp =
       """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Usage (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("the user agent contains the latest version") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp = """^Algolia for Scala \(2.3.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -113,6 +127,45 @@ class UsageTest extends AnyFunSuite {
 
     assertError("`apiKey` is missing.") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "")
+    }
+  }
+
+  test("switch API key") {
+
+    val client = UsageClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/1"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+    }
+
+    {
+
+      client.setClientApiKey(
+        apiKey = "updated-api-key"
+      )
+    }
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/2"
+        ),
+        Duration.Inf
+      )
+      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
     }
   }
 }

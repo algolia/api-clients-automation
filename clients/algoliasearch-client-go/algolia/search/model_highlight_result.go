@@ -4,12 +4,15 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // HighlightResult - struct for HighlightResult.
 type HighlightResult struct {
 	HighlightResultOption               *HighlightResultOption
 	ArrayOfHighlightResultOption        *[]HighlightResultOption
+	MapmapOfStringHighlightResult       *map[string]HighlightResult
 	MapmapOfStringHighlightResultOption *map[string]HighlightResultOption
 }
 
@@ -17,6 +20,13 @@ type HighlightResult struct {
 func HighlightResultOptionAsHighlightResult(v *HighlightResultOption) *HighlightResult {
 	return &HighlightResult{
 		HighlightResultOption: v,
+	}
+}
+
+// map[string]HighlightResultAsHighlightResult is a convenience function that returns map[string]HighlightResult wrapped in HighlightResult.
+func MapmapOfStringHighlightResultAsHighlightResult(v map[string]HighlightResult) *HighlightResult {
+	return &HighlightResult{
+		MapmapOfStringHighlightResult: &v,
 	}
 }
 
@@ -37,43 +47,38 @@ func ArrayOfHighlightResultOptionAsHighlightResult(v []HighlightResultOption) *H
 // Unmarshal JSON data into one of the pointers in the struct.
 func (dst *HighlightResult) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal data into HighlightResultOption
-	err = newStrictDecoder(data).Decode(&dst.HighlightResultOption)
-	if err == nil && validateStruct(dst.HighlightResultOption) == nil {
-		jsonHighlightResultOption, _ := json.Marshal(dst.HighlightResultOption)
-		if string(jsonHighlightResultOption) == "{}" { // empty struct
+	// use discriminator value to speed up the lookup if possible, if not we will try every possibility
+	var jsonDict map[string]any
+	_ = newStrictDecoder(data).Decode(&jsonDict)
+	if utils.HasKey(jsonDict, "matchLevel") && utils.HasKey(jsonDict, "matchedWords") {
+		// try to unmarshal data into HighlightResultOption
+		err = newStrictDecoder(data).Decode(&dst.HighlightResultOption)
+		if err == nil && validateStruct(dst.HighlightResultOption) == nil {
+			return nil // found the correct type
+		} else {
 			dst.HighlightResultOption = nil
-		} else {
-			return nil
 		}
-	} else {
-		dst.HighlightResultOption = nil
 	}
-
-	// try to unmarshal data into ArrayOfHighlightResultOption
-	err = newStrictDecoder(data).Decode(&dst.ArrayOfHighlightResultOption)
-	if err == nil && validateStruct(dst.ArrayOfHighlightResultOption) == nil {
-		jsonArrayOfHighlightResultOption, _ := json.Marshal(dst.ArrayOfHighlightResultOption)
-		if string(jsonArrayOfHighlightResultOption) == "{}" { // empty struct
-			dst.ArrayOfHighlightResultOption = nil
-		} else {
-			return nil
-		}
+	// try to unmarshal data into MapmapOfStringHighlightResult
+	err = newStrictDecoder(data).Decode(&dst.MapmapOfStringHighlightResult)
+	if err == nil && validateStruct(dst.MapmapOfStringHighlightResult) == nil {
+		return nil // found the correct type
 	} else {
-		dst.ArrayOfHighlightResultOption = nil
+		dst.MapmapOfStringHighlightResult = nil
 	}
-
 	// try to unmarshal data into MapmapOfStringHighlightResultOption
 	err = newStrictDecoder(data).Decode(&dst.MapmapOfStringHighlightResultOption)
 	if err == nil && validateStruct(dst.MapmapOfStringHighlightResultOption) == nil {
-		jsonMapmapOfStringHighlightResultOption, _ := json.Marshal(dst.MapmapOfStringHighlightResultOption)
-		if string(jsonMapmapOfStringHighlightResultOption) == "{}" { // empty struct
-			dst.MapmapOfStringHighlightResultOption = nil
-		} else {
-			return nil
-		}
+		return nil // found the correct type
 	} else {
 		dst.MapmapOfStringHighlightResultOption = nil
+	}
+	// try to unmarshal data into ArrayOfHighlightResultOption
+	err = newStrictDecoder(data).Decode(&dst.ArrayOfHighlightResultOption)
+	if err == nil && validateStruct(dst.ArrayOfHighlightResultOption) == nil {
+		return nil // found the correct type
+	} else {
+		dst.ArrayOfHighlightResultOption = nil
 	}
 
 	return fmt.Errorf("Data failed to match schemas in oneOf(HighlightResult)")
@@ -99,6 +104,15 @@ func (src HighlightResult) MarshalJSON() ([]byte, error) {
 		return serialized, nil
 	}
 
+	if src.MapmapOfStringHighlightResult != nil {
+		serialized, err := json.Marshal(&src.MapmapOfStringHighlightResult)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of MapmapOfStringHighlightResult of HighlightResult: %w", err)
+		}
+
+		return serialized, nil
+	}
+
 	if src.MapmapOfStringHighlightResultOption != nil {
 		serialized, err := json.Marshal(&src.MapmapOfStringHighlightResultOption)
 		if err != nil {
@@ -119,6 +133,10 @@ func (obj HighlightResult) GetActualInstance() any {
 
 	if obj.ArrayOfHighlightResultOption != nil {
 		return *obj.ArrayOfHighlightResultOption
+	}
+
+	if obj.MapmapOfStringHighlightResult != nil {
+		return *obj.MapmapOfStringHighlightResult
 	}
 
 	if obj.MapmapOfStringHighlightResultOption != nil {

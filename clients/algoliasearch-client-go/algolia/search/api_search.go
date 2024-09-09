@@ -2692,7 +2692,7 @@ DeleteBy calls the API and returns the raw response from it.
 	This operation doesn't accept empty queries or filters.
 
 It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse),
-and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
 
 	    Required API Key ACLs:
 	    - deleteIndex
@@ -2746,7 +2746,7 @@ DeleteBy casts the HTTP response body to a defined struct.
 This operation doesn't accept empty queries or filters.
 
 It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse),
-and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
 
 Required API Key ACLs:
   - deleteIndex
@@ -6283,12 +6283,12 @@ func (r *ApiPartialUpdateObjectRequest) UnmarshalJSON(b []byte) error {
 type ApiPartialUpdateObjectRequest struct {
 	indexName          string
 	objectID           string
-	attributesToUpdate map[string]AttributeToUpdate
+	attributesToUpdate map[string]any
 	createIfNotExists  *bool
 }
 
 // NewApiPartialUpdateObjectRequest creates an instance of the ApiPartialUpdateObjectRequest to be used for the API call.
-func (c *APIClient) NewApiPartialUpdateObjectRequest(indexName string, objectID string, attributesToUpdate map[string]AttributeToUpdate) ApiPartialUpdateObjectRequest {
+func (c *APIClient) NewApiPartialUpdateObjectRequest(indexName string, objectID string, attributesToUpdate map[string]any) ApiPartialUpdateObjectRequest {
 	return ApiPartialUpdateObjectRequest{
 		indexName:          indexName,
 		objectID:           objectID,
@@ -6309,25 +6309,37 @@ PartialUpdateObject calls the API and returns the raw response from it.
 
 	  - If a record with the specified object ID doesn't exist,
 	    a new record is added to the index **if** `createIfNotExists` is true.
-
 	  - If the index doesn't exist yet, this method creates a new index.
-
 	  - You can use any first-level attribute but not nested attributes.
 	    If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
 
+To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.
+
+- Increment: increment a numeric attribute
+- Decrement: decrement a numeric attribute
+- Add: append a number or string element to an array attribute
+- Remove: remove all matching number or string elements from an array attribute made of numbers or strings
+- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present
+- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.
+- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.
+
+You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:
+
+- _operation: the operation to apply on the attribute
+- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+
 	    Required API Key ACLs:
+	    - addObject
 
-	  - addObject
-
-	    Request can be constructed by NewApiPartialUpdateObjectRequest with parameters below.
-	    @param indexName string - Name of the index on which to perform the operation.
-	    @param objectID string - Unique record identifier.
-	    @param attributesToUpdate map[string]AttributeToUpdate - Attributes with their values.
-	    @param createIfNotExists bool - Whether to create a new record if it doesn't exist.
-	    @param opts ...RequestOption - Optional parameters for the API call
-	    @return *http.Response - The raw response from the API
-	    @return []byte - The raw response body from the API
-	    @return error - An error if the API call fails
+	Request can be constructed by NewApiPartialUpdateObjectRequest with parameters below.
+	  @param indexName string - Name of the index on which to perform the operation.
+	  @param objectID string - Unique record identifier.
+	  @param attributesToUpdate map[string]any - Attributes with their values.
+	  @param createIfNotExists bool - Whether to create a new record if it doesn't exist.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
 */
 func (c *APIClient) PartialUpdateObjectWithHTTPInfo(r ApiPartialUpdateObjectRequest, opts ...RequestOption) (*http.Response, []byte, error) {
 	requestPath := "/1/indexes/{indexName}/{objectID}/partial"
@@ -6341,9 +6353,6 @@ func (c *APIClient) PartialUpdateObjectWithHTTPInfo(r ApiPartialUpdateObjectRequ
 		return nil, nil, reportError("Parameter `objectID` is required when calling `PartialUpdateObject`.")
 	}
 
-	if len(r.attributesToUpdate) == 0 {
-		return nil, nil, reportError("Parameter `attributesToUpdate` is required when calling `PartialUpdateObject`.")
-	}
 	if len(r.attributesToUpdate) == 0 {
 		return nil, nil, reportError("Parameter `attributesToUpdate` is required when calling `PartialUpdateObject`.")
 	}
@@ -6386,6 +6395,21 @@ Adds new attributes to a record, or update existing ones.
   - You can use any first-level attribute but not nested attributes.
     If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
 
+To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.
+
+- Increment: increment a numeric attribute
+- Decrement: decrement a numeric attribute
+- Add: append a number or string element to an array attribute
+- Remove: remove all matching number or string elements from an array attribute made of numbers or strings
+- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present
+- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.
+- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value that's greater than 0.
+
+You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:
+
+- _operation: the operation to apply on the attribute
+- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
+
 Required API Key ACLs:
   - addObject
 
@@ -6393,7 +6417,7 @@ Request can be constructed by NewApiPartialUpdateObjectRequest with parameters b
 
 	@param indexName string - Name of the index on which to perform the operation.
 	@param objectID string - Unique record identifier.
-	@param attributesToUpdate map[string]AttributeToUpdate - Attributes with their values.
+	@param attributesToUpdate map[string]any - Attributes with their values.
 	@param createIfNotExists bool - Whether to create a new record if it doesn't exist.
 	@return UpdatedAtWithObjectIdResponse
 */
@@ -6874,7 +6898,7 @@ SaveObject calls the API and returns the raw response from it.
 - If a record with the specified object ID doesn't exist, a new record is added to your index.
 - If you add a record to an index that doesn't exist yet, a new index is created.
 
-To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial).
+To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject).
 To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
 
 	    Required API Key ACLs:
@@ -6933,7 +6957,7 @@ Adds a record to an index or replace it.
 - If a record with the specified object ID doesn't exist, a new record is added to your index.
 - If you add a record to an index that doesn't exist yet, a new index is created.
 
-To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial).
+To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject).
 To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
 
 Required API Key ACLs:
@@ -9361,7 +9385,7 @@ func (c *APIClient) WaitForTask(
 	taskID int64,
 	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-	// provide a defalut timeout function
+	// provide a default timeout function
 	opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
@@ -9395,7 +9419,7 @@ func (c *APIClient) WaitForAppTask(
 	taskID int64,
 	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-	// provide a defalut timeout function
+	// provide a default timeout function
 	opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
@@ -9528,7 +9552,7 @@ func (c *APIClient) WaitForApiKey(
 		return nil, &errs.WaitKeyOperationError{}
 	}
 
-	// provide a defalut timeout function
+	// provide a default timeout function
 	opts = append([]WaitForApiKeyOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
@@ -9887,7 +9911,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 
 /*
 ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
-See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
 
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
@@ -9940,4 +9964,21 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 		BatchResponses:        batchResp,
 		MoveOperationResponse: *moveResp,
 	}, nil
+}
+
+// Exists returns whether an initialized index exists or not, along with a nil
+// error. When encountering a network error, a non-nil error is returned along
+// with false.
+func (c *APIClient) IndexExists(indexName string) (bool, error) {
+	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName))
+	if err == nil {
+		return true, nil
+	}
+
+	var apiErr *APIError
+	if errors.As(err, &apiErr) && apiErr.Status == http.StatusNotFound {
+		return false, nil
+	}
+
+	return false, err
 }

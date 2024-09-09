@@ -39,10 +39,10 @@ class SearchClientBenchmark {
       withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6682)), false)
     );
     for (int i = 0; i < 1000; i++) {
-      var res = client.search(
+      SearchResponses res = client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
+            Arrays.asList(
               new SearchForHits().setIndexName("cts_e2e_benchmark_search_java").setQuery("iphone 15 pro max 512gb").setHitsPerPage(50)
             )
           ),

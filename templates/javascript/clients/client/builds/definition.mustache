@@ -23,24 +23,19 @@ export {
 export * from '../model';
 
 {{#isSearchClient}}
-import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from '../model';
+import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
 {{/isSearchClient}}
 
 {{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
+import {createHmac} from 'node:crypto';
 {{/nodeSearchHelpers}}
-
-/**
- * The client type.
- */
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof {{apiName}}>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function {{apiName}}(
   appId: string,
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: ClientOptions
-) {
+): {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} {
   if (!appId || typeof appId !== 'string') {
     throw new Error("`appId` is missing.");
   }

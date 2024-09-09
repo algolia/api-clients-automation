@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.QuerySuggestionsClient
 // IMPORT<
 import com.algolia.client.model.querysuggestions.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -18,10 +17,10 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     var response = client.createConfig(
       configurationWithIndex = ConfigurationWithIndex(
-        indexName = "theIndexName",
+        indexName = "<YOUR_INDEX_NAME>",
         sourceIndices = listOf(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = listOf(
               Facet(
                 attribute = "test",
@@ -35,6 +34,7 @@ class SnippetQuerySuggestionsClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -52,6 +52,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -69,6 +70,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -86,6 +88,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -103,6 +106,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -117,9 +121,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.deleteConfig(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -135,6 +140,7 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     var response = client.getAllConfigs()
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -149,9 +155,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getConfig(
-      indexName = "cts_e2e_browse_query_suggestions",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -166,9 +173,10 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getConfigStatus(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -183,11 +191,28 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.getLogFile(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)
@@ -200,11 +225,11 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.updateConfig(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       configuration = Configuration(
         sourceIndices = listOf(
           SourceIndex(
-            indexName = "testIndex",
+            indexName = "<YOUR_INDEX_NAME>",
             facets = listOf(
               Facet(
                 attribute = "test",
@@ -218,6 +243,7 @@ class SnippetQuerySuggestionsClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<

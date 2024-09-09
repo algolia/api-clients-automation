@@ -39,7 +39,13 @@ object RunType {
   case object Discover extends RunType {
     override def toString = "discover"
   }
-  val values: Seq[RunType] = Seq(Reindex, Update, Discover)
+  case object Validate extends RunType {
+    override def toString = "validate"
+  }
+  case object Push extends RunType {
+    override def toString = "push"
+  }
+  val values: Seq[RunType] = Seq(Reindex, Update, Discover, Validate, Push)
 
   def withName(name: String): RunType = RunType.values
     .find(_.toString == name)

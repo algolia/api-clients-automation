@@ -5,6 +5,7 @@
 namespace Algolia\AlgoliaSearch\Model\Analytics;
 
 use Algolia\AlgoliaSearch\Model\AbstractModel;
+use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
  * DailySearchesNoResults Class Doc Comment.
@@ -261,10 +262,8 @@ class DailySearchesNoResults extends AbstractModel implements ModelInterface, \A
      * Returns true if offset exists. False otherwise.
      *
      * @param int $offset Offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -276,7 +275,7 @@ class DailySearchesNoResults extends AbstractModel implements ModelInterface, \A
      *
      * @return null|mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -287,7 +286,7 @@ class DailySearchesNoResults extends AbstractModel implements ModelInterface, \A
      * @param null|int $offset Offset
      * @param mixed    $value  Value to be set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -301,7 +300,7 @@ class DailySearchesNoResults extends AbstractModel implements ModelInterface, \A
      *
      * @param int $offset Offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

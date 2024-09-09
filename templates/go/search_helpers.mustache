@@ -108,7 +108,7 @@ func (c *APIClient) WaitForTask(
 	taskID int64,
 	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-  // provide a defalut timeout function
+  // provide a default timeout function
   opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
@@ -142,7 +142,7 @@ func (c *APIClient) WaitForAppTask(
 	taskID int64,
 	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
-  // provide a defalut timeout function
+  // provide a default timeout function
   opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
@@ -276,7 +276,7 @@ func (c *APIClient) WaitForApiKey(
 	}
 
 
-  // provide a defalut timeout function
+  // provide a default timeout function
   opts = append([]WaitForApiKeyOption{WithTimeout(func(count int) time.Duration {
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
@@ -637,7 +637,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 
 /*
 ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
-See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
 
   @param indexName string - the index name to replace objects into.
   @param objects []map[string]any - List of objects to replace.
@@ -690,4 +690,21 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 		BatchResponses:        batchResp,
 		MoveOperationResponse: *moveResp,
 	}, nil
+}
+
+// Exists returns whether an initialized index exists or not, along with a nil
+// error. When encountering a network error, a non-nil error is returned along
+// with false.
+func (c *APIClient) IndexExists(indexName string) (bool, error) {
+	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName))
+	if err == nil {
+		return true, nil
+	}
+
+  var apiErr *APIError
+	if errors.As(err, &apiErr) && apiErr.Status == http.StatusNotFound {
+		return false, nil
+	}
+
+	return false, err
 }

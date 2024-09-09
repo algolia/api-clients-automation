@@ -24,81 +24,50 @@
     "getUserTokenProfile": {
       "default": "var response = await client.GetUserTokenProfileAsync(\"UserToken\");"
     },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
     "setPersonalizationStrategy": {
       "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventScoring = new List<EventScoring>\n    {\n      new EventScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      }\n    },\n    FacetScoring = new List<FacetScoring>\n    {\n      new FacetScoring { Score = 42, FacetName = \"Event\", }\n    },\n    PersonalizationImpact = 42,\n  }\n);"
     },
     "init": {
       "default": "var client = new PersonalizationClient("
-    },
-    "waitForAppTask": {
-      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
-        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
-        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
-      }
-    },
-    "waitForTask": {
-      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
     }
   },
-  "dart": {
-    "waitForAppTask": {
-      "default": "await client.waitAppTask(response.taskID);"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
-    },
-    "waitForTask": {
-      "default": "await client.waitTask('<<indexName>>', response.taskID);"
-    }
-  },
+  "dart": {},
   "go": {
     "import": {
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization\""
     },
     "customDelete": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteUserProfile": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getPersonalizationStrategy": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetPersonalizationStrategy()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.GetPersonalizationStrategy()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getUserTokenProfile": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(\n  \"UserToken\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setPersonalizationStrategy": {
-      "default": "// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION\nclient, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(\n\n  personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(\n    []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName(\"Algolia\").SetEventType(personalization.EventType(\"click\"))}).SetFacetScoring(\n    []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName(\"Event\")}).SetPersonalizationImpact(42),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+      "default": "response, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(\n\n  personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(\n    []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName(\"Algolia\").SetEventType(personalization.EventType(\"click\"))}).SetFacetScoring(\n    []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName(\"Event\")}).SetPersonalizationImpact(42),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
-    "waitForAppTask": {
-      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
-        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
-        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
-      }
-    },
-    "waitForTask": {
-      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    "init": {
+      "default": "client, err := personalization.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", personalization.US)"
     }
   },
   "java": {
@@ -126,24 +95,14 @@
     "getUserTokenProfile": {
       "default": "client.getUserTokenProfile(\"UserToken\");"
     },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
     "setPersonalizationStrategy": {
-      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(List.of(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
+      "default": "client.setPersonalizationStrategy(\n  new PersonalizationStrategyParams()\n    .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName(\"Algolia\").setEventType(EventType.CLICK)))\n    .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName(\"Event\")))\n    .setPersonalizationImpact(42)\n);"
     },
     "init": {
       "default": "PersonalizationClient client = new PersonalizationClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
-    },
-    "waitForAppTask": {
-      "default": "client.waitForAppTask(response.getTaskID());"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
-        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
-        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
-      }
-    },
-    "waitForTask": {
-      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
     }
   },
   "javascript": {
@@ -151,44 +110,34 @@
       "default": "import { personalizationClient } from '@algolia/client-personalization';"
     },
     "customDelete": {
-      "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
     },
     "customGet": {
-      "default": "const response = await client.customGet({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.customGet({ path: 'test/minimal' });"
     },
     "customPost": {
-      "default": "const response = await client.customPost({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.customPost({ path: 'test/minimal' });"
     },
     "customPut": {
-      "default": "const response = await client.customPut({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.customPut({ path: 'test/minimal' });"
     },
     "deleteUserProfile": {
-      "default": "const response = await client.deleteUserProfile({ userToken: 'UserToken' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.deleteUserProfile({ userToken: 'UserToken' });"
     },
     "getPersonalizationStrategy": {
-      "default": "const response = await client.getPersonalizationStrategy();\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getPersonalizationStrategy();"
     },
     "getUserTokenProfile": {
-      "default": "const response = await client.getUserTokenProfile({ userToken: 'UserToken' });\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.getUserTokenProfile({ userToken: 'UserToken' });"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "setPersonalizationStrategy": {
-      "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});\n\n// use typed response\nconsole.log(response);"
+      "default": "const response = await client.setPersonalizationStrategy({\n  eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],\n  facetScoring: [{ score: 42, facetName: 'Event' }],\n  personalizationImpact: 42,\n});"
     },
     "init": {
-      "default": "const client = personalizationClient("
-    },
-    "waitForAppTask": {
-      "default": "await client.waitForAppTask({ taskID: response.taskID });"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
-        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
-        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
-      }
-    },
-    "waitForTask": {
-      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
+      "default": "const client = personalizationClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
     }
   },
   "kotlin": {
@@ -196,44 +145,34 @@
       "default": "import com.algolia.client.api.PersonalizationClient"
     },
     "customDelete": {
-      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)"
     },
     "deleteUserProfile": {
-      "default": "var response = client.deleteUserProfile(\n  userToken = \"UserToken\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.deleteUserProfile(\n  userToken = \"UserToken\",\n)"
     },
     "getPersonalizationStrategy": {
-      "default": "var response = client.getPersonalizationStrategy()\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getPersonalizationStrategy()"
     },
     "getUserTokenProfile": {
-      "default": "var response = client.getUserTokenProfile(\n  userToken = \"UserToken\",\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.getUserTokenProfile(\n  userToken = \"UserToken\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = listOf(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetScoring = listOf(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)\n\n// Use the response\nprintln(response)"
+      "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = listOf(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetScoring = listOf(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)"
     },
     "init": {
       "default": "val client = PersonalizationClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.taskID)"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
     }
   },
   "php": {
@@ -241,44 +180,34 @@
       "default": "use Algolia\\AlgoliaSearch\\Api\\PersonalizationClient;"
     },
     "customDelete": {
-      "default": "$response = $client->customDelete(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
     },
     "customGet": {
-      "default": "$response = $client->customGet(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);"
     },
     "customPost": {
-      "default": "$response = $client->customPost(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);"
     },
     "customPut": {
-      "default": "$response = $client->customPut(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);"
     },
     "deleteUserProfile": {
-      "default": "$response = $client->deleteUserProfile(\n    'UserToken',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->deleteUserProfile(\n    'UserToken',\n);"
     },
     "getPersonalizationStrategy": {
-      "default": "$response = $client->getPersonalizationStrategy();\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getPersonalizationStrategy();"
     },
     "getUserTokenProfile": {
-      "default": "$response = $client->getUserTokenProfile(\n    'UserToken',\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->getUserTokenProfile(\n    'UserToken',\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
     },
     "setPersonalizationStrategy": {
-      "default": "$response = $client->setPersonalizationStrategy(\n    ['eventScoring' => [\n        ['score' => 42,\n            'eventName' => 'Algolia',\n            'eventType' => 'click',\n        ],\n    ],\n        'facetScoring' => [\n            ['score' => 42,\n                'facetName' => 'Event',\n            ],\n        ],\n        'personalizationImpact' => 42,\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+      "default": "$response = $client->setPersonalizationStrategy(\n    ['eventScoring' => [\n        ['score' => 42,\n            'eventName' => 'Algolia',\n            'eventType' => 'click',\n        ],\n    ],\n        'facetScoring' => [\n            ['score' => 42,\n                'facetName' => 'Event',\n            ],\n        ],\n        'personalizationImpact' => 42,\n    ],\n);"
     },
     "init": {
       "default": "$client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
-    },
-    "waitForAppTask": {
-      "default": "$client->waitForAppTask($response['taskID']);"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
-        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
-        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
-      }
-    },
-    "waitForTask": {
-      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
     }
   },
   "python": {
@@ -286,44 +215,34 @@
       "default": "from algoliasearch.personalization.client import PersonalizationClient"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
     },
     "deleteUserProfile": {
-      "default": "response = await _client.delete_user_profile(\n    user_token=\"UserToken\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.delete_user_profile(\n    user_token=\"UserToken\",\n)"
     },
     "getPersonalizationStrategy": {
-      "default": "response = await _client.get_personalization_strategy()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_personalization_strategy()"
     },
     "getUserTokenProfile": {
-      "default": "response = await _client.get_user_token_profile(\n    user_token=\"UserToken\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.get_user_token_profile(\n    user_token=\"UserToken\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "response = await _client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+      "default": "response = await _client.set_personalization_strategy(\n    personalization_strategy_params={\n        \"eventScoring\": [\n            {\n                \"score\": 42,\n                \"eventName\": \"Algolia\",\n                \"eventType\": \"click\",\n            },\n        ],\n        \"facetScoring\": [\n            {\n                \"score\": 42,\n                \"facetName\": \"Event\",\n            },\n        ],\n        \"personalizationImpact\": 42,\n    },\n)"
     },
     "init": {
       "default": "_client = PersonalizationClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "await client.wait_for_app_task(task_id=response.task_id)"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
-    },
-    "waitForTask": {
-      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
     }
   },
   "ruby": {
@@ -331,44 +250,34 @@
       "default": "require \"algolia\""
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.custom_delete(\"test/minimal\")"
     },
     "customGet": {
-      "default": "response = client.custom_get(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.custom_get(\"test/minimal\")"
     },
     "customPost": {
-      "default": "response = client.custom_post(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.custom_post(\"test/minimal\")"
     },
     "customPut": {
-      "default": "response = client.custom_put(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.custom_put(\"test/minimal\")"
     },
     "deleteUserProfile": {
-      "default": "response = client.delete_user_profile(\"UserToken\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.delete_user_profile(\"UserToken\")"
     },
     "getPersonalizationStrategy": {
-      "default": "response = client.get_personalization_strategy\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_personalization_strategy"
     },
     "getUserTokenProfile": {
-      "default": "response = client.get_user_token_profile(\"UserToken\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.get_user_token_profile(\"UserToken\")"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
-      "default": "response = client.set_personalization_strategy(\n  PersonalizationStrategyParams.new(\n    event_scoring: [EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+      "default": "response = client.set_personalization_strategy(\n  PersonalizationStrategyParams.new(\n    event_scoring: [EventScoring.new(score: 42, event_name: \"Algolia\", event_type: \"click\")],\n    facet_scoring: [FacetScoring.new(score: 42, facet_name: \"Event\")],\n    personalization_impact: 42\n  )\n)"
     },
     "init": {
       "default": "client = Algolia::PersonalizationClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.wait_for_app_task(response.task_id)"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
-        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
-        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
-      }
-    },
-    "waitForTask": {
-      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
     }
   },
   "scala": {
@@ -376,44 +285,31 @@
       "default": "import algoliasearch.api.PersonalizationClient"
     },
     "customDelete": {
-      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
     },
     "customGet": {
-      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)"
     },
     "customPost": {
-      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)"
     },
     "customPut": {
-      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)"
     },
     "deleteUserProfile": {
-      "default": "val response = client.deleteUserProfile(\n  userToken = \"UserToken\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.deleteUserProfile(\n  userToken = \"UserToken\"\n)"
     },
     "getPersonalizationStrategy": {
-      "default": "val response = client.getPersonalizationStrategy(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getPersonalizationStrategy(\n)"
     },
     "getUserTokenProfile": {
-      "default": "val response = client.getUserTokenProfile(\n  userToken = \"UserToken\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.getUserTokenProfile(\n  userToken = \"UserToken\"\n)"
     },
     "setPersonalizationStrategy": {
-      "default": "val response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = Seq(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.withName(\"click\")\n      )\n    ),\n    facetScoring = Seq(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\"\n      )\n    ),\n    personalizationImpact = 42\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+      "default": "val response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventScoring = Seq(\n      EventScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.withName(\"click\")\n      )\n    ),\n    facetScoring = Seq(\n      FacetScoring(\n        score = 42,\n        facetName = \"Event\"\n      )\n    ),\n    personalizationImpact = 42\n  )\n)"
     },
     "init": {
       "default": "val client = PersonalizationClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
-    },
-    "waitForAppTask": {
-      "default": "client.waitAppTask(response.getTaskID())"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "",
-        "update": "",
-        "delete": ""
-      }
-    },
-    "waitForTask": {
-      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
     }
   },
   "swift": {
@@ -441,24 +337,14 @@
     "getUserTokenProfile": {
       "default": "let response = try await client.getUserTokenProfile(userToken: \"UserToken\")"
     },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
     "setPersonalizationStrategy": {
       "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventScoring: [EventScoring(\n            score: 42,\n            eventName: \"Algolia\",\n            eventType: PersonalizationEventType.click\n        )],\n        facetScoring: [FacetScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
     },
     "init": {
       "default": "let client = try PersonalizationClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
-    },
-    "waitForAppTask": {
-      "default": "try await client.waitForAppTask(with: response.taskID)"
-    },
-    "waitForApiKey": {
-      "default": {
-        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
-        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
-        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
-      }
-    },
-    "waitForTask": {
-      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
     }
   }
 }

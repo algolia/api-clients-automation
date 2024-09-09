@@ -53,7 +53,10 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
+
     supportingFiles.add(new SupportingFile("LICENSE", "../../", "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", "../../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));
@@ -106,6 +109,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     OneOf.updateModelsOneOf(models, modelPackage);
     GenericPropagator.propagateGenericsToModels(models);
+    OneOf.addOneOfMetadata(models);
 
     for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
       String modelName = entry.getKey();
@@ -133,7 +137,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    ModelPruner.removeOrphans(this, operations, models, true);
+    ModelPruner.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

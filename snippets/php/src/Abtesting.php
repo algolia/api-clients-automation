@@ -16,7 +16,7 @@ class SnippetAbtestingClient
      *
      * addABTests with minimal parameters
      */
-    public function snippetForAddABTests()
+    public function snippetForAddABTests(): void
     {
         // >SEPARATOR addABTests default
         // Initialize the client
@@ -38,6 +38,7 @@ class SnippetAbtestingClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -48,7 +49,7 @@ class SnippetAbtestingClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -59,6 +60,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -69,7 +71,7 @@ class SnippetAbtestingClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -80,6 +82,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -90,7 +93,7 @@ class SnippetAbtestingClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -101,6 +104,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -111,7 +115,7 @@ class SnippetAbtestingClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -122,6 +126,7 @@ class SnippetAbtestingClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -132,7 +137,7 @@ class SnippetAbtestingClient
      *
      * deleteABTest
      */
-    public function snippetForDeleteABTest()
+    public function snippetForDeleteABTest(): void
     {
         // >SEPARATOR deleteABTest default
         // Initialize the client
@@ -143,6 +148,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -153,7 +159,7 @@ class SnippetAbtestingClient
      *
      * getABTest
      */
-    public function snippetForGetABTest()
+    public function snippetForGetABTest(): void
     {
         // >SEPARATOR getABTest default
         // Initialize the client
@@ -164,6 +170,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -174,7 +181,7 @@ class SnippetAbtestingClient
      *
      * listABTests with minimal parameters
      */
-    public function snippetForListABTests()
+    public function snippetForListABTests(): void
     {
         // >SEPARATOR listABTests default
         // Initialize the client
@@ -183,8 +190,63 @@ class SnippetAbtestingClient
         // Call the API
         $response = $client->listABTests();
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ScheduleABTest method.
+     *
+     * scheduleABTest with minimal parameters
+     */
+    public function snippetForScheduleABTest(): void
+    {
+        // >SEPARATOR scheduleABTest default
+        // Initialize the client
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->scheduleABTest(
+            ['endAt' => '2022-12-31T00:00:00.000Z',
+                'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                'name' => 'myABTest',
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 30,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -193,7 +255,7 @@ class SnippetAbtestingClient
      *
      * stopABTest
      */
-    public function snippetForStopABTest()
+    public function snippetForStopABTest(): void
     {
         // >SEPARATOR stopABTest default
         // Initialize the client
@@ -204,6 +266,7 @@ class SnippetAbtestingClient
             42,
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

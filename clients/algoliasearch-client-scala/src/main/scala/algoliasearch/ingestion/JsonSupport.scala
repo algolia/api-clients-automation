@@ -36,6 +36,7 @@ object JsonSupport {
     new DestinationTypeSerializer() :+
     new DockerImageTypeSerializer() :+
     new DockerRegistrySerializer() :+
+    new DockerStreamsSyncModeSerializer() :+
     new EntityTypeSerializer() :+
     new EventSortKeysSerializer() :+
     new EventStatusSerializer() :+
@@ -74,7 +75,8 @@ object JsonSupport {
     TriggerSerializer
 
   private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new ErrorBaseSerializer()
+    new ErrorBaseSerializer() :+
+    new PushTaskRecordsSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
   implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization

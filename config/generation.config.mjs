@@ -7,14 +7,12 @@ export const patterns = [
   'snippets/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
+  'clients/**/.github/**',
 
   // C#
-  '!snippets/csharp/**',
-  'snippets/csharp/src/**.cs',
   'clients/algoliasearch-client-csharp/**',
   '!clients/algoliasearch-client-csharp/*',
   'clients/algoliasearch-client-csharp/global.json',
-  '!clients/algoliasearch-client-javascript/.github/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Clients/AlgoliaConfig.cs',
   '!clients/algoliasearch-client-csharp/algoliasearch/Exceptions/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Serializer/**',
@@ -22,7 +20,11 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
+
   'tests/output/csharp/global.json',
+  '!snippets/csharp/**',
+  'snippets/csharp/src/**.cs',
+  '!snippets/csharp/src/Program.cs',
 
   // Dart
   '!snippets/dart/**',
@@ -41,7 +43,6 @@ export const patterns = [
 
   // GO
   'clients/algoliasearch-client-go/algolia/**',
-  '!clients/algoliasearch-client-go/.github/**',
   '!clients/algoliasearch-client-go/*',
   '!clients/algoliasearch-client-go/algolia/transport/**',
   '!clients/algoliasearch-client-go/algolia/errs/**',
@@ -61,21 +62,26 @@ export const patterns = [
   'clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/BuildConfig.java',
 
   'tests/output/java/build.gradle',
+  '!snippets/java/settings.gradle',
 
   // JavaScript
   '!snippets/javascript/*.json',
   '!clients/algoliasearch-client-javascript/*',
-  '!clients/algoliasearch-client-javascript/.github/**',
   '!clients/algoliasearch-client-javascript/.yarn/**',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
   // the release process is allowed to push changes to this file, but in general we don't because those files are generated
-  process.env.RELEASE ? '!clients/algoliasearch-client-javascript/packages/**/package.json' : 'clients/algoliasearch-client-javascript/packages/**/package.json',
+  process.env.RELEASE
+    ? '!clients/algoliasearch-client-javascript/packages/**/package.json'
+    : 'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/jest.config.cjs',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/babel.config.cjs',
+  'clients/algoliasearch-client-javascript/packages/*/tsup.config.ts',
+  '!clients/algoliasearch-client-javascript/packages/client-common/tsup.config.ts',
+  '!clients/algoliasearch-client-javascript/packages/requester-*/tsup.config.ts',
 
   'tests/output/javascript/package.json',
 
@@ -94,10 +100,11 @@ export const patterns = [
   '!clients/algoliasearch-client-php/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
+  '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
+  '!clients/algoliasearch-client-php/lib/Model/ModelInterface.php',
   'clients/algoliasearch-client-php/lib/Configuration/*',
-  'clients/algoliasearch-client-php/lib/ApiException.php',
-  'clients/algoliasearch-client-php/lib/ObjectSerializer.php',
-  'clients/algoliasearch-client-php/lib/Algolia.php',
+  '!clients/algoliasearch-client-php/lib/Configuration/Configuration.php',
+  '!clients/algoliasearch-client-php/lib/Configuration/ConfigWithRegion.php',
   'clients/algoliasearch-client-php/composer.json',
 
   // Python
@@ -137,6 +144,7 @@ export const patterns = [
   '!clients/algoliasearch-client-scala/**',
   'clients/algoliasearch-client-scala/version.sbt',
   'clients/algoliasearch-client-scala/src/main/scala/algoliasearch/**',
+  '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/ApiClient.scala',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/exception/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/**',
   '!clients/algoliasearch-client-scala/src/main/scala/algoliasearch/config/**',
@@ -161,5 +169,5 @@ export const patterns = [
   '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
 
-  'clients/**/LICENSE'
+  'clients/**/LICENSE',
 ];

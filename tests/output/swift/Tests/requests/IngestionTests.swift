@@ -189,6 +189,37 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// push
+    func testCreateSourceTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createSourceWithHTTPInfo(sourceCreate: SourceCreate(
+            type: SourceType.push,
+            name: "pushezpourentrer"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"type\":\"push\",\"name\":\"pushezpourentrer\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/sources")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// task without cron
     func testCreateTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -247,6 +278,45 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let expectedBodyData =
             "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// task shopify
+    func testCreateTaskTest2() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            action: ActionType.replace,
+            cron: "* * * * *",
+            input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                name: "foo",
+                syncMode: DockerStreamsSyncMode.incremental
+            )]))
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -355,6 +425,45 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let expectedBodyData =
             "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// task shopify
+    func testCreateTaskV1Test3() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createTaskV1WithHTTPInfo(taskCreate: TaskCreateV1(
+            sourceID: "search",
+            destinationID: "destinationName",
+            trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
+            action: ActionType.replace,
+            input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                name: "foo",
+                syncMode: DockerStreamsSyncMode.incremental
+            )]))
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1318,6 +1427,42 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// generateTransformationCode
+    func testGenerateTransformationCodeTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .generateTransformationCodeWithHTTPInfo(
+                generateTransformationCodePayload: GenerateTransformationCodePayload(
+                    id: "foo",
+                    userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
+                )
+            )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/models")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getAuthentication
     func testGetAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -1712,7 +1857,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/transformations/copilot")
+        XCTAssertEqual(echoResponse.path, "/1/transformations/models")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1752,10 +1897,21 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.pushTaskWithHTTPInfo(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            batchWriteParams: IngestionBatchWriteParams(requests: [
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "bar", "foo": "1"]),
-                IngestionBatchRequest(action: IngestionAction.addObject, body: ["key": "baz", "foo": "2"]),
-            ])
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1764,7 +1920,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+            "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2041,7 +2197,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .searchTransformationsWithHTTPInfo(transformationSearch: TransformationSearch(transformationsIDs: [
+            .searchTransformationsWithHTTPInfo(transformationSearch: TransformationSearch(transformationIDs: [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
@@ -2053,7 +2209,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
+            "{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2090,8 +2246,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// tryTransformations
-    func testTryTransformationsTest() async throws {
+    /// tryTransformation
+    func testTryTransformationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -2100,7 +2256,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.tryTransformationsWithHTTPInfo(transformationTry: TransformationTry(
+        let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
             code: "foo",
             sampleRecord: ["bar": "baz"]
         ))
@@ -2116,6 +2272,124 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/transformations/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// with authentications
+    func testTryTransformationTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
+            code: "foo",
+            sampleRecord: ["bar": "baz"],
+            authentications: [AuthenticationCreate(
+                type: AuthenticationType.oauth,
+                name: "authName",
+                input: AuthInput.authOAuth(AuthOAuth(
+                    url: "http://test.oauth",
+                    clientId: "myID",
+                    clientSecret: "mySecret"
+                ))
+            )]
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// tryTransformationBeforeUpdate
+    func testTryTransformationBeforeUpdateTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// existing with authentications
+    func testTryTransformationBeforeUpdateTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationTry: TransformationTry(
+                code: "foo",
+                sampleRecord: ["bar": "baz"],
+                authentications: [AuthenticationCreate(
+                    type: AuthenticationType.oauth,
+                    name: "authName",
+                    input: AuthInput.authOAuth(AuthOAuth(
+                        url: "http://test.oauth",
+                        clientId: "myID",
+                        clientSecret: "mySecret"
+                    ))
+                )]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)

@@ -5,8 +5,7 @@ import { isNullable, isPairWithKey } from '../utils';
 export const validInlineTitle: Rule.RuleModule = {
   meta: {
     docs: {
-      description:
-        'title must be set in inline models, should be the first property and start with a lowercase',
+      description: 'title must be set in inline models, should be the first property and start with a lowercase',
     },
     messages: {
       inlineTitleExists: 'title must be set in inline models',
@@ -22,11 +21,7 @@ export const validInlineTitle: Rule.RuleModule = {
 
     return {
       YAMLPair(node): void {
-        if (
-          !isPairWithKey(node, 'type') ||
-          node.value?.type !== 'YAMLScalar' ||
-          node.value.value !== 'object'
-        ) {
+        if (!isPairWithKey(node, 'type') || node.value?.type !== 'YAMLScalar' || node.value.value !== 'object') {
           return;
         }
 
@@ -36,15 +31,10 @@ export const validInlineTitle: Rule.RuleModule = {
         }
 
         // make sure title starts with a lowercase
-        const title = node.parent.pairs.find((pair) =>
-          isPairWithKey(pair, 'title')
-        );
+        const title = node.parent.pairs.find((pair) => isPairWithKey(pair, 'title'));
         const titleNode = title?.value;
         const titleValue = (titleNode as any)?.value as string;
-        if (
-          titleNode &&
-          (titleNode.type !== 'YAMLScalar' || !/^[a-z]/.test(titleValue))
-        ) {
+        if (titleNode && (titleNode.type !== 'YAMLScalar' || !/^[a-z]/.test(titleValue))) {
           context.report({
             node: title,
             messageId: 'lowercaseTitle',
@@ -60,18 +50,13 @@ export const validInlineTitle: Rule.RuleModule = {
         }
 
         // if there are no properties, we don't need a title
-        const properties = node.parent.pairs.find((pair) =>
-          isPairWithKey(pair, 'properties')
-        );
+        const properties = node.parent.pairs.find((pair) => isPairWithKey(pair, 'properties'));
         if (!properties) {
           return;
         }
 
         // allow it on nullable objects
-        if (
-          isPairWithKey(node.parent.parent.parent, 'oneOf') &&
-          isNullable(node.parent.parent.parent.value)
-        ) {
+        if (isPairWithKey(node.parent.parent.parent, 'oneOf') && isNullable(node.parent.parent.parent.value)) {
           return;
         }
 

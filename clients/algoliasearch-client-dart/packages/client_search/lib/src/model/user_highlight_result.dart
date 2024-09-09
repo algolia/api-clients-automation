@@ -17,6 +17,7 @@ final class UserHighlightResult {
   /// - [Map<String, HighlightResultOption>]
   /// - [List<HighlightResultOption>]
   /// - [HighlightResultOption]
+  /// - [Map<String, HighlightResult>]
   @JsonKey(name: r'userID')
   final dynamic userID;
 
@@ -24,6 +25,7 @@ final class UserHighlightResult {
   /// - [Map<String, HighlightResultOption>]
   /// - [List<HighlightResultOption>]
   /// - [HighlightResultOption]
+  /// - [Map<String, HighlightResult>]
   @JsonKey(name: r'clusterName')
   final dynamic clusterName;
 

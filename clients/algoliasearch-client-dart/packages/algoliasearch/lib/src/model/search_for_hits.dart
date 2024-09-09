@@ -165,7 +165,7 @@ final class SearchForHits {
   final int? offset;
 
   /// Number of hits to retrieve (used in combination with `offset`).
-  // minimum: 1
+  // minimum: 0
   // maximum: 1000
   @JsonKey(name: r'length')
   final int? length;
@@ -318,6 +318,7 @@ final class SearchForHits {
   final List<String>? disableTypoToleranceOnAttributes;
 
   /// One of types:
+  /// - [BooleanString]
   /// - [bool]
   /// - [List<SupportedLanguage>]
   @JsonKey(name: r'ignorePlurals')

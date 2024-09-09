@@ -8,7 +8,6 @@ module.exports = {
     '**/dist',
     '**/target',
     '**/.yarn',
-    'website/specs',
     '**/project.packagespec.json',
   ],
 
@@ -127,14 +126,42 @@ module.exports = {
             ],
           },
         ],
-        '@typescript-eslint/ban-types': [
+        '@typescript-eslint/no-restricted-types': [
           'error',
           {
             types: {
-              object: {
-                message: 'Use Record instead',
-                fixWith: 'Record<string, any>',
+              String: {
+                message: 'Use `string` instead.',
+                fixWith: 'string',
               },
+              Number: {
+                message: 'Use `number` instead.',
+                fixWith: 'number',
+              },
+              Boolean: {
+                message: 'Use `boolean` instead.',
+                fixWith: 'boolean',
+              },
+              Symbol: {
+                message: 'Use `symbol` instead.',
+                fixWith: 'symbol',
+              },
+              Object: {
+                message:
+                  'The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848',
+                fixWith: 'Record<string, unknown>',
+              },
+              '{}': {
+                message:
+                  'The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.',
+                fixWith: 'Record<string, unknown>',
+              },
+              object: {
+                message:
+                  'The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848',
+                fixWith: 'Record<string, unknown>',
+              },
+              Function: 'Use a specific function type instead, like `() => void`.',
             },
           },
         ],
@@ -146,14 +173,8 @@ module.exports = {
         ],
       },
     },
-    // JS client rules
     {
       files: ['clients/algoliasearch-client-javascript/packages/**/*.ts'],
-
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        project: './clients/algoliasearch-client-javascript/tsconfig.json',
-      },
 
       rules: {
         // For a wider browser support (IE>=11), we forbid those two
@@ -171,12 +192,14 @@ module.exports = {
           },
         ],
         '@typescript-eslint/prefer-optional-chain': 0,
-      },
+      }
     },
     {
       files: ['*.json'],
-
-      plugins: ['json-format'],
+      parserOptions: {
+        extraFileExtensions: ['.json'],
+      },
+      extends: ["plugin:json/recommended-legacy"]
     },
     {
       files: ['templates/**/*.mustache'],

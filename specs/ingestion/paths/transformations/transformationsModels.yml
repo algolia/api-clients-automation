@@ -27,3 +27,46 @@ get:
               - llms
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
+
+post:
+  tags:
+    - transformations
+  summary: Generates code for the selected model based on the given prompt
+  description: Generates code for the selected model based on the given prompt.
+  operationId: generateTransformationCode
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: generateTransformationCodePayload
+          type: object
+          additionalProperties: false
+          properties:
+            id:
+              type: string
+            systemPrompt:
+              type: string
+            userPrompt:
+              type: string
+          required:
+            - id
+            - userPrompt
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: generateTransformationCodeResponse
+            type: object
+            additionalProperties: false
+            properties:
+              generatedCode:
+                type: string
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'

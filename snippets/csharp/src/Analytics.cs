@@ -23,6 +23,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -41,6 +42,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -59,6 +61,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -77,6 +80,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -95,6 +99,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetAddToCartRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -113,6 +118,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetAverageClickPositionAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -131,6 +137,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetClickPositionsAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -149,6 +156,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetClickThroughRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -167,6 +175,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetConversionRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -185,6 +194,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoClickRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -203,6 +213,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoResultsRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -221,6 +232,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetPurchaseRateAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -239,6 +251,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetRevenueAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -257,6 +270,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesCountAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -275,6 +289,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesNoClicksAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -293,6 +308,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetSearchesNoResultsAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -311,6 +327,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetStatusAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -329,6 +346,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopCountriesAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -347,6 +365,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFilterAttributesAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -365,6 +384,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFilterForAttributeAsync("myAttribute", "index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -383,6 +403,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopFiltersNoResultsAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -401,6 +422,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopHitsAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -419,6 +441,7 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetTopSearchesAsync("index");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -437,6 +460,26 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetUsersCountAsync("index");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForAnalyticsClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

@@ -60,9 +60,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       // guess the package name for js from the output folder variable
       if (language === 'javascript') {
-        current[key].additionalProperties.packageName = output.substring(
-          output.lastIndexOf('/') + 1,
-        );
+        current[key].additionalProperties.packageName = output.substring(output.lastIndexOf('/') + 1);
       }
     }
 
@@ -75,10 +73,7 @@ export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.
 
 export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
 
-export async function run(
-  command: string,
-  { errorMessage, cwd, language }: RunOptions = {},
-): Promise<string> {
+export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');
   const dockerImage = getDockerImage(language);
   let wrappedCmd = command;
@@ -175,8 +170,8 @@ async function buildCustomGenerators(): Promise<void> {
   spinner.succeed();
 }
 
-export async function gitBranchExists(branchName: string): Promise<boolean> {
-  return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
+export async function gitBranchExists(branchName: string, cwd?: string): Promise<boolean> {
+  return Boolean(await run(`git ls-remote --heads origin ${branchName}`, { cwd }));
 }
 
 export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
@@ -282,13 +277,14 @@ export async function setupAndGen(
   generators: Generator[],
   mode: GeneratorMode,
   fn: (gen: Generator) => Promise<void>,
+  additionalProperties = {},
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];
     await buildSpecs({ clients, outputFormat: 'yml', docs: false, useCache: true });
   }
 
-  await generateOpenapitools(generators, mode);
+  await generateOpenapitools(generators, mode, additionalProperties);
   await buildCustomGenerators();
 
   for (const gen of generators) {
