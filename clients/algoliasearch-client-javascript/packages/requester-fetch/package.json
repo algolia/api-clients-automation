@@ -23,7 +23,7 @@
         "require": "./dist/requester.fetch.node.cjs",
         "default": "./dist/requester.fetch.node.cjs"
       },
-      "workerd": {
+      "worker": {
         "types": "./dist/requester.fetch.node.d.ts",
         "default": "./dist/requester.fetch.node.js"
       },
