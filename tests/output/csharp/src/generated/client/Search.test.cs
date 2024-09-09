@@ -318,7 +318,7 @@ public class SearchClientTests
     {
       var res = await client.IndexExistsAsync("indexExistsYES");
 
-      Assert.True(res);
+      Assert.Equal(true, res);
     }
   }
 
@@ -345,7 +345,7 @@ public class SearchClientTests
     {
       var res = await client.IndexExistsAsync("indexExistsNO");
 
-      Assert.False(res);
+      Assert.Equal(false, res);
     }
   }
 
@@ -807,7 +807,7 @@ public class SearchClientTests
         Enum.Parse<ApiKeyOperation>("Delete")
       );
 
-      Assert.Null(res);
+      Assert.Equal(null, res);
     }
   }
 
