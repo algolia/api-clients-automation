@@ -3,9 +3,11 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.{{client}}
+{{#isSearchClient}}
+import com.algolia.client.extensions.*
+{{/isSearchClient}}
 // IMPORT<
 import com.algolia.client.model.{{import}}.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -18,32 +20,13 @@ class Snippet{{client}} {
       val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
       // Call the API
-      var response = client.{{method}}(
-        {{#parametersWithDataType}}
-        {{> tests/request_param}}
-        {{/parametersWithDataType}}
-        {{#hasRequestOptions}}
-        requestOptions = RequestOptions(
-            {{#requestOptions.queryParameters}}
-            urlParameters = buildMap {
-                {{#parametersWithDataType}}
-                put("{{{key}}}", {{> tests/param_value}})
-                {{/parametersWithDataType}}
-            },
-            {{/requestOptions.queryParameters}}
-            {{#requestOptions.headers}}
-            headers = buildMap {
-            {{#parametersWithDataType}}
-                put("{{{key}}}", {{> tests/param_value}})
-            {{/parametersWithDataType}}
-            },
-            {{/requestOptions.headers}}
-        )
-        {{/hasRequestOptions}}
-      )
-
+      {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}
+      
+      // >LOG
+      {{#hasResponse}}
       // Use the response
       println(response)
+      {{/hasResponse}}
       // SEPARATOR<
 
       exitProcess(0)

@@ -27,7 +27,7 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import type { ScheduleABTestResponse } from '../model/scheduleABTestResponse';
 import type { ScheduleABTestsRequest } from '../model/scheduleABTestsRequest';
 
-export const apiClientVersion = '5.1.1';
+export const apiClientVersion = '5.3.1';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -97,6 +97,20 @@ export function createAbtestingClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**

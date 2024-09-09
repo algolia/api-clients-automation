@@ -2,11 +2,11 @@ package com.algolia.codegen.cts.tests;
 
 import static org.openapitools.codegen.utils.StringUtils.camelize;
 
+import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
 import java.util.*;
-import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenResponse;
@@ -14,44 +14,12 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
-  private final boolean withSnippets;
+  private final boolean withSyncTests;
   private List<SupportingFile> supportingFiles;
 
-  public TestsRequest(String language, String client, boolean withSnippets) {
-    super(language, client);
-    this.withSnippets = withSnippets;
-  }
-
-  protected Map<String, Request[]> loadRequestCTS() throws Exception {
-    String clientName = client;
-    // This special case allow us to read the `search` CTS to generated the tests for the
-    // `lite` client, which is only available in Javascript
-    if (client.equals("algoliasearch")) {
-      clientName = "search";
-    }
-
-    Map<String, Request[]> baseCTS = super.loadCTS("requests", clientName, Request[].class);
-
-    // The algoliasearch client bundles many client and therefore should provide tests for all the
-    // subsequent specs
-    if (client.equals("algoliasearch")) {
-      Map<String, Request[]> recommendCTS = super.loadCTS("requests", "recommend", Request[].class);
-      for (Map.Entry<String, Request[]> entry : recommendCTS.entrySet()) {
-        String operation = entry.getKey();
-        // custom methods are common to every clients, we don't want duplicate tests
-        if (operation.startsWith("custom")) {
-          continue;
-        }
-
-        if (baseCTS.containsKey(operation)) {
-          baseCTS.put(operation, ArrayUtils.addAll(baseCTS.get(operation), entry.getValue()));
-        } else {
-          baseCTS.put(operation, entry.getValue());
-        }
-      }
-    }
-
-    return baseCTS;
+  public TestsRequest(CTSManager ctsManager) {
+    super(ctsManager);
+    this.withSyncTests = false;
   }
 
   @Override
@@ -103,7 +71,7 @@ public class TestsRequest extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, Request[]> cts = loadRequestCTS();
+    Map<String, Request[]> cts = loadFullCTS(Request[].class);
 
     if (this.client.equals("search")) {
       bundle.put("isSearchClient", true);
@@ -111,7 +79,7 @@ public class TestsRequest extends TestsGenerator {
 
     List<Object> blocks = new ArrayList<>();
     List<Object> blocksE2E = new ArrayList<>();
-    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
+    ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, false);
 
     bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
 
@@ -148,16 +116,13 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i == 0 ? "" : i);
-        test.put("isSnippet", req.isSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));
         }
 
         try {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
-          if (Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal)) {
-            test.put("isCustomRequest", true);
-          }
+          test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
 
           if (req.request != null && !isHelper) {
             // We check on the spec if body parameters should be present in the CTS
@@ -182,7 +147,7 @@ public class TestsRequest extends TestsGenerator {
           }
 
           test.put("request", req.request);
-          test.put("isAsync", true);
+          test.put("isAsyncMethod", true);
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
@@ -205,11 +170,11 @@ public class TestsRequest extends TestsGenerator {
 
           // Determines whether the endpoint is expected to return a response payload deserialized
           // and therefore a variable to store it into.
-          test.put("hasResponsePayload", true);
+          test.put("hasResponse", true);
 
           for (CodegenResponse response : ope.responses) {
             if (response.code.equals("204")) {
-              test.put("hasResponsePayload", false);
+              test.put("hasResponse", false);
             }
           }
 
@@ -224,21 +189,6 @@ public class TestsRequest extends TestsGenerator {
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
 
-      if (withSnippets) {
-        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("isSnippet", false)).toList();
-        if (snippets.size() == 0) {
-          Map<String, Object> snippet = tests.get(0);
-          snippet.put("description", snippet.get("testName"));
-          snippet.put("testName", "default");
-          snippets = List.of(snippet);
-        } else {
-          for (Map<String, Object> snippet : snippets) {
-            snippet.put("description", snippet.get("testName"));
-          }
-        }
-        testObj.put("snippets", snippets);
-      }
-
       blocks.add(testObj);
 
       // extract e2e
@@ -250,11 +200,39 @@ public class TestsRequest extends TestsGenerator {
         blocksE2E.add(e2eObj);
       }
     }
-    bundle.put("blocksRequests", blocks);
-    if (!blocksE2E.isEmpty()) {
-      bundle.put("blocksE2E", blocksE2E);
-    } else if (supportingFiles != null) {
-      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+    if (this.withSyncTests) {
+      List<Object> modes = new ArrayList<>();
+
+      if (!blocksE2E.isEmpty()) {
+        Map<String, Object> sync = new HashMap<>();
+        sync.put("isSyncClient", true);
+        sync.put("blocksE2E", blocksE2E);
+
+        Map<String, Object> async = new HashMap<>();
+        sync.put("blocksE2E", blocksE2E);
+
+        modes.add(sync);
+        modes.add(async);
+      }
+
+      Map<String, Object> sync = new HashMap<>();
+      sync.put("isSyncClient", true);
+      sync.put("blocksRequests", blocks);
+
+      Map<String, Object> async = new HashMap<>();
+      async.put("blocksRequests", blocks);
+
+      modes.add(sync);
+      modes.add(async);
+
+      bundle.put("modes", modes);
+    } else {
+      bundle.put("blocksRequests", blocks);
+      if (!blocksE2E.isEmpty()) {
+        bundle.put("blocksE2E", blocksE2E);
+      } else if (supportingFiles != null) {
+        supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
+      }
     }
   }
 }

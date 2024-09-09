@@ -2,6 +2,7 @@
 package client
 
 import (
+	"encoding/json"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,7 @@ import (
 	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -43,8 +45,22 @@ func TestAbtestingcommonApi0(t *testing.T) {
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
 
-// calls api with default read timeouts
+// the user agent contains the latest version
 func TestAbtestingcommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createAbtestingClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test",
+	))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.0\).*`), echo.Header.Get("User-Agent"))
+}
+
+// calls api with default read timeouts
+func TestAbtestingcommonApi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -59,7 +75,7 @@ func TestAbtestingcommonApi1(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestAbtestingcommonApi2(t *testing.T) {
+func TestAbtestingcommonApi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -146,4 +162,50 @@ func TestAbtestingparameters2(t *testing.T) {
 	}
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
+}
+
+// switch API key
+func TestAbtestingsetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *abtesting.APIClient
+	var cfg abtesting.AbtestingConfiguration
+	_ = client
+	_ = echo
+	cfg = abtesting.AbtestingConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+		},
+		Region: abtesting.Region("us"),
+	}
+	client, err = abtesting.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key",
+		)
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2",
+		))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

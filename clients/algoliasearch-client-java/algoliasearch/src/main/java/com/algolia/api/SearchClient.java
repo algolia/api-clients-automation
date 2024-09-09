@@ -3565,7 +3565,26 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor.
+   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
+   * the entire record, you can use these built-in operations. These operations can be helpful if
+   * you don't have access to your initial data. - Increment: increment a numeric attribute -
+   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
+   * attribute - Remove: remove all matching number or string elements from an array attribute made
+   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
+   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
+   * integer attribute only if the provided value matches the current value, and otherwise ignore
+   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
+   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
+   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
+   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
+   * the current value, and otherwise ignore the whole object update. For example, if you pass an
+   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
+   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
+   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
+   * an object with the attribute to update as the key and its value being an object with the
+   * following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3579,7 +3598,7 @@ public class SearchClient extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     Boolean createIfNotExists,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -3591,7 +3610,26 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor.
+   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
+   * the entire record, you can use these built-in operations. These operations can be helpful if
+   * you don't have access to your initial data. - Increment: increment a numeric attribute -
+   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
+   * attribute - Remove: remove all matching number or string elements from an array attribute made
+   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
+   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
+   * integer attribute only if the provided value matches the current value, and otherwise ignore
+   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
+   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
+   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
+   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
+   * the current value, and otherwise ignore the whole object update. For example, if you pass an
+   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
+   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
+   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
+   * an object with the attribute to update as the key and its value being an object with the
+   * following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3603,7 +3641,7 @@ public class SearchClient extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     Boolean createIfNotExists
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObject(indexName, objectID, attributesToUpdate, createIfNotExists, null);
@@ -3614,7 +3652,26 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor.
+   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
+   * the entire record, you can use these built-in operations. These operations can be helpful if
+   * you don't have access to your initial data. - Increment: increment a numeric attribute -
+   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
+   * attribute - Remove: remove all matching number or string elements from an array attribute made
+   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
+   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
+   * integer attribute only if the provided value matches the current value, and otherwise ignore
+   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
+   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
+   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
+   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
+   * the current value, and otherwise ignore the whole object update. For example, if you pass an
+   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
+   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
+   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
+   * an object with the attribute to update as the key and its value being an object with the
+   * following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3626,7 +3683,7 @@ public class SearchClient extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObject(indexName, objectID, attributesToUpdate, null, requestOptions);
@@ -3637,7 +3694,26 @@ public class SearchClient extends ApiClient {
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
    * - If the index doesn't exist yet, this method creates a new index. - You can use any
    * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
-   * treats it as a replacement for its first-level ancestor.
+   * treats it as a replacement for its first-level ancestor. To update an attribute without pushing
+   * the entire record, you can use these built-in operations. These operations can be helpful if
+   * you don't have access to your initial data. - Increment: increment a numeric attribute -
+   * Decrement: decrement a numeric attribute - Add: append a number or string element to an array
+   * attribute - Remove: remove all matching number or string elements from an array attribute made
+   * of numbers or strings - AddUnique: add a number or string element to an array attribute made of
+   * numbers or strings only if it's not already present - IncrementFrom: increment a numeric
+   * integer attribute only if the provided value matches the current value, and otherwise ignore
+   * the whole object update. For example, if you pass an IncrementFrom value of 2 for the version
+   * attribute, but the current value of the attribute is 1, the engine ignores the update. If the
+   * object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. -
+   * IncrementSet: increment a numeric integer attribute only if the provided value is greater than
+   * the current value, and otherwise ignore the whole object update. For example, if you pass an
+   * IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1,
+   * the engine updates the object. If the object doesn't exist yet, the engine only creates it if
+   * you pass an IncrementSet value that's greater than 0. You can specify an operation by providing
+   * an object with the attribute to update as the key and its value being an object with the
+   * following properties: - _operation: the operation to apply on the attribute - value: the
+   * right-hand side argument to the operation, for example, increment or decrement step, value to
+   * add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3647,7 +3723,7 @@ public class SearchClient extends ApiClient {
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate
+    @Nonnull Object attributesToUpdate
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObject(indexName, objectID, attributesToUpdate, null, null);
   }
@@ -3657,7 +3733,26 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor.
+   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
+   * attribute without pushing the entire record, you can use these built-in operations. These
+   * operations can be helpful if you don't have access to your initial data. - Increment: increment
+   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
+   * element to an array attribute - Remove: remove all matching number or string elements from an
+   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
+   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * increment a numeric integer attribute only if the provided value matches the current value, and
+   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
+   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
+   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
+   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
+   * greater than the current value, and otherwise ignore the whole object update. For example, if
+   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
+   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
+   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
+   * operation by providing an object with the attribute to update as the key and its value being an
+   * object with the following properties: - _operation: the operation to apply on the attribute -
+   * value: the right-hand side argument to the operation, for example, increment or decrement step,
+   * value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3671,7 +3766,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     Boolean createIfNotExists,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -3695,7 +3790,26 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor.
+   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
+   * attribute without pushing the entire record, you can use these built-in operations. These
+   * operations can be helpful if you don't have access to your initial data. - Increment: increment
+   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
+   * element to an array attribute - Remove: remove all matching number or string elements from an
+   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
+   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * increment a numeric integer attribute only if the provided value matches the current value, and
+   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
+   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
+   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
+   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
+   * greater than the current value, and otherwise ignore the whole object update. For example, if
+   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
+   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
+   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
+   * operation by providing an object with the attribute to update as the key and its value being an
+   * object with the following properties: - _operation: the operation to apply on the attribute -
+   * value: the right-hand side argument to the operation, for example, increment or decrement step,
+   * value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3707,7 +3821,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     Boolean createIfNotExists
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObjectAsync(indexName, objectID, attributesToUpdate, createIfNotExists, null);
@@ -3718,7 +3832,26 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor.
+   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
+   * attribute without pushing the entire record, you can use these built-in operations. These
+   * operations can be helpful if you don't have access to your initial data. - Increment: increment
+   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
+   * element to an array attribute - Remove: remove all matching number or string elements from an
+   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
+   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * increment a numeric integer attribute only if the provided value matches the current value, and
+   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
+   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
+   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
+   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
+   * greater than the current value, and otherwise ignore the whole object update. For example, if
+   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
+   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
+   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
+   * operation by providing an object with the attribute to update as the key and its value being an
+   * object with the following properties: - _operation: the operation to apply on the attribute -
+   * value: the right-hand side argument to the operation, for example, increment or decrement step,
+   * value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3730,7 +3863,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate,
+    @Nonnull Object attributesToUpdate,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObjectAsync(indexName, objectID, attributesToUpdate, null, requestOptions);
@@ -3741,7 +3874,26 @@ public class SearchClient extends ApiClient {
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
    * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, the engine treats it as a replacement for its first-level ancestor.
+   * attribute, the engine treats it as a replacement for its first-level ancestor. To update an
+   * attribute without pushing the entire record, you can use these built-in operations. These
+   * operations can be helpful if you don't have access to your initial data. - Increment: increment
+   * a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string
+   * element to an array attribute - Remove: remove all matching number or string elements from an
+   * array attribute made of numbers or strings - AddUnique: add a number or string element to an
+   * array attribute made of numbers or strings only if it's not already present - IncrementFrom:
+   * increment a numeric integer attribute only if the provided value matches the current value, and
+   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
+   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
+   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
+   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
+   * greater than the current value, and otherwise ignore the whole object update. For example, if
+   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
+   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
+   * creates it if you pass an IncrementSet value that's greater than 0. You can specify an
+   * operation by providing an object with the attribute to update as the key and its value being an
+   * object with the following properties: - _operation: the operation to apply on the attribute -
+   * value: the right-hand side argument to the operation, for example, increment or decrement step,
+   * value to add or remove.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3751,7 +3903,7 @@ public class SearchClient extends ApiClient {
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
     @Nonnull String indexName,
     @Nonnull String objectID,
-    @Nonnull Map<String, AttributeToUpdate> attributesToUpdate
+    @Nonnull Object attributesToUpdate
   ) throws AlgoliaRuntimeException {
     return this.partialUpdateObjectAsync(indexName, objectID, attributesToUpdate, null, null);
   }
@@ -5685,8 +5837,14 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-    TaskUtils.retryUntil(
+  public GetTaskResponse waitForTask(
+    String indexName,
+    Long taskID,
+    int maxRetries,
+    IntUnaryOperator timeout,
+    RequestOptions requestOptions
+  ) {
+    return TaskUtils.retryUntil(
       () -> this.getTask(indexName, taskID, requestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
@@ -5702,8 +5860,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
-    this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetTaskResponse waitForTask(String indexName, Long taskID, RequestOptions requestOptions) {
+    return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
@@ -5715,8 +5873,8 @@ public class SearchClient extends ApiClient {
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public void waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
-    this.waitForTask(indexName, taskID, maxRetries, timeout, null);
+  public GetTaskResponse waitForTask(String indexName, Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForTask(indexName, taskID, maxRetries, timeout, null);
   }
 
   /**
@@ -5725,8 +5883,8 @@ public class SearchClient extends ApiClient {
    * @param indexName The `indexName` where the operation was performed.
    * @param taskID The `taskID` returned in the method response.
    */
-  public void waitForTask(String indexName, Long taskID) {
-    this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetTaskResponse waitForTask(String indexName, Long taskID) {
+    return this.waitForTask(indexName, taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
@@ -5739,8 +5897,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
-    TaskUtils.retryUntil(
+  public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    return TaskUtils.retryUntil(
       () -> this.getAppTask(taskID, requestOptions),
       (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
       maxRetries,
@@ -5755,8 +5913,8 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public void waitForAppTask(Long taskID, RequestOptions requestOptions) {
-    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  public GetTaskResponse waitForAppTask(Long taskID, RequestOptions requestOptions) {
+    return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
   }
 
   /**
@@ -5767,8 +5925,8 @@ public class SearchClient extends ApiClient {
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
    */
-  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
-    this.waitForAppTask(taskID, maxRetries, timeout, null);
+  public GetTaskResponse waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    return this.waitForAppTask(taskID, maxRetries, timeout, null);
   }
 
   /**
@@ -5776,8 +5934,8 @@ public class SearchClient extends ApiClient {
    *
    * @param taskID The `taskID` returned in the method response.
    */
-  public void waitForAppTask(Long taskID) {
-    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  public GetTaskResponse waitForAppTask(Long taskID) {
+    return this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
   }
 
   /**
@@ -6584,5 +6742,17 @@ public class SearchClient extends ApiClient {
     long timeStamp = Long.parseLong(validUntilMatch.replace("validUntil=", ""));
 
     return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
+  }
+
+  public boolean indexExists(String indexName) {
+    try {
+      getSettings(indexName);
+    } catch (AlgoliaApiException e) {
+      if (e.getStatusCode() == 404) {
+        return false;
+      }
+      throw e;
+    }
+    return true;
   }
 }

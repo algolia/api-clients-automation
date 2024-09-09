@@ -18,6 +18,7 @@ class SnippetUsageClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetUsageClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetUsageClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetUsageClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -69,7 +73,8 @@ class SnippetUsageClient {
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "<YOUR_INDEX_NAME>", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +88,21 @@ class SnippetUsageClient {
 
     // Call the API
     client.getUsage(Statistic.QUERIES_OPERATIONS, "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

@@ -23,6 +23,7 @@ export async function snippetForAddABTests(): Promise<void> {
     ],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -39,6 +40,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -55,6 +57,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -71,6 +74,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -87,6 +91,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -103,6 +108,7 @@ export async function snippetForDeleteABTest(): Promise<void> {
   // Call the API
   const response = await client.deleteABTest({ id: 42 });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -119,6 +125,7 @@ export async function snippetForGetABTest(): Promise<void> {
   // Call the API
   const response = await client.getABTest({ id: 42 });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -135,6 +142,7 @@ export async function snippetForListABTests(): Promise<void> {
   // Call the API
   const response = await client.listABTests();
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -159,8 +167,24 @@ export async function snippetForScheduleABTest(): Promise<void> {
     ],
   });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -175,6 +199,7 @@ export async function snippetForStopABTest(): Promise<void> {
   // Call the API
   const response = await client.stopABTest({ id: 42 });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<

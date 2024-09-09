@@ -107,7 +107,7 @@ import type { TransformationTryResponse } from '../model/transformationTryRespon
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.1.1';
+export const apiClientVersion = '1.3.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -207,6 +207,20 @@ export function createIngestionClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**
@@ -1707,20 +1721,23 @@ export function createIngestionClient({
      *
      * @param pushTask - The pushTask object.
      * @param pushTask.taskID - Unique identifier of a task.
-     * @param pushTask.batchWriteParams - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param pushTask.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    pushTask({ taskID, batchWriteParams }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    pushTask({ taskID, pushTaskPayload }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `pushTask`.');
       }
 
-      if (!batchWriteParams) {
-        throw new Error('Parameter `batchWriteParams` is required when calling `pushTask`.');
+      if (!pushTaskPayload) {
+        throw new Error('Parameter `pushTaskPayload` is required when calling `pushTask`.');
       }
 
-      if (!batchWriteParams.requests) {
-        throw new Error('Parameter `batchWriteParams.requests` is required when calling `pushTask`.');
+      if (!pushTaskPayload.action) {
+        throw new Error('Parameter `pushTaskPayload.action` is required when calling `pushTask`.');
+      }
+      if (!pushTaskPayload.records) {
+        throw new Error('Parameter `pushTaskPayload.records` is required when calling `pushTask`.');
       }
 
       const requestPath = '/2/tasks/{taskID}/push'.replace('{taskID}', encodeURIComponent(taskID));
@@ -1732,7 +1749,7 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: batchWriteParams,
+        data: pushTaskPayload,
       };
 
       return transporter.request(request, requestOptions);

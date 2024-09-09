@@ -28,7 +28,7 @@ import type { GetRecommendationsResponse } from '../model/getRecommendationsResp
 import type { RecommendRule } from '../model/recommendRule';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
-export const apiClientVersion = '5.1.1';
+export const apiClientVersion = '5.3.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -123,6 +123,20 @@ export function createRecommendClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**

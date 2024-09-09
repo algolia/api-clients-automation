@@ -18,6 +18,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +74,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.deleteUserProfile("UserToken");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +88,7 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.getPersonalizationStrategy();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -96,6 +102,21 @@ class SnippetPersonalizationClient {
 
     // Call the API
     client.getUserTokenProfile("UserToken");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -110,10 +131,11 @@ class SnippetPersonalizationClient {
     // Call the API
     client.setPersonalizationStrategy(
       new PersonalizationStrategyParams()
-        .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
-        .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
+        .setEventScoring(Arrays.asList(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
+        .setFacetScoring(Arrays.asList(new FacetScoring().setScore(42).setFacetName("Event")))
         .setPersonalizationImpact(42)
     );
+    // >LOG
     // SEPARATOR<
   }
 }

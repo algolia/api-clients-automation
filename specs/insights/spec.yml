@@ -16,8 +16,9 @@ info:
 
     The base URLs for making requests to the Insights API are:
 
-    - `https://insights.us.algolia.io` (`https://insights.algolia.io` is an alias)
+    - `https://insights.us.algolia.io`
     - `https://insights.de.algolia.io`
+    - `https//insights.algolia.io` (routes requests to the closest of the above servers, based on your geographical location)
 
     **All requests must use HTTPS.**
 
@@ -100,3 +101,9 @@ paths:
 
   /1/usertokens/{userToken}:
     $ref: 'paths/deleteUserToken.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

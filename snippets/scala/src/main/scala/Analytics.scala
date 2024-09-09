@@ -30,6 +30,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetAnalyticsClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -106,6 +110,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -125,6 +130,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -144,6 +150,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -163,6 +170,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -182,6 +190,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -201,6 +210,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -220,6 +230,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -239,6 +250,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -258,6 +270,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -277,6 +290,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -296,6 +310,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -315,6 +330,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -334,6 +350,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -353,6 +370,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -372,6 +390,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -392,6 +411,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -411,6 +431,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -430,6 +451,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -449,6 +471,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -468,6 +491,7 @@ class SnippetAnalyticsClient {
       index = "index"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

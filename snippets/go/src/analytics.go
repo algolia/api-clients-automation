@@ -30,6 +30,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -58,6 +59,7 @@ func SnippetForCustomGetOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -86,6 +88,7 @@ func SnippetForCustomPostOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -114,6 +117,7 @@ func SnippetForCustomPutOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -142,6 +146,7 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -170,6 +175,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -198,6 +204,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -226,6 +233,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -254,6 +262,7 @@ func SnippetForGetConversionRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -282,6 +291,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -310,6 +320,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -338,6 +349,7 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -366,6 +378,7 @@ func SnippetForGetRevenueOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -394,6 +407,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -422,6 +436,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -450,6 +465,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -478,6 +494,7 @@ func SnippetForGetStatusOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -506,6 +523,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -534,6 +552,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -562,6 +581,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -590,6 +610,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -618,6 +639,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -646,6 +668,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -674,7 +697,35 @@ func SnippetForGetUsersCountOfAnalytics() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetClientApiKeyOfAnalytics() {
+	/*
+	   Snippet for the setClientApiKey method.
+
+	   switch API key
+	*/
+
+	// >SEPARATOR setClientApiKey default
+	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
+	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SetClientApiKey(
+		"updated-api-key",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }

@@ -71,6 +71,28 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
+    /// getRule
+    func testGetRuleTest() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.getRuleWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "qr-1725004648916")
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
     /// getSettings
     func testGetSettingsTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
@@ -250,6 +272,31 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         let expectedBodyData =
             try XCTUnwrap(
                 "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+
+        XCTAssertEqual(response.statusCode, 200)
+    }
+
+    /// searchRules
+    func testSearchRulesTest() async throws {
+        guard let client = SearchClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.searchRulesWithHTTPInfo(
+            indexName: "cts_e2e_browse",
+            searchRulesParams: SearchRulesParams(query: "zorro")
+        )
+        let responseBody = try XCTUnwrap(response.body)
+        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
+
+        let expectedBodyData =
+            try XCTUnwrap(
+                "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
                     .data(using: .utf8)
             )
 

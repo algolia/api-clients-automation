@@ -37,6 +37,7 @@ public class SnippetIngestionClient
         ),
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -59,10 +60,11 @@ public class SnippetIngestionClient
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______", }),
+        Input = new DestinationInput(new DestinationIndexName { IndexName = "<YOUR_INDEX_NAME>", }),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -97,6 +99,7 @@ public class SnippetIngestionClient
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -122,6 +125,7 @@ public class SnippetIngestionClient
         Action = Enum.Parse<ActionType>("Replace"),
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -150,6 +154,7 @@ public class SnippetIngestionClient
         Action = Enum.Parse<ActionType>("Replace"),
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -175,6 +180,7 @@ public class SnippetIngestionClient
         Description = "baz",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -193,6 +199,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -211,6 +218,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -229,6 +237,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -247,6 +256,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -265,6 +275,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -283,6 +294,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -301,6 +313,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -319,6 +332,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -337,6 +351,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -355,6 +370,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -373,6 +389,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -391,6 +408,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.DisableTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -409,6 +427,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -427,6 +446,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.EnableTaskV1Async("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -452,6 +472,7 @@ public class SnippetIngestionClient
           "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -470,6 +491,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -488,6 +510,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -509,6 +532,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -527,6 +551,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -545,6 +570,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -563,6 +589,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -581,6 +608,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -599,6 +627,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -617,6 +646,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListAuthenticationsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -635,6 +665,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListDestinationsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -653,6 +684,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -671,6 +703,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListRunsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -689,6 +722,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListSourcesAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -707,6 +741,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTasksAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -725,6 +760,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTasksV1Async();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -743,6 +779,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTransformationModelsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -761,6 +798,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTransformationsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -780,23 +818,33 @@ public class SnippetIngestionClient
     // Call the API
     var response = await client.PushTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new BatchWriteParams
+      new PushTaskPayload
       {
-        Requests = new List<BatchRequest>
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
         {
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            }
           },
-          new BatchRequest
+          new PushTaskRecords
           {
-            Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            }
           }
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -823,6 +871,7 @@ public class SnippetIngestionClient
         EntityType = Enum.Parse<EntityType>("Product"),
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -841,6 +890,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -859,6 +909,7 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.RunTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -886,6 +937,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -913,6 +965,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -940,6 +993,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -968,6 +1022,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -996,6 +1051,7 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1024,6 +1080,26 @@ public class SnippetIngestionClient
         },
       }
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForIngestionClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1044,6 +1120,7 @@ public class SnippetIngestionClient
     var response = await client.TriggerDockerSourceDiscoverAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1068,6 +1145,7 @@ public class SnippetIngestionClient
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1093,6 +1171,7 @@ public class SnippetIngestionClient
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1114,6 +1193,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new AuthenticationUpdate { Name = "newName", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1135,6 +1215,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new DestinationUpdate { Name = "newName", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1156,6 +1237,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1177,6 +1259,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdate { Enabled = false, Cron = "* * * * *", }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1198,6 +1281,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdateV1 { Enabled = false, }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1224,6 +1308,7 @@ public class SnippetIngestionClient
         Description = "baz",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1258,6 +1343,7 @@ public class SnippetIngestionClient
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1279,6 +1365,7 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName", }
     );
+    // >LOG
     // SEPARATOR<
   }
 }

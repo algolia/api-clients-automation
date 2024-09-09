@@ -1,1 +1,1 @@
-{{^useEchoRequester}}$res = {{/useEchoRequester}}{{> tests/method}};
+{{^useEchoRequester}}{{#hasResponse}}$res = {{/hasResponse}}{{/useEchoRequester}}{{> tests/method}};

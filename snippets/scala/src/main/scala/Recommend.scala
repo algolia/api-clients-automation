@@ -30,6 +30,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -49,6 +50,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -68,6 +70,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -87,6 +90,7 @@ class SnippetRecommendClient {
       path = "test/minimal"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -103,11 +107,12 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.deleteRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -124,11 +129,12 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.getRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -145,11 +151,12 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.getRecommendStatus(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products"),
       taskID = 12345L
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -169,7 +176,7 @@ class SnippetRecommendClient {
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
           RelatedQuery(
-            indexName = "indexName",
+            indexName = "<YOUR_INDEX_NAME>",
             objectID = "objectID",
             model = RelatedModel.withName("related-products"),
             threshold = 42.1
@@ -178,6 +185,7 @@ class SnippetRecommendClient {
       )
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
@@ -194,10 +202,11 @@ class SnippetRecommendClient {
 
     // Call the API
     val response = client.searchRecommendRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.withName("related-products")
     )
 
+    // >LOG
     // Use the response
     val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<

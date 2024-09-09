@@ -15,9 +15,9 @@ class TestSearchClient:
         _config.hosts = HostsCollection(
             [Host(url="localhost", scheme="http", port=6682)]
         )
-        self._client = SearchClient.create_with_config(config=_config)
+        _client = SearchClient.create_with_config(config=_config)
         for _ in range(0, 1000):
-            _req = await self._client.search(
+            _req = await _client.search(
                 search_method_params={
                     "requests": [
                         {

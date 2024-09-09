@@ -18,6 +18,7 @@ class SnippetInsightsClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetInsightsClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetInsightsClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetInsightsClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +74,7 @@ class SnippetInsightsClient {
 
     // Call the API
     client.deleteUserToken("test-user-1");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -85,7 +90,7 @@ class SnippetInsightsClient {
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
-          List.of(
+          Arrays.asList(
             new ClickedObjectIDsAfterSearch()
               .setEventType(ClickEvent.CLICK)
               .setEventName("Product Clicked")
@@ -93,12 +98,27 @@ class SnippetInsightsClient {
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
               .setTimestamp(1641290601962L)
-              .setObjectIDs(List.of("9780545139700", "9780439784542"))
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(List.of(7, 6))
+              .setPositions(Arrays.asList(7, 6))
           )
         )
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

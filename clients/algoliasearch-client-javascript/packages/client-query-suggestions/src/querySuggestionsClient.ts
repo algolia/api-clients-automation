@@ -27,7 +27,7 @@ import type { ConfigurationResponse } from '../model/configurationResponse';
 import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
 import type { LogFile } from '../model/logFile';
 
-export const apiClientVersion = '5.1.1';
+export const apiClientVersion = '5.3.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -97,6 +97,20 @@ export function createQuerySuggestionsClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      if (!authMode || authMode === 'WithinHeaders') {
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**
@@ -253,7 +267,7 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+     * Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the `Delete an index` operation.
      *
      * Required API Key ACLs:
      * - editSettings.

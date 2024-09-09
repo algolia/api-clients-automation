@@ -24,16 +24,17 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     }
 
     // Call the API
-    {{#hasResponsePayload}}response, err :={{/hasResponsePayload}}{{^hasResponsePayload}}err ={{/hasResponsePayload}} {{> tests/method}}
+    {{#hasResponse}}response, err :={{/hasResponse}}{{^hasResponse}}err ={{/hasResponse}} {{> tests/method}}
     if err != nil {
       // handle the eventual error
       panic(err)
     }
-
-    {{#hasResponsePayload}}
+    
+    // >LOG
+    {{#hasResponse}}
     // use the model directly
     print(response)
-    {{/hasResponsePayload}}
+    {{/hasResponse}}
     // SEPARATOR<
 }
 {{/snippets}}

@@ -15,19 +15,13 @@ import 'package:algolia_client_recommend/src/model/search_recommend_rules_respon
 
 final class RecommendClient implements ApiClient {
   @override
-  final String apiKey;
-
-  @override
-  final String appId;
-
-  @override
   final ClientOptions options;
 
   final RetryStrategy _retryStrategy;
 
   RecommendClient({
-    required this.appId,
-    required this.apiKey,
+    required String appId,
+    required String apiKey,
     this.options = const ClientOptions(),
   }) : _retryStrategy = RetryStrategy.create(
           segment: AgentSegment(value: "Recommend", version: packageVersion),
@@ -47,6 +41,12 @@ final class RecommendClient implements ApiClient {
         ) {
     assert(appId.isNotEmpty, '`appId` is missing.');
     assert(apiKey.isNotEmpty, '`apiKey` is missing.');
+  }
+
+  /// Allows to switch the API key used to authenticate requests.
+  @override
+  void setClientApiKey({required String apiKey}) {
+    _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
   /// This method allow you to send requests to the Algolia REST API.

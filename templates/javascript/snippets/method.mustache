@@ -11,16 +11,19 @@ import type { RequestOptions } from '@algolia/client-common';
 // Snippet for the {{method}} method.
 //
 // {{{description}}}
-export async function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Promise<void> {
+export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): {{#isAsyncMethod}}Promise<void>{{/isAsyncMethod}}{{^isAsyncMethod}}void{{/isAsyncMethod}} {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
   // Call the API
-  const response = {{> tests/method}};
+  {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
 
+  // >LOG
+  {{#hasResponse}}
   // use typed response
   console.log(response);
+  {{/hasResponse}}
   // SEPARATOR<
 }
 

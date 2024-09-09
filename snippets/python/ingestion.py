@@ -27,6 +27,7 @@ async def snippet_for_create_authentication():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -51,12 +52,13 @@ async def snippet_for_create_destination():
             "type": "search",
             "name": "destinationName",
             "input": {
-                "indexName": "full_name______",
+                "indexName": "<YOUR_INDEX_NAME>",
             },
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -94,6 +96,7 @@ async def snippet_for_create_source():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -121,6 +124,7 @@ async def snippet_for_create_task():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -151,6 +155,7 @@ async def snippet_for_create_task_v1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -178,6 +183,7 @@ async def snippet_for_create_transformation():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -201,6 +207,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -224,6 +231,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -247,6 +255,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -270,6 +279,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -293,6 +303,7 @@ async def snippet_for_delete_authentication():
         authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -316,6 +327,7 @@ async def snippet_for_delete_destination():
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -339,6 +351,7 @@ async def snippet_for_delete_source():
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -362,6 +375,7 @@ async def snippet_for_delete_task():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -385,6 +399,7 @@ async def snippet_for_delete_task_v1():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -408,6 +423,7 @@ async def snippet_for_delete_transformation():
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -431,6 +447,7 @@ async def snippet_for_disable_task():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -454,6 +471,7 @@ async def snippet_for_disable_task_v1():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -477,6 +495,7 @@ async def snippet_for_enable_task():
         task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -500,6 +519,7 @@ async def snippet_for_enable_task_v1():
         task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -526,6 +546,7 @@ async def snippet_for_generate_transformation_code():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -549,6 +570,7 @@ async def snippet_for_get_authentication():
         authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -572,6 +594,7 @@ async def snippet_for_get_destination():
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -596,6 +619,7 @@ async def snippet_for_get_event():
         event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -619,6 +643,7 @@ async def snippet_for_get_run():
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -642,6 +667,7 @@ async def snippet_for_get_source():
         source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -665,6 +691,7 @@ async def snippet_for_get_task():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -688,6 +715,7 @@ async def snippet_for_get_task_v1():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -711,6 +739,7 @@ async def snippet_for_get_transformation():
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -732,6 +761,7 @@ async def snippet_for_list_authentications():
     # Call the API
     response = await _client.list_authentications()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -753,6 +783,7 @@ async def snippet_for_list_destinations():
     # Call the API
     response = await _client.list_destinations()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -776,6 +807,7 @@ async def snippet_for_list_events():
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -797,6 +829,7 @@ async def snippet_for_list_runs():
     # Call the API
     response = await _client.list_runs()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -818,6 +851,7 @@ async def snippet_for_list_sources():
     # Call the API
     response = await _client.list_sources()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -839,6 +873,7 @@ async def snippet_for_list_tasks():
     # Call the API
     response = await _client.list_tasks()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -860,6 +895,7 @@ async def snippet_for_list_tasks_v1():
     # Call the API
     response = await _client.list_tasks_v1()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -881,6 +917,7 @@ async def snippet_for_list_transformation_models():
     # Call the API
     response = await _client.list_transformation_models()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -902,6 +939,7 @@ async def snippet_for_list_transformations():
     # Call the API
     response = await _client.list_transformations()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -923,26 +961,24 @@ async def snippet_for_push_task():
     # Call the API
     response = await _client.push_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        batch_write_params={
-            "requests": [
+        push_task_payload={
+            "action": "addObject",
+            "records": [
                 {
-                    "action": "addObject",
-                    "body": {
-                        "key": "bar",
-                        "foo": "1",
-                    },
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
                 },
                 {
-                    "action": "addObject",
-                    "body": {
-                        "key": "baz",
-                        "foo": "2",
-                    },
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
                 },
             ],
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -977,6 +1013,7 @@ async def snippet_for_run_source():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1000,6 +1037,7 @@ async def snippet_for_run_task():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1023,6 +1061,7 @@ async def snippet_for_run_task_v1():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1051,6 +1090,7 @@ async def snippet_for_search_authentications():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1079,6 +1119,7 @@ async def snippet_for_search_destinations():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1107,6 +1148,7 @@ async def snippet_for_search_sources():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1136,6 +1178,7 @@ async def snippet_for_search_tasks():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1165,6 +1208,7 @@ async def snippet_for_search_tasks_v1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1194,11 +1238,31 @@ async def snippet_for_search_transformations():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<
 
 
@@ -1217,6 +1281,7 @@ async def snippet_for_trigger_docker_source_discover():
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1245,6 +1310,7 @@ async def snippet_for_try_transformation():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1274,6 +1340,7 @@ async def snippet_for_try_transformation_before_update():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1300,6 +1367,7 @@ async def snippet_for_update_authentication():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1326,6 +1394,7 @@ async def snippet_for_update_destination():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1352,6 +1421,7 @@ async def snippet_for_update_source():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1379,6 +1449,7 @@ async def snippet_for_update_task():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1405,6 +1476,7 @@ async def snippet_for_update_task_v1():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1433,6 +1505,7 @@ async def snippet_for_update_transformation():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1470,6 +1543,7 @@ async def snippet_for_validate_source():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -1496,6 +1570,7 @@ async def snippet_for_validate_source_before_update():
         },
     )
 
+    # >LOG
     # use the class directly
     print(response)
 

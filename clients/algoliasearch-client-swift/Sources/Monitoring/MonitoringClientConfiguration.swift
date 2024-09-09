@@ -8,7 +8,7 @@ import Foundation
 
 public struct MonitoringClientConfiguration: BaseConfiguration, Credentials {
     public let appID: String
-    public let apiKey: String
+    public var apiKey: String
     public var writeTimeout: TimeInterval
     public var readTimeout: TimeInterval
     public var logLevel: LogLevel
@@ -48,12 +48,8 @@ public struct MonitoringClientConfiguration: BaseConfiguration, Credentials {
         UserAgentController.append(UserAgent(title: "Monitoring", version: Version.current.description))
 
         guard let hosts else {
-            guard let url = URL(string: "https://status.algolia.com") else {
-                throw AlgoliaError.runtimeError("Malformed URL")
-            }
-
             self.hosts = [
-                .init(url: url),
+                .init(url: URL(string: "https://status.algolia.com")!),
             ]
             return
         }

@@ -54,34 +54,33 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     }
     {{/isError}}
     {{^isError}}
+    {{#shouldScope}}
+    {
+    {{/shouldScope}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
-    {{#match}}
     {{#testUserAgent}}
-    val regexp = """{{{match}}}""".r
+    val regexp = """{{{match.value}}}""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
     {{/testUserAgent}}
     {{#testTimeouts}}
-    assert(echo.lastResponse.get.connectTimeout == {{{match.parametersWithDataTypeMap.connectTimeout.value}}})
-    assert(echo.lastResponse.get.responseTimeout == {{{match.parametersWithDataTypeMap.responseTimeout.value}}})
+    assert(echo.lastResponse.get.connectTimeout == {{{matchConnectTimeout}}})
+    assert(echo.lastResponse.get.responseTimeout == {{{matchResponseTimeout}}})
     {{/testTimeouts}}
     {{#testHost}}
-    assert(echo.lastResponse.get.host == "{{{match}}}")
+    assert(echo.lastResponse.get.host == "{{{match.value}}}")
     {{/testHost}}
     {{#testResponse}}
-    {{#matchIsJSON}}
-    assert(write(res) == "{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}")
-    {{/matchIsJSON}}
-    {{^matchIsJSON}}
-    {{#matchIsNull}}
-    assert(res == null)
-    {{/matchIsNull}}
-    {{^matchIsNull}}
-    assert(res == "{{{match}}}")
-    {{/matchIsNull}}
-    {{/matchIsJSON}}
+    {{^match.isPrimitive}}
+    assert(write(res) == "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
+    {{/match.isPrimitive}}
+    {{#match.isPrimitive}}
+    assert(res == {{#match}}{{> tests/param_value}}{{/match}})
+    {{/match.isPrimitive}}
     {{/testResponse}}
-    {{/match}}
+    {{#shouldScope}}
+    }
+    {{/shouldScope}}
     {{/isError}}
     {{/steps}}
   }

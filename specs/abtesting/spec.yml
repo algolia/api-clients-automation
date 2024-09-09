@@ -12,8 +12,9 @@ info:
 
     The base URLs for requests to the A/B testing API are:
 
-    - `https://analytics.us.algolia.com` (alias: `https://analytics.algolia.com`)
+    - `https://analytics.us.algolia.com`
     - `https://analytics.de.algolia.com`
+    - `https://analytics.algolia.com` (routes requests to the closest of the above servers, based on your geographical location)
 
     Use the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).
 
@@ -98,3 +99,9 @@ paths:
     $ref: 'paths/stopABTest.yml'
   /2/abtests/schedule:
     $ref: 'paths/scheduleABTest.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

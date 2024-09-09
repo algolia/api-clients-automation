@@ -18,6 +18,7 @@ void snippetForcustomDelete() async {
   final response = await client.customDelete(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -36,6 +37,7 @@ void snippetForcustomGet() async {
   final response = await client.customGet(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -54,6 +56,7 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -72,6 +75,7 @@ void snippetForcustomPut() async {
   final response = await client.customPut(
     path: "test/minimal",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -87,9 +91,10 @@ void snippetFordeleteUserToken() async {
       region: 'YOUR_APP_ID_REGION');
 
   // Call the API
-  final response = await client.deleteUserToken(
+  await client.deleteUserToken(
     userToken: "test-user-1",
   );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -128,5 +133,25 @@ void snippetForpushEvents() async {
       ],
     ),
   );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+void snippetForsetClientApiKey() async {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  final client = InsightsClient(
+      appId: 'YOUR_APP_ID',
+      apiKey: 'YOUR_API_KEY',
+      region: 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey(
+    apiKey: "updated-api-key",
+  );
+  // >LOG
   // SEPARATOR<
 }

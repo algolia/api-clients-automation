@@ -1,0 +1,23 @@
+method:
+  get:
+    x-helper: true
+    tags:
+      - Index
+    operationId: indexExists
+    summary: Check if an index exists or not
+    description: |
+      You can initialize an index with any name. The index is created on Algolia's servers when you add objects or set settings. To prevent accidentally creating new indices, or changing existing indices, you can use the exists method. The exists method returns a boolean that indicates whether an initialized index has been created.
+    parameters:
+      - in: query
+        name: indexName
+        description: The name of the index to check.
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Index exists.
+        content:
+          application/json:
+            schema:
+              type: boolean

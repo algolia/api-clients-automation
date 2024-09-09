@@ -16,7 +16,7 @@ class SnippetQuerySuggestionsClient
      *
      * createConfig
      */
-    public function snippetForCreateConfig()
+    public function snippetForCreateConfig(): void
     {
         // >SEPARATOR createConfig default
         // Initialize the client
@@ -24,9 +24,9 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->createConfig(
-            ['indexName' => 'theIndexName',
+            ['indexName' => '<YOUR_INDEX_NAME>',
                 'sourceIndices' => [
-                    ['indexName' => 'testIndex',
+                    ['indexName' => '<YOUR_INDEX_NAME>',
                         'facets' => [
                             ['attribute' => 'test',
                             ],
@@ -53,6 +53,7 @@ class SnippetQuerySuggestionsClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -63,7 +64,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -74,6 +75,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -84,7 +86,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -95,6 +97,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -105,7 +108,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -116,6 +119,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -126,7 +130,7 @@ class SnippetQuerySuggestionsClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -137,6 +141,7 @@ class SnippetQuerySuggestionsClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -147,7 +152,7 @@ class SnippetQuerySuggestionsClient
      *
      * deleteConfig
      */
-    public function snippetForDeleteConfig()
+    public function snippetForDeleteConfig(): void
     {
         // >SEPARATOR deleteConfig default
         // Initialize the client
@@ -155,9 +160,10 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->deleteConfig(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -168,7 +174,7 @@ class SnippetQuerySuggestionsClient
      *
      * getAllConfigs
      */
-    public function snippetForGetAllConfigs()
+    public function snippetForGetAllConfigs(): void
     {
         // >SEPARATOR getAllConfigs default
         // Initialize the client
@@ -177,6 +183,7 @@ class SnippetQuerySuggestionsClient
         // Call the API
         $response = $client->getAllConfigs();
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -187,7 +194,7 @@ class SnippetQuerySuggestionsClient
      *
      * Retrieve QS config e2e
      */
-    public function snippetForGetConfig()
+    public function snippetForGetConfig(): void
     {
         // >SEPARATOR getConfig default
         // Initialize the client
@@ -195,9 +202,10 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getConfig(
-            'cts_e2e_browse_query_suggestions',
+            '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -208,7 +216,7 @@ class SnippetQuerySuggestionsClient
      *
      * getConfigStatus
      */
-    public function snippetForGetConfigStatus()
+    public function snippetForGetConfigStatus(): void
     {
         // >SEPARATOR getConfigStatus default
         // Initialize the client
@@ -216,9 +224,10 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getConfigStatus(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -229,7 +238,7 @@ class SnippetQuerySuggestionsClient
      *
      * getLogFile
      */
-    public function snippetForGetLogFile()
+    public function snippetForGetLogFile(): void
     {
         // >SEPARATOR getLogFile default
         // Initialize the client
@@ -237,11 +246,32 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->getLogFile(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 
@@ -250,7 +280,7 @@ class SnippetQuerySuggestionsClient
      *
      * updateConfig
      */
-    public function snippetForUpdateConfig()
+    public function snippetForUpdateConfig(): void
     {
         // >SEPARATOR updateConfig default
         // Initialize the client
@@ -258,9 +288,9 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->updateConfig(
-            'theIndexName',
+            '<YOUR_INDEX_NAME>',
             ['sourceIndices' => [
-                ['indexName' => 'testIndex',
+                ['indexName' => '<YOUR_INDEX_NAME>',
                     'facets' => [
                         ['attribute' => 'test',
                         ],
@@ -287,6 +317,7 @@ class SnippetQuerySuggestionsClient
             ],
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<

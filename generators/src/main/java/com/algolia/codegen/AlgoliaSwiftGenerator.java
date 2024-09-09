@@ -14,8 +14,6 @@ import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +43,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "basesearchresponse",
     "batchrequest",
     "batchwriteparams",
+    "booleanstring",
     "condition",
     "configuration",
     "consequence",
@@ -161,7 +160,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     setLibrary(LIBRARY_URLSESSION);
 
     try {
-      additionalProperties.put("swiftVersion", Files.readString(Paths.get("config/.swift-version")).trim());
+      additionalProperties.put("swiftVersion", Helpers.getLanguageVersion("swift"));
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);
@@ -199,6 +198,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     );
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
 
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));

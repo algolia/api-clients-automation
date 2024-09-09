@@ -27,6 +27,11 @@ open class QuerySuggestionsClient {
         try self.init(configuration: QuerySuggestionsClientConfiguration(appID: appID, apiKey: apiKey, region: region))
     }
 
+    open func setClientApiKey(apiKey: String) {
+        self.configuration.apiKey = apiKey
+        self.transporter.setClientApiKey(apiKey: apiKey)
+    }
+
     /// - parameter configurationWithIndex: (body)
     /// - returns: BaseResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -350,8 +355,8 @@ open class QuerySuggestionsClient {
     }
 
     // Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the
-    // Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an
-    // index](/specs/search#tag/Indices/operation/deleteIndex) operation.
+    // Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the `Delete an
+    // index` operation.
     // Required API Key ACLs:
     //  - editSettings
     //

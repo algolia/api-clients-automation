@@ -82,6 +82,9 @@ components:
       $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
+  schemas:
+    attributeToUpdate:
+      $ref: 'paths/objects/common/schemas.yml#/attributeToUpdate'
 servers:
   - url: https://{appId}.algolia.net
     variables:
@@ -358,6 +361,15 @@ paths:
   /waitForApiKey:
     $ref: 'helpers/waitForApiKey.yml#/method'
 
+  /waitForTask:
+    $ref: 'helpers/waitForTask.yml#/method'
+
+  /waitForAppTask:
+    $ref: 'helpers/waitForAppTask.yml#/method'
+
+  /browseObjects:
+    $ref: 'helpers/browseObjects.yml#/method'
+
   /generateSecuredApiKey:
     $ref: 'helpers/generateSecuredApiKey.yml#/method'
 
@@ -375,3 +387,9 @@ paths:
 
   /partialUpdateObjects:
     $ref: 'helpers/partialUpdateObjects.yml#/method'
+
+  /indexExists:
+    $ref: 'helpers/indexExists.yml#/method'
+
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

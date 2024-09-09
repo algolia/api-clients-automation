@@ -20,7 +20,7 @@ void main() {
       options: ClientOptions(requester: requester),
     );
     {{/autoCreateClient}}    
-    {{#steps}}    
+    {{#steps}}
     {{#isError}}
     await expectError(
       '{{{expectedError}}}',
@@ -30,20 +30,26 @@ void main() {
     );
     {{/isError}}
     {{^isError}}
+    {{#shouldScope}}
+    {
+    {{/shouldScope}}
     {{#match}}
     requester.setOnRequest((request) {
       {{#testUserAgent}}
           TestHandle.current.markSkipped('User agent added using an interceptor');
       {{/testUserAgent}}
       {{#testTimeouts}}
-          expect({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, request.timeout.inMilliseconds);
+          expect({{{matchResponseTimeout}}}, request.timeout.inMilliseconds);
       {{/testTimeouts}}
       {{#testHost}}
-          expect(request.host.url, '{{{match}}}');
+          expect(request.host.url, {{#match}}{{> tests/param_value}}{{/match}});
       {{/testHost}}
     });
     {{/match}}
     {{#dynamicTemplate}}{{/dynamicTemplate}}
+    {{#shouldScope}} 
+    }
+    {{/shouldScope}}
     {{/isError}}
     {{/steps}}
     }

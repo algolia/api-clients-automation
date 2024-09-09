@@ -15,6 +15,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -34,6 +35,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -53,6 +55,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -72,6 +75,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -91,6 +95,7 @@ def snippet_for_get_add_to_cart_rate
   # Call the API
   response = client.get_add_to_cart_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -110,6 +115,7 @@ def snippet_for_get_average_click_position
   # Call the API
   response = client.get_average_click_position("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -129,6 +135,7 @@ def snippet_for_get_click_positions
   # Call the API
   response = client.get_click_positions("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -148,6 +155,7 @@ def snippet_for_get_click_through_rate
   # Call the API
   response = client.get_click_through_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -167,6 +175,7 @@ def snippet_for_get_conversion_rate
   # Call the API
   response = client.get_conversion_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -186,6 +195,7 @@ def snippet_for_get_no_click_rate
   # Call the API
   response = client.get_no_click_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -205,6 +215,7 @@ def snippet_for_get_no_results_rate
   # Call the API
   response = client.get_no_results_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -224,6 +235,7 @@ def snippet_for_get_purchase_rate
   # Call the API
   response = client.get_purchase_rate("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -243,6 +255,7 @@ def snippet_for_get_revenue
   # Call the API
   response = client.get_revenue("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -262,6 +275,7 @@ def snippet_for_get_searches_count
   # Call the API
   response = client.get_searches_count("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -281,6 +295,7 @@ def snippet_for_get_searches_no_clicks
   # Call the API
   response = client.get_searches_no_clicks("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -300,6 +315,7 @@ def snippet_for_get_searches_no_results
   # Call the API
   response = client.get_searches_no_results("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -319,6 +335,7 @@ def snippet_for_get_status
   # Call the API
   response = client.get_status("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -338,6 +355,7 @@ def snippet_for_get_top_countries
   # Call the API
   response = client.get_top_countries("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -357,6 +375,7 @@ def snippet_for_get_top_filter_attributes
   # Call the API
   response = client.get_top_filter_attributes("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -376,6 +395,7 @@ def snippet_for_get_top_filter_for_attribute
   # Call the API
   response = client.get_top_filter_for_attribute("myAttribute", "index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -395,6 +415,7 @@ def snippet_for_get_top_filters_no_results
   # Call the API
   response = client.get_top_filters_no_results("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -414,6 +435,7 @@ def snippet_for_get_top_hits
   # Call the API
   response = client.get_top_hits("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -433,6 +455,7 @@ def snippet_for_get_top_searches
   # Call the API
   response = client.get_top_searches("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -452,10 +475,25 @@ def snippet_for_get_users_count
   # Call the API
   response = client.get_users_count("index")
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

@@ -15,6 +15,7 @@ def snippet_for_custom_delete
   # Call the API
   response = client.custom_delete("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -34,6 +35,7 @@ def snippet_for_custom_get
   # Call the API
   response = client.custom_get("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -53,6 +55,7 @@ def snippet_for_custom_post
   # Call the API
   response = client.custom_post("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -72,6 +75,7 @@ def snippet_for_custom_put
   # Call the API
   response = client.custom_put("test/minimal")
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -89,8 +93,14 @@ def snippet_for_get_index_usage
   client = Algolia::UsageClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
   # Call the API
-  response = client.get_index_usage("queries_operations", "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
+  response = client.get_index_usage(
+    "queries_operations",
+    "<YOUR_INDEX_NAME>",
+    "2024-04-03T12:46:43Z",
+    "2024-04-05T12:46:43Z"
+  )
 
+  # >LOG
   # use the class directly
   puts(response)
 
@@ -110,10 +120,25 @@ def snippet_for_get_usage
   # Call the API
   response = client.get_usage("queries_operations", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
 
+  # >LOG
   # use the class directly
   puts(response)
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::UsageClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

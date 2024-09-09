@@ -19,6 +19,7 @@ async def snippet_for_custom_delete():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -42,6 +43,7 @@ async def snippet_for_custom_get():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -65,6 +67,7 @@ async def snippet_for_custom_post():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -88,6 +91,7 @@ async def snippet_for_custom_put():
         path="test/minimal",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -111,6 +115,7 @@ async def snippet_for_get_cluster_incidents():
         clusters="c1-de",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -134,6 +139,7 @@ async def snippet_for_get_cluster_status():
         clusters="c1-de",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -155,6 +161,7 @@ async def snippet_for_get_incidents():
     # Call the API
     response = await _client.get_incidents()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -178,6 +185,7 @@ async def snippet_for_get_indexing_time():
         clusters="c1-de",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -201,6 +209,7 @@ async def snippet_for_get_latency():
         clusters="c1-de",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -225,6 +234,7 @@ async def snippet_for_get_metrics():
         period="minute",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -248,6 +258,7 @@ async def snippet_for_get_reachability():
         clusters="c1-de",
     )
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -269,6 +280,7 @@ async def snippet_for_get_servers():
     # Call the API
     response = await _client.get_servers()
 
+    # >LOG
     # use the class directly
     print(response)
 
@@ -290,9 +302,29 @@ async def snippet_for_get_status():
     # Call the API
     response = await _client.get_status()
 
+    # >LOG
     # use the class directly
     print(response)
 
     # print the JSON response
     print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_set_client_api_key():
+    """
+    Snippet for the setClientApiKey method.
+
+    switch API key
+    """
+    # >SEPARATOR setClientApiKey default
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    _client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # >LOG
     # SEPARATOR<

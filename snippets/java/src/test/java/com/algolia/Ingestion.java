@@ -23,6 +23,7 @@ class SnippetIngestionClient {
         .setName("authName")
         .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -39,9 +40,10 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexName().setIndexName("full_name______"))
+        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -60,13 +62,14 @@ class SnippetIngestionClient {
         .setName("sourceName")
         .setInput(
           new SourceCommercetools()
-            .setStoreKeys(List.of("myStore"))
-            .setLocales(List.of("de"))
+            .setStoreKeys(Arrays.asList("myStore"))
+            .setLocales(Arrays.asList("de"))
             .setUrl("http://commercetools.com")
             .setProjectKey("keyID")
         )
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -80,6 +83,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -99,6 +103,7 @@ class SnippetIngestionClient {
         .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
         .setAction(ActionType.REPLACE)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -112,6 +117,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -125,6 +131,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -138,6 +145,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -151,6 +159,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -164,6 +173,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -177,6 +187,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -190,6 +201,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -203,6 +215,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -216,6 +229,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -229,6 +243,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -242,6 +257,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -255,6 +271,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -268,6 +285,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -281,6 +299,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -294,6 +313,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -311,6 +331,7 @@ class SnippetIngestionClient {
         .setId("foo")
         .setUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE" + " of code is doing")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -324,6 +345,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -337,6 +359,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -350,6 +373,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -363,6 +387,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -376,6 +401,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -389,6 +415,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -402,6 +429,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -415,6 +443,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -428,6 +457,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listAuthentications();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -441,6 +471,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listDestinations();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -454,6 +485,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -467,6 +499,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listRuns();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -480,6 +513,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listSources();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -493,6 +527,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listTasks();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -506,6 +541,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listTasksV1();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -519,6 +555,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listTransformationModels();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -532,6 +569,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listTransformations();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -546,14 +584,16 @@ class SnippetIngestionClient {
     // Call the API
     client.pushTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new BatchWriteParams()
-        .setRequests(
-          List.of(
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
-            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
           )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -569,10 +609,11 @@ class SnippetIngestionClient {
     client.runSource(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new RunSourcePayload()
-        .setIndexToInclude(List.of("products_us", "products eu"))
-        .setEntityIDs(List.of("1234", "5678"))
+        .setIndexToInclude(Arrays.asList("products_us", "products eu"))
+        .setEntityIDs(Arrays.asList("1234", "5678"))
         .setEntityType(EntityType.PRODUCT)
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -586,6 +627,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -599,6 +641,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -613,8 +656,9 @@ class SnippetIngestionClient {
     // Call the API
     client.searchAuthentications(
       new AuthenticationSearch()
-        .setAuthenticationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+        .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -628,8 +672,10 @@ class SnippetIngestionClient {
 
     // Call the API
     client.searchDestinations(
-      new DestinationSearch().setDestinationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      new DestinationSearch()
+        .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -643,8 +689,9 @@ class SnippetIngestionClient {
 
     // Call the API
     client.searchSources(
-      new SourceSearch().setSourceIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+      new SourceSearch().setSourceIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -660,9 +707,14 @@ class SnippetIngestionClient {
     client.searchTasks(
       new TaskSearch()
         .setTaskIDs(
-          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -678,9 +730,14 @@ class SnippetIngestionClient {
     client.searchTasksV1(
       new TaskSearch()
         .setTaskIDs(
-          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          )
         )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -696,9 +753,28 @@ class SnippetIngestionClient {
     client.searchTransformations(
       new TransformationSearch()
         .setTransformationIDs(
-          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+          )
         )
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -712,6 +788,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -724,7 +801,18 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.tryTransformation(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+    client.tryTransformation(
+      new TransformationTry()
+        .setCode("foo")
+        .setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
+            }
+          }
+        )
+    );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -739,8 +827,17 @@ class SnippetIngestionClient {
     // Call the API
     client.tryTransformationBeforeUpdate(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz"))
+      new TransformationTry()
+        .setCode("foo")
+        .setSampleRecord(
+          new HashMap() {
+            {
+              put("bar", "baz");
+            }
+          }
+        )
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -754,6 +851,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new AuthenticationUpdate().setName("newName"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -767,6 +865,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new DestinationUpdate().setName("newName"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -780,6 +879,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -793,6 +893,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false).setCron("* * * * *"));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -806,6 +907,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdateV1().setEnabled(false));
+    // >LOG
     // SEPARATOR<
   }
 
@@ -822,6 +924,7 @@ class SnippetIngestionClient {
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -840,13 +943,14 @@ class SnippetIngestionClient {
         .setName("sourceName")
         .setInput(
           new SourceCommercetools()
-            .setStoreKeys(List.of("myStore"))
-            .setLocales(List.of("de"))
+            .setStoreKeys(Arrays.asList("myStore"))
+            .setLocales(Arrays.asList("de"))
             .setUrl("http://commercetools.com")
             .setProjectKey("keyID")
         )
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -860,6 +964,7 @@ class SnippetIngestionClient {
 
     // Call the API
     client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    // >LOG
     // SEPARATOR<
   }
 }

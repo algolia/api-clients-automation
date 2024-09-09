@@ -20,6 +20,10 @@ module Algolia
       @@default ||= ApiClient.new
     end
 
+    def set_client_api_key(api_key)
+      @config.set_client_api_key(api_key)
+    end
+
     # Call an API with given options.
     #
     # @return [Http::Response] the response.
@@ -93,7 +97,7 @@ module Algolia
           data.each { |k, v| hash[k] = convert_to_type(v, sub_type) }
         end
       else
-        # models (e.g. Pet) or oneOf
+        # models (e.g. Pet), enum, or oneOf
         klass = Algolia.const_get(return_type)
         klass.respond_to?(:openapi_one_of) ? klass.build(data) : klass.build_from_hash(data)
       end

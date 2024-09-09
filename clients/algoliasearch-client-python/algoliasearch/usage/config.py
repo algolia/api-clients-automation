@@ -1,15 +1,12 @@
 from os import environ
-from typing import Optional
 
 from algoliasearch.http.base_config import BaseConfig
-from algoliasearch.http.hosts import CallType, Host, HostsCollection
+from algoliasearch.http.hosts import Host, HostsCollection
 from algoliasearch.http.user_agent import UserAgent
 
 
 class UsageConfig(BaseConfig):
-    def __init__(
-        self, app_id: Optional[str] = None, api_key: Optional[str] = None
-    ) -> None:
+    def __init__(self, app_id: str, api_key: str) -> None:
         super().__init__(app_id, api_key)
 
         user_agent = UserAgent().add("Usage")
@@ -21,30 +18,18 @@ class UsageConfig(BaseConfig):
             "content-type": "application/json",
         }
 
-        self.proxies = {
-            "http": environ.get("HTTP_PROXY"),
-            "https": environ.get("HTTPS_PROXY"),
-        }
-        if self.proxies["http"] is None:
-            del self.proxies["http"]
-        if self.proxies["https"] is None:
-            del self.proxies["https"]
+        http_proxy = environ.get("HTTP_PROXY")
+        https_proxy = environ.get("HTTPS_PROXY")
+
+        self.proxies = {}
+
+        if http_proxy is not None:
+            self.proxies["http"] = http_proxy
+        if https_proxy is not None:
+            self.proxies["https"] = https_proxy
 
         self.hosts = HostsCollection(
             [
-                Host(
-                    url="{}-dsn.algolia.net".format(self.app_id),
-                    priority=10,
-                    accept=CallType.READ,
-                ),
-                Host(
-                    url="{}.algolia.net".format(self.app_id),
-                    priority=10,
-                    accept=CallType.WRITE,
-                ),
-                Host("{}-1.algolianet.com".format(self.app_id)),
-                Host("{}-2.algolianet.com".format(self.app_id)),
-                Host("{}-3.algolianet.com".format(self.app_id)),
-            ],
-            reorder_hosts=True,
+                Host("usage.algolia.com"),
+            ]
         )

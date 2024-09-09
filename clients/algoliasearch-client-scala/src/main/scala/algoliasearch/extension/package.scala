@@ -308,7 +308,7 @@ package object extension {
     def partialUpdateObjects(
         indexName: String,
         objects: Seq[Any],
-        createIfNotExists: Boolean,
+        createIfNotExists: Boolean = false,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
@@ -394,6 +394,17 @@ package object extension {
         batchResponses = batchResponses,
         moveOperationResponse = move
       )
+    }
+
+    def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
+      try {
+        client.getSettings(indexName)
+      } catch {
+        case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => Future.successful(false)
+        case e: Throwable                                                   => throw e
+      }
+
+      Future.successful(true)
     }
   }
 }

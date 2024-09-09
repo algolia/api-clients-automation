@@ -942,10 +942,11 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_push_task
     req = @client.push_task_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      BatchWriteParams.new(
-        requests: [
-          BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
-          BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
+      PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
+          PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
         ]
       )
     )
@@ -956,7 +957,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
       ),
       JSON.parse(req.body)
     )

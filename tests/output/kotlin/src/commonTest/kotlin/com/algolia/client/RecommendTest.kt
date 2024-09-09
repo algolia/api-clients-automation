@@ -9,6 +9,7 @@ import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
@@ -62,6 +63,23 @@ class RecommendTest {
   }
 
   @Test
+  fun `the user agent contains the latest version`() = runTest {
+    val client = RecommendClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(3.3.0\\).*".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
   fun `calls api with default read timeouts`() = runTest {
     val client = RecommendClient(appId = "appId", apiKey = "apiKey")
     client.runTest(
@@ -89,6 +107,44 @@ class RecommendTest {
       intercept = {
         assertEquals(2000, it.connectTimeout)
         assertEquals(30000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `switch API key`() = runTest {
+    val client = RecommendClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/1",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+      },
+    )
+    client.runTest(
+      call = {
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
+      },
+      intercept = {
+      },
+    )
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/2",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
       },
     )
   }

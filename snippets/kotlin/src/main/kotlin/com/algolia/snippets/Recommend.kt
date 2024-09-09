@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.RecommendClient
 // IMPORT<
 import com.algolia.client.model.recommend.*
-
 import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
@@ -20,6 +19,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -37,6 +37,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -54,6 +55,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -71,6 +73,7 @@ class SnippetRecommendClient {
       path = "test/minimal",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -85,11 +88,12 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.deleteRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       objectID = "objectID",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -104,11 +108,12 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.getRecommendRule(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       objectID = "objectID",
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -123,11 +128,12 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.getRecommendStatus(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
       taskID = 12345L,
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -145,7 +151,7 @@ class SnippetRecommendClient {
       getRecommendationsParams = GetRecommendationsParams(
         requests = listOf(
           RelatedQuery(
-            indexName = "indexName",
+            indexName = "<YOUR_INDEX_NAME>",
             objectID = "objectID",
             model = RelatedModel.entries.first { it.value == "related-products" },
             threshold = 42.1,
@@ -154,6 +160,7 @@ class SnippetRecommendClient {
       ),
     )
 
+    // >LOG
     // Use the response
     println(response)
     // SEPARATOR<
@@ -168,12 +175,29 @@ class SnippetRecommendClient {
 
     // Call the API
     var response = client.searchRecommendRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       model = RecommendModels.entries.first { it.value == "related-products" },
     )
 
+    // >LOG
     // Use the response
     println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key",
+    )
+
+    // >LOG
     // SEPARATOR<
 
     exitProcess(0)

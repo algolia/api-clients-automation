@@ -36,6 +36,7 @@ public class SnippetAbtestingClient
         },
       }
     );
+    // >LOG
     // SEPARATOR<
   }
 
@@ -54,6 +55,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -72,6 +74,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -90,6 +93,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -108,6 +112,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -126,6 +131,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.DeleteABTestAsync(42);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -144,6 +150,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.GetABTestAsync(42);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -162,6 +169,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.ListABTestsAsync();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -194,6 +202,26 @@ public class SnippetAbtestingClient
         },
       }
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForAbtestingClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new AbtestingClient(
+      new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -212,6 +240,7 @@ public class SnippetAbtestingClient
 
     // Call the API
     var response = await client.StopABTestAsync(42);
+    // >LOG
     // SEPARATOR<
   }
 }

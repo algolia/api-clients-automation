@@ -18,6 +18,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.customDelete("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -31,6 +32,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.customGet("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -44,6 +46,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.customPost("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -57,6 +60,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.customPut("test/minimal");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,6 +74,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getClusterIncidents("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -83,6 +88,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getClusterStatus("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -96,6 +102,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getIncidents();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -109,6 +116,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getIndexingTime("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -122,6 +130,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getLatency("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -135,6 +144,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -148,6 +158,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getReachability("c1-de");
+    // >LOG
     // SEPARATOR<
   }
 
@@ -161,6 +172,7 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getServers();
+    // >LOG
     // SEPARATOR<
   }
 
@@ -174,6 +186,21 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getStatus();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the setClientApiKey method.
+  //
+  // switch API key
+  void snippetForSetClientApiKey() {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.setClientApiKey("updated-api-key");
+    // >LOG
     // SEPARATOR<
   }
 }

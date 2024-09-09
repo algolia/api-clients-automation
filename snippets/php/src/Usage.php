@@ -16,7 +16,7 @@ class SnippetUsageClient
      *
      * allow del method for a custom path with minimal parameters
      */
-    public function snippetForCustomDelete()
+    public function snippetForCustomDelete(): void
     {
         // >SEPARATOR customDelete default
         // Initialize the client
@@ -27,6 +27,7 @@ class SnippetUsageClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -37,7 +38,7 @@ class SnippetUsageClient
      *
      * allow get method for a custom path with minimal parameters
      */
-    public function snippetForCustomGet()
+    public function snippetForCustomGet(): void
     {
         // >SEPARATOR customGet default
         // Initialize the client
@@ -48,6 +49,7 @@ class SnippetUsageClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -58,7 +60,7 @@ class SnippetUsageClient
      *
      * allow post method for a custom path with minimal parameters
      */
-    public function snippetForCustomPost()
+    public function snippetForCustomPost(): void
     {
         // >SEPARATOR customPost default
         // Initialize the client
@@ -69,6 +71,7 @@ class SnippetUsageClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -79,7 +82,7 @@ class SnippetUsageClient
      *
      * allow put method for a custom path with minimal parameters
      */
-    public function snippetForCustomPut()
+    public function snippetForCustomPut(): void
     {
         // >SEPARATOR customPut default
         // Initialize the client
@@ -90,6 +93,7 @@ class SnippetUsageClient
             'test/minimal',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -100,7 +104,7 @@ class SnippetUsageClient
      *
      * getIndexUsage with minimal parameters
      */
-    public function snippetForGetIndexUsage()
+    public function snippetForGetIndexUsage(): void
     {
         // >SEPARATOR getIndexUsage default
         // Initialize the client
@@ -109,11 +113,12 @@ class SnippetUsageClient
         // Call the API
         $response = $client->getIndexUsage(
             'queries_operations',
-            'myIndexName',
+            '<YOUR_INDEX_NAME>',
             '2024-04-03T12:46:43Z',
             '2024-04-05T12:46:43Z',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
         // SEPARATOR<
@@ -124,7 +129,7 @@ class SnippetUsageClient
      *
      * getUsage with minimal parameters
      */
-    public function snippetForGetUsage()
+    public function snippetForGetUsage(): void
     {
         // >SEPARATOR getUsage default
         // Initialize the client
@@ -137,8 +142,29 @@ class SnippetUsageClient
             '2024-04-05T12:46:43Z',
         );
 
+        // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

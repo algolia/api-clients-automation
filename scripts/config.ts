@@ -3,13 +3,17 @@ import clientsConfig from '../config/clients.config.json' assert { type: 'json' 
 import { CI } from './common';
 import type { Language, LanguageConfig } from './types.js';
 
-export function getClientsConfigField(language: Language, pathToField: string[] | string): any {
+export function getClientsConfigField(
+  language: Language,
+  pathToField: string[] | string,
+  required: boolean = true,
+): any {
   const config: LanguageConfig = clientsConfig[language];
   const path = Array.isArray(pathToField) ? pathToField : [pathToField];
 
   return path.reduce((current, key) => {
     const field = current?.[key];
-    if (field !== '' && !field) {
+    if (field !== '' && !field && required) {
       throw new Error(`Unable to find '${pathToField}' for '${language}'`);
     }
 

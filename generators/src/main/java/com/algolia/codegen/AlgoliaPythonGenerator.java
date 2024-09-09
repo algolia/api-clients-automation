@@ -89,6 +89,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
 
     supportingFiles.add(new SupportingFile("LICENSE", "../", "LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", "../.github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", "../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
   }
 
   @Override
@@ -132,6 +133,14 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     }
 
     operations.setImports(imports);
+
+    List<OperationsMap> modes = new ArrayList<>();
+    modes.add(operations);
+    OperationsMap operationsSync = (OperationsMap) operations.clone();
+    operationsSync.put("isSyncClient", true);
+    modes.add(operationsSync);
+
+    additionalProperties.put("modes", modes);
 
     return operations;
   }

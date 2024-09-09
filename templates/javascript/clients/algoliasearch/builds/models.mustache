@@ -1,11 +1,10 @@
 // {{{generationBanner}}}
 
+import type { AbtestingClient, Region as AbTestingRegion } from '@algolia/client-abtesting';
+import type { AnalyticsClient, Region as AnalyticsRegion } from '@algolia/client-analytics';
+import type { ClientOptions } from '@algolia/client-common';
+import type { PersonalizationClient, Region as PersonalizationRegion } from '@algolia/client-personalization';
 import type {
-  Host,
-  Requester,
-  ClientOptions,
-} from '@algolia/client-common';
-import {
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
   Anchoring,
@@ -14,10 +13,10 @@ import {
   AroundRadiusAll,
   AutomaticFacetFilter,
   AutomaticFacetFilters,
-  BrowsePagination,
   BaseSearchParams,
   BaseSearchParamsWithoutQuery,
   BaseSearchResponse,
+  BooleanString,
   Condition,
   Consequence,
   ConsequenceHide,
@@ -78,19 +77,17 @@ import {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
-} from '@algolia/client-search/model';
+} from '@algolia/client-search';
+import { apiClientVersion } from '@algolia/client-search';
+import type { RecommendClient } from '@algolia/recommend';
 
-export * from '@algolia/client-search/model';
-export * from '@algolia/recommend/model';
-export * from '@algolia/client-personalization/model';
-export * from '@algolia/client-analytics/model';
-export * from '@algolia/client-abtesting/model';
+type Region = AbTestingRegion | AnalyticsRegion;
 
-export { SearchClient } from '@algolia/client-search';
-export { RecommendClient } from '@algolia/recommend';
-export { PersonalizationClient } from '@algolia/client-personalization';
-export { AnalyticsClient } from '@algolia/client-analytics';
-export { AbtestingClient } from '@algolia/client-abtesting';
+export * from '@algolia/client-search';
+export * from '@algolia/recommend';
+export * from '@algolia/client-personalization';
+export * from '@algolia/client-analytics';
+export * from '@algolia/client-abtesting';
 
 export {
   AdvancedSyntaxFeatures,
@@ -104,6 +101,7 @@ export {
   BaseSearchParams,
   BaseSearchParamsWithoutQuery,
   BaseSearchResponse,
+  BooleanString,
   Condition,
   Consequence,
   ConsequenceHide,
@@ -164,6 +162,10 @@ export {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  AnalyticsRegion,
+  AbTestingRegion,
+  Region,
+  apiClientVersion,
 };
 
 /**

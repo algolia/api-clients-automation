@@ -44,15 +44,16 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().equals(".php-cs-fixer.dist.php"));
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("phpunit.xml.mustache"));
     supportingFiles.removeIf(file -> file.getTemplateFile().equals("AbstractModel.php"));
-
-    supportingFiles.add(new SupportingFile("Configuration.mustache", "lib/Configuration", "Configuration.php"));
-    supportingFiles.add(new SupportingFile("ConfigWithRegion.mustache", "lib/Configuration", "ConfigWithRegion.php"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ApiException.mustache"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ObjectSerializer.mustache"));
+    supportingFiles.removeIf(file -> file.getTemplateFile().equals("ModelInterface.mustache"));
 
     supportingFiles.add(new SupportingFile("client_config.mustache", "lib/Configuration", getClientName(client) + "Config.php"));
     supportingFiles.add(new SupportingFile("Algolia.mustache", "lib", "Algolia.php"));
 
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
 
     additionalProperties.put("isSearchClient", client.equals("search"));
     additionalProperties.put("configClassname", getClientName(client) + "Config");

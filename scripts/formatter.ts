@@ -6,7 +6,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
   switch (language) {
     case 'csharp':
       if (cwd.includes('tests') || cwd.includes('snippets')) {
-        await run('dotnet format && dotnet tool restore && dotnet dotnet-csharpier .', {
+        await run('dotnet format --no-restore && dotnet tool restore && dotnet dotnet-csharpier .', {
           cwd,
           language,
         });
@@ -37,7 +37,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       );
       break;
     case 'javascript':
-      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern --debug`);
+      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p ${cwd} spotlessApply`, { language });
@@ -45,7 +45,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
     case 'php':
       await runComposerInstall();
       await run(
-        `PHP_CS_FIXER_IGNORE_ENV=1 php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
+        `php clients/algoliasearch-client-php/vendor/bin/php-cs-fixer fix ${cwd} --rules=@PhpCsFixer --using-cache=no --allow-risky=yes`,
         { language },
       );
       break;

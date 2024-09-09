@@ -27,6 +27,11 @@ open class InsightsClient {
         try self.init(configuration: InsightsClientConfiguration(appID: appID, apiKey: apiKey, region: region))
     }
 
+    open func setClientApiKey(apiKey: String) {
+        self.configuration.apiKey = apiKey
+        self.transporter.setClientApiKey(apiKey: apiKey)
+    }
+
     /// - parameter path: (path) Path of the endpoint, anything after \"/1\" must be specified.
     /// - parameter parameters: (query) Query parameters to apply to the current query. (optional)
     /// - returns: AnyCodable
@@ -295,8 +300,9 @@ open class InsightsClient {
     }
 
     /// Deletes all events related to the specified user token from events metrics and analytics. The deletion is
-    /// asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user
-    /// profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+    /// asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user
+    /// profile`
+    /// in the Personalization API.
     ///
     ///
     /// - parameter userToken: (path) User token for which to delete all associated events.

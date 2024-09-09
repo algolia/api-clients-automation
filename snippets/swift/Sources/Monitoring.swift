@@ -17,6 +17,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -30,6 +31,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -43,6 +45,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -56,6 +59,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -69,6 +73,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getClusterIncidents(clusters: "c1-de")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -82,6 +87,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getClusterStatus(clusters: "c1-de")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -95,6 +101,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getIncidents()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -108,6 +115,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getIndexingTime(clusters: "c1-de")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -121,6 +129,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getLatency(clusters: "c1-de")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -134,6 +143,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
+        // >LOG
         // SEPARATOR<
     }
 
@@ -147,6 +157,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getReachability(clusters: "c1-de")
+        // >LOG
         // SEPARATOR<
     }
 
@@ -160,6 +171,7 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getServers()
+        // >LOG
         // SEPARATOR<
     }
 
@@ -173,6 +185,21 @@ final class MonitoringClientSnippet {
 
         // Call the API
         let response = try await client.getStatus()
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the setClientApiKey method.
+    ///
+    /// switch API key
+    func snippetForSetClientApiKey() async throws {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        try client.setClientApiKey(apiKey: "updated-api-key")
+        // >LOG
         // SEPARATOR<
     }
 }

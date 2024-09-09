@@ -16,6 +16,22 @@
     ]
   },
   {
+    "testName": "the user agent contains the latest version",
+    "steps": [
+      {
+        "type": "method",
+        "method": "customPost",
+        "parameters": {
+          "path": "1/test"
+        },
+        "expected": {
+          "type": "userAgent",
+          "match": "^Algolia for ${{languageCased}} \\(${{languageVersion}}\\).*"
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with default read timeouts",
     "steps": [
       {

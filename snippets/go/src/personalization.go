@@ -30,6 +30,7 @@ func SnippetForCustomDeleteOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -58,6 +59,7 @@ func SnippetForCustomGetOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -86,6 +88,7 @@ func SnippetForCustomPostOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -114,6 +117,7 @@ func SnippetForCustomPutOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -142,6 +146,7 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -168,6 +173,7 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<
@@ -196,8 +202,36 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetClientApiKeyOfPersonalization() {
+	/*
+	   Snippet for the setClientApiKey method.
+
+	   switch API key
+	*/
+
+	// >SEPARATOR setClientApiKey default
+	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
+	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SetClientApiKey(
+		"updated-api-key",
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }
 func SnippetForSetPersonalizationStrategyOfPersonalization() {
@@ -227,6 +261,7 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 		panic(err)
 	}
 
+	// >LOG
 	// use the model directly
 	print(response)
 	// SEPARATOR<

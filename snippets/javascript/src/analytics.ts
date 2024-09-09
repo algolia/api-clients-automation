@@ -16,6 +16,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -32,6 +33,7 @@ export async function snippetForCustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -48,6 +50,7 @@ export async function snippetForCustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -64,6 +67,7 @@ export async function snippetForCustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -80,6 +84,7 @@ export async function snippetForGetAddToCartRate(): Promise<void> {
   // Call the API
   const response = await client.getAddToCartRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -96,6 +101,7 @@ export async function snippetForGetAverageClickPosition(): Promise<void> {
   // Call the API
   const response = await client.getAverageClickPosition({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -112,6 +118,7 @@ export async function snippetForGetClickPositions(): Promise<void> {
   // Call the API
   const response = await client.getClickPositions({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -128,6 +135,7 @@ export async function snippetForGetClickThroughRate(): Promise<void> {
   // Call the API
   const response = await client.getClickThroughRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -144,6 +152,7 @@ export async function snippetForGetConversionRate(): Promise<void> {
   // Call the API
   const response = await client.getConversionRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -160,6 +169,7 @@ export async function snippetForGetNoClickRate(): Promise<void> {
   // Call the API
   const response = await client.getNoClickRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -176,6 +186,7 @@ export async function snippetForGetNoResultsRate(): Promise<void> {
   // Call the API
   const response = await client.getNoResultsRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -192,6 +203,7 @@ export async function snippetForGetPurchaseRate(): Promise<void> {
   // Call the API
   const response = await client.getPurchaseRate({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -208,6 +220,7 @@ export async function snippetForGetRevenue(): Promise<void> {
   // Call the API
   const response = await client.getRevenue({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -224,6 +237,7 @@ export async function snippetForGetSearchesCount(): Promise<void> {
   // Call the API
   const response = await client.getSearchesCount({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -240,6 +254,7 @@ export async function snippetForGetSearchesNoClicks(): Promise<void> {
   // Call the API
   const response = await client.getSearchesNoClicks({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -256,6 +271,7 @@ export async function snippetForGetSearchesNoResults(): Promise<void> {
   // Call the API
   const response = await client.getSearchesNoResults({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -272,6 +288,7 @@ export async function snippetForGetStatus(): Promise<void> {
   // Call the API
   const response = await client.getStatus({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -288,6 +305,7 @@ export async function snippetForGetTopCountries(): Promise<void> {
   // Call the API
   const response = await client.getTopCountries({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -304,6 +322,7 @@ export async function snippetForGetTopFilterAttributes(): Promise<void> {
   // Call the API
   const response = await client.getTopFilterAttributes({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -320,6 +339,7 @@ export async function snippetForGetTopFilterForAttribute(): Promise<void> {
   // Call the API
   const response = await client.getTopFilterForAttribute({ attribute: 'myAttribute', index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -336,6 +356,7 @@ export async function snippetForGetTopFiltersNoResults(): Promise<void> {
   // Call the API
   const response = await client.getTopFiltersNoResults({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -352,6 +373,7 @@ export async function snippetForGetTopHits(): Promise<void> {
   // Call the API
   const response = await client.getTopHits({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -368,6 +390,7 @@ export async function snippetForGetTopSearches(): Promise<void> {
   // Call the API
   const response = await client.getTopSearches({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
   // SEPARATOR<
@@ -384,7 +407,23 @@ export async function snippetForGetUsersCount(): Promise<void> {
   // Call the API
   const response = await client.getUsersCount({ index: 'index' });
 
+  // >LOG
   // use typed response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+export function snippetForSetClientApiKey(): void {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+
+  // Call the API
+  client.setClientApiKey({ apiKey: 'updated-api-key' });
+
+  // >LOG
   // SEPARATOR<
 }

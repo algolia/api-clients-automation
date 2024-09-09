@@ -36,27 +36,32 @@ export const COMMON_DEPENDENCIES = {
  * Variables starting by `LANGUAGENAME_` will be used in the `createMatrix` to determine
  * if a job should be added.
  */
-export const DEPENDENCIES = LANGUAGES.reduce(
-  (finalDependencies, lang) => {
-    const key = `${lang.toUpperCase()}_CLIENT_CHANGED`;
-    const langFolder = getLanguageFolder(lang);
+export const DEPENDENCIES = {
+  ...LANGUAGES.reduce(
+    (finalDependencies, lang) => {
+      const key = `${lang.toUpperCase()}_CLIENT_CHANGED`;
+      const langFolder = getLanguageFolder(lang);
 
-    finalDependencies[key] = [
-      ':!**node_modules',
-      `templates/${lang}`,
-      'templates/issue.yml',
-      'templates/LICENSE',
-      // language related files
-      langFolder,
-      getVersionFileForLanguage(lang),
-      `:!${langFolder}/.github`,
-      `:!${langFolder}/README.md`,
-    ];
+      finalDependencies[key] = [
+        ':!**node_modules',
+        `templates/${lang}`,
+        'templates/Bug_report.yml',
+        'templates/issue.yml',
+        'templates/LICENSE',
+        // language related files
+        langFolder,
+        getVersionFileForLanguage(lang),
+        `tests/output/${lang}`,
+        `:!${langFolder}/.github`,
+        `:!${langFolder}/README.md`,
+      ];
 
-    return finalDependencies;
-  },
-  { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
-);
+      return finalDependencies;
+    },
+    { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
+  ),
+  WEBSITE_CHANGED: ['website', 'scripts/website', 'package.json', 'netlify.toml'],
+};
 
 function getVersionFileForLanguage(lang: Language): string {
   // js rely on the nvmrc of the repo

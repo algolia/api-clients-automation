@@ -28,6 +28,7 @@ export 'src/model/batch_params.dart';
 export 'src/model/batch_request.dart';
 export 'src/model/batch_response.dart';
 export 'src/model/batch_write_params.dart';
+export 'src/model/boolean_string.dart';
 export 'src/model/browse_pagination.dart';
 export 'src/model/browse_params_object.dart';
 export 'src/model/browse_response.dart';

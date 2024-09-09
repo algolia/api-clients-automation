@@ -1,3 +1,51 @@
+## [5.3.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.1...5.3.2)
+
+- [0a433cc7a](https://github.com/algolia/api-clients-automation/commit/0a433cc7a) fix(javascript): use transporter directly ([#3682](https://github.com/algolia/api-clients-automation/pull/3682)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.3.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.0...5.3.1)
+
+- [50bd07392](https://github.com/algolia/api-clients-automation/commit/50bd07392) fix(javascript): assert helpers and fix setClientApiKey helper ([#3663](https://github.com/algolia/api-clients-automation/pull/3663)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.5...5.3.0)
+
+- [3b673cee4](https://github.com/algolia/api-clients-automation/commit/3b673cee4) fix(javascript): type definition and template cleanup ([#3656](https://github.com/algolia/api-clients-automation/pull/3656)) by [@shortcuts](https://github.com/shortcuts/)
+- [2c65a8d11](https://github.com/algolia/api-clients-automation/commit/2c65a8d11) feat(clients): helper to switch API key in use ([#3616](https://github.com/algolia/api-clients-automation/pull/3616)) by [@Fluf22](https://github.com/Fluf22/)
+- [f126366dc](https://github.com/algolia/api-clients-automation/commit/f126366dc) fix(specs): note on Analytics API server ([#3650](https://github.com/algolia/api-clients-automation/pull/3650)) by [@kai687](https://github.com/kai687/)
+- [3d02b3164](https://github.com/algolia/api-clients-automation/commit/3d02b3164) feat(clients): add helper to check if an index exists ([#3646](https://github.com/algolia/api-clients-automation/pull/3646)) by [@millotp](https://github.com/millotp/)
+- [a36746d65](https://github.com/algolia/api-clients-automation/commit/a36746d65) fix(specs): note on insights API server ([#3649](https://github.com/algolia/api-clients-automation/pull/3649)) by [@kai687](https://github.com/kai687/)
+- [1f53716c6](https://github.com/algolia/api-clients-automation/commit/1f53716c6) fix(specs): don't extend $ref objects ([#3623](https://github.com/algolia/api-clients-automation/pull/3623)) by [@kai687](https://github.com/kai687/)
+
+## [5.2.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.4...5.2.5)
+
+- [ff0c99653](https://github.com/algolia/api-clients-automation/commit/ff0c99653) chore(javascript): use tsup bundler ([#3640](https://github.com/algolia/api-clients-automation/pull/3640)) by [@shortcuts](https://github.com/shortcuts/)
+- [a9405b168](https://github.com/algolia/api-clients-automation/commit/a9405b168) fix(specs): usage api ([#3624](https://github.com/algolia/api-clients-automation/pull/3624)) by [@kai687](https://github.com/kai687/)
+- [e3af9554e](https://github.com/algolia/api-clients-automation/commit/e3af9554e) fix(specs): no links across API specs ([#3643](https://github.com/algolia/api-clients-automation/pull/3643)) by [@kai687](https://github.com/kai687/)
+
+## [5.2.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.3...5.2.4)
+
+- [3d07a1e4f](https://github.com/algolia/api-clients-automation/commit/3d07a1e4f) fix(specs): ignorePlurals can be a boolean string ([#3620](https://github.com/algolia/api-clients-automation/pull/3620)) by [@millotp](https://github.com/millotp/)
+- [c0675ff6b](https://github.com/algolia/api-clients-automation/commit/c0675ff6b) fix(clients): correly parse usage hosts ([#3622](https://github.com/algolia/api-clients-automation/pull/3622)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.2.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.2...5.2.3)
+
+- [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [5.2.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.1...5.2.2)
+
+- [7189cbe4c](https://github.com/algolia/api-clients-automation/commit/7189cbe4c) fix(javascript): dependency imports and low-level init ([#3596](https://github.com/algolia/api-clients-automation/pull/3596)) by [@shortcuts](https://github.com/shortcuts/)
+- [796ae3fe2](https://github.com/algolia/api-clients-automation/commit/796ae3fe2) chore(javascript): add license to the root of the repo ([#3610](https://github.com/algolia/api-clients-automation/pull/3610)) by [@shortcuts](https://github.com/shortcuts/)
+- [f8b7a77a8](https://github.com/algolia/api-clients-automation/commit/f8b7a77a8) fix(javascript): prefix with `node:` for node packages ([#3608](https://github.com/algolia/api-clients-automation/pull/3608)) by [@atinux](https://github.com/atinux/)
+
+## [5.2.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.0...5.2.1)
+
+- [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)
+
+## [5.2.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.1.1...5.2.0)
+
+- [23a799f0e](https://github.com/algolia/api-clients-automation/commit/23a799f0e) feat(specs): push source type ([#3600](https://github.com/algolia/api-clients-automation/pull/3600)) by [@shortcuts](https://github.com/shortcuts/)
+- [536fdef01](https://github.com/algolia/api-clients-automation/commit/536fdef01) fix(specs): filter run list by type ([#3577](https://github.com/algolia/api-clients-automation/pull/3577)) by [@millotp](https://github.com/millotp/)
+- [9b6dc0b70](https://github.com/algolia/api-clients-automation/commit/9b6dc0b70) docs(specs): update api's length minimum value ([#3574](https://github.com/algolia/api-clients-automation/pull/3574)) by [@Jerska](https://github.com/Jerska/)
+
 ## [5.1.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.1.0...5.1.1)
 
 - [4cbbce55c](https://github.com/algolia/api-clients-automation/commit/4cbbce55c) fix(clients): highlight and snippet results e2e ([#3567](https://github.com/algolia/api-clients-automation/pull/3567)) by [@shortcuts](https://github.com/shortcuts/)

@@ -1,5 +1,10 @@
 {{{objectName}}}(
 {{#value}}
-{{> tests/request_param}}
+{{^isAdditionalProperty}}
+{{#hasAdditionalProperties}}{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} = {{/hasAdditionalProperties}}{{> tests/request_param}}
+{{/isAdditionalProperty}}
 {{/value}}
+{{#hasAdditionalProperties}}
+additionalProperties = mapOf({{#value}}{{#isAdditionalProperty}}"{{key}}" to {{> tests/param_json_element}}{{/isAdditionalProperty}}{{/value}})
+{{/hasAdditionalProperties}}
 )
