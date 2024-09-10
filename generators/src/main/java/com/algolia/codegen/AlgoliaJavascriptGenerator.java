@@ -76,6 +76,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       // builds
       supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("client/builds/node.mustache", "builds", "node.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/fetch.mustache", "builds", "fetch.ts"));
     }
     // `algoliasearch` related files
     else {
@@ -84,6 +85,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       // `algoliasearch` builds
       supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "node.ts"));
+      supportingFiles.add(new SupportingFile("algoliasearch/builds/definition.mustache", "builds", "fetch.ts"));
       supportingFiles.add(new SupportingFile("algoliasearch/builds/models.mustache", "builds", "models.ts"));
 
       // `lite` builds
