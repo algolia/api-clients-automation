@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-testing",
-  "version": "0.1.0",
+  "version": "5.4.0",
   "private": true,
   "description": "A package that contains the echo requester of the algoliasearch JavaScript requesters, for testing purposes",
   "repository": {
