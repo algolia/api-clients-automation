@@ -195,6 +195,13 @@ module.exports = {
       }
     },
     {
+      files: ['clients/algoliasearch-client-javascript/packages/**/__tests__/**/*.ts'],
+
+      extends: ["plugin:vitest/legacy-recommended"],
+
+      plugins: ['@vitest/eslint-plugin'],
+    },
+    {
       files: ['*.json'],
       parserOptions: {
         extraFileExtensions: ['.json'],

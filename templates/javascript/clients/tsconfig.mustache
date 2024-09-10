@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     {{#isAlgoliasearchClient}}
-    "types": ["node", "jest"],
+    "types": ["node", "@cloudflare/workers-types", "vitest-environment-miniflare/globals", "vitest/globals"],
     {{/isAlgoliasearchClient}}
     "outDir": "dist"
   },

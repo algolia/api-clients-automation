@@ -71,9 +71,9 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@algolia/requester-node-http@link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http::locator=javascript-tests%40workspace%3A.":
+"@algolia/requester-testing@link:../../../clients/algoliasearch-client-javascript/packages/requester-testing::locator=javascript-tests%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@algolia/requester-node-http@link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http::locator=javascript-tests%40workspace%3A."
+  resolution: "@algolia/requester-testing@link:../../../clients/algoliasearch-client-javascript/packages/requester-testing::locator=javascript-tests%40workspace%3A."
   languageName: node
   linkType: soft
 
@@ -2063,7 +2063,7 @@ __metadata:
     "@algolia/ingestion": "link:../../../clients/algoliasearch-client-javascript/packages/ingestion"
     "@algolia/monitoring": "link:../../../clients/algoliasearch-client-javascript/packages/monitoring"
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
-    "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
+    "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing"
     "@types/jest": "npm:29.5.12"
     "@types/node": "npm:22.5.1"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
