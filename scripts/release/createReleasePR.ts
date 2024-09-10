@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import path from 'path';
+
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
@@ -7,7 +9,6 @@ import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
 import { getNbGitDiff } from '../ci/utils.js';
 import {
   LANGUAGES,
-  ROOT_ENV_PATH,
   run,
   MAIN_BRANCH,
   OWNER,
@@ -19,6 +20,7 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
+  ROOT_DIR,
 } from '../common.js';
 import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
@@ -29,9 +31,7 @@ import TEXT from './text.js';
 import type { Versions, ParsedCommit, Commit, Changelog, Scope } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 
-dotenv.config({ path: ROOT_ENV_PATH });
-
-export const COMMON_SCOPES = ['specs', 'clients'];
+dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
 // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
 // see https://peps.python.org/pep-0440/
@@ -44,7 +44,7 @@ const fetchedUsers: Record<string, string> = {};
 export function getVersionChangesText(versions: Versions): string {
   return LANGUAGES.map((lang) => {
     if (!versions[lang]) {
-      return `- ~${lang}: ${getPackageVersionDefault(lang)} (${TEXT.noCommit})~`;
+      return `- ~${lang}: ${getPackageVersionDefault(lang)} (no commit)~`;
     }
 
     const { current, releaseType, next } = versions[lang];
@@ -345,8 +345,6 @@ export async function createReleasePR({
   const { validCommits, skippedCommits } = await getCommits(releaseType !== undefined);
 
   const versions = decideReleaseStrategy({ commits: validCommits, releaseType });
-
-  console.log(versions);
 
   // skip anything sla related for now
   if (process.env.SLA) {

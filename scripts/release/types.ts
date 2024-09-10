@@ -8,7 +8,9 @@ export type Version = {
   next: string;
 };
 
-export type Versions = { [lang in Language]?: Version };
+export type Versions = {
+  [lang in Language]?: Version;
+};
 
 export type Scope = Language | 'clients' | 'specs';
 

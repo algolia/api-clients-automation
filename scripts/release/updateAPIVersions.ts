@@ -1,17 +1,14 @@
 import fsp from 'fs/promises';
 
-import dotenv from 'dotenv';
 import yaml from 'js-yaml';
 
 import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import { ROOT_ENV_PATH, toAbsolutePath, run, exists, GENERATORS, CI, setVerbose } from '../common.js';
+import { toAbsolutePath, run, exists, GENERATORS, CI, setVerbose } from '../common.js';
 import { getGitHubUrl, getLanguageFolder } from '../config.js';
 import type { Language } from '../types.js';
 
 import { writeJsonFile } from './common.js';
 import type { Changelog, Versions } from './types.js';
-
-dotenv.config({ path: ROOT_ENV_PATH });
 
 async function updateConfigFiles(versionsToRelease: Versions): Promise<void> {
   // update the other versions in clients.config.json
