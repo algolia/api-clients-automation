@@ -7,7 +7,7 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): {{#lambda.titlecase}}{{client}}{{/lambda.titlecase}} {
-  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: echoRequester() });
+  return {{client}}(appId, apiKey, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}}{ requester: nodeEchoRequester() });
 }
 
 {{#blocksBenchmark}}

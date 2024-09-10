@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "vitest/globals"],
+    "types": ["node"],
     "outDir": "dist"
   },
   "include": ["src", "index.ts"],
-  "exclude": ["dist", "node_modules", "src/__tests__"]
+  "exclude": ["dist", "node_modules"]
 }
