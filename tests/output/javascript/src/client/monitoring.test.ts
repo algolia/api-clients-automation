@@ -3,14 +3,14 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { MonitoringClient } from '@algolia/monitoring';
 import { monitoringClient } from '@algolia/monitoring';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): MonitoringClient {
-  return monitoringClient(appId, apiKey, { requester: echoRequester() });
+  return monitoringClient(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
 describe('commonApi', () => {
@@ -51,7 +51,7 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('use the correct host', async () => {
-    const client = monitoringClient('my-app-id', 'my-api-key', { requester: echoRequester() });
+    const client = monitoringClient('my-app-id', 'my-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
@@ -85,11 +85,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = monitoringClient('foo', 'bar', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = monitoringClient('foo', 'bar', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

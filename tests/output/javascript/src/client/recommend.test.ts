@@ -3,19 +3,19 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { RecommendClient } from '@algolia/recommend';
 import { recommendClient } from '@algolia/recommend';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): RecommendClient {
-  return recommendClient(appId, apiKey, { requester: echoRequester() });
+  return recommendClient(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const client = recommendClient('test-app-id', 'test-api-key', { requester: echoRequester() });
+    const client = recommendClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
@@ -23,7 +23,7 @@ describe('api', () => {
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const client = recommendClient('test-app-id', 'test-api-key', { requester: echoRequester() });
+    const client = recommendClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
@@ -93,11 +93,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = recommendClient('foo', 'bar', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = recommendClient('foo', 'bar', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

@@ -3,14 +3,14 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { InsightsClient } from '@algolia/client-insights';
 import { insightsClient } from '@algolia/client-insights';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): InsightsClient {
-  return insightsClient(appId, apiKey, 'us', { requester: echoRequester() });
+  return insightsClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 }
 
 describe('commonApi', () => {
@@ -51,7 +51,7 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('fallbacks to the alias when region is not given', async () => {
-    const client = insightsClient('my-app-id', 'my-api-key', '', { requester: echoRequester() });
+    const client = insightsClient('my-app-id', 'my-api-key', '', { requester: nodeEchoRequester() });
 
     const result = (await client.pushEvents({
       events: [
@@ -73,7 +73,7 @@ describe('parameters', () => {
   }, 15000);
 
   test('uses the correct region', async () => {
-    const client = insightsClient('my-app-id', 'my-api-key', 'us', { requester: echoRequester() });
+    const client = insightsClient('my-app-id', 'my-api-key', 'us', { requester: nodeEchoRequester() });
 
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
@@ -82,7 +82,7 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const client = insightsClient('my-app-id', 'my-api-key', 'not_a_region', { requester: echoRequester() });
+      const client = insightsClient('my-app-id', 'my-api-key', 'not_a_region', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`region` must be one of the following: de, us');
@@ -116,11 +116,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = insightsClient('foo', 'bar', 'us', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = insightsClient('foo', 'bar', 'us', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

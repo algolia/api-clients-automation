@@ -3,14 +3,14 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { IngestionClient } from '@algolia/ingestion';
 import { ingestionClient } from '@algolia/ingestion';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): IngestionClient {
-  return ingestionClient(appId, apiKey, 'us', { requester: echoRequester() });
+  return ingestionClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 }
 
 describe('commonApi', () => {
@@ -51,7 +51,7 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('uses the correct region', async () => {
-    const client = ingestionClient('my-app-id', 'my-api-key', 'us', { requester: echoRequester() });
+    const client = ingestionClient('my-app-id', 'my-api-key', 'us', { requester: nodeEchoRequester() });
 
     const result = (await client.getSource({
       sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
@@ -62,7 +62,7 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const client = ingestionClient('my-app-id', 'my-api-key', 'not_a_region', { requester: echoRequester() });
+      const client = ingestionClient('my-app-id', 'my-api-key', 'not_a_region', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
@@ -96,11 +96,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = ingestionClient('foo', 'bar', 'us', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = ingestionClient('foo', 'bar', 'us', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

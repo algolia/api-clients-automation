@@ -3,14 +3,14 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { PersonalizationClient } from '@algolia/client-personalization';
 import { personalizationClient } from '@algolia/client-personalization';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): PersonalizationClient {
-  return personalizationClient(appId, apiKey, 'us', { requester: echoRequester() });
+  return personalizationClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 }
 
 describe('commonApi', () => {
@@ -52,7 +52,7 @@ describe('commonApi', () => {
 describe('parameters', () => {
   test('throws when region is not given', async () => {
     try {
-      const client = personalizationClient('my-app-id', 'my-api-key', '', { requester: echoRequester() });
+      const client = personalizationClient('my-app-id', 'my-api-key', '', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
@@ -61,7 +61,9 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const client = personalizationClient('my-app-id', 'my-api-key', 'not_a_region', { requester: echoRequester() });
+      const client = personalizationClient('my-app-id', 'my-api-key', 'not_a_region', {
+        requester: nodeEchoRequester(),
+      });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
@@ -69,7 +71,7 @@ describe('parameters', () => {
   }, 15000);
 
   test('does not throw when region is given', async () => {
-    const client = personalizationClient('my-app-id', 'my-api-key', 'us', { requester: echoRequester() });
+    const client = personalizationClient('my-app-id', 'my-api-key', 'us', { requester: nodeEchoRequester() });
   }, 15000);
 });
 
@@ -99,11 +101,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = personalizationClient('foo', 'bar', 'us', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = personalizationClient('foo', 'bar', 'us', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

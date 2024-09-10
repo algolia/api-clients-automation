@@ -3,19 +3,19 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { SearchClient } from '@algolia/client-search';
 import { searchClient } from '@algolia/client-search';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): SearchClient {
-  return searchClient(appId, apiKey, { requester: echoRequester() });
+  return searchClient(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
 describe('api', () => {
   test('calls api with correct read host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', { requester: echoRequester() });
+    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
@@ -23,7 +23,7 @@ describe('api', () => {
   }, 15000);
 
   test('calls api with correct write host', async () => {
-    const client = searchClient('test-app-id', 'test-api-key', { requester: echoRequester() });
+    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
@@ -201,19 +201,19 @@ describe('indexExists', () => {
 describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {
-      const client = searchClient('', '', { requester: echoRequester() });
+      const client = searchClient('', '', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('', 'my-api-key', { requester: echoRequester() });
+      const client = searchClient('', 'my-api-key', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`appId` is missing.');
     }
     try {
-      const client = searchClient('my-app-id', '', { requester: echoRequester() });
+      const client = searchClient('my-app-id', '', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
@@ -506,11 +506,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = searchClient('foo', 'bar', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = searchClient('foo', 'bar', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

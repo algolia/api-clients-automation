@@ -3,14 +3,14 @@
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
 import type { AnalyticsClient } from '@algolia/client-analytics';
 import { analyticsClient } from '@algolia/client-analytics';
-import { echoRequester } from '@algolia/requester-node-http';
-import type { EchoResponse } from '@algolia/requester-node-http';
+import { nodeEchoRequester } from '@algolia/requester-testing';
+import type { EchoResponse } from '@algolia/requester-testing';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): AnalyticsClient {
-  return analyticsClient(appId, apiKey, 'us', { requester: echoRequester() });
+  return analyticsClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 }
 
 describe('commonApi', () => {
@@ -51,7 +51,7 @@ describe('commonApi', () => {
 
 describe('parameters', () => {
   test('fallbacks to the alias when region is not given', async () => {
-    const client = analyticsClient('my-app-id', 'my-api-key', '', { requester: echoRequester() });
+    const client = analyticsClient('my-app-id', 'my-api-key', '', { requester: nodeEchoRequester() });
 
     const result = (await client.getAverageClickPosition({ index: 'my-index' })) as unknown as EchoResponse;
 
@@ -59,7 +59,7 @@ describe('parameters', () => {
   }, 15000);
 
   test('uses the correct region', async () => {
-    const client = analyticsClient('my-app-id', 'my-api-key', 'de', { requester: echoRequester() });
+    const client = analyticsClient('my-app-id', 'my-api-key', 'de', { requester: nodeEchoRequester() });
 
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
@@ -68,7 +68,7 @@ describe('parameters', () => {
 
   test('throws when incorrect region is given', async () => {
     try {
-      const client = analyticsClient('my-app-id', 'my-api-key', 'not_a_region', { requester: echoRequester() });
+      const client = analyticsClient('my-app-id', 'my-api-key', 'not_a_region', { requester: nodeEchoRequester() });
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch('`region` must be one of the following: de, us');
@@ -113,11 +113,11 @@ describe('init', () => {
   test('sets authMode', async () => {
     const qpClient = analyticsClient('foo', 'bar', 'us', {
       authMode: 'WithinQueryParameters',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
     const headerClient = analyticsClient('foo', 'bar', 'us', {
       authMode: 'WithinHeaders',
-      requester: echoRequester(),
+      requester: nodeEchoRequester(),
     });
 
     const qpResult = (await qpClient.customGet({

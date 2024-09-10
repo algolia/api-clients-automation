@@ -8,7 +8,7 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient(): SearchClient {
-  return searchClient(appId, apiKey, { requester: echoRequester() });
+  return searchClient(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
 describe('benchmark', () => {
