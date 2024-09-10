@@ -62,8 +62,21 @@ get:
   summary: List all A/B tests
   description: Lists all A/B tests you configured for this application.
   parameters:
-    - $ref: '../../common/parameters.yml#/Offset'
-    - $ref: '../../common/parameters.yml#/Limit'
+    - name: offset
+      in: query
+      description: Position of the first item to return.
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    - name: limit
+      in: query
+      description: Number of items to return.
+      required: false
+      schema:
+        type: integer
+        default: 10
     - name: indexPrefix
       in: query
       description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
