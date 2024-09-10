@@ -80,7 +80,7 @@
     "@algolia/requester-node-http": "5.4.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "0.1.0",
+    "@algolia/requester-testing": "5.4.0",
     "@arethetypeswrong/cli": "0.15.4",
     "@types/node": "22.5.1",
     "jsdom": "25.0.0",
