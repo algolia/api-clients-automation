@@ -38,6 +38,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.serverUsed,
     this.userData,
     this.queryID,
+    this.automaticInsights,
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
@@ -138,6 +139,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Whether automatic events collection is enabled for the application.
+  @JsonKey(name: r'_automaticInsights')
+  final bool? automaticInsights;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -166,6 +171,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.automaticInsights == automaticInsights &&
           const MapEquality<String, dynamic>().equals(this, this);
 
   @override
@@ -194,6 +200,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      automaticInsights.hashCode +
       const MapEquality<String, dynamic>().hash(this);
 
   factory BaseSearchResponse.fromJson(Map<String, dynamic> json) {
@@ -226,6 +233,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverUsed: instance.serverUsed,
       userData: instance.userData,
       queryID: instance.queryID,
+      automaticInsights: instance.automaticInsights,
       additionalProperties: additionalProperties,
     );
   }
