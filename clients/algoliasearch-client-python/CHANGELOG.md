@@ -1,6 +1,7 @@
 ## [4.4.1](https://github.com/algolia/algoliasearch-client-python/compare/4.4.0...4.4.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
+- [46d9d8fd0](https://github.com/algolia/api-clients-automation/commit/46d9d8fd0) feat(specs): add (optional) _automaticInsights to search result ([#3688](https://github.com/algolia/api-clients-automation/pull/3688)) by [@raed667](https://github.com/raed667/)
 
 ## [4.4.0](https://github.com/algolia/algoliasearch-client-python/compare/4.3.0...4.4.0)
 
