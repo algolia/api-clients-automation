@@ -32,6 +32,13 @@ async function testAlgoliasearch() {
       ],
     });
 
+    client.generateSecuredApiKey({
+      parentApiKey: 'foo',
+      restrictions: {
+        validUntil: 200,
+      }
+    });
+
     const resLite: SearchResponses = await clientLite.search({
       requests: [
         {
