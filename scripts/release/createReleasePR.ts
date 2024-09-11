@@ -28,7 +28,7 @@ import type { Language } from '../types.js';
 import { getFileChanges, getLastReleasedTag } from './common.js';
 import { generateSLA } from './sla.js';
 import TEXT from './text.js';
-import type { Versions, ParsedCommit, Commit, Changelog, Scope } from './types.js';
+import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
 
 dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
@@ -55,12 +55,10 @@ export function getVersionChangesText(versions: Versions): string {
 
 export function getSkippedCommitsText({
   commitsWithoutLanguageScope,
-  commitsWithUnknownLanguageScope,
 }: {
   commitsWithoutLanguageScope: string[];
-  commitsWithUnknownLanguageScope: string[];
 }): string {
-  if (commitsWithoutLanguageScope.length === 0 && commitsWithUnknownLanguageScope.length === 0) {
+  if (commitsWithoutLanguageScope.length === 0) {
     return '_(None)_';
   }
 
@@ -79,17 +77,6 @@ export function getSkippedCommitsText({
     .slice(0, 15)
     .map((commit) => `- ${commit}`)
     .join('\n')}
-</details>
-
-<details>
-  <summary>
-    <i>Commits with unknown language scope:</i>
-  </summary>
-
-  ${commitsWithUnknownLanguageScope
-    .slice(0, 15)
-    .map((commit) => `- ${commit}`)
-    .join('\n')}
 </details>`;
 }
 
@@ -105,19 +92,19 @@ export async function parseCommit(commit: string): Promise<Commit> {
       error: 'generation-commit',
     };
   }
-  if (!typeAndScope) {
-    return {
-      error: 'unknown-language-scope',
-      message,
-    };
-  }
 
   // get the scope of the commit by checking the changes.
   // any changes in the folder of a language will be scoped to that language
   const diff = await getFileChanges(hash);
+  if (!diff) {
+    return {
+      error: 'missing-language-scope',
+      message,
+    };
+  }
 
   const languageScopes = new Set();
-  for (const change of diff.split('\n')) {
+  for (const change of diff.split('\n').map((line) => line.trim())) {
     if (change.startsWith('clients/')) {
       const lang = change.split('/')[1].replace('algoliasearch-client-', '') as Language;
       languageScopes.add(lang);
@@ -145,11 +132,16 @@ export async function parseCommit(commit: string): Promise<Commit> {
     }
   }
 
+  let commitType = typeAndScope ? typeAndScope[1] : 'fix'; // default to fix.
+  if (!['feat', 'fix', 'chore'].includes(commitType)) {
+    commitType = 'fix';
+  }
+
   return {
     hash,
-    type: typeAndScope[1], // `fix` | `feat` | `chore` | ...
+    type: commitType as CommitType, // `fix` | `feat` | `chore` | ..., default to `fix`
     languages: [...languageScopes] as Language[],
-    scope: typeAndScope[2] as Scope, // `clients` | `specs` | `javascript` | `php` | `java` | ...
+    scope: typeAndScope ? (typeAndScope[2] as Scope) : undefined, // `clients` | `specs` | `javascript` | `php` | `java` | ...
     message: message.replace(`(#${prNumber})`, '').trim(),
     prNumber,
     author: fetchedUsers[authorEmail],
@@ -259,7 +251,6 @@ async function getCommits(force?: boolean): Promise<{
     .filter(Boolean);
 
   const commitsWithoutLanguageScope: string[] = [];
-  const commitsWithUnknownLanguageScope: string[] = [];
   const validCommits: ParsedCommit[] = [];
 
   for (const commitMessage of latestCommits) {
@@ -268,10 +259,6 @@ async function getCommits(force?: boolean): Promise<{
     if ('error' in commit) {
       if (commit.error === 'missing-language-scope') {
         commitsWithoutLanguageScope.push(commit.message);
-      }
-
-      if (commit.error === 'unknown-language-scope') {
-        commitsWithUnknownLanguageScope.push(commit.message);
       }
 
       continue;
@@ -293,7 +280,6 @@ async function getCommits(force?: boolean): Promise<{
     validCommits,
     skippedCommits: getSkippedCommitsText({
       commitsWithoutLanguageScope,
-      commitsWithUnknownLanguageScope,
     }),
   };
 }

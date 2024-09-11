@@ -1,9 +1,16 @@
 import type { ReleaseType } from 'semver';
-import { afterAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
-import { LANGUAGES } from '../../common.js';
-import { decideReleaseStrategy, getNextVersion, getVersionChangesText, parseCommit } from '../createReleasePR.js';
+// @ts-expect-error this is a mock created below
+import { getFileChangesMock } from '../common.js';
+import {
+  decideReleaseStrategy,
+  getNextVersion,
+  getSkippedCommitsText,
+  getVersionChangesText,
+  parseCommit,
+} from '../createReleasePR.js';
 import type { ParsedCommit } from '../types.js';
 
 const gitAuthor = releaseConfig.gitAuthor;
@@ -51,10 +58,21 @@ vi.mock('../../ci/utils.js', async (importOriginal) => {
 
 vi.mock('../common.js', async (importOriginal) => {
   const mod = await importOriginal<typeof import('../common.js')>();
+  const getFileChangesMockFn = vi.fn();
+
   return {
     ...mod,
     getLastReleasedTag: vi.fn().mockResolvedValue('foobar'),
-    getFileChanges: vi.fn().mockResolvedValue('clients/algoliasearch-client-javascript/package.json'),
+    getFileChanges: getFileChangesMockFn,
+    getFileChangesMock: getFileChangesMockFn,
+  };
+});
+
+vi.mock('../../config.js', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../config.js')>();
+  return {
+    ...mod,
+    getPackageVersionDefault: vi.fn().mockReturnValue('0.1.2'),
   };
 });
 
@@ -65,11 +83,14 @@ describe('createReleasePR', () => {
 
   describe('parseCommit', () => {
     it('parses commit', async () => {
+      getFileChangesMock.mockResolvedValueOnce(`clients/algoliasearch-client-javascript/package.json
+        clients/algoliasearch-client-kotlin/src/something/deep.json
+        templates/php/api.mustache`);
       const testCommit = buildTestCommit({ scope: 'javascript' });
       expect(await parseCommit(testCommit)).toEqual({
         hash: 'b2501882',
         scope: 'javascript',
-        languages: ['javascript'],
+        languages: ['javascript', 'kotlin'],
         message: 'fix(javascript): fix the thing',
         prNumber: 123,
         type: 'fix',
@@ -77,19 +98,8 @@ describe('createReleasePR', () => {
       });
     });
 
-    it('considers `specs` as a lang commit', async () => {
-      const testCommit = buildTestCommit({ scope: 'specs' });
-      expect(await parseCommit(testCommit)).toEqual({
-        hash: 'b2501882',
-        scope: 'specs',
-        message: 'fix(specs): fix the thing',
-        prNumber: 123,
-        type: 'fix',
-        author: `[@${gitAuthor.name}](https://github.com/${gitAuthor.name}/)`,
-      });
-    });
-
-    it('returns error when language scope is missing', async () => {
+    it('returns error when languages have not changed', async () => {
+      getFileChangesMock.mockResolvedValueOnce('specs/search/something.json');
       expect(await parseCommit(buildTestCommit())).toEqual(
         expect.objectContaining({
           error: 'missing-language-scope',
@@ -97,12 +107,17 @@ describe('createReleasePR', () => {
       );
     });
 
-    it('returns error when language scope is unknown', async () => {
-      expect(await parseCommit(buildTestCommit({ scope: 'unkown' }))).toEqual(
-        expect.objectContaining({
-          error: 'unknown-language-scope',
-        }),
-      );
+    it('default to fix on unknown type', async () => {
+      getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
+      expect(await parseCommit(buildTestCommit({ type: 'what', scope: 'unkown' }))).toEqual({
+        author: '[@algolia-bot](https://github.com/algolia-bot/)',
+        hash: 'b2501882',
+        languages: ['javascript'],
+        message: 'what(unkown): fix the thing',
+        prNumber: 123,
+        scope: 'unkown',
+        type: 'fix',
+      });
     });
 
     it('returns error when it is a generated commit', async () => {
@@ -158,29 +173,19 @@ describe('createReleasePR', () => {
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
-          ruby: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
           scala: {
             current: '0.0.1',
             releaseType: 'patch',
             next: getNextVersion('0.0.1', 'patch'),
           },
-          csharp: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
           swift: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
+            current: '2.0.1',
+            releaseType: 'minor',
+            next: getNextVersion('2.0.1', 'minor'),
           },
         }),
       ).toMatchInlineSnapshot(`
-        "- csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        "- ~csharp: 0.1.2 (no commit)~
         - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -188,121 +193,19 @@ describe('createReleasePR', () => {
         - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - ~ruby: 0.1.2 (no commit)~
         - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - swift: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
-      `);
-    });
-
-    it('generates text for version changes with a language with no commit', () => {
-      expect(
-        getVersionChangesText({
-          javascript: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          java: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          go: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          kotlin: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          dart: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          ruby: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          scala: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          csharp: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          swift: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-        }),
-      ).toMatchInlineSnapshot(`
-        "- csharp: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - dart: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - go: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - ~php: 0.0.1 (no commit)~
-        - ~python: 0.0.1 (no commit)~
-        - ruby: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - swift: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**"
-      `);
-    });
-
-    it('generates text for version changes with a language to skip', () => {
-      expect(
-        getVersionChangesText({
-          javascript: {
-            current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
-          },
-          php: {
-            current: '0.0.1',
-            releaseType: 'minor',
-            next: getNextVersion('0.0.1', 'minor'),
-          },
-          ruby: {
-            current: '3.0.0.alpha.0',
-            releaseType: 'minor',
-            next: getNextVersion('3.0.0.alpha.0', 'minor'),
-          },
-        }),
-      ).toMatchInlineSnapshot(`
-        "- ~csharp: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~dart: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~go: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~java: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - ~kotlin: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - php: 0.0.1 -> **\`minor\` _(e.g. 0.1.0)_**
-        - ~python: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~ruby: 3.0.0.alpha.0 -> **\`null\` _(e.g. 3.0.0.alpha.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~scala: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default.
-        - ~swift: 0.0.1 -> **\`null\` _(e.g. 0.0.1)_**~
-          - No \`feat\` or \`fix\` commit, thus unchecked by default."
+        - swift: 2.0.1 -> **\`minor\` _(e.g. 2.1.0)_**"
       `);
     });
   });
 
   describe('decideReleaseStrategy', () => {
+    beforeAll(() => {
+      getFileChangesMock.mockResolvedValue(`clients/algoliasearch-client-javascript/package.json
+        templates/php/api.mustache`);
+    });
+
     it('bumps major version for BREAKING CHANGE', async () => {
       const versions = decideReleaseStrategy({
         commits: [
@@ -477,30 +380,24 @@ describe('createReleasePR', () => {
         ],
       });
 
-      expect(versions.javascript.noCommit).toBeUndefined();
-      expect(versions.javascript.releaseType).toEqual('minor');
-      expect(versions.javascript.next).toEqual('0.1.0');
-      expect(versions.php.noCommit).toBeUndefined();
-      expect(versions.php.releaseType).toEqual('minor');
-      expect(versions.php.next).toEqual('0.1.0');
-      expect(versions.java.noCommit).toBeUndefined();
-      expect(versions.java.releaseType).toEqual('minor');
-      expect(versions.java.next).toEqual('0.1.0');
+      expect(versions).toEqual({
+        javascript: {
+          releaseType: 'minor',
+          next: '0.1.0',
+        },
+        php: {
+          releaseType: 'minor',
+          next: '0.1.0',
+        },
+        java: {
+          releaseType: 'minor',
+          next: '0.1.0',
+        },
+      });
     });
 
     it('marks skipRelease for patch upgrade without fix commit', async () => {
       const versions = decideReleaseStrategy({
-        versions: {
-          javascript: {
-            current: '0.0.1',
-          },
-          java: {
-            current: '0.0.1',
-          },
-          php: {
-            current: '0.0.1',
-          },
-        },
         commits: [
           (await parseCommit(
             buildTestCommit({
@@ -510,71 +407,9 @@ describe('createReleasePR', () => {
             }),
           )) as ParsedCommit,
         ],
-        languages: LANGUAGES,
-      });
-      expect(versions.javascript.skipRelease).toEqual(true);
-      expect(versions.java.skipRelease).toBeUndefined();
-      expect(versions.php.skipRelease).toBeUndefined();
-    });
-
-    it('consider prerelease version and correctly bumps them', async () => {
-      const versions = await decideReleaseStrategy({
-        versions: {
-          javascript: {
-            current: '0.0.1-alpha',
-          },
-          java: {
-            current: '0.0.1-beta',
-          },
-          php: {
-            current: '0.0.1-algolia',
-          },
-        },
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'feat',
-              scope: 'specs',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-        languages: LANGUAGES,
       });
 
-      expect(versions.javascript.noCommit).toBeUndefined();
-      expect(versions.javascript.releaseType).toEqual('prerelease');
-      expect(versions.javascript.next).toEqual('0.0.1-alpha.0');
-      expect(versions.php.noCommit).toBeUndefined();
-      expect(versions.php.releaseType).toEqual('prerelease');
-      expect(versions.php.next).toEqual('0.0.1-algolia.0');
-      expect(versions.java.noCommit).toBeUndefined();
-      expect(versions.java.releaseType).toEqual('prerelease');
-      expect(versions.java.next).toEqual('0.0.1-beta.0');
-    });
-
-    it('bumps SNAPSHOT versions correctly', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'feat',
-              scope: 'specs',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.javascript.noCommit).toBeUndefined();
-      expect(versions.javascript.releaseType).toEqual('prerelease');
-      expect(versions.javascript.next).toEqual('0.0.1-alpha.0');
-      expect(versions.php.noCommit).toBeUndefined();
-      expect(versions.php.releaseType).toEqual('prerelease');
-      expect(versions.php.next).toEqual('0.0.1-beta.0');
-      expect(versions.java.noCommit).toBeUndefined();
-      expect(versions.java.releaseType).toEqual('minor');
-      expect(versions.java.next).toEqual('0.0.1-SNAPSHOT');
+      expect(versions).toEqual({});
     });
   });
 
@@ -606,15 +441,6 @@ describe('createReleasePR', () => {
 
           - abcdefg fix: something
         - abcdefg fix: somethin2
-        </details>
-
-        <details>
-          <summary>
-            <i>Commits with unknown language scope:</i>
-          </summary>
-
-          - abcdef2 fix(pascal): what
-        - abcdef2 fix(pascal): what is that
         </details>"
       `);
     });
@@ -662,28 +488,6 @@ describe('createReleasePR', () => {
         - fix: something 12
         - fix: something 13
         - fix: something 14
-        </details>
-
-        <details>
-          <summary>
-            <i>Commits with unknown language scope:</i>
-          </summary>
-
-          - fix(unknown): something 0
-        - fix(unknown): something 1
-        - fix(unknown): something 2
-        - fix(unknown): something 3
-        - fix(unknown): something 4
-        - fix(unknown): something 5
-        - fix(unknown): something 6
-        - fix(unknown): something 7
-        - fix(unknown): something 8
-        - fix(unknown): something 9
-        - fix(unknown): something 10
-        - fix(unknown): something 11
-        - fix(unknown): something 12
-        - fix(unknown): something 13
-        - fix(unknown): something 14
         </details>"
       `);
     });

@@ -12,11 +12,12 @@ export type Versions = {
   [lang in Language]?: Version;
 };
 
+export type CommitType = 'chore' | 'feat' | 'fix';
 export type Scope = Language | 'clients' | 'specs';
 
 export type ParsedCommit = {
   hash: string;
-  type: string;
+  type: CommitType;
   /**
    * A commit can be scoped to a language. When scoped to `clients` or `specs`, it impacts all clients.
    */
@@ -30,8 +31,7 @@ export type ParsedCommit = {
 export type Commit =
   | ParsedCommit
   | { error: 'generation-commit' }
-  | { error: 'missing-language-scope'; message: string }
-  | { error: 'unknown-language-scope'; message: string };
+  | { error: 'missing-language-scope'; message: string };
 
 export type Changelog = {
   [lang in Language]?: string;
