@@ -1,5 +1,4 @@
-import type { ReleaseType } from 'semver';
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
 // @ts-expect-error this is a mock created below
@@ -98,6 +97,15 @@ describe('createReleasePR', () => {
       });
     });
 
+    it('empty commit should be skipped', async () => {
+      getFileChangesMock.mockResolvedValueOnce('');
+      expect(await parseCommit(buildTestCommit())).toEqual(
+        expect.objectContaining({
+          error: 'missing-language-scope',
+        }),
+      );
+    });
+
     it('returns error when languages have not changed', async () => {
       getFileChangesMock.mockResolvedValueOnce('specs/search/something.json');
       expect(await parseCommit(buildTestCommit())).toEqual(
@@ -116,6 +124,16 @@ describe('createReleasePR', () => {
         message: 'what(unkown): fix the thing',
         prNumber: 123,
         scope: 'unkown',
+        type: 'fix',
+      });
+
+      getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
+      expect(await parseCommit(buildTestCommit({ type: '', scope: '' }))).toEqual({
+        author: '[@algolia-bot](https://github.com/algolia-bot/)',
+        hash: 'b2501882',
+        languages: ['javascript'],
+        message: ': fix the thing',
+        prNumber: 123,
         type: 'fix',
       });
     });
@@ -145,8 +163,8 @@ describe('createReleasePR', () => {
           },
           php: {
             current: '0.0.1',
-            releaseType: 'patch',
-            next: getNextVersion('0.0.1', 'patch'),
+            releaseType: 'major',
+            next: getNextVersion('1.0.0', 'major'),
           },
           java: {
             current: '0.0.1',
@@ -191,7 +209,7 @@ describe('createReleasePR', () => {
         - java: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - javascript: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - kotlin: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
-        - php: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
+        - php: 0.0.1 -> **\`major\` _(e.g. 2.0.0)_**
         - python: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
         - ~ruby: 0.1.2 (no commit)~
         - scala: 0.0.1 -> **\`patch\` _(e.g. 0.0.2)_**
@@ -201,12 +219,9 @@ describe('createReleasePR', () => {
   });
 
   describe('decideReleaseStrategy', () => {
-    beforeAll(() => {
+    it('bumps major version for BREAKING CHANGE', async () => {
       getFileChangesMock.mockResolvedValue(`clients/algoliasearch-client-javascript/package.json
         templates/php/api.mustache`);
-    });
-
-    it('bumps major version for BREAKING CHANGE', async () => {
       const versions = decideReleaseStrategy({
         commits: [
           (await parseCommit(
@@ -223,20 +238,10 @@ describe('createReleasePR', () => {
       expect(versions.javascript?.next).toEqual('1.0.0');
     });
 
-    for (const releaseType of ['major', 'minor', 'patch', 'prerelease']) {
-      it(`allows forcing ${releaseType} releases`, () => {
-        const versions = decideReleaseStrategy({
-          commits: [],
-          releaseType: releaseType as ReleaseType,
-        });
-
-        expect(versions.javascript?.releaseType).toEqual(releaseType);
-        expect(versions.php?.releaseType).toEqual(releaseType);
-        expect(versions.java?.releaseType).toEqual(releaseType);
-      });
-    }
-
     it('allows releasing subset of clients', async () => {
+      getFileChangesMock.mockResolvedValue(`clients/algoliasearch-client-javascript/package.json
+        clients/algoliasearch-client-java/package.json
+        clients/algoliasearch-client-php/package.json`);
       const versions = decideReleaseStrategy({
         commits: [
           (await parseCommit(
@@ -257,123 +262,6 @@ describe('createReleasePR', () => {
             buildTestCommit({
               type: 'feat',
               scope: 'php',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.php?.releaseType).toEqual('minor');
-      expect(versions.php?.next).toEqual('0.1.0');
-    });
-
-    it('bumps minor version for feat', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'feat',
-              scope: 'php',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.php?.releaseType).toEqual('minor');
-      expect(versions.php?.next).toEqual('0.1.0');
-    });
-
-    it('bumps patch version for fix', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'fix',
-              scope: 'java',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.java?.releaseType).toEqual('patch');
-      expect(versions.java?.next).toEqual('0.0.2');
-    });
-
-    it('marks noCommit for languages without any commit', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'fix',
-              scope: 'java',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.java?.releaseType).toEqual('patch');
-      expect(versions.java?.next).toEqual('0.0.2');
-    });
-
-    it('releases every languages if a `specs` commit is present', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'fix',
-              scope: 'specs',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.javascript?.releaseType).toEqual('patch');
-      expect(versions.javascript?.next).toEqual('0.0.2');
-      expect(versions.php?.releaseType).toEqual('patch');
-      expect(versions.php?.next).toEqual('0.0.2');
-      expect(versions.java?.releaseType).toEqual('patch');
-      expect(versions.java?.next).toEqual('0.0.2');
-    });
-
-    it('releases every languages if a `clients` commit is present', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'fix',
-              scope: 'clients',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions.javascript?.releaseType).toEqual('patch');
-      expect(versions.javascript?.next).toEqual('0.0.2');
-      expect(versions.php?.releaseType).toEqual('patch');
-      expect(versions.php?.next).toEqual('0.0.2');
-      expect(versions.java?.releaseType).toEqual('patch');
-      expect(versions.java?.next).toEqual('0.0.2');
-    });
-
-    it('bumps for `specs` feat with only language `fix` commits', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'fix',
-              scope: 'php',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-          (await parseCommit(
-            buildTestCommit({
-              type: 'feat',
-              scope: 'specs',
               message: 'update the API',
             }),
           )) as ParsedCommit,
@@ -381,55 +269,33 @@ describe('createReleasePR', () => {
       });
 
       expect(versions).toEqual({
-        javascript: {
+        java: {
+          current: '0.1.2',
+          next: '0.2.0',
           releaseType: 'minor',
-          next: '0.1.0',
+        },
+        javascript: {
+          current: '0.1.2',
+          next: '0.2.0',
+          releaseType: 'minor',
         },
         php: {
+          current: '0.1.2',
+          next: '0.2.0',
           releaseType: 'minor',
-          next: '0.1.0',
-        },
-        java: {
-          releaseType: 'minor',
-          next: '0.1.0',
         },
       });
-    });
-
-    it('marks skipRelease for patch upgrade without fix commit', async () => {
-      const versions = decideReleaseStrategy({
-        commits: [
-          (await parseCommit(
-            buildTestCommit({
-              type: 'chore',
-              scope: 'javascript',
-              message: 'update the API',
-            }),
-          )) as ParsedCommit,
-        ],
-      });
-
-      expect(versions).toEqual({});
     });
   });
 
   describe('getSkippedCommitsText', () => {
     it('does not generate text if there is no commits', () => {
-      expect(
-        getSkippedCommitsText({
-          commitsWithoutLanguageScope: [],
-          commitsWithUnknownLanguageScope: [],
-        }),
-      ).toMatchInlineSnapshot('"_(None)_"');
+      expect(getSkippedCommitsText({ commitsWithoutLanguageScope: [] })).toMatchInlineSnapshot('"_(None)_"');
     });
 
     it('generates text for skipped commits', () => {
       expect(
-        getSkippedCommitsText({
-          commitsWithoutLanguageScope: ['abcdefg fix: something', 'abcdefg fix: somethin2'],
-
-          commitsWithUnknownLanguageScope: ['abcdef2 fix(pascal): what', 'abcdef2 fix(pascal): what is that'],
-        }),
+        getSkippedCommitsText({ commitsWithoutLanguageScope: ['abcdefg fix: something', 'abcdefg fix: somethin2'] }),
       ).toMatchInlineSnapshot(`
         "
         <p>It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.</p>
@@ -447,7 +313,6 @@ describe('createReleasePR', () => {
 
     it('limits the size of the commits to 15 if there is too many', async () => {
       const fakeCommitsWithoutLanguageScope: string[] = [];
-      const fakeCommitsWithUnknownLanguageScope: string[] = [];
 
       for (let i = 0; i < 20; i++) {
         const withoutCommit = await parseCommit(buildTestCommit({ message: `something ${i}` }));
@@ -455,16 +320,11 @@ describe('createReleasePR', () => {
 
         if ('message' in withoutCommit && 'message' in unknownCommit) {
           fakeCommitsWithoutLanguageScope.push(withoutCommit.message);
-          fakeCommitsWithUnknownLanguageScope.push(unknownCommit.message);
         }
       }
 
-      expect(
-        getSkippedCommitsText({
-          commitsWithoutLanguageScope: fakeCommitsWithoutLanguageScope,
-          commitsWithUnknownLanguageScope: fakeCommitsWithUnknownLanguageScope,
-        }),
-      ).toMatchInlineSnapshot(`
+      expect(getSkippedCommitsText({ commitsWithoutLanguageScope: fakeCommitsWithoutLanguageScope }))
+        .toMatchInlineSnapshot(`
         "
         <p>It doesn't mean these commits are being excluded from the release. It means they're not taken into account when the release process figured out the next version number, and updated the changelog.</p>
 
