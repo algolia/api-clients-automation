@@ -38,14 +38,13 @@ baseRecommendRequest:
 searchParams:
   title: queryParameters
   allOf:
-    # TODO: This isn't correct. `page`, `hitsPerPage`, `offset`, and `length` aren't allowed
-    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+    - $ref: './QueryParameters.yml#/searchParamsObject'
     - type: object
       description: Search parameters for filtering the recommendations.
 
 fallbackParams:
   title: fallbackParameters
   allOf:
-    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+    - $ref: './QueryParameters.yml#/searchParamsObject'
     - type: object
       description: Search parameters to use for a fallback request if there aren't enough recommendations.
