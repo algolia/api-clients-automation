@@ -1,3 +1,7 @@
+## [4.4.1](https://github.com/algolia/algoliasearch-client-php/compare/4.4.0...4.4.1)
+
+- [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
+
 ## [4.4.0](https://github.com/algolia/algoliasearch-client-php/compare/4.3.5...4.4.0)
 
 - [a254f03ef](https://github.com/algolia/api-clients-automation/commit/a254f03ef) fix(php): assign value when normalising request options ([#3659](https://github.com/algolia/api-clients-automation/pull/3659)) by [@aykutersoy](https://github.com/aykutersoy/)

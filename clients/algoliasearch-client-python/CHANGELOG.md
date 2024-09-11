@@ -1,3 +1,7 @@
+## [4.4.1](https://github.com/algolia/algoliasearch-client-python/compare/4.4.0...4.4.1)
+
+- [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
+
 ## [4.4.0](https://github.com/algolia/algoliasearch-client-python/compare/4.3.0...4.4.0)
 
 - [b6e273f4f](https://github.com/algolia/api-clients-automation/commit/b6e273f4f) feat(python): add sync client ([#3609](https://github.com/algolia/api-clients-automation/pull/3609)) by [@shortcuts](https://github.com/shortcuts/)
