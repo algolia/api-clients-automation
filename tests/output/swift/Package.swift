@@ -39,10 +39,6 @@ let libraries: [Target.Dependency] = [
         name: "Search",
         package: "algoliasearch-client-swift"
     ),
-    .product(
-        name: "Usage",
-        package: "algoliasearch-client-swift"
-    ),
 ]
 
 let package = Package(
