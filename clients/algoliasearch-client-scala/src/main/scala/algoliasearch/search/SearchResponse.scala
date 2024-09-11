@@ -80,6 +80,8 @@ package algoliasearch.search
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  * @param automaticInsights
+  *   Whether automatic events collection is enabled for the application.
   * @param page
   *   Page of search results to retrieve.
   * @param nbHits
@@ -121,6 +123,7 @@ case class SearchResponse(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
+    automaticInsights: Option[Boolean] = scala.None,
     page: Int,
     nbHits: Int,
     nbPages: Int,

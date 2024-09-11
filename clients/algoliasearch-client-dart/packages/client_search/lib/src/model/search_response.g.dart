@@ -65,6 +65,8 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
+          automaticInsights:
+              $checkedConvert('_automaticInsights', (v) => v as bool?),
           page: $checkedConvert('page', (v) => (v as num).toInt()),
           nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
           nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
@@ -80,7 +82,10 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
         );
         return val;
       },
-      fieldKeyMap: const {'facetsStats': 'facets_stats'},
+      fieldKeyMap: const {
+        'facetsStats': 'facets_stats',
+        'automaticInsights': '_automaticInsights'
+      },
     );
 
 Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
@@ -117,6 +122,7 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
+  writeNotNull('_automaticInsights', instance.automaticInsights);
   val['page'] = instance.page;
   val['nbHits'] = instance.nbHits;
   val['nbPages'] = instance.nbPages;

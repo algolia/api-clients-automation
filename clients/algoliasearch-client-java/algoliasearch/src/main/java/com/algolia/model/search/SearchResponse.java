@@ -87,6 +87,9 @@ public class SearchResponse<T> implements SearchResult<T> {
   @JsonProperty("queryID")
   private String queryID;
 
+  @JsonProperty("_automaticInsights")
+  private Boolean automaticInsights;
+
   @JsonProperty("page")
   private Integer page;
 
@@ -436,6 +439,17 @@ public class SearchResponse<T> implements SearchResult<T> {
     return queryID;
   }
 
+  public SearchResponse<T> setAutomaticInsights(Boolean automaticInsights) {
+    this.automaticInsights = automaticInsights;
+    return this;
+  }
+
+  /** Whether automatic events collection is enabled for the application. */
+  @javax.annotation.Nullable
+  public Boolean getAutomaticInsights() {
+    return automaticInsights;
+  }
+
   public SearchResponse<T> setPage(Integer page) {
     this.page = page;
     return this;
@@ -555,6 +569,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       Objects.equals(this.serverUsed, searchResponse.serverUsed) &&
       Objects.equals(this.userData, searchResponse.userData) &&
       Objects.equals(this.queryID, searchResponse.queryID) &&
+      Objects.equals(this.automaticInsights, searchResponse.automaticInsights) &&
       Objects.equals(this.page, searchResponse.page) &&
       Objects.equals(this.nbHits, searchResponse.nbHits) &&
       Objects.equals(this.nbPages, searchResponse.nbPages) &&
@@ -593,6 +608,7 @@ public class SearchResponse<T> implements SearchResult<T> {
       serverUsed,
       userData,
       queryID,
+      automaticInsights,
       page,
       nbHits,
       nbPages,
@@ -633,6 +649,7 @@ public class SearchResponse<T> implements SearchResult<T> {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
