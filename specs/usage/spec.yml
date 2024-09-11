@@ -49,6 +49,10 @@ tags:
   - name: statistics
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
+x-tagGroups:
+  - name: General
+    tags:
+      - statistics
 paths:
   # ######################
   # ### Custom request ###
