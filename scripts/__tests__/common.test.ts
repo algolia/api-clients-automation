@@ -1,5 +1,7 @@
+import { execa } from 'execa';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { capitalize, createClientName, gitCommit } from '../common.js';
 import { getClientsConfigField } from '../config.js';
 
 vi.mock('execa', () => {
@@ -8,9 +10,6 @@ vi.mock('execa', () => {
     execa: vi.fn(),
   };
 });
-
-const { capitalize, createClientName, gitCommit } = await import('../common.js');
-const { execa } = await import('execa');
 
 describe('gitCommit', () => {
   afterEach(() => {

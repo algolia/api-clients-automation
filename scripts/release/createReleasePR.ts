@@ -25,7 +25,7 @@ import {
 import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
-import { getLastReleasedTag } from './common.js';
+import { getFileChanges, getLastReleasedTag } from './common.js';
 import { generateSLA } from './sla.js';
 import TEXT from './text.js';
 import type { Versions, ParsedCommit, Commit, Changelog, Scope } from './types.js';
@@ -114,7 +114,7 @@ export async function parseCommit(commit: string): Promise<Commit> {
 
   // get the scope of the commit by checking the changes.
   // any changes in the folder of a language will be scoped to that language
-  const diff = await run(`git diff --name-only ${hash}^ ${hash}`);
+  const diff = await getFileChanges(hash);
 
   const languageScopes = new Set();
   for (const change of diff.split('\n')) {

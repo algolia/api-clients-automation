@@ -3,6 +3,7 @@ import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
 import { LANGUAGES } from '../../common.js';
+import { decideReleaseStrategy, getNextVersion, getVersionChangesText, parseCommit } from '../createReleasePR.js';
 import type { ParsedCommit } from '../types.js';
 
 const gitAuthor = releaseConfig.gitAuthor;
@@ -22,8 +23,8 @@ const buildTestCommit = (
 };
 
 // Mock `getOctokit` to bypass the API call and credential requirements
-vi.mock('../../common.js', async () => {
-  const mod = await vi.importActual<typeof import('../../common.js')>('../../common.js');
+vi.mock('../../common.js', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../common.js')>();
   return {
     ...mod,
     getOctokit: vi.fn().mockReturnValue({
@@ -40,24 +41,22 @@ vi.mock('../../common.js', async () => {
   };
 });
 
-vi.mock('../../ci/utils.js', async () => {
-  const mod = await vi.importActual<typeof import('../../ci/utils.js')>('../../ci/utils.js');
+vi.mock('../../ci/utils.js', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../ci/utils.js')>();
   return {
     ...mod,
     getNbGitDiff: vi.fn().mockResolvedValue(1),
   };
 });
 
-vi.mock('../common.js', async () => {
-  const mod = await vi.importActual<typeof import('../common.js')>('../common.js');
+vi.mock('../common.js', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../common.js')>();
   return {
     ...mod,
     getLastReleasedTag: vi.fn().mockResolvedValue('foobar'),
+    getFileChanges: vi.fn().mockResolvedValue('clients/algoliasearch-client-javascript/package.json'),
   };
 });
-
-const { parseCommit, getVersionChangesText, getSkippedCommitsText, decideReleaseStrategy, getNextVersion } =
-  await import('../createReleasePR.js');
 
 describe('createReleasePR', () => {
   afterAll(() => {
