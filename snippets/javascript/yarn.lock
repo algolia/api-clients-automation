@@ -47,12 +47,6 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@algolia/client-usage@link:../../clients/algoliasearch-client-javascript/packages/client-usage::locator=javascript-snippets%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-usage@link:../../clients/algoliasearch-client-javascript/packages/client-usage::locator=javascript-snippets%40workspace%3A."
-  languageName: node
-  linkType: soft
-
 "@algolia/ingestion@link:../../clients/algoliasearch-client-javascript/packages/ingestion::locator=javascript-snippets%40workspace%3A.":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@link:../../clients/algoliasearch-client-javascript/packages/ingestion::locator=javascript-snippets%40workspace%3A."
@@ -94,7 +88,6 @@ __metadata:
     "@algolia/client-personalization": "link:../../clients/algoliasearch-client-javascript/packages/client-personalization"
     "@algolia/client-query-suggestions": "link:../../clients/algoliasearch-client-javascript/packages/client-query-suggestions"
     "@algolia/client-search": "link:../../clients/algoliasearch-client-javascript/packages/client-search"
-    "@algolia/client-usage": "link:../../clients/algoliasearch-client-javascript/packages/client-usage"
     "@algolia/ingestion": "link:../../clients/algoliasearch-client-javascript/packages/ingestion"
     "@algolia/monitoring": "link:../../clients/algoliasearch-client-javascript/packages/monitoring"
     "@algolia/recommend": "link:../../clients/algoliasearch-client-javascript/packages/recommend"

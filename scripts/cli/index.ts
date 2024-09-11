@@ -242,7 +242,6 @@ program
 program
   .command('release')
   .description('Releases the client')
-  .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
   .option<semver.ReleaseType>(
     '-rt --releaseType <type>',
@@ -258,7 +257,7 @@ program
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-sla, --sla-only', 'only generates the sla policy', false)
   .option('-b --breaking', 'allow breaking change on the CI', false)
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, slaOnly, breaking }) => {
+  .action(async ({ verbose, releaseType, dryRun, slaOnly, breaking }) => {
     setVerbose(Boolean(verbose));
 
     if (slaOnly) {
@@ -267,12 +266,7 @@ program
       return;
     }
 
-    if (langArgs.length === 0) {
-      langArgs = [ALL];
-    }
-
     await createReleasePR({
-      languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
       releaseType,
       dryRun,
       breaking,
