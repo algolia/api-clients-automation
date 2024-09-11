@@ -65,10 +65,15 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
+          automaticInsights:
+              $checkedConvert('_automaticInsights', (v) => v as bool?),
         );
         return val;
       },
-      fieldKeyMap: const {'facetsStats': 'facets_stats'},
+      fieldKeyMap: const {
+        'facetsStats': 'facets_stats',
+        'automaticInsights': '_automaticInsights'
+      },
     );
 
 const _$BaseSearchResponseFieldMap = <String, String>{
@@ -96,6 +101,7 @@ const _$BaseSearchResponseFieldMap = <String, String>{
   'serverUsed': 'serverUsed',
   'userData': 'userData',
   'queryID': 'queryID',
+  'automaticInsights': '_automaticInsights',
 };
 
 Map<String, dynamic> _$BaseSearchResponseToJson(BaseSearchResponse instance) {
@@ -132,5 +138,6 @@ Map<String, dynamic> _$BaseSearchResponseToJson(BaseSearchResponse instance) {
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
+  writeNotNull('_automaticInsights', instance.automaticInsights);
   return val;
 }

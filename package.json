@@ -5,10 +5,10 @@
   "workspaces": [
     "scripts/",
     "playground/javascript/node/",
-    "playground/javascript/browser/",
     "eslint"
   ],
   "scripts": {
+    "build": "yarn build:eslint && yarn scripts:build",
     "build:eslint": "yarn workspace eslint-plugin-automation-custom build && yarn install",
     "clean": "rm -rf **/dist **/build **/.build **/node_modules **/.gradle **/vendor **/bin **/obj **/__pycache__ || true",
     "cli": "yarn workspace scripts start",
