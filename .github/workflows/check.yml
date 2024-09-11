@@ -82,6 +82,7 @@ jobs:
 
           if [[ $diff > 0 ]]; then
             echo "Build the custom github actions by running \`yarn workspace scripts build:actions\`"
+            git status --porcelain ./scripts/ci/actions
           fi
 
           exit $diff
