@@ -2,6 +2,7 @@
   "name": "@algolia/api-client-automation",
   "version": "0.0.1",
   "private": true,
+  "description": "The best repository",
   "workspaces": [
     "scripts/",
     "playground/javascript/node/",

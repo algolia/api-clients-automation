@@ -13,7 +13,6 @@ const allSpecs = [
   'query-suggestions',
   'recommend',
   'search',
-  'usage',
 ];
 
 export const refCommon: Rule.RuleModule = {
