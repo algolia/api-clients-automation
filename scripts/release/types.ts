@@ -28,10 +28,7 @@ export type ParsedCommit = {
   prNumber: number;
 };
 
-export type Commit =
-  | ParsedCommit
-  | { error: 'generation-commit' }
-  | { error: 'missing-language-scope'; message: string };
+export type Commit = ParsedCommit | { generated: true; languages: Language[]; message: string };
 
 export type Changelog = {
   [lang in Language]?: string;
