@@ -362,7 +362,7 @@ export async function createReleasePR({
 
       // sometimes the scope of the commits is not set correctly and concerns another language, we can fix it.
       if (LANGUAGES.includes(validCommit.scope as Language) && validCommit.scope !== lang) {
-        validCommit.message = validCommit.message.replace(`(${validCommit.scope}):`, `(${lang}):`);
+        validCommit.message = validCommit.message.replace(`(${validCommit.scope}):`, '(clients):');
       }
 
       const changelogCommit = [
