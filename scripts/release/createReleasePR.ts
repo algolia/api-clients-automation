@@ -86,20 +86,24 @@ export async function parseCommit(commit: string): Promise<Commit> {
   const prNumberMatch = message.match(/#(\d+)/);
   const prNumber = prNumberMatch ? parseInt(prNumberMatch[1], 10) : 0;
 
-  // We skip generation commits as they do not appear in changelogs
-  if (isGeneratedCommit(message)) {
-    return {
-      error: 'generation-commit',
-    };
+  let commitType = typeAndScope ? typeAndScope[1] : 'fix'; // default to fix.
+  if (!['feat', 'fix', 'chore'].includes(commitType)) {
+    commitType = 'fix';
   }
 
   // get the scope of the commit by checking the changes.
   // any changes in the folder of a language will be scoped to that language
   const diff = await getFileChanges(hash);
   if (!diff) {
+    // for empty commits, they will be filtered out later
     return {
-      error: 'missing-language-scope',
-      message,
+      hash,
+      type: commitType as CommitType,
+      languages: [],
+      scope: typeAndScope ? (typeAndScope[2] as Scope) : undefined,
+      message: message.replace(`(#${prNumber})`, '').trim(),
+      prNumber,
+      author: fetchedUsers[authorEmail],
     };
   }
 
@@ -111,9 +115,11 @@ export async function parseCommit(commit: string): Promise<Commit> {
     }
   }
 
-  if (languageScopes.size === 0) {
+  // for generated commits, we just report the languages so that the changes are attributed to the correct language and commit
+  if (isGeneratedCommit(message)) {
     return {
-      error: 'missing-language-scope',
+      generated: true,
+      languages: [...languageScopes] as Language[],
       message,
     };
   }
@@ -130,11 +136,6 @@ export async function parseCommit(commit: string): Promise<Commit> {
     if (data.user) {
       fetchedUsers[authorEmail] = `[@${data.user.login}](https://github.com/${data.user.login}/)`;
     }
-  }
-
-  let commitType = typeAndScope ? typeAndScope[1] : 'fix'; // default to fix.
-  if (!['feat', 'fix', 'chore'].includes(commitType)) {
-    commitType = 'fix';
   }
 
   return {
@@ -246,19 +247,23 @@ async function getCommits(force?: boolean): Promise<{
   skippedCommits: string;
 }> {
   // Reading commits since last release
-  const latestCommits = (await run(`git log --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`))
+  const latestCommits = (
+    await run(`git log --reverse --pretty=format:"%h|%ae|%s" ${await getLastReleasedTag()}..${MAIN_BRANCH}`)
+  )
     .split('\n')
     .filter(Boolean);
 
-  const commitsWithoutLanguageScope: string[] = [];
-  const validCommits: ParsedCommit[] = [];
+  let validCommits: ParsedCommit[] = [];
 
   for (const commitMessage of latestCommits) {
     const commit = await parseCommit(commitMessage);
 
-    if ('error' in commit) {
-      if (commit.error === 'missing-language-scope') {
-        commitsWithoutLanguageScope.push(commit.message);
+    if ('generated' in commit) {
+      const originalCommit = validCommits.findIndex((c) => commit.message.includes(c.message));
+      if (originalCommit !== -1) {
+        validCommits[originalCommit].languages = [
+          ...new Set([...validCommits[originalCommit].languages, ...commit.languages]),
+        ];
       }
 
       continue;
@@ -266,6 +271,12 @@ async function getCommits(force?: boolean): Promise<{
 
     validCommits.push(commit);
   }
+
+  // redo a pass to filter out commits without language scope
+  const commitsWithoutLanguageScope = validCommits
+    .filter((commit) => commit.languages.length === 0)
+    .map((commit) => commit.message);
+  validCommits = validCommits.filter((commit) => commit.languages.length > 0);
 
   if (!force && validCommits.length === 0) {
     console.log(
@@ -351,7 +362,7 @@ export async function createReleasePR({
 
       // sometimes the scope of the commits is not set correctly and concerns another language, we can fix it.
       if (LANGUAGES.includes(validCommit.scope as Language) && validCommit.scope !== lang) {
-        validCommit.message = validCommit.message.replace(`(${validCommit.scope}):`, `(${lang}):`);
+        validCommit.message = validCommit.message.replace(`(${validCommit.scope}):`, '(clients):');
       }
 
       const changelogCommit = [

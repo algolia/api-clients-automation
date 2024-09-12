@@ -101,7 +101,13 @@ describe('createReleasePR', () => {
       getFileChangesMock.mockResolvedValueOnce('');
       expect(await parseCommit(buildTestCommit())).toEqual(
         expect.objectContaining({
-          error: 'missing-language-scope',
+          author: '[@algolia-bot](https://github.com/algolia-bot/)',
+          hash: 'b2501882',
+          languages: [],
+          message: 'fix: fix the thing',
+          prNumber: 123,
+          scope: undefined,
+          type: 'fix',
         }),
       );
     });
@@ -110,7 +116,13 @@ describe('createReleasePR', () => {
       getFileChangesMock.mockResolvedValueOnce('specs/search/something.json');
       expect(await parseCommit(buildTestCommit())).toEqual(
         expect.objectContaining({
-          error: 'missing-language-scope',
+          author: '[@algolia-bot](https://github.com/algolia-bot/)',
+          hash: 'b2501882',
+          languages: [],
+          message: 'fix: fix the thing',
+          prNumber: 123,
+          scope: undefined,
+          type: 'fix',
         }),
       );
     });
@@ -138,7 +150,8 @@ describe('createReleasePR', () => {
       });
     });
 
-    it('returns error when it is a generated commit', async () => {
+    it('returns early when it is a generated commit', async () => {
+      getFileChangesMock.mockResolvedValueOnce('clients/algoliasearch-client-javascript/package.json');
       expect(
         await parseCommit(
           buildTestCommit({
@@ -147,7 +160,9 @@ describe('createReleasePR', () => {
           }),
         ),
       ).toEqual({
-        error: 'generation-commit',
+        generated: true,
+        languages: ['javascript'],
+        message: 'feat(specs): foo bar baz (generated)',
       });
     });
   });
