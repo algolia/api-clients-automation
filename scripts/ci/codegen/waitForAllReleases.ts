@@ -45,6 +45,12 @@ async function fetchAllRuns(runs: Run[]): Promise<void> {
   );
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 async function waitForAllReleases(languagesReleased: Language[]): Promise<void> {
   const lastCommitMessage = await run('git log -1 --format="%s"');
 
@@ -96,6 +102,9 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
             run_id: ciRun.run.id,
           });
 
+          // sleep for a bit to let the CI start
+          await sleep(15000);
+
           ciRun.retried = true;
 
           continue;
@@ -113,9 +122,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
       break;
     }
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 15000);
-    });
+    await sleep(15000);
   }
 
   if (failures.length > 0) {
