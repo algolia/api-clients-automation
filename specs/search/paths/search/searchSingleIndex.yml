@@ -2,7 +2,7 @@ post:
   tags:
     - Search
   operationId: searchSingleIndex
-  x-use-read-transporter: true
+  x-use-read-transporter: false
   x-cacheable: true
   x-acl:
     - search
