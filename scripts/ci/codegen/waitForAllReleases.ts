@@ -12,6 +12,7 @@ type Run = {
   language: Language;
   run?: components['schemas']['workflow-run'];
   finished: boolean;
+  retried: boolean;
 };
 
 async function fetchAllRuns(runs: Run[]): Promise<void> {
@@ -34,8 +35,8 @@ async function fetchAllRuns(runs: Run[]): Promise<void> {
           return;
         }
 
-        // check that the run was created less than 10 minutes ago
-        if (Date.now() - Date.parse(workflowRun.data.workflow_runs[0].created_at) > 15 * 60 * 1000) {
+        // check that the run was created less than 20 minutes ago
+        if (Date.now() - Date.parse(workflowRun.data.workflow_runs[0].created_at) > 20 * 60 * 1000) {
           return;
         }
 
@@ -62,7 +63,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
     )
   )
     .filter((lang) => lang.available)
-    .map((lang) => ({ language: lang.lang, run: undefined, finished: false }));
+    .map((lang) => ({ language: lang.lang, run: undefined, finished: false, retried: false }));
 
   console.log(
     `Waiting for all releases CI to finish for the following languages: ${runs.map((l) => l.language).join(', ')}`,
@@ -72,7 +73,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
 
   const start = Date.now();
   // kotlin release can take a long time
-  while (Date.now() - start < 1000 * 60 * 12) {
+  while (Date.now() - start < 1000 * 60 * 20) {
     await fetchAllRuns(runs);
     for (const ciRun of runs) {
       if (ciRun.finished) {
@@ -86,6 +87,19 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
 
       if (ciRun.run.status === 'completed') {
         const success = ciRun.run.conclusion === 'success';
+        if (!success && !ciRun.retried) {
+          // retry once
+          console.log(`❌ ${ciRun.language} CI failed, retrying once`);
+          await getOctokit().actions.reRunWorkflowFailedJobs({
+            owner: 'algolia',
+            repo: getClientsConfigField(ciRun.language, 'gitRepoId'),
+            run_id: ciRun.run.id,
+          });
+
+          ciRun.retried = true;
+
+          continue;
+        }
         console.log(`${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`);
         if (!success) {
           failures.push(ciRun.language);
