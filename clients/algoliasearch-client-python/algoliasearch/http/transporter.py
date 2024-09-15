@@ -30,7 +30,7 @@ class Transporter(BaseTransporter):
             _session = self._session
             self._session = None
 
-            _session.close()
+            await _session.close()
 
     async def request(
         self,
