@@ -52,7 +52,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
         self._transporter = transporter
 
-    def create_with_config(config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> Self:
+    @classmethod
+    def create_with_config(cls, config: {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}, transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None) -> {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         """Allows creating a client with a customized `{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}` and `Transporter{{#isSyncClient}}Sync{{/isSyncClient}}`. If `transporter` is not provided, the default one will be initialized from the given `config`.
 
         Args:
@@ -72,7 +73,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         return {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
     {{^isSyncClient}}
-    async def __aenter__(self) -> None:
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -202,7 +203,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         :return: Returns the deserialized response in a '{{{returnType}}}' result object.
         {{/returnType}}
         """
-        return ({{^isSyncClient}}await {{/isSyncClient}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)).deserialize({{{returnType}}})
+        resp = {{^isSyncClient}}await {{/isSyncClient}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
+        return resp.deserialize({{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}None{{/returnType}}, resp.raw_data)
 
 {{/operation}}
 {{/operations}}
