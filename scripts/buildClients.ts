@@ -18,7 +18,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'dart':
       if (buildType !== 'snippets') {
         // fix the snippets at some point
-        await run('dart analyze', { cwd, language });
+        await run('dart pub get && dart analyze', { cwd, language });
       }
       break;
     case 'go':
