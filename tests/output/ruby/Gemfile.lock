@@ -24,7 +24,7 @@ GEM
     logger (1.6.1)
     net-http (0.4.1)
       uri
-    net-http-persistent (4.0.2)
+    net-http-persistent (4.0.4)
       connection_pool (~> 2.2)
     power_assert (2.0.3)
     rake (13.2.1)
