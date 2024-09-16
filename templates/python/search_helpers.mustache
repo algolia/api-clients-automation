@@ -22,7 +22,7 @@
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
@@ -49,7 +49,7 @@
             aggregator=_aggregator,
             validate=lambda _resp: _resp.status == "published",
             timeout=lambda: timeout(self._retry_count),
-            error_validate=lambda x: self._retry_count >= max_retries,
+            error_validate=lambda _: self._retry_count >= max_retries,
             error_message=lambda: f"The maximum number of retries exceeded. (${self._retry_count}/${max_retries})",
         )
 
