@@ -14,16 +14,18 @@ final class UserHighlightResult {
   });
 
   /// One of types:
-  /// - [Map<String, HighlightResultOption>]
   /// - [List<HighlightResultOption>]
+  /// - [List<Map<String, HighlightResult>>]
+  /// - [List<List<HighlightResult>>]
   /// - [HighlightResultOption]
   /// - [Map<String, HighlightResult>]
   @JsonKey(name: r'userID')
   final dynamic userID;
 
   /// One of types:
-  /// - [Map<String, HighlightResultOption>]
   /// - [List<HighlightResultOption>]
+  /// - [List<Map<String, HighlightResult>>]
+  /// - [List<List<HighlightResult>>]
   /// - [HighlightResultOption]
   /// - [Map<String, HighlightResult>]
   @JsonKey(name: r'clusterName')

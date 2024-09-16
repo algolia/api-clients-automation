@@ -18,18 +18,13 @@ import java.util.logging.Logger;
 @JsonDeserialize(using = HighlightResult.Deserializer.class)
 public interface HighlightResult {
   // HighlightResult as Map<String, HighlightResult> wrapper.
-  static HighlightResult ofMapOfStringHighlightResult(Map<String, HighlightResult> value) {
+  static HighlightResult of(Map<String, HighlightResult> value) {
     return new MapOfStringHighlightResultWrapper(value);
   }
 
-  // HighlightResult as Map<String, HighlightResultOption> wrapper.
-  static HighlightResult ofMapOfStringHighlightResultOption(Map<String, HighlightResultOption> value) {
-    return new MapOfStringHighlightResultOptionWrapper(value);
-  }
-
-  // HighlightResult as List<HighlightResultOption> wrapper.
-  static HighlightResult of(List<HighlightResultOption> value) {
-    return new ListOfHighlightResultOptionWrapper(value);
+  // HighlightResult as List<HighlightResult> wrapper.
+  static HighlightResult of(List<HighlightResult> value) {
+    return new ListOfHighlightResultWrapper(value);
   }
 
   // HighlightResult as Map<String, HighlightResult> wrapper.
@@ -55,48 +50,24 @@ public interface HighlightResult {
     }
   }
 
-  // HighlightResult as Map<String, HighlightResultOption> wrapper.
-  @JsonSerialize(using = MapOfStringHighlightResultOptionWrapper.Serializer.class)
-  class MapOfStringHighlightResultOptionWrapper implements HighlightResult {
+  // HighlightResult as List<HighlightResult> wrapper.
+  @JsonSerialize(using = ListOfHighlightResultWrapper.Serializer.class)
+  class ListOfHighlightResultWrapper implements HighlightResult {
 
-    private final Map<String, HighlightResultOption> value;
+    private final List<HighlightResult> value;
 
-    MapOfStringHighlightResultOptionWrapper(Map<String, HighlightResultOption> value) {
+    ListOfHighlightResultWrapper(List<HighlightResult> value) {
       this.value = value;
     }
 
-    public Map<String, HighlightResultOption> getValue() {
+    public List<HighlightResult> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<MapOfStringHighlightResultOptionWrapper> {
+    static class Serializer extends JsonSerializer<ListOfHighlightResultWrapper> {
 
       @Override
-      public void serialize(MapOfStringHighlightResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider)
-        throws IOException {
-        gen.writeObject(value.getValue());
-      }
-    }
-  }
-
-  // HighlightResult as List<HighlightResultOption> wrapper.
-  @JsonSerialize(using = ListOfHighlightResultOptionWrapper.Serializer.class)
-  class ListOfHighlightResultOptionWrapper implements HighlightResult {
-
-    private final List<HighlightResultOption> value;
-
-    ListOfHighlightResultOptionWrapper(List<HighlightResultOption> value) {
-      this.value = value;
-    }
-
-    public List<HighlightResultOption> getValue() {
-      return value;
-    }
-
-    static class Serializer extends JsonSerializer<ListOfHighlightResultOptionWrapper> {
-
-      @Override
-      public void serialize(ListOfHighlightResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfHighlightResultWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -130,30 +101,14 @@ public interface HighlightResult {
           );
         }
       }
-      // deserialize Map<String, HighlightResultOption>
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Map<String, HighlightResultOption> value = parser.readValueAs(new TypeReference<Map<String, HighlightResultOption>>() {});
-          return new HighlightResult.MapOfStringHighlightResultOptionWrapper(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf Map<String, HighlightResultOption> (error: " +
-            e.getMessage() +
-            ") (type: Map<String, HighlightResultOption>)"
-          );
-        }
-      }
-      // deserialize List<HighlightResultOption>
+      // deserialize List<HighlightResult>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<HighlightResultOption> value = parser.readValueAs(new TypeReference<List<HighlightResultOption>>() {});
-          return new HighlightResult.ListOfHighlightResultOptionWrapper(value);
+          List<HighlightResult> value = parser.readValueAs(new TypeReference<List<HighlightResult>>() {});
+          return new HighlightResult.ListOfHighlightResultWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<HighlightResultOption> (error: " + e.getMessage() + ") (type: List<HighlightResultOption>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<HighlightResult> (error: " + e.getMessage() + ") (type: List<HighlightResult>)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

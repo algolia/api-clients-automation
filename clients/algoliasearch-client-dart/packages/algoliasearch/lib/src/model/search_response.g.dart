@@ -67,11 +67,11 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
           queryID: $checkedConvert('queryID', (v) => v as String?),
           automaticInsights:
               $checkedConvert('_automaticInsights', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => (v as num).toInt()),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num?)?.toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
           hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           hits: $checkedConvert(
               'hits',
               (v) => (v as List<dynamic>)
@@ -123,10 +123,10 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
   writeNotNull('_automaticInsights', instance.automaticInsights);
-  val['page'] = instance.page;
-  val['nbHits'] = instance.nbHits;
-  val['nbPages'] = instance.nbPages;
-  val['hitsPerPage'] = instance.hitsPerPage;
+  writeNotNull('page', instance.page);
+  writeNotNull('nbHits', instance.nbHits);
+  writeNotNull('nbPages', instance.nbPages);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
   val['hits'] = instance.hits.map((e) => e.toJson()).toList();
   val['query'] = instance.query;
   val['params'] = instance.params;
