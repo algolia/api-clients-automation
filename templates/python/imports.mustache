@@ -3,6 +3,9 @@ from __future__ import annotations
 import base64
 import hashlib
 import hmac
+import json
+import pprint
+import re
 from sys import version_info
 from warnings import warn
 from random import randint
@@ -17,11 +20,13 @@ from json import (
 from pydantic import (
   BaseModel,
   ConfigDict,
+  Discriminator,
   Field,
   StrictBool,
   StrictFloat,
   StrictInt,
   StrictStr,
+  Tag,
   ValidationError,
   field_validator,
   model_serializer,
@@ -33,16 +38,18 @@ from typing import (
   Dict,
   Iterator,
   List,
-  Literal,
   Optional,
+  Set,
   Tuple,
   Union,
 )
 
+from typing_extensions import Annotated
+
 if version_info >= (3, 11):
-  from typing import Self, Annotated
+  from typing import Literal, Self
 else:
-  from typing_extensions import Self, Annotated
+  from typing_extensions import Literal, Self
 
 from algoliasearch.http.helpers import create_iterable, create_iterable_sync, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer

@@ -1,8 +1,6 @@
 class {{classname}}({{vendorExtensions.x-py-enum-type}}, Enum):
-{{> model_description}}
-
     """
-    allowed enum values
+    {{{description}}}{{^description}}{{{classname}}}{{/description}}
     """
 {{#allowableValues}}
     {{#enumVars}}
@@ -12,14 +10,5 @@ class {{classname}}({{vendorExtensions.x-py-enum-type}}, Enum):
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of {{classname}} from a JSON string"""
-        return cls(loads(json_str))
-
-    {{#defaultValue}}
-
-    #
-    @classmethod
-    def _missing_value_(cls, value):
-        if value is no_arg:
-            return cls.{{{.}}}
-    {{/defaultValue}}
+        return cls(json.loads(json_str))
 {{/allowableValues}}

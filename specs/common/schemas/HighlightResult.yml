@@ -47,12 +47,13 @@ highlightResultOptionArray:
   items:
     $ref: '#/highlightResultOption'
 
+# TODO: create a rule that sorts oneOf per number of discriminator in case they share the same primitive type
 highlightResult:
   oneOf:
-    - $ref: '#/highlightResultMap'
     - $ref: '#/highlightResultOption'
     - $ref: '#/highlightResultOptionMap'
     - $ref: '#/highlightResultOptionArray'
+    - $ref: '#/highlightResultMap'
 
 highlightResultMap:
   type: object

@@ -146,6 +146,25 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   }
 
   @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    GenericPropagator.propagateGenericsToModels(models, true);
+    OneOf.addOneOfMetadata(models);
+    jsonParent(models);
+    return models;
+  }
+
+  private static void jsonParent(Map<String, ModelsMap> models) {
+    for (ModelsMap modelContainer : models.values()) {
+      CodegenModel model = modelContainer.getModels().get(0).getModel();
+      if (model.parent != null && model.parent.startsWith("AbstractMap")) {
+        model.vendorExtensions.put("x-map-parent", true);
+      }
+    }
+  }
+
+  @Override
   public ModelsMap postProcessModels(ModelsMap objs) {
     // this is to prevent F811 from flake8 because we have some recusrive models
     String modelName = objs.getModels().get(0).getModel().getClassname();

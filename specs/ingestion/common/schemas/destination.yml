@@ -10,7 +10,7 @@ Destination:
     name:
       $ref: './common.yml#/name'
     input:
-      $ref: '#/DestinationInput'
+      $ref: '#/DestinationIndexName'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -36,7 +36,7 @@ DestinationCreate:
     name:
       $ref: './common.yml#/name'
     input:
-      $ref: '#/DestinationInput'
+      $ref: '#/DestinationIndexName'
     authenticationID:
       $ref: './common.yml#/authenticationID'
     transformationIDs:
@@ -72,7 +72,7 @@ DestinationUpdate:
     name:
       $ref: './common.yml#/name'
     input:
-      $ref: '#/DestinationInput'
+      $ref: '#/DestinationIndexName'
     authenticationID:
       $ref: './common.yml#/authenticationID'
     transformationIDs:
@@ -151,7 +151,3 @@ AttributesToExclude:
       Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
   items:
     type: string
-
-DestinationInput:
-  oneOf:
-    - $ref: '#/DestinationIndexName'

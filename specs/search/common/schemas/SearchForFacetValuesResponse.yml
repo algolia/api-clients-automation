@@ -6,6 +6,7 @@ searchForFacetValuesResponse:
     - exhaustiveFacetsCount
   x-discriminator-fields:
     - facetHits
+    - exhaustiveFacetsCount
   properties:
     facetHits:
       type: array
