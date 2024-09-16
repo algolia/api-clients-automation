@@ -1,7 +1,6 @@
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
-    """
-    {{#description}}{{{description}}}{{/description}}{{^description}}{{{classname}}}{{/description}}
-    """
+{{>model_description}}
+
 {{#vars}}
     {{name}}: {{{vendorExtensions.x-py-typing}}}
 {{/vars}}
@@ -62,6 +61,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{/vars}}
 
     model_config = ConfigDict(
+        use_enum_values=True,
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
@@ -69,7 +69,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.model_dump(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True, exclude_unset=True, exclude_defaults=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
@@ -81,7 +81,96 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        return self.model_dump(by_alias=True)
+        """Return the dictionary representation of the model using alias.
+
+        This is the same as `self.mode_dump` from Pydantic, except that we only add to the output dict for nullable fields that were set at model initialization. Other fields with value `None` are ignored
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude_unset=True,
+            exclude_defaults=True,
+            exclude_none=True,
+            exclude={
+                {{#vendorExtensions.x-py-readonly}}
+                "{{{.}}}",
+                {{/vendorExtensions.x-py-readonly}}
+                {{#isAdditionalPropertiesTrue}}
+                "additional_properties",
+                {{/isAdditionalPropertiesTrue}}
+            },
+        )
+        {{#allVars}}
+        {{#isContainer}}
+        {{#isArray}}
+        {{#items.isArray}}
+        {{^items.items.isPrimitiveType}}
+        _items = []
+        if self.{{{name}}}:
+            for _item in self.{{{name}}}:
+                if _item:
+                    _items.append(
+                         [_inner_item.to_dict() for _inner_item in _item if _inner_item is not None]
+                    )
+            _dict['{{{baseName}}}'] = _items
+        {{/items.items.isPrimitiveType}}
+        {{/items.isArray}}
+        {{^items.isArray}}
+        {{^items.isPrimitiveType}}
+        {{^items.isEnumOrRef}}
+        _items = []
+        if self.{{{name}}}:
+            for _item in self.{{{name}}}:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['{{{baseName}}}'] = _items
+        {{/items.isEnumOrRef}}
+        {{/items.isPrimitiveType}}
+        {{/items.isArray}}
+        {{/isArray}}
+        {{#isMap}}
+        {{#items.isArray}}
+        {{^items.items.isPrimitiveType}}
+        _field_dict_of_array = {}
+        if self.{{{name}}}:
+            for _key in self.{{{name}}}:
+                if self.{{{name}}}[_key] is not None:
+                    _field_dict_of_array[_key] = [
+                        _item.to_dict() for _item in self.{{{name}}}[_key]
+                    ]
+            _dict['{{{baseName}}}'] = _field_dict_of_array
+        {{/items.items.isPrimitiveType}}
+        {{/items.isArray}}
+        {{^items.isArray}}
+        {{^items.isPrimitiveType}}
+        {{^items.isEnumOrRef}}
+        _field_dict = {}
+        if self.{{{name}}}:
+            for _key in self.{{{name}}}:
+                if self.{{{name}}}[_key]:
+                    _field_dict[_key] = self.{{{name}}}[_key].to_dict()
+            _dict['{{{baseName}}}'] = _field_dict
+        {{/items.isEnumOrRef}}
+        {{/items.isPrimitiveType}}
+        {{/items.isArray}}
+        {{/isMap}}
+        {{/isContainer}}
+        {{^isContainer}}
+        {{^isPrimitiveType}}
+        {{^isEnumOrRef}}
+        if self.{{{name}}}:
+            _dict['{{{baseName}}}'] = self.{{{name}}}.to_dict()
+        {{/isEnumOrRef}}
+        {{/isPrimitiveType}}
+        {{/isContainer}}
+        {{/allVars}}
+        {{#isAdditionalPropertiesTrue}}
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
+        {{/isAdditionalPropertiesTrue}}
+        return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:

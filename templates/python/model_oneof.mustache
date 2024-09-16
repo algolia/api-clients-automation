@@ -1,7 +1,5 @@
 class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}):
-    """
-    {{{description}}}{{^description}}{{{classname}}}{{/description}}
-    """
+{{>model_description}}
 
     @staticmethod
     def model_discriminator(v: Any) -> Optional[str]:
@@ -23,6 +21,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     ]] = None
 
     model_config = ConfigDict(
+        use_enum_values=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -76,7 +75,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         raise ValueError("No match found when deserializing the JSON string into {{{classname}}} with oneOf schemas: {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}. Details: " + ", ".join(error_messages))
 
     def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
+        """Returns the JSON representation of the one_of value"""
         if self.value is None:
             return "null"
         if hasattr(self.value, "to_json") and callable(self.value.to_json):
@@ -85,7 +84,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             return json.dumps(self.value)
 
     def to_dict(self) -> Optional[Union[Dict[str, Any], {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]]:
-        """Returns the dict representation of the actual instance"""
+        """Returns the dict representation of the one_of value"""
         if self.value is None:
             return None
         if hasattr(self.value, "to_dict") and callable(self.value.to_dict):
@@ -94,5 +93,5 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             return self.value
 
     def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.model_dump())
+        """Returns the string representation of the one_of value"""
+        return pprint.pformat(self.model_dump(by_alias=True, exclude_unset=True, exclude_defaults=True))
