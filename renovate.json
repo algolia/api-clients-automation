@@ -45,6 +45,12 @@
         "github.com/algolia/algoliasearch-client-go/v4"
       ],
       "allowedVersions": "4.0.0"
+    },
+    {
+      "matchDatasources": [
+        "dart-version"
+      ],
+      "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
     }
   ],
   "regexManagers": [
