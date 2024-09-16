@@ -142,7 +142,7 @@ name = "algoliasearch"
 version = "4.4.1"
 description = "A fully-featured and blazing-fast Python API client to interact with Algolia."
 optional = false
-python-versions = "^3.8.1"
+python-versions = ">= 3.8.1"
 files = []
 develop = true
 
