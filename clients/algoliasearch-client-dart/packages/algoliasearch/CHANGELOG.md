@@ -1,3 +1,8 @@
+## [1.24.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.0...1.24.1)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+- [08d8ee6de](https://github.com/algolia/api-clients-automation/commit/08d8ee6de) chore(deps): dependencies 2024-09-16 [skip-bc] ([#3704](https://github.com/algolia/api-clients-automation/pull/3704)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.24.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.23.4...1.24.0)
 
 - [2c65a8d11](https://github.com/algolia/api-clients-automation/commit/2c65a8d11) feat(clients): helper to switch API key in use ([#3616](https://github.com/algolia/api-clients-automation/pull/3616)) by [@Fluf22](https://github.com/Fluf22/)
