@@ -1,8 +1,5 @@
 import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 import { ApiError } from '@algolia/client-common';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey =
