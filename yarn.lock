@@ -3353,13 +3353,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:4.3.19":
-  version: 4.3.19
-  resolution: "@types/chai@npm:4.3.19"
-  checksum: 10/5ca7a48ec1c792e536bc228911f442c31eb8a24f1c3531f8a5e1e949590a6a045be17a2ec5a3d83f63dae8d59dd93dc5f6ca7355b9c1a9f003c553a733b2e591
-  languageName: node
-  linkType: hard
-
 "@types/connect@npm:*":
   version: 3.4.38
   resolution: "@types/connect@npm:3.4.38"
@@ -7798,7 +7791,6 @@ __metadata:
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    dotenv: "npm:16.4.5"
     typescript: "npm:5.6.2"
   languageName: unknown
   linkType: soft
@@ -10460,7 +10452,6 @@ __metadata:
     "@actions/exec": "npm:1.1.1"
     "@actions/io": "npm:1.1.3"
     "@octokit/rest": "npm:21.0.2"
-    "@types/chai": "npm:4.3.19"
     "@types/express": "npm:4.17.21"
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
