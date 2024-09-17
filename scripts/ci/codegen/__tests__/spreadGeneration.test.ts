@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { cleanUpCommitMessage } from '../spreadGeneration.js';
-import text from '../text.js';
+import { cleanUpCommitMessage } from '../spreadGeneration.ts';
+import text from '../text.ts';
 
 describe('spread generation', () => {
   describe('cleanUpCommitMessage', () => {

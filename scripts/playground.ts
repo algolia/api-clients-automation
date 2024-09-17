@@ -1,5 +1,5 @@
-import type { AllLanguage } from './cli/utils.js';
-import { createClientName, run, runComposerInstall } from './common.js';
+import type { AllLanguage } from './cli/utils.ts';
+import { createClientName, run, runComposerInstall } from './common.ts';
 
 export async function playground({ language, client }: { language: AllLanguage; client: string }): Promise<void> {
   switch (language) {

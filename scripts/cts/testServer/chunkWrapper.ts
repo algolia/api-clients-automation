@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import type { Express } from 'express';
 import express from 'express';
 
-import { setupServer } from './index.js';
+import { setupServer } from './index.ts';
 
 const chunkWrapperState: Record<string, any> = {};
 

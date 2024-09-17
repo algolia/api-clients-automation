@@ -1,6 +1,6 @@
-import config from '../config/clients.config.json' assert { type: 'json' };
+import config from '../config/clients.config.json' with { type: 'json' };
 
-import type { CodeSamples } from './specs/types.js';
+import type { CodeSamples } from './specs/types.ts';
 
 /**
  * Config.

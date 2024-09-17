@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { generateLanguageVersionsHistory } from '../versionsHistory.js';
+import { generateLanguageVersionsHistory } from '../versionsHistory.ts';
 
 describe('no new releases', () => {
   it('parses version of the same minor', () => {

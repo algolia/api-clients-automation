@@ -8,8 +8,8 @@ import generationCommitText, {
   commitStartPrepareRelease,
   commitStartRelease,
   isGeneratedCommit,
-} from '../ci/codegen/text.js';
-import { getNbGitDiff } from '../ci/utils.js';
+} from '../ci/codegen/text.ts';
+import { getNbGitDiff } from '../ci/utils.ts';
 import {
   CI,
   configureGitHubAuthor,
@@ -24,15 +24,15 @@ import {
   run,
   setVerbose,
   TODAY,
-} from '../common.js';
-import { getPackageVersionDefault } from '../config.js';
-import type { Language } from '../types.js';
+} from '../common.ts';
+import { getPackageVersionDefault } from '../config.ts';
+import type { Language } from '../types.ts';
 
-import { getFileChanges, getLastReleasedTag, stripCommitMessage } from './common.js';
-import TEXT from './text.js';
-import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.js';
-import { updateAPIVersions } from './updateAPIVersions.js';
-import { generateVersionsHistory } from './versionsHistory.js';
+import { getFileChanges, getLastReleasedTag, stripCommitMessage } from './common.ts';
+import TEXT from './text.ts';
+import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.ts';
+import { updateAPIVersions } from './updateAPIVersions.ts';
+import { generateVersionsHistory } from './versionsHistory.ts';
 
 dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 

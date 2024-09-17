@@ -3,7 +3,7 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type { Express, Request, Response } from 'express';
 
-import { setupServer } from './index.js';
+import { setupServer } from './index.ts';
 
 // Checks that the client sends a different API key after the first request.
 function addRoutes(app: Express): void {

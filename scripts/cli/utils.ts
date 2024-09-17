@@ -1,5 +1,5 @@
-import { CLIENTS, GENERATORS, LANGUAGES } from '../common.js';
-import type { Generator, Language } from '../types.js';
+import { CLIENTS, GENERATORS, LANGUAGES } from '../common.ts';
+import type { Generator, Language } from '../types.ts';
 
 export const ALL = 'all';
 export const PROMPT_LANGUAGES = [ALL, ...LANGUAGES];
