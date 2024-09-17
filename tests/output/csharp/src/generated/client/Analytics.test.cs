@@ -142,8 +142,8 @@ public class AnalyticsClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new AnalyticsClient(_config);
 

@@ -81,8 +81,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -110,8 +110,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -140,9 +140,9 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
+        },
       },
-      Compression = CompressionType.Gzip
+      Compression = CompressionType.Gzip,
     };
     var client = new SearchClient(_config);
 
@@ -222,8 +222,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -310,8 +310,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -337,8 +337,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -364,8 +364,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -470,8 +470,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -481,7 +481,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         },
         true
       );
@@ -509,8 +509,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -520,7 +520,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
         },
         false
       );
@@ -548,8 +548,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -567,7 +567,7 @@ public class SearchClientTests
           new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
           new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
           new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
-          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
         },
         3
       );
@@ -595,8 +595,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -606,7 +606,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         }
       );
 
@@ -633,8 +633,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -645,7 +645,7 @@ public class SearchClientTests
         new List<Object>
         {
           new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
         }
       );
     });
@@ -670,8 +670,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -713,8 +713,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -747,8 +747,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -763,7 +763,7 @@ public class SearchClientTests
           {
             Enum.Parse<Acl>("Search"),
             Enum.Parse<Acl>("AddObject"),
-            Enum.Parse<Acl>("DeleteObject")
+            Enum.Parse<Acl>("DeleteObject"),
           },
           Indexes = new List<string> { "Movies", "Books" },
           Referers = new List<string> { "*google.com", "*algolia.com" },
@@ -796,8 +796,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -826,8 +826,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -857,8 +857,8 @@ public class SearchClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 

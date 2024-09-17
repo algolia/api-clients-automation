@@ -578,7 +578,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
             }
-          )
+          ),
         },
       }
     );
@@ -624,7 +624,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -656,7 +656,7 @@ public class RecommendClientRequestTests
               FacetName = "facet",
               FacetValue = "value",
             }
-          )
+          ),
         },
       }
     );
@@ -703,7 +703,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -743,7 +743,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
             }
-          )
+          ),
         },
       }
     );
@@ -813,7 +813,7 @@ public class RecommendClientRequestTests
                 ),
               },
             }
-          )
+          ),
         },
       }
     );
@@ -844,7 +844,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<FbtModel>("BoughtTogether"),
               Threshold = 42.7,
             }
-          )
+          ),
         },
       }
     );

@@ -135,7 +135,7 @@ public class SnippetInsightsClient
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               Positions = new List<int> { 7, 6 },
             }
-          )
+          ),
         },
       }
     );

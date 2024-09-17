@@ -116,8 +116,8 @@ public class IngestionClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new IngestionClient(_config);
 

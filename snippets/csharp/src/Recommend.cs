@@ -164,7 +164,7 @@ public class SnippetRecommendClient
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
             }
-          )
+          ),
         },
       }
     );

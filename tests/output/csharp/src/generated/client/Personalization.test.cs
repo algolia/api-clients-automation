@@ -142,8 +142,8 @@ public class PersonalizationClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new PersonalizationClient(_config);
 

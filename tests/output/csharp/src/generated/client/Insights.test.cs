@@ -97,7 +97,7 @@ public class InsightsClientTests
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               Positions = new List<int> { 7, 6 },
             }
-          )
+          ),
         },
       }
     );
@@ -148,8 +148,8 @@ public class InsightsClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new InsightsClient(_config);
 

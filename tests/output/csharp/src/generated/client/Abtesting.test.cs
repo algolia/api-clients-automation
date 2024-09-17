@@ -127,8 +127,8 @@ public class AbtestingClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new AbtestingClient(_config);
 

@@ -7,7 +7,7 @@
       "default": "var response = await client.CreateAuthenticationAsync(\n  new AuthenticationCreate\n  {\n    Type = Enum.Parse<AuthenticationType>(\"Oauth\"),\n    Name = \"authName\",\n    Input = new AuthInput(\n      new AuthOAuth\n      {\n        Url = \"http://test.oauth\",\n        ClientId = \"myID\",\n        ClientSecret = \"mySecret\",\n      }\n    ),\n  }\n);"
     },
     "createDestination": {
-      "default": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\", }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
+      "default": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\" }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
     },
     "createSource": {
       "default": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
@@ -16,7 +16,7 @@
       "default": "var response = await client.CreateTaskAsync(\n  new TaskCreate\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
     },
     "createTaskV1": {
-      "default": "var response = await client.CreateTaskV1Async(\n  new TaskCreateV1\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\"), }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
+      "default": "var response = await client.CreateTaskV1Async(\n  new TaskCreateV1\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\") }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
     },
     "createTransformation": {
       "default": "var response = await client.CreateTransformationAsync(\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
@@ -118,7 +118,7 @@
       "default": "var response = await client.ListTransformationsAsync();"
     },
     "pushTask": {
-      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        }\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        }\n      }\n    },\n  }\n);"
+      "default": "var response = await client.PushTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        },\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        },\n      },\n    },\n  }\n);"
     },
     "runSource": {
       "default": "var response = await client.RunSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload\n  {\n    IndexToInclude = new List<string> { \"products_us\", \"products eu\" },\n    EntityIDs = new List<string> { \"1234\", \"5678\" },\n    EntityType = Enum.Parse<EntityType>(\"Product\"),\n  }\n);"
@@ -130,22 +130,22 @@
       "default": "var response = await client.RunTaskV1Async(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "searchAuthentications": {
-      "default": "var response = await client.SearchAuthenticationsAsync(\n  new AuthenticationSearch\n  {\n    AuthenticationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchAuthenticationsAsync(\n  new AuthenticationSearch\n  {\n    AuthenticationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchDestinations": {
-      "default": "var response = await client.SearchDestinationsAsync(\n  new DestinationSearch\n  {\n    DestinationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchDestinationsAsync(\n  new DestinationSearch\n  {\n    DestinationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchSources": {
-      "default": "var response = await client.SearchSourcesAsync(\n  new SourceSearch\n  {\n    SourceIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchSourcesAsync(\n  new SourceSearch\n  {\n    SourceIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    },\n  }\n);"
     },
     "searchTasks": {
-      "default": "var response = await client.SearchTasksAsync(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTasksAsync(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "searchTasksV1": {
-      "default": "var response = await client.SearchTasksV1Async(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTasksV1Async(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "searchTransformations": {
-      "default": "var response = await client.SearchTransformationsAsync(\n  new TransformationSearch\n  {\n    TransformationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+      "default": "var response = await client.SearchTransformationsAsync(\n  new TransformationSearch\n  {\n    TransformationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    },\n  }\n);"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -160,19 +160,19 @@
       "default": "var response = await client.TryTransformationBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry\n  {\n    Code = \"foo\",\n    SampleRecord = new Dictionary<string, string> { { \"bar\", \"baz\" } },\n  }\n);"
     },
     "updateAuthentication": {
-      "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\" }\n);"
     },
     "updateDestination": {
-      "default": "var response = await client.UpdateDestinationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateDestinationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate { Name = \"newName\" }\n);"
     },
     "updateSource": {
-      "default": "var response = await client.UpdateSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.UpdateSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\" }\n);"
     },
     "updateTask": {
-      "default": "var response = await client.UpdateTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate { Enabled = false, Cron = \"* * * * *\", }\n);"
+      "default": "var response = await client.UpdateTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate { Enabled = false, Cron = \"* * * * *\" }\n);"
     },
     "updateTaskV1": {
-      "default": "var response = await client.UpdateTaskV1Async(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdateV1 { Enabled = false, }\n);"
+      "default": "var response = await client.UpdateTaskV1Async(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdateV1 { Enabled = false }\n);"
     },
     "updateTransformation": {
       "default": "var response = await client.UpdateTransformationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
@@ -181,7 +181,7 @@
       "default": "var response = await client.ValidateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
     },
     "validateSourceBeforeUpdate": {
-      "default": "var response = await client.ValidateSourceBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+      "default": "var response = await client.ValidateSourceBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\" }\n);"
     },
     "init": {
       "default": "var client = new IngestionClient("

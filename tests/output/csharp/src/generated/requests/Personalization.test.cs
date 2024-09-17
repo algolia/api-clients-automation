@@ -563,11 +563,11 @@ public class PersonalizationClientRequestTests
             Score = 42,
             EventName = "Algolia",
             EventType = Enum.Parse<EventType>("Click"),
-          }
+          },
         },
         FacetScoring = new List<FacetScoring>
         {
-          new FacetScoring { Score = 42, FacetName = "Event", }
+          new FacetScoring { Score = 42, FacetName = "Event" },
         },
         PersonalizationImpact = 42,
       }

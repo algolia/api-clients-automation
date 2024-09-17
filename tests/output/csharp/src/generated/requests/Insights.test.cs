@@ -549,7 +549,7 @@ public class InsightsClientRequestTests
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               Positions = new List<int> { 7, 6 },
             }
-          )
+          ),
         },
       }
     );
@@ -580,7 +580,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1726272000000L,
+              Timestamp = 1726531200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -593,10 +593,10 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1726272000000L,
+              Timestamp = 1726531200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
-          )
+          ),
         },
       }
     );
@@ -605,7 +605,7 @@ public class InsightsClientRequestTests
     Assert.Equal("/1/events", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726272000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726272000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726531200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1726531200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -631,7 +631,7 @@ public class InsightsClientRequestTests
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
-          )
+          ),
         },
       }
     );
@@ -665,7 +665,7 @@ public class InsightsClientRequestTests
               Timestamp = 1641290601962L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
-          )
+          ),
         },
       }
     );
@@ -713,11 +713,11 @@ public class InsightsClientRequestTests
                   Price = new Price("8$"),
                   Quantity = 7,
                   Discount = new Discount("30%"),
-                }
+                },
               },
               Currency = "USD",
             }
-          )
+          ),
         },
       }
     );

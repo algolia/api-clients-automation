@@ -111,8 +111,8 @@ public class RecommendClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new RecommendClient(_config);
 

@@ -100,8 +100,8 @@ public class MonitoringClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new MonitoringClient(_config);
 
