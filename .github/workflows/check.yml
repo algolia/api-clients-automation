@@ -204,7 +204,7 @@ jobs:
           cd clients/algoliasearch-client-javascript/packages
           ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
           cd algoliasearch
-          ls | grep -v -E "(__tests__|jest.config.ts)" | xargs rm -rf
+          ls | grep -v -E "__tests__" | xargs rm -rf
 
       - name: Setup
         uses: ./.github/actions/setup
