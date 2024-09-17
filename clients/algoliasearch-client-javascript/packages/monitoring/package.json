@@ -54,10 +54,10 @@
     "@algolia/requester-node-http": "5.4.2"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.15.4",
+    "@arethetypeswrong/cli": "0.16.2",
     "@types/node": "22.5.1",
     "publint": "0.2.10",
-    "rollup": "4.21.2",
+    "rollup": "4.21.3",
     "tsup": "8.2.4",
     "typescript": "5.5.4"
   },

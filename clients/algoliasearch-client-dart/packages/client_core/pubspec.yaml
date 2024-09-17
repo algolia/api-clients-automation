@@ -13,4 +13,4 @@ dependencies:
   dio: ^5.2.1
 dev_dependencies:
   lints: ^4.0.0
-  test: ^1.24.3
+  test: ^1.25.8
