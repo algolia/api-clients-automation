@@ -1,21 +1,21 @@
-import { RuleTester } from 'eslint';
+import { runClassic } from 'eslint-vitest-rule-tester';
+import yamlParser from 'yaml-eslint-parser';
 
-import { validInlineTitle } from '../src/rules/validInlineTitle';
+import { validInlineTitle } from '../src/rules/validInlineTitle.js';
 
-const ruleTester = new RuleTester({
-  parser: require.resolve('yaml-eslint-parser'),
-});
-
-ruleTester.run('valid-inline-title', validInlineTitle, {
-  valid: [
-    `
+runClassic(
+  'valid-inline-title',
+  validInlineTitle,
+  {
+    valid: [
+      `
 currencies:
   type: object
   properties:
     inner:
       type: object
   `,
-    `
+      `
 currencies:
   type: object
   properties:
@@ -27,7 +27,7 @@ currencies:
           type: string
           title: Currency
   `,
-    `
+      `
 dictionaryLanguage:
   oneOf:
     - type: object
@@ -36,10 +36,10 @@ dictionaryLanguage:
           type: integer
     - type: 'null'
     `,
-  ],
-  invalid: [
-    {
-      code: `
+    ],
+    invalid: [
+      {
+        code: `
 currencies:
   type: object
   properties:
@@ -50,10 +50,10 @@ currencies:
           type: string
           title: Currency
   `,
-      errors: [{ messageId: 'inlineTitleExists' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'inlineTitleExists' }],
+      },
+      {
+        code: `
 currencies:
   type: object
   properties:
@@ -65,10 +65,10 @@ currencies:
           type: string
           title: Currency
   `,
-      errors: [{ messageId: 'firstProperty' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'firstProperty' }],
+      },
+      {
+        code: `
 currencies:
   title: UpperCaseFine
   type: object
@@ -77,10 +77,10 @@ currencies:
       title: UpperCaseNotFine
       type: object
   `,
-      errors: [{ messageId: 'lowercaseTitle' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'lowercaseTitle' }],
+      },
+      {
+        code: `
 currencies:
   title: spaces are fine
   type: object
@@ -89,7 +89,11 @@ currencies:
       title: spaces are not fine
       type: object
   `,
-      errors: [{ messageId: 'noSpaceInTitle' }],
-    },
-  ],
-});
+        errors: [{ messageId: 'noSpaceInTitle' }],
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);
