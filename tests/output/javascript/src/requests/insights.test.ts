@@ -2,6 +2,7 @@
 import { insightsClient } from '@algolia/client-insights';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
+import { describe, test, expect } from 'vitest';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
