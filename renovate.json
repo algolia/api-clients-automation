@@ -83,10 +83,8 @@
         "package.mustache"
       ],
       "matchStrings": [
-        "\"(dev)?[dD]ependencies\":\\s*{[^}]*}",
-        "\\s\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
+        "\"(?<depName>.*?)\":\\s*\"(?<currentValue>\\d+.*?)\""
       ],
-      "matchStringsStrategy": "recursive",
       "datasourceTemplate": "npm"
     },
     {
