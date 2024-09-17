@@ -1,27 +1,27 @@
-import { RuleTester } from 'eslint';
+import { runClassic } from 'eslint-vitest-rule-tester';
+import yamlParser from 'yaml-eslint-parser';
 
-import { createOutOfLineRule } from '../src/rules/outOfLineRule';
-
-const ruleTester = new RuleTester({
-  parser: require.resolve('yaml-eslint-parser'),
-});
+import { createOutOfLineRule } from '../src/rules/outOfLineRule.js';
 
 // this test is enough for oneOf, allOf, anyOf, as they use the same rule.
-ruleTester.run('out-of-line-enum', createOutOfLineRule({ property: 'enum' }), {
-  valid: [
-    `
+runClassic(
+  'out-of-line-enum',
+  createOutOfLineRule({ property: 'enum' }),
+  {
+    valid: [
+      `
 simple:
   type: string
   enum: [bla, blabla]
 `,
-    `
+      `
 simple:
   type: string
   enum:
     - bla
     - blabla
 `,
-    `
+      `
 simple:
   type: string
   enum: [bla, blabla]
@@ -29,7 +29,7 @@ simple:
 useIt:
   $ref: '#/simple'
 `,
-    `
+      `
 servers:
   - url: http://test-server.com
     variables:
@@ -39,19 +39,19 @@ servers:
           - us
           - de
 `,
-  ],
-  invalid: [
-    {
-      code: `
+    ],
+    invalid: [
+      {
+        code: `
 root:
   inside:
     type: string
     enum: [bla, blabla]
 `,
-      errors: [{ messageId: 'enumNotOutOfLine' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'enumNotOutOfLine' }],
+      },
+      {
+        code: `
 root:
   inside:
     deeper:
@@ -61,21 +61,28 @@ root:
 useIt:
   $ref: '#/root/inside/deeper'
 `,
-      errors: [{ messageId: 'enumNotOutOfLine' }],
-    },
-  ],
-});
+        errors: [{ messageId: 'enumNotOutOfLine' }],
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);
 
 // oneOf should allow `type: 'null'`
-ruleTester.run('out-of-line-oneOf-null', createOutOfLineRule({ property: 'oneOf' }), {
-  valid: [
-    `
+runClassic(
+  'out-of-line-oneOf-null',
+  createOutOfLineRule({ property: 'oneOf' }),
+  {
+    valid: [
+      `
 simple:
   oneOf:
     - type: string
     - type: 'null'
 `,
-    `
+      `
 obj:
   type: object
   properties:
@@ -84,10 +91,10 @@ obj:
         - type: string
         - type: 'null'
 `,
-  ],
-  invalid: [
-    {
-      code: `
+    ],
+    invalid: [
+      {
+        code: `
 simple:
   type: object
   properties:
@@ -96,21 +103,32 @@ simple:
         - type: string
         - type: null
       `,
-      errors: [{ messageId: 'oneOfNotOutOfLine' }],
-    },
-  ],
-});
+        errors: [{ messageId: 'oneOfNotOutOfLine' }],
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);
 
 // allow enum to be nullable
-ruleTester.run('out-of-line-enum-null', createOutOfLineRule({ property: 'enum' }), {
-  valid: [
-    `
+runClassic(
+  'out-of-line-enum-null',
+  createOutOfLineRule({ property: 'enum' }),
+  {
+    valid: [
+      `
 simple:
   oneOf:
     - type: string
       enum: [bla, blabla]
     - type: 'null'
 `,
-  ],
-  invalid: [],
-});
+    ],
+    invalid: [],
+  },
+  {
+    parser: yamlParser,
+  },
+);

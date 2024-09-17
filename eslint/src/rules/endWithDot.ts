@@ -1,19 +1,24 @@
-import type { Rule } from 'eslint';
+import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
+import { isBlockScalar, isPairWithKey, isScalar } from '../utils.js';
 
-export const endWithDot: Rule.RuleModule = {
+export const endWithDot = createRule('endWithDot', {
   meta: {
     docs: {
       description: '`description` must end with a period',
+      categories: null,
+      extensionRule: false,
+      layout: false,
     },
     messages: {
       endWithDot: 'description does not end with a period',
     },
     fixable: 'code',
+    type: 'layout',
+    schema: [],
   },
   create(context) {
-    if (!context.sourceCode.parserServices.isYAML) {
+    if (!context.getSourceCode().parserServices?.isYAML) {
       return {};
     }
 
@@ -52,4 +57,4 @@ export const endWithDot: Rule.RuleModule = {
       },
     };
   },
-};
+});
