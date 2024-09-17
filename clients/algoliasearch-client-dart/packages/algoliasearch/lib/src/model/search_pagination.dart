@@ -9,30 +9,30 @@ part 'search_pagination.g.dart';
 final class SearchPagination {
   /// Returns a new [SearchPagination] instance.
   const SearchPagination({
-    required this.page,
-    required this.nbHits,
-    required this.nbPages,
-    required this.hitsPerPage,
+    this.page,
+    this.nbHits,
+    this.nbPages,
+    this.hitsPerPage,
   });
 
   /// Page of search results to retrieve.
   // minimum: 0
   @JsonKey(name: r'page')
-  final int page;
+  final int? page;
 
   /// Number of results (hits).
   @JsonKey(name: r'nbHits')
-  final int nbHits;
+  final int? nbHits;
 
   /// Number of pages of results.
   @JsonKey(name: r'nbPages')
-  final int nbPages;
+  final int? nbPages;
 
   /// Number of hits per page.
   // minimum: 1
   // maximum: 1000
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
   @override
   bool operator ==(Object other) =>

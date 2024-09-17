@@ -39,10 +39,10 @@ final class SearchResponse {
     this.userData,
     this.queryID,
     this.automaticInsights,
-    required this.page,
-    required this.nbHits,
-    required this.nbPages,
-    required this.hitsPerPage,
+    this.page,
+    this.nbHits,
+    this.nbPages,
+    this.hitsPerPage,
     required this.hits,
     required this.query,
     required this.params,
@@ -152,21 +152,21 @@ final class SearchResponse {
   /// Page of search results to retrieve.
   // minimum: 0
   @JsonKey(name: r'page')
-  final int page;
+  final int? page;
 
   /// Number of results (hits).
   @JsonKey(name: r'nbHits')
-  final int nbHits;
+  final int? nbHits;
 
   /// Number of pages of results.
   @JsonKey(name: r'nbPages')
-  final int nbPages;
+  final int? nbPages;
 
   /// Number of hits per page.
   // minimum: 1
   // maximum: 1000
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
   /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   @JsonKey(name: r'hits')
