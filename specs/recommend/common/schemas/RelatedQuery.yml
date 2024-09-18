@@ -12,7 +12,7 @@ relatedProducts:
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
     fallbackParameters:
-      $ref: './RecommendationsRequest.yml#/fallbackParams'
+      $ref: './QueryParameters.yml#/recommendSearchParams'
   required:
     - model
     - objectID

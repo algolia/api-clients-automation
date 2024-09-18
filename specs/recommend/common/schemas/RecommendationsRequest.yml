@@ -30,21 +30,7 @@ baseRecommendRequest:
         Depending on the available recommendations and the other request parameters,
         the actual number of recommendations may be lower than this value.
     queryParameters:
-      $ref: '#/searchParams'
+      $ref: './QueryParameters.yml#/recommendSearchParams'
   required:
     - indexName
     - threshold
-
-searchParams:
-  title: queryParameters
-  allOf:
-    - $ref: './QueryParameters.yml#/searchParamsObject'
-    - type: object
-      description: Search parameters for filtering the recommendations.
-
-fallbackParams:
-  title: fallbackParameters
-  allOf:
-    - $ref: './QueryParameters.yml#/searchParamsObject'
-    - type: object
-      description: Search parameters to use for a fallback request if there aren't enough recommendations.

@@ -12,7 +12,7 @@ trendingFacets:
     model:
       $ref: '#/trendingFacetsModel'
     fallbackParameters:
-      $ref: './RecommendationsRequest.yml#/fallbackParams'
+      $ref: './QueryParameters.yml#/recommendSearchParams'
   required:
     - facetName
     - model

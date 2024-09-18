@@ -10,7 +10,7 @@ recommendedForYou:
     model:
       $ref: '#/recommendedForYouModel'
     fallbackParameters:
-      $ref: './RecommendationsRequest.yml#/fallbackParams'
+      $ref: './QueryParameters.yml#/recommendSearchParams'
   required:
     - model
 

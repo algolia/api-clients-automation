@@ -14,7 +14,7 @@ trendingItems:
     model:
       $ref: '#/trendingItemsModel'
     fallbackParameters:
-      $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+      $ref: './QueryParameters.yml#/recommendSearchParams'
   required:
     - model
 
