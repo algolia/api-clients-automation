@@ -8,7 +8,7 @@ searchParamsObject:
   description: Each parameter value, including the `query` must not be larger than 512 bytes.
   allOf:
     - $ref: '#/baseSearchParams'
-    - $ref: '../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+    - $ref: './IndexSettings.yml#/indexSettingsAsSearchParams'
 
 baseSearchParams:
   allOf:
@@ -121,7 +121,7 @@ baseSearchParamsWithoutQuery:
     naturalLanguages:
       type: array
       items:
-        $ref: '../../../common/schemas/IndexSettings.yml#/supportedLanguage'
+        $ref: './IndexSettings.yml#/supportedLanguage'
       description: |
         ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):
 
