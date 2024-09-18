@@ -1,7 +1,7 @@
 [
   {
     "parameters": {
-      "key": "myApiKey",
+      "key": "ALGOLIA_API_KEY",
       "apiKey": {
         "acl": [
           "search",
@@ -13,7 +13,7 @@
       }
     },
     "request": {
-      "path": "/1/keys/myApiKey",
+      "path": "/1/keys/ALGOLIA_API_KEY",
       "method": "PUT",
       "body": {
         "acl": [

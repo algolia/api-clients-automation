@@ -99,7 +99,7 @@
     },
     "requestOptions": {
       "headers": {
-        "x-algolia-api-key": "myApiKey"
+        "x-algolia-api-key": "ALGOLIA_API_KEY"
       }
     },
     "request": {
@@ -112,7 +112,7 @@
         "query": "parameters"
       },
       "headers": {
-        "x-algolia-api-key": "myApiKey"
+        "x-algolia-api-key": "ALGOLIA_API_KEY"
       }
     }
   },
@@ -129,7 +129,7 @@
     },
     "requestOptions": {
       "headers": {
-        "x-algolia-api-key": "myApiKey"
+        "x-algolia-api-key": "ALGOLIA_API_KEY"
       }
     },
     "request": {
@@ -142,7 +142,7 @@
         "query": "parameters"
       },
       "headers": {
-        "x-algolia-api-key": "myApiKey"
+        "x-algolia-api-key": "ALGOLIA_API_KEY"
       }
     }
   },
