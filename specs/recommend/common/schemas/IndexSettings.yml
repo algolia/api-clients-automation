@@ -338,7 +338,36 @@ indexSettingsAsSearchParams:
         - custom
       x-categories:
         - Ranking
+    # customRanking:
+    #   type: array
+    #   items:
+    #     type: string
+    #   example:
+    #     - desc(popularity)
+    #     - asc(price)
+    #   description: |
+    #     Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+    #     Attribute names are case-sensitive.
 
+    #     The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.
+
+    #     Records with missing values for your selected custom ranking attributes are always sorted last.
+    #     Boolean attributes are sorted based on their alphabetical order.
+
+    #     **Modifiers**
+
+    #     - `asc("ATTRIBUTE")`.
+    #       Sort the index by the values of an attribute, in ascending order.
+
+    #     - `desc("ATTRIBUTE")`.
+    #       Sort the index by the values of an attribute, in descending order.
+
+    #     If you use two or more custom ranking attributes,
+    #     [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,
+    #     or the other attributes will never be applied.
+    #   default: []
+    #   x-categories:
+    #     - Ranking
     relevancyStrictness:
       type: integer
       example: 90
@@ -463,18 +492,18 @@ indexSettingsAsSearchParams:
       $ref: '#/ignorePlurals'
     removeStopWords:
       $ref: '#/removeStopWords'
-    keepDiacriticsOnCharacters:
-      type: string
-      example: øé
-      description: |
-        Characters for which diacritics should be preserved.
+    # keepDiacriticsOnCharacters:
+    #   type: string
+    #   example: øé
+    #   description: |
+    #     Characters for which diacritics should be preserved.
 
-        By default, Algolia removes diacritics from letters.
-        For example, `é` becomes `e`. If this causes issues in your search,
-        you can specify characters that should keep their diacritics.
-      default: ''
-      x-categories:
-        - Languages
+    #     By default, Algolia removes diacritics from letters.
+    #     For example, `é` becomes `e`. If this causes issues in your search,
+    #     you can specify characters that should keep their diacritics.
+    #   default: ''
+    #   x-categories:
+    #     - Languages
     queryLanguages:
       type: array
       items:
@@ -524,10 +553,10 @@ indexSettingsAsSearchParams:
       $ref: '#/queryType'
     removeWordsIfNoResults:
       $ref: '#/removeWordsIfNoResults'
-    mode:
-      $ref: '#/mode'
-    semanticSearch:
-      $ref: '#/semanticSearch'
+    # mode:
+    #   $ref: '#/mode'
+    # semanticSearch:
+    #   $ref: '#/semanticSearch'
     advancedSyntax:
       type: boolean
       description: |
@@ -783,18 +812,18 @@ queryType:
   x-categories:
     - Query strategy
 
-mode:
-  type: string
-  enum:
-    - neuralSearch
-    - keywordSearch
-  description: |
-    Search mode the index will use to query for results.
+# mode:
+#   type: string
+#   enum:
+#     - neuralSearch
+#     - keywordSearch
+#   description: |
+#     Search mode the index will use to query for results.
 
-    This setting only applies to indices, for which Algolia enabled NeuralSearch for you.
-  default: keywordSearch
-  x-categories:
-    - Query strategy
+#     This setting only applies to indices, for which Algolia enabled NeuralSearch for you.
+#   default: keywordSearch
+#   x-categories:
+#     - Query strategy
 
 removeWordsIfNoResults:
   type: string
@@ -1051,22 +1080,22 @@ sortRemainingBy:
   type: string
   enum: [count, alpha, hidden]
 
-semanticSearch:
-  type: object
-  description: |
-    Settings for the semantic search part of NeuralSearch.
-    Only used when `mode` is `neuralSearch`.
-  properties:
-    eventSources:
-      oneOf:
-        - type: array
-          description: |
-            Indices from which to collect click and conversion events.
+# semanticSearch:
+#   type: object
+#   description: |
+#     Settings for the semantic search part of NeuralSearch.
+#     Only used when `mode` is `neuralSearch`.
+#   properties:
+#     eventSources:
+#       oneOf:
+#         - type: array
+#           description: |
+#             Indices from which to collect click and conversion events.
 
-            If null, the current index and all its replicas are used.
-          items:
-            type: string
-        - type: 'null'
+#             If null, the current index and all its replicas are used.
+#           items:
+#             type: string
+#         - type: 'null'
 
 supportedLanguage:
   type: string
