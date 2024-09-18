@@ -43,31 +43,16 @@ sealed trait SnippetResult
 
 trait SnippetResultTrait extends SnippetResult
 
-trait SnippetResultEvidence
-
-object SnippetResultEvidence {
-  implicit object MapOfStringSnippetResultEvidence extends SnippetResultEvidence
-  implicit object MapOfStringSnippetResultOptionEvidence extends SnippetResultEvidence
-}
-
 object SnippetResult {
 
   case class MapOfStringSnippetResult(value: Map[String, SnippetResult]) extends SnippetResult
-  case class MapOfStringSnippetResultOption(value: Map[String, SnippetResultOption]) extends SnippetResult
-  case class SeqOfSnippetResultOption(value: Seq[SnippetResultOption]) extends SnippetResult
+  case class SeqOfSnippetResult(value: Seq[SnippetResult]) extends SnippetResult
 
-  def apply(
-      value: Map[String, SnippetResult]
-  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultEvidence.type): SnippetResult = {
+  def apply(value: Map[String, SnippetResult]): SnippetResult = {
     SnippetResult.MapOfStringSnippetResult(value)
   }
-  def apply(
-      value: Map[String, SnippetResultOption]
-  )(implicit ev: SnippetResultEvidence.MapOfStringSnippetResultOptionEvidence.type): SnippetResult = {
-    SnippetResult.MapOfStringSnippetResultOption(value)
-  }
-  def apply(value: Seq[SnippetResultOption]): SnippetResult = {
-    SnippetResult.SeqOfSnippetResultOption(value)
+  def apply(value: Seq[SnippetResult]): SnippetResult = {
+    SnippetResult.SeqOfSnippetResult(value)
   }
 
 }
@@ -79,17 +64,16 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "matchLevel") => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResult]](value))
-        case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResultOption]](value))
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          SnippetResult.SeqOfSnippetResultOption(value.map(_.extract))
+          SnippetResult.SeqOfSnippetResult(value.map(_.extract))
         case _ => throw new MappingException("Can't convert " + json + " to SnippetResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SnippetResult =>
     value match {
-      case value: SnippetResultOption                    => Extraction.decompose(value)(format - this)
-      case SnippetResult.SeqOfSnippetResultOption(value) => JArray(value.map(Extraction.decompose).toList)
+      case value: SnippetResultOption              => Extraction.decompose(value)(format - this)
+      case SnippetResult.SeqOfSnippetResult(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }
 }

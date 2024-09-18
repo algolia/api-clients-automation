@@ -456,7 +456,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getPage() {
     return page;
   }
@@ -467,7 +467,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Number of results (hits). */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbHits() {
     return nbHits;
   }
@@ -478,7 +478,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Number of pages of results. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbPages() {
     return nbPages;
   }
@@ -489,7 +489,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }

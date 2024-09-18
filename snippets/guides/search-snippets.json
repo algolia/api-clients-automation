@@ -10,27 +10,27 @@
       "default": "var response = await client.AddOrUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new Dictionary<string, string> { { \"key\", \"value\" } }\n);"
     },
     "appendSource": {
-      "default": "var response = await client.AppendSourceAsync(\n  new Source { VarSource = \"theSource\", Description = \"theDescription\", }\n);"
+      "default": "var response = await client.AppendSourceAsync(\n  new Source { VarSource = \"theSource\", Description = \"theDescription\" }\n);"
     },
     "assignUserId": {
-      "default": "var response = await client.AssignUserIdAsync(\n  \"userID\",\n  new AssignUserIdParams { Cluster = \"theCluster\", }\n);"
+      "default": "var response = await client.AssignUserIdAsync(\n  \"userID\",\n  new AssignUserIdParams { Cluster = \"theCluster\" }\n);"
     },
     "batch": {
-      "addObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"bar\" }, { \"foo\", \"1\" } },\n      },\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"baz\" }, { \"foo\", \"2\" } },\n      }\n    },\n  }\n);",
-      "clear": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"Clear\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);",
-      "delete": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"Delete\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);",
-      "deleteObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"DeleteObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);",
-      "partialUpdateObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"PartialUpdateObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);",
-      "partialUpdateObjectNoCreate": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"PartialUpdateObjectNoCreate\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);",
-      "updateObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"UpdateObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      }\n    },\n  }\n);"
+      "addObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"bar\" }, { \"foo\", \"1\" } },\n      },\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"baz\" }, { \"foo\", \"2\" } },\n      },\n    },\n  }\n);",
+      "clear": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"Clear\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);",
+      "delete": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"Delete\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);",
+      "deleteObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"DeleteObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);",
+      "partialUpdateObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"PartialUpdateObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);",
+      "partialUpdateObjectNoCreate": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"PartialUpdateObjectNoCreate\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);",
+      "updateObject": "var response = await client.BatchAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new BatchWriteParams\n  {\n    Requests = new List<BatchRequest>\n    {\n      new BatchRequest\n      {\n        Action = Enum.Parse<Action>(\"UpdateObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n      },\n    },\n  }\n);"
     },
     "batchAssignUserIds": {
       "default": "var response = await client.BatchAssignUserIdsAsync(\n  \"userID\",\n  new BatchAssignUserIdsParams\n  {\n    Cluster = \"theCluster\",\n    Users = new List<string> { \"user1\", \"user2\" },\n  }\n);"
     },
     "batchDictionaryEntries": {
-      "replace": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Plurals\"),\n  new BatchDictionaryEntriesParams\n  {\n    ClearExistingDictionaryEntries = true,\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"AddEntry\"),\n        Body = new DictionaryEntry\n        {\n          ObjectID = \"1\",\n          Language = Enum.Parse<SupportedLanguage>(\"En\"),\n          Word = \"fancy\",\n          Words = new List<string> { \"believe\", \"algolia\" },\n          Decomposition = new List<string> { \"trust\", \"algolia\" },\n          State = Enum.Parse<DictionaryEntryState>(\"Enabled\"),\n        },\n      }\n    },\n  }\n);",
-      "delete": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Plurals\"),\n  new BatchDictionaryEntriesParams\n  {\n    ClearExistingDictionaryEntries = true,\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"DeleteEntry\"),\n        Body = new DictionaryEntry { ObjectID = \"1\", },\n      }\n    },\n  }\n);",
-      "append": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new BatchDictionaryEntriesParams\n  {\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"AddEntry\"),\n        Body = new DictionaryEntry\n        {\n          ObjectID = \"1\",\n          Language = Enum.Parse<SupportedLanguage>(\"En\"),\n          AdditionalProperties = new Dictionary<string, object> { { \"additional\", \"try me\" }, }\n        },\n      }\n    },\n  }\n);"
+      "replace": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Plurals\"),\n  new BatchDictionaryEntriesParams\n  {\n    ClearExistingDictionaryEntries = true,\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"AddEntry\"),\n        Body = new DictionaryEntry\n        {\n          ObjectID = \"1\",\n          Language = Enum.Parse<SupportedLanguage>(\"En\"),\n          Word = \"fancy\",\n          Words = new List<string> { \"believe\", \"algolia\" },\n          Decomposition = new List<string> { \"trust\", \"algolia\" },\n          State = Enum.Parse<DictionaryEntryState>(\"Enabled\"),\n        },\n      },\n    },\n  }\n);",
+      "delete": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Plurals\"),\n  new BatchDictionaryEntriesParams\n  {\n    ClearExistingDictionaryEntries = true,\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"DeleteEntry\"),\n        Body = new DictionaryEntry { ObjectID = \"1\" },\n      },\n    },\n  }\n);",
+      "append": "var response = await client.BatchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new BatchDictionaryEntriesParams\n  {\n    Requests = new List<BatchDictionaryEntriesRequest>\n    {\n      new BatchDictionaryEntriesRequest\n      {\n        Action = Enum.Parse<DictionaryAction>(\"AddEntry\"),\n        Body = new DictionaryEntry\n        {\n          ObjectID = \"1\",\n          Language = Enum.Parse<SupportedLanguage>(\"En\"),\n          AdditionalProperties = new Dictionary<string, object> { { \"additional\", \"try me\" } },\n        },\n      },\n    },\n  }\n);"
     },
     "browse": {
       "default": "var response = await client.BrowseAsync<Hit>(\"<YOUR_INDEX_NAME>\");"
@@ -60,7 +60,7 @@
       "default": "var response = await client.DeleteApiKeyAsync(\"myTestApiKey\");"
     },
     "deleteBy": {
-      "default": "var response = await client.DeleteByAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new DeleteByParams { Filters = \"brand:brandName\", }\n);"
+      "default": "var response = await client.DeleteByAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new DeleteByParams { Filters = \"brand:brandName\" }\n);"
     },
     "deleteIndex": {
       "default": "var response = await client.DeleteIndexAsync(\"<YOUR_INDEX_NAME>\");"
@@ -103,7 +103,7 @@
       "default": "var response = await client.GetObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new List<string> { \"attr1\", \"attr2\" }\n);"
     },
     "getObjects": {
-      "default": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      }\n    },\n  }\n);"
+      "default": "var response = await client.GetObjectsAsync<Hit>(\n  new GetObjectsParams\n  {\n    Requests = new List<GetObjectsRequest>\n    {\n      new GetObjectsRequest\n      {\n        AttributesToRetrieve = new List<string> { \"attr1\", \"attr2\" },\n        ObjectID = \"uniqueID\",\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      },\n    },\n  }\n);"
     },
     "getRule": {
       "default": "var response = await client.GetRuleAsync(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
@@ -147,10 +147,10 @@
       "default": "var response = await client.ListUserIdsAsync();"
     },
     "multipleBatch": {
-      "default": "var response = await client.MultipleBatchAsync(\n  new BatchParams\n  {\n    Requests = new List<MultipleBatchRequest>\n    {\n      new MultipleBatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      }\n    },\n  }\n);"
+      "default": "var response = await client.MultipleBatchAsync(\n  new BatchParams\n  {\n    Requests = new List<MultipleBatchRequest>\n    {\n      new MultipleBatchRequest\n      {\n        Action = Enum.Parse<Action>(\"AddObject\"),\n        Body = new Dictionary<string, string> { { \"key\", \"value\" } },\n        IndexName = \"<YOUR_INDEX_NAME>\",\n      },\n    },\n  }\n);"
     },
     "operationIndex": {
-      "scopes": "var response = await client.OperationIndexAsync(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams\n  {\n    Operation = Enum.Parse<OperationType>(\"Move\"),\n    Destination = \"<DESTINATION_INDEX_NAME>\",\n    Scope = new List<ScopeType>\n    {\n      Enum.Parse<ScopeType>(\"Rules\"),\n      Enum.Parse<ScopeType>(\"Settings\")\n    },\n  }\n);",
+      "scopes": "var response = await client.OperationIndexAsync(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams\n  {\n    Operation = Enum.Parse<OperationType>(\"Move\"),\n    Destination = \"<DESTINATION_INDEX_NAME>\",\n    Scope = new List<ScopeType>\n    {\n      Enum.Parse<ScopeType>(\"Rules\"),\n      Enum.Parse<ScopeType>(\"Settings\"),\n    },\n  }\n);",
       "copy": "var response = await client.OperationIndexAsync(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams\n  {\n    Operation = Enum.Parse<OperationType>(\"Copy\"),\n    Destination = \"<DESTINATION_INDEX_NAME>\",\n  }\n);",
       "move": "var response = await client.OperationIndexAsync(\n  \"<SOURCE_INDEX_NAME>\",\n  new OperationIndexParams\n  {\n    Operation = Enum.Parse<OperationType>(\"Move\"),\n    Destination = \"<DESTINATION_INDEX_NAME>\",\n  }\n);"
     },
@@ -158,17 +158,17 @@
       "default": "var response = await client.PartialUpdateObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"uniqueID\",\n  new Dictionary<string, string> { { \"attributeId\", \"new value\" } }\n);"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } }\n  },\n  true\n);",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } }\n  },\n  false\n);"
+      "call partialUpdateObjects with createIfNotExists&#x3D;true": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  },\n  true\n);",
+      "call partialUpdateObjects with createIfNotExists&#x3D;false": "var response = await client.PartialUpdateObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n  },\n  false\n);"
     },
     "removeUserId": {
       "default": "var response = await client.RemoveUserIdAsync(\"uniqueID\");"
     },
     "replaceAllObjects": {
-      "default": "var response = await client.ReplaceAllObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n    new Dictionary<string, string> { { \"objectID\", \"5\" }, { \"name\", \"Eva\" } },\n    new Dictionary<string, string> { { \"objectID\", \"6\" }, { \"name\", \"Fiona\" } },\n    new Dictionary<string, string> { { \"objectID\", \"7\" }, { \"name\", \"Gael\" } },\n    new Dictionary<string, string> { { \"objectID\", \"8\" }, { \"name\", \"Hugo\" } },\n    new Dictionary<string, string> { { \"objectID\", \"9\" }, { \"name\", \"Igor\" } },\n    new Dictionary<string, string> { { \"objectID\", \"10\" }, { \"name\", \"Julia\" } }\n  },\n  3\n);"
+      "default": "var response = await client.ReplaceAllObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n    new Dictionary<string, string> { { \"objectID\", \"3\" }, { \"name\", \"Cyril\" } },\n    new Dictionary<string, string> { { \"objectID\", \"4\" }, { \"name\", \"David\" } },\n    new Dictionary<string, string> { { \"objectID\", \"5\" }, { \"name\", \"Eva\" } },\n    new Dictionary<string, string> { { \"objectID\", \"6\" }, { \"name\", \"Fiona\" } },\n    new Dictionary<string, string> { { \"objectID\", \"7\" }, { \"name\", \"Gael\" } },\n    new Dictionary<string, string> { { \"objectID\", \"8\" }, { \"name\", \"Hugo\" } },\n    new Dictionary<string, string> { { \"objectID\", \"9\" }, { \"name\", \"Igor\" } },\n    new Dictionary<string, string> { { \"objectID\", \"10\" }, { \"name\", \"Julia\" } },\n  },\n  3\n);"
     },
     "replaceSources": {
-      "default": "var response = await client.ReplaceSourcesAsync(\n  new List<Source>\n  {\n    new Source { VarSource = \"theSource\", Description = \"theDescription\", }\n  }\n);"
+      "default": "var response = await client.ReplaceSourcesAsync(\n  new List<Source>\n  {\n    new Source { VarSource = \"theSource\", Description = \"theDescription\" },\n  }\n);"
     },
     "restoreApiKey": {
       "default": "var response = await client.RestoreApiKeyAsync(\"myApiKey\");"
@@ -177,37 +177,37 @@
       "default": "var response = await client.SaveObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new Dictionary<string, string> { { \"objectID\", \"id\" }, { \"test\", \"val\" } }\n);"
     },
     "saveObjects": {
-      "call saveObjects without error": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } }\n  }\n);",
-      "saveObjects should report errors": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } }\n  }\n);"
+      "call saveObjects without error": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);",
+      "saveObjects should report errors": "var response = await client.SaveObjectsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Object>\n  {\n    new Dictionary<string, string> { { \"objectID\", \"1\" }, { \"name\", \"Adam\" } },\n    new Dictionary<string, string> { { \"objectID\", \"2\" }, { \"name\", \"Benoit\" } },\n  }\n);"
     },
     "saveRule": {
-      "default": "var response = await client.SaveRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new Rule\n  {\n    ObjectID = \"id1\",\n    Conditions = new List<Condition>\n    {\n      new Condition { Pattern = \"apple\", Anchoring = Enum.Parse<Anchoring>(\"Contains\"), }\n    },\n  }\n);"
+      "default": "var response = await client.SaveRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new Rule\n  {\n    ObjectID = \"id1\",\n    Conditions = new List<Condition>\n    {\n      new Condition { Pattern = \"apple\", Anchoring = Enum.Parse<Anchoring>(\"Contains\") },\n    },\n  }\n);"
     },
     "saveRules": {
-      "default": "var response = await client.SaveRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Rule>\n  {\n    new Rule\n    {\n      ObjectID = \"a-rule-id\",\n      Conditions = new List<Condition>\n      {\n        new Condition { Pattern = \"smartphone\", Anchoring = Enum.Parse<Anchoring>(\"Contains\"), }\n      },\n    },\n    new Rule\n    {\n      ObjectID = \"a-second-rule-id\",\n      Conditions = new List<Condition>\n      {\n        new Condition { Pattern = \"apple\", Anchoring = Enum.Parse<Anchoring>(\"Contains\"), }\n      },\n    }\n  },\n  false,\n  true\n);"
+      "default": "var response = await client.SaveRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<Rule>\n  {\n    new Rule\n    {\n      ObjectID = \"a-rule-id\",\n      Conditions = new List<Condition>\n      {\n        new Condition { Pattern = \"smartphone\", Anchoring = Enum.Parse<Anchoring>(\"Contains\") },\n      },\n    },\n    new Rule\n    {\n      ObjectID = \"a-second-rule-id\",\n      Conditions = new List<Condition>\n      {\n        new Condition { Pattern = \"apple\", Anchoring = Enum.Parse<Anchoring>(\"Contains\") },\n      },\n    },\n  },\n  false,\n  true\n);"
     },
     "saveSynonym": {
       "default": "var response = await client.SaveSynonymAsync(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new SynonymHit\n  {\n    ObjectID = \"id1\",\n    Type = Enum.Parse<SynonymType>(\"Synonym\"),\n    Synonyms = new List<string> { \"car\", \"vehicule\", \"auto\" },\n  },\n  true\n);"
     },
     "saveSynonyms": {
-      "default": "var response = await client.SaveSynonymsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<SynonymHit>\n  {\n    new SynonymHit\n    {\n      ObjectID = \"id1\",\n      Type = Enum.Parse<SynonymType>(\"Synonym\"),\n      Synonyms = new List<string> { \"car\", \"vehicule\", \"auto\" },\n    },\n    new SynonymHit\n    {\n      ObjectID = \"id2\",\n      Type = Enum.Parse<SynonymType>(\"Onewaysynonym\"),\n      Input = \"iphone\",\n      Synonyms = new List<string> { \"ephone\", \"aphone\", \"yphone\" },\n    }\n  },\n  true,\n  true\n);"
+      "default": "var response = await client.SaveSynonymsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new List<SynonymHit>\n  {\n    new SynonymHit\n    {\n      ObjectID = \"id1\",\n      Type = Enum.Parse<SynonymType>(\"Synonym\"),\n      Synonyms = new List<string> { \"car\", \"vehicule\", \"auto\" },\n    },\n    new SynonymHit\n    {\n      ObjectID = \"id2\",\n      Type = Enum.Parse<SynonymType>(\"Onewaysynonym\"),\n      Input = \"iphone\",\n      Synonyms = new List<string> { \"ephone\", \"aphone\", \"yphone\" },\n    },\n  },\n  true,\n  true\n);"
     },
     "search": {
-      "withHitsPerPage": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          HitsPerPage = 50,\n        }\n      )\n    },\n  }\n);",
-      "filterOnly": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
-      "filterOr": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n        }\n      )\n    },\n  }\n);",
-      "filterNot": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"NOT actor:Nicolas Cage\",\n        }\n      )\n    },\n  }\n);",
-      "retrieveFacets": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"author\", \"genre\" },\n        }\n      )\n    },\n  }\n);",
-      "retrieveFacetsWildcard": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"*\" },\n        }\n      )\n    },\n  }\n);"
+      "withHitsPerPage": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          HitsPerPage = 50,\n        }\n      ),\n    },\n  }\n);",
+      "filterOnly": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Scarlett Johansson\",\n        }\n      ),\n    },\n  }\n);",
+      "filterOr": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n        }\n      ),\n    },\n  }\n);",
+      "filterNot": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Filters = \"NOT actor:Nicolas Cage\",\n        }\n      ),\n    },\n  }\n);",
+      "retrieveFacets": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"author\", \"genre\" },\n        }\n      ),\n    },\n  }\n);",
+      "retrieveFacetsWildcard": "var response = await client.SearchAsync<Hit>(\n  new SearchMethodParams\n  {\n    Requests = new List<SearchQuery>\n    {\n      new SearchQuery(\n        new SearchForHits\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          Query = \"<YOUR_QUERY>\",\n          Facets = new List<string> { \"*\" },\n        }\n      ),\n    },\n  }\n);"
     },
     "searchDictionaryEntries": {
-      "default": "var response = await client.SearchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new SearchDictionaryEntriesParams { Query = \"about\", }\n);"
+      "default": "var response = await client.SearchDictionaryEntriesAsync(\n  Enum.Parse<DictionaryType>(\"Stopwords\"),\n  new SearchDictionaryEntriesParams { Query = \"about\" }\n);"
     },
     "searchForFacetValues": {
       "default": "var response = await client.SearchForFacetValuesAsync(\"<YOUR_INDEX_NAME>\", \"facetName\");"
     },
     "searchRules": {
-      "default": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\", }\n);"
+      "default": "var response = await client.SearchRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new SearchRulesParams { Query = \"zorro\" }\n);"
     },
     "searchSingleIndex": {
       "default": "var response = await client.SearchSingleIndexAsync<Hit>(\"<YOUR_INDEX_NAME>\");"
@@ -222,17 +222,17 @@
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
     "setDictionarySettings": {
-      "default": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true }\n      },\n    },\n  }\n);"
+      "default": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true },\n      },\n    },\n  }\n);"
     },
     "setSettings": {
-      "default": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    AttributesForFaceting = new List<string>\n    {\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\"\n    },\n  }\n);"
+      "default": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    AttributesForFaceting = new List<string>\n    {\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    },\n  }\n);"
     },
     "updateApiKey": {
       "default": "var response = await client.UpdateApiKeyAsync(\n  \"myApiKey\",\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-add-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Add\")\n);",
-      "wait for api key - update": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-update-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Update\"),\n  new ApiKey\n  {\n    Description = \"my updated api key\",\n    Acl = new List<Acl>\n    {\n      Enum.Parse<Acl>(\"Search\"),\n      Enum.Parse<Acl>(\"AddObject\"),\n      Enum.Parse<Acl>(\"DeleteObject\")\n    },\n    Indexes = new List<string> { \"Movies\", \"Books\" },\n    Referers = new List<string> { \"*google.com\", \"*algolia.com\" },\n    Validity = 305,\n    MaxQueriesPerIPPerHour = 95,\n    MaxHitsPerQuery = 20,\n  }\n);",
+      "wait for api key - update": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-update-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Update\"),\n  new ApiKey\n  {\n    Description = \"my updated api key\",\n    Acl = new List<Acl>\n    {\n      Enum.Parse<Acl>(\"Search\"),\n      Enum.Parse<Acl>(\"AddObject\"),\n      Enum.Parse<Acl>(\"DeleteObject\"),\n    },\n    Indexes = new List<string> { \"Movies\", \"Books\" },\n    Referers = new List<string> { \"*google.com\", \"*algolia.com\" },\n    Validity = 305,\n    MaxQueriesPerIPPerHour = 95,\n    MaxHitsPerQuery = 20,\n  }\n);",
       "wait for api key - delete": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-delete-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Delete\")\n);"
     },
     "waitForAppTask": {

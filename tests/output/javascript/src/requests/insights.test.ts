@@ -2,6 +2,7 @@
 import { insightsClient } from '@algolia/client-insights';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
+import { describe, test, expect } from 'vitest';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -307,7 +308,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726012800000,
+          timestamp: 1726531200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -317,7 +318,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726012800000,
+          timestamp: 1726531200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -333,7 +334,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726012800000,
+          timestamp: 1726531200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -343,7 +344,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726012800000,
+          timestamp: 1726531200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

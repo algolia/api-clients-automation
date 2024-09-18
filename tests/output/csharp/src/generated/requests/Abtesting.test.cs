@@ -36,10 +36,8 @@ public class AbtestingClientRequestTests
         Name = "myABTest",
         Variants = new List<AddABTestsVariant>
         {
-          new AddABTestsVariant(
-            new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30, }
-          ),
-          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50, })
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
       }
     );
@@ -613,10 +611,8 @@ public class AbtestingClientRequestTests
         Name = "myABTest",
         Variants = new List<AddABTestsVariant>
         {
-          new AddABTestsVariant(
-            new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30, }
-          ),
-          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50, })
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
       }
     );

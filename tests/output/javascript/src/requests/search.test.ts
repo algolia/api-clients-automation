@@ -2,6 +2,7 @@
 import { searchClient } from '@algolia/client-search';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
+import { describe, test, expect } from 'vitest';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -2315,31 +2316,5 @@ describe('updateApiKey', () => {
       maxHitsPerQuery: 20,
     });
     expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
-describe('getSecuredApiKeyRemainingValidity', () => {
-  test('is able to check the remaining validity of a key', () => {
-    const resp = client.generateSecuredApiKey({
-      parentApiKey: 'foo',
-      restrictions: { validUntil: 42 },
-    });
-    expect(resp).toEqual(
-      'NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI=',
-    );
-
-    const validity = client.getSecuredApiKeyRemainingValidity({
-      securedApiKey: resp,
-    });
-    expect(validity).toEqual(42 - Math.round(new Date().getTime() / 1000));
-  });
-
-  test('throws when the validity field is not found', () => {
-    try {
-      client.getSecuredApiKeyRemainingValidity({ securedApiKey: 'foo' });
-      throw new Error('test is expected to throw error');
-    } catch (e) {
-      expect((e as Error).message).toMatch('validUntil not found in given secured api key.');
-    }
   });
 });

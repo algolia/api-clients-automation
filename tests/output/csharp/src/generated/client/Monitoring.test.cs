@@ -47,7 +47,7 @@ public class MonitoringClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.3.1\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.3.2\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -100,8 +100,8 @@ public class MonitoringClientTests
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new MonitoringClient(_config);
 

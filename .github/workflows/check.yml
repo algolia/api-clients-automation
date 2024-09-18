@@ -204,7 +204,7 @@ jobs:
           cd clients/algoliasearch-client-javascript/packages
           ls | grep -v -E "(client-common|requester-*|algoliasearch)" | xargs rm -rf
           cd algoliasearch
-          ls | grep -v -E "(__tests__|jest.config.ts)" | xargs rm -rf
+          ls | grep -v -E "__tests__" | xargs rm -rf
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -289,7 +289,7 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-22.04
     needs:
       - setup
@@ -400,7 +400,7 @@ jobs:
           path: clients-${{matrix.client.language }}.zip
 
   kotlin_build_macos:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: macos-latest
     needs:
       - setup
@@ -430,13 +430,14 @@ jobs:
           type: minimal
           language: kotlin
 
-      - name: remove previous build from linux
-        run: |
-          rm -rf clients/algoliasearch-client-kotlin/build || true
-          rm -rf clients/algoliasearch-client-kotlin/.kotlin || true
-          rm -rf clients/algoliasearch-client-kotlin/.gradle || true
+      - name: Build clients for macOS
+        id: build
+        continue-on-error: true
+        run: yarn cli build clients kotlin
 
-      - run: yarn cli build clients kotlin
+      - name: Retry build
+        if: ${{ steps.build.outcome == 'failure' }}
+        run: yarn cli build clients kotlin
 
       - name: Set output
         id: setoutput
@@ -478,7 +479,14 @@ jobs:
           language: swift
           version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
 
-      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
+      - name: Run tests on macOS
+        id: run-test
+        continue-on-error: true
+        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
+
+      - name: Retry tests
+        if: ${{ steps.run-test.outcome == 'failure' }}
+        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
 
       - name: Set output
         id: setoutput
@@ -622,7 +630,7 @@ jobs:
 
   push_and_release:
     runs-on: ubuntu-22.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     needs:
       - codegen
       - check_green

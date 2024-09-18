@@ -31,13 +31,13 @@ public class SnippetQuerySuggestionsClient
           new SourceIndex
           {
             IndexName = "<YOUR_INDEX_NAME>",
-            Facets = new List<Facet> { new Facet { Attribute = "test", } },
+            Facets = new List<Facet> { new Facet { Attribute = "test" } },
             Generate = new List<List<string>>
             {
               new List<string> { "facetA", "facetB" },
-              new List<string> { "facetC" }
+              new List<string> { "facetC" },
             },
-          }
+          },
         },
         Languages = new Languages(new List<string> { "french" }),
         Exclude = new List<string> { "test" },
@@ -260,13 +260,13 @@ public class SnippetQuerySuggestionsClient
           new SourceIndex
           {
             IndexName = "<YOUR_INDEX_NAME>",
-            Facets = new List<Facet> { new Facet { Attribute = "test", } },
+            Facets = new List<Facet> { new Facet { Attribute = "test" } },
             Generate = new List<List<string>>
             {
               new List<string> { "facetA", "facetB" },
-              new List<string> { "facetC" }
+              new List<string> { "facetC" },
             },
-          }
+          },
         },
         Languages = new Languages(new List<string> { "french" }),
         Exclude = new List<string> { "test" },

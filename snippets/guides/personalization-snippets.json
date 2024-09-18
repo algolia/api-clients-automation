@@ -28,7 +28,7 @@
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
     "setPersonalizationStrategy": {
-      "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventScoring = new List<EventScoring>\n    {\n      new EventScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      }\n    },\n    FacetScoring = new List<FacetScoring>\n    {\n      new FacetScoring { Score = 42, FacetName = \"Event\", }\n    },\n    PersonalizationImpact = 42,\n  }\n);"
+      "default": "var response = await client.SetPersonalizationStrategyAsync(\n  new PersonalizationStrategyParams\n  {\n    EventScoring = new List<EventScoring>\n    {\n      new EventScoring\n      {\n        Score = 42,\n        EventName = \"Algolia\",\n        EventType = Enum.Parse<EventType>(\"Click\"),\n      },\n    },\n    FacetScoring = new List<FacetScoring>\n    {\n      new FacetScoring { Score = 42, FacetName = \"Event\" },\n    },\n    PersonalizationImpact = 42,\n  }\n);"
     },
     "init": {
       "default": "var client = new PersonalizationClient("

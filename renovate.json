@@ -45,6 +45,12 @@
         "github.com/algolia/algoliasearch-client-go/v4"
       ],
       "allowedVersions": "4.0.0"
+    },
+    {
+      "matchDatasources": [
+        "dart-version"
+      ],
+      "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
     }
   ],
   "regexManagers": [
@@ -77,10 +83,8 @@
         "package.mustache"
       ],
       "matchStrings": [
-        "\"(dev)?[dD]ependencies\":\\s*{[^}]*}",
-        "\\s\"(?<depName>.*?)\": \"(?<currentValue>.*?)\",?\\s"
+        "\"(?<depName>.*?)\":\\s*\"(?<currentValue>\\d+.*?)\""
       ],
-      "matchStringsStrategy": "recursive",
       "datasourceTemplate": "npm"
     },
     {
@@ -228,7 +232,9 @@
     "**/client-search/**",
     "**/client_search/**",
     "**/ingestion/**",
+    "**/monitoring/**",
     "**/recommend/**",
+    "clients/algoliasearch-client-csharp/global.json",
     "clients/algoliasearch-client-php/composer.json",
     "tests/output/dart/**",
     "tests/output/java/**",

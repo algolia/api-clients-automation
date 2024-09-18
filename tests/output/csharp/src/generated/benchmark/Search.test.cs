@@ -37,8 +37,8 @@ public class SearchClientBenchmark
           Up = true,
           LastUse = DateTime.UtcNow,
           Accept = CallType.Read | CallType.Write,
-        }
-      }
+        },
+      },
     };
     var client = new SearchClient(_config);
 
@@ -56,7 +56,7 @@ public class SearchClientBenchmark
                 Query = "iphone 15 pro max 512gb",
                 HitsPerPage = 50,
               }
-            )
+            ),
           },
         }
       );

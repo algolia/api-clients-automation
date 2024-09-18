@@ -68,7 +68,7 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.AppendSourceAsync(
-      new Source { VarSource = "theSource", Description = "theDescription", }
+      new Source { VarSource = "theSource", Description = "theDescription" }
     );
     // >LOG
     // SEPARATOR<
@@ -88,7 +88,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.AssignUserIdAsync(
       "userID",
-      new AssignUserIdParams { Cluster = "theCluster", }
+      new AssignUserIdParams { Cluster = "theCluster" }
     );
     // >LOG
     // SEPARATOR<
@@ -121,7 +121,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("AddObject"),
             Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
-          }
+          },
         },
       }
     );
@@ -151,7 +151,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("Clear"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -181,7 +181,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("Delete"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -211,7 +211,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("DeleteObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -241,7 +241,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("PartialUpdateObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -271,7 +271,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("PartialUpdateObjectNoCreate"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -301,7 +301,7 @@ public class SnippetSearchClient
           {
             Action = Enum.Parse<Action>("UpdateObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
-          }
+          },
         },
       }
     );
@@ -364,7 +364,7 @@ public class SnippetSearchClient
               Decomposition = new List<string> { "trust", "algolia" },
               State = Enum.Parse<DictionaryEntryState>("Enabled"),
             },
-          }
+          },
         },
       }
     );
@@ -394,8 +394,8 @@ public class SnippetSearchClient
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry { ObjectID = "1", },
-          }
+            Body = new DictionaryEntry { ObjectID = "1" },
+          },
         },
       }
     );
@@ -428,9 +428,9 @@ public class SnippetSearchClient
             {
               ObjectID = "1",
               Language = Enum.Parse<SupportedLanguage>("En"),
-              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" }, }
+              AdditionalProperties = new Dictionary<string, object> { { "additional", "try me" } },
             },
-          }
+          },
         },
       }
     );
@@ -605,7 +605,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteByAsync(
       "<YOUR_INDEX_NAME>",
-      new DeleteByParams { Filters = "brand:brandName", }
+      new DeleteByParams { Filters = "brand:brandName" }
     );
     // >LOG
     // SEPARATOR<
@@ -904,7 +904,7 @@ public class SnippetSearchClient
             AttributesToRetrieve = new List<string> { "attr1", "attr2" },
             ObjectID = "uniqueID",
             IndexName = "<YOUR_INDEX_NAME>",
-          }
+          },
         },
       }
     );
@@ -1189,7 +1189,7 @@ public class SnippetSearchClient
             Action = Enum.Parse<Action>("AddObject"),
             Body = new Dictionary<string, string> { { "key", "value" } },
             IndexName = "<YOUR_INDEX_NAME>",
-          }
+          },
         },
       }
     );
@@ -1218,7 +1218,7 @@ public class SnippetSearchClient
         Scope = new List<ScopeType>
         {
           Enum.Parse<ScopeType>("Rules"),
-          Enum.Parse<ScopeType>("Settings")
+          Enum.Parse<ScopeType>("Settings"),
         },
       }
     );
@@ -1312,7 +1312,7 @@ public class SnippetSearchClient
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
       },
       true
     );
@@ -1337,7 +1337,7 @@ public class SnippetSearchClient
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
-        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
       },
       false
     );
@@ -1387,7 +1387,7 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
         new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
         new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
-        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
       },
       3
     );
@@ -1410,7 +1410,7 @@ public class SnippetSearchClient
     var response = await client.ReplaceSourcesAsync(
       new List<Source>
       {
-        new Source { VarSource = "theSource", Description = "theDescription", }
+        new Source { VarSource = "theSource", Description = "theDescription" },
       }
     );
     // >LOG
@@ -1471,7 +1471,7 @@ public class SnippetSearchClient
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
       }
     );
     // >LOG
@@ -1495,7 +1495,7 @@ public class SnippetSearchClient
       new List<Object>
       {
         new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
-        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
       }
     );
     // >LOG
@@ -1522,7 +1522,7 @@ public class SnippetSearchClient
         ObjectID = "id1",
         Conditions = new List<Condition>
         {
-          new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+          new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
         },
       }
     );
@@ -1551,7 +1551,7 @@ public class SnippetSearchClient
           ObjectID = "a-rule-id",
           Conditions = new List<Condition>
           {
-            new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+            new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
         },
         new Rule
@@ -1559,9 +1559,9 @@ public class SnippetSearchClient
           ObjectID = "a-second-rule-id",
           Conditions = new List<Condition>
           {
-            new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+            new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
           },
-        }
+        },
       },
       false,
       true
@@ -1625,7 +1625,7 @@ public class SnippetSearchClient
           Type = Enum.Parse<SynonymType>("Onewaysynonym"),
           Input = "iphone",
           Synonyms = new List<string> { "ephone", "aphone", "yphone" },
-        }
+        },
       },
       true,
       true
@@ -1658,7 +1658,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               HitsPerPage = 50,
             }
-          )
+          ),
         },
       }
     );
@@ -1690,7 +1690,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               Filters = "actor:Scarlett Johansson",
             }
-          )
+          ),
         },
       }
     );
@@ -1722,7 +1722,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               Filters = "actor:Tom Cruise OR actor:Scarlett Johansson",
             }
-          )
+          ),
         },
       }
     );
@@ -1754,7 +1754,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               Filters = "NOT actor:Nicolas Cage",
             }
-          )
+          ),
         },
       }
     );
@@ -1786,7 +1786,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               Facets = new List<string> { "author", "genre" },
             }
-          )
+          ),
         },
       }
     );
@@ -1818,7 +1818,7 @@ public class SnippetSearchClient
               Query = "<YOUR_QUERY>",
               Facets = new List<string> { "*" },
             }
-          )
+          ),
         },
       }
     );
@@ -1840,7 +1840,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Stopwords"),
-      new SearchDictionaryEntriesParams { Query = "about", }
+      new SearchDictionaryEntriesParams { Query = "about" }
     );
     // >LOG
     // SEPARATOR<
@@ -1877,7 +1877,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchRulesAsync(
       "<YOUR_INDEX_NAME>",
-      new SearchRulesParams { Query = "zorro", }
+      new SearchRulesParams { Query = "zorro" }
     );
     // >LOG
     // SEPARATOR<
@@ -1980,7 +1980,7 @@ public class SnippetSearchClient
           {
             { "fr", false },
             { "en", false },
-            { "ru", true }
+            { "ru", true },
           },
         },
       }
@@ -2009,7 +2009,7 @@ public class SnippetSearchClient
         {
           "actor",
           "filterOnly(category)",
-          "searchable(publisher)"
+          "searchable(publisher)",
         },
       }
     );
@@ -2085,7 +2085,7 @@ public class SnippetSearchClient
         {
           Enum.Parse<Acl>("Search"),
           Enum.Parse<Acl>("AddObject"),
-          Enum.Parse<Acl>("DeleteObject")
+          Enum.Parse<Acl>("DeleteObject"),
         },
         Indexes = new List<string> { "Movies", "Books" },
         Referers = new List<string> { "*google.com", "*algolia.com" },

@@ -11,8 +11,8 @@
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
     "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.74.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-instantsearch": "7.13.1"
   },
   "devDependencies": {

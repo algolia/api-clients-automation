@@ -18,18 +18,13 @@ import java.util.logging.Logger;
 @JsonDeserialize(using = SnippetResult.Deserializer.class)
 public interface SnippetResult {
   // SnippetResult as Map<String, SnippetResult> wrapper.
-  static SnippetResult ofMapOfStringSnippetResult(Map<String, SnippetResult> value) {
+  static SnippetResult of(Map<String, SnippetResult> value) {
     return new MapOfStringSnippetResultWrapper(value);
   }
 
-  // SnippetResult as Map<String, SnippetResultOption> wrapper.
-  static SnippetResult ofMapOfStringSnippetResultOption(Map<String, SnippetResultOption> value) {
-    return new MapOfStringSnippetResultOptionWrapper(value);
-  }
-
-  // SnippetResult as List<SnippetResultOption> wrapper.
-  static SnippetResult of(List<SnippetResultOption> value) {
-    return new ListOfSnippetResultOptionWrapper(value);
+  // SnippetResult as List<SnippetResult> wrapper.
+  static SnippetResult of(List<SnippetResult> value) {
+    return new ListOfSnippetResultWrapper(value);
   }
 
   // SnippetResult as Map<String, SnippetResult> wrapper.
@@ -55,48 +50,24 @@ public interface SnippetResult {
     }
   }
 
-  // SnippetResult as Map<String, SnippetResultOption> wrapper.
-  @JsonSerialize(using = MapOfStringSnippetResultOptionWrapper.Serializer.class)
-  class MapOfStringSnippetResultOptionWrapper implements SnippetResult {
+  // SnippetResult as List<SnippetResult> wrapper.
+  @JsonSerialize(using = ListOfSnippetResultWrapper.Serializer.class)
+  class ListOfSnippetResultWrapper implements SnippetResult {
 
-    private final Map<String, SnippetResultOption> value;
+    private final List<SnippetResult> value;
 
-    MapOfStringSnippetResultOptionWrapper(Map<String, SnippetResultOption> value) {
+    ListOfSnippetResultWrapper(List<SnippetResult> value) {
       this.value = value;
     }
 
-    public Map<String, SnippetResultOption> getValue() {
+    public List<SnippetResult> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<MapOfStringSnippetResultOptionWrapper> {
+    static class Serializer extends JsonSerializer<ListOfSnippetResultWrapper> {
 
       @Override
-      public void serialize(MapOfStringSnippetResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider)
-        throws IOException {
-        gen.writeObject(value.getValue());
-      }
-    }
-  }
-
-  // SnippetResult as List<SnippetResultOption> wrapper.
-  @JsonSerialize(using = ListOfSnippetResultOptionWrapper.Serializer.class)
-  class ListOfSnippetResultOptionWrapper implements SnippetResult {
-
-    private final List<SnippetResultOption> value;
-
-    ListOfSnippetResultOptionWrapper(List<SnippetResultOption> value) {
-      this.value = value;
-    }
-
-    public List<SnippetResultOption> getValue() {
-      return value;
-    }
-
-    static class Serializer extends JsonSerializer<ListOfSnippetResultOptionWrapper> {
-
-      @Override
-      public void serialize(ListOfSnippetResultOptionWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfSnippetResultWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -130,30 +101,14 @@ public interface SnippetResult {
           );
         }
       }
-      // deserialize Map<String, SnippetResultOption>
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Map<String, SnippetResultOption> value = parser.readValueAs(new TypeReference<Map<String, SnippetResultOption>>() {});
-          return new SnippetResult.MapOfStringSnippetResultOptionWrapper(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf Map<String, SnippetResultOption> (error: " +
-            e.getMessage() +
-            ") (type: Map<String, SnippetResultOption>)"
-          );
-        }
-      }
-      // deserialize List<SnippetResultOption>
+      // deserialize List<SnippetResult>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<SnippetResultOption> value = parser.readValueAs(new TypeReference<List<SnippetResultOption>>() {});
-          return new SnippetResult.ListOfSnippetResultOptionWrapper(value);
+          List<SnippetResult> value = parser.readValueAs(new TypeReference<List<SnippetResult>>() {});
+          return new SnippetResult.ListOfSnippetResultWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<SnippetResultOption> (error: " + e.getMessage() + ") (type: List<SnippetResultOption>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<SnippetResult> (error: " + e.getMessage() + ") (type: List<SnippetResult>)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

@@ -1,65 +1,69 @@
-import { RuleTester } from 'eslint';
+import { runClassic } from 'eslint-vitest-rule-tester';
+import yamlParser from 'yaml-eslint-parser';
 
-import { validACL } from '../src/rules/validACL';
+import { validACL } from '../src/rules/validACL.js';
 
-const ruleTester = new RuleTester({
-  parser: require.resolve('yaml-eslint-parser'),
-});
-
-ruleTester.run('valid-acl', validACL, {
-  valid: [
-    `
+runClassic(
+  'valid-acl',
+  validACL,
+  {
+    valid: [
+      `
 x-acl:
   - search
   - browse
     `,
-    `
+      `
 x-acl:
   - admin
     `,
-    `
+      `
 x-acl: ['search', 'settings']
     `,
-    `
+      `
 nested:
   inside:
     x-acl:
       - search
       - recommendation
     `,
-  ],
-  invalid: [
-    {
-      code: `
+    ],
+    invalid: [
+      {
+        code: `
 x-acl:
   - notACL
   - search
     `,
-      errors: [{ messageId: 'validACL' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'validACL' }],
+      },
+      {
+        code: `
 nested:
   inside:
     x-acl:
       - search
       - notACL
     `,
-      errors: [{ messageId: 'validACL' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'validACL' }],
+      },
+      {
+        code: `
 x-acl: notList
     `,
-      errors: [{ messageId: 'validArray' }],
-    },
-    {
-      code: `
+        errors: [{ messageId: 'validArray' }],
+      },
+      {
+        code: `
 x-acl:
   - ['search']
   - 88
     `,
-      errors: [{ messageId: 'validString' }],
-    },
-  ],
-});
+        errors: [{ messageId: 'validString' }],
+      },
+    ],
+  },
+  {
+    parser: yamlParser,
+  },
+);

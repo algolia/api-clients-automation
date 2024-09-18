@@ -1441,7 +1441,7 @@ paths:
                       Query = "<YOUR_QUERY>",
                       HitsPerPage = 50,
                     }
-                  )
+                  ),
                 },
               }
             );
@@ -3582,7 +3582,7 @@ paths:
 
             var response = await client.DeleteByAsync(
               "<YOUR_INDEX_NAME>",
-              new DeleteByParams { Filters = "brand:brandName", }
+              new DeleteByParams { Filters = "brand:brandName" }
             );
 
             // >LOG
@@ -4407,7 +4407,7 @@ paths:
                   {
                     Action = Enum.Parse<Action>("AddObject"),
                     Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
-                  }
+                  },
                 },
               }
             );
@@ -4833,7 +4833,7 @@ paths:
                     Action = Enum.Parse<Action>("AddObject"),
                     Body = new Dictionary<string, string> { { "key", "value" } },
                     IndexName = "<YOUR_INDEX_NAME>",
-                  }
+                  },
                 },
               }
             );
@@ -5199,7 +5199,7 @@ paths:
                     AttributesToRetrieve = new List<string> { "attr1", "attr2" },
                     ObjectID = "uniqueID",
                     IndexName = "<YOUR_INDEX_NAME>",
-                  }
+                  },
                 },
               }
             );
@@ -5722,7 +5722,7 @@ paths:
                 {
                   "actor",
                   "filterOnly(category)",
-                  "searchable(publisher)"
+                  "searchable(publisher)",
                 },
               }
             );
@@ -6770,7 +6770,7 @@ paths:
                   Type = Enum.Parse<SynonymType>("Onewaysynonym"),
                   Input = "iphone",
                   Synonyms = new List<string> { "ephone", "aphone", "yphone" },
-                }
+                },
               },
               true,
               true
@@ -9305,7 +9305,7 @@ paths:
                 ObjectID = "id1",
                 Conditions = new List<Condition>
                 {
-                  new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+                  new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
                 },
               }
             );
@@ -9831,7 +9831,7 @@ paths:
                   ObjectID = "a-rule-id",
                   Conditions = new List<Condition>
                   {
-                    new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+                    new Condition { Pattern = "smartphone", Anchoring = Enum.Parse<Anchoring>("Contains") },
                   },
                 },
                 new Rule
@@ -9839,9 +9839,9 @@ paths:
                   ObjectID = "a-second-rule-id",
                   Conditions = new List<Condition>
                   {
-                    new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
+                    new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
                   },
-                }
+                },
               },
               false,
               true
@@ -10476,7 +10476,7 @@ paths:
 
             var response = await client.SearchRulesAsync(
               "<YOUR_INDEX_NAME>",
-              new SearchRulesParams { Query = "zorro", }
+              new SearchRulesParams { Query = "zorro" }
             );
 
             // >LOG
@@ -10771,7 +10771,7 @@ paths:
                       Decomposition = new List<string> { "trust", "algolia" },
                       State = Enum.Parse<DictionaryEntryState>("Enabled"),
                     },
-                  }
+                  },
                 },
               }
             );
@@ -11187,7 +11187,7 @@ paths:
 
             var response = await client.SearchDictionaryEntriesAsync(
               Enum.Parse<DictionaryType>("Stopwords"),
-              new SearchDictionaryEntriesParams { Query = "about", }
+              new SearchDictionaryEntriesParams { Query = "about" }
             );
 
             // >LOG
@@ -11659,7 +11659,7 @@ paths:
                   {
                     { "fr", false },
                     { "en", false },
-                    { "ru", true }
+                    { "ru", true },
                   },
                 },
               }
@@ -12158,7 +12158,7 @@ paths:
 
             var response = await client.AssignUserIdAsync(
               "userID",
-              new AssignUserIdParams { Cluster = "theCluster", }
+              new AssignUserIdParams { Cluster = "theCluster" }
             );
 
             // >LOG
@@ -14576,7 +14576,7 @@ paths:
             var response = await client.ReplaceSourcesAsync(
               new List<Source>
               {
-                new Source { VarSource = "theSource", Description = "theDescription", }
+                new Source { VarSource = "theSource", Description = "theDescription" },
               }
             );
 
@@ -14842,7 +14842,7 @@ paths:
             // Call the API
 
             var response = await client.AppendSourceAsync(
-              new Source { VarSource = "theSource", Description = "theDescription", }
+              new Source { VarSource = "theSource", Description = "theDescription" }
             );
 
             // >LOG
@@ -16232,7 +16232,7 @@ paths:
                 Scope = new List<ScopeType>
                 {
                   Enum.Parse<ScopeType>("Rules"),
-                  Enum.Parse<ScopeType>("Settings")
+                  Enum.Parse<ScopeType>("Settings"),
                 },
               }
             );
@@ -18741,21 +18741,10 @@ components:
           $ref: '#/components/schemas/nbPages'
         hitsPerPage:
           $ref: '#/components/schemas/hitsPerPage'
-      required:
-        - page
-        - nbHits
-        - nbPages
-        - hitsPerPage
     objectID:
       type: string
       description: Unique record identifier.
       example: test-record-123
-    highlightResultMap:
-      type: object
-      description: Surround words that match the query with HTML tags for highlighting.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResult'
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -18793,29 +18782,22 @@ components:
       x-discriminator-fields:
         - matchLevel
         - matchedWords
-    highlightResultOptionMap:
+    highlightResultMap:
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/highlightResultOption'
-    highlightResultOptionArray:
+        $ref: '#/components/schemas/highlightResult'
+    highlightResult:
+      oneOf:
+        - $ref: '#/components/schemas/highlightResultOption'
+        - $ref: '#/components/schemas/highlightResultMap'
+        - $ref: '#/components/schemas/highlightResultArray'
+    highlightResultArray:
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
-        $ref: '#/components/schemas/highlightResultOption'
-    highlightResult:
-      oneOf:
-        - $ref: '#/components/schemas/highlightResultMap'
-        - $ref: '#/components/schemas/highlightResultOption'
-        - $ref: '#/components/schemas/highlightResultOptionMap'
-        - $ref: '#/components/schemas/highlightResultOptionArray'
-    snippetResultMap:
-      type: object
-      description: Snippets that show the context around a matching search query.
-      additionalProperties:
-        x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResult'
+        $ref: '#/components/schemas/highlightResult'
     snippetResultOption:
       type: object
       description: Snippets that show the context around a matching search query.
@@ -18830,23 +18812,22 @@ components:
         - matchLevel
       x-discriminator-fields:
         - matchLevel
-    snippetResultOptionMap:
+    snippetResultMap:
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties:
         x-additionalPropertiesName: attribute
-        $ref: '#/components/schemas/snippetResultOption'
-    snippetResultOptionArray:
+        $ref: '#/components/schemas/snippetResult'
+    snippetResult:
+      oneOf:
+        - $ref: '#/components/schemas/snippetResultOption'
+        - $ref: '#/components/schemas/snippetResultMap'
+        - $ref: '#/components/schemas/snippetResultArray'
+    snippetResultArray:
       type: array
       description: Snippets that show the context around a matching search query.
       items:
-        $ref: '#/components/schemas/snippetResultOption'
-    snippetResult:
-      oneOf:
-        - $ref: '#/components/schemas/snippetResultMap'
-        - $ref: '#/components/schemas/snippetResultOption'
-        - $ref: '#/components/schemas/snippetResultOptionMap'
-        - $ref: '#/components/schemas/snippetResultOptionArray'
+        $ref: '#/components/schemas/snippetResult'
     matchedGeoLocation:
       type: object
       properties:
