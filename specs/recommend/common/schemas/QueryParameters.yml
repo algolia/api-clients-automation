@@ -6,6 +6,13 @@ recommendSearchParams:
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsQuery'
     - $ref: './IndexSettings.yml#/recommendIndexSettings'
 
+fallbackParams:
+  title: fallbackParameters
+  allOf:
+    - $ref: './QueryParameters.yml#/recommendSearchParams'
+    - type: object
+      description: Search parameters to use for a fallback request if there aren't enough recommendations.
+
 baseRecommendSearchParams:
   type: object
   additionalProperties: false

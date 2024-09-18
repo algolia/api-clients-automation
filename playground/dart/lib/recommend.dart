@@ -15,7 +15,7 @@ void main() async {
     RelatedProducts(
       model: RelatedModel.relatedProducts,
       objectID: '6445156',
-      fallbackParameters: RecommendSearchParams(
+      fallbackParameters: FallbackParams(
         query: 'iphone',
       ),
     ),
