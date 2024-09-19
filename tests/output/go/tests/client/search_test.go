@@ -190,7 +190,7 @@ func TestSearchcommonApi1(t *testing.T) {
 		"1/test",
 	))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.2\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.3.3\).*`), echo.Header.Get("User-Agent"))
 }
 
 // calls api with default read timeouts
