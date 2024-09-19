@@ -15,7 +15,7 @@ public struct SearchDisjunctiveFacetingResponse<T: Codable> {
 /// Helper making multiple queries for disjunctive faceting
 /// and merging the multiple search responses into a single one with
 /// combined facets information
-struct DisjunctiveFacetingHelper {
+internal struct DisjunctiveFacetingHelper {
 
   let query: SearchForHits
   let refinements: [String: [String]]
