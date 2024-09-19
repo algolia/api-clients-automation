@@ -17,8 +17,21 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
 
-  # calls api with correct write host
+  # read transporter with POST method
   def test_api1
+
+    client = Algolia::SearchClient.create(
+      "test-app-id",
+      "test-api-key",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.search_single_index_with_http_info("indexName")
+    assert_equal("test-app-id-dsn.algolia.net", req.host.url)
+  end
+
+  # calls api with correct write host
+  def test_api2
 
     client = Algolia::SearchClient.create(
       "test-app-id",
@@ -31,7 +44,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # tests the retry strategy
-  def test_api2
+  def test_api3
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -64,7 +77,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # tests the retry strategy error
-  def test_api3
+  def test_api4
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -92,7 +105,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # test the compression strategy
-  def test_api4
+  def test_api5
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",

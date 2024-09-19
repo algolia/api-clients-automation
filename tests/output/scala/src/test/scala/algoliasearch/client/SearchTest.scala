@@ -47,6 +47,19 @@ class SearchTest extends AnyFunSuite {
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
 
+  test("read transporter with POST method") {
+
+    val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
+
+    Await.ready(
+      client.searchSingleIndex(
+        indexName = "indexName"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+  }
+
   test("calls api with correct write host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")

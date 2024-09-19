@@ -24,6 +24,14 @@ describe('api', () => {
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
   }, 15000);
 
+  test('read transporter with POST method', async () => {
+    const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
+
+    const result = (await client.searchSingleIndex({ indexName: 'indexName' })) as unknown as EchoResponse;
+
+    expect(result.host).toEqual('test-app-id-dsn.algolia.net');
+  }, 15000);
+
   test('calls api with correct write host', async () => {
     const client = searchClient('test-app-id', 'test-api-key', { requester: nodeEchoRequester() });
 

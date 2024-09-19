@@ -33,6 +33,20 @@ class TestSearchClient:
 
     async def test_api_1(self):
         """
+        read transporter with POST method
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _client = SearchClient.create_with_config(
+            config=_config, transporter=EchoTransporter(_config)
+        )
+        _req = await _client.search_single_index_with_http_info(
+            index_name="indexName",
+        )
+        assert _req.host == "test-app-id-dsn.algolia.net"
+
+    async def test_api_2(self):
+        """
         calls api with correct write host
         """
 
@@ -45,7 +59,7 @@ class TestSearchClient:
         )
         assert _req.host == "test-app-id.algolia.net"
 
-    async def test_api_2(self):
+    async def test_api_3(self):
         """
         tests the retry strategy
         """
@@ -70,7 +84,7 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"message":"ok test server response"}""")
 
-    async def test_api_3(self):
+    async def test_api_4(self):
         """
         tests the retry strategy error
         """
@@ -728,6 +742,20 @@ class TestSearchClientSync:
 
     def test_api_1(self):
         """
+        read transporter with POST method
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _client = SearchClientSync.create_with_config(
+            config=_config, transporter=EchoTransporterSync(_config)
+        )
+        _req = _client.search_single_index_with_http_info(
+            index_name="indexName",
+        )
+        assert _req.host == "test-app-id-dsn.algolia.net"
+
+    def test_api_2(self):
+        """
         calls api with correct write host
         """
 
@@ -740,7 +768,7 @@ class TestSearchClientSync:
         )
         assert _req.host == "test-app-id.algolia.net"
 
-    def test_api_2(self):
+    def test_api_3(self):
         """
         tests the retry strategy
         """
@@ -765,7 +793,7 @@ class TestSearchClientSync:
             else _req.to_dict()
         ) == loads("""{"message":"ok test server response"}""")
 
-    def test_api_3(self):
+    def test_api_4(self):
         """
         tests the retry strategy error
         """

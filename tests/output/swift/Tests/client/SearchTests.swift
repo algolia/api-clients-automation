@@ -23,8 +23,21 @@ final class SearchClientClientTests: XCTestCase {
         XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
     }
 
-    /// calls api with correct write host
+    /// read transporter with POST method
     func testApiTest1() async throws {
+        let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response: Response<SearchResponse<Hit>> = try await client
+            .searchSingleIndexWithHTTPInfo(indexName: "indexName")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
+    }
+
+    /// calls api with correct write host
+    func testApiTest2() async throws {
         let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -36,7 +49,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// tests the retry strategy
-    func testApiTest2() async throws {
+    func testApiTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -58,7 +71,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// tests the retry strategy error
-    func testApiTest3() async throws {
+    func testApiTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -81,7 +94,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// test the compression strategy
-    func testApiTest4() async throws {
+    func testApiTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",

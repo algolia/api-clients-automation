@@ -37,9 +37,9 @@ public class RecommendClient extends ApiClient {
     hosts.add(new Host(appId + ".algolia.net", EnumSet.of(CallType.WRITE)));
 
     List<Host> commonHosts = new ArrayList<>();
-    hosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
-    hosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-1.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-2.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
+    commonHosts.add(new Host(appId + "-3.algolianet.net", EnumSet.of(CallType.READ, CallType.WRITE)));
 
     Collections.shuffle(commonHosts, new Random());
 
