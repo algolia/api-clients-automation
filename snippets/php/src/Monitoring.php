@@ -20,7 +20,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customDelete(
@@ -42,7 +42,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customGet(
@@ -64,7 +64,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPost(
@@ -86,7 +86,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->customPut(
@@ -108,7 +108,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getClusterIncidents default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getClusterIncidents(
@@ -130,7 +130,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getClusterStatus default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getClusterStatus(
@@ -152,7 +152,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getIncidents default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getIncidents();
@@ -172,7 +172,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getIndexingTime default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getIndexingTime(
@@ -194,7 +194,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getLatency default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getLatency(
@@ -216,7 +216,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getMetrics default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getMetrics(
@@ -239,7 +239,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getReachability default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getReachability(
@@ -261,7 +261,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getServers default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getServers();
@@ -281,7 +281,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR getStatus default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->getStatus();
@@ -301,7 +301,7 @@ class SnippetMonitoringClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $client->setClientApiKey(

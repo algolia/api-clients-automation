@@ -14,7 +14,7 @@ class SnippetInsightsClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -28,7 +28,7 @@ class SnippetInsightsClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customGet("test/minimal");
@@ -42,7 +42,7 @@ class SnippetInsightsClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPost("test/minimal");
@@ -56,7 +56,7 @@ class SnippetInsightsClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
@@ -70,7 +70,7 @@ class SnippetInsightsClient {
   void snippetForDeleteUserToken() {
     // >SEPARATOR deleteUserToken default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.deleteUserToken("test-user-1");
@@ -84,7 +84,7 @@ class SnippetInsightsClient {
   void snippetForPushEvents() {
     // >SEPARATOR pushEvents default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.pushEvents(
@@ -114,7 +114,7 @@ class SnippetInsightsClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setClientApiKey("updated-api-key");

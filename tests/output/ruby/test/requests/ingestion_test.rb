@@ -41,7 +41,7 @@ class TestIngestionClient < Test::Unit::TestCase
       AuthenticationCreate.new(
         type: "algolia",
         name: "authName",
-        input: AuthAlgolia.new(app_id: "myappID", api_key: "randomApiKey")
+        input: AuthAlgolia.new(app_id: "ALGOLIA_APPLICATION_ID", api_key: "ALGOLIA_API_KEY")
       )
     )
 
@@ -51,7 +51,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}"
+        "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}"
       ),
       JSON.parse(req.body)
     )
@@ -442,14 +442,14 @@ class TestIngestionClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -461,14 +461,14 @@ class TestIngestionClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))

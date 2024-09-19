@@ -61,8 +61,8 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client->createAuthentication(
             ['type' => 'algolia',
                 'name' => 'authName',
-                'input' => ['appID' => 'myappID',
-                    'apiKey' => 'randomApiKey',
+                'input' => ['appID' => 'ALGOLIA_APPLICATION_ID',
+                    'apiKey' => 'ALGOLIA_API_KEY',
                 ],
             ],
         );
@@ -71,7 +71,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/authentications',
                 'method' => 'POST',
-                'body' => json_decode('{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}'),
+                'body' => json_decode('{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}'),
             ],
         ]);
     }
@@ -563,7 +563,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -574,7 +574,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }
@@ -591,7 +591,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -602,7 +602,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }

@@ -54,7 +54,7 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
 
 			ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("algolia")).SetName("authName").SetInput(ingestion.AuthAlgoliaAsAuthInput(
-				ingestion.NewEmptyAuthAlgolia().SetAppID("myappID").SetApiKey("randomApiKey"))),
+				ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY"))),
 		))
 		require.NoError(t, err)
 
@@ -62,7 +62,7 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}`)
+		ja.Assertf(*echo.Body, `{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}`)
 	})
 }
 
@@ -437,7 +437,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -447,7 +447,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
@@ -462,7 +462,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			ingestion.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -472,7 +472,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}

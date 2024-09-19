@@ -20,7 +20,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -42,7 +42,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -64,7 +64,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -86,7 +86,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -108,7 +108,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getAddToCartRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getAddToCartRate(
@@ -130,7 +130,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getAverageClickPosition default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getAverageClickPosition(
@@ -152,7 +152,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getClickPositions default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getClickPositions(
@@ -174,7 +174,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getClickThroughRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getClickThroughRate(
@@ -196,7 +196,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getConversionRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getConversionRate(
@@ -218,7 +218,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getNoClickRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getNoClickRate(
@@ -240,7 +240,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getNoResultsRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getNoResultsRate(
@@ -262,7 +262,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getPurchaseRate default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getPurchaseRate(
@@ -284,7 +284,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getRevenue default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getRevenue(
@@ -306,7 +306,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getSearchesCount default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getSearchesCount(
@@ -328,7 +328,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getSearchesNoClicks default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getSearchesNoClicks(
@@ -350,7 +350,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getSearchesNoResults default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getSearchesNoResults(
@@ -372,7 +372,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getStatus default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getStatus(
@@ -394,7 +394,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopCountries default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopCountries(
@@ -416,7 +416,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopFilterAttributes default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopFilterAttributes(
@@ -438,7 +438,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopFilterForAttribute default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopFilterForAttribute(
@@ -461,7 +461,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopFiltersNoResults default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopFiltersNoResults(
@@ -483,7 +483,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopHits default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopHits(
@@ -505,7 +505,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getTopSearches default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTopSearches(
@@ -527,7 +527,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR getUsersCount default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getUsersCount(
@@ -549,7 +549,7 @@ class SnippetAnalyticsClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(

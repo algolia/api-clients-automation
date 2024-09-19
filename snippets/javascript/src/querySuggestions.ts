@@ -11,7 +11,7 @@ import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 export async function snippetForCreateConfig(): Promise<void> {
   // >SEPARATOR createConfig default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.createConfig({
@@ -35,7 +35,7 @@ export async function snippetForCreateConfig(): Promise<void> {
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -52,7 +52,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -69,7 +69,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -86,7 +86,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -103,7 +103,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteConfig(): Promise<void> {
   // >SEPARATOR deleteConfig default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.deleteConfig({ indexName: 'theIndexName' });
@@ -120,7 +120,7 @@ export async function snippetForDeleteConfig(): Promise<void> {
 export async function snippetForGetAllConfigs(): Promise<void> {
   // >SEPARATOR getAllConfigs default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.getAllConfigs();
@@ -137,7 +137,7 @@ export async function snippetForGetAllConfigs(): Promise<void> {
 export async function snippetForGetConfig(): Promise<void> {
   // >SEPARATOR getConfig default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });
@@ -154,7 +154,7 @@ export async function snippetForGetConfig(): Promise<void> {
 export async function snippetForGetConfigStatus(): Promise<void> {
   // >SEPARATOR getConfigStatus default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.getConfigStatus({ indexName: 'theIndexName' });
@@ -171,7 +171,7 @@ export async function snippetForGetConfigStatus(): Promise<void> {
 export async function snippetForGetLogFile(): Promise<void> {
   // >SEPARATOR getLogFile default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.getLogFile({ indexName: 'theIndexName' });
@@ -188,7 +188,7 @@ export async function snippetForGetLogFile(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   client.setClientApiKey({ apiKey: 'updated-api-key' });
@@ -203,7 +203,7 @@ export function snippetForSetClientApiKey(): void {
 export async function snippetForUpdateConfig(): Promise<void> {
   // >SEPARATOR updateConfig default
   // Initialize the client
-  const client = querySuggestionsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = querySuggestionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.updateConfig({

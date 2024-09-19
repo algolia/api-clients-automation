@@ -264,14 +264,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -297,14 +298,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },

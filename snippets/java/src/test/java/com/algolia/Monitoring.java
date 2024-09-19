@@ -14,7 +14,7 @@ class SnippetMonitoringClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -28,7 +28,7 @@ class SnippetMonitoringClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customGet("test/minimal");
@@ -42,7 +42,7 @@ class SnippetMonitoringClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPost("test/minimal");
@@ -56,7 +56,7 @@ class SnippetMonitoringClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.customPut("test/minimal");
@@ -70,7 +70,7 @@ class SnippetMonitoringClient {
   void snippetForGetClusterIncidents() {
     // >SEPARATOR getClusterIncidents default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getClusterIncidents("c1-de");
@@ -84,7 +84,7 @@ class SnippetMonitoringClient {
   void snippetForGetClusterStatus() {
     // >SEPARATOR getClusterStatus default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getClusterStatus("c1-de");
@@ -98,7 +98,7 @@ class SnippetMonitoringClient {
   void snippetForGetIncidents() {
     // >SEPARATOR getIncidents default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getIncidents();
@@ -112,7 +112,7 @@ class SnippetMonitoringClient {
   void snippetForGetIndexingTime() {
     // >SEPARATOR getIndexingTime default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getIndexingTime("c1-de");
@@ -126,7 +126,7 @@ class SnippetMonitoringClient {
   void snippetForGetLatency() {
     // >SEPARATOR getLatency default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getLatency("c1-de");
@@ -140,7 +140,7 @@ class SnippetMonitoringClient {
   void snippetForGetMetrics() {
     // >SEPARATOR getMetrics default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
@@ -154,7 +154,7 @@ class SnippetMonitoringClient {
   void snippetForGetReachability() {
     // >SEPARATOR getReachability default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getReachability("c1-de");
@@ -168,7 +168,7 @@ class SnippetMonitoringClient {
   void snippetForGetServers() {
     // >SEPARATOR getServers default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getServers();
@@ -182,7 +182,7 @@ class SnippetMonitoringClient {
   void snippetForGetStatus() {
     // >SEPARATOR getStatus default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.getStatus();
@@ -196,7 +196,7 @@ class SnippetMonitoringClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+    MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     client.setClientApiKey("updated-api-key");

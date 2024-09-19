@@ -14,8 +14,8 @@ func SnippetForCustomDeleteOfInsights() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -43,8 +43,8 @@ func SnippetForCustomGetOfInsights() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -72,8 +72,8 @@ func SnippetForCustomPostOfInsights() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -101,8 +101,8 @@ func SnippetForCustomPutOfInsights() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -130,8 +130,8 @@ func SnippetForDeleteUserTokenOfInsights() {
 	*/
 
 	// >SEPARATOR deleteUserToken default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -157,8 +157,8 @@ func SnippetForPushEventsOfInsights() {
 	*/
 
 	// >SEPARATOR pushEvents default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -191,8 +191,8 @@ func SnippetForSetClientApiKeyOfInsights() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
-	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
+	// Initialize the client with your application region, eg. insights.ALGOLIA_APPLICATION_REGION
+	client, err := insights.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", insights.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

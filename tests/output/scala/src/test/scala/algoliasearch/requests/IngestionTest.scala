@@ -65,8 +65,8 @@ class IngestionTest extends AnyFunSuite {
         `type` = AuthenticationType.withName("algolia"),
         name = "authName",
         input = AuthAlgolia(
-          appID = "myappID",
-          apiKey = "randomApiKey"
+          appID = "ALGOLIA_APPLICATION_ID",
+          apiKey = "ALGOLIA_API_KEY"
         )
       )
     )
@@ -76,8 +76,9 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/authentications")
     assert(res.method == "POST")
-    val expectedBody =
-      parse("""{"type":"algolia","name":"authName","input":{"appID":"myappID","apiKey":"randomApiKey"}}""")
+    val expectedBody = parse(
+      """{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -610,7 +611,7 @@ class IngestionTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -630,7 +631,7 @@ class IngestionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))
@@ -647,7 +648,7 @@ class IngestionTest extends AnyFunSuite {
       requestOptions = Some(
         RequestOptions
           .builder()
-          .withHeader("x-algolia-api-key", "myApiKey")
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
           .build()
       )
     )
@@ -667,7 +668,7 @@ class IngestionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val expectedHeaders = parse("""{"x-algolia-api-key":"myApiKey"}""").asInstanceOf[JObject].obj.toMap
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
     val actualHeaders = res.headers
     for ((k, v) <- expectedHeaders) {
       assert(actualHeaders.contains(k))

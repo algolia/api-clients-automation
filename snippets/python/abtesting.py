@@ -12,10 +12,12 @@ async def snippet_for_add_ab_tests():
     """
     # >SEPARATOR addABTests default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.add_ab_tests(
+    response = await client.add_ab_tests(
         add_ab_tests_request={
             "endAt": "2022-12-31T00:00:00.000Z",
             "name": "myABTest",
@@ -31,6 +33,28 @@ async def snippet_for_add_ab_tests():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.add_ab_tests_with_http_info(
+        add_ab_tests_request={
+            "endAt": "2022-12-31T00:00:00.000Z",
+            "name": "myABTest",
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 30,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -49,12 +73,23 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -73,12 +108,23 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -97,12 +143,23 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -121,12 +178,23 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -145,12 +213,23 @@ async def snippet_for_delete_ab_test():
     """
     # >SEPARATOR deleteABTest default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_ab_test(
+    response = await client.delete_ab_test(
         id=42,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_ab_test_with_http_info(
+        id=42,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -169,12 +248,23 @@ async def snippet_for_get_ab_test():
     """
     # >SEPARATOR getABTest default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_ab_test(
+    response = await client.get_ab_test(
         id=42,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_ab_test_with_http_info(
+        id=42,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -193,10 +283,19 @@ async def snippet_for_list_ab_tests():
     """
     # >SEPARATOR listABTests default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_ab_tests()
+    response = await client.list_ab_tests()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_ab_tests_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -215,10 +314,12 @@ async def snippet_for_schedule_ab_test():
     """
     # >SEPARATOR scheduleABTest default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.schedule_ab_test(
+    response = await client.schedule_ab_test(
         schedule_ab_tests_request={
             "endAt": "2022-12-31T00:00:00.000Z",
             "scheduledAt": "2022-11-31T00:00:00.000Z",
@@ -235,6 +336,29 @@ async def snippet_for_schedule_ab_test():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.schedule_ab_test_with_http_info(
+        schedule_ab_tests_request={
+            "endAt": "2022-12-31T00:00:00.000Z",
+            "scheduledAt": "2022-11-31T00:00:00.000Z",
+            "name": "myABTest",
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 30,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -253,10 +377,17 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 
@@ -272,12 +403,23 @@ async def snippet_for_stop_ab_test():
     """
     # >SEPARATOR stopABTest default
     # Initialize the client
-    _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AbtestingClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.stop_ab_test(
+    response = await client.stop_ab_test(
         id=42,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.stop_ab_test_with_http_info(
+        id=42,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly

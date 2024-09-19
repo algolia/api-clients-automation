@@ -269,7 +269,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -280,7 +280,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }
@@ -297,7 +297,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             [
                 'headers' => [
-                    'x-algolia-api-key' => 'myApiKey',
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
             ]
         );
@@ -308,7 +308,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"myApiKey"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
             ],
         ]);
     }

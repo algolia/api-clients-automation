@@ -23,7 +23,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -43,7 +43,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customGet[JObject](
@@ -63,7 +63,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPost[JObject](
@@ -83,7 +83,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPut[JObject](
@@ -103,7 +103,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetClusterIncidents(): Unit = {
     // >SEPARATOR getClusterIncidents default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getClusterIncidents(
@@ -123,7 +123,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetClusterStatus(): Unit = {
     // >SEPARATOR getClusterStatus default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getClusterStatus(
@@ -143,7 +143,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetIncidents(): Unit = {
     // >SEPARATOR getIncidents default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getIncidents(
@@ -162,7 +162,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetIndexingTime(): Unit = {
     // >SEPARATOR getIndexingTime default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getIndexingTime(
@@ -182,7 +182,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetLatency(): Unit = {
     // >SEPARATOR getLatency default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getLatency(
@@ -202,7 +202,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetMetrics(): Unit = {
     // >SEPARATOR getMetrics default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getMetrics(
@@ -223,7 +223,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetReachability(): Unit = {
     // >SEPARATOR getReachability default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getReachability(
@@ -243,7 +243,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetServers(): Unit = {
     // >SEPARATOR getServers default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getServers(
@@ -262,7 +262,7 @@ class SnippetMonitoringClient {
   def snippetForMonitoringClientGetStatus(): Unit = {
     // >SEPARATOR getStatus default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getStatus(

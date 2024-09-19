@@ -11,7 +11,7 @@ import { recommendClient } from '@algolia/recommend';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -28,7 +28,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -45,7 +45,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -62,7 +62,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -79,7 +79,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteRecommendRule(): Promise<void> {
   // >SEPARATOR deleteRecommendRule default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteRecommendRule({
@@ -100,7 +100,7 @@ export async function snippetForDeleteRecommendRule(): Promise<void> {
 export async function snippetForGetRecommendRule(): Promise<void> {
   // >SEPARATOR getRecommendRule default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getRecommendRule({
@@ -121,7 +121,7 @@ export async function snippetForGetRecommendRule(): Promise<void> {
 export async function snippetForGetRecommendStatus(): Promise<void> {
   // >SEPARATOR getRecommendStatus default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getRecommendStatus({
@@ -142,7 +142,7 @@ export async function snippetForGetRecommendStatus(): Promise<void> {
 export async function snippetForGetRecommendations(): Promise<void> {
   // >SEPARATOR getRecommendations default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getRecommendations({
@@ -161,7 +161,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
 export async function snippetForSearchRecommendRules(): Promise<void> {
   // >SEPARATOR searchRecommendRules default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });
@@ -178,7 +178,7 @@ export async function snippetForSearchRecommendRules(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   client.setClientApiKey({ apiKey: 'updated-api-key' });

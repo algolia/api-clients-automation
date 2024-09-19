@@ -1052,7 +1052,7 @@ final class SearchClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -1077,7 +1077,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -1100,7 +1100,7 @@ final class SearchClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -1125,7 +1125,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -2485,7 +2485,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.restoreApiKeyWithHTTPInfo(key: "myApiKey")
+        let response = try await client.restoreApiKeyWithHTTPInfo(key: "ALGOLIA_API_KEY")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2493,7 +2493,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
 
-        XCTAssertEqual(echoResponse.path, "/1/keys/myApiKey/restore")
+        XCTAssertEqual(echoResponse.path, "/1/keys/ALGOLIA_API_KEY/restore")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -4537,7 +4537,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.updateApiKeyWithHTTPInfo(
-            key: "myApiKey",
+            key: "ALGOLIA_API_KEY",
             apiKey: ApiKey(
                 acl: [Acl.search, Acl.addObject],
                 maxHitsPerQuery: 20,
@@ -4558,7 +4558,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/keys/myApiKey")
+        XCTAssertEqual(echoResponse.path, "/1/keys/ALGOLIA_API_KEY")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)

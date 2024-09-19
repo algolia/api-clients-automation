@@ -11,7 +11,7 @@ import { monitoringClient } from '@algolia/monitoring';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -28,7 +28,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -45,7 +45,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -62,7 +62,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -79,7 +79,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForGetClusterIncidents(): Promise<void> {
   // >SEPARATOR getClusterIncidents default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getClusterIncidents({ clusters: 'c1-de' });
@@ -96,7 +96,7 @@ export async function snippetForGetClusterIncidents(): Promise<void> {
 export async function snippetForGetClusterStatus(): Promise<void> {
   // >SEPARATOR getClusterStatus default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getClusterStatus({ clusters: 'c1-de' });
@@ -113,7 +113,7 @@ export async function snippetForGetClusterStatus(): Promise<void> {
 export async function snippetForGetIncidents(): Promise<void> {
   // >SEPARATOR getIncidents default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getIncidents();
@@ -130,7 +130,7 @@ export async function snippetForGetIncidents(): Promise<void> {
 export async function snippetForGetIndexingTime(): Promise<void> {
   // >SEPARATOR getIndexingTime default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getIndexingTime({ clusters: 'c1-de' });
@@ -147,7 +147,7 @@ export async function snippetForGetIndexingTime(): Promise<void> {
 export async function snippetForGetLatency(): Promise<void> {
   // >SEPARATOR getLatency default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getLatency({ clusters: 'c1-de' });
@@ -164,7 +164,7 @@ export async function snippetForGetLatency(): Promise<void> {
 export async function snippetForGetMetrics(): Promise<void> {
   // >SEPARATOR getMetrics default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getMetrics({ metric: 'avg_build_time', period: 'minute' });
@@ -181,7 +181,7 @@ export async function snippetForGetMetrics(): Promise<void> {
 export async function snippetForGetReachability(): Promise<void> {
   // >SEPARATOR getReachability default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getReachability({ clusters: 'c1-de' });
@@ -198,7 +198,7 @@ export async function snippetForGetReachability(): Promise<void> {
 export async function snippetForGetServers(): Promise<void> {
   // >SEPARATOR getServers default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getServers();
@@ -215,7 +215,7 @@ export async function snippetForGetServers(): Promise<void> {
 export async function snippetForGetStatus(): Promise<void> {
   // >SEPARATOR getStatus default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getStatus();
@@ -232,7 +232,7 @@ export async function snippetForGetStatus(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = monitoringClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   client.setClientApiKey({ apiKey: 'updated-api-key' });

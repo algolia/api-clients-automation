@@ -12,7 +12,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateAuthentication() {
     // >SEPARATOR createAuthentication default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createAuthentication(
@@ -38,7 +38,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateDestination() {
     // >SEPARATOR createDestination default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createDestination(
@@ -63,7 +63,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateSource() {
     // >SEPARATOR createSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createSource(
@@ -91,7 +91,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateTask() {
     // >SEPARATOR createTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createTask(
@@ -113,7 +113,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateTaskV1() {
     // >SEPARATOR createTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createTaskV1(
@@ -138,7 +138,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCreateTransformation() {
     // >SEPARATOR createTransformation default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.createTransformation(
@@ -160,7 +160,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customDelete(
@@ -178,7 +178,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customGet(
@@ -196,7 +196,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPost(
@@ -214,7 +214,7 @@ class SnippetIngestionClient {
   suspend fun snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPut(
@@ -232,7 +232,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteAuthentication() {
     // >SEPARATOR deleteAuthentication default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteAuthentication(
@@ -250,7 +250,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteDestination() {
     // >SEPARATOR deleteDestination default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteDestination(
@@ -268,7 +268,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteSource() {
     // >SEPARATOR deleteSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteSource(
@@ -286,7 +286,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteTask() {
     // >SEPARATOR deleteTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteTask(
@@ -304,7 +304,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteTaskV1() {
     // >SEPARATOR deleteTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteTaskV1(
@@ -322,7 +322,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDeleteTransformation() {
     // >SEPARATOR deleteTransformation default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteTransformation(
@@ -340,7 +340,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDisableTask() {
     // >SEPARATOR disableTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.disableTask(
@@ -358,7 +358,7 @@ class SnippetIngestionClient {
   suspend fun snippetForDisableTaskV1() {
     // >SEPARATOR disableTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.disableTaskV1(
@@ -376,7 +376,7 @@ class SnippetIngestionClient {
   suspend fun snippetForEnableTask() {
     // >SEPARATOR enableTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.enableTask(
@@ -394,7 +394,7 @@ class SnippetIngestionClient {
   suspend fun snippetForEnableTaskV1() {
     // >SEPARATOR enableTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.enableTaskV1(
@@ -412,7 +412,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetAuthentication() {
     // >SEPARATOR getAuthentication default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getAuthentication(
@@ -430,7 +430,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetDestination() {
     // >SEPARATOR getDestination default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getDestination(
@@ -448,7 +448,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetEvent() {
     // >SEPARATOR getEvent default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getEvent(
@@ -467,7 +467,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetRun() {
     // >SEPARATOR getRun default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getRun(
@@ -485,7 +485,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetSource() {
     // >SEPARATOR getSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getSource(
@@ -503,7 +503,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetTask() {
     // >SEPARATOR getTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getTask(
@@ -521,7 +521,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetTaskV1() {
     // >SEPARATOR getTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getTaskV1(
@@ -539,7 +539,7 @@ class SnippetIngestionClient {
   suspend fun snippetForGetTransformation() {
     // >SEPARATOR getTransformation default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getTransformation(
@@ -557,7 +557,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListAuthentications() {
     // >SEPARATOR listAuthentications default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listAuthentications()
@@ -573,7 +573,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListDestinations() {
     // >SEPARATOR listDestinations default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listDestinations()
@@ -589,7 +589,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListEvents() {
     // >SEPARATOR listEvents default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listEvents(
@@ -607,7 +607,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListRuns() {
     // >SEPARATOR listRuns default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listRuns()
@@ -623,7 +623,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListSources() {
     // >SEPARATOR listSources default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listSources()
@@ -639,7 +639,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListTasks() {
     // >SEPARATOR listTasks default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listTasks()
@@ -655,7 +655,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListTasksV1() {
     // >SEPARATOR listTasksV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listTasksV1()
@@ -671,7 +671,7 @@ class SnippetIngestionClient {
   suspend fun snippetForListTransformations() {
     // >SEPARATOR listTransformations default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listTransformations()
@@ -687,7 +687,7 @@ class SnippetIngestionClient {
   suspend fun snippetForPushTask() {
     // >SEPARATOR pushTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.pushTask(
@@ -724,7 +724,7 @@ class SnippetIngestionClient {
   suspend fun snippetForRunSource() {
     // >SEPARATOR runSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.runSource(
@@ -747,7 +747,7 @@ class SnippetIngestionClient {
   suspend fun snippetForRunTask() {
     // >SEPARATOR runTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.runTask(
@@ -765,7 +765,7 @@ class SnippetIngestionClient {
   suspend fun snippetForRunTaskV1() {
     // >SEPARATOR runTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.runTaskV1(
@@ -783,7 +783,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchAuthentications() {
     // >SEPARATOR searchAuthentications default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchAuthentications(
@@ -803,7 +803,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchDestinations() {
     // >SEPARATOR searchDestinations default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchDestinations(
@@ -823,7 +823,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchSources() {
     // >SEPARATOR searchSources default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchSources(
@@ -843,7 +843,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchTasks() {
     // >SEPARATOR searchTasks default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchTasks(
@@ -863,7 +863,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchTasksV1() {
     // >SEPARATOR searchTasksV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchTasksV1(
@@ -883,7 +883,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSearchTransformations() {
     // >SEPARATOR searchTransformations default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.searchTransformations(
@@ -903,7 +903,7 @@ class SnippetIngestionClient {
   suspend fun snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     client.setClientApiKey(
@@ -919,7 +919,7 @@ class SnippetIngestionClient {
   suspend fun snippetForTriggerDockerSourceDiscover() {
     // >SEPARATOR triggerDockerSourceDiscover default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.triggerDockerSourceDiscover(
@@ -937,7 +937,7 @@ class SnippetIngestionClient {
   suspend fun snippetForTryTransformation() {
     // >SEPARATOR tryTransformation default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.tryTransformation(
@@ -963,7 +963,7 @@ class SnippetIngestionClient {
   suspend fun snippetForTryTransformationBeforeUpdate() {
     // >SEPARATOR tryTransformationBeforeUpdate default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.tryTransformationBeforeUpdate(
@@ -990,7 +990,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateAuthentication() {
     // >SEPARATOR updateAuthentication default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateAuthentication(
@@ -1011,7 +1011,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateDestination() {
     // >SEPARATOR updateDestination default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateDestination(
@@ -1032,7 +1032,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateSource() {
     // >SEPARATOR updateSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateSource(
@@ -1053,7 +1053,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateTask() {
     // >SEPARATOR updateTask default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateTask(
@@ -1075,7 +1075,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateTaskV1() {
     // >SEPARATOR updateTaskV1 default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateTaskV1(
@@ -1096,7 +1096,7 @@ class SnippetIngestionClient {
   suspend fun snippetForUpdateTransformation() {
     // >SEPARATOR updateTransformation default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.updateTransformation(
@@ -1119,7 +1119,7 @@ class SnippetIngestionClient {
   suspend fun snippetForValidateSource() {
     // >SEPARATOR validateSource default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.validateSource(
@@ -1147,7 +1147,7 @@ class SnippetIngestionClient {
   suspend fun snippetForValidateSourceBeforeUpdate() {
     // >SEPARATOR validateSourceBeforeUpdate default
     // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.validateSourceBeforeUpdate(

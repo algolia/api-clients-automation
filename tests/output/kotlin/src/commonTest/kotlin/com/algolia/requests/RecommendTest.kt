@@ -233,7 +233,7 @@ class RecommendTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -241,7 +241,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -263,7 +263,7 @@ class RecommendTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -271,7 +271,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },

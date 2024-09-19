@@ -23,7 +23,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -43,7 +47,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     val response = client.customGet[JObject](
@@ -63,7 +71,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     val response = client.customPost[JObject](
@@ -83,7 +95,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     val response = client.customPut[JObject](
@@ -103,7 +119,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientDeleteUserToken(): Unit = {
     // >SEPARATOR deleteUserToken default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     client.deleteUserToken(
@@ -121,7 +141,11 @@ class SnippetInsightsClient {
   def snippetForInsightsClientPushEvents(): Unit = {
     // >SEPARATOR pushEvents default
     // Initialize the client
-    val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
 
     // Call the API
     val response = client.pushEvents(

@@ -13,7 +13,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -27,7 +27,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -41,7 +41,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -55,7 +55,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -69,7 +69,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetAddToCartRate() async throws {
         // >SEPARATOR getAddToCartRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getAddToCartRate(index: "index")
@@ -83,7 +83,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetAverageClickPosition() async throws {
         // >SEPARATOR getAverageClickPosition default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getAverageClickPosition(index: "index")
@@ -97,7 +97,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetClickPositions() async throws {
         // >SEPARATOR getClickPositions default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getClickPositions(index: "index")
@@ -111,7 +111,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetClickThroughRate() async throws {
         // >SEPARATOR getClickThroughRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getClickThroughRate(index: "index")
@@ -125,7 +125,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetConversionRate() async throws {
         // >SEPARATOR getConversionRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getConversionRate(index: "index")
@@ -139,7 +139,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetNoClickRate() async throws {
         // >SEPARATOR getNoClickRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getNoClickRate(index: "index")
@@ -153,7 +153,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetNoResultsRate() async throws {
         // >SEPARATOR getNoResultsRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getNoResultsRate(index: "index")
@@ -167,7 +167,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetPurchaseRate() async throws {
         // >SEPARATOR getPurchaseRate default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getPurchaseRate(index: "index")
@@ -181,7 +181,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetRevenue() async throws {
         // >SEPARATOR getRevenue default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getRevenue(index: "index")
@@ -195,7 +195,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesCount() async throws {
         // >SEPARATOR getSearchesCount default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getSearchesCount(index: "index")
@@ -209,7 +209,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesNoClicks() async throws {
         // >SEPARATOR getSearchesNoClicks default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getSearchesNoClicks(index: "index")
@@ -223,7 +223,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesNoResults() async throws {
         // >SEPARATOR getSearchesNoResults default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getSearchesNoResults(index: "index")
@@ -237,7 +237,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetStatus() async throws {
         // >SEPARATOR getStatus default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getStatus(index: "index")
@@ -251,7 +251,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopCountries() async throws {
         // >SEPARATOR getTopCountries default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopCountries(index: "index")
@@ -265,7 +265,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFilterAttributes() async throws {
         // >SEPARATOR getTopFilterAttributes default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopFilterAttributes(index: "index")
@@ -279,7 +279,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFilterForAttribute() async throws {
         // >SEPARATOR getTopFilterForAttribute default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
@@ -293,7 +293,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFiltersNoResults() async throws {
         // >SEPARATOR getTopFiltersNoResults default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopFiltersNoResults(index: "index")
@@ -307,7 +307,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopHits() async throws {
         // >SEPARATOR getTopHits default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopHits(index: "index")
@@ -321,7 +321,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopSearches() async throws {
         // >SEPARATOR getTopSearches default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTopSearches(index: "index")
@@ -335,7 +335,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetUsersCount() async throws {
         // >SEPARATOR getUsersCount default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getUsersCount(index: "index")
@@ -349,7 +349,7 @@ final class AnalyticsClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")

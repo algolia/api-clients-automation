@@ -12,7 +12,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customDelete(
@@ -30,7 +30,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customGet(
@@ -48,7 +48,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPost(
@@ -66,7 +66,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPut(
@@ -84,7 +84,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForDeleteUserProfile() {
     // >SEPARATOR deleteUserProfile default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.deleteUserProfile(
@@ -102,7 +102,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForGetPersonalizationStrategy() {
     // >SEPARATOR getPersonalizationStrategy default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getPersonalizationStrategy()
@@ -118,7 +118,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForGetUserTokenProfile() {
     // >SEPARATOR getUserTokenProfile default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.getUserTokenProfile(
@@ -136,7 +136,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     client.setClientApiKey(
@@ -152,7 +152,7 @@ class SnippetPersonalizationClient {
   suspend fun snippetForSetPersonalizationStrategy() {
     // >SEPARATOR setPersonalizationStrategy default
     // Initialize the client
-    val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.setPersonalizationStrategy(

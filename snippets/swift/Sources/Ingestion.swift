@@ -13,7 +13,7 @@ final class IngestionClientSnippet {
     func snippetForCreateAuthentication() async throws {
         // >SEPARATOR createAuthentication default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createAuthentication(authenticationCreate: AuthenticationCreate(
@@ -31,7 +31,7 @@ final class IngestionClientSnippet {
     func snippetForCreateDestination() async throws {
         // >SEPARATOR createDestination default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createDestination(destinationCreate: DestinationCreate(
@@ -50,7 +50,7 @@ final class IngestionClientSnippet {
     func snippetForCreateSource() async throws {
         // >SEPARATOR createSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createSource(sourceCreate: SourceCreate(
@@ -74,7 +74,7 @@ final class IngestionClientSnippet {
     func snippetForCreateTask() async throws {
         // >SEPARATOR createTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createTask(taskCreate: TaskCreate(
@@ -92,7 +92,7 @@ final class IngestionClientSnippet {
     func snippetForCreateTaskV1() async throws {
         // >SEPARATOR createTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createTaskV1(taskCreate: TaskCreateV1(
@@ -111,7 +111,7 @@ final class IngestionClientSnippet {
     func snippetForCreateTransformation() async throws {
         // >SEPARATOR createTransformation default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.createTransformation(transformationCreate: TransformationCreate(
@@ -129,7 +129,7 @@ final class IngestionClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -143,7 +143,7 @@ final class IngestionClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -157,7 +157,7 @@ final class IngestionClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -171,7 +171,7 @@ final class IngestionClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -185,7 +185,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteAuthentication() async throws {
         // >SEPARATOR deleteAuthentication default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -199,7 +199,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteDestination() async throws {
         // >SEPARATOR deleteDestination default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -213,7 +213,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteSource() async throws {
         // >SEPARATOR deleteSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteSource(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -227,7 +227,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteTask() async throws {
         // >SEPARATOR deleteTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -241,7 +241,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteTaskV1() async throws {
         // >SEPARATOR deleteTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -255,7 +255,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteTransformation() async throws {
         // >SEPARATOR deleteTransformation default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.deleteTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -269,7 +269,7 @@ final class IngestionClientSnippet {
     func snippetForDisableTask() async throws {
         // >SEPARATOR disableTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.disableTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -283,7 +283,7 @@ final class IngestionClientSnippet {
     func snippetForDisableTaskV1() async throws {
         // >SEPARATOR disableTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.disableTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -297,7 +297,7 @@ final class IngestionClientSnippet {
     func snippetForEnableTask() async throws {
         // >SEPARATOR enableTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.enableTask(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -311,7 +311,7 @@ final class IngestionClientSnippet {
     func snippetForEnableTaskV1() async throws {
         // >SEPARATOR enableTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.enableTaskV1(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -325,7 +325,7 @@ final class IngestionClientSnippet {
     func snippetForGetAuthentication() async throws {
         // >SEPARATOR getAuthentication default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -339,7 +339,7 @@ final class IngestionClientSnippet {
     func snippetForGetDestination() async throws {
         // >SEPARATOR getDestination default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -353,7 +353,7 @@ final class IngestionClientSnippet {
     func snippetForGetEvent() async throws {
         // >SEPARATOR getEvent default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getEvent(
@@ -370,7 +370,7 @@ final class IngestionClientSnippet {
     func snippetForGetRun() async throws {
         // >SEPARATOR getRun default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getRun(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -384,7 +384,7 @@ final class IngestionClientSnippet {
     func snippetForGetSource() async throws {
         // >SEPARATOR getSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getSource(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
@@ -398,7 +398,7 @@ final class IngestionClientSnippet {
     func snippetForGetTask() async throws {
         // >SEPARATOR getTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -412,7 +412,7 @@ final class IngestionClientSnippet {
     func snippetForGetTaskV1() async throws {
         // >SEPARATOR getTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -426,7 +426,7 @@ final class IngestionClientSnippet {
     func snippetForGetTransformation() async throws {
         // >SEPARATOR getTransformation default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -440,7 +440,7 @@ final class IngestionClientSnippet {
     func snippetForListAuthentications() async throws {
         // >SEPARATOR listAuthentications default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listAuthentications()
@@ -454,7 +454,7 @@ final class IngestionClientSnippet {
     func snippetForListDestinations() async throws {
         // >SEPARATOR listDestinations default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listDestinations()
@@ -468,7 +468,7 @@ final class IngestionClientSnippet {
     func snippetForListEvents() async throws {
         // >SEPARATOR listEvents default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listEvents(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -482,7 +482,7 @@ final class IngestionClientSnippet {
     func snippetForListRuns() async throws {
         // >SEPARATOR listRuns default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listRuns()
@@ -496,7 +496,7 @@ final class IngestionClientSnippet {
     func snippetForListSources() async throws {
         // >SEPARATOR listSources default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listSources()
@@ -510,7 +510,7 @@ final class IngestionClientSnippet {
     func snippetForListTasks() async throws {
         // >SEPARATOR listTasks default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listTasks()
@@ -524,7 +524,7 @@ final class IngestionClientSnippet {
     func snippetForListTasksV1() async throws {
         // >SEPARATOR listTasksV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listTasksV1()
@@ -538,7 +538,7 @@ final class IngestionClientSnippet {
     func snippetForListTransformations() async throws {
         // >SEPARATOR listTransformations default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listTransformations()
@@ -552,7 +552,7 @@ final class IngestionClientSnippet {
     func snippetForPushTask() async throws {
         // >SEPARATOR pushTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.pushTask(
@@ -583,7 +583,7 @@ final class IngestionClientSnippet {
     func snippetForRunSource() async throws {
         // >SEPARATOR runSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.runSource(
@@ -604,7 +604,7 @@ final class IngestionClientSnippet {
     func snippetForRunTask() async throws {
         // >SEPARATOR runTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.runTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -618,7 +618,7 @@ final class IngestionClientSnippet {
     func snippetForRunTaskV1() async throws {
         // >SEPARATOR runTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.runTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -632,7 +632,7 @@ final class IngestionClientSnippet {
     func snippetForSearchAuthentications() async throws {
         // >SEPARATOR searchAuthentications default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client
@@ -650,7 +650,7 @@ final class IngestionClientSnippet {
     func snippetForSearchDestinations() async throws {
         // >SEPARATOR searchDestinations default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.searchDestinations(destinationSearch: DestinationSearch(destinationIDs: [
@@ -667,7 +667,7 @@ final class IngestionClientSnippet {
     func snippetForSearchSources() async throws {
         // >SEPARATOR searchSources default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.searchSources(sourceSearch: SourceSearch(sourceIDs: [
@@ -684,7 +684,7 @@ final class IngestionClientSnippet {
     func snippetForSearchTasks() async throws {
         // >SEPARATOR searchTasks default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.searchTasks(taskSearch: TaskSearch(taskIDs: [
@@ -702,7 +702,7 @@ final class IngestionClientSnippet {
     func snippetForSearchTasksV1() async throws {
         // >SEPARATOR searchTasksV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.searchTasksV1(taskSearch: TaskSearch(taskIDs: [
@@ -720,7 +720,7 @@ final class IngestionClientSnippet {
     func snippetForSearchTransformations() async throws {
         // >SEPARATOR searchTransformations default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client
@@ -739,7 +739,7 @@ final class IngestionClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")
@@ -753,7 +753,7 @@ final class IngestionClientSnippet {
     func snippetForTriggerDockerSourceDiscover() async throws {
         // >SEPARATOR triggerDockerSourceDiscover default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.triggerDockerSourceDiscover(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -767,7 +767,7 @@ final class IngestionClientSnippet {
     func snippetForTryTransformation() async throws {
         // >SEPARATOR tryTransformation default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.tryTransformation(transformationTry: TransformationTry(
@@ -784,7 +784,7 @@ final class IngestionClientSnippet {
     func snippetForTryTransformationBeforeUpdate() async throws {
         // >SEPARATOR tryTransformationBeforeUpdate default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.tryTransformationBeforeUpdate(
@@ -801,7 +801,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateAuthentication() async throws {
         // >SEPARATOR updateAuthentication default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateAuthentication(
@@ -818,7 +818,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateDestination() async throws {
         // >SEPARATOR updateDestination default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateDestination(
@@ -835,7 +835,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateSource() async throws {
         // >SEPARATOR updateSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateSource(
@@ -852,7 +852,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateTask() async throws {
         // >SEPARATOR updateTask default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateTask(
@@ -869,7 +869,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateTaskV1() async throws {
         // >SEPARATOR updateTaskV1 default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateTaskV1(
@@ -886,7 +886,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateTransformation() async throws {
         // >SEPARATOR updateTransformation default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.updateTransformation(
@@ -903,7 +903,7 @@ final class IngestionClientSnippet {
     func snippetForValidateSource() async throws {
         // >SEPARATOR validateSource default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.validateSource(sourceCreate: SourceCreate(
@@ -927,7 +927,7 @@ final class IngestionClientSnippet {
     func snippetForValidateSourceBeforeUpdate() async throws {
         // >SEPARATOR validateSourceBeforeUpdate default
         // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.validateSourceBeforeUpdate(
