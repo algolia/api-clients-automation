@@ -131,6 +131,9 @@ paths:
 
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     $ref: 'paths/searchRecommendRules.yml'
+  
+  /1/indexes/{indexName}/{model}/recommend/rules/batch:
+    $ref: 'paths/batchRecommendRules.yml'
 
   # ###############
   # ### Helpers ###
