@@ -364,26 +364,6 @@ export async function snippetForEnableTaskV1(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the generateTransformationCode method.
-//
-// generateTransformationCode
-export async function snippetForGenerateTransformationCode(): Promise<void> {
-  // >SEPARATOR generateTransformationCode default
-  // Initialize the client
-  const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
-
-  // Call the API
-  const response = await client.generateTransformationCode({
-    id: 'foo',
-    userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',
-  });
-
-  // >LOG
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getAuthentication method.
 //
 // getAuthentication
@@ -635,23 +615,6 @@ export async function snippetForListTasksV1(): Promise<void> {
 
   // Call the API
   const response = await client.listTasksV1();
-
-  // >LOG
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the listTransformationModels method.
-//
-// listTransformationModels
-export async function snippetForListTransformationModels(): Promise<void> {
-  // >SEPARATOR listTransformationModels default
-  // Initialize the client
-  const client = ingestionClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
-
-  // Call the API
-  const response = await client.listTransformationModels();
 
   // >LOG
   // use typed response

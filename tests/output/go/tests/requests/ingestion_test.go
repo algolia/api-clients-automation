@@ -794,25 +794,6 @@ func TestIngestion_EnableTaskV1(t *testing.T) {
 	})
 }
 
-func TestIngestion_GenerateTransformationCode(t *testing.T) {
-	client, echo := createIngestionClient(t)
-	_ = echo
-
-	t.Run("generateTransformationCode", func(t *testing.T) {
-		_, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(
-
-			ingestion.NewEmptyGenerateTransformationCodePayload().SetId("foo").SetUserPrompt("fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"),
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/transformations/models", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}`)
-	})
-}
-
 func TestIngestion_GetAuthentication(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -1067,21 +1048,6 @@ func TestIngestion_ListTasksV1(t *testing.T) {
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-	})
-}
-
-func TestIngestion_ListTransformationModels(t *testing.T) {
-	client, echo := createIngestionClient(t)
-	_ = echo
-
-	t.Run("listTransformationModels", func(t *testing.T) {
-		_, err := client.ListTransformationModels()
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/transformations/models", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)

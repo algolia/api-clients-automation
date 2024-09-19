@@ -871,25 +871,6 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_generate_transformation_code_(self):
-        """
-        generateTransformationCode
-        """
-        _req = await self._client.generate_transformation_code_with_http_info(
-            generate_transformation_code_payload={
-                "id": "foo",
-                "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
-            },
-        )
-
-        assert _req.path == "/1/transformations/models"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}"""
-        )
-
     async def test_get_authentication_(self):
         """
         getAuthentication
@@ -1121,18 +1102,6 @@ class TestIngestionClient:
         _req = await self._client.list_tasks_v1_with_http_info()
 
         assert _req.path == "/1/tasks"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    async def test_list_transformation_models_(self):
-        """
-        listTransformationModels
-        """
-        _req = await self._client.list_transformation_models_with_http_info()
-
-        assert _req.path == "/1/transformations/models"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -2507,25 +2476,6 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    def test_generate_transformation_code_(self):
-        """
-        generateTransformationCode
-        """
-        _req = self._client.generate_transformation_code_with_http_info(
-            generate_transformation_code_payload={
-                "id": "foo",
-                "userPrompt": "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
-            },
-        )
-
-        assert _req.path == "/1/transformations/models"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"id":"foo","userPrompt":"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"}"""
-        )
-
     def test_get_authentication_(self):
         """
         getAuthentication
@@ -2757,18 +2707,6 @@ class TestIngestionClientSync:
         _req = self._client.list_tasks_v1_with_http_info()
 
         assert _req.path == "/1/tasks"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
-    def test_list_transformation_models_(self):
-        """
-        listTransformationModels
-        """
-        _req = self._client.list_transformation_models_with_http_info()
-
-        assert _req.path == "/1/transformations/models"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
