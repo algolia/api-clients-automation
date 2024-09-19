@@ -70,7 +70,7 @@ final class RecommendClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.3.2\\).*"
+        let pattern = "^Algolia for Swift \\(9.3.3\\).*"
         let rule = StringRule(pattern: pattern)
         let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
         guard let userAgent else {

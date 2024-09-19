@@ -12,12 +12,21 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -36,12 +45,21 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -60,12 +78,21 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -84,12 +111,21 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -108,12 +144,21 @@ async def snippet_for_get_cluster_incidents():
     """
     # >SEPARATOR getClusterIncidents default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_cluster_incidents(
+    response = await client.get_cluster_incidents(
         clusters="c1-de",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_cluster_incidents_with_http_info(
+        clusters="c1-de",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -132,12 +177,21 @@ async def snippet_for_get_cluster_status():
     """
     # >SEPARATOR getClusterStatus default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_cluster_status(
+    response = await client.get_cluster_status(
         clusters="c1-de",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_cluster_status_with_http_info(
+        clusters="c1-de",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -156,10 +210,17 @@ async def snippet_for_get_incidents():
     """
     # >SEPARATOR getIncidents default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_incidents()
+    response = await client.get_incidents()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_incidents_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -178,12 +239,21 @@ async def snippet_for_get_indexing_time():
     """
     # >SEPARATOR getIndexingTime default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_indexing_time(
+    response = await client.get_indexing_time(
         clusters="c1-de",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_indexing_time_with_http_info(
+        clusters="c1-de",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -202,12 +272,21 @@ async def snippet_for_get_latency():
     """
     # >SEPARATOR getLatency default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_latency(
+    response = await client.get_latency(
         clusters="c1-de",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_latency_with_http_info(
+        clusters="c1-de",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -226,13 +305,23 @@ async def snippet_for_get_metrics():
     """
     # >SEPARATOR getMetrics default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_metrics(
+    response = await client.get_metrics(
         metric="avg_build_time",
         period="minute",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_metrics_with_http_info(
+        metric="avg_build_time",
+        period="minute",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -251,12 +340,21 @@ async def snippet_for_get_reachability():
     """
     # >SEPARATOR getReachability default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_reachability(
+    response = await client.get_reachability(
         clusters="c1-de",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_reachability_with_http_info(
+        clusters="c1-de",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -275,10 +373,17 @@ async def snippet_for_get_servers():
     """
     # >SEPARATOR getServers default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_servers()
+    response = await client.get_servers()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_servers_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -297,10 +402,17 @@ async def snippet_for_get_status():
     """
     # >SEPARATOR getStatus default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_status()
+    response = await client.get_status()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_status_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -319,10 +431,15 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 

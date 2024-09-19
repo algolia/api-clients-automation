@@ -13,7 +13,7 @@ final class MonitoringClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -27,7 +27,7 @@ final class MonitoringClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -41,7 +41,7 @@ final class MonitoringClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -55,7 +55,7 @@ final class MonitoringClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -69,7 +69,7 @@ final class MonitoringClientSnippet {
     func snippetForGetClusterIncidents() async throws {
         // >SEPARATOR getClusterIncidents default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getClusterIncidents(clusters: "c1-de")
@@ -83,7 +83,7 @@ final class MonitoringClientSnippet {
     func snippetForGetClusterStatus() async throws {
         // >SEPARATOR getClusterStatus default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getClusterStatus(clusters: "c1-de")
@@ -97,7 +97,7 @@ final class MonitoringClientSnippet {
     func snippetForGetIncidents() async throws {
         // >SEPARATOR getIncidents default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getIncidents()
@@ -111,7 +111,7 @@ final class MonitoringClientSnippet {
     func snippetForGetIndexingTime() async throws {
         // >SEPARATOR getIndexingTime default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getIndexingTime(clusters: "c1-de")
@@ -125,7 +125,7 @@ final class MonitoringClientSnippet {
     func snippetForGetLatency() async throws {
         // >SEPARATOR getLatency default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getLatency(clusters: "c1-de")
@@ -139,7 +139,7 @@ final class MonitoringClientSnippet {
     func snippetForGetMetrics() async throws {
         // >SEPARATOR getMetrics default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
@@ -153,7 +153,7 @@ final class MonitoringClientSnippet {
     func snippetForGetReachability() async throws {
         // >SEPARATOR getReachability default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getReachability(clusters: "c1-de")
@@ -167,7 +167,7 @@ final class MonitoringClientSnippet {
     func snippetForGetServers() async throws {
         // >SEPARATOR getServers default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getServers()
@@ -181,7 +181,7 @@ final class MonitoringClientSnippet {
     func snippetForGetStatus() async throws {
         // >SEPARATOR getStatus default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getStatus()
@@ -195,7 +195,7 @@ final class MonitoringClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")

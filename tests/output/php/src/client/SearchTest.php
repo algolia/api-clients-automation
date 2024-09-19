@@ -125,7 +125,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.4.2\).*/',
+                '/^Algolia for PHP \(4.4.3\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

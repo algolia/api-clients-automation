@@ -264,14 +264,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -297,14 +298,15 @@ void main() {
         },
         requestOptions: RequestOptions(
           headers: {
-            'x-algolia-api-key': 'myApiKey',
+            'x-algolia-api-key': 'ALGOLIA_API_KEY',
           },
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -650,7 +652,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 42.1,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
@@ -725,13 +727,13 @@ void main() {
               maxRecommendations: 10,
               facetName: "myFacetName",
               facetValue: "myFacetValue",
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback",
@@ -804,7 +806,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query1",
@@ -823,7 +825,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query2",

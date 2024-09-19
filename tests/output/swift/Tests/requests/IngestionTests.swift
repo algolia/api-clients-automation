@@ -58,7 +58,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createAuthenticationWithHTTPInfo(authenticationCreate: AuthenticationCreate(
             type: AuthenticationType.algolia,
             name: "authName",
-            input: AuthInput.authAlgolia(AuthAlgolia(appID: "myappID", apiKey: "randomApiKey"))
+            input: AuthInput.authAlgolia(AuthAlgolia(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY"))
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -67,7 +67,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}"
+            "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -827,7 +827,7 @@ final class IngestionClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -852,7 +852,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -876,7 +876,7 @@ final class IngestionClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -901,7 +901,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -1427,42 +1427,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// generateTransformationCode
-    func testGenerateTransformationCodeTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client
-            .generateTransformationCodeWithHTTPInfo(
-                generateTransformationCodePayload: GenerateTransformationCodePayload(
-                    id: "foo",
-                    userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
-                )
-            )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData =
-            "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}"
-                .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/transformations/models")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// getAuthentication
     func testGetAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
@@ -1836,28 +1800,6 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/tasks")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// listTransformationModels
-    func testListTransformationModelsTest() async throws {
-        let configuration = try IngestionClientConfiguration(
-            appID: IngestionClientRequestsTests.APPLICATION_ID,
-            apiKey: IngestionClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = IngestionClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.listTransformationModelsWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/transformations/models")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)

@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -30,7 +30,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -50,7 +50,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -70,7 +70,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -90,7 +90,7 @@ end
 def snippet_for_get_cluster_incidents
   # >SEPARATOR getClusterIncidents default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_cluster_incidents("c1-de")
@@ -110,7 +110,7 @@ end
 def snippet_for_get_cluster_status
   # >SEPARATOR getClusterStatus default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_cluster_status("c1-de")
@@ -130,7 +130,7 @@ end
 def snippet_for_get_incidents
   # >SEPARATOR getIncidents default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_incidents
@@ -150,7 +150,7 @@ end
 def snippet_for_get_indexing_time
   # >SEPARATOR getIndexingTime default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_indexing_time("c1-de")
@@ -170,7 +170,7 @@ end
 def snippet_for_get_latency
   # >SEPARATOR getLatency default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_latency("c1-de")
@@ -190,7 +190,7 @@ end
 def snippet_for_get_metrics
   # >SEPARATOR getMetrics default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_metrics("avg_build_time", "minute")
@@ -210,7 +210,7 @@ end
 def snippet_for_get_reachability
   # >SEPARATOR getReachability default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_reachability("c1-de")
@@ -230,7 +230,7 @@ end
 def snippet_for_get_servers
   # >SEPARATOR getServers default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_servers
@@ -250,7 +250,7 @@ end
 def snippet_for_get_status
   # >SEPARATOR getStatus default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_status
@@ -270,7 +270,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::MonitoringClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   client.set_client_api_key("updated-api-key")

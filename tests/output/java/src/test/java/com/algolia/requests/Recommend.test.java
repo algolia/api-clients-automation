@@ -325,7 +325,7 @@ class RecommendClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -347,7 +347,7 @@ class RecommendClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -376,7 +376,7 @@ class RecommendClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -398,7 +398,7 @@ class RecommendClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -739,7 +739,7 @@ class RecommendClientRequestsTests {
                 .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
                   new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
@@ -806,10 +806,10 @@ class RecommendClientRequestsTests {
                 .setFacetName("myFacetName")
                 .setFacetValue("myFacetValue")
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
                 )
             )
           )
@@ -876,7 +876,7 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
+                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
                 )
                 .setFallbackParameters(
                   new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
@@ -888,7 +888,7 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
+                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
                 )
                 .setFallbackParameters(
                   new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))

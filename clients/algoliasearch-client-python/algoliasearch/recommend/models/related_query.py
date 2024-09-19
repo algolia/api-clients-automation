@@ -19,8 +19,8 @@ else:
 
 
 from algoliasearch.recommend.models.fallback_params import FallbackParams
+from algoliasearch.recommend.models.recommend_search_params import RecommendSearchParams
 from algoliasearch.recommend.models.related_model import RelatedModel
-from algoliasearch.recommend.models.search_params import SearchParams
 
 
 class RelatedQuery(BaseModel):
@@ -44,7 +44,7 @@ class RelatedQuery(BaseModel):
             alias="maxRecommendations",
         )
     )
-    query_parameters: Optional[SearchParams] = Field(
+    query_parameters: Optional[RecommendSearchParams] = Field(
         default=None, alias="queryParameters"
     )
     model: RelatedModel
@@ -81,6 +81,7 @@ class RelatedQuery(BaseModel):
             by_alias=True,
             exclude={},
             exclude_none=True,
+            exclude_unset=True,
         )
         if self.query_parameters:
             _dict["queryParameters"] = self.query_parameters.to_dict()
@@ -103,7 +104,7 @@ class RelatedQuery(BaseModel):
                 "threshold": obj.get("threshold"),
                 "maxRecommendations": obj.get("maxRecommendations"),
                 "queryParameters": (
-                    SearchParams.from_dict(obj.get("queryParameters"))
+                    RecommendSearchParams.from_dict(obj.get("queryParameters"))
                     if obj.get("queryParameters") is not None
                     else None
                 ),

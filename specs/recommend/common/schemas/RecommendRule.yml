@@ -32,7 +32,7 @@ Condition:
     If not specified, the rule is triggered for all recommendations.
   properties:
     filters:
-      $ref: '../../../common/schemas/SearchParams.yml#/filters'
+      $ref: './QueryParameters.yml#/baseRecommendSearchParams/properties/filters'
     context:
       $ref: '../../../common/schemas/Rule.yml#/context'
 
@@ -89,7 +89,7 @@ ParamsConsequence:
       items:
         $ref: '#/AutoFacetFilter'
     filters:
-      $ref: '../../../common/schemas/SearchParams.yml#/filters'
+      $ref: './QueryParameters.yml#/baseRecommendSearchParams/properties/filters'
     optionalFilters:
       type: array
       description: |

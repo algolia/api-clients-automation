@@ -9,7 +9,8 @@ import 'package:algoliasearch/algoliasearch_lite.dart';
 void snippetForcustomPost() async {
   // >SEPARATOR customPost default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customPost(
@@ -25,7 +26,8 @@ void snippetForcustomPost() async {
 void snippetForgetRecommendations() async {
   // >SEPARATOR getRecommendations default
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getRecommendations(
@@ -50,7 +52,8 @@ void snippetForgetRecommendations() async {
 void snippetForsearch() async {
   // >SEPARATOR search withHitsPerPage
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -74,7 +77,8 @@ void snippetForsearch() async {
 void snippetForsearch1() async {
   // >SEPARATOR search filterOnly
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -98,7 +102,8 @@ void snippetForsearch1() async {
 void snippetForsearch2() async {
   // >SEPARATOR search filterOr
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -122,7 +127,8 @@ void snippetForsearch2() async {
 void snippetForsearch3() async {
   // >SEPARATOR search filterNot
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -146,7 +152,8 @@ void snippetForsearch3() async {
 void snippetForsearch4() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(
@@ -173,7 +180,8 @@ void snippetForsearch4() async {
 void snippetForsearch5() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
-  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.search(

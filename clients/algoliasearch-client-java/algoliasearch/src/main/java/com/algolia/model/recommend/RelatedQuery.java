@@ -21,7 +21,7 @@ public class RelatedQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("model")
   private RelatedModel model;
@@ -73,14 +73,14 @@ public class RelatedQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public RelatedQuery setQueryParameters(SearchParams queryParameters) {
+  public RelatedQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 

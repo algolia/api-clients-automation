@@ -14,8 +14,8 @@ func SnippetForCreateConfigOfSuggestions() {
 	*/
 
 	// >SEPARATOR createConfig default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -51,8 +51,8 @@ func SnippetForCustomDeleteOfSuggestions() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -80,8 +80,8 @@ func SnippetForCustomGetOfSuggestions() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -109,8 +109,8 @@ func SnippetForCustomPostOfSuggestions() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -138,8 +138,8 @@ func SnippetForCustomPutOfSuggestions() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -167,8 +167,8 @@ func SnippetForDeleteConfigOfSuggestions() {
 	*/
 
 	// >SEPARATOR deleteConfig default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -196,8 +196,8 @@ func SnippetForGetAllConfigsOfSuggestions() {
 	*/
 
 	// >SEPARATOR getAllConfigs default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -223,8 +223,8 @@ func SnippetForGetConfigOfSuggestions() {
 	*/
 
 	// >SEPARATOR getConfig default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -252,8 +252,8 @@ func SnippetForGetConfigStatusOfSuggestions() {
 	*/
 
 	// >SEPARATOR getConfigStatus default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -281,8 +281,8 @@ func SnippetForGetLogFileOfSuggestions() {
 	*/
 
 	// >SEPARATOR getLogFile default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -310,8 +310,8 @@ func SnippetForSetClientApiKeyOfSuggestions() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -337,8 +337,8 @@ func SnippetForUpdateConfigOfSuggestions() {
 	*/
 
 	// >SEPARATOR updateConfig default
-	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
-	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
+	// Initialize the client with your application region, eg. suggestions.ALGOLIA_APPLICATION_REGION
+	client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", suggestions.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

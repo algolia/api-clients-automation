@@ -1,3 +1,7 @@
+## [1.24.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.1...1.24.2)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+
 ## [1.24.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.24.0...1.24.1)
 
 - [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)

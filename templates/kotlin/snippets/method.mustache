@@ -17,7 +17,7 @@ class Snippet{{client}} {
   suspend fun snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
       // >SEPARATOR {{method}} {{testName}}
       // Initialize the client
-      val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
+      val client = {{client}}(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY"{{#hasRegionalHost}}, region = "ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}})
 
       // Call the API
       {{#hasResponse}}var response = {{/hasResponse}}client.{{> tests/method}}

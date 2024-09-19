@@ -128,8 +128,7 @@ export async function runCts(
 ): Promise<void> {
   const withBenchmarkServer =
     suites.benchmark && (clients.includes('search') || clients.includes('all') || languages.includes('swift'));
-  const withClientServer =
-    suites.client && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin'); // the macos swift CI also runs the clients tests
+  const withClientServer = suites.client;
   const closeTestServer = await startTestServer({
     ...suites,
     benchmark: withBenchmarkServer,
@@ -142,7 +141,8 @@ export async function runCts(
 
   await closeTestServer();
 
-  if (withClientServer) {
+  if (withClientServer && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin')) {
+    // the macos swift CI also runs the clients tests
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
     assertValidTimeouts(languages.length);

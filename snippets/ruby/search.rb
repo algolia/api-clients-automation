@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_add_api_key
   # >SEPARATOR addApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.add_api_key(
@@ -38,7 +38,7 @@ end
 def snippet_for_add_or_update_object
   # >SEPARATOR addOrUpdateObject default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.add_or_update_object("<YOUR_INDEX_NAME>", "uniqueID", {key: "value"})
@@ -58,7 +58,7 @@ end
 def snippet_for_append_source
   # >SEPARATOR appendSource default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.append_source(Source.new(source: "theSource", description: "theDescription"))
@@ -78,7 +78,7 @@ end
 def snippet_for_assign_user_id
   # >SEPARATOR assignUserId default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.assign_user_id("userID", AssignUserIdParams.new(cluster: "theCluster"))
@@ -98,7 +98,7 @@ end
 def snippet_for_batch
   # >SEPARATOR batch addObject
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -126,7 +126,7 @@ end
 def snippet_for_batch1
   # >SEPARATOR batch clear
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -149,7 +149,7 @@ end
 def snippet_for_batch2
   # >SEPARATOR batch delete
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -172,7 +172,7 @@ end
 def snippet_for_batch3
   # >SEPARATOR batch deleteObject
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -195,7 +195,7 @@ end
 def snippet_for_batch4
   # >SEPARATOR batch partialUpdateObject
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -218,7 +218,7 @@ end
 def snippet_for_batch5
   # >SEPARATOR batch partialUpdateObjectNoCreate
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -241,7 +241,7 @@ end
 def snippet_for_batch6
   # >SEPARATOR batch updateObject
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch(
@@ -264,7 +264,7 @@ end
 def snippet_for_batch_assign_user_ids
   # >SEPARATOR batchAssignUserIds default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch_assign_user_ids(
@@ -287,7 +287,7 @@ end
 def snippet_for_batch_dictionary_entries
   # >SEPARATOR batchDictionaryEntries replace
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch_dictionary_entries(
@@ -325,7 +325,7 @@ end
 def snippet_for_batch_dictionary_entries1
   # >SEPARATOR batchDictionaryEntries delete
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch_dictionary_entries(
@@ -351,7 +351,7 @@ end
 def snippet_for_batch_dictionary_entries2
   # >SEPARATOR batchDictionaryEntries append
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch_dictionary_entries(
@@ -381,7 +381,7 @@ end
 def snippet_for_browse
   # >SEPARATOR browse default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.browse("<YOUR_INDEX_NAME>")
@@ -401,7 +401,7 @@ end
 def snippet_for_clear_objects
   # >SEPARATOR clearObjects default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.clear_objects("<YOUR_INDEX_NAME>")
@@ -421,7 +421,7 @@ end
 def snippet_for_clear_rules
   # >SEPARATOR clearRules default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.clear_rules("<YOUR_INDEX_NAME>")
@@ -441,7 +441,7 @@ end
 def snippet_for_clear_synonyms
   # >SEPARATOR clearSynonyms default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.clear_synonyms("<YOUR_INDEX_NAME>")
@@ -461,7 +461,7 @@ end
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -481,7 +481,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -501,7 +501,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -521,7 +521,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -541,7 +541,7 @@ end
 def snippet_for_delete_api_key
   # >SEPARATOR deleteApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_api_key("myTestApiKey")
@@ -561,7 +561,7 @@ end
 def snippet_for_delete_by
   # >SEPARATOR deleteBy default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_by("<YOUR_INDEX_NAME>", DeleteByParams.new(filters: "brand:brandName"))
@@ -581,7 +581,7 @@ end
 def snippet_for_delete_index
   # >SEPARATOR deleteIndex default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_index("<YOUR_INDEX_NAME>")
@@ -601,7 +601,7 @@ end
 def snippet_for_delete_object
   # >SEPARATOR deleteObject default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
@@ -621,7 +621,7 @@ end
 def snippet_for_delete_objects
   # >SEPARATOR deleteObjects default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_objects("<YOUR_INDEX_NAME>", ["1", "2"])
@@ -641,7 +641,7 @@ end
 def snippet_for_delete_rule
   # >SEPARATOR deleteRule default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
@@ -661,7 +661,7 @@ end
 def snippet_for_delete_source
   # >SEPARATOR deleteSource default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_source("theSource")
@@ -681,7 +681,7 @@ end
 def snippet_for_delete_synonym
   # >SEPARATOR deleteSynonym default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
@@ -701,7 +701,7 @@ end
 def snippet_for_generate_secured_api_key
   # >SEPARATOR generateSecuredApiKey generate secured api key basic
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.generate_secured_api_key(
@@ -724,7 +724,7 @@ end
 def snippet_for_generate_secured_api_key1
   # >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.generate_secured_api_key(
@@ -761,7 +761,7 @@ end
 def snippet_for_get_api_key
   # >SEPARATOR getApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_api_key("myTestApiKey")
@@ -781,7 +781,7 @@ end
 def snippet_for_get_app_task
   # >SEPARATOR getAppTask default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_app_task(123)
@@ -801,7 +801,7 @@ end
 def snippet_for_get_dictionary_languages
   # >SEPARATOR getDictionaryLanguages default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_dictionary_languages
@@ -821,7 +821,7 @@ end
 def snippet_for_get_dictionary_settings
   # >SEPARATOR getDictionarySettings default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_dictionary_settings
@@ -841,7 +841,7 @@ end
 def snippet_for_get_logs
   # >SEPARATOR getLogs default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_logs
@@ -861,7 +861,7 @@ end
 def snippet_for_get_object
   # >SEPARATOR getObject default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_object("<YOUR_INDEX_NAME>", "uniqueID", ["attr1", "attr2"])
@@ -881,7 +881,7 @@ end
 def snippet_for_get_objects
   # >SEPARATOR getObjects default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_objects(
@@ -911,7 +911,7 @@ end
 def snippet_for_get_rule
   # >SEPARATOR getRule default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_rule("<YOUR_INDEX_NAME>", "qr-1725004648916")
@@ -931,7 +931,7 @@ end
 def snippet_for_get_settings
   # >SEPARATOR getSettings default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_settings("<YOUR_INDEX_NAME>")
@@ -951,7 +951,7 @@ end
 def snippet_for_get_sources
   # >SEPARATOR getSources default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_sources
@@ -971,7 +971,7 @@ end
 def snippet_for_get_synonym
   # >SEPARATOR getSynonym default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_synonym("<YOUR_INDEX_NAME>", "id1")
@@ -991,7 +991,7 @@ end
 def snippet_for_get_task
   # >SEPARATOR getTask default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_task("<YOUR_INDEX_NAME>", 123)
@@ -1011,7 +1011,7 @@ end
 def snippet_for_get_top_user_ids
   # >SEPARATOR getTopUserIds default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_top_user_ids
@@ -1031,7 +1031,7 @@ end
 def snippet_for_get_user_id
   # >SEPARATOR getUserId default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_user_id("uniqueID")
@@ -1051,7 +1051,7 @@ end
 def snippet_for_has_pending_mappings
   # >SEPARATOR hasPendingMappings default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.has_pending_mappings
@@ -1071,7 +1071,7 @@ end
 def snippet_for_index_exists
   # >SEPARATOR indexExists indexExists
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
@@ -1091,7 +1091,7 @@ end
 def snippet_for_index_exists1
   # >SEPARATOR indexExists indexNotExists
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
@@ -1111,7 +1111,7 @@ end
 def snippet_for_index_exists2
   # >SEPARATOR indexExists indexExistsWithError
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.index_exists("<YOUR_INDEX_NAME>")
@@ -1131,7 +1131,7 @@ end
 def snippet_for_list_api_keys
   # >SEPARATOR listApiKeys default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.list_api_keys
@@ -1151,7 +1151,7 @@ end
 def snippet_for_list_clusters
   # >SEPARATOR listClusters default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.list_clusters
@@ -1171,7 +1171,7 @@ end
 def snippet_for_list_indices
   # >SEPARATOR listIndices default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.list_indices
@@ -1191,7 +1191,7 @@ end
 def snippet_for_list_user_ids
   # >SEPARATOR listUserIds default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.list_user_ids
@@ -1211,7 +1211,7 @@ end
 def snippet_for_multiple_batch
   # >SEPARATOR multipleBatch default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.multiple_batch(
@@ -1235,7 +1235,7 @@ end
 def snippet_for_operation_index
   # >SEPARATOR operationIndex scopes
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.operation_index(
@@ -1258,7 +1258,7 @@ end
 def snippet_for_operation_index1
   # >SEPARATOR operationIndex copy
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.operation_index(
@@ -1281,7 +1281,7 @@ end
 def snippet_for_operation_index2
   # >SEPARATOR operationIndex move
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.operation_index(
@@ -1304,7 +1304,7 @@ end
 def snippet_for_partial_update_object
   # >SEPARATOR partialUpdateObject default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.partial_update_object("<YOUR_INDEX_NAME>", "uniqueID", {attributeId: "new value"})
@@ -1324,7 +1324,7 @@ end
 def snippet_for_partial_update_objects
   # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.partial_update_objects(
@@ -1348,7 +1348,7 @@ end
 def snippet_for_partial_update_objects1
   # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.partial_update_objects(
@@ -1372,7 +1372,7 @@ end
 def snippet_for_remove_user_id
   # >SEPARATOR removeUserId default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.remove_user_id("uniqueID")
@@ -1392,7 +1392,7 @@ end
 def snippet_for_replace_all_objects
   # >SEPARATOR replaceAllObjects default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.replace_all_objects(
@@ -1427,7 +1427,7 @@ end
 def snippet_for_replace_sources
   # >SEPARATOR replaceSources default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.replace_sources([Source.new(source: "theSource", description: "theDescription")])
@@ -1447,10 +1447,10 @@ end
 def snippet_for_restore_api_key
   # >SEPARATOR restoreApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.restore_api_key("myApiKey")
+  response = client.restore_api_key("ALGOLIA_API_KEY")
 
   # >LOG
   # use the class directly
@@ -1467,7 +1467,7 @@ end
 def snippet_for_save_object
   # >SEPARATOR saveObject default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id", test: "val"})
@@ -1487,7 +1487,7 @@ end
 def snippet_for_save_objects
   # >SEPARATOR saveObjects call saveObjects without error
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_objects(
@@ -1510,7 +1510,7 @@ end
 def snippet_for_save_objects1
   # >SEPARATOR saveObjects saveObjects should report errors
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_objects(
@@ -1533,7 +1533,7 @@ end
 def snippet_for_save_rule
   # >SEPARATOR saveRule default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_rule(
@@ -1557,7 +1557,7 @@ end
 def snippet_for_save_rules
   # >SEPARATOR saveRules default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_rules(
@@ -1585,7 +1585,7 @@ end
 def snippet_for_save_synonym
   # >SEPARATOR saveSynonym default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_synonym(
@@ -1610,7 +1610,7 @@ end
 def snippet_for_save_synonyms
   # >SEPARATOR saveSynonyms default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.save_synonyms(
@@ -1638,7 +1638,7 @@ end
 def snippet_for_search
   # >SEPARATOR search withHitsPerPage
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1662,7 +1662,7 @@ end
 def snippet_for_search1
   # >SEPARATOR search filterOnly
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1688,7 +1688,7 @@ end
 def snippet_for_search2
   # >SEPARATOR search filterOr
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1718,7 +1718,7 @@ end
 def snippet_for_search3
   # >SEPARATOR search filterNot
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1744,7 +1744,7 @@ end
 def snippet_for_search4
   # >SEPARATOR search retrieveFacets
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1768,7 +1768,7 @@ end
 def snippet_for_search5
   # >SEPARATOR search retrieveFacetsWildcard
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search(
@@ -1792,7 +1792,7 @@ end
 def snippet_for_search_dictionary_entries
   # >SEPARATOR searchDictionaryEntries default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_dictionary_entries("stopwords", SearchDictionaryEntriesParams.new(query: "about"))
@@ -1812,7 +1812,7 @@ end
 def snippet_for_search_for_facet_values
   # >SEPARATOR searchForFacetValues default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_for_facet_values("<YOUR_INDEX_NAME>", "facetName")
@@ -1832,7 +1832,7 @@ end
 def snippet_for_search_rules
   # >SEPARATOR searchRules default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_rules("<YOUR_INDEX_NAME>", SearchRulesParams.new(query: "zorro"))
@@ -1852,7 +1852,7 @@ end
 def snippet_for_search_single_index
   # >SEPARATOR searchSingleIndex default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_single_index("<YOUR_INDEX_NAME>")
@@ -1872,7 +1872,7 @@ end
 def snippet_for_search_synonyms
   # >SEPARATOR searchSynonyms default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_synonyms("<YOUR_INDEX_NAME>")
@@ -1892,7 +1892,7 @@ end
 def snippet_for_search_user_ids
   # >SEPARATOR searchUserIds default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_user_ids(
@@ -1914,7 +1914,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   client.set_client_api_key("updated-api-key")
@@ -1928,7 +1928,7 @@ end
 def snippet_for_set_dictionary_settings
   # >SEPARATOR setDictionarySettings default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.set_dictionary_settings(
@@ -1952,7 +1952,7 @@ end
 def snippet_for_set_settings
   # >SEPARATOR setSettings default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.set_settings(
@@ -1975,11 +1975,11 @@ end
 def snippet_for_update_api_key
   # >SEPARATOR updateApiKey default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.update_api_key(
-    "myApiKey",
+    "ALGOLIA_API_KEY",
     ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
   )
 
@@ -1998,7 +1998,7 @@ end
 def snippet_for_wait_for_api_key
   # >SEPARATOR waitForApiKey wait for api key helper - add
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
@@ -2018,7 +2018,7 @@ end
 def snippet_for_wait_for_api_key1
   # >SEPARATOR waitForApiKey wait for api key - update
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.wait_for_api_key(
@@ -2050,7 +2050,7 @@ end
 def snippet_for_wait_for_api_key2
   # >SEPARATOR waitForApiKey wait for api key - delete
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.wait_for_api_key("api-key-delete-operation-test-ruby", "delete")
@@ -2070,7 +2070,7 @@ end
 def snippet_for_wait_for_app_task
   # >SEPARATOR waitForAppTask default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.wait_for_app_task(123)
@@ -2090,7 +2090,7 @@ end
 def snippet_for_wait_for_task
   # >SEPARATOR waitForTask default
   # Initialize the client
-  client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.wait_for_task("<YOUR_INDEX_NAME>", 123)

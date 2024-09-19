@@ -14,8 +14,8 @@ func SnippetForCustomDeleteOfAnalytics() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -43,8 +43,8 @@ func SnippetForCustomGetOfAnalytics() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -72,8 +72,8 @@ func SnippetForCustomPostOfAnalytics() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -101,8 +101,8 @@ func SnippetForCustomPutOfAnalytics() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -130,8 +130,8 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getAddToCartRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -159,8 +159,8 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	*/
 
 	// >SEPARATOR getAverageClickPosition default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -188,8 +188,8 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	*/
 
 	// >SEPARATOR getClickPositions default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -217,8 +217,8 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getClickThroughRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -246,8 +246,8 @@ func SnippetForGetConversionRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getConversionRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -275,8 +275,8 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getNoClickRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -304,8 +304,8 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getNoResultsRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -333,8 +333,8 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 	*/
 
 	// >SEPARATOR getPurchaseRate default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -362,8 +362,8 @@ func SnippetForGetRevenueOfAnalytics() {
 	*/
 
 	// >SEPARATOR getRevenue default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -391,8 +391,8 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	*/
 
 	// >SEPARATOR getSearchesCount default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -420,8 +420,8 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	*/
 
 	// >SEPARATOR getSearchesNoClicks default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -449,8 +449,8 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	*/
 
 	// >SEPARATOR getSearchesNoResults default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -478,8 +478,8 @@ func SnippetForGetStatusOfAnalytics() {
 	*/
 
 	// >SEPARATOR getStatus default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -507,8 +507,8 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopCountries default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -536,8 +536,8 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopFilterAttributes default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -565,8 +565,8 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopFilterForAttribute default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -594,8 +594,8 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopFiltersNoResults default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -623,8 +623,8 @@ func SnippetForGetTopHitsOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopHits default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -652,8 +652,8 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	*/
 
 	// >SEPARATOR getTopSearches default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -681,8 +681,8 @@ func SnippetForGetUsersCountOfAnalytics() {
 	*/
 
 	// >SEPARATOR getUsersCount default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -710,8 +710,8 @@ func SnippetForSetClientApiKeyOfAnalytics() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
-	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	// Initialize the client with your application region, eg. analytics.ALGOLIA_APPLICATION_REGION
+	client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", analytics.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

@@ -53,7 +53,7 @@ public class QuerySuggestionsClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.3.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.4.1\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

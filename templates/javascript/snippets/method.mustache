@@ -14,7 +14,7 @@ import type { RequestOptions } from '@algolia/client-common';
 export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): {{#isAsyncMethod}}Promise<void>{{/isAsyncMethod}}{{^isAsyncMethod}}void{{/isAsyncMethod}} {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
-  const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
+  const client = {{client}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", {{#hasRegionalHost}}'ALGOLIA_APPLICATION_REGION', {{/hasRegionalHost}});
 
   // Call the API
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};

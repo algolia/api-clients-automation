@@ -233,7 +233,7 @@ class RecommendTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -241,7 +241,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -263,7 +263,7 @@ class RecommendTest {
           },
           requestOptions = RequestOptions(
             headers = buildMap {
-              put("x-algolia-api-key", "myApiKey")
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
             },
           ),
         )
@@ -271,7 +271,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
       },
@@ -565,7 +565,7 @@ class RecommendTest {
                 model = RelatedModel.entries.first { it.value == "related-products" },
                 threshold = 42.1,
                 maxRecommendations = 10,
-                queryParameters = SearchParams(
+                queryParameters = RecommendSearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
                 ),
@@ -626,11 +626,11 @@ class RecommendTest {
                 maxRecommendations = 10,
                 facetName = "myFacetName",
                 facetValue = "myFacetValue",
-                queryParameters = SearchParams(
+                queryParameters = RecommendSearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
                 ),
-                fallbackParameters = SearchParamsObject(
+                fallbackParameters = FallbackParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
                 ),
@@ -691,7 +691,7 @@ class RecommendTest {
                 model = RelatedModel.entries.first { it.value == "related-products" },
                 threshold = 21.7,
                 maxRecommendations = 10,
-                queryParameters = SearchParams(
+                queryParameters = RecommendSearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(FacetFilters.of("query1"))),
                 ),
@@ -706,7 +706,7 @@ class RecommendTest {
                 model = RelatedModel.entries.first { it.value == "related-products" },
                 threshold = 21.7,
                 maxRecommendations = 10,
-                queryParameters = SearchParams(
+                queryParameters = RecommendSearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(FacetFilters.of("query2"))),
                 ),

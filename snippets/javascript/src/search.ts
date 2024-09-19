@@ -11,7 +11,7 @@ import { searchClient } from '@algolia/client-search';
 export async function snippetForAddApiKey(): Promise<void> {
   // >SEPARATOR addApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.addApiKey({
@@ -34,7 +34,7 @@ export async function snippetForAddApiKey(): Promise<void> {
 export async function snippetForAddOrUpdateObject(): Promise<void> {
   // >SEPARATOR addOrUpdateObject default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.addOrUpdateObject({
@@ -55,7 +55,7 @@ export async function snippetForAddOrUpdateObject(): Promise<void> {
 export async function snippetForAppendSource(): Promise<void> {
   // >SEPARATOR appendSource default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.appendSource({ source: 'theSource', description: 'theDescription' });
@@ -72,7 +72,7 @@ export async function snippetForAppendSource(): Promise<void> {
 export async function snippetForAssignUserId(): Promise<void> {
   // >SEPARATOR assignUserId default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.assignUserId({
@@ -92,7 +92,7 @@ export async function snippetForAssignUserId(): Promise<void> {
 export async function snippetForBatch(): Promise<void> {
   // >SEPARATOR batch addObject
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -117,7 +117,7 @@ export async function snippetForBatch(): Promise<void> {
 export async function snippetForBatch1(): Promise<void> {
   // >SEPARATOR batch clear
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -137,7 +137,7 @@ export async function snippetForBatch1(): Promise<void> {
 export async function snippetForBatch2(): Promise<void> {
   // >SEPARATOR batch delete
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -157,7 +157,7 @@ export async function snippetForBatch2(): Promise<void> {
 export async function snippetForBatch3(): Promise<void> {
   // >SEPARATOR batch deleteObject
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -177,7 +177,7 @@ export async function snippetForBatch3(): Promise<void> {
 export async function snippetForBatch4(): Promise<void> {
   // >SEPARATOR batch partialUpdateObject
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -197,7 +197,7 @@ export async function snippetForBatch4(): Promise<void> {
 export async function snippetForBatch5(): Promise<void> {
   // >SEPARATOR batch partialUpdateObjectNoCreate
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -217,7 +217,7 @@ export async function snippetForBatch5(): Promise<void> {
 export async function snippetForBatch6(): Promise<void> {
   // >SEPARATOR batch updateObject
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batch({
@@ -237,7 +237,7 @@ export async function snippetForBatch6(): Promise<void> {
 export async function snippetForBatchAssignUserIds(): Promise<void> {
   // >SEPARATOR batchAssignUserIds default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batchAssignUserIds({
@@ -257,7 +257,7 @@ export async function snippetForBatchAssignUserIds(): Promise<void> {
 export async function snippetForBatchDictionaryEntries(): Promise<void> {
   // >SEPARATOR batchDictionaryEntries replace
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batchDictionaryEntries({
@@ -292,7 +292,7 @@ export async function snippetForBatchDictionaryEntries(): Promise<void> {
 export async function snippetForBatchDictionaryEntries1(): Promise<void> {
   // >SEPARATOR batchDictionaryEntries delete
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batchDictionaryEntries({
@@ -315,7 +315,7 @@ export async function snippetForBatchDictionaryEntries1(): Promise<void> {
 export async function snippetForBatchDictionaryEntries2(): Promise<void> {
   // >SEPARATOR batchDictionaryEntries append
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.batchDictionaryEntries({
@@ -337,7 +337,7 @@ export async function snippetForBatchDictionaryEntries2(): Promise<void> {
 export async function snippetForBrowse(): Promise<void> {
   // >SEPARATOR browse default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.browse({ indexName: 'cts_e2e_browse' });
@@ -354,7 +354,7 @@ export async function snippetForBrowse(): Promise<void> {
 export async function snippetForClearObjects(): Promise<void> {
   // >SEPARATOR clearObjects default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.clearObjects({ indexName: 'theIndexName' });
@@ -371,7 +371,7 @@ export async function snippetForClearObjects(): Promise<void> {
 export async function snippetForClearRules(): Promise<void> {
   // >SEPARATOR clearRules default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.clearRules({ indexName: 'indexName' });
@@ -388,7 +388,7 @@ export async function snippetForClearRules(): Promise<void> {
 export async function snippetForClearSynonyms(): Promise<void> {
   // >SEPARATOR clearSynonyms default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.clearSynonyms({ indexName: 'indexName' });
@@ -405,7 +405,7 @@ export async function snippetForClearSynonyms(): Promise<void> {
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -422,7 +422,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -439,7 +439,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -456,7 +456,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -473,7 +473,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteApiKey(): Promise<void> {
   // >SEPARATOR deleteApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteApiKey({ key: 'myTestApiKey' });
@@ -490,7 +490,7 @@ export async function snippetForDeleteApiKey(): Promise<void> {
 export async function snippetForDeleteBy(): Promise<void> {
   // >SEPARATOR deleteBy default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteBy({ indexName: 'theIndexName', deleteByParams: { filters: 'brand:brandName' } });
@@ -507,7 +507,7 @@ export async function snippetForDeleteBy(): Promise<void> {
 export async function snippetForDeleteIndex(): Promise<void> {
   // >SEPARATOR deleteIndex default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteIndex({ indexName: 'theIndexName' });
@@ -524,7 +524,7 @@ export async function snippetForDeleteIndex(): Promise<void> {
 export async function snippetForDeleteObject(): Promise<void> {
   // >SEPARATOR deleteObject default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
@@ -541,7 +541,7 @@ export async function snippetForDeleteObject(): Promise<void> {
 export async function snippetForDeleteObjects(): Promise<void> {
   // >SEPARATOR deleteObjects default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
@@ -558,7 +558,7 @@ export async function snippetForDeleteObjects(): Promise<void> {
 export async function snippetForDeleteRule(): Promise<void> {
   // >SEPARATOR deleteRule default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });
@@ -575,7 +575,7 @@ export async function snippetForDeleteRule(): Promise<void> {
 export async function snippetForDeleteSource(): Promise<void> {
   // >SEPARATOR deleteSource default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteSource({ source: 'theSource' });
@@ -592,7 +592,7 @@ export async function snippetForDeleteSource(): Promise<void> {
 export async function snippetForDeleteSynonym(): Promise<void> {
   // >SEPARATOR deleteSynonym default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });
@@ -609,7 +609,7 @@ export async function snippetForDeleteSynonym(): Promise<void> {
 export function snippetForGenerateSecuredApiKey(): void {
   // >SEPARATOR generateSecuredApiKey generate secured api key basic
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = client.generateSecuredApiKey({
@@ -629,7 +629,7 @@ export function snippetForGenerateSecuredApiKey(): void {
 export function snippetForGenerateSecuredApiKey1(): void {
   // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = client.generateSecuredApiKey({
@@ -663,7 +663,7 @@ export function snippetForGenerateSecuredApiKey1(): void {
 export async function snippetForGetApiKey(): Promise<void> {
   // >SEPARATOR getApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getApiKey({ key: 'myTestApiKey' });
@@ -680,7 +680,7 @@ export async function snippetForGetApiKey(): Promise<void> {
 export async function snippetForGetAppTask(): Promise<void> {
   // >SEPARATOR getAppTask default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getAppTask({ taskID: 123 });
@@ -697,7 +697,7 @@ export async function snippetForGetAppTask(): Promise<void> {
 export async function snippetForGetDictionaryLanguages(): Promise<void> {
   // >SEPARATOR getDictionaryLanguages default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getDictionaryLanguages();
@@ -714,7 +714,7 @@ export async function snippetForGetDictionaryLanguages(): Promise<void> {
 export async function snippetForGetDictionarySettings(): Promise<void> {
   // >SEPARATOR getDictionarySettings default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getDictionarySettings();
@@ -731,7 +731,7 @@ export async function snippetForGetDictionarySettings(): Promise<void> {
 export async function snippetForGetLogs(): Promise<void> {
   // >SEPARATOR getLogs default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getLogs();
@@ -748,7 +748,7 @@ export async function snippetForGetLogs(): Promise<void> {
 export async function snippetForGetObject(): Promise<void> {
   // >SEPARATOR getObject default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getObject({
@@ -769,7 +769,7 @@ export async function snippetForGetObject(): Promise<void> {
 export async function snippetForGetObjects(): Promise<void> {
   // >SEPARATOR getObjects default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getObjects({
@@ -788,7 +788,7 @@ export async function snippetForGetObjects(): Promise<void> {
 export async function snippetForGetRule(): Promise<void> {
   // >SEPARATOR getRule default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });
@@ -805,7 +805,7 @@ export async function snippetForGetRule(): Promise<void> {
 export async function snippetForGetSettings(): Promise<void> {
   // >SEPARATOR getSettings default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getSettings({ indexName: 'cts_e2e_settings' });
@@ -822,7 +822,7 @@ export async function snippetForGetSettings(): Promise<void> {
 export async function snippetForGetSources(): Promise<void> {
   // >SEPARATOR getSources default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getSources();
@@ -839,7 +839,7 @@ export async function snippetForGetSources(): Promise<void> {
 export async function snippetForGetSynonym(): Promise<void> {
   // >SEPARATOR getSynonym default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });
@@ -856,7 +856,7 @@ export async function snippetForGetSynonym(): Promise<void> {
 export async function snippetForGetTask(): Promise<void> {
   // >SEPARATOR getTask default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });
@@ -873,7 +873,7 @@ export async function snippetForGetTask(): Promise<void> {
 export async function snippetForGetTopUserIds(): Promise<void> {
   // >SEPARATOR getTopUserIds default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getTopUserIds();
@@ -890,7 +890,7 @@ export async function snippetForGetTopUserIds(): Promise<void> {
 export async function snippetForGetUserId(): Promise<void> {
   // >SEPARATOR getUserId default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getUserId({ userID: 'uniqueID' });
@@ -907,7 +907,7 @@ export async function snippetForGetUserId(): Promise<void> {
 export async function snippetForHasPendingMappings(): Promise<void> {
   // >SEPARATOR hasPendingMappings default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.hasPendingMappings();
@@ -924,7 +924,7 @@ export async function snippetForHasPendingMappings(): Promise<void> {
 export async function snippetForIndexExists(): Promise<void> {
   // >SEPARATOR indexExists indexExists
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.indexExists({ indexName: 'indexExistsYES' });
@@ -941,7 +941,7 @@ export async function snippetForIndexExists(): Promise<void> {
 export async function snippetForIndexExists1(): Promise<void> {
   // >SEPARATOR indexExists indexNotExists
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.indexExists({ indexName: 'indexExistsNO' });
@@ -958,7 +958,7 @@ export async function snippetForIndexExists1(): Promise<void> {
 export async function snippetForIndexExists2(): Promise<void> {
   // >SEPARATOR indexExists indexExistsWithError
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.indexExists({ indexName: 'indexExistsERROR' });
@@ -975,7 +975,7 @@ export async function snippetForIndexExists2(): Promise<void> {
 export async function snippetForListApiKeys(): Promise<void> {
   // >SEPARATOR listApiKeys default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.listApiKeys();
@@ -992,7 +992,7 @@ export async function snippetForListApiKeys(): Promise<void> {
 export async function snippetForListClusters(): Promise<void> {
   // >SEPARATOR listClusters default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.listClusters();
@@ -1009,7 +1009,7 @@ export async function snippetForListClusters(): Promise<void> {
 export async function snippetForListIndices(): Promise<void> {
   // >SEPARATOR listIndices default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.listIndices();
@@ -1026,7 +1026,7 @@ export async function snippetForListIndices(): Promise<void> {
 export async function snippetForListUserIds(): Promise<void> {
   // >SEPARATOR listUserIds default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.listUserIds();
@@ -1043,7 +1043,7 @@ export async function snippetForListUserIds(): Promise<void> {
 export async function snippetForMultipleBatch(): Promise<void> {
   // >SEPARATOR multipleBatch default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.multipleBatch({
@@ -1062,7 +1062,7 @@ export async function snippetForMultipleBatch(): Promise<void> {
 export async function snippetForOperationIndex(): Promise<void> {
   // >SEPARATOR operationIndex scopes
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.operationIndex({
@@ -1082,7 +1082,7 @@ export async function snippetForOperationIndex(): Promise<void> {
 export async function snippetForOperationIndex1(): Promise<void> {
   // >SEPARATOR operationIndex copy
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.operationIndex({
@@ -1102,7 +1102,7 @@ export async function snippetForOperationIndex1(): Promise<void> {
 export async function snippetForOperationIndex2(): Promise<void> {
   // >SEPARATOR operationIndex move
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.operationIndex({
@@ -1122,7 +1122,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
 export async function snippetForPartialUpdateObject(): Promise<void> {
   // >SEPARATOR partialUpdateObject default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.partialUpdateObject({
@@ -1143,7 +1143,7 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
 export async function snippetForPartialUpdateObjects(): Promise<void> {
   // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.partialUpdateObjects({
@@ -1167,7 +1167,7 @@ export async function snippetForPartialUpdateObjects(): Promise<void> {
 export async function snippetForPartialUpdateObjects1(): Promise<void> {
   // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.partialUpdateObjects({
@@ -1191,7 +1191,7 @@ export async function snippetForPartialUpdateObjects1(): Promise<void> {
 export async function snippetForRemoveUserId(): Promise<void> {
   // >SEPARATOR removeUserId default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.removeUserId({ userID: 'uniqueID' });
@@ -1208,7 +1208,7 @@ export async function snippetForRemoveUserId(): Promise<void> {
 export async function snippetForReplaceAllObjects(): Promise<void> {
   // >SEPARATOR replaceAllObjects default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.replaceAllObjects({
@@ -1240,7 +1240,7 @@ export async function snippetForReplaceAllObjects(): Promise<void> {
 export async function snippetForReplaceSources(): Promise<void> {
   // >SEPARATOR replaceSources default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });
@@ -1257,10 +1257,10 @@ export async function snippetForReplaceSources(): Promise<void> {
 export async function snippetForRestoreApiKey(): Promise<void> {
   // >SEPARATOR restoreApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.restoreApiKey({ key: 'myApiKey' });
+  const response = await client.restoreApiKey({ key: 'ALGOLIA_API_KEY' });
 
   // >LOG
   // use typed response
@@ -1274,7 +1274,7 @@ export async function snippetForRestoreApiKey(): Promise<void> {
 export async function snippetForSaveObject(): Promise<void> {
   // >SEPARATOR saveObject default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
@@ -1291,7 +1291,7 @@ export async function snippetForSaveObject(): Promise<void> {
 export async function snippetForSaveObjects(): Promise<void> {
   // >SEPARATOR saveObjects call saveObjects without error
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveObjects({
@@ -1314,7 +1314,7 @@ export async function snippetForSaveObjects(): Promise<void> {
 export async function snippetForSaveObjects1(): Promise<void> {
   // >SEPARATOR saveObjects saveObjects should report errors
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveObjects({
@@ -1337,7 +1337,7 @@ export async function snippetForSaveObjects1(): Promise<void> {
 export async function snippetForSaveRule(): Promise<void> {
   // >SEPARATOR saveRule default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveRule({
@@ -1358,7 +1358,7 @@ export async function snippetForSaveRule(): Promise<void> {
 export async function snippetForSaveRules(): Promise<void> {
   // >SEPARATOR saveRules default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveRules({
@@ -1383,7 +1383,7 @@ export async function snippetForSaveRules(): Promise<void> {
 export async function snippetForSaveSynonym(): Promise<void> {
   // >SEPARATOR saveSynonym default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveSynonym({
@@ -1405,7 +1405,7 @@ export async function snippetForSaveSynonym(): Promise<void> {
 export async function snippetForSaveSynonyms(): Promise<void> {
   // >SEPARATOR saveSynonyms default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.saveSynonyms({
@@ -1430,7 +1430,7 @@ export async function snippetForSaveSynonyms(): Promise<void> {
 export async function snippetForSearch(): Promise<void> {
   // >SEPARATOR search withHitsPerPage
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1449,7 +1449,7 @@ export async function snippetForSearch(): Promise<void> {
 export async function snippetForSearch1(): Promise<void> {
   // >SEPARATOR search filterOnly
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1468,7 +1468,7 @@ export async function snippetForSearch1(): Promise<void> {
 export async function snippetForSearch2(): Promise<void> {
   // >SEPARATOR search filterOr
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1493,7 +1493,7 @@ export async function snippetForSearch2(): Promise<void> {
 export async function snippetForSearch3(): Promise<void> {
   // >SEPARATOR search filterNot
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1512,7 +1512,7 @@ export async function snippetForSearch3(): Promise<void> {
 export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1531,7 +1531,7 @@ export async function snippetForSearch4(): Promise<void> {
 export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -1550,7 +1550,7 @@ export async function snippetForSearch5(): Promise<void> {
 export async function snippetForSearchDictionaryEntries(): Promise<void> {
   // >SEPARATOR searchDictionaryEntries default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchDictionaryEntries({
@@ -1570,7 +1570,7 @@ export async function snippetForSearchDictionaryEntries(): Promise<void> {
 export async function snippetForSearchForFacetValues(): Promise<void> {
   // >SEPARATOR searchForFacetValues default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });
@@ -1587,7 +1587,7 @@ export async function snippetForSearchForFacetValues(): Promise<void> {
 export async function snippetForSearchRules(): Promise<void> {
   // >SEPARATOR searchRules default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
@@ -1604,7 +1604,7 @@ export async function snippetForSearchRules(): Promise<void> {
 export async function snippetForSearchSingleIndex(): Promise<void> {
   // >SEPARATOR searchSingleIndex default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchSingleIndex({ indexName: 'indexName' });
@@ -1621,7 +1621,7 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
 export async function snippetForSearchSynonyms(): Promise<void> {
   // >SEPARATOR searchSynonyms default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchSynonyms({ indexName: 'indexName' });
@@ -1638,7 +1638,7 @@ export async function snippetForSearchSynonyms(): Promise<void> {
 export async function snippetForSearchUserIds(): Promise<void> {
   // >SEPARATOR searchUserIds default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.searchUserIds({
@@ -1660,7 +1660,7 @@ export async function snippetForSearchUserIds(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   client.setClientApiKey({ apiKey: 'updated-api-key' });
@@ -1675,7 +1675,7 @@ export function snippetForSetClientApiKey(): void {
 export async function snippetForSetDictionarySettings(): Promise<void> {
   // >SEPARATOR setDictionarySettings default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.setDictionarySettings({
@@ -1694,7 +1694,7 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
 export async function snippetForSetSettings(): Promise<void> {
   // >SEPARATOR setSettings default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.setSettings({
@@ -1714,11 +1714,11 @@ export async function snippetForSetSettings(): Promise<void> {
 export async function snippetForUpdateApiKey(): Promise<void> {
   // >SEPARATOR updateApiKey default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.updateApiKey({
-    key: 'myApiKey',
+    key: 'ALGOLIA_API_KEY',
     apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
   });
 
@@ -1734,7 +1734,7 @@ export async function snippetForUpdateApiKey(): Promise<void> {
 export async function snippetForWaitForApiKey(): Promise<void> {
   // >SEPARATOR waitForApiKey wait for api key helper - add
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
@@ -1751,7 +1751,7 @@ export async function snippetForWaitForApiKey(): Promise<void> {
 export async function snippetForWaitForApiKey1(): Promise<void> {
   // >SEPARATOR waitForApiKey wait for api key - update
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.waitForApiKey({
@@ -1780,7 +1780,7 @@ export async function snippetForWaitForApiKey1(): Promise<void> {
 export async function snippetForWaitForApiKey2(): Promise<void> {
   // >SEPARATOR waitForApiKey wait for api key - delete
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
@@ -1797,7 +1797,7 @@ export async function snippetForWaitForApiKey2(): Promise<void> {
 export async function snippetForWaitForAppTask(): Promise<void> {
   // >SEPARATOR waitForAppTask default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.waitForAppTask({ taskID: 123 });
@@ -1814,7 +1814,7 @@ export async function snippetForWaitForAppTask(): Promise<void> {
 export async function snippetForWaitForTask(): Promise<void> {
   // >SEPARATOR waitForTask default
   // Initialize the client
-  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });

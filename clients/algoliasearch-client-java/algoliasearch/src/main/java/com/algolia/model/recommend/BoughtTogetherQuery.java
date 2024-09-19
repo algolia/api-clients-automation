@@ -21,7 +21,7 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("model")
   private FbtModel model;
@@ -70,14 +70,14 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public BoughtTogetherQuery setQueryParameters(SearchParams queryParameters) {
+  public BoughtTogetherQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 

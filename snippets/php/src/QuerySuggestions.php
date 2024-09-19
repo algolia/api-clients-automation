@@ -20,7 +20,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR createConfig default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->createConfig(
@@ -68,7 +68,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -90,7 +90,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -112,7 +112,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -134,7 +134,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -156,7 +156,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR deleteConfig default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteConfig(
@@ -178,7 +178,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR getAllConfigs default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getAllConfigs();
@@ -198,7 +198,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR getConfig default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getConfig(
@@ -220,7 +220,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR getConfigStatus default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getConfigStatus(
@@ -242,7 +242,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR getLogFile default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getLogFile(
@@ -264,7 +264,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(
@@ -284,7 +284,7 @@ class SnippetQuerySuggestionsClient
     {
         // >SEPARATOR updateConfig default
         // Initialize the client
-        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->updateConfig(

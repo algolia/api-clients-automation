@@ -14,8 +14,8 @@ func SnippetForCustomDeleteOfPersonalization() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -43,8 +43,8 @@ func SnippetForCustomGetOfPersonalization() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -72,8 +72,8 @@ func SnippetForCustomPostOfPersonalization() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -101,8 +101,8 @@ func SnippetForCustomPutOfPersonalization() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -130,8 +130,8 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 	*/
 
 	// >SEPARATOR deleteUserProfile default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -159,8 +159,8 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	*/
 
 	// >SEPARATOR getPersonalizationStrategy default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -186,8 +186,8 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 	*/
 
 	// >SEPARATOR getUserTokenProfile default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -215,8 +215,8 @@ func SnippetForSetClientApiKeyOfPersonalization() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -242,8 +242,8 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	*/
 
 	// >SEPARATOR setPersonalizationStrategy default
-	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
-	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
+	// Initialize the client with your application region, eg. personalization.ALGOLIA_APPLICATION_REGION
+	client, err := personalization.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", personalization.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

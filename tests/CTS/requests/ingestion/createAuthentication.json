@@ -30,8 +30,8 @@
       "type": "algolia",
       "name": "authName",
       "input": {
-        "appID": "myappID",
-        "apiKey": "randomApiKey"
+        "appID": "ALGOLIA_APPLICATION_ID",
+        "apiKey": "ALGOLIA_API_KEY"
       }
     },
     "request": {
@@ -41,8 +41,8 @@
         "type": "algolia",
         "name": "authName",
         "input": {
-          "appID": "myappID",
-          "apiKey": "randomApiKey"
+          "appID": "ALGOLIA_APPLICATION_ID",
+          "apiKey": "ALGOLIA_API_KEY"
         }
       }
     }

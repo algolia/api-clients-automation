@@ -232,14 +232,14 @@ class TestAbtestingClient:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     async def test_custom_post_5(self):
@@ -255,14 +255,14 @@ class TestAbtestingClient:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     async def test_custom_post_6(self):
@@ -763,14 +763,14 @@ class TestAbtestingClientSync:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     def test_custom_post_5(self):
@@ -786,14 +786,14 @@ class TestAbtestingClientSync:
                 "facet": "filters",
             },
             request_options={
-                "headers": loads("""{"x-algolia-api-key":"myApiKey"}"""),
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
             },
         )
 
         assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
-        assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
     def test_custom_post_6(self):

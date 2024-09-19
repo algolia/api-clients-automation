@@ -149,14 +149,14 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -168,14 +168,14 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"myApiKey\"}", :symbolize_names => true)}
+      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
     )
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
     assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "myApiKey"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -352,7 +352,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 42.1,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
@@ -411,8 +411,8 @@ class TestRecommendClient < Test::Unit::TestCase
             max_recommendations: 10,
             facet_name: "myFacetName",
             facet_value: "myFacetValue",
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: SearchParamsObject.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
       )
@@ -464,7 +464,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query1"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query1"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
           ),
           RelatedQuery.new(
@@ -473,7 +473,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query2"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query2"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
           )
         ]

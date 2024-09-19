@@ -19,6 +19,7 @@ part 'search_for_facets.g.dart';
 final class SearchForFacets {
   /// Returns a new [SearchForFacets] instance.
   const SearchForFacets({
+    this.params,
     this.query,
     this.similarQuery,
     this.filters,
@@ -100,6 +101,10 @@ final class SearchForFacets {
     this.facetQuery,
     required this.type,
   });
+
+  /// Search parameters as a URL-encoded query string.
+  @JsonKey(name: r'params')
+  final String? params;
 
   /// Search query.
   @JsonKey(name: r'query')
@@ -458,6 +463,7 @@ final class SearchForFacets {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SearchForFacets &&
+          other.params == params &&
           other.query == query &&
           other.similarQuery == similarQuery &&
           other.filters == filters &&
@@ -544,6 +550,7 @@ final class SearchForFacets {
 
   @override
   int get hashCode =>
+      params.hashCode +
       query.hashCode +
       similarQuery.hashCode +
       filters.hashCode +

@@ -5,6 +5,7 @@ export const patterns = [
 
   'clients/**',
   'snippets/**',
+  'snippets/guides/**',
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
@@ -118,7 +119,6 @@ export const patterns = [
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
-  'tests/output/python/requirements.txt',
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
 
