@@ -11,7 +11,7 @@ import '{{{import}}}';
 void snippetFor{{method}}{{testIndex}}() async {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
-  final client = {{client}}(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY'{{#hasRegionalHost}}, region: 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+  final client = {{client}}(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY'{{#hasRegionalHost}}, region: 'ALGOLIA_APPLICATION_REGION'{{/hasRegionalHost}});
   
   // Call the API
   {{#hasResponse}}final response = {{/hasResponse}}{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}(
