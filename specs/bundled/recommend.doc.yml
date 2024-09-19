@@ -173,63 +173,65 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.CustomGetAsync("test/minimal");
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.customGet(
               path: "test/minimal",
             );
-
             // >LOG
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
+
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // >LOG
+
             // use the model directly
+
             print(response)
         - lang: java
           label: Java
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -239,23 +241,30 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.customGet({ path: 'test/minimal' });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -275,8 +284,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -293,28 +302,50 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.custom_get(
+
+            response = await client.custom_get(
                 path="test/minimal",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.custom_get_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -337,8 +368,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -358,8 +389,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -398,63 +429,65 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.CustomPostAsync("test/minimal");
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.customPost(
               path: "test/minimal",
             );
-
             // >LOG
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
+
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // >LOG
+
             // use the model directly
+
             print(response)
         - lang: java
           label: Java
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -464,23 +497,30 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.customPost({ path: 'test/minimal' });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -500,8 +540,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -518,28 +558,50 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.custom_post(
+
+            response = await client.custom_post(
                 path="test/minimal",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.custom_post_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -562,8 +624,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -583,8 +645,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -623,63 +685,65 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.CustomPutAsync("test/minimal");
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.customPut(
               path: "test/minimal",
             );
-
             // >LOG
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
+
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // >LOG
+
             // use the model directly
+
             print(response)
         - lang: java
           label: Java
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -689,23 +753,30 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.customPut({ path: 'test/minimal' });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -725,8 +796,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -743,28 +814,50 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.custom_put(
+
+            response = await client.custom_put(
                 path="test/minimal",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.custom_put_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -787,8 +880,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -808,8 +901,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -842,40 +935,34 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.CustomDeleteAsync("test/minimal");
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.customDelete(
               path: "test/minimal",
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -906,8 +993,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -920,7 +1007,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -939,8 +1027,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -960,8 +1048,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -978,28 +1066,50 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.custom_delete(
+
+            response = await client.custom_delete(
                 path="test/minimal",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.custom_delete_with_http_info(
+                path="test/minimal",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -1022,8 +1132,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1043,8 +1153,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1111,15 +1221,13 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.GetRecommendationsAsync(
               new GetRecommendationsParams
               {
@@ -1137,19 +1245,15 @@ paths:
                 },
               }
             );
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.getRecommendations(
               getRecommendationsParams: GetRecommendationsParams(
                 requests: [
@@ -1162,14 +1266,14 @@ paths:
                 ],
               ),
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1203,8 +1307,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -1225,25 +1329,32 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.getRecommendations({
               requests: [{ indexName: 'indexName', objectID: 'objectID', model: 'related-products', threshold: 42.1 }],
             });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1272,8 +1383,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -1297,12 +1408,16 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.get_recommendations(
+
+            response = await client.get_recommendations(
                 get_recommendations_params={
                     "requests": [
                         {
@@ -1315,19 +1430,46 @@ paths:
                 },
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.get_recommendations_with_http_info(
+                get_recommendations_params={
+                    "requests": [
+                        {
+                            "indexName": "<YOUR_INDEX_NAME>",
+                            "objectID": "objectID",
+                            "model": "related-products",
+                            "threshold": 42.1,
+                        },
+                    ],
+                },
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -1361,8 +1503,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1391,8 +1533,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1441,46 +1583,40 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.GetRecommendRuleAsync(
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.getRecommendRule(
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1511,8 +1647,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -1523,27 +1659,34 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.getRecommendRule({
               indexName: 'indexName',
               model: 'related-products',
               objectID: 'objectID',
             });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1565,8 +1708,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -1585,30 +1728,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.get_recommend_rule(
+
+            response = await client.get_recommend_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.get_recommend_rule_with_http_info(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+                object_id="objectID",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -1632,8 +1799,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1655,8 +1822,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1694,46 +1861,40 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.DeleteRecommendRuleAsync(
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.deleteRecommendRule(
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1764,8 +1925,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -1776,27 +1937,34 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.deleteRecommendRule({
               indexName: 'indexName',
               model: 'related-products',
               objectID: 'objectID',
             });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1818,8 +1986,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -1838,30 +2006,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.delete_recommend_rule(
+
+            response = await client.delete_recommend_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.delete_recommend_rule_with_http_info(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+                object_id="objectID",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -1885,8 +2077,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1908,8 +2100,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -1974,46 +2166,40 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.GetRecommendStatusAsync(
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts"),
               12345L
             );
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.getRecommendStatus(
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
               taskID: 12345,
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2044,8 +2230,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -2056,27 +2242,34 @@ paths:
             // >LOG
         - lang: javascript
           label: JavaScript
-          source: |
+          source: >
             // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
 
             // Call the API
+
             const response = await client.getRecommendStatus({
               indexName: 'indexName',
               model: 'related-products',
               taskID: 12345,
             });
 
+
             // >LOG
+
             // use typed response
+
             console.log(response);
         - lang: kotlin
           label: Kotlin
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -2098,8 +2291,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -2118,30 +2311,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.get_recommend_status(
+
+            response = await client.get_recommend_status(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 task_id=12345,
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.get_recommend_status_with_http_info(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+                task_id=12345,
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -2165,8 +2382,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -2188,8 +2405,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -2304,44 +2521,38 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
 
             // Call the API
-
             var response = await client.SearchRecommendRulesAsync(
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
-
             // >LOG
         - lang: dart
           label: Dart
-          source: >
+          source: |
             // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
-
             final response = await client.searchRecommendRules(
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
             );
-
             // >LOG
         - lang: go
           label: Go
           source: >
             // Initialize the client
 
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2372,8 +2583,8 @@ paths:
           source: >
             // Initialize the client
 
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
 
             // Call the API
@@ -2387,7 +2598,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -2406,8 +2618,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -2428,8 +2640,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
 
 
             // Call the API
@@ -2447,29 +2659,52 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await _client.search_recommend_rules(
+
+            response = await client.search_recommend_rules(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
             )
 
-            # >LOG
-            # use the class directly
+
             print(response)
 
+
+            # Skip deserialization
+
+            raw_response = await client.search_recommend_rules_with_http_info(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::RecommendClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY")
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
@@ -2493,8 +2728,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
 
 
             // Call the API
@@ -2515,8 +2750,8 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
 
 
             // Call the API

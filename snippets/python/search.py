@@ -12,10 +12,10 @@ async def snippet_for_add_api_key():
     """
     # >SEPARATOR addApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.add_api_key(
+    response = await client.add_api_key(
         api_key={
             "acl": [
                 "search",
@@ -27,6 +27,24 @@ async def snippet_for_add_api_key():
             "maxHitsPerQuery": 20,
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.add_api_key_with_http_info(
+        api_key={
+            "acl": [
+                "search",
+                "addObject",
+            ],
+            "description": "my new api key",
+            "validity": 300,
+            "maxQueriesPerIPPerHour": 100,
+            "maxHitsPerQuery": 20,
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -45,16 +63,29 @@ async def snippet_for_add_or_update_object():
     """
     # >SEPARATOR addOrUpdateObject default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.add_or_update_object(
+    response = await client.add_or_update_object(
         index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         body={
             "key": "value",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.add_or_update_object_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="uniqueID",
+        body={
+            "key": "value",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -73,15 +104,27 @@ async def snippet_for_append_source():
     """
     # >SEPARATOR appendSource default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.append_source(
+    response = await client.append_source(
         source={
             "source": "theSource",
             "description": "theDescription",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.append_source_with_http_info(
+        source={
+            "source": "theSource",
+            "description": "theDescription",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -100,15 +143,27 @@ async def snippet_for_assign_user_id():
     """
     # >SEPARATOR assignUserId default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.assign_user_id(
+    response = await client.assign_user_id(
         x_algolia_user_id="userID",
         assign_user_id_params={
             "cluster": "theCluster",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.assign_user_id_with_http_info(
+        x_algolia_user_id="userID",
+        assign_user_id_params={
+            "cluster": "theCluster",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -127,10 +182,10 @@ async def snippet_for_batch():
     """
     # >SEPARATOR batch addObject
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -152,6 +207,33 @@ async def snippet_for_batch():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "addObject",
+                    "body": {
+                        "key": "bar",
+                        "foo": "1",
+                    },
+                },
+                {
+                    "action": "addObject",
+                    "body": {
+                        "key": "baz",
+                        "foo": "2",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -169,10 +251,10 @@ async def snippet_for_batch1():
     """
     # >SEPARATOR batch clear
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -185,6 +267,25 @@ async def snippet_for_batch1():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "clear",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -203,10 +304,10 @@ async def snippet_for_batch2():
     """
     # >SEPARATOR batch delete
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -219,6 +320,25 @@ async def snippet_for_batch2():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "delete",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -237,10 +357,10 @@ async def snippet_for_batch3():
     """
     # >SEPARATOR batch deleteObject
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -253,6 +373,25 @@ async def snippet_for_batch3():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "deleteObject",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -271,10 +410,10 @@ async def snippet_for_batch4():
     """
     # >SEPARATOR batch partialUpdateObject
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -287,6 +426,25 @@ async def snippet_for_batch4():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "partialUpdateObject",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -305,10 +463,10 @@ async def snippet_for_batch5():
     """
     # >SEPARATOR batch partialUpdateObjectNoCreate
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -321,6 +479,25 @@ async def snippet_for_batch5():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "partialUpdateObjectNoCreate",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -339,10 +516,10 @@ async def snippet_for_batch6():
     """
     # >SEPARATOR batch updateObject
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch(
+    response = await client.batch(
         index_name="<YOUR_INDEX_NAME>",
         batch_write_params={
             "requests": [
@@ -355,6 +532,25 @@ async def snippet_for_batch6():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        batch_write_params={
+            "requests": [
+                {
+                    "action": "updateObject",
+                    "body": {
+                        "key": "value",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -373,10 +569,10 @@ async def snippet_for_batch_assign_user_ids():
     """
     # >SEPARATOR batchAssignUserIds default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch_assign_user_ids(
+    response = await client.batch_assign_user_ids(
         x_algolia_user_id="userID",
         batch_assign_user_ids_params={
             "cluster": "theCluster",
@@ -386,6 +582,22 @@ async def snippet_for_batch_assign_user_ids():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_assign_user_ids_with_http_info(
+        x_algolia_user_id="userID",
+        batch_assign_user_ids_params={
+            "cluster": "theCluster",
+            "users": [
+                "user1",
+                "user2",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -404,10 +616,10 @@ async def snippet_for_batch_dictionary_entries():
     """
     # >SEPARATOR batchDictionaryEntries replace
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch_dictionary_entries(
+    response = await client.batch_dictionary_entries(
         dictionary_name="plurals",
         batch_dictionary_entries_params={
             "clearExistingDictionaryEntries": True,
@@ -433,6 +645,37 @@ async def snippet_for_batch_dictionary_entries():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_dictionary_entries_with_http_info(
+        dictionary_name="plurals",
+        batch_dictionary_entries_params={
+            "clearExistingDictionaryEntries": True,
+            "requests": [
+                {
+                    "action": "addEntry",
+                    "body": {
+                        "objectID": "1",
+                        "language": "en",
+                        "word": "fancy",
+                        "words": [
+                            "believe",
+                            "algolia",
+                        ],
+                        "decomposition": [
+                            "trust",
+                            "algolia",
+                        ],
+                        "state": "enabled",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -450,10 +693,10 @@ async def snippet_for_batch_dictionary_entries1():
     """
     # >SEPARATOR batchDictionaryEntries delete
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch_dictionary_entries(
+    response = await client.batch_dictionary_entries(
         dictionary_name="plurals",
         batch_dictionary_entries_params={
             "clearExistingDictionaryEntries": True,
@@ -467,6 +710,26 @@ async def snippet_for_batch_dictionary_entries1():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_dictionary_entries_with_http_info(
+        dictionary_name="plurals",
+        batch_dictionary_entries_params={
+            "clearExistingDictionaryEntries": True,
+            "requests": [
+                {
+                    "action": "deleteEntry",
+                    "body": {
+                        "objectID": "1",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -485,10 +748,10 @@ async def snippet_for_batch_dictionary_entries2():
     """
     # >SEPARATOR batchDictionaryEntries append
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.batch_dictionary_entries(
+    response = await client.batch_dictionary_entries(
         dictionary_name="stopwords",
         batch_dictionary_entries_params={
             "requests": [
@@ -503,6 +766,27 @@ async def snippet_for_batch_dictionary_entries2():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.batch_dictionary_entries_with_http_info(
+        dictionary_name="stopwords",
+        batch_dictionary_entries_params={
+            "requests": [
+                {
+                    "action": "addEntry",
+                    "body": {
+                        "objectID": "1",
+                        "language": "en",
+                        "additional": "try me",
+                    },
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -521,12 +805,21 @@ async def snippet_for_browse():
     """
     # >SEPARATOR browse default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.browse(
+    response = await client.browse(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.browse_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -545,12 +838,21 @@ async def snippet_for_clear_objects():
     """
     # >SEPARATOR clearObjects default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.clear_objects(
+    response = await client.clear_objects(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.clear_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -569,12 +871,21 @@ async def snippet_for_clear_rules():
     """
     # >SEPARATOR clearRules default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.clear_rules(
+    response = await client.clear_rules(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.clear_rules_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -593,12 +904,21 @@ async def snippet_for_clear_synonyms():
     """
     # >SEPARATOR clearSynonyms default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.clear_synonyms(
+    response = await client.clear_synonyms(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.clear_synonyms_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -617,12 +937,21 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -641,12 +970,21 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -665,12 +1003,21 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -689,12 +1036,21 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -713,12 +1069,21 @@ async def snippet_for_delete_api_key():
     """
     # >SEPARATOR deleteApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_api_key(
+    response = await client.delete_api_key(
         key="myTestApiKey",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_api_key_with_http_info(
+        key="myTestApiKey",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -737,15 +1102,27 @@ async def snippet_for_delete_by():
     """
     # >SEPARATOR deleteBy default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_by(
+    response = await client.delete_by(
         index_name="<YOUR_INDEX_NAME>",
         delete_by_params={
             "filters": "brand:brandName",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_by_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        delete_by_params={
+            "filters": "brand:brandName",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -764,12 +1141,21 @@ async def snippet_for_delete_index():
     """
     # >SEPARATOR deleteIndex default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_index(
+    response = await client.delete_index(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_index_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -788,13 +1174,23 @@ async def snippet_for_delete_object():
     """
     # >SEPARATOR deleteObject default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_object(
+    response = await client.delete_object(
         index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_object_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="uniqueID",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -813,16 +1209,29 @@ async def snippet_for_delete_objects():
     """
     # >SEPARATOR deleteObjects default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_objects(
+    response = await client.delete_objects(
         index_name="<YOUR_INDEX_NAME>",
         object_ids=[
             "1",
             "2",
         ],
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_ids=[
+            "1",
+            "2",
+        ],
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -841,13 +1250,23 @@ async def snippet_for_delete_rule():
     """
     # >SEPARATOR deleteRule default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_rule(
+    response = await client.delete_rule(
         index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_rule_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="id1",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -866,12 +1285,21 @@ async def snippet_for_delete_source():
     """
     # >SEPARATOR deleteSource default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_source(
+    response = await client.delete_source(
         source="theSource",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_source_with_http_info(
+        source="theSource",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -890,13 +1318,23 @@ async def snippet_for_delete_synonym():
     """
     # >SEPARATOR deleteSynonym default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_synonym(
+    response = await client.delete_synonym(
         index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_synonym_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="id1",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -915,10 +1353,10 @@ async def snippet_for_generate_secured_api_key():
     """
     # >SEPARATOR generateSecuredApiKey generate secured api key basic
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = _client.generate_secured_api_key(
+    response = client.generate_secured_api_key(
         parent_api_key="2640659426d5107b6e47d75db9cbaef8",
         restrictions={
             "validUntil": 2524604400,
@@ -927,6 +1365,21 @@ async def snippet_for_generate_secured_api_key():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = client.generate_secured_api_key_with_http_info(
+        parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+        restrictions={
+            "validUntil": 2524604400,
+            "restrictIndices": [
+                "Movies",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -945,10 +1398,10 @@ async def snippet_for_generate_secured_api_key1():
     """
     # >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = _client.generate_secured_api_key(
+    response = client.generate_secured_api_key(
         parent_api_key="2640659426d5107b6e47d75db9cbaef8",
         restrictions={
             "validUntil": 2524604400,
@@ -973,6 +1426,36 @@ async def snippet_for_generate_secured_api_key1():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = client.generate_secured_api_key_with_http_info(
+        parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+        restrictions={
+            "validUntil": 2524604400,
+            "restrictIndices": [
+                "Movies",
+                "cts_e2e_settings",
+            ],
+            "restrictSources": "192.168.1.0/24",
+            "filters": "category:Book OR category:Ebook AND _tags:published",
+            "userToken": "user123",
+            "searchParams": {
+                "query": "batman",
+                "typoTolerance": "strict",
+                "aroundRadius": "all",
+                "mode": "neuralSearch",
+                "hitsPerPage": 10,
+                "optionalWords": [
+                    "one",
+                    "two",
+                ],
+            },
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -990,12 +1473,21 @@ async def snippet_for_get_api_key():
     """
     # >SEPARATOR getApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_api_key(
+    response = await client.get_api_key(
         key="myTestApiKey",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_api_key_with_http_info(
+        key="myTestApiKey",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1014,12 +1506,21 @@ async def snippet_for_get_app_task():
     """
     # >SEPARATOR getAppTask default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_app_task(
+    response = await client.get_app_task(
         task_id=123,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_app_task_with_http_info(
+        task_id=123,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1038,10 +1539,17 @@ async def snippet_for_get_dictionary_languages():
     """
     # >SEPARATOR getDictionaryLanguages default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_dictionary_languages()
+    response = await client.get_dictionary_languages()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_dictionary_languages_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1060,10 +1568,17 @@ async def snippet_for_get_dictionary_settings():
     """
     # >SEPARATOR getDictionarySettings default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_dictionary_settings()
+    response = await client.get_dictionary_settings()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_dictionary_settings_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1082,10 +1597,17 @@ async def snippet_for_get_logs():
     """
     # >SEPARATOR getLogs default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_logs()
+    response = await client.get_logs()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_logs_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1104,10 +1626,10 @@ async def snippet_for_get_object():
     """
     # >SEPARATOR getObject default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_object(
+    response = await client.get_object(
         index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         attributes_to_retrieve=[
@@ -1115,6 +1637,20 @@ async def snippet_for_get_object():
             "attr2",
         ],
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_object_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="uniqueID",
+        attributes_to_retrieve=[
+            "attr1",
+            "attr2",
+        ],
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1133,10 +1669,10 @@ async def snippet_for_get_objects():
     """
     # >SEPARATOR getObjects default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_objects(
+    response = await client.get_objects(
         get_objects_params={
             "requests": [
                 {
@@ -1150,6 +1686,26 @@ async def snippet_for_get_objects():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_objects_with_http_info(
+        get_objects_params={
+            "requests": [
+                {
+                    "attributesToRetrieve": [
+                        "attr1",
+                        "attr2",
+                    ],
+                    "objectID": "uniqueID",
+                    "indexName": "<YOUR_INDEX_NAME>",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1168,13 +1724,23 @@ async def snippet_for_get_rule():
     """
     # >SEPARATOR getRule default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_rule(
+    response = await client.get_rule(
         index_name="<YOUR_INDEX_NAME>",
         object_id="qr-1725004648916",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_rule_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="qr-1725004648916",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1193,12 +1759,21 @@ async def snippet_for_get_settings():
     """
     # >SEPARATOR getSettings default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_settings(
+    response = await client.get_settings(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_settings_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1217,10 +1792,17 @@ async def snippet_for_get_sources():
     """
     # >SEPARATOR getSources default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_sources()
+    response = await client.get_sources()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_sources_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1239,13 +1821,23 @@ async def snippet_for_get_synonym():
     """
     # >SEPARATOR getSynonym default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_synonym(
+    response = await client.get_synonym(
         index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_synonym_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="id1",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1264,13 +1856,23 @@ async def snippet_for_get_task():
     """
     # >SEPARATOR getTask default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_task(
+    response = await client.get_task(
         index_name="<YOUR_INDEX_NAME>",
         task_id=123,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_task_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        task_id=123,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1289,10 +1891,17 @@ async def snippet_for_get_top_user_ids():
     """
     # >SEPARATOR getTopUserIds default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_top_user_ids()
+    response = await client.get_top_user_ids()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_user_ids_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1311,12 +1920,21 @@ async def snippet_for_get_user_id():
     """
     # >SEPARATOR getUserId default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_user_id(
+    response = await client.get_user_id(
         user_id="uniqueID",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_user_id_with_http_info(
+        user_id="uniqueID",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1335,10 +1953,17 @@ async def snippet_for_has_pending_mappings():
     """
     # >SEPARATOR hasPendingMappings default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.has_pending_mappings()
+    response = await client.has_pending_mappings()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.has_pending_mappings_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1357,12 +1982,21 @@ async def snippet_for_index_exists():
     """
     # >SEPARATOR indexExists indexExists
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.index_exists(
+    response = await client.index_exists(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.index_exists_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1381,12 +2015,21 @@ async def snippet_for_index_exists1():
     """
     # >SEPARATOR indexExists indexNotExists
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.index_exists(
+    response = await client.index_exists(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.index_exists_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1405,12 +2048,21 @@ async def snippet_for_index_exists2():
     """
     # >SEPARATOR indexExists indexExistsWithError
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.index_exists(
+    response = await client.index_exists(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.index_exists_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1429,10 +2081,17 @@ async def snippet_for_list_api_keys():
     """
     # >SEPARATOR listApiKeys default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.list_api_keys()
+    response = await client.list_api_keys()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_api_keys_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1451,10 +2110,17 @@ async def snippet_for_list_clusters():
     """
     # >SEPARATOR listClusters default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.list_clusters()
+    response = await client.list_clusters()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_clusters_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1473,10 +2139,17 @@ async def snippet_for_list_indices():
     """
     # >SEPARATOR listIndices default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.list_indices()
+    response = await client.list_indices()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_indices_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1495,10 +2168,17 @@ async def snippet_for_list_user_ids():
     """
     # >SEPARATOR listUserIds default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.list_user_ids()
+    response = await client.list_user_ids()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_user_ids_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1517,10 +2197,10 @@ async def snippet_for_multiple_batch():
     """
     # >SEPARATOR multipleBatch default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.multiple_batch(
+    response = await client.multiple_batch(
         batch_params={
             "requests": [
                 {
@@ -1533,6 +2213,25 @@ async def snippet_for_multiple_batch():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.multiple_batch_with_http_info(
+        batch_params={
+            "requests": [
+                {
+                    "action": "addObject",
+                    "body": {
+                        "key": "value",
+                    },
+                    "indexName": "<YOUR_INDEX_NAME>",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1551,10 +2250,10 @@ async def snippet_for_operation_index():
     """
     # >SEPARATOR operationIndex scopes
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.operation_index(
+    response = await client.operation_index(
         index_name="<SOURCE_INDEX_NAME>",
         operation_index_params={
             "operation": "move",
@@ -1565,6 +2264,23 @@ async def snippet_for_operation_index():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.operation_index_with_http_info(
+        index_name="<SOURCE_INDEX_NAME>",
+        operation_index_params={
+            "operation": "move",
+            "destination": "<DESTINATION_INDEX_NAME>",
+            "scope": [
+                "rules",
+                "settings",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1583,16 +2299,29 @@ async def snippet_for_operation_index1():
     """
     # >SEPARATOR operationIndex copy
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.operation_index(
+    response = await client.operation_index(
         index_name="<SOURCE_INDEX_NAME>",
         operation_index_params={
             "operation": "copy",
             "destination": "<DESTINATION_INDEX_NAME>",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.operation_index_with_http_info(
+        index_name="<SOURCE_INDEX_NAME>",
+        operation_index_params={
+            "operation": "copy",
+            "destination": "<DESTINATION_INDEX_NAME>",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1611,16 +2340,29 @@ async def snippet_for_operation_index2():
     """
     # >SEPARATOR operationIndex move
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.operation_index(
+    response = await client.operation_index(
         index_name="<SOURCE_INDEX_NAME>",
         operation_index_params={
             "operation": "move",
             "destination": "<DESTINATION_INDEX_NAME>",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.operation_index_with_http_info(
+        index_name="<SOURCE_INDEX_NAME>",
+        operation_index_params={
+            "operation": "move",
+            "destination": "<DESTINATION_INDEX_NAME>",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1639,16 +2381,29 @@ async def snippet_for_partial_update_object():
     """
     # >SEPARATOR partialUpdateObject default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.partial_update_object(
+    response = await client.partial_update_object(
         index_name="<YOUR_INDEX_NAME>",
         object_id="uniqueID",
         attributes_to_update={
             "attributeId": "new value",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.partial_update_object_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="uniqueID",
+        attributes_to_update={
+            "attributeId": "new value",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1667,10 +2422,10 @@ async def snippet_for_partial_update_objects():
     """
     # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.partial_update_objects(
+    response = await client.partial_update_objects(
         index_name="<YOUR_INDEX_NAME>",
         objects=[
             {
@@ -1684,6 +2439,26 @@ async def snippet_for_partial_update_objects():
         ],
         create_if_not_exists=True,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.partial_update_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+        create_if_not_exists=True,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1702,10 +2477,10 @@ async def snippet_for_partial_update_objects1():
     """
     # >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.partial_update_objects(
+    response = await client.partial_update_objects(
         index_name="<YOUR_INDEX_NAME>",
         objects=[
             {
@@ -1719,6 +2494,26 @@ async def snippet_for_partial_update_objects1():
         ],
         create_if_not_exists=False,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.partial_update_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+        ],
+        create_if_not_exists=False,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1737,12 +2532,21 @@ async def snippet_for_remove_user_id():
     """
     # >SEPARATOR removeUserId default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.remove_user_id(
+    response = await client.remove_user_id(
         user_id="uniqueID",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.remove_user_id_with_http_info(
+        user_id="uniqueID",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1761,10 +2565,10 @@ async def snippet_for_replace_all_objects():
     """
     # >SEPARATOR replaceAllObjects default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.replace_all_objects(
+    response = await client.replace_all_objects(
         index_name="<YOUR_INDEX_NAME>",
         objects=[
             {
@@ -1811,6 +2615,58 @@ async def snippet_for_replace_all_objects():
         batch_size=3,
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.replace_all_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+            {
+                "objectID": "5",
+                "name": "Eva",
+            },
+            {
+                "objectID": "6",
+                "name": "Fiona",
+            },
+            {
+                "objectID": "7",
+                "name": "Gael",
+            },
+            {
+                "objectID": "8",
+                "name": "Hugo",
+            },
+            {
+                "objectID": "9",
+                "name": "Igor",
+            },
+            {
+                "objectID": "10",
+                "name": "Julia",
+            },
+        ],
+        batch_size=3,
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -1828,10 +2684,10 @@ async def snippet_for_replace_sources():
     """
     # >SEPARATOR replaceSources default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.replace_sources(
+    response = await client.replace_sources(
         source=[
             {
                 "source": "theSource",
@@ -1839,6 +2695,20 @@ async def snippet_for_replace_sources():
             },
         ],
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.replace_sources_with_http_info(
+        source=[
+            {
+                "source": "theSource",
+                "description": "theDescription",
+            },
+        ],
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1857,12 +2727,21 @@ async def snippet_for_restore_api_key():
     """
     # >SEPARATOR restoreApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.restore_api_key(
-        key="myApiKey",
+    response = await client.restore_api_key(
+        key="ALGOLIA_API_KEY",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.restore_api_key_with_http_info(
+        key="ALGOLIA_API_KEY",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1881,16 +2760,29 @@ async def snippet_for_save_object():
     """
     # >SEPARATOR saveObject default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_object(
+    response = await client.save_object(
         index_name="<YOUR_INDEX_NAME>",
         body={
             "objectID": "id",
             "test": "val",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_object_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        body={
+            "objectID": "id",
+            "test": "val",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1909,10 +2801,10 @@ async def snippet_for_save_objects():
     """
     # >SEPARATOR saveObjects call saveObjects without error
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_objects(
+    response = await client.save_objects(
         index_name="<YOUR_INDEX_NAME>",
         objects=[
             {
@@ -1925,6 +2817,25 @@ async def snippet_for_save_objects():
             },
         ],
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1943,10 +2854,10 @@ async def snippet_for_save_objects1():
     """
     # >SEPARATOR saveObjects saveObjects should report errors
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_objects(
+    response = await client.save_objects(
         index_name="<YOUR_INDEX_NAME>",
         objects=[
             {
@@ -1959,6 +2870,25 @@ async def snippet_for_save_objects1():
             },
         ],
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_objects_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1977,10 +2907,10 @@ async def snippet_for_save_rule():
     """
     # >SEPARATOR saveRule default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_rule(
+    response = await client.save_rule(
         index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
         rule={
@@ -1993,6 +2923,25 @@ async def snippet_for_save_rule():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_rule_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="id1",
+        rule={
+            "objectID": "id1",
+            "conditions": [
+                {
+                    "pattern": "apple",
+                    "anchoring": "contains",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2011,10 +2960,10 @@ async def snippet_for_save_rules():
     """
     # >SEPARATOR saveRules default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_rules(
+    response = await client.save_rules(
         index_name="<YOUR_INDEX_NAME>",
         rules=[
             {
@@ -2040,6 +2989,37 @@ async def snippet_for_save_rules():
         clear_existing_rules=True,
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_rules_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        rules=[
+            {
+                "objectID": "a-rule-id",
+                "conditions": [
+                    {
+                        "pattern": "smartphone",
+                        "anchoring": "contains",
+                    },
+                ],
+            },
+            {
+                "objectID": "a-second-rule-id",
+                "conditions": [
+                    {
+                        "pattern": "apple",
+                        "anchoring": "contains",
+                    },
+                ],
+            },
+        ],
+        forward_to_replicas=False,
+        clear_existing_rules=True,
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -2057,10 +3037,10 @@ async def snippet_for_save_synonym():
     """
     # >SEPARATOR saveSynonym default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_synonym(
+    response = await client.save_synonym(
         index_name="<YOUR_INDEX_NAME>",
         object_id="id1",
         synonym_hit={
@@ -2074,6 +3054,26 @@ async def snippet_for_save_synonym():
         },
         forward_to_replicas=True,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_synonym_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="id1",
+        synonym_hit={
+            "objectID": "id1",
+            "type": "synonym",
+            "synonyms": [
+                "car",
+                "vehicule",
+                "auto",
+            ],
+        },
+        forward_to_replicas=True,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2092,10 +3092,10 @@ async def snippet_for_save_synonyms():
     """
     # >SEPARATOR saveSynonyms default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.save_synonyms(
+    response = await client.save_synonyms(
         index_name="<YOUR_INDEX_NAME>",
         synonym_hit=[
             {
@@ -2122,6 +3122,38 @@ async def snippet_for_save_synonyms():
         replace_existing_synonyms=True,
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.save_synonyms_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        synonym_hit=[
+            {
+                "objectID": "id1",
+                "type": "synonym",
+                "synonyms": [
+                    "car",
+                    "vehicule",
+                    "auto",
+                ],
+            },
+            {
+                "objectID": "id2",
+                "type": "onewaysynonym",
+                "input": "iphone",
+                "synonyms": [
+                    "ephone",
+                    "aphone",
+                    "yphone",
+                ],
+            },
+        ],
+        forward_to_replicas=True,
+        replace_existing_synonyms=True,
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -2139,10 +3171,10 @@ async def snippet_for_search():
     """
     # >SEPARATOR search withHitsPerPage
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2153,6 +3185,23 @@ async def snippet_for_search():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "hitsPerPage": 50,
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2171,10 +3220,10 @@ async def snippet_for_search1():
     """
     # >SEPARATOR search filterOnly
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2185,6 +3234,23 @@ async def snippet_for_search1():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "filters": "actor:Scarlett Johansson",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2203,10 +3269,10 @@ async def snippet_for_search2():
     """
     # >SEPARATOR search filterOr
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2217,6 +3283,23 @@ async def snippet_for_search2():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "filters": "actor:Tom Cruise OR actor:Scarlett Johansson",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2235,10 +3318,10 @@ async def snippet_for_search3():
     """
     # >SEPARATOR search filterNot
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2249,6 +3332,23 @@ async def snippet_for_search3():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "filters": "NOT actor:Nicolas Cage",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2267,10 +3367,10 @@ async def snippet_for_search4():
     """
     # >SEPARATOR search retrieveFacets
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2284,6 +3384,26 @@ async def snippet_for_search4():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "facets": [
+                        "author",
+                        "genre",
+                    ],
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2302,10 +3422,10 @@ async def snippet_for_search5():
     """
     # >SEPARATOR search retrieveFacetsWildcard
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search(
+    response = await client.search(
         search_method_params={
             "requests": [
                 {
@@ -2318,6 +3438,25 @@ async def snippet_for_search5():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_with_http_info(
+        search_method_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "query": "<YOUR_QUERY>",
+                    "facets": [
+                        "*",
+                    ],
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2336,15 +3475,27 @@ async def snippet_for_search_dictionary_entries():
     """
     # >SEPARATOR searchDictionaryEntries default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_dictionary_entries(
+    response = await client.search_dictionary_entries(
         dictionary_name="stopwords",
         search_dictionary_entries_params={
             "query": "about",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_dictionary_entries_with_http_info(
+        dictionary_name="stopwords",
+        search_dictionary_entries_params={
+            "query": "about",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2363,13 +3514,23 @@ async def snippet_for_search_for_facet_values():
     """
     # >SEPARATOR searchForFacetValues default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_for_facet_values(
+    response = await client.search_for_facet_values(
         index_name="<YOUR_INDEX_NAME>",
         facet_name="facetName",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_for_facet_values_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        facet_name="facetName",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2388,15 +3549,27 @@ async def snippet_for_search_rules():
     """
     # >SEPARATOR searchRules default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_rules(
+    response = await client.search_rules(
         index_name="<YOUR_INDEX_NAME>",
         search_rules_params={
             "query": "zorro",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_rules_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        search_rules_params={
+            "query": "zorro",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2415,12 +3588,21 @@ async def snippet_for_search_single_index():
     """
     # >SEPARATOR searchSingleIndex default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_single_index(
+    response = await client.search_single_index(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_single_index_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2439,12 +3621,21 @@ async def snippet_for_search_synonyms():
     """
     # >SEPARATOR searchSynonyms default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_synonyms(
+    response = await client.search_synonyms(
         index_name="<YOUR_INDEX_NAME>",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_synonyms_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2463,10 +3654,10 @@ async def snippet_for_search_user_ids():
     """
     # >SEPARATOR searchUserIds default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_user_ids(
+    response = await client.search_user_ids(
         search_user_ids_params={
             "query": "test",
             "clusterName": "theClusterName",
@@ -2474,6 +3665,20 @@ async def snippet_for_search_user_ids():
             "hitsPerPage": 10,
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_user_ids_with_http_info(
+        search_user_ids_params={
+            "query": "test",
+            "clusterName": "theClusterName",
+            "page": 5,
+            "hitsPerPage": 10,
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2492,10 +3697,15 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 
@@ -2511,10 +3721,10 @@ async def snippet_for_set_dictionary_settings():
     """
     # >SEPARATOR setDictionarySettings default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.set_dictionary_settings(
+    response = await client.set_dictionary_settings(
         dictionary_settings_params={
             "disableStandardEntries": {
                 "plurals": {
@@ -2525,6 +3735,23 @@ async def snippet_for_set_dictionary_settings():
             },
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.set_dictionary_settings_with_http_info(
+        dictionary_settings_params={
+            "disableStandardEntries": {
+                "plurals": {
+                    "fr": False,
+                    "en": False,
+                    "ru": True,
+                },
+            },
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2543,10 +3770,10 @@ async def snippet_for_set_settings():
     """
     # >SEPARATOR setSettings default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.set_settings(
+    response = await client.set_settings(
         index_name="<YOUR_INDEX_NAME>",
         index_settings={
             "attributesForFaceting": [
@@ -2556,6 +3783,22 @@ async def snippet_for_set_settings():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.set_settings_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "attributesForFaceting": [
+                "actor",
+                "filterOnly(category)",
+                "searchable(publisher)",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2574,11 +3817,11 @@ async def snippet_for_update_api_key():
     """
     # >SEPARATOR updateApiKey default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.update_api_key(
-        key="myApiKey",
+    response = await client.update_api_key(
+        key="ALGOLIA_API_KEY",
         api_key={
             "acl": [
                 "search",
@@ -2589,6 +3832,24 @@ async def snippet_for_update_api_key():
             "maxHitsPerQuery": 20,
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_api_key_with_http_info(
+        key="ALGOLIA_API_KEY",
+        api_key={
+            "acl": [
+                "search",
+                "addObject",
+            ],
+            "validity": 300,
+            "maxQueriesPerIPPerHour": 100,
+            "maxHitsPerQuery": 20,
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2607,13 +3868,23 @@ async def snippet_for_wait_for_api_key():
     """
     # >SEPARATOR waitForApiKey wait for api key helper - add
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.wait_for_api_key(
+    response = await client.wait_for_api_key(
         key="api-key-add-operation-test-python",
         operation="add",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.wait_for_api_key_with_http_info(
+        key="api-key-add-operation-test-python",
+        operation="add",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2632,10 +3903,10 @@ async def snippet_for_wait_for_api_key1():
     """
     # >SEPARATOR waitForApiKey wait for api key - update
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.wait_for_api_key(
+    response = await client.wait_for_api_key(
         key="api-key-update-operation-test-python",
         operation="update",
         api_key={
@@ -2659,6 +3930,35 @@ async def snippet_for_wait_for_api_key1():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.wait_for_api_key_with_http_info(
+        key="api-key-update-operation-test-python",
+        operation="update",
+        api_key={
+            "description": "my updated api key",
+            "acl": [
+                "search",
+                "addObject",
+                "deleteObject",
+            ],
+            "indexes": [
+                "Movies",
+                "Books",
+            ],
+            "referers": [
+                "*google.com",
+                "*algolia.com",
+            ],
+            "validity": 305,
+            "maxQueriesPerIPPerHour": 95,
+            "maxHitsPerQuery": 20,
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -2676,13 +3976,23 @@ async def snippet_for_wait_for_api_key2():
     """
     # >SEPARATOR waitForApiKey wait for api key - delete
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.wait_for_api_key(
+    response = await client.wait_for_api_key(
         key="api-key-delete-operation-test-python",
         operation="delete",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.wait_for_api_key_with_http_info(
+        key="api-key-delete-operation-test-python",
+        operation="delete",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2701,12 +4011,21 @@ async def snippet_for_wait_for_app_task():
     """
     # >SEPARATOR waitForAppTask default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.wait_for_app_task(
+    response = await client.wait_for_app_task(
         task_id=123,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.wait_for_app_task_with_http_info(
+        task_id=123,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -2725,13 +4044,23 @@ async def snippet_for_wait_for_task():
     """
     # >SEPARATOR waitForTask default
     # Initialize the client
-    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.wait_for_task(
+    response = await client.wait_for_task(
         index_name="<YOUR_INDEX_NAME>",
         task_id=123,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.wait_for_task_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        task_id=123,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly

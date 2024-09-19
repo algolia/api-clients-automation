@@ -14,7 +14,7 @@ class SnippetAbtestingClient {
   void snippetForAddABTests() {
     // >SEPARATOR addABTests default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.addABTests(
@@ -38,7 +38,7 @@ class SnippetAbtestingClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -52,7 +52,7 @@ class SnippetAbtestingClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customGet("test/minimal");
@@ -66,7 +66,7 @@ class SnippetAbtestingClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPost("test/minimal");
@@ -80,7 +80,7 @@ class SnippetAbtestingClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
@@ -94,7 +94,7 @@ class SnippetAbtestingClient {
   void snippetForDeleteABTest() {
     // >SEPARATOR deleteABTest default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.deleteABTest(42);
@@ -108,7 +108,7 @@ class SnippetAbtestingClient {
   void snippetForGetABTest() {
     // >SEPARATOR getABTest default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getABTest(42);
@@ -122,7 +122,7 @@ class SnippetAbtestingClient {
   void snippetForListABTests() {
     // >SEPARATOR listABTests default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.listABTests();
@@ -136,7 +136,7 @@ class SnippetAbtestingClient {
   void snippetForScheduleABTest() {
     // >SEPARATOR scheduleABTest default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.scheduleABTest(
@@ -161,7 +161,7 @@ class SnippetAbtestingClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setClientApiKey("updated-api-key");
@@ -175,7 +175,7 @@ class SnippetAbtestingClient {
   void snippetForStopABTest() {
     // >SEPARATOR stopABTest default
     // Initialize the client
-    AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.stopABTest(42);

@@ -63,7 +63,9 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<AuthenticationType>("Algolia"),
         Name = "authName",
-        Input = new AuthInput(new AuthAlgolia { AppID = "myappID", ApiKey = "randomApiKey" }),
+        Input = new AuthInput(
+          new AuthAlgolia { AppID = "ALGOLIA_APPLICATION_ID", ApiKey = "ALGOLIA_API_KEY" }
+        ),
       }
     );
 
@@ -71,7 +73,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/authentications", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"myappID\",\"apiKey\":\"randomApiKey\"}}",
+      "{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -617,7 +619,7 @@ public class IngestionClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -638,7 +640,7 @@ public class IngestionClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -656,7 +658,7 @@ public class IngestionClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -677,7 +679,7 @@ public class IngestionClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)

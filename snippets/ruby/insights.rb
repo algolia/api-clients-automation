@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -30,7 +30,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -50,7 +50,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -70,7 +70,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -90,7 +90,7 @@ end
 def snippet_for_delete_user_token
   # >SEPARATOR deleteUserToken default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   client.delete_user_token("test-user-1")
@@ -104,7 +104,7 @@ end
 def snippet_for_push_events
   # >SEPARATOR pushEvents default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.push_events(
@@ -140,7 +140,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::InsightsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::InsightsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   client.set_client_api_key("updated-api-key")

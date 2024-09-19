@@ -11,7 +11,7 @@ import { liteClient } from 'algoliasearch/lite';
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -28,7 +28,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForGetRecommendations(): Promise<void> {
   // >SEPARATOR getRecommendations default
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.getRecommendations({
@@ -47,7 +47,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
 export async function snippetForSearch(): Promise<void> {
   // >SEPARATOR search withHitsPerPage
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -66,7 +66,7 @@ export async function snippetForSearch(): Promise<void> {
 export async function snippetForSearch1(): Promise<void> {
   // >SEPARATOR search filterOnly
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -85,7 +85,7 @@ export async function snippetForSearch1(): Promise<void> {
 export async function snippetForSearch2(): Promise<void> {
   // >SEPARATOR search filterOr
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -110,7 +110,7 @@ export async function snippetForSearch2(): Promise<void> {
 export async function snippetForSearch3(): Promise<void> {
   // >SEPARATOR search filterNot
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -129,7 +129,7 @@ export async function snippetForSearch3(): Promise<void> {
 export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({
@@ -148,7 +148,7 @@ export async function snippetForSearch4(): Promise<void> {
 export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
-  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+  const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({

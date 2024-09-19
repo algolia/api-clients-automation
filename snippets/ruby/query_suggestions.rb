@@ -10,7 +10,11 @@ require "algolia"
 def snippet_for_create_config
   # >SEPARATOR createConfig default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.create_config(
@@ -43,7 +47,11 @@ end
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -63,7 +71,11 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -83,7 +95,11 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -103,7 +119,11 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -123,7 +143,11 @@ end
 def snippet_for_delete_config
   # >SEPARATOR deleteConfig default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.delete_config("<YOUR_INDEX_NAME>")
@@ -143,7 +167,11 @@ end
 def snippet_for_get_all_configs
   # >SEPARATOR getAllConfigs default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_all_configs
@@ -163,7 +191,11 @@ end
 def snippet_for_get_config
   # >SEPARATOR getConfig default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_config("<YOUR_INDEX_NAME>")
@@ -183,7 +215,11 @@ end
 def snippet_for_get_config_status
   # >SEPARATOR getConfigStatus default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_config_status("<YOUR_INDEX_NAME>")
@@ -203,7 +239,11 @@ end
 def snippet_for_get_log_file
   # >SEPARATOR getLogFile default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.get_log_file("<YOUR_INDEX_NAME>")
@@ -223,7 +263,11 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   client.set_client_api_key("updated-api-key")
@@ -237,7 +281,11 @@ end
 def snippet_for_update_config
   # >SEPARATOR updateConfig default
   # Initialize the client
-  client = Algolia::QuerySuggestionsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::QuerySuggestionsClient.create(
+    "ALGOLIA_APPLICATION_ID",
+    "ALGOLIA_API_KEY",
+    "ALGOLIA_APPLICATION_REGION"
+  )
 
   # Call the API
   response = client.update_config(

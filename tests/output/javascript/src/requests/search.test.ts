@@ -466,7 +466,7 @@ describe('customPost', () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -474,14 +474,14 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -489,7 +489,7 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
@@ -1097,9 +1097,9 @@ describe('replaceSources', () => {
 
 describe('restoreApiKey', () => {
   test('restoreApiKey', async () => {
-    const req = (await client.restoreApiKey({ key: 'myApiKey' })) as unknown as EchoResponse;
+    const req = (await client.restoreApiKey({ key: 'ALGOLIA_API_KEY' })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/keys/myApiKey/restore');
+    expect(req.path).toEqual('/1/keys/ALGOLIA_API_KEY/restore');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -2303,11 +2303,11 @@ describe('setSettings', () => {
 describe('updateApiKey', () => {
   test('updateApiKey', async () => {
     const req = (await client.updateApiKey({
-      key: 'myApiKey',
+      key: 'ALGOLIA_API_KEY',
       apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/keys/myApiKey');
+    expect(req.path).toEqual('/1/keys/ALGOLIA_API_KEY');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({
       acl: ['search', 'addObject'],

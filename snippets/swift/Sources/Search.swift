@@ -13,7 +13,7 @@ final class SearchClientSnippet {
     func snippetForAddApiKey() async throws {
         // >SEPARATOR addApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.addApiKey(apiKey: ApiKey(
@@ -33,7 +33,7 @@ final class SearchClientSnippet {
     func snippetForAddOrUpdateObject() async throws {
         // >SEPARATOR addOrUpdateObject default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.addOrUpdateObject(
@@ -51,7 +51,7 @@ final class SearchClientSnippet {
     func snippetForAppendSource() async throws {
         // >SEPARATOR appendSource default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.appendSource(source: SearchSource(
@@ -68,7 +68,7 @@ final class SearchClientSnippet {
     func snippetForAssignUserId() async throws {
         // >SEPARATOR assignUserId default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.assignUserId(
@@ -85,7 +85,7 @@ final class SearchClientSnippet {
     func snippetForBatch() async throws {
         // >SEPARATOR batch addObject
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -105,7 +105,7 @@ final class SearchClientSnippet {
     func snippetForBatch1() async throws {
         // >SEPARATOR batch clear
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -125,7 +125,7 @@ final class SearchClientSnippet {
     func snippetForBatch2() async throws {
         // >SEPARATOR batch delete
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -145,7 +145,7 @@ final class SearchClientSnippet {
     func snippetForBatch3() async throws {
         // >SEPARATOR batch deleteObject
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -165,7 +165,7 @@ final class SearchClientSnippet {
     func snippetForBatch4() async throws {
         // >SEPARATOR batch partialUpdateObject
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -185,7 +185,7 @@ final class SearchClientSnippet {
     func snippetForBatch5() async throws {
         // >SEPARATOR batch partialUpdateObjectNoCreate
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -205,7 +205,7 @@ final class SearchClientSnippet {
     func snippetForBatch6() async throws {
         // >SEPARATOR batch updateObject
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batch(
@@ -225,7 +225,7 @@ final class SearchClientSnippet {
     func snippetForBatchAssignUserIds() async throws {
         // >SEPARATOR batchAssignUserIds default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batchAssignUserIds(
@@ -242,7 +242,7 @@ final class SearchClientSnippet {
     func snippetForBatchDictionaryEntries() async throws {
         // >SEPARATOR batchDictionaryEntries replace
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batchDictionaryEntries(
@@ -272,7 +272,7 @@ final class SearchClientSnippet {
     func snippetForBatchDictionaryEntries1() async throws {
         // >SEPARATOR batchDictionaryEntries delete
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batchDictionaryEntries(
@@ -295,7 +295,7 @@ final class SearchClientSnippet {
     func snippetForBatchDictionaryEntries2() async throws {
         // >SEPARATOR batchDictionaryEntries append
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.batchDictionaryEntries(
@@ -319,7 +319,7 @@ final class SearchClientSnippet {
     func snippetForBrowse() async throws {
         // >SEPARATOR browse default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: BrowseResponse<Hit> = try await client.browse(indexName: "<YOUR_INDEX_NAME>")
@@ -333,7 +333,7 @@ final class SearchClientSnippet {
     func snippetForClearObjects() async throws {
         // >SEPARATOR clearObjects default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.clearObjects(indexName: "<YOUR_INDEX_NAME>")
@@ -347,7 +347,7 @@ final class SearchClientSnippet {
     func snippetForClearRules() async throws {
         // >SEPARATOR clearRules default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.clearRules(indexName: "<YOUR_INDEX_NAME>")
@@ -361,7 +361,7 @@ final class SearchClientSnippet {
     func snippetForClearSynonyms() async throws {
         // >SEPARATOR clearSynonyms default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.clearSynonyms(indexName: "<YOUR_INDEX_NAME>")
@@ -375,7 +375,7 @@ final class SearchClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -389,7 +389,7 @@ final class SearchClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -403,7 +403,7 @@ final class SearchClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -417,7 +417,7 @@ final class SearchClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -431,7 +431,7 @@ final class SearchClientSnippet {
     func snippetForDeleteApiKey() async throws {
         // >SEPARATOR deleteApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteApiKey(key: "myTestApiKey")
@@ -445,7 +445,7 @@ final class SearchClientSnippet {
     func snippetForDeleteBy() async throws {
         // >SEPARATOR deleteBy default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteBy(
@@ -462,7 +462,7 @@ final class SearchClientSnippet {
     func snippetForDeleteIndex() async throws {
         // >SEPARATOR deleteIndex default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteIndex(indexName: "<YOUR_INDEX_NAME>")
@@ -476,7 +476,7 @@ final class SearchClientSnippet {
     func snippetForDeleteObject() async throws {
         // >SEPARATOR deleteObject default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteObject(indexName: "<YOUR_INDEX_NAME>", objectID: "uniqueID")
@@ -490,7 +490,7 @@ final class SearchClientSnippet {
     func snippetForDeleteObjects() async throws {
         // >SEPARATOR deleteObjects default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteObjects(indexName: "<YOUR_INDEX_NAME>", objectIDs: ["1", "2"])
@@ -504,7 +504,7 @@ final class SearchClientSnippet {
     func snippetForDeleteRule() async throws {
         // >SEPARATOR deleteRule default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteRule(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
@@ -518,7 +518,7 @@ final class SearchClientSnippet {
     func snippetForDeleteSource() async throws {
         // >SEPARATOR deleteSource default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteSource(source: "theSource")
@@ -532,7 +532,7 @@ final class SearchClientSnippet {
     func snippetForDeleteSynonym() async throws {
         // >SEPARATOR deleteSynonym default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
@@ -546,7 +546,7 @@ final class SearchClientSnippet {
     func snippetForGenerateSecuredApiKey() async throws {
         // >SEPARATOR generateSecuredApiKey generate secured api key basic
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try client.generateSecuredApiKey(
@@ -563,7 +563,7 @@ final class SearchClientSnippet {
     func snippetForGenerateSecuredApiKey1() async throws {
         // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try client.generateSecuredApiKey(
@@ -594,7 +594,7 @@ final class SearchClientSnippet {
     func snippetForGetApiKey() async throws {
         // >SEPARATOR getApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getApiKey(key: "myTestApiKey")
@@ -608,7 +608,7 @@ final class SearchClientSnippet {
     func snippetForGetAppTask() async throws {
         // >SEPARATOR getAppTask default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getAppTask(taskID: Int64(123))
@@ -622,7 +622,7 @@ final class SearchClientSnippet {
     func snippetForGetDictionaryLanguages() async throws {
         // >SEPARATOR getDictionaryLanguages default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getDictionaryLanguages()
@@ -636,7 +636,7 @@ final class SearchClientSnippet {
     func snippetForGetDictionarySettings() async throws {
         // >SEPARATOR getDictionarySettings default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getDictionarySettings()
@@ -650,7 +650,7 @@ final class SearchClientSnippet {
     func snippetForGetLogs() async throws {
         // >SEPARATOR getLogs default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getLogs()
@@ -664,7 +664,7 @@ final class SearchClientSnippet {
     func snippetForGetObject() async throws {
         // >SEPARATOR getObject default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getObject(
@@ -682,7 +682,7 @@ final class SearchClientSnippet {
     func snippetForGetObjects() async throws {
         // >SEPARATOR getObjects default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: GetObjectsResponse<Hit> = try await client
@@ -701,7 +701,7 @@ final class SearchClientSnippet {
     func snippetForGetRule() async throws {
         // >SEPARATOR getRule default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getRule(indexName: "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
@@ -715,7 +715,7 @@ final class SearchClientSnippet {
     func snippetForGetSettings() async throws {
         // >SEPARATOR getSettings default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getSettings(indexName: "<YOUR_INDEX_NAME>")
@@ -729,7 +729,7 @@ final class SearchClientSnippet {
     func snippetForGetSources() async throws {
         // >SEPARATOR getSources default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getSources()
@@ -743,7 +743,7 @@ final class SearchClientSnippet {
     func snippetForGetSynonym() async throws {
         // >SEPARATOR getSynonym default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
@@ -757,7 +757,7 @@ final class SearchClientSnippet {
     func snippetForGetTask() async throws {
         // >SEPARATOR getTask default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
@@ -771,7 +771,7 @@ final class SearchClientSnippet {
     func snippetForGetTopUserIds() async throws {
         // >SEPARATOR getTopUserIds default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getTopUserIds()
@@ -785,7 +785,7 @@ final class SearchClientSnippet {
     func snippetForGetUserId() async throws {
         // >SEPARATOR getUserId default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getUserId(userID: "uniqueID")
@@ -799,7 +799,7 @@ final class SearchClientSnippet {
     func snippetForHasPendingMappings() async throws {
         // >SEPARATOR hasPendingMappings default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.hasPendingMappings()
@@ -813,7 +813,7 @@ final class SearchClientSnippet {
     func snippetForIndexExists() async throws {
         // >SEPARATOR indexExists indexExists
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
@@ -827,7 +827,7 @@ final class SearchClientSnippet {
     func snippetForIndexExists1() async throws {
         // >SEPARATOR indexExists indexNotExists
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
@@ -841,7 +841,7 @@ final class SearchClientSnippet {
     func snippetForIndexExists2() async throws {
         // >SEPARATOR indexExists indexExistsWithError
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
@@ -855,7 +855,7 @@ final class SearchClientSnippet {
     func snippetForListApiKeys() async throws {
         // >SEPARATOR listApiKeys default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.listApiKeys()
@@ -869,7 +869,7 @@ final class SearchClientSnippet {
     func snippetForListClusters() async throws {
         // >SEPARATOR listClusters default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.listClusters()
@@ -883,7 +883,7 @@ final class SearchClientSnippet {
     func snippetForListIndices() async throws {
         // >SEPARATOR listIndices default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.listIndices()
@@ -897,7 +897,7 @@ final class SearchClientSnippet {
     func snippetForListUserIds() async throws {
         // >SEPARATOR listUserIds default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.listUserIds()
@@ -911,7 +911,7 @@ final class SearchClientSnippet {
     func snippetForMultipleBatch() async throws {
         // >SEPARATOR multipleBatch default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(
@@ -929,7 +929,7 @@ final class SearchClientSnippet {
     func snippetForOperationIndex() async throws {
         // >SEPARATOR operationIndex scopes
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.operationIndex(
@@ -950,7 +950,7 @@ final class SearchClientSnippet {
     func snippetForOperationIndex1() async throws {
         // >SEPARATOR operationIndex copy
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.operationIndex(
@@ -970,7 +970,7 @@ final class SearchClientSnippet {
     func snippetForOperationIndex2() async throws {
         // >SEPARATOR operationIndex move
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.operationIndex(
@@ -990,7 +990,7 @@ final class SearchClientSnippet {
     func snippetForPartialUpdateObject() async throws {
         // >SEPARATOR partialUpdateObject default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.partialUpdateObject(
@@ -1008,7 +1008,7 @@ final class SearchClientSnippet {
     func snippetForPartialUpdateObjects() async throws {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.partialUpdateObjects(
@@ -1026,7 +1026,7 @@ final class SearchClientSnippet {
     func snippetForPartialUpdateObjects1() async throws {
         // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.partialUpdateObjects(
@@ -1044,7 +1044,7 @@ final class SearchClientSnippet {
     func snippetForRemoveUserId() async throws {
         // >SEPARATOR removeUserId default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.removeUserId(userID: "uniqueID")
@@ -1058,7 +1058,7 @@ final class SearchClientSnippet {
     func snippetForReplaceAllObjects() async throws {
         // >SEPARATOR replaceAllObjects default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.replaceAllObjects(
@@ -1087,7 +1087,7 @@ final class SearchClientSnippet {
     func snippetForReplaceSources() async throws {
         // >SEPARATOR replaceSources default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.replaceSources(source: [SearchSource(
@@ -1104,10 +1104,10 @@ final class SearchClientSnippet {
     func snippetForRestoreApiKey() async throws {
         // >SEPARATOR restoreApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.restoreApiKey(key: "myApiKey")
+        let response = try await client.restoreApiKey(key: "ALGOLIA_API_KEY")
         // >LOG
         // SEPARATOR<
     }
@@ -1118,7 +1118,7 @@ final class SearchClientSnippet {
     func snippetForSaveObject() async throws {
         // >SEPARATOR saveObject default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveObject(
@@ -1135,7 +1135,7 @@ final class SearchClientSnippet {
     func snippetForSaveObjects() async throws {
         // >SEPARATOR saveObjects call saveObjects without error
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveObjects(
@@ -1152,7 +1152,7 @@ final class SearchClientSnippet {
     func snippetForSaveObjects1() async throws {
         // >SEPARATOR saveObjects saveObjects should report errors
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveObjects(
@@ -1169,7 +1169,7 @@ final class SearchClientSnippet {
     func snippetForSaveRule() async throws {
         // >SEPARATOR saveRule default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveRule(
@@ -1190,7 +1190,7 @@ final class SearchClientSnippet {
     func snippetForSaveRules() async throws {
         // >SEPARATOR saveRules default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveRules(
@@ -1218,7 +1218,7 @@ final class SearchClientSnippet {
     func snippetForSaveSynonym() async throws {
         // >SEPARATOR saveSynonym default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveSynonym(
@@ -1237,7 +1237,7 @@ final class SearchClientSnippet {
     func snippetForSaveSynonyms() async throws {
         // >SEPARATOR saveSynonyms default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.saveSynonyms(
@@ -1264,7 +1264,7 @@ final class SearchClientSnippet {
     func snippetForSearch() async throws {
         // >SEPARATOR search withHitsPerPage
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1283,7 +1283,7 @@ final class SearchClientSnippet {
     func snippetForSearch1() async throws {
         // >SEPARATOR search filterOnly
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1302,7 +1302,7 @@ final class SearchClientSnippet {
     func snippetForSearch2() async throws {
         // >SEPARATOR search filterOr
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1321,7 +1321,7 @@ final class SearchClientSnippet {
     func snippetForSearch3() async throws {
         // >SEPARATOR search filterNot
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1340,7 +1340,7 @@ final class SearchClientSnippet {
     func snippetForSearch4() async throws {
         // >SEPARATOR search retrieveFacets
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1359,7 +1359,7 @@ final class SearchClientSnippet {
     func snippetForSearch5() async throws {
         // >SEPARATOR search retrieveFacetsWildcard
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
@@ -1378,7 +1378,7 @@ final class SearchClientSnippet {
     func snippetForSearchDictionaryEntries() async throws {
         // >SEPARATOR searchDictionaryEntries default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchDictionaryEntries(
@@ -1395,7 +1395,7 @@ final class SearchClientSnippet {
     func snippetForSearchForFacetValues() async throws {
         // >SEPARATOR searchForFacetValues default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchForFacetValues(indexName: "<YOUR_INDEX_NAME>", facetName: "facetName")
@@ -1409,7 +1409,7 @@ final class SearchClientSnippet {
     func snippetForSearchRules() async throws {
         // >SEPARATOR searchRules default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchRules(
@@ -1426,7 +1426,7 @@ final class SearchClientSnippet {
     func snippetForSearchSingleIndex() async throws {
         // >SEPARATOR searchSingleIndex default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
@@ -1440,7 +1440,7 @@ final class SearchClientSnippet {
     func snippetForSearchSynonyms() async throws {
         // >SEPARATOR searchSynonyms default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchSynonyms(indexName: "<YOUR_INDEX_NAME>")
@@ -1454,7 +1454,7 @@ final class SearchClientSnippet {
     func snippetForSearchUserIds() async throws {
         // >SEPARATOR searchUserIds default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchUserIds(searchUserIdsParams: SearchUserIdsParams(
@@ -1473,7 +1473,7 @@ final class SearchClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")
@@ -1487,7 +1487,7 @@ final class SearchClientSnippet {
     func snippetForSetDictionarySettings() async throws {
         // >SEPARATOR setDictionarySettings default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client
@@ -1508,7 +1508,7 @@ final class SearchClientSnippet {
     func snippetForSetSettings() async throws {
         // >SEPARATOR setSettings default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.setSettings(
@@ -1529,11 +1529,11 @@ final class SearchClientSnippet {
     func snippetForUpdateApiKey() async throws {
         // >SEPARATOR updateApiKey default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.updateApiKey(
-            key: "myApiKey",
+            key: "ALGOLIA_API_KEY",
             apiKey: ApiKey(
                 acl: [Acl.search, Acl.addObject],
                 maxHitsPerQuery: 20,
@@ -1551,7 +1551,7 @@ final class SearchClientSnippet {
     func snippetForWaitForApiKey() async throws {
         // >SEPARATOR waitForApiKey wait for api key helper - add
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.waitForApiKey(
@@ -1568,7 +1568,7 @@ final class SearchClientSnippet {
     func snippetForWaitForApiKey1() async throws {
         // >SEPARATOR waitForApiKey wait for api key - update
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.waitForApiKey(
@@ -1594,7 +1594,7 @@ final class SearchClientSnippet {
     func snippetForWaitForApiKey2() async throws {
         // >SEPARATOR waitForApiKey wait for api key - delete
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.waitForApiKey(
@@ -1611,7 +1611,7 @@ final class SearchClientSnippet {
     func snippetForWaitForAppTask() async throws {
         // >SEPARATOR waitForAppTask default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.waitForAppTask(taskID: Int64(123))
@@ -1625,7 +1625,7 @@ final class SearchClientSnippet {
     func snippetForWaitForTask() async throws {
         // >SEPARATOR waitForTask default
         // Initialize the client
-        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.waitForTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))

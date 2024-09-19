@@ -203,7 +203,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -213,7 +213,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
@@ -228,7 +228,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
 		)
 		require.NoError(t, err)
 
@@ -238,7 +238,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
 		headers := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"myApiKey"}`), &headers))
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}

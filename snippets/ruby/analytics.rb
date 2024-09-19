@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -30,7 +30,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -50,7 +50,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -70,7 +70,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -90,7 +90,7 @@ end
 def snippet_for_get_add_to_cart_rate
   # >SEPARATOR getAddToCartRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_add_to_cart_rate("index")
@@ -110,7 +110,7 @@ end
 def snippet_for_get_average_click_position
   # >SEPARATOR getAverageClickPosition default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_average_click_position("index")
@@ -130,7 +130,7 @@ end
 def snippet_for_get_click_positions
   # >SEPARATOR getClickPositions default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_click_positions("index")
@@ -150,7 +150,7 @@ end
 def snippet_for_get_click_through_rate
   # >SEPARATOR getClickThroughRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_click_through_rate("index")
@@ -170,7 +170,7 @@ end
 def snippet_for_get_conversion_rate
   # >SEPARATOR getConversionRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_conversion_rate("index")
@@ -190,7 +190,7 @@ end
 def snippet_for_get_no_click_rate
   # >SEPARATOR getNoClickRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_no_click_rate("index")
@@ -210,7 +210,7 @@ end
 def snippet_for_get_no_results_rate
   # >SEPARATOR getNoResultsRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_no_results_rate("index")
@@ -230,7 +230,7 @@ end
 def snippet_for_get_purchase_rate
   # >SEPARATOR getPurchaseRate default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_purchase_rate("index")
@@ -250,7 +250,7 @@ end
 def snippet_for_get_revenue
   # >SEPARATOR getRevenue default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_revenue("index")
@@ -270,7 +270,7 @@ end
 def snippet_for_get_searches_count
   # >SEPARATOR getSearchesCount default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_searches_count("index")
@@ -290,7 +290,7 @@ end
 def snippet_for_get_searches_no_clicks
   # >SEPARATOR getSearchesNoClicks default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_searches_no_clicks("index")
@@ -310,7 +310,7 @@ end
 def snippet_for_get_searches_no_results
   # >SEPARATOR getSearchesNoResults default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_searches_no_results("index")
@@ -330,7 +330,7 @@ end
 def snippet_for_get_status
   # >SEPARATOR getStatus default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_status("index")
@@ -350,7 +350,7 @@ end
 def snippet_for_get_top_countries
   # >SEPARATOR getTopCountries default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_countries("index")
@@ -370,7 +370,7 @@ end
 def snippet_for_get_top_filter_attributes
   # >SEPARATOR getTopFilterAttributes default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_filter_attributes("index")
@@ -390,7 +390,7 @@ end
 def snippet_for_get_top_filter_for_attribute
   # >SEPARATOR getTopFilterForAttribute default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_filter_for_attribute("myAttribute", "index")
@@ -410,7 +410,7 @@ end
 def snippet_for_get_top_filters_no_results
   # >SEPARATOR getTopFiltersNoResults default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_filters_no_results("index")
@@ -430,7 +430,7 @@ end
 def snippet_for_get_top_hits
   # >SEPARATOR getTopHits default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_hits("index")
@@ -450,7 +450,7 @@ end
 def snippet_for_get_top_searches
   # >SEPARATOR getTopSearches default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_top_searches("index")
@@ -470,7 +470,7 @@ end
 def snippet_for_get_users_count
   # >SEPARATOR getUsersCount default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_users_count("index")
@@ -490,7 +490,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::AnalyticsClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   client.set_client_api_key("updated-api-key")

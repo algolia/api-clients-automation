@@ -12,12 +12,23 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -36,12 +47,23 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -60,12 +82,23 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -84,12 +117,23 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -108,12 +152,23 @@ async def snippet_for_get_add_to_cart_rate():
     """
     # >SEPARATOR getAddToCartRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_add_to_cart_rate(
+    response = await client.get_add_to_cart_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_add_to_cart_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -132,12 +187,23 @@ async def snippet_for_get_average_click_position():
     """
     # >SEPARATOR getAverageClickPosition default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_average_click_position(
+    response = await client.get_average_click_position(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_average_click_position_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -156,12 +222,23 @@ async def snippet_for_get_click_positions():
     """
     # >SEPARATOR getClickPositions default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_click_positions(
+    response = await client.get_click_positions(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_click_positions_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -180,12 +257,23 @@ async def snippet_for_get_click_through_rate():
     """
     # >SEPARATOR getClickThroughRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_click_through_rate(
+    response = await client.get_click_through_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_click_through_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -204,12 +292,23 @@ async def snippet_for_get_conversion_rate():
     """
     # >SEPARATOR getConversionRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_conversion_rate(
+    response = await client.get_conversion_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_conversion_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -228,12 +327,23 @@ async def snippet_for_get_no_click_rate():
     """
     # >SEPARATOR getNoClickRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_no_click_rate(
+    response = await client.get_no_click_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_no_click_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -252,12 +362,23 @@ async def snippet_for_get_no_results_rate():
     """
     # >SEPARATOR getNoResultsRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_no_results_rate(
+    response = await client.get_no_results_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_no_results_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -276,12 +397,23 @@ async def snippet_for_get_purchase_rate():
     """
     # >SEPARATOR getPurchaseRate default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_purchase_rate(
+    response = await client.get_purchase_rate(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_purchase_rate_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -300,12 +432,23 @@ async def snippet_for_get_revenue():
     """
     # >SEPARATOR getRevenue default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_revenue(
+    response = await client.get_revenue(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_revenue_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -324,12 +467,23 @@ async def snippet_for_get_searches_count():
     """
     # >SEPARATOR getSearchesCount default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_searches_count(
+    response = await client.get_searches_count(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_searches_count_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -348,12 +502,23 @@ async def snippet_for_get_searches_no_clicks():
     """
     # >SEPARATOR getSearchesNoClicks default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_searches_no_clicks(
+    response = await client.get_searches_no_clicks(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_searches_no_clicks_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -372,12 +537,23 @@ async def snippet_for_get_searches_no_results():
     """
     # >SEPARATOR getSearchesNoResults default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_searches_no_results(
+    response = await client.get_searches_no_results(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_searches_no_results_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -396,12 +572,23 @@ async def snippet_for_get_status():
     """
     # >SEPARATOR getStatus default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_status(
+    response = await client.get_status(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_status_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -420,12 +607,23 @@ async def snippet_for_get_top_countries():
     """
     # >SEPARATOR getTopCountries default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_countries(
+    response = await client.get_top_countries(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_countries_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -444,12 +642,23 @@ async def snippet_for_get_top_filter_attributes():
     """
     # >SEPARATOR getTopFilterAttributes default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_filter_attributes(
+    response = await client.get_top_filter_attributes(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_filter_attributes_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -468,13 +677,25 @@ async def snippet_for_get_top_filter_for_attribute():
     """
     # >SEPARATOR getTopFilterForAttribute default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_filter_for_attribute(
+    response = await client.get_top_filter_for_attribute(
         attribute="myAttribute",
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_filter_for_attribute_with_http_info(
+        attribute="myAttribute",
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -493,12 +714,23 @@ async def snippet_for_get_top_filters_no_results():
     """
     # >SEPARATOR getTopFiltersNoResults default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_filters_no_results(
+    response = await client.get_top_filters_no_results(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_filters_no_results_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -517,12 +749,23 @@ async def snippet_for_get_top_hits():
     """
     # >SEPARATOR getTopHits default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_hits(
+    response = await client.get_top_hits(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_hits_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -541,12 +784,23 @@ async def snippet_for_get_top_searches():
     """
     # >SEPARATOR getTopSearches default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_top_searches(
+    response = await client.get_top_searches(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_top_searches_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -565,12 +819,23 @@ async def snippet_for_get_users_count():
     """
     # >SEPARATOR getUsersCount default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_users_count(
+    response = await client.get_users_count(
         index="index",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_users_count_with_http_info(
+        index="index",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -589,10 +854,17 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = AnalyticsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 

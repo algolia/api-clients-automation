@@ -11,7 +11,7 @@ import { insightsClient } from '@algolia/client-insights';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customDelete({ path: 'test/minimal' });
@@ -28,7 +28,7 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customGet({ path: 'test/minimal' });
@@ -45,7 +45,7 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customPost({ path: 'test/minimal' });
@@ -62,7 +62,7 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
@@ -79,7 +79,7 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForDeleteUserToken(): Promise<void> {
   // >SEPARATOR deleteUserToken default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   await client.deleteUserToken({ userToken: 'test-user-1' });
@@ -94,7 +94,7 @@ export async function snippetForDeleteUserToken(): Promise<void> {
 export async function snippetForPushEvents(): Promise<void> {
   // >SEPARATOR pushEvents default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   const response = await client.pushEvents({
@@ -125,7 +125,7 @@ export async function snippetForPushEvents(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  const client = insightsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');
+  const client = insightsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   client.setClientApiKey({ apiKey: 'updated-api-key' });

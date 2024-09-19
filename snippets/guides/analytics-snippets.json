@@ -1,7 +1,7 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Analytics;"
     },
     "customDelete": {
       "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
@@ -79,7 +79,7 @@
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
     "init": {
-      "default": "var client = new AnalyticsClient("
+      "default": "var client = new AnalyticsClient(\n  new AnalyticsConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")\n);"
     }
   },
   "dart": {},
@@ -163,7 +163,7 @@
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
-      "default": "client, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)"
+      "default": "client, err := analytics.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
     }
   },
   "java": {
@@ -246,7 +246,7 @@
       "default": "client.setClientApiKey(\"updated-api-key\");"
     },
     "init": {
-      "default": "AnalyticsClient client = new AnalyticsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
+      "default": "AnalyticsClient client = new AnalyticsClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
     }
   },
   "javascript": {
@@ -329,7 +329,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
+      "default": "const client = analyticsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "kotlin": {
@@ -412,7 +412,7 @@
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
     },
     "init": {
-      "default": "val client = AnalyticsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+      "default": "val client = AnalyticsClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "php": {
@@ -495,7 +495,7 @@
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
     },
     "init": {
-      "default": "$client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
+      "default": "$client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "python": {
@@ -503,82 +503,82 @@
       "default": "from algoliasearch.analytics.client import AnalyticsClient"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAddToCartRate": {
-      "default": "response = await _client.get_add_to_cart_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_add_to_cart_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_add_to_cart_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAverageClickPosition": {
-      "default": "response = await _client.get_average_click_position(\n    index=\"index\",\n)"
+      "default": "response = await client.get_average_click_position(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_average_click_position_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClickPositions": {
-      "default": "response = await _client.get_click_positions(\n    index=\"index\",\n)"
+      "default": "response = await client.get_click_positions(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_click_positions_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClickThroughRate": {
-      "default": "response = await _client.get_click_through_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_click_through_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_click_through_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getConversionRate": {
-      "default": "response = await _client.get_conversion_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_conversion_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_conversion_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getNoClickRate": {
-      "default": "response = await _client.get_no_click_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_no_click_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_no_click_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getNoResultsRate": {
-      "default": "response = await _client.get_no_results_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_no_results_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_no_results_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getPurchaseRate": {
-      "default": "response = await _client.get_purchase_rate(\n    index=\"index\",\n)"
+      "default": "response = await client.get_purchase_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_purchase_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getRevenue": {
-      "default": "response = await _client.get_revenue(\n    index=\"index\",\n)"
+      "default": "response = await client.get_revenue(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_revenue_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesCount": {
-      "default": "response = await _client.get_searches_count(\n    index=\"index\",\n)"
+      "default": "response = await client.get_searches_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesNoClicks": {
-      "default": "response = await _client.get_searches_no_clicks(\n    index=\"index\",\n)"
+      "default": "response = await client.get_searches_no_clicks(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_no_clicks_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesNoResults": {
-      "default": "response = await _client.get_searches_no_results(\n    index=\"index\",\n)"
+      "default": "response = await client.get_searches_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getStatus": {
-      "default": "response = await _client.get_status(\n    index=\"index\",\n)"
+      "default": "response = await client.get_status(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_status_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopCountries": {
-      "default": "response = await _client.get_top_countries(\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_countries(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_countries_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFilterAttributes": {
-      "default": "response = await _client.get_top_filter_attributes(\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_filter_attributes(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filter_attributes_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFilterForAttribute": {
-      "default": "response = await _client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filter_for_attribute_with_http_info(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFiltersNoResults": {
-      "default": "response = await _client.get_top_filters_no_results(\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_filters_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filters_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopHits": {
-      "default": "response = await _client.get_top_hits(\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_hits(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_hits_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopSearches": {
-      "default": "response = await _client.get_top_searches(\n    index=\"index\",\n)"
+      "default": "response = await client.get_top_searches(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_searches_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getUsersCount": {
-      "default": "response = await _client.get_users_count(\n    index=\"index\",\n)"
+      "default": "response = await client.get_users_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_users_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
-      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
-      "default": "_client = AnalyticsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "client = AnalyticsClient(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
     }
   },
   "ruby": {
@@ -661,7 +661,7 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "init": {
-      "default": "client = Algolia::AnalyticsClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "client = Algolia::AnalyticsClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "scala": {
@@ -741,7 +741,7 @@
       "default": "val response = client.getUsersCount(\n  index = \"index\"\n)"
     },
     "init": {
-      "default": "val client = AnalyticsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = Option(\"YOUR_APP_ID_REGION\"))"
+      "default": "val client = AnalyticsClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = Option(\"ALGOLIA_APPLICATION_REGION\")\n)"
     }
   },
   "swift": {
@@ -824,7 +824,7 @@
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
     },
     "init": {
-      "default": "let client = try AnalyticsClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
+      "default": "let client = try AnalyticsClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
     }
   }
 }

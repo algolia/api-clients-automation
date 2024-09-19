@@ -10,7 +10,7 @@ require "algolia"
 def snippet_for_create_authentication
   # >SEPARATOR createAuthentication default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_authentication(
@@ -36,7 +36,7 @@ end
 def snippet_for_create_destination
   # >SEPARATOR createDestination default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_destination(
@@ -63,7 +63,7 @@ end
 def snippet_for_create_source
   # >SEPARATOR createSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_source(
@@ -95,7 +95,7 @@ end
 def snippet_for_create_task
   # >SEPARATOR createTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_task(
@@ -117,7 +117,7 @@ end
 def snippet_for_create_task_v1
   # >SEPARATOR createTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_task_v1(
@@ -144,7 +144,7 @@ end
 def snippet_for_create_transformation
   # >SEPARATOR createTransformation default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.create_transformation(TransformationCreate.new(code: "foo", name: "bar", description: "baz"))
@@ -164,7 +164,7 @@ end
 def snippet_for_custom_delete
   # >SEPARATOR customDelete default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_delete("test/minimal")
@@ -184,7 +184,7 @@ end
 def snippet_for_custom_get
   # >SEPARATOR customGet default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_get("test/minimal")
@@ -204,7 +204,7 @@ end
 def snippet_for_custom_post
   # >SEPARATOR customPost default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_post("test/minimal")
@@ -224,7 +224,7 @@ end
 def snippet_for_custom_put
   # >SEPARATOR customPut default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.custom_put("test/minimal")
@@ -244,7 +244,7 @@ end
 def snippet_for_delete_authentication
   # >SEPARATOR deleteAuthentication default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -264,7 +264,7 @@ end
 def snippet_for_delete_destination
   # >SEPARATOR deleteDestination default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -284,7 +284,7 @@ end
 def snippet_for_delete_source
   # >SEPARATOR deleteSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -304,7 +304,7 @@ end
 def snippet_for_delete_task
   # >SEPARATOR deleteTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -324,7 +324,7 @@ end
 def snippet_for_delete_task_v1
   # >SEPARATOR deleteTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -344,7 +344,7 @@ end
 def snippet_for_delete_transformation
   # >SEPARATOR deleteTransformation default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -364,7 +364,7 @@ end
 def snippet_for_disable_task
   # >SEPARATOR disableTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.disable_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -384,7 +384,7 @@ end
 def snippet_for_disable_task_v1
   # >SEPARATOR disableTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.disable_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -404,7 +404,7 @@ end
 def snippet_for_enable_task
   # >SEPARATOR enableTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -424,7 +424,7 @@ end
 def snippet_for_enable_task_v1
   # >SEPARATOR enableTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.enable_task_v1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -444,7 +444,7 @@ end
 def snippet_for_get_authentication
   # >SEPARATOR getAuthentication default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -464,7 +464,7 @@ end
 def snippet_for_get_destination
   # >SEPARATOR getDestination default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -484,7 +484,7 @@ end
 def snippet_for_get_event
   # >SEPARATOR getEvent default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
@@ -504,7 +504,7 @@ end
 def snippet_for_get_run
   # >SEPARATOR getRun default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_run("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -524,7 +524,7 @@ end
 def snippet_for_get_source
   # >SEPARATOR getSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
@@ -544,7 +544,7 @@ end
 def snippet_for_get_task
   # >SEPARATOR getTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -564,7 +564,7 @@ end
 def snippet_for_get_task_v1
   # >SEPARATOR getTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -584,7 +584,7 @@ end
 def snippet_for_get_transformation
   # >SEPARATOR getTransformation default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -604,7 +604,7 @@ end
 def snippet_for_list_authentications
   # >SEPARATOR listAuthentications default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_authentications
@@ -624,7 +624,7 @@ end
 def snippet_for_list_destinations
   # >SEPARATOR listDestinations default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_destinations
@@ -644,7 +644,7 @@ end
 def snippet_for_list_events
   # >SEPARATOR listEvents default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -664,7 +664,7 @@ end
 def snippet_for_list_runs
   # >SEPARATOR listRuns default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_runs
@@ -684,7 +684,7 @@ end
 def snippet_for_list_sources
   # >SEPARATOR listSources default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_sources
@@ -704,7 +704,7 @@ end
 def snippet_for_list_tasks
   # >SEPARATOR listTasks default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_tasks
@@ -724,7 +724,7 @@ end
 def snippet_for_list_tasks_v1
   # >SEPARATOR listTasksV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_tasks_v1
@@ -744,7 +744,7 @@ end
 def snippet_for_list_transformations
   # >SEPARATOR listTransformations default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_transformations
@@ -764,7 +764,7 @@ end
 def snippet_for_push_task
   # >SEPARATOR pushTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.push_task(
@@ -793,7 +793,7 @@ end
 def snippet_for_run_source
   # >SEPARATOR runSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.run_source(
@@ -820,7 +820,7 @@ end
 def snippet_for_run_task
   # >SEPARATOR runTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.run_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -840,7 +840,7 @@ end
 def snippet_for_run_task_v1
   # >SEPARATOR runTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.run_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -860,7 +860,7 @@ end
 def snippet_for_search_authentications
   # >SEPARATOR searchAuthentications default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_authentications(
@@ -884,7 +884,7 @@ end
 def snippet_for_search_destinations
   # >SEPARATOR searchDestinations default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_destinations(
@@ -908,7 +908,7 @@ end
 def snippet_for_search_sources
   # >SEPARATOR searchSources default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_sources(
@@ -930,7 +930,7 @@ end
 def snippet_for_search_tasks
   # >SEPARATOR searchTasks default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_tasks(
@@ -958,7 +958,7 @@ end
 def snippet_for_search_tasks_v1
   # >SEPARATOR searchTasksV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_tasks_v1(
@@ -986,7 +986,7 @@ end
 def snippet_for_search_transformations
   # >SEPARATOR searchTransformations default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.search_transformations(
@@ -1014,7 +1014,7 @@ end
 def snippet_for_set_client_api_key
   # >SEPARATOR setClientApiKey default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   client.set_client_api_key("updated-api-key")
@@ -1028,7 +1028,7 @@ end
 def snippet_for_trigger_docker_source_discover
   # >SEPARATOR triggerDockerSourceDiscover default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.trigger_docker_source_discover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -1048,7 +1048,7 @@ end
 def snippet_for_try_transformation
   # >SEPARATOR tryTransformation default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.try_transformation(TransformationTry.new(code: "foo", sample_record: {bar: "baz"}))
@@ -1068,7 +1068,7 @@ end
 def snippet_for_try_transformation_before_update
   # >SEPARATOR tryTransformationBeforeUpdate default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.try_transformation_before_update(
@@ -1091,7 +1091,7 @@ end
 def snippet_for_update_authentication
   # >SEPARATOR updateAuthentication default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_authentication(
@@ -1114,7 +1114,7 @@ end
 def snippet_for_update_destination
   # >SEPARATOR updateDestination default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", DestinationUpdate.new(name: "newName"))
@@ -1134,7 +1134,7 @@ end
 def snippet_for_update_source
   # >SEPARATOR updateSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName"))
@@ -1154,7 +1154,7 @@ end
 def snippet_for_update_task
   # >SEPARATOR updateTask default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_task(
@@ -1177,7 +1177,7 @@ end
 def snippet_for_update_task_v1
   # >SEPARATOR updateTaskV1 default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", TaskUpdateV1.new(enabled: false))
@@ -1197,7 +1197,7 @@ end
 def snippet_for_update_transformation
   # >SEPARATOR updateTransformation default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.update_transformation(
@@ -1220,7 +1220,7 @@ end
 def snippet_for_validate_source
   # >SEPARATOR validateSource default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.validate_source(
@@ -1252,7 +1252,7 @@ end
 def snippet_for_validate_source_before_update
   # >SEPARATOR validateSourceBeforeUpdate default
   # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.validate_source_before_update(
