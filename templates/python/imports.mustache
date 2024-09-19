@@ -33,16 +33,18 @@ from typing import (
   Dict,
   Iterator,
   List,
-  Literal,
+  Set,
   Optional,
   Tuple,
   Union,
 )
 
+from typing_extensions import Annotated
+
 if version_info >= (3, 11):
-  from typing import Self, Annotated
+  from typing import Self
 else:
-  from typing_extensions import Self, Annotated
+  from typing_extensions import Self
 
 from algoliasearch.http.helpers import create_iterable, create_iterable_sync, RetryTimeout
 from algoliasearch.http.serializer import bodySerializer, QueryParametersSerializer
