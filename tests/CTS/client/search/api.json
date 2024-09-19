@@ -24,6 +24,30 @@
     ]
   },
   {
+    "testName": "read transporter with POST method",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "searchSingleIndex",
+        "parameters": {
+          "indexName": "indexName"
+        },
+        "expected": {
+          "type": "host",
+          "match": "test-app-id-dsn.algolia.net"
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with correct write host",
     "autoCreateClient": false,
     "steps": [

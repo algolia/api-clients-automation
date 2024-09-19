@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
 import okio.BufferedSink;
+import com.algolia.utils.UseReadTransporter;
 
 /**
  * HttpRequester is responsible for making HTTP requests using the OkHttp client. It provides a
@@ -72,7 +73,12 @@ public final class HttpRequester implements Requester {
     RequestBody requestBody = createRequestBody(httpRequest);
 
     // Build the HTTP request.
-    Request request = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody).build();
+    Request.Builder requestBuilder = new Request.Builder().url(url).headers(headers).method(httpRequest.getMethod(), requestBody);
+    if (httpRequest.isRead()) {
+      requestBuilder.tag(new UseReadTransporter());
+    }
+    
+    Request request = requestBuilder.build();
 
     // Get or adjust the HTTP client according to request options.
     OkHttpClient client = getOkHttpClient(requestOptions);
