@@ -1,0 +1,75 @@
+recommendSearchParams:
+  title: Search parameters as object
+  description: Search parameters for filtering the recommendations.
+  allOf:
+    - $ref: '#/baseRecommendSearchParams'
+    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsQuery'
+    - $ref: './IndexSettings.yml#/recommendIndexSettings'
+
+fallbackParams:
+  title: fallbackParameters
+  allOf:
+    - $ref: './QueryParameters.yml#/recommendSearchParams'
+    - type: object
+      description: Search parameters to use for a fallback request if there aren't enough recommendations.
+
+baseRecommendSearchParams:
+  type: object
+  additionalProperties: false
+  properties:
+    similarQuery:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/similarQuery'
+    filters:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/filters'
+    facetFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facetFilters'
+    optionalFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/optionalFilters'
+    numericFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/numericFilters'
+    tagFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/tagFilters'
+    sumOrFiltersScores:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/sumOrFiltersScores'
+    restrictSearchableAttributes:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/restrictSearchableAttributes'
+    facets:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facets'
+    facetingAfterDistinct:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facetingAfterDistinct'
+    aroundLatLng:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/aroundLatLng'
+    aroundLatLngViaIP:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/aroundLatLngViaIP'
+    aroundRadius:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/aroundRadius'
+    aroundPrecision:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/aroundPrecision'
+    minimumAroundRadius:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/minimumAroundRadius'
+    insideBoundingBox:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/insideBoundingBox'
+    insidePolygon:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/insidePolygon'
+    naturalLanguages:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/naturalLanguages'
+    ruleContexts:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/ruleContexts'
+    personalizationImpact:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/personalizationImpact'
+    userToken:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/userToken'
+    getRankingInfo:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/getRankingInfo'
+    synonyms:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/synonyms'
+    clickAnalytics:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/clickAnalytics'
+    analytics:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/analytics'
+    analyticsTags:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/analyticsTags'
+    percentileComputation:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/percentileComputation'
+    enableABTest:
+      $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/enableABTest'

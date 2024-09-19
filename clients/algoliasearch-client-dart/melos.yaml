@@ -43,6 +43,10 @@ scripts:
     exec: dart pub upgrade
     description: Run `dart pub upgrade` in all packages
 
+  outdated:
+    exec: dart pub outdated
+    description: Run `dart pub outdated` in all packages
+
   clear:
     exec: rm -rf .dart_tool
     description: Clear build folders, i.e. `.dart_tool` in all packages
