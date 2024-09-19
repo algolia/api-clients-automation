@@ -438,31 +438,6 @@ def snippet_for_enable_task_v1
   # SEPARATOR<
 end
 
-# Snippet for the generateTransformationCode method.
-#
-# generateTransformationCode
-def snippet_for_generate_transformation_code
-  # >SEPARATOR generateTransformationCode default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.generate_transformation_code(
-    GenerateTransformationCodePayload.new(
-      id: "foo",
-      user_prompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
-    )
-  )
-
-  # >LOG
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
 # Snippet for the getAuthentication method.
 #
 # getAuthentication
@@ -753,26 +728,6 @@ def snippet_for_list_tasks_v1
 
   # Call the API
   response = client.list_tasks_v1
-
-  # >LOG
-  # use the class directly
-  puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
-  # SEPARATOR<
-end
-
-# Snippet for the listTransformationModels method.
-#
-# listTransformationModels
-def snippet_for_list_transformation_models
-  # >SEPARATOR listTransformationModels default
-  # Initialize the client
-  client = Algolia::IngestionClient.create("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-  # Call the API
-  response = client.list_transformation_models
 
   # >LOG
   # use the class directly

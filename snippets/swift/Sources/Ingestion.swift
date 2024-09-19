@@ -319,24 +319,6 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the generateTransformationCode method.
-    ///
-    /// generateTransformationCode
-    func snippetForGenerateTransformationCode() async throws {
-        // >SEPARATOR generateTransformationCode default
-        // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client
-            .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(
-                id: "foo",
-                userPrompt: "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing"
-            ))
-        // >LOG
-        // SEPARATOR<
-    }
-
     /// Snippet for the getAuthentication method.
     ///
     /// getAuthentication
@@ -546,20 +528,6 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.listTasksV1()
-        // >LOG
-        // SEPARATOR<
-    }
-
-    /// Snippet for the listTransformationModels method.
-    ///
-    /// listTransformationModels
-    func snippetForListTransformationModels() async throws {
-        // >SEPARATOR listTransformationModels default
-        // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client.listTransformationModels()
         // >LOG
         // SEPARATOR<
     }

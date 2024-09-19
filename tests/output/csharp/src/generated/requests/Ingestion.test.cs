@@ -992,28 +992,6 @@ public class IngestionClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "generateTransformationCode")]
-  public async Task GenerateTransformationCodeTest()
-  {
-    await client.GenerateTransformationCodeAsync(
-      new GenerateTransformationCodePayload
-      {
-        Id = "foo",
-        UserPrompt =
-          "fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing",
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/models", req.Path);
-    Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"id\":\"foo\",\"userPrompt\":\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
   [Fact(DisplayName = "getAuthentication")]
   public async Task GetAuthenticationTest()
   {
@@ -1216,17 +1194,6 @@ public class IngestionClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
-  [Fact(DisplayName = "listTransformationModels")]
-  public async Task ListTransformationModelsTest()
-  {
-    await client.ListTransformationModelsAsync();
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/transformations/models", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }

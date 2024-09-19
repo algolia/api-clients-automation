@@ -63,9 +63,6 @@
     "enableTaskV1": {
       "default": "var response = await client.EnableTaskV1Async(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
-    "generateTransformationCode": {
-      "default": "var response = await client.GenerateTransformationCodeAsync(\n  new GenerateTransformationCodePayload\n  {\n    Id = \"foo\",\n    UserPrompt =\n      \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n  }\n);"
-    },
     "getAuthentication": {
       "default": "var response = await client.GetAuthenticationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
@@ -110,9 +107,6 @@
     },
     "listTasksV1": {
       "default": "var response = await client.ListTasksV1Async();"
-    },
-    "listTransformationModels": {
-      "default": "var response = await client.ListTransformationModelsAsync();"
     },
     "listTransformations": {
       "default": "var response = await client.ListTransformationsAsync();"
@@ -252,9 +246,6 @@
     "enableTaskV1": {
       "default": "response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
-    "generateTransformationCode": {
-      "default": "response, err := client.GenerateTransformationCode(client.NewApiGenerateTransformationCodeRequest(\n\n  ingestion.NewEmptyGenerateTransformationCodePayload().SetId(\"foo\").SetUserPrompt(\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
-    },
     "getAuthentication": {
       "default": "response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
@@ -299,9 +290,6 @@
     },
     "listTasksV1": {
       "default": "response, err := client.ListTasksV1(client.NewApiListTasksV1Request())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
-    },
-    "listTransformationModels": {
-      "default": "response, err := client.ListTransformationModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTransformations": {
       "default": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -440,9 +428,6 @@
     "enableTaskV1": {
       "default": "client.enableTaskV1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
-    "generateTransformationCode": {
-      "default": "client.generateTransformationCode(\n  new GenerateTransformationCodePayload()\n    .setId(\"foo\")\n    .setUserPrompt(\"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE\" + \" of code is doing\")\n);"
-    },
     "getAuthentication": {
       "default": "client.getAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
@@ -487,9 +472,6 @@
     },
     "listTasksV1": {
       "default": "client.listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "client.listTransformationModels();"
     },
     "listTransformations": {
       "default": "client.listTransformations();"
@@ -628,9 +610,6 @@
     "enableTaskV1": {
       "default": "const response = await client.enableTaskV1({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });"
     },
-    "generateTransformationCode": {
-      "default": "const response = await client.generateTransformationCode({\n  id: 'foo',\n  userPrompt: 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n});"
-    },
     "getAuthentication": {
       "default": "const response = await client.getAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });"
     },
@@ -675,9 +654,6 @@
     },
     "listTasksV1": {
       "default": "const response = await client.listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "const response = await client.listTransformationModels();"
     },
     "listTransformations": {
       "default": "const response = await client.listTransformations();"
@@ -816,9 +792,6 @@
     "enableTaskV1": {
       "default": "var response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
     },
-    "generateTransformationCode": {
-      "default": "var response = client.generateTransformationCode(\n  generateTransformationCodePayload = GenerateTransformationCodePayload(\n    id = \"foo\",\n    userPrompt = \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n  ),\n)"
-    },
     "getAuthentication": {
       "default": "var response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
@@ -863,9 +836,6 @@
     },
     "listTasksV1": {
       "default": "var response = client.listTasksV1()"
-    },
-    "listTransformationModels": {
-      "default": "var response = client.listTransformationModels()"
     },
     "listTransformations": {
       "default": "var response = client.listTransformations()"
@@ -1004,9 +974,6 @@
     "enableTaskV1": {
       "default": "$response = $client->enableTaskV1(\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n);"
     },
-    "generateTransformationCode": {
-      "default": "$response = $client->generateTransformationCode(\n    ['id' => 'foo',\n        'userPrompt' => 'fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing',\n    ],\n);"
-    },
     "getAuthentication": {
       "default": "$response = $client->getAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);"
     },
@@ -1051,9 +1018,6 @@
     },
     "listTasksV1": {
       "default": "$response = $client->listTasksV1();"
-    },
-    "listTransformationModels": {
-      "default": "$response = $client->listTransformationModels();"
     },
     "listTransformations": {
       "default": "$response = $client->listTransformations();"
@@ -1192,9 +1156,6 @@
     "enableTaskV1": {
       "default": "response = await _client.enable_task_v1(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
     },
-    "generateTransformationCode": {
-      "default": "response = await _client.generate_transformation_code(\n    generate_transformation_code_payload={\n        \"id\": \"foo\",\n        \"userPrompt\": \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\",\n    },\n)"
-    },
     "getAuthentication": {
       "default": "response = await _client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
     },
@@ -1239,9 +1200,6 @@
     },
     "listTasksV1": {
       "default": "response = await _client.list_tasks_v1()"
-    },
-    "listTransformationModels": {
-      "default": "response = await _client.list_transformation_models()"
     },
     "listTransformations": {
       "default": "response = await _client.list_transformations()"
@@ -1380,9 +1338,6 @@
     "enableTaskV1": {
       "default": "response = client.enable_task_v1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
-    "generateTransformationCode": {
-      "default": "response = client.generate_transformation_code(\n  GenerateTransformationCodePayload.new(\n    id: \"foo\",\n    user_prompt: \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n  )\n)"
-    },
     "getAuthentication": {
       "default": "response = client.get_authentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
@@ -1427,9 +1382,6 @@
     },
     "listTasksV1": {
       "default": "response = client.list_tasks_v1"
-    },
-    "listTransformationModels": {
-      "default": "response = client.list_transformation_models"
     },
     "listTransformations": {
       "default": "response = client.list_transformations"
@@ -1568,9 +1520,6 @@
     "enableTaskV1": {
       "default": "val response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n)"
     },
-    "generateTransformationCode": {
-      "default": "val response = client.generateTransformationCode(\n  generateTransformationCodePayload = GenerateTransformationCodePayload(\n    id = \"foo\",\n    userPrompt =\n      \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n  )\n)"
-    },
     "getAuthentication": {
       "default": "val response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
     },
@@ -1615,9 +1564,6 @@
     },
     "listTasksV1": {
       "default": "val response = client.listTasksV1(\n)"
-    },
-    "listTransformationModels": {
-      "default": "val response = client.listTransformationModels(\n)"
     },
     "listTransformations": {
       "default": "val response = client.listTransformations(\n)"
@@ -1753,9 +1699,6 @@
     "enableTaskV1": {
       "default": "let response = try await client.enableTaskV1(taskID: \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
-    "generateTransformationCode": {
-      "default": "let response = try await client\n    .generateTransformationCode(generateTransformationCodePayload: GenerateTransformationCodePayload(\n        id: \"foo\",\n        userPrompt: \"fizzbuzz algorithm in fortran with a lot of comments that describe what EACH LINE of code is doing\"\n    ))"
-    },
     "getAuthentication": {
       "default": "let response = try await client.getAuthentication(authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
@@ -1800,9 +1743,6 @@
     },
     "listTasksV1": {
       "default": "let response = try await client.listTasksV1()"
-    },
-    "listTransformationModels": {
-      "default": "let response = try await client.listTransformationModels()"
     },
     "listTransformations": {
       "default": "let response = try await client.listTransformations()"
