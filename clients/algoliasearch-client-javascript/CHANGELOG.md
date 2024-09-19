@@ -1,3 +1,7 @@
+## [5.5.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.1...5.5.2)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+
 ## [5.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.0...5.5.1)
 
 - [901076592](https://github.com/algolia/api-clients-automation/commit/901076592) fix(javascript): react-native lite resolution ([#3771](https://github.com/algolia/api-clients-automation/pull/3771)) by [@shortcuts](https://github.com/shortcuts/)

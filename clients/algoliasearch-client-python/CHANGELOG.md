@@ -1,3 +1,7 @@
+## [4.4.3](https://github.com/algolia/algoliasearch-client-python/compare/4.4.2...4.4.3)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+
 ## [4.4.2](https://github.com/algolia/algoliasearch-client-python/compare/4.4.1...4.4.2)
 
 - [0016c95e4](https://github.com/algolia/api-clients-automation/commit/0016c95e4) fix(python): missing transporter close ([#3741](https://github.com/algolia/api-clients-automation/pull/3741)) by [@shortcuts](https://github.com/shortcuts/)
