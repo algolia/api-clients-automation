@@ -6,7 +6,9 @@ import 'package:algoliasearch/src/model/around_radius_all.dart';
 import 'package:algoliasearch/src/model/automatic_facet_filter.dart';
 import 'package:algoliasearch/src/model/base_get_api_key_response.dart';
 import 'package:algoliasearch/src/model/base_index_settings.dart';
+import 'package:algoliasearch/src/model/base_recommend_index_settings.dart';
 import 'package:algoliasearch/src/model/base_recommend_request.dart';
+import 'package:algoliasearch/src/model/base_recommend_search_params.dart';
 import 'package:algoliasearch/src/model/base_search_params.dart';
 import 'package:algoliasearch/src/model/base_search_params_without_query.dart';
 import 'package:algoliasearch/src/model/base_search_response.dart';
@@ -26,7 +28,6 @@ import 'package:algoliasearch/src/model/exhaustive.dart';
 import 'package:algoliasearch/src/model/facet_hits.dart';
 import 'package:algoliasearch/src/model/facet_ordering.dart';
 import 'package:algoliasearch/src/model/facet_stats.dart';
-import 'package:algoliasearch/src/model/facets.dart';
 import 'package:algoliasearch/src/model/fallback_params.dart';
 import 'package:algoliasearch/src/model/fbt_model.dart';
 import 'package:algoliasearch/src/model/frequently_bought_together.dart';
@@ -37,6 +38,7 @@ import 'package:algoliasearch/src/model/highlight_result_option.dart';
 import 'package:algoliasearch/src/model/hit.dart';
 import 'package:algoliasearch/src/model/index_settings.dart';
 import 'package:algoliasearch/src/model/index_settings_as_search_params.dart';
+import 'package:algoliasearch/src/model/index_settings_facets.dart';
 import 'package:algoliasearch/src/model/looking_similar.dart';
 import 'package:algoliasearch/src/model/looking_similar_model.dart';
 import 'package:algoliasearch/src/model/looking_similar_query.dart';
@@ -49,6 +51,8 @@ import 'package:algoliasearch/src/model/query_type.dart';
 import 'package:algoliasearch/src/model/range.dart';
 import 'package:algoliasearch/src/model/ranking_info.dart';
 import 'package:algoliasearch/src/model/recommend_hit.dart';
+import 'package:algoliasearch/src/model/recommend_index_settings.dart';
+import 'package:algoliasearch/src/model/recommend_search_params.dart';
 import 'package:algoliasearch/src/model/recommendations_hits.dart';
 import 'package:algoliasearch/src/model/recommendations_results.dart';
 import 'package:algoliasearch/src/model/recommended_for_you.dart';
@@ -71,9 +75,9 @@ import 'package:algoliasearch/src/model/search_for_hits_options.dart';
 import 'package:algoliasearch/src/model/search_hits.dart';
 import 'package:algoliasearch/src/model/search_method_params.dart';
 import 'package:algoliasearch/src/model/search_pagination.dart';
-import 'package:algoliasearch/src/model/search_params.dart';
 import 'package:algoliasearch/src/model/search_params_object.dart';
 import 'package:algoliasearch/src/model/search_params_query.dart';
+import 'package:algoliasearch/src/model/search_params_string.dart';
 import 'package:algoliasearch/src/model/search_response.dart';
 import 'package:algoliasearch/src/model/search_responses.dart';
 import 'package:algoliasearch/src/model/search_strategy.dart';
@@ -133,8 +137,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BaseIndexSettings':
       return BaseIndexSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BaseRecommendIndexSettings':
+      return BaseRecommendIndexSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'BaseRecommendRequest':
       return BaseRecommendRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BaseRecommendSearchParams':
+      return BaseRecommendSearchParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BaseSearchParams':
       return BaseSearchParams.fromJson(value as Map<String, dynamic>)
@@ -184,8 +194,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'FacetStats':
       return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Facets':
-      return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FallbackParams':
       return FallbackParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -213,6 +221,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'IndexSettingsAsSearchParams':
       return IndexSettingsAsSearchParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'IndexSettingsFacets':
+      return IndexSettingsFacets.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'LookingSimilar':
       return LookingSimilar.fromJson(value as Map<String, dynamic>)
@@ -242,6 +253,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RecommendHit':
       return RecommendHit.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'RecommendIndexSettings':
+      return RecommendIndexSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RecommendSearchParams':
+      return RecommendSearchParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RecommendationsHits':
       return RecommendationsHits.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -301,13 +318,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchPagination':
       return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SearchParams':
-      return SearchParams.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchParamsObject':
       return SearchParamsObject.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchParamsQuery':
       return SearchParamsQuery.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchParamsString':
+      return SearchParamsString.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchResponse':
       return SearchResponse.fromJson(value as Map<String, dynamic>)

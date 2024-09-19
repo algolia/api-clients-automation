@@ -21,7 +21,7 @@ BaseRecommendRequest _$BaseRecommendRequestFromJson(
               'queryParameters',
               (v) => v == null
                   ? null
-                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+                  : RecommendSearchParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

@@ -603,7 +603,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 42.1,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
@@ -672,13 +672,13 @@ class RecommendTest extends AnyFunSuite {
             facetName = Some("myFacetName"),
             facetValue = Some("myFacetValue"),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
             ),
             fallbackParameters = Some(
-              SearchParamsObject(
+              FallbackParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
               )
@@ -745,7 +745,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
               )
@@ -764,7 +764,7 @@ class RecommendTest extends AnyFunSuite {
             threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParams(
+              RecommendSearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
               )

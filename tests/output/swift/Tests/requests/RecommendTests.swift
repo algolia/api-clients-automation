@@ -815,16 +815,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                             threshold: 42.1,
                             maxRecommendations: 10,
                             queryParameters: RecommendSearchParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                                query: "myQuery"
                             ),
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID",
                             fallbackParameters: FallbackParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                                query: "myQuery"
                             )
                         )),
                 ])
@@ -907,17 +907,17 @@ final class RecommendClientRequestsTests: XCTestCase {
                             threshold: 42.1,
                             maxRecommendations: 10,
                             queryParameters: RecommendSearchParams(
-                                query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
+                                query: "myQuery"
                             ),
                             facetName: "myFacetName",
                             facetValue: "myFacetValue",
                             model: TrendingItemsModel.trendingItems,
-                            fallbackParameters: RecommendSearchParamsObject(
-                                query: "myQuery",
+                            fallbackParameters: FallbackParams(
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
+                                query: "myQuery"
                             )
                         )),
                 ])
@@ -1000,16 +1000,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")]),
+                        query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID1",
                     fallbackParameters: FallbackParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")]),
+                        query: "myQuery"
                     )
                 )),
                 RecommendationsRequest.relatedQuery(RelatedQuery(
@@ -1017,16 +1017,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                     threshold: 21.7,
                     maxRecommendations: 10,
                     queryParameters: RecommendSearchParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")]),
+                        query: "myQuery"
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID2",
                     fallbackParameters: FallbackParams(
-                        query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")]),
+                        query: "myQuery"
                     )
                 )),
             ]))

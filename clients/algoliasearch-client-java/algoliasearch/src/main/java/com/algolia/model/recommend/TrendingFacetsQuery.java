@@ -21,7 +21,7 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("facetName")
   private Object facetName;
@@ -73,14 +73,14 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public TrendingFacetsQuery setQueryParameters(SearchParams queryParameters) {
+  public TrendingFacetsQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 

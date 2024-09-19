@@ -21,7 +21,7 @@ RecommendedForYouQuery _$RecommendedForYouQueryFromJson(
               'queryParameters',
               (v) => v == null
                   ? null
-                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+                  : RecommendSearchParams.fromJson(v as Map<String, dynamic>)),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$RecommendedForYouModelEnumMap, v)),
           fallbackParameters: $checkedConvert(
