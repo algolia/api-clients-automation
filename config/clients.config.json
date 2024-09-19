@@ -246,7 +246,7 @@
     ],
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.4.3",
+    "packageVersion": "4.4.4",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "dockerImage": "apic_base",
