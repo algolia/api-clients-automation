@@ -175,8 +175,6 @@ paths:
     $ref: 'paths/transformations/transformationsTry.yml'
   /1/transformations/search:
     $ref: 'paths/transformations/transformationsSearch.yml'
-  /1/transformations/models:
-    $ref: 'paths/transformations/transformationsModels.yml'
   /1/transformations/{transformationID}:
     $ref: 'paths/transformations/transformationID.yml'
   /1/transformations/{transformationID}/try:
