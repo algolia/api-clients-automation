@@ -41,7 +41,6 @@ object JsonSupport {
     new FbtModelSerializer() :+
     new LookingSimilarModelSerializer() :+
     new MatchLevelSerializer() :+
-    new ModeSerializer() :+
     new QueryTypeSerializer() :+
     new RecommendModelsSerializer() :+
     new RecommendedForYouModelSerializer() :+

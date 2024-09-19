@@ -44,5 +44,5 @@ case class BaseRecommendRequest(
     indexName: String,
     threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
-    queryParameters: Option[SearchParams] = scala.None
+    queryParameters: Option[RecommendSearchParams] = scala.None
 )

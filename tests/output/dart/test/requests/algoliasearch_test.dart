@@ -406,7 +406,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 42.1,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
@@ -481,13 +481,13 @@ void main() {
               maxRecommendations: 10,
               facetName: "myFacetName",
               facetValue: "myFacetValue",
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback",
@@ -560,7 +560,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query1",
@@ -579,7 +579,7 @@ void main() {
               model: RelatedModel.fromJson("related-products"),
               threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParams(
+              queryParameters: RecommendSearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query2",
@@ -1313,7 +1313,7 @@ void main() {
                   RemoveWordsIfNoResults.fromJson("allOptional"),
               renderingContent: RenderingContent(
                 facetOrdering: FacetOrdering(
-                  facets: Facets(
+                  facets: IndexSettingsFacets(
                     order: [
                       "a",
                       "b",

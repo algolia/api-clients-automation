@@ -46,7 +46,7 @@ case class RecommendedForYouQuery(
     indexName: String,
     threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
-    queryParameters: Option[SearchParams] = scala.None,
+    queryParameters: Option[RecommendSearchParams] = scala.None,
     model: RecommendedForYouModel,
     fallbackParameters: Option[FallbackParams] = scala.None
 ) extends RecommendationsRequestTrait

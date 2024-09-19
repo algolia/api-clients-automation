@@ -21,7 +21,7 @@ public class TrendingItemsQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("facetName")
   private String facetName;
@@ -33,7 +33,7 @@ public class TrendingItemsQuery implements RecommendationsRequest {
   private TrendingItemsModel model;
 
   @JsonProperty("fallbackParameters")
-  private SearchParamsObject fallbackParameters;
+  private FallbackParams fallbackParameters;
 
   public TrendingItemsQuery setIndexName(String indexName) {
     this.indexName = indexName;
@@ -76,14 +76,14 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public TrendingItemsQuery setQueryParameters(SearchParams queryParameters) {
+  public TrendingItemsQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 
@@ -126,14 +126,14 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return model;
   }
 
-  public TrendingItemsQuery setFallbackParameters(SearchParamsObject fallbackParameters) {
+  public TrendingItemsQuery setFallbackParameters(FallbackParams fallbackParameters) {
     this.fallbackParameters = fallbackParameters;
     return this;
   }
 
   /** Get fallbackParameters */
   @javax.annotation.Nullable
-  public SearchParamsObject getFallbackParameters() {
+  public FallbackParams getFallbackParameters() {
     return fallbackParameters;
   }
 

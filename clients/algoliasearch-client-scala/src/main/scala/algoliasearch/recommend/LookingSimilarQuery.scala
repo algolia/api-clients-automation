@@ -48,7 +48,7 @@ case class LookingSimilarQuery(
     indexName: String,
     threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
-    queryParameters: Option[SearchParams] = scala.None,
+    queryParameters: Option[RecommendSearchParams] = scala.None,
     model: LookingSimilarModel,
     objectID: String,
     fallbackParameters: Option[FallbackParams] = scala.None

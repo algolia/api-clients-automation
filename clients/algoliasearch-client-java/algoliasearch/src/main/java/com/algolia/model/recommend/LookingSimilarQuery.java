@@ -21,7 +21,7 @@ public class LookingSimilarQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("model")
   private LookingSimilarModel model;
@@ -73,14 +73,14 @@ public class LookingSimilarQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public LookingSimilarQuery setQueryParameters(SearchParams queryParameters) {
+  public LookingSimilarQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 

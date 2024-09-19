@@ -609,7 +609,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 42.1,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -688,14 +688,14 @@ public class RecommendClientRequestTests
               MaxRecommendations = 10,
               FacetName = "myFacetName",
               FacetValue = "myFacetValue",
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
                   new List<FacetFilters> { new FacetFilters("query") }
                 ),
               },
-              FallbackParameters = new SearchParamsObject
+              FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -774,7 +774,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -798,7 +798,7 @@ public class RecommendClientRequestTests
               Model = Enum.Parse<RelatedModel>("RelatedProducts"),
               Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParams
+              QueryParameters = new RecommendSearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(

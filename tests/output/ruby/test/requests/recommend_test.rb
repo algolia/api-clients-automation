@@ -352,7 +352,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 42.1,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
@@ -411,8 +411,8 @@ class TestRecommendClient < Test::Unit::TestCase
             max_recommendations: 10,
             facet_name: "myFacetName",
             facet_value: "myFacetValue",
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query"]),
-            fallback_parameters: SearchParamsObject.new(query: "myQuery", facet_filters: ["fallback"])
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query"]),
+            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback"])
           )
         ]
       )
@@ -464,7 +464,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query1"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query1"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
           ),
           RelatedQuery.new(
@@ -473,7 +473,7 @@ class TestRecommendClient < Test::Unit::TestCase
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query2"]),
+            query_parameters: RecommendSearchParams.new(query: "myQuery", facet_filters: ["query2"]),
             fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback2"])
           )
         ]

@@ -465,7 +465,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))}),
@@ -499,9 +499,9 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
 					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
-						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))}),
 		))
 		require.NoError(t, err)
@@ -534,12 +534,12 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
 							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))}),

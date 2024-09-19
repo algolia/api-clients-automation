@@ -16,7 +16,7 @@ FacetOrdering _$FacetOrderingFromJson(Map<String, dynamic> json) =>
               'facets',
               (v) => v == null
                   ? null
-                  : Facets.fromJson(v as Map<String, dynamic>)),
+                  : IndexSettingsFacets.fromJson(v as Map<String, dynamic>)),
           values: $checkedConvert(
               'values',
               (v) => (v as Map<String, dynamic>?)?.map(

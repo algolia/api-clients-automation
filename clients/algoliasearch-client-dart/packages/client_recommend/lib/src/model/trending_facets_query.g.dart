@@ -20,7 +20,7 @@ TrendingFacetsQuery _$TrendingFacetsQueryFromJson(Map<String, dynamic> json) =>
               'queryParameters',
               (v) => v == null
                   ? null
-                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+                  : RecommendSearchParams.fromJson(v as Map<String, dynamic>)),
           facetName: $checkedConvert('facetName', (v) => v),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$TrendingFacetsModelEnumMap, v)),

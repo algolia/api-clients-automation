@@ -21,7 +21,7 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
   private Integer maxRecommendations;
 
   @JsonProperty("queryParameters")
-  private SearchParams queryParameters;
+  private RecommendSearchParams queryParameters;
 
   @JsonProperty("model")
   private RecommendedForYouModel model;
@@ -70,14 +70,14 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public RecommendedForYouQuery setQueryParameters(SearchParams queryParameters) {
+  public RecommendedForYouQuery setQueryParameters(RecommendSearchParams queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
 
   /** Get queryParameters */
   @javax.annotation.Nullable
-  public SearchParams getQueryParameters() {
+  public RecommendSearchParams getQueryParameters() {
     return queryParameters;
   }
 

@@ -35,6 +35,6 @@ package algoliasearch.recommend
   *   Order of facet values. One object for each facet.
   */
 case class FacetOrdering(
-    facets: Option[Facets] = scala.None,
+    facets: Option[IndexSettingsFacets] = scala.None,
     values: Option[Map[String, Value]] = scala.None
 )
