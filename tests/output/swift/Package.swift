@@ -84,5 +84,11 @@ let package = Package(
                 .target(name: "Utils"),
             ] + libraries
         ),
+        .testTarget(
+            name: "manual",
+            dependencies: [
+                .target(name: "Utils"),
+            ] + libraries
+        ),
     ]
 )
