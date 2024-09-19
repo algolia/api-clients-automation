@@ -125,7 +125,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             },
             exclude_none=True,
             exclude_unset=True,
-            exclude_defaults=True,
         )
         {{#allVars}}
         {{#isContainer}}
