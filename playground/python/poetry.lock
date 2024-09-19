@@ -139,7 +139,7 @@ frozenlist = ">=1.1.0"
 
 [[package]]
 name = "algoliasearch"
-version = "4.4.1"
+version = "4.4.2"
 description = "A fully-featured and blazing-fast Python API client to interact with Algolia."
 optional = false
 python-versions = ">= 3.8.1"
@@ -862,5 +862,5 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.8.1"
-content-hash = "d0d3ccdeb76edaff7051edf6c9418b2808720e5c29e1337bb1dcc5c97316943a"
+python-versions = ">= 3.8.1"
+content-hash = "dfa3bff1d09cecebda86aed5791fbf6b0e889a7aa7cdc9f13761d54c17971ef4"
