@@ -168,7 +168,6 @@
     "packageVersion": "5.5.2",
     "modelFolder": "model",
     "apiFolder": "src",
-    "dockerImage": "apic_base",
     "tests": {
       "extension": ".test.ts",
       "outputFolder": "src"
