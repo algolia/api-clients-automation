@@ -46,9 +46,9 @@ object RecommendClient {
   private def hosts(appId: String): Seq[Host] = {
     val commonHosts = Random.shuffle(
       List(
-        Host(appId + "-1.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-2.algolianet.net", Set(CallType.Read, CallType.Write)),
-        Host(appId + "-3.algolianet.net", Set(CallType.Read, CallType.Write))
+        Host(appId + "-1.algolianet.com", Set(CallType.Read, CallType.Write)),
+        Host(appId + "-2.algolianet.com", Set(CallType.Read, CallType.Write)),
+        Host(appId + "-3.algolianet.com", Set(CallType.Read, CallType.Write))
       )
     )
     List(
