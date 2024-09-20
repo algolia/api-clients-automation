@@ -105,6 +105,9 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if obj is None:
             return None
 
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
         {{#allVars}}
         {{#isContainer}}
         {{#isArray}}
