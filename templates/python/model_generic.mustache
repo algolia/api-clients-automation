@@ -83,21 +83,11 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        _dict = self.model_dump(
+        return self.model_dump(
             by_alias=True,
             exclude_none=True,
             exclude_unset=True,
         )
-        {{#allVars}}
-        {{#isNullable}}
-        # set to None if {{{name}}} (nullable) is None
-        # and model_fields_set contains the field
-        if self.{{name}} is None and "{{{name}}}" in self.model_fields_set:
-            _dict['{{{baseName}}}'] = None
-
-        {{/isNullable}}
-        {{/allVars}}
-        return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
