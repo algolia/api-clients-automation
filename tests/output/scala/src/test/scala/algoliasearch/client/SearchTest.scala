@@ -47,6 +47,19 @@ class SearchTest extends AnyFunSuite {
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
 
+  test("read transporter with POST method") {
+
+    val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
+
+    Await.ready(
+      client.searchSingleIndex(
+        indexName = "indexName"
+      ),
+      Duration.Inf
+    )
+    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+  }
+
   test("calls api with correct write host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
@@ -158,7 +171,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.3.3\).*""".r
+    val regexp = """^Algolia for Scala \(2.3.4\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

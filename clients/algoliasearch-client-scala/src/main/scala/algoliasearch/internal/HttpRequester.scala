@@ -4,6 +4,7 @@ import algoliasearch.config._
 import algoliasearch.exception.{AlgoliaApiException, AlgoliaClientException}
 import algoliasearch.internal.interceptor.{GzipRequestInterceptor, HeaderInterceptor, LogInterceptor}
 import algoliasearch.internal.util.escape
+import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
 import okio.BufferedSink
@@ -140,11 +141,12 @@ private[algoliasearch] class HttpRequester private (
     val headers = createHeaders(httpRequest, requestOptions)
     val requestBody = createRequestBody(httpRequest)
     // Build the HTTP request.
-    val request = new Request.Builder()
+    val requestBuilder = new Request.Builder()
       .url(url)
       .headers(headers)
       .method(httpRequest.method, requestBody)
-      .build
+    if (httpRequest.read) requestBuilder.tag(UseReadTransporter)
+    val request = requestBuilder.build
     // Get or adjust the HTTP client according to request options.
     val client = okHttpClient(requestOptions)
     // Execute the request.

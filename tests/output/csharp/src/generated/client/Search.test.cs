@@ -37,8 +37,19 @@ public class SearchClientTests
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
   }
 
-  [Fact(DisplayName = "calls api with correct write host")]
+  [Fact(DisplayName = "read transporter with POST method")]
   public async Task ApiTest1()
+  {
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
+
+    await client.SearchSingleIndexAsync<Hit>("indexName");
+    EchoResponse result = _echo.LastResponse;
+
+    Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
+  }
+
+  [Fact(DisplayName = "calls api with correct write host")]
+  public async Task ApiTest2()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
 
@@ -49,7 +60,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy")]
-  public async Task ApiTest2()
+  public async Task ApiTest3()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -96,7 +107,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy error")]
-  public async Task ApiTest3()
+  public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -126,7 +137,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "test the compression strategy")]
-  public async Task ApiTest4()
+  public async Task ApiTest5()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {

@@ -58,8 +58,17 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with correct write host")
+  @DisplayName("read transporter with POST method")
   void apiTest1() {
+    SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
+    client.searchSingleIndex("indexName", Hit.class);
+    EchoResponse result = echo.getLastResponse();
+    assertEquals("test-app-id-dsn.algolia.net", result.host);
+  }
+
+  @Test
+  @DisplayName("calls api with correct write host")
+  void apiTest2() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
@@ -68,7 +77,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("tests the retry strategy")
-  void apiTest2() {
+  void apiTest3() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -90,7 +99,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("tests the retry strategy error")
-  void apiTest3() {
+  void apiTest4() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -109,7 +118,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("test the compression strategy")
-  void apiTest4() {
+  void apiTest5() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -164,7 +173,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.3.3\\).*";
+      String regexp = "^Algolia for Java \\(4.3.4\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

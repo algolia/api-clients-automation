@@ -55,8 +55,25 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('calls api with correct write host')]
+    #[TestDox('read transporter with POST method')]
     public function test1api(): void
+    {
+        $client = $this->createClient(
+            'test-app-id',
+            'test-api-key'
+        );
+        $this->assertIsObject($client);
+        $client->searchSingleIndex(
+            'indexName',
+        );
+        $this->assertEquals(
+            'test-app-id-dsn.algolia.net',
+            $this->recordedRequest['request']->getUri()->getHost()
+        );
+    }
+
+    #[TestDox('calls api with correct write host')]
+    public function test2api(): void
     {
         $client = $this->createClient(
             'test-app-id',
@@ -73,7 +90,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy')]
-    public function test2api(): void
+    public function test3api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
 
@@ -87,7 +104,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('tests the retry strategy error')]
-    public function test3api(): void
+    public function test4api(): void
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676']));
 

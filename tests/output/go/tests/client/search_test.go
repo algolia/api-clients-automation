@@ -57,8 +57,34 @@ func TestSearchapi0(t *testing.T) {
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
-// calls api with correct write host
+// read transporter with POST method
 func TestSearchapi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:     "test-app-id",
+			ApiKey:    "test-api-key",
+			Requester: echo,
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"indexName",
+	))
+	require.NoError(t, err)
+	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
+}
+
+// calls api with correct write host
+func TestSearchapi2(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -84,7 +110,7 @@ func TestSearchapi1(t *testing.T) {
 }
 
 // tests the retry strategy
-func TestSearchapi2(t *testing.T) {
+func TestSearchapi3(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -112,7 +138,7 @@ func TestSearchapi2(t *testing.T) {
 }
 
 // tests the retry strategy error
-func TestSearchapi3(t *testing.T) {
+func TestSearchapi4(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -137,7 +163,7 @@ func TestSearchapi3(t *testing.T) {
 }
 
 // test the compression strategy
-func TestSearchapi4(t *testing.T) {
+func TestSearchapi5(t *testing.T) {
 	var err error
 	var res any
 	_ = res

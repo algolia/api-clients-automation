@@ -23,6 +23,24 @@ void main() {
     }
   });
 
+  test('read transporter with POST method', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(requester: requester));
+    requester.setOnRequest((request) {
+      expect(request.host.url, "test-app-id-dsn.algolia.net");
+    });
+    try {
+      final res = await client.searchSingleIndex(
+        indexName: "indexName",
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('calls api with correct write host', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

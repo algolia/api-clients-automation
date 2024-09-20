@@ -33,6 +33,21 @@ class SearchTest {
   }
 
   @Test
+  fun `read transporter with POST method`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+        )
+      },
+      intercept = {
+        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+      },
+    )
+  }
+
+  @Test
   fun `calls api with correct write host`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
