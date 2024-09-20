@@ -6,7 +6,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{#description}}""" {{{.}}} """{{/description}}
 
 {{/vars}}
-    __properties: ClassVar[List[str]] = [{{#allVars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/allVars}}]
 {{#vars}}
     {{#vendorExtensions.x-regex}}
 
@@ -80,22 +79,12 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.
 
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-            {{#vendorExtensions.x-py-readonly}}
-            "{{{.}}}",
-            {{/vendorExtensions.x-py-readonly}}
-        ])
-
         _dict = self.model_dump(
             by_alias=True,
-            exclude=excluded_fields,
             exclude_none=True,
             exclude_unset=True,
         )
@@ -121,13 +110,16 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#isArray}}
         {{#items.isArray}}
         {{^items.items.isPrimitiveType}}
-        obj["{{{baseName}}}"] = ([ [{{{items.items.dataType}}}.from_dict(_inner_item) for _inner_item in _item] for _item in obj.get("{{{baseName}}}") ] if obj.get("{{{baseName}}}") is not None else None)
+        obj["{{{baseName}}}"] = [ [{{{items.items.dataType}}}.from_dict(_inner_item) for _inner_item in _item] for _item in obj["{{{baseName}}}"] ] if obj.get("{{{baseName}}}") is not None else None
         {{/items.items.isPrimitiveType}}
         {{/items.isArray}}
         {{^items.isArray}}
         {{^items.isPrimitiveType}}
+        {{#items.isEnumOrRef}}
+        obj["{{{baseName}}}"] = obj.get("{{{baseName}}}")
+        {{/items.isEnumOrRef}}
         {{^items.isEnumOrRef}}
-        obj["{{{baseName}}}"] = ([{{{items.dataType}}}.from_dict(_item) for _item in obj.get("{{{baseName}}}")] if obj.get("{{{baseName}}}") is not None else None)
+        obj["{{{baseName}}}"] = [{{{items.dataType}}}.from_dict(_item) for _item in obj["{{{baseName}}}"]] if obj.get("{{{baseName}}}") is not None else None
         {{/items.isEnumOrRef}}
         {{/items.isPrimitiveType}}
         {{/items.isArray}}
@@ -137,15 +129,31 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{^items.isEnumOrRef}}
         {{#items.isContainer}}
         {{#items.isMap}}
-        obj["{{{baseName}}}"] = (dict( (_k, dict( (_ik, {{{items.items.dataType}}}.from_dict(_iv)) for _ik, _iv in _v.items()) if _v is not None else None) for _k, _v in obj.get("{{{baseName}}}").items()) if obj.get("{{{baseName}}}") is not None else None)
+        obj["{{{baseName}}}"] = dict( (_k, dict( (_ik, {{{items.items.dataType}}}.from_dict(_iv)) for _ik, _iv in _v.items()) if _v is not None else None) for _k, _v in obj.get("{{{baseName}}}").items()) if obj.get("{{{baseName}}}") is not None else None
         {{/items.isMap}}
         {{#items.isArray}}
-        obj["{{{baseName}}}"] = dict( (_k, [{{{items.items.dataType}}}.from_dict(_item) for _item in _v] if _v is not None else None) for _k, _v in obj.get("{{{baseName}}}").items())
+        obj["{{{baseName}}}"] = dict( (_k, [{{{items.items.dataType}}}.from_dict(_item) for _item in _v] if _v is not None else None) for _k, _v in obj.get("{{{baseName}}}", {}).items())
         {{/items.isArray}}
         {{/items.isContainer}}
+        {{^items.isContainer}}
+        obj["{{{baseName}}}"] = dict( (_k, {{{items.dataType}}}.from_dict(_v)) for _k, _v in obj["{{{baseName}}}"].items()) if obj.get("{{{baseName}}}") is not None else None
+        {{/items.isContainer}}
+        {{/items.isEnumOrRef}}
+        {{#items.isEnumOrRef}}
+        obj["{{{baseName}}}"] = dict((_k, _v) for _k, _v in obj.get("{{{baseName}}}").items())
         {{/items.isEnumOrRef}}
         {{/items.isPrimitiveType}}
         {{/isMap}}
+        {{/isContainer}}
+        {{^isContainer}}
+        {{^isPrimitiveType}}
+        {{^isEnumOrRef}}
+        obj["{{{baseName}}}"] = {{{dataType}}}.from_dict(obj["{{{baseName}}}"]) if obj.get("{{{baseName}}}") is not None else None
+        {{/isEnumOrRef}}
+        {{#isEnumOrRef}}
+        obj["{{{baseName}}}"] = obj.get("{{{baseName}}}")
+        {{/isEnumOrRef}}
+        {{/isPrimitiveType}}
         {{/isContainer}}
         {{/allVars}}
 
