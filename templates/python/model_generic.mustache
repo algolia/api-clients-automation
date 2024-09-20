@@ -3,7 +3,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
 {{#vars}}
     {{name}}: {{{vendorExtensions.x-py-typing}}}
-    """ {{{description}}} """
+    {{#description}}""" {{{.}}} """{{/description}}
 
 {{/vars}}
 {{#isAdditionalPropertiesTrue}}
