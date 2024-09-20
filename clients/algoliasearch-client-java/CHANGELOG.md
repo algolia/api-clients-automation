@@ -1,3 +1,7 @@
+## [4.3.5](https://github.com/algolia/algoliasearch-client-java/compare/4.3.4...4.3.5)
+
+- [1ee5ce88e](https://github.com/algolia/api-clients-automation/commit/1ee5ce88e) fix(clients): use the correct host for search ([#3787](https://github.com/algolia/api-clients-automation/pull/3787)) by [@millotp](https://github.com/millotp/)
+
 ## [4.3.4](https://github.com/algolia/algoliasearch-client-java/compare/4.3.3...4.3.4)
 
 - [4f64d5fdd](https://github.com/algolia/api-clients-automation/commit/4f64d5fdd) fix(clients): use the dsn with the read transporter ([#3781](https://github.com/algolia/api-clients-automation/pull/3781)) by [@millotp](https://github.com/millotp/)
