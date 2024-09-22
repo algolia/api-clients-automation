@@ -6,7 +6,7 @@ val client = {{client}}(
         {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}} region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"{{value}}"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}},{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
         clientOptions = ClientOptions
           .builder()
-          .withHosts(List({{#customHosts}}Host("{{host}}", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
+          .withHosts(List({{#customHosts}}Host(System.getenv("CI") == "true" ? "localhost" : "host.docker.internal", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
           {{#gzipEncoding}}.withCompressionType(CompressionType.Gzip){{/gzipEncoding}}
           .build()
       )
