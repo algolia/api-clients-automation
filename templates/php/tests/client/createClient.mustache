@@ -5,5 +5,5 @@ $client = $this->createClient(
     {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
 );
 {{^isError}}$this->assertIsObject($client);{{/isError}}{{/useEchoRequester}}{{#hasCustomHosts}}
-$client = {{client}}::createWithConfig({{clientPrefix}}Config::create("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})->setFullHosts([{{#customHosts}}"http://{{host}}:{{port}}"{{^-last}},{{/-last}}{{/customHosts}}]));
+$client = {{client}}::createWithConfig({{clientPrefix}}Config::create("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})->setFullHosts([{{#customHosts}}"http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":{{port}}"{{^-last}},{{/-last}}{{/customHosts}}]));
 {{/hasCustomHosts}}

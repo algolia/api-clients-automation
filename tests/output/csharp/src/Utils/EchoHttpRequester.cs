@@ -69,7 +69,7 @@ public class EchoHttpRequester : IHttpRequester
       QueryParameters = SplitQuery(request.Uri.Query),
       Headers = new Dictionary<string, string>(request.Headers),
       ConnectTimeout = connectTimeout,
-      ResponseTimeout = requestTimeout
+      ResponseTimeout = requestTimeout,
     };
 
     LastResponse = echo;
