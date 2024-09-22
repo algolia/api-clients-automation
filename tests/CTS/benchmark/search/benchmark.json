@@ -19,7 +19,7 @@
       {
         "type": "method",
         "method": "search",
-        "times": 1000,
+        "times": 2000,
         "parameters": {
           "requests": [
             {
