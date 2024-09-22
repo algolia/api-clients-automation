@@ -115,7 +115,11 @@ final class RecommendClientClientTests: XCTestCase {
         let configuration = try RecommendClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = RecommendClient(configuration: configuration, transporter: transporter)

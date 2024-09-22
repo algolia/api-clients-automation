@@ -32,7 +32,10 @@ public class SearchClientBenchmark
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6682,
           Up = true,
           LastUse = DateTime.UtcNow,

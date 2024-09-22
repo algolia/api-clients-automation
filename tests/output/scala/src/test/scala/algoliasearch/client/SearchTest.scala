@@ -82,9 +82,24 @@ class SearchTest extends AnyFunSuite {
         .builder()
         .withHosts(
           List(
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676)),
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6677)),
-            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6677)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6678)
+            )
           )
         )
         .build()
@@ -106,7 +121,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            )
+          )
+        )
         .build()
     )
 
@@ -127,7 +151,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6678)
+            )
+          )
+        )
         .withCompressionType(CompressionType.Gzip)
         .build()
     )
@@ -274,7 +307,16 @@ class SearchTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6683)
+            )
+          )
+        )
         .build()
     )
 

@@ -96,7 +96,13 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`region` must be one of the following: de, us", e.message)
+      assert_equal(
+        "`region` must be one of the following: de, us".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -112,7 +118,13 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
       client.get_click_positions_with_http_info(nil)
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Parameter `index` is required when calling `get_click_positions`.", e.message)
+      assert_equal(
+        "Parameter `index` is required when calling `get_click_positions`.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -124,7 +136,7 @@ class TestClientAnalyticsClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6683,
             accept: CallType::READ | CallType::WRITE

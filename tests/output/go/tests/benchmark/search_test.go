@@ -27,7 +27,7 @@ func TestSearchbenchmark0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6682", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6682", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)

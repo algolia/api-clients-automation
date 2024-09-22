@@ -95,7 +95,10 @@ public class MonitoringClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,

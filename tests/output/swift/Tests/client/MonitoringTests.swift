@@ -103,7 +103,11 @@ final class MonitoringClientClientTests: XCTestCase {
         let configuration = try MonitoringClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = MonitoringClient(configuration: configuration, transporter: transporter)
