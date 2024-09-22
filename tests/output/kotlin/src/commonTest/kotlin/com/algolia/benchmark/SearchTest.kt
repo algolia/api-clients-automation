@@ -17,7 +17,7 @@ class SearchTest {
   @Test
   fun `benchmark the search method`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6682))))
-    for (i in 1..1000) {
+    for (i in 1..2000) {
       client.runTest(
         call = {
           search(

@@ -23,7 +23,7 @@ class SearchTest extends TestCase
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6682']));
 
-        for ($i = 1; $i <= 1000; ++$i) {
+        for ($i = 1; $i <= 2000; ++$i) {
             $res = $client->search(
                 ['requests' => [
                     ['indexName' => 'cts_e2e_benchmark_search_php',

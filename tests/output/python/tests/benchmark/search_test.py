@@ -16,7 +16,7 @@ class TestSearchClient:
             [Host(url="localhost", scheme="http", port=6682)]
         )
         _client = SearchClient.create_with_config(config=_config)
-        for _ in range(0, 1000):
+        for _ in range(0, 2000):
             _req = await _client.search(
                 search_method_params={
                     "requests": [

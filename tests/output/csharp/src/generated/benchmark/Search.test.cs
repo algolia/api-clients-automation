@@ -42,7 +42,7 @@ public class SearchClientBenchmark
     };
     var client = new SearchClient(_config);
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 2000; i++)
     {
       var res = await client.SearchAsync<Hit>(
         new SearchMethodParams
