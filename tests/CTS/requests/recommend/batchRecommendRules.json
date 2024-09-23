@@ -1,0 +1,16 @@
+[
+    {
+        "testName": "batch recommend rules",
+        "parameters": {
+            "indexName": "indexName",
+            "model": "related-products"
+        },
+        "request": {
+            "path": "/1/indexes/indexName/related-products/recommend/rules/batch",
+            "method": "POST",
+            "body": {
+                "rules": []
+            }
+        }
+    }
+]
