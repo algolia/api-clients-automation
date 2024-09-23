@@ -28,11 +28,10 @@ post:
         schema:
           title: rules
           type: array
-          # required: true
           description: Recommend rules.
           additionalProperties: false
           items:
-            $ref: '../common/schemas/RecommendRule.yml'
+            $ref: '../common/schemas/RecommendRule.yml#/RecommendRule'
 
   responses:
     '200':
