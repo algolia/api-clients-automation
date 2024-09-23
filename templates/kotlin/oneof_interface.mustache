@@ -26,13 +26,9 @@ import kotlin.jvm.JvmInline
 @Serializable({{classname}}Serializer::class)
 public sealed interface {{classname}} {
     {{#composedSchemas.oneOf}}
-    {{^isModel}}
-    {{^isEnumRef}}
     @Serializable
     @JvmInline
     public value class {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(public val value: {{{datatypeWithEnum}}}): {{classname}}
-    {{/isEnumRef}}
-    {{/isModel}}
     {{/composedSchemas.oneOf}}
 
     public companion object {
@@ -62,13 +58,9 @@ public sealed interface {{classname}} {
 
     {{^vendorExtensions.x-is-multi-array}}{{^vendorExtensions.x-is-multi-map}}
     {{#composedSchemas.oneOf}}
-    {{^isModel}}
-    {{^isEnumRef}}
     public fun of(value: {{{datatypeWithEnum}}}): {{classname}} {
         return {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value(value);
     }
-    {{/isEnumRef}}
-    {{/isModel}}
     {{/composedSchemas.oneOf}}
     {{/vendorExtensions.x-is-multi-map}}{{/vendorExtensions.x-is-multi-array}}
     }
@@ -78,6 +70,25 @@ internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{clas
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<{{classname}}> {
         return when {
             {{#composedSchemas.oneOf}}
+            {{^isModel}}
+              {{^isMap}}
+                {{^isArray}}
+                  {{^isEnumRef}}
+                    {{^isInteger}}
+                      {{^isLong}}
+                        {{^isDouble}}
+                          {{^isBoolean}}
+                            {{^isPrimitiveType}}
+                              element is JsonObject{{#vendorExtensions.x-discriminator-fields}} && element.containsKey("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} -> {{{datatypeWithEnum}}}.serializer()
+                            {{/isPrimitiveType}}
+                          {{/isBoolean}}
+                        {{/isDouble}}
+                      {{/isLong}}
+                    {{/isInteger}}
+                  {{/isEnumRef}}
+                {{/isArray}}
+              {{/isMap}}
+            {{/isModel}}
             {{#isModel}}
             element is JsonObject{{#vendorExtensions.x-discriminator-fields}} && element.containsKey("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} -> {{{datatypeWithEnum}}}.serializer()
             {{/isModel}}
@@ -85,7 +96,7 @@ internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{clas
             element is JsonObject -> {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
             {{/isMap}}
             {{#isArray}}
-            element{{#items}}{{#isModel}}.isJsonArrayOfObjects{{/isModel}}{{#isPrimitiveType}}.isJsonArrayOfPrimitives{{/isPrimitiveType}}{{^isModel}}{{^isPrimitiveType}} is JsonArray{{/isPrimitiveType}}{{/isModel}}{{/items}} -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
+            element is JsonArray -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
             {{/isArray}}
             {{#isEnumRef}}
             element.isString -> {{{datatypeWithEnum}}}.serializer()
