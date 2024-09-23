@@ -16,13 +16,13 @@ internal data class DisjunctiveFaceting(
   val disjunctiveFacets: Set<String>,
 ) {
   // Build filters SQL string from the provided refinements and disjunctive facets set
-  private fun buildFilters(excludedAttribute: String?): String {
+  internal fun buildFilters(excludedAttribute: String?): String {
     val filters = refinements.entries.sortedBy { it.key }.filter {
       it.key != excludedAttribute && it.value.isNotEmpty()
     }.map {
-      val facetOperator = if (disjunctiveFacets.contains(it.key)) "OR" else "AND"
-      val expression = it.value.joinToString(facetOperator) { value -> "${it.key}:$value" }
-      return "($expression)"
+      val facetOperator = if (disjunctiveFacets.contains(it.key)) " OR " else " AND "
+      val expression = it.value.joinToString(facetOperator) { value -> """"${it.key}":"$value"""" }
+      return@map "($expression)"
     }
     return filters.joinToString(" AND ")
   }
@@ -66,7 +66,7 @@ internal data class DisjunctiveFaceting(
   }
 
   // Get applied disjunctive facet values for provided attribute
-  private fun appliedDisjunctiveFacetValues(attribute: String): Set<String> {
+  internal fun appliedDisjunctiveFacetValues(attribute: String): Set<String> {
     if (!disjunctiveFacets.contains(attribute)) {
       return emptySet()
     }
