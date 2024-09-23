@@ -109,7 +109,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "timerange",
     "typotolerance",
     "typotoleranceenum",
-    "Updatedatresponse",
+    "updatedatresponse",
     "value"
   );
 
