@@ -1,7 +1,7 @@
-import { callGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.js';
-import { getTestOutputFolder } from '../config.js';
-import { formatter } from '../formatter.js';
-import type { Generator } from '../types.js';
+import { callGenerator, exists, run, setupAndGen, toAbsolutePath } from '../common.ts';
+import { getTestOutputFolder } from '../config.ts';
+import { formatter } from '../formatter.ts';
+import type { Generator } from '../types.ts';
 
 export async function snippetsGenerateMany(generators: Generator[]): Promise<void> {
   await setupAndGen(generators, 'snippets', async (gen) => {

@@ -12,13 +12,13 @@ import {
   ensureGitHubToken,
   configureGitHubAuthor,
   setVerbose,
-} from '../../common.js';
-import { getLanguageFolder, getPackageVersionDefault } from '../../config.js';
-import { getNewReleasedTag } from '../../release/common.js';
-import type { Language } from '../../types.js';
-import { cloneRepository, getNbGitDiff } from '../utils.js';
+} from '../../common.ts';
+import { getLanguageFolder, getPackageVersionDefault } from '../../config.ts';
+import { getNewReleasedTag } from '../../release/common.ts';
+import type { Language } from '../../types.ts';
+import { cloneRepository, getNbGitDiff } from '../utils.ts';
 
-import text, { commitStartRelease } from './text.js';
+import text, { commitStartRelease } from './text.ts';
 
 export function cleanUpCommitMessage(commitMessage: string, version: string): string {
   if (commitMessage.startsWith(commitStartRelease)) {

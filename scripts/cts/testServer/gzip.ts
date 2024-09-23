@@ -4,9 +4,8 @@ import zlib from 'node:zlib';
 import crc32 from 'crc/crc32';
 import type { Express } from 'express';
 
-import { retryHandler } from './timeout';
-
-import { setupServer } from '.';
+import { setupServer } from './index.ts';
+import { retryHandler } from './timeout.ts';
 
 function addRoutes(app: Express): void {
   app.get('/1/test/retry/:lang', retryHandler(0, 'ok test server response'));

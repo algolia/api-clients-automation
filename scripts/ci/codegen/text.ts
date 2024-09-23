@@ -1,4 +1,4 @@
-import { TODAY } from '../../common.js';
+import { TODAY } from '../../common.ts';
 
 export const commitStartPrepareRelease = 'chore: prepare release';
 export const commitStartRelease = 'chore: release';

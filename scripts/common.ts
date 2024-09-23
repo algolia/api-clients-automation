@@ -6,16 +6,16 @@ import { execaCommand, execa } from 'execa';
 import type { ExecaError } from 'execa';
 import { remove } from 'fs-extra';
 
-import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
-import releaseConfig from '../config/release.config.json' assert { type: 'json' };
+import clientsConfig from '../config/clients.config.json' with { type: 'json' };
+import releaseConfig from '../config/release.config.json' with { type: 'json' };
 
-import { Cache } from './cache';
-import { getDockerImage } from './config';
-import { generateOpenapitools } from './pre-gen';
-import { getGitAuthor } from './release/common.js';
-import { buildSpecs } from './specs';
-import { createSpinner } from './spinners.js';
-import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
+import { Cache } from './cache.ts';
+import { getDockerImage } from './config.ts';
+import { generateOpenapitools } from './pre-gen/index.ts';
+import { getGitAuthor } from './release/common.ts';
+import { buildSpecs } from './specs/index.ts';
+import { createSpinner } from './spinners.ts';
+import type { Generator, GeneratorMode, Language, RunOptions } from './types.ts';
 
 export const fullReleaseConfig = releaseConfig;
 

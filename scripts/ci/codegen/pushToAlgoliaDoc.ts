@@ -12,10 +12,10 @@ import {
   getOctokit,
   setVerbose,
   gitBranchExists,
-} from '../../common.js';
-import { getNbGitDiff } from '../utils.js';
+} from '../../common.ts';
+import { getNbGitDiff } from '../utils.ts';
 
-import { commitStartRelease } from './text.js';
+import { commitStartRelease } from './text.ts';
 
 async function pushToAlgoliaDoc(): Promise<void> {
   const githubToken = ensureGitHubToken();

@@ -2,13 +2,13 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import { Cache } from '../cache.js';
-import { run, toAbsolutePath } from '../common.js';
-import { createSpinner } from '../spinners.js';
-import type { Spec } from '../types.js';
+import { Cache } from '../cache.ts';
+import { run, toAbsolutePath } from '../common.ts';
+import { createSpinner } from '../spinners.ts';
+import type { Spec } from '../types.ts';
 
-import { lintCommon, transformBundle } from './format.js';
-import type { BaseBuildSpecsOptions } from './types.js';
+import { lintCommon, transformBundle } from './format.ts';
+import type { BaseBuildSpecsOptions } from './types.ts';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost', 'getRecommendations'];
 

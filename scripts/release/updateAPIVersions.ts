@@ -2,13 +2,13 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import clientsConfig from '../../config/clients.config.json' assert { type: 'json' };
-import { toAbsolutePath, run, exists, GENERATORS, CI, setVerbose } from '../common.js';
-import { getGitHubUrl, getLanguageFolder } from '../config.js';
-import type { Language } from '../types.js';
+import clientsConfig from '../../config/clients.config.json' with { type: 'json' };
+import { toAbsolutePath, run, exists, GENERATORS, CI, setVerbose } from '../common.ts';
+import { getGitHubUrl, getLanguageFolder } from '../config.ts';
+import type { Language } from '../types.ts';
 
-import { writeJsonFile } from './common.js';
-import type { Changelog, Versions } from './types.js';
+import { writeJsonFile } from './common.ts';
+import type { Changelog, Versions } from './types.ts';
 
 async function updateConfigFiles(versionsToRelease: Versions): Promise<void> {
   // update the other versions in clients.config.json

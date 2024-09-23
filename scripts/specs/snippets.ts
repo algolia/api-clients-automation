@@ -1,9 +1,9 @@
 import fsp from 'fs/promises';
 
-import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
-import type { Language } from '../types.js';
+import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.ts';
+import type { Language } from '../types.ts';
 
-import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
+import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.ts';
 
 export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   switch (language) {

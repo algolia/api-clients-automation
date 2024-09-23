@@ -3,7 +3,7 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type { Express, Request, Response } from 'express';
 
-import { setupServer } from '.';
+import { setupServer } from './index.ts';
 
 function addRoutes(app: Express): void {
   app.get('/check-api-key/1', (req: Request, res: Response) => {

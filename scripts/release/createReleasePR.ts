@@ -5,8 +5,8 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.js';
-import { getNbGitDiff } from '../ci/utils.js';
+import generationCommitText, { isGeneratedCommit } from '../ci/codegen/text.ts';
+import { getNbGitDiff } from '../ci/utils.ts';
 import {
   LANGUAGES,
   run,
@@ -21,15 +21,15 @@ import {
   setVerbose,
   configureGitHubAuthor,
   ROOT_DIR,
-} from '../common.js';
-import { getPackageVersionDefault } from '../config.js';
-import type { Language } from '../types.js';
+} from '../common.ts';
+import { getPackageVersionDefault } from '../config.ts';
+import type { Language } from '../types.ts';
 
-import { getFileChanges, getLastReleasedTag } from './common.js';
-import { generateSLA } from './sla.js';
-import TEXT from './text.js';
-import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.js';
-import { updateAPIVersions } from './updateAPIVersions.js';
+import { getFileChanges, getLastReleasedTag } from './common.ts';
+import { generateSLA } from './sla.ts';
+import TEXT from './text.ts';
+import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.ts';
+import { updateAPIVersions } from './updateAPIVersions.ts';
 
 dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 

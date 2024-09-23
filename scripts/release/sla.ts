@@ -4,12 +4,12 @@ import fsp from 'fs/promises';
 
 import semver from 'semver';
 
-import { cloneRepository } from '../ci/utils.js';
-import { ensureGitHubToken, fullReleaseConfig, LANGUAGES, run, toAbsolutePath } from '../common.js';
-import type { Language } from '../types.js';
+import { cloneRepository } from '../ci/utils.ts';
+import { ensureGitHubToken, fullReleaseConfig, LANGUAGES, run, toAbsolutePath } from '../common.ts';
+import type { Language } from '../types.ts';
 
-import { preReleaseRegExp } from './createReleasePR.js';
-import type { Version, Versions } from './types.js';
+import { preReleaseRegExp } from './createReleasePR.ts';
+import type { Version, Versions } from './types.ts';
 
 function getMajorMinor(lang: Language, version: string): { major: number; minor: number } {
   const matches = version.match(/(\d+)\.(\d+)/);

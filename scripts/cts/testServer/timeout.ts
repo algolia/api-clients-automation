@@ -3,7 +3,7 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type express from 'express';
 
-import { setupServer } from '.';
+import { setupServer } from './index.ts';
 
 const timeoutState: Record<string, { timestamp: number[]; duration: number[]; hangCount: number }> = {};
 

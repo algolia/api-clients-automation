@@ -1,7 +1,7 @@
-import { run } from './common.js';
-import { getLanguageFolder } from './config.js';
-import { createSpinner } from './spinners.js';
-import type { Generator, Language } from './types.js';
+import { run } from './common.ts';
+import { getLanguageFolder } from './config.ts';
+import { createSpinner } from './spinners.ts';
+import type { Generator, Language } from './types.ts';
 
 type BuildType = 'client' | 'playground' | 'snippets';
 

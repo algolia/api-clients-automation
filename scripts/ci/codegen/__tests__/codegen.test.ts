@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { pushGeneratedCode } from '../pushGeneratedCode.js';
+import { pushGeneratedCode } from '../pushGeneratedCode.ts';
 
-vi.mock('../../../common.js', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('../../../common.js')>();
+vi.mock('../../../common.ts', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../../common.ts')>();
   return {
     ...mod,
     run: vi.fn().mockResolvedValue(''),

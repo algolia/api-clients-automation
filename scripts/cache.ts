@@ -2,7 +2,7 @@ import fsp from 'fs/promises';
 
 import { hashElement } from 'folder-hash';
 
-import { exists } from './common';
+import { exists } from './common.ts';
 
 export class Cache {
   folder: string;

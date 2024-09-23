@@ -3,11 +3,11 @@ import fsp from 'fs/promises';
 
 import { setOutput } from '@actions/core';
 
-import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.js';
-import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.js';
+import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.ts';
+import { getLanguageFolder, getTestExtension, getTestOutputFolder, getClientsConfigField } from '../../config.ts';
 
-import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
-import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.js';
+import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.ts';
+import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.ts';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };

@@ -12,8 +12,8 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
-  # this is the same as `yarn build:cli && yarn start` but without the overhead of yarn
-  (cd $ROOT/scripts && cd $ROOT/scripts && cat package.json | jq  '.scripts."build:cli"' | xargs -I{} sh -c "eval '../node_modules/.bin/{}'" && NODE_NO_WARNINGS=1 node --enable-source-maps dist/cli/index.js $* || true)
+  # this is the same as `yarn start` but without the overhead of yarn
+  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node --experimental-strip-types cli/index.ts $*)
 }
 
 export apic

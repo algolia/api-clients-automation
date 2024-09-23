@@ -3,7 +3,7 @@ import type { Server } from 'http';
 import { expect } from 'chai';
 import type { Express } from 'express';
 
-import { setupServer } from '.';
+import { setupServer } from './index.ts';
 
 const retryCount: Record<
   string,

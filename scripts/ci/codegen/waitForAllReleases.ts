@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import type { components } from '@octokit/openapi-types';
 
-import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common';
-import { getClientsConfigField, getLanguageFolder } from '../../config';
-import { getTargetBranch } from '../../release/common';
-import type { Language } from '../../types';
+import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common.ts';
+import { getClientsConfigField, getLanguageFolder } from '../../config.ts';
+import { getTargetBranch } from '../../release/common.ts';
+import type { Language } from '../../types.ts';
 
-import { commitStartRelease } from './text';
+import { commitStartRelease } from './text.ts';
 
 type Run = {
   language: Language;

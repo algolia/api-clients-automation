@@ -3,17 +3,17 @@ import type { Server } from 'http';
 import express from 'express';
 import type { Express } from 'express';
 
-import { createSpinner } from '../../spinners';
-import type { CTSType } from '../runCts';
+import { createSpinner } from '../../spinners.ts';
+import type { CTSType } from '../runCts.ts';
 
-import { apiKeyServer } from './apiKey';
-import { benchmarkServer } from './benchmark';
-import { chunkWrapperServer } from './chunkWrapper';
-import { gzipServer } from './gzip';
-import { replaceAllObjectsServer } from './replaceAllObjects';
-import { timeoutServer } from './timeout';
-import { timeoutServerBis } from './timeoutBis';
-import { waitForApiKeyServer } from './waitFor';
+import { apiKeyServer } from './apiKey.ts';
+import { benchmarkServer } from './benchmark.ts';
+import { chunkWrapperServer } from './chunkWrapper.ts';
+import { gzipServer } from './gzip.ts';
+import { replaceAllObjectsServer } from './replaceAllObjects.ts';
+import { timeoutServer } from './timeout.ts';
+import { timeoutServerBis } from './timeoutBis.ts';
+import { waitForApiKeyServer } from './waitFor.ts';
 
 export async function startTestServer(suites: Record<CTSType, boolean>): Promise<() => Promise<void>> {
   const toStart: Array<Promise<Server>> = [];

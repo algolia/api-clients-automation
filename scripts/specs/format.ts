@@ -2,13 +2,13 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import { Cache } from '../cache.js';
-import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
-import { createSpinner } from '../spinners.js';
-import type { Spec } from '../types.js';
+import { Cache } from '../cache.ts';
+import { GENERATORS, exists, run, toAbsolutePath } from '../common.ts';
+import { createSpinner } from '../spinners.ts';
+import type { Spec } from '../types.ts';
 
-import { getCodeSampleLabel, transformSnippetsToCodeSamples, transformCodeSamplesToGuideMethods } from './snippets.js';
-import type { SnippetSamples } from './types.js';
+import { getCodeSampleLabel, transformSnippetsToCodeSamples, transformCodeSamplesToGuideMethods } from './snippets.ts';
+import type { SnippetSamples } from './types.ts';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');

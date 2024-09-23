@@ -27,8 +27,7 @@ module.exports = {
       'ignorePackages',
       {
         js: 'never',
-        ts: 'never',
-        mjs: 'never',
+        ts: 'always',
       },
     ],
     '@typescript-eslint/sort-type-union-intersection-members': 0,

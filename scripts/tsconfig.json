@@ -6,6 +6,8 @@
     "typeRoots": ["../node_modules/@types"],
     "types": ["node"],
     "lib": ["esnext", "dom"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
   },
   "include": ["**/*.ts", "./**.cjs", "**/*.mjs"],
   "exclude": ["dist", "*.json", "node_modules"]

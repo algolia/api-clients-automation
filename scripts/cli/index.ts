@@ -1,23 +1,23 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
-import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
-import { getLanguageFolder } from '../config.js';
-import { ctsGenerateMany } from '../cts/generate.js';
-import { runCts } from '../cts/runCts.js';
-import { startTestServer } from '../cts/testServer';
-import { formatter } from '../formatter.js';
-import { generate } from '../generate.js';
-import { playground } from '../playground.js';
-import { createReleasePR } from '../release/createReleasePR.js';
-import { generateSLA } from '../release/sla.js';
-import { snippetsGenerateMany } from '../snippets/generate.js';
-import { buildSpecs } from '../specs';
-import type { Language } from '../types.js';
+import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.ts';
+import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.ts';
+import { getLanguageFolder } from '../config.ts';
+import { ctsGenerateMany } from '../cts/generate.ts';
+import { runCts } from '../cts/runCts.ts';
+import { startTestServer } from '../cts/testServer/index.ts';
+import { formatter } from '../formatter.ts';
+import { generate } from '../generate.ts';
+import { playground } from '../playground.ts';
+import { createReleasePR } from '../release/createReleasePR.ts';
+import { generateSLA } from '../release/sla.ts';
+import { snippetsGenerateMany } from '../snippets/generate.ts';
+import { buildSpecs } from '../specs/index.ts';
+import type { Language } from '../types.ts';
 
-import type { LangArg } from './utils.js';
-import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.js';
+import type { LangArg } from './utils.ts';
+import { ALL, getClientChoices, generatorList, transformSelection, PROMPT_CLIENTS, PROMPT_LANGUAGES } from './utils.ts';
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),

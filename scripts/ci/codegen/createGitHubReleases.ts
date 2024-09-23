@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 
-import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common';
-import { isPreRelease } from '../../release/sla';
-import type { Language } from '../../types';
-import { cloneRepository } from '../utils';
+import { ensureGitHubToken, getOctokit, OWNER, run, setVerbose, toAbsolutePath } from '../../common.ts';
+import { isPreRelease } from '../../release/sla.ts';
+import type { Language } from '../../types.ts';
+import { cloneRepository } from '../utils.ts';
 
-import { commitStartRelease } from './text';
+import { commitStartRelease } from './text.ts';
 
 async function createGitHubRelease(lang: Language): Promise<void> {
   // **Full Changelog**:

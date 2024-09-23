@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { LANGUAGES } from '../../common.js';
-import { getLanguageFolder } from '../../config.js';
-import type { Language } from '../../types.js';
-import { getNbGitDiff } from '../utils.js';
+import { LANGUAGES } from '../../common.ts';
+import { getLanguageFolder } from '../../config.ts';
+import type { Language } from '../../types.ts';
+import { getNbGitDiff } from '../utils.ts';
 
 export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows'],

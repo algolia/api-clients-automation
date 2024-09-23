@@ -1,16 +1,16 @@
 import fsp from 'fs/promises';
 
-import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
-import { getTestOutputFolder } from '../config.js';
-import { createSpinner } from '../spinners.js';
-import type { Language } from '../types.js';
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
+import { getTestOutputFolder } from '../config.ts';
+import { createSpinner } from '../spinners.ts';
+import type { Language } from '../types.ts';
 
-import { startTestServer } from './testServer';
-import { printBenchmarkReport } from './testServer/benchmark.js';
-import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
-import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
-import { assertValidTimeouts } from './testServer/timeout.js';
-import { assertValidWaitForApiKey } from './testServer/waitFor.js';
+import { printBenchmarkReport } from './testServer/benchmark.ts';
+import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
+import { startTestServer } from './testServer/index.ts';
+import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts';
+import { assertValidTimeouts } from './testServer/timeout.ts';
+import { assertValidWaitForApiKey } from './testServer/waitFor.ts';
 
 export type CTSType = 'benchmark' | 'client' | 'e2e' | 'requests';
 

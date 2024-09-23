@@ -1,5 +1,5 @@
-import { run, runComposerInstall } from './common.js';
-import { createSpinner } from './spinners.js';
+import { run, runComposerInstall } from './common.ts';
+import { createSpinner } from './spinners.ts';
 
 export async function formatter(language: string, cwd: string): Promise<void> {
   const spinner = createSpinner(`running formatter for '${language}' in '${cwd}'`);

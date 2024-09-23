@@ -1,7 +1,7 @@
-import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
+import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 
-import { CI } from './common';
-import type { Language, LanguageConfig } from './types.js';
+import { CI } from './common.ts';
+import type { Language, LanguageConfig } from './types.ts';
 
 export function getClientsConfigField(
   language: Language,

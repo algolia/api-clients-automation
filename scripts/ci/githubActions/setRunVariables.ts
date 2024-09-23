@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as core from '@actions/core';
 
-import { DEPENDENCIES, isBaseChanged } from './utils.js';
+import { DEPENDENCIES, isBaseChanged } from './utils.ts';
 
 /**
  * Outputs variables used in the CI to determine if a job should run.

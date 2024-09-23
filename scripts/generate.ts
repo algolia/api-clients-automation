@@ -1,8 +1,8 @@
-import { callGenerator, setupAndGen } from './common.js';
-import { getLanguageFolder } from './config.js';
-import { formatter } from './formatter.js';
-import { removeExistingCodegen } from './pre-gen';
-import type { Generator } from './types.js';
+import { callGenerator, setupAndGen } from './common.ts';
+import { getLanguageFolder } from './config.ts';
+import { formatter } from './formatter.ts';
+import { removeExistingCodegen } from './pre-gen/index.ts';
+import type { Generator } from './types.ts';
 
 async function preGen(gen: Generator): Promise<void> {
   await removeExistingCodegen(gen);

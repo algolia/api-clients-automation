@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { setOutput } from '@actions/core';
 
-import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';
-import { getNbGitDiff } from '../utils.js';
+import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.ts';
+import { getNbGitDiff } from '../utils.ts';
 
-import text, { commitStartPrepareRelease } from './text.js';
+import text, { commitStartPrepareRelease } from './text.ts';
 
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');

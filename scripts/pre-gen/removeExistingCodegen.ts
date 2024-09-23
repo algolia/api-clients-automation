@@ -1,9 +1,9 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { createClientName, run, toAbsolutePath, toSnakeCase } from '../common.js';
-import { getLanguageApiFolder, getLanguageFolder, getLanguageModelFolder } from '../config.js';
-import type { Generator } from '../types.js';
+import { createClientName, run, toAbsolutePath, toSnakeCase } from '../common.ts';
+import { getLanguageApiFolder, getLanguageFolder, getLanguageModelFolder } from '../config.ts';
+import type { Generator } from '../types.ts';
 
 /**
  * Remove `model` folder for the current language and client.

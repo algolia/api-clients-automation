@@ -47,10 +47,6 @@ runs:
       shell: bash
       run: YARN_ENABLE_HARDENED_MODE=0 yarn install
 
-    - name: Build scripts
-      shell: bash
-      run: yarn workspace scripts build:cli
-
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
       if: ${{ inputs.language == 'javascript' }}

@@ -1,8 +1,8 @@
 import { execa } from 'execa';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { capitalize, createClientName, gitCommit } from '../common.js';
-import { getClientsConfigField } from '../config.js';
+import { capitalize, createClientName, gitCommit } from '../common.ts';
+import { getClientsConfigField } from '../config.ts';
 
 vi.mock('execa', () => {
   return {

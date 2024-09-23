@@ -17,9 +17,9 @@
     "fix:json": "eslint --ext=json . --fix",
     "fix:mustache": "eslint --ext=mustache templates/**/tests/ --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
-    "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts build:cli",
+    "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build",
     "playground:browser": "yarn workspace javascript-browser-playground start",
-    "scripts:build": "yarn workspace scripts build",
+    "scripts:build": "yarn workspace scripts build:actions",
     "scripts:lint": "yarn workspace scripts lint",
     "scripts:test": "yarn workspace scripts test",
     "specs:fix": "eslint --ext=yml specs/$0 --fix",
@@ -28,8 +28,6 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@babel/core": "7.25.2",
-    "@babel/eslint-parser": "7.25.1",
     "@eslint-community/eslint-plugin-eslint-comments": "4.4.0",
     "@openapitools/openapi-generator-cli": "2.13.5",
     "@redocly/cli": "1.25.2",
@@ -50,7 +48,6 @@
     "eslint-plugin-yml": "1.14.0",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
-    "pinst": "3.0.0",
     "prettier": "3.3.3",
     "prettier-plugin-java": "2.6.4",
     "renovate-config-algolia": "2.1.10",

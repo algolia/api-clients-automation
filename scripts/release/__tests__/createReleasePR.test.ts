@@ -2,15 +2,15 @@ import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
 // @ts-expect-error this is a mock created below
-import { getFileChangesMock } from '../common.js';
+import { getFileChangesMock } from '../common.ts';
 import {
   decideReleaseStrategy,
   getNextVersion,
   getSkippedCommitsText,
   getVersionChangesText,
   parseCommit,
-} from '../createReleasePR.js';
-import type { ParsedCommit } from '../types.js';
+} from '../createReleasePR.ts';
+import type { ParsedCommit } from '../types.ts';
 
 const gitAuthor = releaseConfig.gitAuthor;
 
@@ -29,8 +29,8 @@ const buildTestCommit = (
 };
 
 // Mock `getOctokit` to bypass the API call and credential requirements
-vi.mock('../../common.js', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('../../common.js')>();
+vi.mock('../../common.ts', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../common.ts')>();
   return {
     ...mod,
     getOctokit: vi.fn().mockReturnValue({
@@ -47,16 +47,16 @@ vi.mock('../../common.js', async (importOriginal) => {
   };
 });
 
-vi.mock('../../ci/utils.js', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('../../ci/utils.js')>();
+vi.mock('../../ci/utils.ts', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../ci/utils.ts')>();
   return {
     ...mod,
     getNbGitDiff: vi.fn().mockResolvedValue(1),
   };
 });
 
-vi.mock('../common.js', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('../common.js')>();
+vi.mock('../common.ts', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../common.ts')>();
   const getFileChangesMockFn = vi.fn();
 
   return {
@@ -67,8 +67,8 @@ vi.mock('../common.js', async (importOriginal) => {
   };
 });
 
-vi.mock('../../config.js', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('../../config.js')>();
+vi.mock('../../config.ts', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../config.ts')>();
   return {
     ...mod,
     getPackageVersionDefault: vi.fn().mockReturnValue('0.1.2'),

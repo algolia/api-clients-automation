@@ -1,8 +1,8 @@
 // @ts-nocheck this file is broken while the SLA is unclear
 import { describe, expect, it } from 'vitest';
 
-import { fullReleaseConfig, LANGUAGES } from '../../common.js';
-import { generateLanguageSLA } from '../sla.js';
+import { fullReleaseConfig, LANGUAGES } from '../../common.ts';
+import { generateLanguageSLA } from '../sla.ts';
 
 describe('generateLanguageSLA', () => {
   LANGUAGES.forEach((lang) => {
