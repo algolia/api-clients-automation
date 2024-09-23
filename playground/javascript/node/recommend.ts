@@ -1,4 +1,4 @@
-import recommendClient from '@algolia/recommend';
+import { recommendClient } from '@algolia/recommend';
 import { ApiError } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
@@ -6,9 +6,6 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
 
 const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
-
-console.log("######################")
-console.log({ recommendClient })
 
 // Init client with appId and apiKey
 const client = recommendClient(appId, apiKey);
