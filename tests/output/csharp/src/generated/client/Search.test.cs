@@ -37,8 +37,19 @@ public class SearchClientTests
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
   }
 
-  [Fact(DisplayName = "calls api with correct write host")]
+  [Fact(DisplayName = "read transporter with POST method")]
   public async Task ApiTest1()
+  {
+    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
+
+    await client.SearchSingleIndexAsync<Hit>("indexName");
+    EchoResponse result = _echo.LastResponse;
+
+    Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
+  }
+
+  [Fact(DisplayName = "calls api with correct write host")]
+  public async Task ApiTest2()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
 
@@ -49,7 +60,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy")]
-  public async Task ApiTest2()
+  public async Task ApiTest3()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -58,7 +69,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6676,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -67,7 +81,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6677,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -76,7 +93,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6678,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -96,7 +116,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "tests the retry strategy error")]
-  public async Task ApiTest3()
+  public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -105,7 +125,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6676,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -126,7 +149,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "test the compression strategy")]
-  public async Task ApiTest4()
+  public async Task ApiTest5()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -135,7 +158,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6678,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -180,7 +206,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.4.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.4.1\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -217,7 +243,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -305,7 +334,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -332,7 +364,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -359,7 +394,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -465,7 +503,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -504,7 +545,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -543,7 +587,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6679,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -590,7 +637,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -628,7 +678,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6680,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -665,7 +718,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -708,7 +764,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -742,7 +801,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -791,7 +853,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -821,7 +886,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -852,7 +920,10 @@ public class SearchClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6681,
           Up = true,
           LastUse = DateTime.UtcNow,

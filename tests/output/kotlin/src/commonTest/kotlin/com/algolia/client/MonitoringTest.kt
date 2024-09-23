@@ -42,7 +42,7 @@ class MonitoringTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.3.2\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.3.3\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -98,7 +98,7 @@ class MonitoringTest {
 
   @Test
   fun `switch API key`() = runTest {
-    val client = MonitoringClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = MonitoringClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(

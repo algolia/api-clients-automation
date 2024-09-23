@@ -12,7 +12,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.customDelete(
@@ -30,7 +30,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.customGet(
@@ -48,7 +48,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.customPost(
@@ -66,7 +66,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.customPut(
@@ -84,7 +84,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetClusterIncidents() {
     // >SEPARATOR getClusterIncidents default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getClusterIncidents(
@@ -102,7 +102,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetClusterStatus() {
     // >SEPARATOR getClusterStatus default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getClusterStatus(
@@ -120,7 +120,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetIncidents() {
     // >SEPARATOR getIncidents default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getIncidents()
@@ -136,7 +136,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetIndexingTime() {
     // >SEPARATOR getIndexingTime default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getIndexingTime(
@@ -154,7 +154,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetLatency() {
     // >SEPARATOR getLatency default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getLatency(
@@ -172,7 +172,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetMetrics() {
     // >SEPARATOR getMetrics default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getMetrics(
@@ -191,7 +191,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetReachability() {
     // >SEPARATOR getReachability default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getReachability(
@@ -209,7 +209,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetServers() {
     // >SEPARATOR getServers default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getServers()
@@ -225,7 +225,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForGetStatus() {
     // >SEPARATOR getStatus default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     var response = client.getStatus()
@@ -241,7 +241,7 @@ class SnippetMonitoringClient {
   suspend fun snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     client.setClientApiKey(

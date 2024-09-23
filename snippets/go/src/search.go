@@ -15,7 +15,7 @@ func SnippetForAddApiKeyOfSearch() {
 
 	// >SEPARATOR addApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -46,7 +46,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 
 	// >SEPARATOR addOrUpdateObject default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -75,7 +75,7 @@ func SnippetForAppendSourceOfSearch() {
 
 	// >SEPARATOR appendSource default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -105,7 +105,7 @@ func SnippetForAssignUserIdOfSearch() {
 
 	// >SEPARATOR assignUserId default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -135,7 +135,7 @@ func SnippetForBatchOfSearch() {
 
 	// >SEPARATOR batch addObject
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -166,7 +166,7 @@ func SnippetForBatchOfSearch1() {
 
 	// >SEPARATOR batch clear
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -197,7 +197,7 @@ func SnippetForBatchOfSearch2() {
 
 	// >SEPARATOR batch delete
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -228,7 +228,7 @@ func SnippetForBatchOfSearch3() {
 
 	// >SEPARATOR batch deleteObject
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -259,7 +259,7 @@ func SnippetForBatchOfSearch4() {
 
 	// >SEPARATOR batch partialUpdateObject
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -290,7 +290,7 @@ func SnippetForBatchOfSearch5() {
 
 	// >SEPARATOR batch partialUpdateObjectNoCreate
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -321,7 +321,7 @@ func SnippetForBatchOfSearch6() {
 
 	// >SEPARATOR batch updateObject
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -352,7 +352,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 
 	// >SEPARATOR batchAssignUserIds default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -383,7 +383,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 
 	// >SEPARATOR batchDictionaryEntries replace
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -417,7 +417,7 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 
 	// >SEPARATOR batchDictionaryEntries delete
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -449,7 +449,7 @@ func SnippetForBatchDictionaryEntriesOfSearch2() {
 
 	// >SEPARATOR batchDictionaryEntries append
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -481,7 +481,7 @@ func SnippetForBrowseOfSearch() {
 
 	// >SEPARATOR browse default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -510,7 +510,7 @@ func SnippetForClearObjectsOfSearch() {
 
 	// >SEPARATOR clearObjects default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -539,7 +539,7 @@ func SnippetForClearRulesOfSearch() {
 
 	// >SEPARATOR clearRules default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -568,7 +568,7 @@ func SnippetForClearSynonymsOfSearch() {
 
 	// >SEPARATOR clearSynonyms default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -597,7 +597,7 @@ func SnippetForCustomDeleteOfSearch() {
 
 	// >SEPARATOR customDelete default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -626,7 +626,7 @@ func SnippetForCustomGetOfSearch() {
 
 	// >SEPARATOR customGet default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -655,7 +655,7 @@ func SnippetForCustomPostOfSearch() {
 
 	// >SEPARATOR customPost default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -684,7 +684,7 @@ func SnippetForCustomPutOfSearch() {
 
 	// >SEPARATOR customPut default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -713,7 +713,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 
 	// >SEPARATOR deleteApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -742,7 +742,7 @@ func SnippetForDeleteByOfSearch() {
 
 	// >SEPARATOR deleteBy default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -772,7 +772,7 @@ func SnippetForDeleteIndexOfSearch() {
 
 	// >SEPARATOR deleteIndex default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -801,7 +801,7 @@ func SnippetForDeleteObjectOfSearch() {
 
 	// >SEPARATOR deleteObject default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -830,7 +830,7 @@ func SnippetForDeleteObjectsOfSearch() {
 
 	// >SEPARATOR deleteObjects default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -860,7 +860,7 @@ func SnippetForDeleteRuleOfSearch() {
 
 	// >SEPARATOR deleteRule default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -889,7 +889,7 @@ func SnippetForDeleteSourceOfSearch() {
 
 	// >SEPARATOR deleteSource default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -918,7 +918,7 @@ func SnippetForDeleteSynonymOfSearch() {
 
 	// >SEPARATOR deleteSynonym default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -947,7 +947,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch() {
 
 	// >SEPARATOR generateSecuredApiKey generate secured api key basic
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -978,7 +978,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 
 	// >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1011,7 +1011,7 @@ func SnippetForGetApiKeyOfSearch() {
 
 	// >SEPARATOR getApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1040,7 +1040,7 @@ func SnippetForGetAppTaskOfSearch() {
 
 	// >SEPARATOR getAppTask default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1069,7 +1069,7 @@ func SnippetForGetDictionaryLanguagesOfSearch() {
 
 	// >SEPARATOR getDictionaryLanguages default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1096,7 +1096,7 @@ func SnippetForGetDictionarySettingsOfSearch() {
 
 	// >SEPARATOR getDictionarySettings default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1123,7 +1123,7 @@ func SnippetForGetLogsOfSearch() {
 
 	// >SEPARATOR getLogs default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1150,7 +1150,7 @@ func SnippetForGetObjectOfSearch() {
 
 	// >SEPARATOR getObject default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1180,7 +1180,7 @@ func SnippetForGetObjectsOfSearch() {
 
 	// >SEPARATOR getObjects default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1212,7 +1212,7 @@ func SnippetForGetRuleOfSearch() {
 
 	// >SEPARATOR getRule default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1241,7 +1241,7 @@ func SnippetForGetSettingsOfSearch() {
 
 	// >SEPARATOR getSettings default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1270,7 +1270,7 @@ func SnippetForGetSourcesOfSearch() {
 
 	// >SEPARATOR getSources default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1297,7 +1297,7 @@ func SnippetForGetSynonymOfSearch() {
 
 	// >SEPARATOR getSynonym default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1326,7 +1326,7 @@ func SnippetForGetTaskOfSearch() {
 
 	// >SEPARATOR getTask default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1355,7 +1355,7 @@ func SnippetForGetTopUserIdsOfSearch() {
 
 	// >SEPARATOR getTopUserIds default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1382,7 +1382,7 @@ func SnippetForGetUserIdOfSearch() {
 
 	// >SEPARATOR getUserId default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1411,7 +1411,7 @@ func SnippetForHasPendingMappingsOfSearch() {
 
 	// >SEPARATOR hasPendingMappings default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1438,7 +1438,7 @@ func SnippetForIndexExistsOfSearch() {
 
 	// >SEPARATOR indexExists indexExists
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1467,7 +1467,7 @@ func SnippetForIndexExistsOfSearch1() {
 
 	// >SEPARATOR indexExists indexNotExists
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1496,7 +1496,7 @@ func SnippetForIndexExistsOfSearch2() {
 
 	// >SEPARATOR indexExists indexExistsWithError
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1525,7 +1525,7 @@ func SnippetForListApiKeysOfSearch() {
 
 	// >SEPARATOR listApiKeys default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1552,7 +1552,7 @@ func SnippetForListClustersOfSearch() {
 
 	// >SEPARATOR listClusters default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1579,7 +1579,7 @@ func SnippetForListIndicesOfSearch() {
 
 	// >SEPARATOR listIndices default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1606,7 +1606,7 @@ func SnippetForListUserIdsOfSearch() {
 
 	// >SEPARATOR listUserIds default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1633,7 +1633,7 @@ func SnippetForMultipleBatchOfSearch() {
 
 	// >SEPARATOR multipleBatch default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1664,7 +1664,7 @@ func SnippetForOperationIndexOfSearch() {
 
 	// >SEPARATOR operationIndex scopes
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1695,7 +1695,7 @@ func SnippetForOperationIndexOfSearch1() {
 
 	// >SEPARATOR operationIndex copy
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1725,7 +1725,7 @@ func SnippetForOperationIndexOfSearch2() {
 
 	// >SEPARATOR operationIndex move
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1755,7 +1755,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 
 	// >SEPARATOR partialUpdateObject default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1784,7 +1784,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 
 	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;true
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1814,7 +1814,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 
 	// >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists&#x3D;false
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1844,7 +1844,7 @@ func SnippetForRemoveUserIdOfSearch() {
 
 	// >SEPARATOR removeUserId default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1873,7 +1873,7 @@ func SnippetForReplaceAllObjectsOfSearch() {
 
 	// >SEPARATOR replaceAllObjects default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1903,7 +1903,7 @@ func SnippetForReplaceSourcesOfSearch() {
 
 	// >SEPARATOR replaceSources default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1933,7 +1933,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 
 	// >SEPARATOR restoreApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1941,7 +1941,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-		"myApiKey",
+		"ALGOLIA_API_KEY",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -1962,7 +1962,7 @@ func SnippetForSaveObjectOfSearch() {
 
 	// >SEPARATOR saveObject default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1991,7 +1991,7 @@ func SnippetForSaveObjectsOfSearch() {
 
 	// >SEPARATOR saveObjects call saveObjects without error
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2021,7 +2021,7 @@ func SnippetForSaveObjectsOfSearch1() {
 
 	// >SEPARATOR saveObjects saveObjects should report errors
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2051,7 +2051,7 @@ func SnippetForSaveRuleOfSearch() {
 
 	// >SEPARATOR saveRule default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2082,7 +2082,7 @@ func SnippetForSaveRulesOfSearch() {
 
 	// >SEPARATOR saveRules default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2114,7 +2114,7 @@ func SnippetForSaveSynonymOfSearch() {
 
 	// >SEPARATOR saveSynonym default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2145,7 +2145,7 @@ func SnippetForSaveSynonymsOfSearch() {
 
 	// >SEPARATOR saveSynonyms default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2177,7 +2177,7 @@ func SnippetForSearchOfSearch() {
 
 	// >SEPARATOR search withHitsPerPage
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2209,7 +2209,7 @@ func SnippetForSearchOfSearch1() {
 
 	// >SEPARATOR search filterOnly
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2241,7 +2241,7 @@ func SnippetForSearchOfSearch2() {
 
 	// >SEPARATOR search filterOr
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2273,7 +2273,7 @@ func SnippetForSearchOfSearch3() {
 
 	// >SEPARATOR search filterNot
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2305,7 +2305,7 @@ func SnippetForSearchOfSearch4() {
 
 	// >SEPARATOR search retrieveFacets
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2338,7 +2338,7 @@ func SnippetForSearchOfSearch5() {
 
 	// >SEPARATOR search retrieveFacetsWildcard
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2371,7 +2371,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 
 	// >SEPARATOR searchDictionaryEntries default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2401,7 +2401,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 
 	// >SEPARATOR searchForFacetValues default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2430,7 +2430,7 @@ func SnippetForSearchRulesOfSearch() {
 
 	// >SEPARATOR searchRules default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2460,7 +2460,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 
 	// >SEPARATOR searchSingleIndex default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2489,7 +2489,7 @@ func SnippetForSearchSynonymsOfSearch() {
 
 	// >SEPARATOR searchSynonyms default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2518,7 +2518,7 @@ func SnippetForSearchUserIdsOfSearch() {
 
 	// >SEPARATOR searchUserIds default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2548,7 +2548,7 @@ func SnippetForSetClientApiKeyOfSearch() {
 
 	// >SEPARATOR setClientApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2575,7 +2575,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 
 	// >SEPARATOR setDictionarySettings default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2606,7 +2606,7 @@ func SnippetForSetSettingsOfSearch() {
 
 	// >SEPARATOR setSettings default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2637,7 +2637,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 
 	// >SEPARATOR updateApiKey default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2645,7 +2645,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 
 	// Call the API
 	response, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
-		"myApiKey",
+		"ALGOLIA_API_KEY",
 		search.NewEmptyApiKey().SetAcl(
 			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
 	))
@@ -2668,7 +2668,7 @@ func SnippetForWaitForApiKeyOfSearch() {
 
 	// >SEPARATOR waitForApiKey wait for api key helper - add
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2697,7 +2697,7 @@ func SnippetForWaitForApiKeyOfSearch1() {
 
 	// >SEPARATOR waitForApiKey wait for api key - update
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2730,7 +2730,7 @@ func SnippetForWaitForApiKeyOfSearch2() {
 
 	// >SEPARATOR waitForApiKey wait for api key - delete
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2759,7 +2759,7 @@ func SnippetForWaitForAppTaskOfSearch() {
 
 	// >SEPARATOR waitForAppTask default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -2788,7 +2788,7 @@ func SnippetForWaitForTaskOfSearch() {
 
 	// >SEPARATOR waitForTask default
 	// Initialize the client
-	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

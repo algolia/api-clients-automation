@@ -1,7 +1,7 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Search;"
     },
     "addApiKey": {
       "default": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
@@ -171,7 +171,7 @@
       "default": "var response = await client.ReplaceSourcesAsync(\n  new List<Source>\n  {\n    new Source { VarSource = \"theSource\", Description = \"theDescription\" },\n  }\n);"
     },
     "restoreApiKey": {
-      "default": "var response = await client.RestoreApiKeyAsync(\"myApiKey\");"
+      "default": "var response = await client.RestoreApiKeyAsync(\"ALGOLIA_API_KEY\");"
     },
     "saveObject": {
       "default": "var response = await client.SaveObjectAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new Dictionary<string, string> { { \"objectID\", \"id\" }, { \"test\", \"val\" } }\n);"
@@ -228,7 +228,7 @@
       "default": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    AttributesForFaceting = new List<string>\n    {\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    },\n  }\n);"
     },
     "updateApiKey": {
-      "default": "var response = await client.UpdateApiKeyAsync(\n  \"myApiKey\",\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
+      "default": "var response = await client.UpdateApiKeyAsync(\n  \"ALGOLIA_API_KEY\",\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "var response = await client.WaitForApiKeyAsync(\n  \"api-key-add-operation-test-csharp\",\n  Enum.Parse<ApiKeyOperation>(\"Add\")\n);",
@@ -242,7 +242,7 @@
       "default": "var response = await client.WaitForTaskAsync(\"<YOUR_INDEX_NAME>\", 123L);"
     },
     "init": {
-      "default": "var client = new SearchClient(new SearchConfig(\"YOUR_APP_ID\", \"YOUR_API_KEY\"));"
+      "default": "var client = new SearchClient(new SearchConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\"));"
     }
   },
   "dart": {
@@ -417,7 +417,7 @@
       "default": "final response = await client.replaceSources(\n  source: [\n    Source(\n      source: \"theSource\",\n      description: \"theDescription\",\n    ),\n  ],\n);"
     },
     "restoreApiKey": {
-      "default": "final response = await client.restoreApiKey(\n  key: \"myApiKey\",\n);"
+      "default": "final response = await client.restoreApiKey(\n  key: \"ALGOLIA_API_KEY\",\n);"
     },
     "saveObject": {
       "default": "final response = await client.saveObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  body: {\n    'objectID': \"id\",\n    'test': \"val\",\n  },\n);"
@@ -474,7 +474,7 @@
       "default": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    attributesForFaceting: [\n      \"actor\",\n      \"filterOnly(category)\",\n      \"searchable(publisher)\",\n    ],\n  ),\n);"
     },
     "updateApiKey": {
-      "default": "final response = await client.updateApiKey(\n  key: \"myApiKey\",\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
+      "default": "final response = await client.updateApiKey(\n  key: \"ALGOLIA_API_KEY\",\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "final response = await client.waitForApiKey(\n  key: \"api-key-add-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"add\"),\n);",
@@ -488,7 +488,7 @@
       "default": "final response = await client.waitForTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 123,\n);"
     },
     "init": {
-      "default": "final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');"
+      "default": "final client =\n    SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');"
     }
   },
   "go": {
@@ -663,7 +663,7 @@
       "default": "response, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(\n\n  []search.Source{*search.NewEmptySource().SetSource(\"theSource\").SetDescription(\"theDescription\")},\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "restoreApiKey": {
-      "default": "response, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(\n  \"myApiKey\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(\n  \"ALGOLIA_API_KEY\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "saveObject": {
       "default": "response, err := client.SaveObject(client.NewApiSaveObjectRequest(\n  \"<YOUR_INDEX_NAME>\", map[string]any{\"objectID\": \"id\", \"test\": \"val\"},\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -720,7 +720,7 @@
       "default": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetAttributesForFaceting(\n    []string{\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateApiKey": {
-      "default": "response, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(\n  \"myApiKey\",\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(\n  \"ALGOLIA_API_KEY\",\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "response, err := client.WaitForApiKey(\n  \"api-key-add-operation-test-go\", search.ApiKeyOperation(\"add\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -734,7 +734,7 @@
       "default": "response, err := client.WaitForTask(\n  \"<YOUR_INDEX_NAME>\", 123,\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
-      "default": "client, err := search.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "client, err := search.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
     }
   },
   "java": {
@@ -909,7 +909,7 @@
       "default": "client.replaceSources(Arrays.asList(new Source().setSource(\"theSource\").setDescription(\"theDescription\")));"
     },
     "restoreApiKey": {
-      "default": "client.restoreApiKey(\"myApiKey\");"
+      "default": "client.restoreApiKey(\"ALGOLIA_API_KEY\");"
     },
     "saveObject": {
       "default": "client.saveObject(\n  \"<YOUR_INDEX_NAME>\",\n  new HashMap() {\n    {\n      put(\"objectID\", \"id\");\n      put(\"test\", \"val\");\n    }\n  }\n);"
@@ -966,7 +966,7 @@
       "default": "client.setSettings(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings().setAttributesForFaceting(Arrays.asList(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n);"
     },
     "updateApiKey": {
-      "default": "client.updateApiKey(\n  \"myApiKey\",\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)\n);"
+      "default": "client.updateApiKey(\n  \"ALGOLIA_API_KEY\",\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "client.waitForApiKey(\"api-key-add-operation-test-java\", ApiKeyOperation.ADD);",
@@ -980,7 +980,7 @@
       "default": "client.waitForTask(\"<YOUR_INDEX_NAME>\", 123L);"
     },
     "init": {
-      "default": "SearchClient client = new SearchClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\");"
+      "default": "SearchClient client = new SearchClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\");"
     }
   },
   "javascript": {
@@ -1155,7 +1155,7 @@
       "default": "const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });"
     },
     "restoreApiKey": {
-      "default": "const response = await client.restoreApiKey({ key: 'myApiKey' });"
+      "default": "const response = await client.restoreApiKey({ key: 'ALGOLIA_API_KEY' });"
     },
     "saveObject": {
       "default": "const response = await client.saveObject({ indexName: '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });"
@@ -1212,7 +1212,7 @@
       "default": "const response = await client.setSettings({\n  indexName: '<YOUR_INDEX_NAME>',\n  indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },\n});"
     },
     "updateApiKey": {
-      "default": "const response = await client.updateApiKey({\n  key: 'myApiKey',\n  apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },\n});"
+      "default": "const response = await client.updateApiKey({\n  key: 'ALGOLIA_API_KEY',\n  apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },\n});"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "const response = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });",
@@ -1226,7 +1226,7 @@
       "default": "const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });"
     },
     "init": {
-      "default": "const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');"
+      "default": "const client = searchClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {
@@ -1401,7 +1401,7 @@
       "default": "var response = client.replaceSources(\n  source = listOf(\n    Source(\n      source = \"theSource\",\n      description = \"theDescription\",\n    ),\n  ),\n)"
     },
     "restoreApiKey": {
-      "default": "var response = client.restoreApiKey(\n  key = \"myApiKey\",\n)"
+      "default": "var response = client.restoreApiKey(\n  key = \"ALGOLIA_API_KEY\",\n)"
     },
     "saveObject": {
       "default": "var response = client.saveObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  body = buildJsonObject {\n    put(\n      \"objectID\",\n      JsonPrimitive(\"id\"),\n    )\n    put(\n      \"test\",\n      JsonPrimitive(\"val\"),\n    )\n  },\n)"
@@ -1458,7 +1458,7 @@
       "default": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = listOf(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"),\n  ),\n)"
     },
     "updateApiKey": {
-      "default": "var response = client.updateApiKey(\n  key = \"myApiKey\",\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    validity = 300,\n    maxQueriesPerIPPerHour = 100,\n    maxHitsPerQuery = 20,\n  ),\n)"
+      "default": "var response = client.updateApiKey(\n  key = \"ALGOLIA_API_KEY\",\n  apiKey = ApiKey(\n    acl = listOf(Acl.entries.first { it.value == \"search\" }, Acl.entries.first { it.value == \"addObject\" }),\n    validity = 300,\n    maxQueriesPerIPPerHour = 100,\n    maxHitsPerQuery = 20,\n  ),\n)"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "var response = client.waitForApiKey(\n  key = \"api-key-add-operation-test-kotlin\",\n  operation = ApiKeyOperation.entries.first { it.value == \"add\" },\n)",
@@ -1472,7 +1472,7 @@
       "default": "var response = client.waitForTask(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  taskID = 123L,\n)"
     },
     "init": {
-      "default": "val client = SearchClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+      "default": "val client = SearchClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
     }
   },
   "php": {
@@ -1647,7 +1647,7 @@
       "default": "$response = $client->replaceSources(\n    [\n        ['source' => 'theSource',\n            'description' => 'theDescription',\n        ],\n    ],\n);"
     },
     "restoreApiKey": {
-      "default": "$response = $client->restoreApiKey(\n    'myApiKey',\n);"
+      "default": "$response = $client->restoreApiKey(\n    'ALGOLIA_API_KEY',\n);"
     },
     "saveObject": {
       "default": "$response = $client->saveObject(\n    '<YOUR_INDEX_NAME>',\n    ['objectID' => 'id',\n        'test' => 'val',\n    ],\n);"
@@ -1704,7 +1704,7 @@
       "default": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['attributesForFaceting' => [\n        'actor',\n\n        'filterOnly(category)',\n\n        'searchable(publisher)',\n    ],\n    ],\n);"
     },
     "updateApiKey": {
-      "default": "$response = $client->updateApiKey(\n    'myApiKey',\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
+      "default": "$response = $client->updateApiKey(\n    'ALGOLIA_API_KEY',\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "$response = $client->waitForApiKey(\n    'api-key-add-operation-test-php',\n    'add',\n);",
@@ -1718,7 +1718,7 @@
       "default": "$response = $client->waitForTask(\n    '<YOUR_INDEX_NAME>',\n    123,\n);"
     },
     "init": {
-      "default": "$client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');"
+      "default": "$client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "python": {
@@ -1726,245 +1726,245 @@
       "default": "from algoliasearch.search.client import SearchClient"
     },
     "addApiKey": {
-      "default": "response = await _client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
+      "default": "response = await client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.add_api_key_with_http_info(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "addOrUpdateObject": {
-      "default": "response = await _client.add_or_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    body={\n        \"key\": \"value\",\n    },\n)"
+      "default": "response = await client.add_or_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    body={\n        \"key\": \"value\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.add_or_update_object_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    body={\n        \"key\": \"value\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "appendSource": {
-      "default": "response = await _client.append_source(\n    source={\n        \"source\": \"theSource\",\n        \"description\": \"theDescription\",\n    },\n)"
+      "default": "response = await client.append_source(\n    source={\n        \"source\": \"theSource\",\n        \"description\": \"theDescription\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.append_source_with_http_info(\n    source={\n        \"source\": \"theSource\",\n        \"description\": \"theDescription\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "assignUserId": {
-      "default": "response = await _client.assign_user_id(\n    x_algolia_user_id=\"userID\",\n    assign_user_id_params={\n        \"cluster\": \"theCluster\",\n    },\n)"
+      "default": "response = await client.assign_user_id(\n    x_algolia_user_id=\"userID\",\n    assign_user_id_params={\n        \"cluster\": \"theCluster\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.assign_user_id_with_http_info(\n    x_algolia_user_id=\"userID\",\n    assign_user_id_params={\n        \"cluster\": \"theCluster\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "batch": {
-      "addObject": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"bar\",\n                    \"foo\": \"1\",\n                },\n            },\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"baz\",\n                    \"foo\": \"2\",\n                },\n            },\n        ],\n    },\n)",
-      "clear": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"clear\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)",
-      "delete": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"delete\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)",
-      "deleteObject": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"deleteObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)",
-      "partialUpdateObject": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)",
-      "partialUpdateObjectNoCreate": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObjectNoCreate\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)",
-      "updateObject": "response = await _client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"updateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)"
+      "addObject": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"bar\",\n                    \"foo\": \"1\",\n                },\n            },\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"baz\",\n                    \"foo\": \"2\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"bar\",\n                    \"foo\": \"1\",\n                },\n            },\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"baz\",\n                    \"foo\": \"2\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "clear": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"clear\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"clear\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "delete": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"delete\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"delete\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "deleteObject": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"deleteObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"deleteObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "partialUpdateObject": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "partialUpdateObjectNoCreate": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObjectNoCreate\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"partialUpdateObjectNoCreate\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "updateObject": "response = await client.batch(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"updateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    batch_write_params={\n        \"requests\": [\n            {\n                \"action\": \"updateObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "batchAssignUserIds": {
-      "default": "response = await _client.batch_assign_user_ids(\n    x_algolia_user_id=\"userID\",\n    batch_assign_user_ids_params={\n        \"cluster\": \"theCluster\",\n        \"users\": [\n            \"user1\",\n            \"user2\",\n        ],\n    },\n)"
+      "default": "response = await client.batch_assign_user_ids(\n    x_algolia_user_id=\"userID\",\n    batch_assign_user_ids_params={\n        \"cluster\": \"theCluster\",\n        \"users\": [\n            \"user1\",\n            \"user2\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_assign_user_ids_with_http_info(\n    x_algolia_user_id=\"userID\",\n    batch_assign_user_ids_params={\n        \"cluster\": \"theCluster\",\n        \"users\": [\n            \"user1\",\n            \"user2\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "batchDictionaryEntries": {
-      "replace": "response = await _client.batch_dictionary_entries(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"word\": \"fancy\",\n                    \"words\": [\n                        \"believe\",\n                        \"algolia\",\n                    ],\n                    \"decomposition\": [\n                        \"trust\",\n                        \"algolia\",\n                    ],\n                    \"state\": \"enabled\",\n                },\n            },\n        ],\n    },\n)",
-      "delete": "response = await _client.batch_dictionary_entries(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"deleteEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                },\n            },\n        ],\n    },\n)",
-      "append": "response = await _client.batch_dictionary_entries(\n    dictionary_name=\"stopwords\",\n    batch_dictionary_entries_params={\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"additional\": \"try me\",\n                },\n            },\n        ],\n    },\n)"
+      "replace": "response = await client.batch_dictionary_entries(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"word\": \"fancy\",\n                    \"words\": [\n                        \"believe\",\n                        \"algolia\",\n                    ],\n                    \"decomposition\": [\n                        \"trust\",\n                        \"algolia\",\n                    ],\n                    \"state\": \"enabled\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_dictionary_entries_with_http_info(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"word\": \"fancy\",\n                    \"words\": [\n                        \"believe\",\n                        \"algolia\",\n                    ],\n                    \"decomposition\": [\n                        \"trust\",\n                        \"algolia\",\n                    ],\n                    \"state\": \"enabled\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "delete": "response = await client.batch_dictionary_entries(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"deleteEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_dictionary_entries_with_http_info(\n    dictionary_name=\"plurals\",\n    batch_dictionary_entries_params={\n        \"clearExistingDictionaryEntries\": True,\n        \"requests\": [\n            {\n                \"action\": \"deleteEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "append": "response = await client.batch_dictionary_entries(\n    dictionary_name=\"stopwords\",\n    batch_dictionary_entries_params={\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"additional\": \"try me\",\n                },\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.batch_dictionary_entries_with_http_info(\n    dictionary_name=\"stopwords\",\n    batch_dictionary_entries_params={\n        \"requests\": [\n            {\n                \"action\": \"addEntry\",\n                \"body\": {\n                    \"objectID\": \"1\",\n                    \"language\": \"en\",\n                    \"additional\": \"try me\",\n                },\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "browse": {
-      "default": "response = await _client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.browse_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "clearObjects": {
-      "default": "response = await _client.clear_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.clear_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.clear_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "clearRules": {
-      "default": "response = await _client.clear_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.clear_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.clear_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "clearSynonyms": {
-      "default": "response = await _client.clear_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.clear_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.clear_synonyms_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteApiKey": {
-      "default": "response = await _client.delete_api_key(\n    key=\"myTestApiKey\",\n)"
+      "default": "response = await client.delete_api_key(\n    key=\"myTestApiKey\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_api_key_with_http_info(\n    key=\"myTestApiKey\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteBy": {
-      "default": "response = await _client.delete_by(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    delete_by_params={\n        \"filters\": \"brand:brandName\",\n    },\n)"
+      "default": "response = await client.delete_by(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    delete_by_params={\n        \"filters\": \"brand:brandName\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_by_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    delete_by_params={\n        \"filters\": \"brand:brandName\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteIndex": {
-      "default": "response = await _client.delete_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.delete_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_index_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteObject": {
-      "default": "response = await _client.delete_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n)"
+      "default": "response = await client.delete_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_object_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteObjects": {
-      "default": "response = await _client.delete_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_ids=[\n        \"1\",\n        \"2\",\n    ],\n)"
+      "default": "response = await client.delete_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_ids=[\n        \"1\",\n        \"2\",\n    ],\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_ids=[\n        \"1\",\n        \"2\",\n    ],\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteRule": {
-      "default": "response = await _client.delete_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)"
+      "default": "response = await client.delete_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_rule_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteSource": {
-      "default": "response = await _client.delete_source(\n    source=\"theSource\",\n)"
+      "default": "response = await client.delete_source(\n    source=\"theSource\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_source_with_http_info(\n    source=\"theSource\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteSynonym": {
-      "default": "response = await _client.delete_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)"
+      "default": "response = await client.delete_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_synonym_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(raw_response.raw_data)"
     },
     "generateSecuredApiKey": {
-      "generate secured api key basic": "response = _client.generate_secured_api_key(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n        ],\n    },\n)",
-      "generate secured api key with searchParams": "response = _client.generate_secured_api_key(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n            \"cts_e2e_settings\",\n        ],\n        \"restrictSources\": \"192.168.1.0/24\",\n        \"filters\": \"category:Book OR category:Ebook AND _tags:published\",\n        \"userToken\": \"user123\",\n        \"searchParams\": {\n            \"query\": \"batman\",\n            \"typoTolerance\": \"strict\",\n            \"aroundRadius\": \"all\",\n            \"mode\": \"neuralSearch\",\n            \"hitsPerPage\": 10,\n            \"optionalWords\": [\n                \"one\",\n                \"two\",\n            ],\n        },\n    },\n)"
+      "generate secured api key basic": "response = client.generate_secured_api_key(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.generate_secured_api_key_with_http_info(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "generate secured api key with searchParams": "response = client.generate_secured_api_key(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n            \"cts_e2e_settings\",\n        ],\n        \"restrictSources\": \"192.168.1.0/24\",\n        \"filters\": \"category:Book OR category:Ebook AND _tags:published\",\n        \"userToken\": \"user123\",\n        \"searchParams\": {\n            \"query\": \"batman\",\n            \"typoTolerance\": \"strict\",\n            \"aroundRadius\": \"all\",\n            \"mode\": \"neuralSearch\",\n            \"hitsPerPage\": 10,\n            \"optionalWords\": [\n                \"one\",\n                \"two\",\n            ],\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.generate_secured_api_key_with_http_info(\n    parent_api_key=\"2640659426d5107b6e47d75db9cbaef8\",\n    restrictions={\n        \"validUntil\": 2524604400,\n        \"restrictIndices\": [\n            \"Movies\",\n            \"cts_e2e_settings\",\n        ],\n        \"restrictSources\": \"192.168.1.0/24\",\n        \"filters\": \"category:Book OR category:Ebook AND _tags:published\",\n        \"userToken\": \"user123\",\n        \"searchParams\": {\n            \"query\": \"batman\",\n            \"typoTolerance\": \"strict\",\n            \"aroundRadius\": \"all\",\n            \"mode\": \"neuralSearch\",\n            \"hitsPerPage\": 10,\n            \"optionalWords\": [\n                \"one\",\n                \"two\",\n            ],\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "getApiKey": {
-      "default": "response = await _client.get_api_key(\n    key=\"myTestApiKey\",\n)"
+      "default": "response = await client.get_api_key(\n    key=\"myTestApiKey\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_api_key_with_http_info(\n    key=\"myTestApiKey\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAppTask": {
-      "default": "response = await _client.get_app_task(\n    task_id=123,\n)"
+      "default": "response = await client.get_app_task(\n    task_id=123,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_app_task_with_http_info(\n    task_id=123,\n)\n\nprint(raw_response.raw_data)"
     },
     "getDictionaryLanguages": {
-      "default": "response = await _client.get_dictionary_languages()"
+      "default": "response = await client.get_dictionary_languages()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_dictionary_languages_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getDictionarySettings": {
-      "default": "response = await _client.get_dictionary_settings()"
+      "default": "response = await client.get_dictionary_settings()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_dictionary_settings_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getLogs": {
-      "default": "response = await _client.get_logs()"
+      "default": "response = await client.get_logs()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_logs_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getObject": {
-      "default": "response = await _client.get_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_retrieve=[\n        \"attr1\",\n        \"attr2\",\n    ],\n)"
+      "default": "response = await client.get_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_retrieve=[\n        \"attr1\",\n        \"attr2\",\n    ],\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_object_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_retrieve=[\n        \"attr1\",\n        \"attr2\",\n    ],\n)\n\nprint(raw_response.raw_data)"
     },
     "getObjects": {
-      "default": "response = await _client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)"
+      "default": "response = await client.get_objects(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_objects_with_http_info(\n    get_objects_params={\n        \"requests\": [\n            {\n                \"attributesToRetrieve\": [\n                    \"attr1\",\n                    \"attr2\",\n                ],\n                \"objectID\": \"uniqueID\",\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "getRule": {
-      "default": "response = await _client.get_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)"
+      "default": "response = await client.get_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_rule_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSettings": {
-      "default": "response = await _client.get_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.get_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_settings_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSources": {
-      "default": "response = await _client.get_sources()"
+      "default": "response = await client.get_sources()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_sources_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getSynonym": {
-      "default": "response = await _client.get_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)"
+      "default": "response = await client.get_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_synonym_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTask": {
-      "default": "response = await _client.get_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)"
+      "default": "response = await client.get_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_task_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopUserIds": {
-      "default": "response = await _client.get_top_user_ids()"
+      "default": "response = await client.get_top_user_ids()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_user_ids_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getUserId": {
-      "default": "response = await _client.get_user_id(\n    user_id=\"uniqueID\",\n)"
+      "default": "response = await client.get_user_id(\n    user_id=\"uniqueID\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_user_id_with_http_info(\n    user_id=\"uniqueID\",\n)\n\nprint(raw_response.raw_data)"
     },
     "hasPendingMappings": {
-      "default": "response = await _client.has_pending_mappings()"
+      "default": "response = await client.has_pending_mappings()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.has_pending_mappings_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "indexExists": {
-      "indexExists": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)",
-      "indexNotExists": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)",
-      "indexExistsWithError": "response = await _client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "indexExists": "response = await client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.index_exists_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)",
+      "indexNotExists": "response = await client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.index_exists_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)",
+      "indexExistsWithError": "response = await client.index_exists(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.index_exists_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "listApiKeys": {
-      "default": "response = await _client.list_api_keys()"
+      "default": "response = await client.list_api_keys()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.list_api_keys_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listClusters": {
-      "default": "response = await _client.list_clusters()"
+      "default": "response = await client.list_clusters()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.list_clusters_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listIndices": {
-      "default": "response = await _client.list_indices()"
+      "default": "response = await client.list_indices()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.list_indices_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "listUserIds": {
-      "default": "response = await _client.list_user_ids()"
+      "default": "response = await client.list_user_ids()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.list_user_ids_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "multipleBatch": {
-      "default": "response = await _client.multiple_batch(\n    batch_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)"
+      "default": "response = await client.multiple_batch(\n    batch_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.multiple_batch_with_http_info(\n    batch_params={\n        \"requests\": [\n            {\n                \"action\": \"addObject\",\n                \"body\": {\n                    \"key\": \"value\",\n                },\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "operationIndex": {
-      "scopes": "response = await _client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n        \"scope\": [\n            \"rules\",\n            \"settings\",\n        ],\n    },\n)",
-      "copy": "response = await _client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"copy\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)",
-      "move": "response = await _client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)"
+      "scopes": "response = await client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n        \"scope\": [\n            \"rules\",\n            \"settings\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.operation_index_with_http_info(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n        \"scope\": [\n            \"rules\",\n            \"settings\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "copy": "response = await client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"copy\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.operation_index_with_http_info(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"copy\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)\n\nprint(raw_response.raw_data)",
+      "move": "response = await client.operation_index(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.operation_index_with_http_info(\n    index_name=\"<SOURCE_INDEX_NAME>\",\n    operation_index_params={\n        \"operation\": \"move\",\n        \"destination\": \"<DESTINATION_INDEX_NAME>\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "partialUpdateObject": {
-      "default": "response = await _client.partial_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_update={\n        \"attributeId\": \"new value\",\n    },\n)"
+      "default": "response = await client.partial_update_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_update={\n        \"attributeId\": \"new value\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.partial_update_object_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"uniqueID\",\n    attributes_to_update={\n        \"attributeId\": \"new value\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = await _client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)",
-      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = await _client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)"
+      "call partialUpdateObjects with createIfNotExists&#x3D;true": "response = await client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.partial_update_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n    create_if_not_exists=True,\n)\n\nprint(raw_response.raw_data)",
+      "call partialUpdateObjects with createIfNotExists&#x3D;false": "response = await client.partial_update_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.partial_update_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n    ],\n    create_if_not_exists=False,\n)\n\nprint(raw_response.raw_data)"
     },
     "removeUserId": {
-      "default": "response = await _client.remove_user_id(\n    user_id=\"uniqueID\",\n)"
+      "default": "response = await client.remove_user_id(\n    user_id=\"uniqueID\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.remove_user_id_with_http_info(\n    user_id=\"uniqueID\",\n)\n\nprint(raw_response.raw_data)"
     },
     "replaceAllObjects": {
-      "default": "response = await _client.replace_all_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n        {\n            \"objectID\": \"5\",\n            \"name\": \"Eva\",\n        },\n        {\n            \"objectID\": \"6\",\n            \"name\": \"Fiona\",\n        },\n        {\n            \"objectID\": \"7\",\n            \"name\": \"Gael\",\n        },\n        {\n            \"objectID\": \"8\",\n            \"name\": \"Hugo\",\n        },\n        {\n            \"objectID\": \"9\",\n            \"name\": \"Igor\",\n        },\n        {\n            \"objectID\": \"10\",\n            \"name\": \"Julia\",\n        },\n    ],\n    batch_size=3,\n)"
+      "default": "response = await client.replace_all_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n        {\n            \"objectID\": \"5\",\n            \"name\": \"Eva\",\n        },\n        {\n            \"objectID\": \"6\",\n            \"name\": \"Fiona\",\n        },\n        {\n            \"objectID\": \"7\",\n            \"name\": \"Gael\",\n        },\n        {\n            \"objectID\": \"8\",\n            \"name\": \"Hugo\",\n        },\n        {\n            \"objectID\": \"9\",\n            \"name\": \"Igor\",\n        },\n        {\n            \"objectID\": \"10\",\n            \"name\": \"Julia\",\n        },\n    ],\n    batch_size=3,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.replace_all_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n        {\n            \"objectID\": \"3\",\n            \"name\": \"Cyril\",\n        },\n        {\n            \"objectID\": \"4\",\n            \"name\": \"David\",\n        },\n        {\n            \"objectID\": \"5\",\n            \"name\": \"Eva\",\n        },\n        {\n            \"objectID\": \"6\",\n            \"name\": \"Fiona\",\n        },\n        {\n            \"objectID\": \"7\",\n            \"name\": \"Gael\",\n        },\n        {\n            \"objectID\": \"8\",\n            \"name\": \"Hugo\",\n        },\n        {\n            \"objectID\": \"9\",\n            \"name\": \"Igor\",\n        },\n        {\n            \"objectID\": \"10\",\n            \"name\": \"Julia\",\n        },\n    ],\n    batch_size=3,\n)\n\nprint(raw_response.raw_data)"
     },
     "replaceSources": {
-      "default": "response = await _client.replace_sources(\n    source=[\n        {\n            \"source\": \"theSource\",\n            \"description\": \"theDescription\",\n        },\n    ],\n)"
+      "default": "response = await client.replace_sources(\n    source=[\n        {\n            \"source\": \"theSource\",\n            \"description\": \"theDescription\",\n        },\n    ],\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.replace_sources_with_http_info(\n    source=[\n        {\n            \"source\": \"theSource\",\n            \"description\": \"theDescription\",\n        },\n    ],\n)\n\nprint(raw_response.raw_data)"
     },
     "restoreApiKey": {
-      "default": "response = await _client.restore_api_key(\n    key=\"myApiKey\",\n)"
+      "default": "response = await client.restore_api_key(\n    key=\"ALGOLIA_API_KEY\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.restore_api_key_with_http_info(\n    key=\"ALGOLIA_API_KEY\",\n)\n\nprint(raw_response.raw_data)"
     },
     "saveObject": {
-      "default": "response = await _client.save_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    body={\n        \"objectID\": \"id\",\n        \"test\": \"val\",\n    },\n)"
+      "default": "response = await client.save_object(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    body={\n        \"objectID\": \"id\",\n        \"test\": \"val\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_object_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    body={\n        \"objectID\": \"id\",\n        \"test\": \"val\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "saveObjects": {
-      "call saveObjects without error": "response = await _client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)",
-      "saveObjects should report errors": "response = await _client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)"
+      "call saveObjects without error": "response = await client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)\n\nprint(raw_response.raw_data)",
+      "saveObjects should report errors": "response = await client.save_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_objects_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    objects=[\n        {\n            \"objectID\": \"1\",\n            \"name\": \"Adam\",\n        },\n        {\n            \"objectID\": \"2\",\n            \"name\": \"Benoit\",\n        },\n    ],\n)\n\nprint(raw_response.raw_data)"
     },
     "saveRule": {
-      "default": "response = await _client.save_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    rule={\n        \"objectID\": \"id1\",\n        \"conditions\": [\n            {\n                \"pattern\": \"apple\",\n                \"anchoring\": \"contains\",\n            },\n        ],\n    },\n)"
+      "default": "response = await client.save_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    rule={\n        \"objectID\": \"id1\",\n        \"conditions\": [\n            {\n                \"pattern\": \"apple\",\n                \"anchoring\": \"contains\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_rule_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    rule={\n        \"objectID\": \"id1\",\n        \"conditions\": [\n            {\n                \"pattern\": \"apple\",\n                \"anchoring\": \"contains\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "saveRules": {
-      "default": "response = await _client.save_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    rules=[\n        {\n            \"objectID\": \"a-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"smartphone\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n        {\n            \"objectID\": \"a-second-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"apple\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n    ],\n    forward_to_replicas=False,\n    clear_existing_rules=True,\n)"
+      "default": "response = await client.save_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    rules=[\n        {\n            \"objectID\": \"a-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"smartphone\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n        {\n            \"objectID\": \"a-second-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"apple\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n    ],\n    forward_to_replicas=False,\n    clear_existing_rules=True,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    rules=[\n        {\n            \"objectID\": \"a-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"smartphone\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n        {\n            \"objectID\": \"a-second-rule-id\",\n            \"conditions\": [\n                {\n                    \"pattern\": \"apple\",\n                    \"anchoring\": \"contains\",\n                },\n            ],\n        },\n    ],\n    forward_to_replicas=False,\n    clear_existing_rules=True,\n)\n\nprint(raw_response.raw_data)"
     },
     "saveSynonym": {
-      "default": "response = await _client.save_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    synonym_hit={\n        \"objectID\": \"id1\",\n        \"type\": \"synonym\",\n        \"synonyms\": [\n            \"car\",\n            \"vehicule\",\n            \"auto\",\n        ],\n    },\n    forward_to_replicas=True,\n)"
+      "default": "response = await client.save_synonym(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    synonym_hit={\n        \"objectID\": \"id1\",\n        \"type\": \"synonym\",\n        \"synonyms\": [\n            \"car\",\n            \"vehicule\",\n            \"auto\",\n        ],\n    },\n    forward_to_replicas=True,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_synonym_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"id1\",\n    synonym_hit={\n        \"objectID\": \"id1\",\n        \"type\": \"synonym\",\n        \"synonyms\": [\n            \"car\",\n            \"vehicule\",\n            \"auto\",\n        ],\n    },\n    forward_to_replicas=True,\n)\n\nprint(raw_response.raw_data)"
     },
     "saveSynonyms": {
-      "default": "response = await _client.save_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    synonym_hit=[\n        {\n            \"objectID\": \"id1\",\n            \"type\": \"synonym\",\n            \"synonyms\": [\n                \"car\",\n                \"vehicule\",\n                \"auto\",\n            ],\n        },\n        {\n            \"objectID\": \"id2\",\n            \"type\": \"onewaysynonym\",\n            \"input\": \"iphone\",\n            \"synonyms\": [\n                \"ephone\",\n                \"aphone\",\n                \"yphone\",\n            ],\n        },\n    ],\n    forward_to_replicas=True,\n    replace_existing_synonyms=True,\n)"
+      "default": "response = await client.save_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    synonym_hit=[\n        {\n            \"objectID\": \"id1\",\n            \"type\": \"synonym\",\n            \"synonyms\": [\n                \"car\",\n                \"vehicule\",\n                \"auto\",\n            ],\n        },\n        {\n            \"objectID\": \"id2\",\n            \"type\": \"onewaysynonym\",\n            \"input\": \"iphone\",\n            \"synonyms\": [\n                \"ephone\",\n                \"aphone\",\n                \"yphone\",\n            ],\n        },\n    ],\n    forward_to_replicas=True,\n    replace_existing_synonyms=True,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.save_synonyms_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    synonym_hit=[\n        {\n            \"objectID\": \"id1\",\n            \"type\": \"synonym\",\n            \"synonyms\": [\n                \"car\",\n                \"vehicule\",\n                \"auto\",\n            ],\n        },\n        {\n            \"objectID\": \"id2\",\n            \"type\": \"onewaysynonym\",\n            \"input\": \"iphone\",\n            \"synonyms\": [\n                \"ephone\",\n                \"aphone\",\n                \"yphone\",\n            ],\n        },\n    ],\n    forward_to_replicas=True,\n    replace_existing_synonyms=True,\n)\n\nprint(raw_response.raw_data)"
     },
     "search": {
-      "withHitsPerPage": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"hitsPerPage\": 50,\n            },\n        ],\n    },\n)",
-      "filterOnly": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)",
-      "filterOr": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)",
-      "filterNot": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"NOT actor:Nicolas Cage\",\n            },\n        ],\n    },\n)",
-      "retrieveFacets": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"author\",\n                    \"genre\",\n                ],\n            },\n        ],\n    },\n)",
-      "retrieveFacetsWildcard": "response = await _client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"*\",\n                ],\n            },\n        ],\n    },\n)"
+      "withHitsPerPage": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"hitsPerPage\": 50,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"hitsPerPage\": 50,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "filterOnly": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "filterOr": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"actor:Tom Cruise OR actor:Scarlett Johansson\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "filterNot": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"NOT actor:Nicolas Cage\",\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"filters\": \"NOT actor:Nicolas Cage\",\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "retrieveFacets": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"author\",\n                    \"genre\",\n                ],\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"author\",\n                    \"genre\",\n                ],\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)",
+      "retrieveFacetsWildcard": "response = await client.search(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"*\",\n                ],\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_with_http_info(\n    search_method_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"query\": \"<YOUR_QUERY>\",\n                \"facets\": [\n                    \"*\",\n                ],\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchDictionaryEntries": {
-      "default": "response = await _client.search_dictionary_entries(\n    dictionary_name=\"stopwords\",\n    search_dictionary_entries_params={\n        \"query\": \"about\",\n    },\n)"
+      "default": "response = await client.search_dictionary_entries(\n    dictionary_name=\"stopwords\",\n    search_dictionary_entries_params={\n        \"query\": \"about\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_dictionary_entries_with_http_info(\n    dictionary_name=\"stopwords\",\n    search_dictionary_entries_params={\n        \"query\": \"about\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchForFacetValues": {
-      "default": "response = await _client.search_for_facet_values(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    facet_name=\"facetName\",\n)"
+      "default": "response = await client.search_for_facet_values(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    facet_name=\"facetName\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_for_facet_values_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    facet_name=\"facetName\",\n)\n\nprint(raw_response.raw_data)"
     },
     "searchRules": {
-      "default": "response = await _client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)"
+      "default": "response = await client.search_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    search_rules_params={\n        \"query\": \"zorro\",\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "searchSingleIndex": {
-      "default": "response = await _client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.search_single_index(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_single_index_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "searchSynonyms": {
-      "default": "response = await _client.search_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = await client.search_synonyms(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_synonyms_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)\n\nprint(raw_response.raw_data)"
     },
     "searchUserIds": {
-      "default": "response = await _client.search_user_ids(\n    search_user_ids_params={\n        \"query\": \"test\",\n        \"clusterName\": \"theClusterName\",\n        \"page\": 5,\n        \"hitsPerPage\": 10,\n    },\n)"
+      "default": "response = await client.search_user_ids(\n    search_user_ids_params={\n        \"query\": \"test\",\n        \"clusterName\": \"theClusterName\",\n        \"page\": 5,\n        \"hitsPerPage\": 10,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.search_user_ids_with_http_info(\n    search_user_ids_params={\n        \"query\": \"test\",\n        \"clusterName\": \"theClusterName\",\n        \"page\": 5,\n        \"hitsPerPage\": 10,\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
-      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "setDictionarySettings": {
-      "default": "response = await _client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)"
+      "default": "response = await client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.set_dictionary_settings_with_http_info(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "setSettings": {
-      "default": "response = await _client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributesForFaceting\": [\n            \"actor\",\n            \"filterOnly(category)\",\n            \"searchable(publisher)\",\n        ],\n    },\n)"
+      "default": "response = await client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributesForFaceting\": [\n            \"actor\",\n            \"filterOnly(category)\",\n            \"searchable(publisher)\",\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.set_settings_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"attributesForFaceting\": [\n            \"actor\",\n            \"filterOnly(category)\",\n            \"searchable(publisher)\",\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "updateApiKey": {
-      "default": "response = await _client.update_api_key(\n    key=\"myApiKey\",\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
+      "default": "response = await client.update_api_key(\n    key=\"ALGOLIA_API_KEY\",\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.update_api_key_with_http_info(\n    key=\"ALGOLIA_API_KEY\",\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "waitForApiKey": {
-      "wait for api key helper - add": "response = await _client.wait_for_api_key(\n    key=\"api-key-add-operation-test-python\",\n    operation=\"add\",\n)",
-      "wait for api key - update": "response = await _client.wait_for_api_key(\n    key=\"api-key-update-operation-test-python\",\n    operation=\"update\",\n    api_key={\n        \"description\": \"my updated api key\",\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n            \"deleteObject\",\n        ],\n        \"indexes\": [\n            \"Movies\",\n            \"Books\",\n        ],\n        \"referers\": [\n            \"*google.com\",\n            \"*algolia.com\",\n        ],\n        \"validity\": 305,\n        \"maxQueriesPerIPPerHour\": 95,\n        \"maxHitsPerQuery\": 20,\n    },\n)",
-      "wait for api key - delete": "response = await _client.wait_for_api_key(\n    key=\"api-key-delete-operation-test-python\",\n    operation=\"delete\",\n)"
+      "wait for api key helper - add": "response = await client.wait_for_api_key(\n    key=\"api-key-add-operation-test-python\",\n    operation=\"add\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.wait_for_api_key_with_http_info(\n    key=\"api-key-add-operation-test-python\",\n    operation=\"add\",\n)\n\nprint(raw_response.raw_data)",
+      "wait for api key - update": "response = await client.wait_for_api_key(\n    key=\"api-key-update-operation-test-python\",\n    operation=\"update\",\n    api_key={\n        \"description\": \"my updated api key\",\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n            \"deleteObject\",\n        ],\n        \"indexes\": [\n            \"Movies\",\n            \"Books\",\n        ],\n        \"referers\": [\n            \"*google.com\",\n            \"*algolia.com\",\n        ],\n        \"validity\": 305,\n        \"maxQueriesPerIPPerHour\": 95,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.wait_for_api_key_with_http_info(\n    key=\"api-key-update-operation-test-python\",\n    operation=\"update\",\n    api_key={\n        \"description\": \"my updated api key\",\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n            \"deleteObject\",\n        ],\n        \"indexes\": [\n            \"Movies\",\n            \"Books\",\n        ],\n        \"referers\": [\n            \"*google.com\",\n            \"*algolia.com\",\n        ],\n        \"validity\": 305,\n        \"maxQueriesPerIPPerHour\": 95,\n        \"maxHitsPerQuery\": 20,\n    },\n)\n\nprint(raw_response.raw_data)",
+      "wait for api key - delete": "response = await client.wait_for_api_key(\n    key=\"api-key-delete-operation-test-python\",\n    operation=\"delete\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.wait_for_api_key_with_http_info(\n    key=\"api-key-delete-operation-test-python\",\n    operation=\"delete\",\n)\n\nprint(raw_response.raw_data)"
     },
     "waitForAppTask": {
-      "default": "response = await _client.wait_for_app_task(\n    task_id=123,\n)"
+      "default": "response = await client.wait_for_app_task(\n    task_id=123,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.wait_for_app_task_with_http_info(\n    task_id=123,\n)\n\nprint(raw_response.raw_data)"
     },
     "waitForTask": {
-      "default": "response = await _client.wait_for_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)"
+      "default": "response = await client.wait_for_task(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.wait_for_task_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    task_id=123,\n)\n\nprint(raw_response.raw_data)"
     },
     "init": {
-      "default": "_client = SearchClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "client = SearchClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
     }
   },
   "ruby": {
@@ -2139,7 +2139,7 @@
       "default": "response = client.replace_sources([Source.new(source: \"theSource\", description: \"theDescription\")])"
     },
     "restoreApiKey": {
-      "default": "response = client.restore_api_key(\"myApiKey\")"
+      "default": "response = client.restore_api_key(\"ALGOLIA_API_KEY\")"
     },
     "saveObject": {
       "default": "response = client.save_object(\"<YOUR_INDEX_NAME>\", {objectID: \"id\", test: \"val\"})"
@@ -2196,7 +2196,7 @@
       "default": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  IndexSettings.new(attributes_for_faceting: [\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"])\n)"
     },
     "updateApiKey": {
-      "default": "response = client.update_api_key(\n  \"myApiKey\",\n  ApiKey.new(acl: [\"search\", \"addObject\"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)\n)"
+      "default": "response = client.update_api_key(\n  \"ALGOLIA_API_KEY\",\n  ApiKey.new(acl: [\"search\", \"addObject\"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)\n)"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "response = client.wait_for_api_key(\"api-key-add-operation-test-ruby\", \"add\")",
@@ -2210,7 +2210,7 @@
       "default": "response = client.wait_for_task(\"<YOUR_INDEX_NAME>\", 123)"
     },
     "init": {
-      "default": "client = Algolia::SearchClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+      "default": "client = Algolia::SearchClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
     }
   },
   "scala": {
@@ -2366,7 +2366,7 @@
       "default": "val response = client.replaceSources(\n  source = Seq(\n    Source(\n      source = \"theSource\",\n      description = Some(\"theDescription\")\n    )\n  )\n)"
     },
     "restoreApiKey": {
-      "default": "val response = client.restoreApiKey(\n  key = \"myApiKey\"\n)"
+      "default": "val response = client.restoreApiKey(\n  key = \"ALGOLIA_API_KEY\"\n)"
     },
     "saveObject": {
       "default": "val response = client.saveObject(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  body = JObject(List(JField(\"objectID\", JString(\"id\")), JField(\"test\", JString(\"val\"))))\n)"
@@ -2416,10 +2416,10 @@
       "default": "val response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    attributesForFaceting = Some(Seq(\"actor\", \"filterOnly(category)\", \"searchable(publisher)\"))\n  )\n)"
     },
     "updateApiKey": {
-      "default": "val response = client.updateApiKey(\n  key = \"myApiKey\",\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    validity = Some(300),\n    maxQueriesPerIPPerHour = Some(100),\n    maxHitsPerQuery = Some(20)\n  )\n)"
+      "default": "val response = client.updateApiKey(\n  key = \"ALGOLIA_API_KEY\",\n  apiKey = ApiKey(\n    acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n    validity = Some(300),\n    maxQueriesPerIPPerHour = Some(100),\n    maxHitsPerQuery = Some(20)\n  )\n)"
     },
     "init": {
-      "default": "val client = SearchClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+      "default": "val client = SearchClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"
     }
   },
   "swift": {
@@ -2594,7 +2594,7 @@
       "default": "let response = try await client.replaceSources(source: [SearchSource(\n    source: \"theSource\",\n    description: \"theDescription\"\n)])"
     },
     "restoreApiKey": {
-      "default": "let response = try await client.restoreApiKey(key: \"myApiKey\")"
+      "default": "let response = try await client.restoreApiKey(key: \"ALGOLIA_API_KEY\")"
     },
     "saveObject": {
       "default": "let response = try await client.saveObject(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    body: [\"objectID\": \"id\", \"test\": \"val\"]\n)"
@@ -2651,7 +2651,7 @@
       "default": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(attributesForFaceting: [\n        \"actor\",\n        \"filterOnly(category)\",\n        \"searchable(publisher)\",\n    ])\n)"
     },
     "updateApiKey": {
-      "default": "let response = try await client.updateApiKey(\n    key: \"myApiKey\",\n    apiKey: ApiKey(\n        acl: [Acl.search, Acl.addObject],\n        maxHitsPerQuery: 20,\n        maxQueriesPerIPPerHour: 100,\n        validity: 300\n    )\n)"
+      "default": "let response = try await client.updateApiKey(\n    key: \"ALGOLIA_API_KEY\",\n    apiKey: ApiKey(\n        acl: [Acl.search, Acl.addObject],\n        maxHitsPerQuery: 20,\n        maxQueriesPerIPPerHour: 100,\n        validity: 300\n    )\n)"
     },
     "waitForApiKey": {
       "wait for api key helper - add": "let response = try await client.waitForApiKey(\n    key: \"api-key-add-operation-test-swift\",\n    operation: ApiKeyOperation.add\n)",
@@ -2665,7 +2665,7 @@
       "default": "let response = try await client.waitForTask(indexName: \"<YOUR_INDEX_NAME>\", taskID: Int64(123))"
     },
     "init": {
-      "default": "let client = try SearchClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\")"
+      "default": "let client = try SearchClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\")"
     }
   }
 }

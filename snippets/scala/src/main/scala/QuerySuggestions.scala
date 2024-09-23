@@ -23,7 +23,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientCreateConfig(): Unit = {
     // >SEPARATOR createConfig default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.createConfig(
@@ -60,7 +64,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -80,7 +88,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customGet[JObject](
@@ -100,7 +112,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customPost[JObject](
@@ -120,7 +136,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.customPut[JObject](
@@ -140,7 +160,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientDeleteConfig(): Unit = {
     // >SEPARATOR deleteConfig default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.deleteConfig(
@@ -160,7 +184,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientGetAllConfigs(): Unit = {
     // >SEPARATOR getAllConfigs default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getAllConfigs(
@@ -179,7 +207,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientGetConfig(): Unit = {
     // >SEPARATOR getConfig default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getConfig(
@@ -199,7 +231,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientGetConfigStatus(): Unit = {
     // >SEPARATOR getConfigStatus default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getConfigStatus(
@@ -219,7 +255,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientGetLogFile(): Unit = {
     // >SEPARATOR getLogFile default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.getLogFile(
@@ -239,7 +279,11 @@ class SnippetQuerySuggestionsClient {
   def snippetForQuerySuggestionsClientUpdateConfig(): Unit = {
     // >SEPARATOR updateConfig default
     // Initialize the client
-    val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
 
     // Call the API
     val response = client.updateConfig(

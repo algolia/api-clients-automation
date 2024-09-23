@@ -12,10 +12,12 @@ async def snippet_for_create_authentication():
     """
     # >SEPARATOR createAuthentication default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_authentication(
+    response = await client.create_authentication(
         authentication_create={
             "type": "oauth",
             "name": "authName",
@@ -26,6 +28,23 @@ async def snippet_for_create_authentication():
             },
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_authentication_with_http_info(
+        authentication_create={
+            "type": "oauth",
+            "name": "authName",
+            "input": {
+                "url": "http://test.oauth",
+                "client_id": "myID",
+                "client_secret": "mySecret",
+            },
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -44,10 +63,12 @@ async def snippet_for_create_destination():
     """
     # >SEPARATOR createDestination default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_destination(
+    response = await client.create_destination(
         destination_create={
             "type": "search",
             "name": "destinationName",
@@ -57,6 +78,22 @@ async def snippet_for_create_destination():
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_destination_with_http_info(
+        destination_create={
+            "type": "search",
+            "name": "destinationName",
+            "input": {
+                "indexName": "<YOUR_INDEX_NAME>",
+            },
+            "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -75,10 +112,12 @@ async def snippet_for_create_source():
     """
     # >SEPARATOR createSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_source(
+    response = await client.create_source(
         source_create={
             "type": "commercetools",
             "name": "sourceName",
@@ -95,6 +134,29 @@ async def snippet_for_create_source():
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_source_with_http_info(
+        source_create={
+            "type": "commercetools",
+            "name": "sourceName",
+            "input": {
+                "storeKeys": [
+                    "myStore",
+                ],
+                "locales": [
+                    "de",
+                ],
+                "url": "http://commercetools.com",
+                "projectKey": "keyID",
+            },
+            "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -113,16 +175,31 @@ async def snippet_for_create_task():
     """
     # >SEPARATOR createTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_task(
+    response = await client.create_task(
         task_create={
             "sourceID": "search",
             "destinationID": "destinationName",
             "action": "replace",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_task_with_http_info(
+        task_create={
+            "sourceID": "search",
+            "destinationID": "destinationName",
+            "action": "replace",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -141,10 +218,12 @@ async def snippet_for_create_task_v1():
     """
     # >SEPARATOR createTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_task_v1(
+    response = await client.create_task_v1(
         task_create={
             "sourceID": "search",
             "destinationID": "destinationName",
@@ -154,6 +233,22 @@ async def snippet_for_create_task_v1():
             "action": "replace",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_task_v1_with_http_info(
+        task_create={
+            "sourceID": "search",
+            "destinationID": "destinationName",
+            "trigger": {
+                "type": "onDemand",
+            },
+            "action": "replace",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -172,16 +267,31 @@ async def snippet_for_create_transformation():
     """
     # >SEPARATOR createTransformation default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.create_transformation(
+    response = await client.create_transformation(
         transformation_create={
             "code": "foo",
             "name": "bar",
             "description": "baz",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.create_transformation_with_http_info(
+        transformation_create={
+            "code": "foo",
+            "name": "bar",
+            "description": "baz",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -200,12 +310,23 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -224,12 +345,23 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -248,12 +380,23 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -272,12 +415,23 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -296,12 +450,23 @@ async def snippet_for_delete_authentication():
     """
     # >SEPARATOR deleteAuthentication default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_authentication(
+    response = await client.delete_authentication(
         authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_authentication_with_http_info(
+        authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -320,12 +485,23 @@ async def snippet_for_delete_destination():
     """
     # >SEPARATOR deleteDestination default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_destination(
+    response = await client.delete_destination(
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_destination_with_http_info(
+        destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -344,12 +520,23 @@ async def snippet_for_delete_source():
     """
     # >SEPARATOR deleteSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_source(
+    response = await client.delete_source(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_source_with_http_info(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -368,12 +555,23 @@ async def snippet_for_delete_task():
     """
     # >SEPARATOR deleteTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_task(
+    response = await client.delete_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -392,12 +590,23 @@ async def snippet_for_delete_task_v1():
     """
     # >SEPARATOR deleteTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_task_v1(
+    response = await client.delete_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_task_v1_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -416,12 +625,23 @@ async def snippet_for_delete_transformation():
     """
     # >SEPARATOR deleteTransformation default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.delete_transformation(
+    response = await client.delete_transformation(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_transformation_with_http_info(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -440,12 +660,23 @@ async def snippet_for_disable_task():
     """
     # >SEPARATOR disableTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.disable_task(
+    response = await client.disable_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.disable_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -464,12 +695,23 @@ async def snippet_for_disable_task_v1():
     """
     # >SEPARATOR disableTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.disable_task_v1(
+    response = await client.disable_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.disable_task_v1_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -488,12 +730,23 @@ async def snippet_for_enable_task():
     """
     # >SEPARATOR enableTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.enable_task(
+    response = await client.enable_task(
         task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.enable_task_with_http_info(
+        task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -512,12 +765,23 @@ async def snippet_for_enable_task_v1():
     """
     # >SEPARATOR enableTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.enable_task_v1(
+    response = await client.enable_task_v1(
         task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.enable_task_v1_with_http_info(
+        task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -536,12 +800,23 @@ async def snippet_for_get_authentication():
     """
     # >SEPARATOR getAuthentication default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_authentication(
+    response = await client.get_authentication(
         authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_authentication_with_http_info(
+        authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -560,12 +835,23 @@ async def snippet_for_get_destination():
     """
     # >SEPARATOR getDestination default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_destination(
+    response = await client.get_destination(
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_destination_with_http_info(
+        destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -584,13 +870,25 @@ async def snippet_for_get_event():
     """
     # >SEPARATOR getEvent default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_event(
+    response = await client.get_event(
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_event_with_http_info(
+        run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -609,12 +907,23 @@ async def snippet_for_get_run():
     """
     # >SEPARATOR getRun default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_run(
+    response = await client.get_run(
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_run_with_http_info(
+        run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -633,12 +942,23 @@ async def snippet_for_get_source():
     """
     # >SEPARATOR getSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_source(
+    response = await client.get_source(
         source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_source_with_http_info(
+        source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -657,12 +977,23 @@ async def snippet_for_get_task():
     """
     # >SEPARATOR getTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_task(
+    response = await client.get_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -681,12 +1012,23 @@ async def snippet_for_get_task_v1():
     """
     # >SEPARATOR getTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_task_v1(
+    response = await client.get_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_task_v1_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -705,12 +1047,23 @@ async def snippet_for_get_transformation():
     """
     # >SEPARATOR getTransformation default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.get_transformation(
+    response = await client.get_transformation(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_transformation_with_http_info(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -729,10 +1082,19 @@ async def snippet_for_list_authentications():
     """
     # >SEPARATOR listAuthentications default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_authentications()
+    response = await client.list_authentications()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_authentications_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -751,10 +1113,19 @@ async def snippet_for_list_destinations():
     """
     # >SEPARATOR listDestinations default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_destinations()
+    response = await client.list_destinations()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_destinations_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -773,12 +1144,23 @@ async def snippet_for_list_events():
     """
     # >SEPARATOR listEvents default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_events(
+    response = await client.list_events(
         run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_events_with_http_info(
+        run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -797,10 +1179,19 @@ async def snippet_for_list_runs():
     """
     # >SEPARATOR listRuns default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_runs()
+    response = await client.list_runs()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_runs_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -819,10 +1210,19 @@ async def snippet_for_list_sources():
     """
     # >SEPARATOR listSources default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_sources()
+    response = await client.list_sources()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_sources_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -841,10 +1241,19 @@ async def snippet_for_list_tasks():
     """
     # >SEPARATOR listTasks default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_tasks()
+    response = await client.list_tasks()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_tasks_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -863,10 +1272,19 @@ async def snippet_for_list_tasks_v1():
     """
     # >SEPARATOR listTasksV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_tasks_v1()
+    response = await client.list_tasks_v1()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_tasks_v1_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -885,10 +1303,19 @@ async def snippet_for_list_transformations():
     """
     # >SEPARATOR listTransformations default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.list_transformations()
+    response = await client.list_transformations()
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.list_transformations_with_http_info()
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -907,10 +1334,12 @@ async def snippet_for_push_task():
     """
     # >SEPARATOR pushTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.push_task(
+    response = await client.push_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         push_task_payload={
             "action": "addObject",
@@ -929,6 +1358,30 @@ async def snippet_for_push_task():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.push_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        push_task_payload={
+            "action": "addObject",
+            "records": [
+                {
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
+                },
+                {
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -946,10 +1399,12 @@ async def snippet_for_run_source():
     """
     # >SEPARATOR runSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.run_source(
+    response = await client.run_source(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         run_source_payload={
             "indexToInclude": [
@@ -963,6 +1418,26 @@ async def snippet_for_run_source():
             "entityType": "product",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.run_source_with_http_info(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        run_source_payload={
+            "indexToInclude": [
+                "products_us",
+                "products eu",
+            ],
+            "entityIDs": [
+                "1234",
+                "5678",
+            ],
+            "entityType": "product",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -981,12 +1456,23 @@ async def snippet_for_run_task():
     """
     # >SEPARATOR runTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.run_task(
+    response = await client.run_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.run_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1005,12 +1491,23 @@ async def snippet_for_run_task_v1():
     """
     # >SEPARATOR runTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.run_task_v1(
+    response = await client.run_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.run_task_v1_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1029,10 +1526,12 @@ async def snippet_for_search_authentications():
     """
     # >SEPARATOR searchAuthentications default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_authentications(
+    response = await client.search_authentications(
         authentication_search={
             "authenticationIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1040,6 +1539,20 @@ async def snippet_for_search_authentications():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_authentications_with_http_info(
+        authentication_search={
+            "authenticationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1058,10 +1571,12 @@ async def snippet_for_search_destinations():
     """
     # >SEPARATOR searchDestinations default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_destinations(
+    response = await client.search_destinations(
         destination_search={
             "destinationIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1069,6 +1584,20 @@ async def snippet_for_search_destinations():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_destinations_with_http_info(
+        destination_search={
+            "destinationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1087,10 +1616,12 @@ async def snippet_for_search_sources():
     """
     # >SEPARATOR searchSources default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_sources(
+    response = await client.search_sources(
         source_search={
             "sourceIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1098,6 +1629,20 @@ async def snippet_for_search_sources():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_sources_with_http_info(
+        source_search={
+            "sourceIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1116,10 +1661,12 @@ async def snippet_for_search_tasks():
     """
     # >SEPARATOR searchTasks default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_tasks(
+    response = await client.search_tasks(
         task_search={
             "taskIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1128,6 +1675,21 @@ async def snippet_for_search_tasks():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_tasks_with_http_info(
+        task_search={
+            "taskIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1146,10 +1708,12 @@ async def snippet_for_search_tasks_v1():
     """
     # >SEPARATOR searchTasksV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_tasks_v1(
+    response = await client.search_tasks_v1(
         task_search={
             "taskIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1158,6 +1722,21 @@ async def snippet_for_search_tasks_v1():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_tasks_v1_with_http_info(
+        task_search={
+            "taskIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1176,10 +1755,12 @@ async def snippet_for_search_transformations():
     """
     # >SEPARATOR searchTransformations default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.search_transformations(
+    response = await client.search_transformations(
         transformation_search={
             "transformationIDs": [
                 "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1188,6 +1769,21 @@ async def snippet_for_search_transformations():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_transformations_with_http_info(
+        transformation_search={
+            "transformationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1206,10 +1802,17 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 
@@ -1225,12 +1828,23 @@ async def snippet_for_trigger_docker_source_discover():
     """
     # >SEPARATOR triggerDockerSourceDiscover default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.trigger_docker_source_discover(
+    response = await client.trigger_docker_source_discover(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.trigger_docker_source_discover_with_http_info(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1249,10 +1863,12 @@ async def snippet_for_try_transformation():
     """
     # >SEPARATOR tryTransformation default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.try_transformation(
+    response = await client.try_transformation(
         transformation_try={
             "code": "foo",
             "sampleRecord": {
@@ -1260,6 +1876,20 @@ async def snippet_for_try_transformation():
             },
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.try_transformation_with_http_info(
+        transformation_try={
+            "code": "foo",
+            "sampleRecord": {
+                "bar": "baz",
+            },
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1278,10 +1908,12 @@ async def snippet_for_try_transformation_before_update():
     """
     # >SEPARATOR tryTransformationBeforeUpdate default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.try_transformation_before_update(
+    response = await client.try_transformation_before_update(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
             "code": "foo",
@@ -1290,6 +1922,21 @@ async def snippet_for_try_transformation_before_update():
             },
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.try_transformation_before_update_with_http_info(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        transformation_try={
+            "code": "foo",
+            "sampleRecord": {
+                "bar": "baz",
+            },
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1308,15 +1955,29 @@ async def snippet_for_update_authentication():
     """
     # >SEPARATOR updateAuthentication default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_authentication(
+    response = await client.update_authentication(
         authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         authentication_update={
             "name": "newName",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_authentication_with_http_info(
+        authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        authentication_update={
+            "name": "newName",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1335,15 +1996,29 @@ async def snippet_for_update_destination():
     """
     # >SEPARATOR updateDestination default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_destination(
+    response = await client.update_destination(
         destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         destination_update={
             "name": "newName",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_destination_with_http_info(
+        destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        destination_update={
+            "name": "newName",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1362,15 +2037,29 @@ async def snippet_for_update_source():
     """
     # >SEPARATOR updateSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_source(
+    response = await client.update_source(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         source_update={
             "name": "newName",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_source_with_http_info(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        source_update={
+            "name": "newName",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1389,16 +2078,31 @@ async def snippet_for_update_task():
     """
     # >SEPARATOR updateTask default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_task(
+    response = await client.update_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         task_update={
             "enabled": False,
             "cron": "* * * * *",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_task_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_update={
+            "enabled": False,
+            "cron": "* * * * *",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1417,15 +2121,29 @@ async def snippet_for_update_task_v1():
     """
     # >SEPARATOR updateTaskV1 default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_task_v1(
+    response = await client.update_task_v1(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         task_update={
             "enabled": False,
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_task_v1_with_http_info(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_update={
+            "enabled": False,
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1444,10 +2162,12 @@ async def snippet_for_update_transformation():
     """
     # >SEPARATOR updateTransformation default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.update_transformation(
+    response = await client.update_transformation(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_create={
             "code": "foo",
@@ -1455,6 +2175,20 @@ async def snippet_for_update_transformation():
             "description": "baz",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.update_transformation_with_http_info(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        transformation_create={
+            "code": "foo",
+            "name": "bar",
+            "description": "baz",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1473,10 +2207,12 @@ async def snippet_for_validate_source():
     """
     # >SEPARATOR validateSource default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.validate_source(
+    response = await client.validate_source(
         source_create={
             "type": "commercetools",
             "name": "sourceName",
@@ -1493,6 +2229,29 @@ async def snippet_for_validate_source():
             "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.validate_source_with_http_info(
+        source_create={
+            "type": "commercetools",
+            "name": "sourceName",
+            "input": {
+                "storeKeys": [
+                    "myStore",
+                ],
+                "locales": [
+                    "de",
+                ],
+                "url": "http://commercetools.com",
+                "projectKey": "keyID",
+            },
+            "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -1511,15 +2270,29 @@ async def snippet_for_validate_source_before_update():
     """
     # >SEPARATOR validateSourceBeforeUpdate default
     # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = IngestionClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.validate_source_before_update(
+    response = await client.validate_source_before_update(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         source_update={
             "name": "newName",
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.validate_source_before_update_with_http_info(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        source_update={
+            "name": "newName",
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly

@@ -62,7 +62,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.4.2\).*/',
+                '/^Algolia for PHP \(4.4.3\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -124,7 +124,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = MonitoringClient::createWithConfig(MonitoringConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6683']));
+        $client = MonitoringClient::createWithConfig(MonitoringConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
 
         $res = $client->customGet(
             'check-api-key/1',

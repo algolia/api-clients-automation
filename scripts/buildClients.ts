@@ -25,12 +25,12 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run('go build ./...', { cwd, language });
       break;
     case 'javascript':
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });
+      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd, language });
       if (buildType === 'client') {
         const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
-        await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd });
+        await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd, language });
       }
 
       break;

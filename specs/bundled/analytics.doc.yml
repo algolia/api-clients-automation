@@ -156,7 +156,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -166,10 +166,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -199,8 +199,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -213,8 +214,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -232,8 +233,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -253,8 +254,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -271,37 +272,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.custom_get(
+            response = await client.custom_get(
                 path="test/minimal",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.custom_get_with_http_info(
+                path="test/minimal",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -321,32 +324,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -388,7 +388,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -398,10 +398,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -431,8 +431,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -445,8 +446,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -464,8 +465,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -485,8 +486,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -503,37 +504,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.custom_post(
+            response = await client.custom_post(
                 path="test/minimal",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.custom_post_with_http_info(
+                path="test/minimal",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -553,32 +556,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -620,7 +620,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -630,10 +630,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -663,8 +663,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -677,8 +678,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -696,8 +697,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -717,8 +718,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -735,37 +736,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.custom_put(
+            response = await client.custom_put(
                 path="test/minimal",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.custom_put_with_http_info(
+                path="test/minimal",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -785,32 +788,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -846,7 +846,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -856,10 +856,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -890,8 +890,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -904,8 +905,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -924,8 +925,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -945,8 +946,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -963,37 +964,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.custom_delete(
+            response = await client.custom_delete(
                 path="test/minimal",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.custom_delete_with_http_info(
+                path="test/minimal",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1013,32 +1016,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1094,7 +1094,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1104,10 +1104,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1138,8 +1138,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1152,8 +1153,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1171,8 +1172,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1192,8 +1193,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1210,37 +1211,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_top_searches(
+            response = await client.get_top_searches(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_top_searches_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1260,32 +1263,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopSearches(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1364,7 +1364,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1374,10 +1374,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1408,8 +1408,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1422,8 +1423,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1441,8 +1442,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1462,8 +1463,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1480,37 +1481,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_searches_count(
+            response = await client.get_searches_count(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_searches_count_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1530,32 +1533,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getSearchesCount(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1630,7 +1630,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1640,10 +1640,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1674,8 +1674,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1688,8 +1689,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1708,8 +1709,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -1729,8 +1730,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1747,37 +1748,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_searches_no_results(
+            response = await client.get_searches_no_results(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_searches_no_results_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -1797,32 +1800,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getSearchesNoResults(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -1902,7 +1902,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -1912,10 +1912,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -1946,8 +1946,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -1960,8 +1961,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -1980,8 +1981,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -2001,8 +2002,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2019,37 +2020,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_searches_no_clicks(
+            response = await client.get_searches_no_clicks(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_searches_no_clicks_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -2069,32 +2072,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getSearchesNoClicks(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -2185,7 +2185,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -2195,10 +2195,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2229,8 +2229,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -2243,8 +2244,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2262,8 +2263,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -2283,8 +2284,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2301,37 +2302,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_no_results_rate(
+            response = await client.get_no_results_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_no_results_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -2351,32 +2354,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getNoResultsRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -2467,7 +2467,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -2477,10 +2477,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2511,8 +2511,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -2525,8 +2526,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2544,8 +2545,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -2565,8 +2566,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2583,37 +2584,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_no_click_rate(
+            response = await client.get_no_click_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_no_click_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -2633,32 +2636,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getNoClickRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -2713,7 +2713,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -2723,10 +2723,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -2756,8 +2756,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -2770,8 +2771,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2789,8 +2790,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -2810,8 +2811,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -2828,37 +2829,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_top_hits(
+            response = await client.get_top_hits(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_top_hits_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -2878,32 +2881,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopHits(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -2997,7 +2997,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -3007,10 +3007,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -3041,8 +3041,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -3055,8 +3056,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3074,8 +3075,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -3095,8 +3096,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3113,37 +3114,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_users_count(
+            response = await client.get_users_count(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_users_count_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -3163,32 +3166,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getUsersCount(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -3246,7 +3246,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -3256,10 +3256,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -3290,8 +3290,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -3304,8 +3305,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3324,8 +3325,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -3345,8 +3346,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3366,15 +3367,30 @@ paths:
           source: >
             # Initialize the client
 
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_top_filter_attributes(
+            response = await client.get_top_filter_attributes(
                 index="index",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = await
+            client.get_top_filter_attributes_with_http_info(
+                index="index",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -3392,8 +3408,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -3413,32 +3429,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopFilterAttributes(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -3500,7 +3513,7 @@ paths:
             // Initialize the client
 
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
 
@@ -3514,10 +3527,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -3548,8 +3561,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -3562,8 +3576,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3582,8 +3596,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -3604,8 +3618,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3626,16 +3640,32 @@ paths:
           source: >
             # Initialize the client
 
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_top_filter_for_attribute(
+            response = await client.get_top_filter_for_attribute(
                 attribute="myAttribute",
                 index="index",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = await
+            client.get_top_filter_for_attribute_with_http_info(
+                attribute="myAttribute",
+                index="index",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -3653,8 +3683,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -3675,33 +3705,30 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopFilterForAttribute(
               attribute = "myAttribute",
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -3762,7 +3789,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -3772,10 +3799,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -3806,8 +3833,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -3820,8 +3848,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3840,8 +3868,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -3861,8 +3889,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -3882,15 +3910,30 @@ paths:
           source: >
             # Initialize the client
 
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_top_filters_no_results(
+            response = await client.get_top_filters_no_results(
                 index="index",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = await
+            client.get_top_filters_no_results_with_http_info(
+                index="index",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -3908,8 +3951,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -3929,32 +3972,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopFiltersNoResults(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -4029,7 +4069,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -4039,10 +4079,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -4073,8 +4113,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -4087,8 +4128,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4106,8 +4147,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -4127,8 +4168,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4145,37 +4186,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_top_countries(
+            response = await client.get_top_countries(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_top_countries_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -4195,32 +4238,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getTopCountries(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -4311,7 +4351,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -4321,10 +4361,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -4355,8 +4395,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -4369,8 +4410,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4389,8 +4430,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -4410,8 +4451,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4431,15 +4472,30 @@ paths:
           source: >
             # Initialize the client
 
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
 
             # Call the API
 
-            response = await _client.get_average_click_position(
+            response = await client.get_average_click_position(
                 index="index",
             )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = await
+            client.get_average_click_position_with_http_info(
+                index="index",
+            )
+
+
+            print(raw_response.raw_data)
 
 
             # >LOG
@@ -4457,8 +4513,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -4478,32 +4534,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getAverageClickPosition(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -4567,7 +4620,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -4577,10 +4630,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -4611,8 +4664,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -4625,8 +4679,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4644,8 +4698,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -4665,8 +4719,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4683,37 +4737,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_click_positions(
+            response = await client.get_click_positions(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_click_positions_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -4733,32 +4789,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getClickPositions(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -4849,7 +4902,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -4859,10 +4912,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -4893,8 +4946,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -4907,8 +4961,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4927,8 +4981,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -4948,8 +5002,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -4966,37 +5020,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_click_through_rate(
+            response = await client.get_click_through_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_click_through_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -5016,32 +5072,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getClickThroughRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -5132,7 +5185,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -5142,10 +5195,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -5176,8 +5229,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -5190,8 +5244,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5209,8 +5263,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -5230,8 +5284,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5248,37 +5302,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_conversion_rate(
+            response = await client.get_conversion_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_conversion_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -5298,32 +5354,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getConversionRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -5414,7 +5467,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -5424,10 +5477,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -5458,8 +5511,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -5472,8 +5526,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5491,8 +5545,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -5512,8 +5566,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5530,37 +5584,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_add_to_cart_rate(
+            response = await client.get_add_to_cart_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_add_to_cart_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -5580,32 +5636,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getAddToCartRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -5696,7 +5749,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -5706,10 +5759,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -5740,8 +5793,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -5754,8 +5808,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5773,8 +5827,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -5794,8 +5848,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -5812,37 +5866,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_purchase_rate(
+            response = await client.get_purchase_rate(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_purchase_rate_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -5862,32 +5918,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getPurchaseRate(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -5961,7 +6014,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -5971,10 +6024,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -6004,8 +6057,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -6018,8 +6072,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -6037,8 +6091,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -6058,8 +6112,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -6076,37 +6130,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_revenue(
+            response = await client.get_revenue(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_revenue_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -6126,32 +6182,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getRevenue(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API
@@ -6203,7 +6256,7 @@ paths:
           source: |
             // Initialize the client
             var client = new AnalyticsClient(
-              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+              new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
             );
 
             // Call the API
@@ -6213,10 +6266,10 @@ paths:
           label: Go
           source: >
             // Initialize the client with your application region, eg.
-            analytics.YOUR_APP_ID_REGION
+            analytics.ALGOLIA_APPLICATION_REGION
 
-            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            analytics.US)
+            client, err := analytics.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", analytics.US)
 
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
@@ -6246,8 +6299,9 @@ paths:
           source: >
             // Initialize the client
 
-            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+            AnalyticsClient client = new
+            AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
 
 
             // Call the API
@@ -6260,8 +6314,8 @@ paths:
           source: >
             // Initialize the client
 
-            const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY',
-            'YOUR_APP_ID_REGION');
+            const client = analyticsClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -6279,8 +6333,8 @@ paths:
           source: >
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
 
             // Call the API
@@ -6300,8 +6354,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
 
             // Call the API
@@ -6318,37 +6372,39 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: |
             # Initialize the client
-
-            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
+            client = AnalyticsClient(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
 
             # Call the API
-
-            response = await _client.get_status(
+            response = await client.get_status(
                 index="index",
             )
 
-
-            # >LOG
-
-            # use the class directly
-
             print(response)
 
+            # Skip deserialization
+            raw_response = await client.get_status_with_http_info(
+                index="index",
+            )
+
+            print(raw_response.raw_data)
+
+            # >LOG
+            # use the class directly
+            print(response)
 
             # print the JSON response
-
             print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
 
             # Call the API
@@ -6368,32 +6424,29 @@ paths:
             puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: |
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
+            val client = AnalyticsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
 
             // Call the API
-
             val response = client.getStatus(
               index = "index"
             )
 
-
             // >LOG
-
             // Use the response
-
             val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
+            let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
 
 
             // Call the API

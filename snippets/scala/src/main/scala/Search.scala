@@ -24,7 +24,7 @@ class SnippetSearchClient {
   def snippetForSearchClientAddApiKey(): Unit = {
     // >SEPARATOR addApiKey default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.addApiKey(
@@ -50,7 +50,7 @@ class SnippetSearchClient {
   def snippetForSearchClientAddOrUpdateObject(): Unit = {
     // >SEPARATOR addOrUpdateObject default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.addOrUpdateObject(
@@ -72,7 +72,7 @@ class SnippetSearchClient {
   def snippetForSearchClientAppendSource(): Unit = {
     // >SEPARATOR appendSource default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.appendSource(
@@ -95,7 +95,7 @@ class SnippetSearchClient {
   def snippetForSearchClientAssignUserId(): Unit = {
     // >SEPARATOR assignUserId default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.assignUserId(
@@ -118,7 +118,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch(): Unit = {
     // >SEPARATOR batch addObject
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -150,7 +150,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch1(): Unit = {
     // >SEPARATOR batch clear
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -178,7 +178,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch2(): Unit = {
     // >SEPARATOR batch delete
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -206,7 +206,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch3(): Unit = {
     // >SEPARATOR batch deleteObject
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -234,7 +234,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch4(): Unit = {
     // >SEPARATOR batch partialUpdateObject
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -262,7 +262,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch5(): Unit = {
     // >SEPARATOR batch partialUpdateObjectNoCreate
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -290,7 +290,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatch6(): Unit = {
     // >SEPARATOR batch updateObject
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batch(
@@ -318,7 +318,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatchAssignUserIds(): Unit = {
     // >SEPARATOR batchAssignUserIds default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batchAssignUserIds(
@@ -342,7 +342,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatchDictionaryEntries(): Unit = {
     // >SEPARATOR batchDictionaryEntries replace
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batchDictionaryEntries(
@@ -378,7 +378,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatchDictionaryEntries1(): Unit = {
     // >SEPARATOR batchDictionaryEntries delete
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batchDictionaryEntries(
@@ -409,7 +409,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBatchDictionaryEntries2(): Unit = {
     // >SEPARATOR batchDictionaryEntries append
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.batchDictionaryEntries(
@@ -441,7 +441,7 @@ class SnippetSearchClient {
   def snippetForSearchClientBrowse(): Unit = {
     // >SEPARATOR browse default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.browse(
@@ -461,7 +461,7 @@ class SnippetSearchClient {
   def snippetForSearchClientClearObjects(): Unit = {
     // >SEPARATOR clearObjects default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.clearObjects(
@@ -481,7 +481,7 @@ class SnippetSearchClient {
   def snippetForSearchClientClearRules(): Unit = {
     // >SEPARATOR clearRules default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.clearRules(
@@ -501,7 +501,7 @@ class SnippetSearchClient {
   def snippetForSearchClientClearSynonyms(): Unit = {
     // >SEPARATOR clearSynonyms default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.clearSynonyms(
@@ -521,7 +521,7 @@ class SnippetSearchClient {
   def snippetForSearchClientCustomDelete(): Unit = {
     // >SEPARATOR customDelete default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customDelete[JObject](
@@ -541,7 +541,7 @@ class SnippetSearchClient {
   def snippetForSearchClientCustomGet(): Unit = {
     // >SEPARATOR customGet default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customGet[JObject](
@@ -561,7 +561,7 @@ class SnippetSearchClient {
   def snippetForSearchClientCustomPost(): Unit = {
     // >SEPARATOR customPost default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPost[JObject](
@@ -581,7 +581,7 @@ class SnippetSearchClient {
   def snippetForSearchClientCustomPut(): Unit = {
     // >SEPARATOR customPut default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.customPut[JObject](
@@ -601,7 +601,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteApiKey(): Unit = {
     // >SEPARATOR deleteApiKey default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteApiKey(
@@ -621,7 +621,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteBy(): Unit = {
     // >SEPARATOR deleteBy default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteBy(
@@ -644,7 +644,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteIndex(): Unit = {
     // >SEPARATOR deleteIndex default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteIndex(
@@ -664,7 +664,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteObject(): Unit = {
     // >SEPARATOR deleteObject default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteObject(
@@ -685,7 +685,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteRule(): Unit = {
     // >SEPARATOR deleteRule default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteRule(
@@ -706,7 +706,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteSource(): Unit = {
     // >SEPARATOR deleteSource default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteSource(
@@ -726,7 +726,7 @@ class SnippetSearchClient {
   def snippetForSearchClientDeleteSynonym(): Unit = {
     // >SEPARATOR deleteSynonym default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.deleteSynonym(
@@ -747,7 +747,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetApiKey(): Unit = {
     // >SEPARATOR getApiKey default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getApiKey(
@@ -767,7 +767,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetAppTask(): Unit = {
     // >SEPARATOR getAppTask default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getAppTask(
@@ -787,7 +787,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetDictionaryLanguages(): Unit = {
     // >SEPARATOR getDictionaryLanguages default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getDictionaryLanguages(
@@ -806,7 +806,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetDictionarySettings(): Unit = {
     // >SEPARATOR getDictionarySettings default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getDictionarySettings(
@@ -825,7 +825,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetLogs(): Unit = {
     // >SEPARATOR getLogs default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getLogs(
@@ -844,7 +844,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetObject(): Unit = {
     // >SEPARATOR getObject default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getObject(
@@ -866,7 +866,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetObjects(): Unit = {
     // >SEPARATOR getObjects default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getObjects(
@@ -894,7 +894,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetRule(): Unit = {
     // >SEPARATOR getRule default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getRule(
@@ -915,7 +915,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetSettings(): Unit = {
     // >SEPARATOR getSettings default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getSettings(
@@ -935,7 +935,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetSources(): Unit = {
     // >SEPARATOR getSources default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getSources(
@@ -954,7 +954,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetSynonym(): Unit = {
     // >SEPARATOR getSynonym default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getSynonym(
@@ -975,7 +975,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetTask(): Unit = {
     // >SEPARATOR getTask default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getTask(
@@ -996,7 +996,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetTopUserIds(): Unit = {
     // >SEPARATOR getTopUserIds default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getTopUserIds(
@@ -1015,7 +1015,7 @@ class SnippetSearchClient {
   def snippetForSearchClientGetUserId(): Unit = {
     // >SEPARATOR getUserId default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.getUserId(
@@ -1035,7 +1035,7 @@ class SnippetSearchClient {
   def snippetForSearchClientHasPendingMappings(): Unit = {
     // >SEPARATOR hasPendingMappings default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.hasPendingMappings(
@@ -1054,7 +1054,7 @@ class SnippetSearchClient {
   def snippetForSearchClientListApiKeys(): Unit = {
     // >SEPARATOR listApiKeys default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.listApiKeys(
@@ -1073,7 +1073,7 @@ class SnippetSearchClient {
   def snippetForSearchClientListClusters(): Unit = {
     // >SEPARATOR listClusters default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.listClusters(
@@ -1092,7 +1092,7 @@ class SnippetSearchClient {
   def snippetForSearchClientListIndices(): Unit = {
     // >SEPARATOR listIndices default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.listIndices(
@@ -1111,7 +1111,7 @@ class SnippetSearchClient {
   def snippetForSearchClientListUserIds(): Unit = {
     // >SEPARATOR listUserIds default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.listUserIds(
@@ -1130,7 +1130,7 @@ class SnippetSearchClient {
   def snippetForSearchClientMultipleBatch(): Unit = {
     // >SEPARATOR multipleBatch default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.multipleBatch(
@@ -1158,7 +1158,7 @@ class SnippetSearchClient {
   def snippetForSearchClientOperationIndex(): Unit = {
     // >SEPARATOR operationIndex scopes
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.operationIndex(
@@ -1183,7 +1183,7 @@ class SnippetSearchClient {
   def snippetForSearchClientOperationIndex1(): Unit = {
     // >SEPARATOR operationIndex copy
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.operationIndex(
@@ -1207,7 +1207,7 @@ class SnippetSearchClient {
   def snippetForSearchClientOperationIndex2(): Unit = {
     // >SEPARATOR operationIndex move
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.operationIndex(
@@ -1231,7 +1231,7 @@ class SnippetSearchClient {
   def snippetForSearchClientPartialUpdateObject(): Unit = {
     // >SEPARATOR partialUpdateObject default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.partialUpdateObject(
@@ -1253,7 +1253,7 @@ class SnippetSearchClient {
   def snippetForSearchClientRemoveUserId(): Unit = {
     // >SEPARATOR removeUserId default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.removeUserId(
@@ -1273,7 +1273,7 @@ class SnippetSearchClient {
   def snippetForSearchClientReplaceSources(): Unit = {
     // >SEPARATOR replaceSources default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.replaceSources(
@@ -1298,11 +1298,11 @@ class SnippetSearchClient {
   def snippetForSearchClientRestoreApiKey(): Unit = {
     // >SEPARATOR restoreApiKey default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.restoreApiKey(
-      key = "myApiKey"
+      key = "ALGOLIA_API_KEY"
     )
 
     // >LOG
@@ -1318,7 +1318,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSaveObject(): Unit = {
     // >SEPARATOR saveObject default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.saveObject(
@@ -1339,7 +1339,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSaveRule(): Unit = {
     // >SEPARATOR saveRule default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.saveRule(
@@ -1371,7 +1371,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSaveRules(): Unit = {
     // >SEPARATOR saveRules default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.saveRules(
@@ -1417,7 +1417,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSaveSynonym(): Unit = {
     // >SEPARATOR saveSynonym default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.saveSynonym(
@@ -1444,7 +1444,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSaveSynonyms(): Unit = {
     // >SEPARATOR saveSynonyms default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.saveSynonyms(
@@ -1479,7 +1479,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch(): Unit = {
     // >SEPARATOR search withHitsPerPage
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1507,7 +1507,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch1(): Unit = {
     // >SEPARATOR search filterOnly
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1535,7 +1535,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch2(): Unit = {
     // >SEPARATOR search filterOr
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1563,7 +1563,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch3(): Unit = {
     // >SEPARATOR search filterNot
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1591,7 +1591,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch4(): Unit = {
     // >SEPARATOR search retrieveFacets
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1619,7 +1619,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearch5(): Unit = {
     // >SEPARATOR search retrieveFacetsWildcard
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.search(
@@ -1647,7 +1647,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchDictionaryEntries(): Unit = {
     // >SEPARATOR searchDictionaryEntries default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchDictionaryEntries(
@@ -1670,7 +1670,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchForFacetValues(): Unit = {
     // >SEPARATOR searchForFacetValues default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchForFacetValues(
@@ -1691,7 +1691,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchRules(): Unit = {
     // >SEPARATOR searchRules default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchRules(
@@ -1716,7 +1716,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchSingleIndex(): Unit = {
     // >SEPARATOR searchSingleIndex default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchSingleIndex(
@@ -1736,7 +1736,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchSynonyms(): Unit = {
     // >SEPARATOR searchSynonyms default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchSynonyms(
@@ -1756,7 +1756,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSearchUserIds(): Unit = {
     // >SEPARATOR searchUserIds default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.searchUserIds(
@@ -1781,7 +1781,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSetDictionarySettings(): Unit = {
     // >SEPARATOR setDictionarySettings default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.setDictionarySettings(
@@ -1805,7 +1805,7 @@ class SnippetSearchClient {
   def snippetForSearchClientSetSettings(): Unit = {
     // >SEPARATOR setSettings default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.setSettings(
@@ -1828,11 +1828,11 @@ class SnippetSearchClient {
   def snippetForSearchClientUpdateApiKey(): Unit = {
     // >SEPARATOR updateApiKey default
     // Initialize the client
-    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
     val response = client.updateApiKey(
-      key = "myApiKey",
+      key = "ALGOLIA_API_KEY",
       apiKey = ApiKey(
         acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
         validity = Some(300),

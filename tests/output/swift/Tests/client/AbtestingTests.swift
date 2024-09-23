@@ -46,7 +46,7 @@ final class AbtestingClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.3.2\\).*"
+        let pattern = "^Algolia for Swift \\(9.4.0\\).*"
         let rule = StringRule(pattern: pattern)
         let userAgent = try XCTUnwrap(echoResponse.headers?["User-Agent"])
         guard let userAgent else {
@@ -137,7 +137,11 @@ final class AbtestingClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             region: Region(rawValue: "us"),
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = AbtestingClient(configuration: configuration, transporter: transporter)

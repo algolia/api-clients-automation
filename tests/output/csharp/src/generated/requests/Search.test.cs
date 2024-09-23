@@ -777,7 +777,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -798,7 +798,7 @@ public class SearchClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -816,7 +816,7 @@ public class SearchClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
 
     var req = _echo.LastResponse;
@@ -837,7 +837,7 @@ public class SearchClientRequestTests
       Assert.Equal(expected, actual.Value);
     }
     var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"x-algolia-api-key\":\"myApiKey\"}"
+      "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}"
     );
     var actualHeaders = req.Headers;
     foreach (var expectedHeader in expectedHeaders)
@@ -1701,10 +1701,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "restoreApiKey")]
   public async Task RestoreApiKeyTest()
   {
-    await client.RestoreApiKeyAsync("myApiKey");
+    await client.RestoreApiKeyAsync("ALGOLIA_API_KEY");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/keys/myApiKey/restore", req.Path);
+    Assert.Equal("/1/keys/ALGOLIA_API_KEY/restore", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     Assert.Equal("{}", req.Body);
   }
@@ -3511,7 +3511,7 @@ public class SearchClientRequestTests
   public async Task UpdateApiKeyTest()
   {
     await client.UpdateApiKeyAsync(
-      "myApiKey",
+      "ALGOLIA_API_KEY",
       new ApiKey
       {
         Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
@@ -3522,7 +3522,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/keys/myApiKey", req.Path);
+    Assert.Equal("/1/keys/ALGOLIA_API_KEY", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",

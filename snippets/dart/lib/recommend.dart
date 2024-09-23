@@ -9,7 +9,8 @@ import 'package:algolia_client_recommend/algolia_client_recommend.dart';
 void snippetForcustomDelete() async {
   // >SEPARATOR customDelete default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customDelete(
@@ -25,7 +26,8 @@ void snippetForcustomDelete() async {
 void snippetForcustomGet() async {
   // >SEPARATOR customGet default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customGet(
@@ -41,7 +43,8 @@ void snippetForcustomGet() async {
 void snippetForcustomPost() async {
   // >SEPARATOR customPost default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customPost(
@@ -57,7 +60,8 @@ void snippetForcustomPost() async {
 void snippetForcustomPut() async {
   // >SEPARATOR customPut default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.customPut(
@@ -73,7 +77,8 @@ void snippetForcustomPut() async {
 void snippetFordeleteRecommendRule() async {
   // >SEPARATOR deleteRecommendRule default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.deleteRecommendRule(
@@ -91,7 +96,8 @@ void snippetFordeleteRecommendRule() async {
 void snippetForgetRecommendRule() async {
   // >SEPARATOR getRecommendRule default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getRecommendRule(
@@ -109,7 +115,8 @@ void snippetForgetRecommendRule() async {
 void snippetForgetRecommendStatus() async {
   // >SEPARATOR getRecommendStatus default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getRecommendStatus(
@@ -127,7 +134,8 @@ void snippetForgetRecommendStatus() async {
 void snippetForgetRecommendations() async {
   // >SEPARATOR getRecommendations default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.getRecommendations(
@@ -152,7 +160,8 @@ void snippetForgetRecommendations() async {
 void snippetForsearchRecommendRules() async {
   // >SEPARATOR searchRecommendRules default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.searchRecommendRules(
@@ -169,7 +178,8 @@ void snippetForsearchRecommendRules() async {
 void snippetForsetClientApiKey() async {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   client.setClientApiKey(

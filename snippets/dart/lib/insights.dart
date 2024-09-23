@@ -10,9 +10,9 @@ void snippetForcustomDelete() async {
   // >SEPARATOR customDelete default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   final response = await client.customDelete(
@@ -29,9 +29,9 @@ void snippetForcustomGet() async {
   // >SEPARATOR customGet default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   final response = await client.customGet(
@@ -48,9 +48,9 @@ void snippetForcustomPost() async {
   // >SEPARATOR customPost default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   final response = await client.customPost(
@@ -67,9 +67,9 @@ void snippetForcustomPut() async {
   // >SEPARATOR customPut default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   final response = await client.customPut(
@@ -86,9 +86,9 @@ void snippetFordeleteUserToken() async {
   // >SEPARATOR deleteUserToken default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   await client.deleteUserToken(
@@ -105,9 +105,9 @@ void snippetForpushEvents() async {
   // >SEPARATOR pushEvents default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   final response = await client.pushEvents(
@@ -144,9 +144,9 @@ void snippetForsetClientApiKey() async {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
   final client = InsightsClient(
-      appId: 'YOUR_APP_ID',
-      apiKey: 'YOUR_API_KEY',
-      region: 'YOUR_APP_ID_REGION');
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
 
   // Call the API
   client.setClientApiKey(

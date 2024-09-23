@@ -36,9 +36,19 @@ class SearchClientBenchmark {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6682)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6682
+          )
+        ),
+        false
+      )
     );
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 2000; i++) {
       SearchResponses res = client.search(
         new SearchMethodParams()
           .setRequests(

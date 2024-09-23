@@ -129,7 +129,7 @@ describe('customPost', () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -137,14 +137,14 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -152,7 +152,7 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {
@@ -308,7 +308,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726531200000,
+          timestamp: 1726790400000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -318,7 +318,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726531200000,
+          timestamp: 1726790400000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -334,7 +334,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726531200000,
+          timestamp: 1726790400000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -344,7 +344,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1726531200000,
+          timestamp: 1726790400000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

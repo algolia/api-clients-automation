@@ -1,5 +1,5 @@
 _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{parametersWithDataTypeMap.appId.value}}", "{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})
         {{#hasCustomHosts}}
-        {{#isError}}    {{/isError}}_config.hosts = HostsCollection([{{#customHosts}}Host(url='{{host}}', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/customHosts}}])
+        {{#isError}}    {{/isError}}_config.hosts = HostsCollection([{{#customHosts}}Host(url='localhost' if environ.get('CI') == 'true' else 'host.docker.internal', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/customHosts}}])
         {{/hasCustomHosts}}
         {{#isError}}    {{/isError}}_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config){{/useEchoRequester}})

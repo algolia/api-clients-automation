@@ -14,8 +14,8 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	*/
 
 	// >SEPARATOR createAuthentication default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -45,8 +45,8 @@ func SnippetForCreateDestinationOfIngestion() {
 	*/
 
 	// >SEPARATOR createDestination default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -76,8 +76,8 @@ func SnippetForCreateSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR createSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -109,8 +109,8 @@ func SnippetForCreateTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR createTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -139,8 +139,8 @@ func SnippetForCreateTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR createTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -170,8 +170,8 @@ func SnippetForCreateTransformationOfIngestion() {
 	*/
 
 	// >SEPARATOR createTransformation default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -200,8 +200,8 @@ func SnippetForCustomDeleteOfIngestion() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -229,8 +229,8 @@ func SnippetForCustomGetOfIngestion() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -258,8 +258,8 @@ func SnippetForCustomPostOfIngestion() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -287,8 +287,8 @@ func SnippetForCustomPutOfIngestion() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -316,8 +316,8 @@ func SnippetForDeleteAuthenticationOfIngestion() {
 	*/
 
 	// >SEPARATOR deleteAuthentication default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -345,8 +345,8 @@ func SnippetForDeleteDestinationOfIngestion() {
 	*/
 
 	// >SEPARATOR deleteDestination default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -374,8 +374,8 @@ func SnippetForDeleteSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR deleteSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -403,8 +403,8 @@ func SnippetForDeleteTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR deleteTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -432,8 +432,8 @@ func SnippetForDeleteTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR deleteTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -461,8 +461,8 @@ func SnippetForDeleteTransformationOfIngestion() {
 	*/
 
 	// >SEPARATOR deleteTransformation default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -490,8 +490,8 @@ func SnippetForDisableTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR disableTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -519,8 +519,8 @@ func SnippetForDisableTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR disableTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -548,8 +548,8 @@ func SnippetForEnableTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR enableTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -577,8 +577,8 @@ func SnippetForEnableTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR enableTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -606,8 +606,8 @@ func SnippetForGetAuthenticationOfIngestion() {
 	*/
 
 	// >SEPARATOR getAuthentication default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -635,8 +635,8 @@ func SnippetForGetDestinationOfIngestion() {
 	*/
 
 	// >SEPARATOR getDestination default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -664,8 +664,8 @@ func SnippetForGetEventOfIngestion() {
 	*/
 
 	// >SEPARATOR getEvent default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -693,8 +693,8 @@ func SnippetForGetRunOfIngestion() {
 	*/
 
 	// >SEPARATOR getRun default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -722,8 +722,8 @@ func SnippetForGetSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR getSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -751,8 +751,8 @@ func SnippetForGetTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR getTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -780,8 +780,8 @@ func SnippetForGetTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR getTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -809,8 +809,8 @@ func SnippetForGetTransformationOfIngestion() {
 	*/
 
 	// >SEPARATOR getTransformation default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -838,8 +838,8 @@ func SnippetForListAuthenticationsOfIngestion() {
 	*/
 
 	// >SEPARATOR listAuthentications default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -865,8 +865,8 @@ func SnippetForListDestinationsOfIngestion() {
 	*/
 
 	// >SEPARATOR listDestinations default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -892,8 +892,8 @@ func SnippetForListEventsOfIngestion() {
 	*/
 
 	// >SEPARATOR listEvents default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -921,8 +921,8 @@ func SnippetForListRunsOfIngestion() {
 	*/
 
 	// >SEPARATOR listRuns default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -948,8 +948,8 @@ func SnippetForListSourcesOfIngestion() {
 	*/
 
 	// >SEPARATOR listSources default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -975,8 +975,8 @@ func SnippetForListTasksOfIngestion() {
 	*/
 
 	// >SEPARATOR listTasks default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1002,8 +1002,8 @@ func SnippetForListTasksV1OfIngestion() {
 	*/
 
 	// >SEPARATOR listTasksV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1029,8 +1029,8 @@ func SnippetForListTransformationsOfIngestion() {
 	*/
 
 	// >SEPARATOR listTransformations default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1056,8 +1056,8 @@ func SnippetForPushTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR pushTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1087,8 +1087,8 @@ func SnippetForRunSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR runSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1119,8 +1119,8 @@ func SnippetForRunTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR runTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1148,8 +1148,8 @@ func SnippetForRunTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR runTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1177,8 +1177,8 @@ func SnippetForSearchAuthenticationsOfIngestion() {
 	*/
 
 	// >SEPARATOR searchAuthentications default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1208,8 +1208,8 @@ func SnippetForSearchDestinationsOfIngestion() {
 	*/
 
 	// >SEPARATOR searchDestinations default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1239,8 +1239,8 @@ func SnippetForSearchSourcesOfIngestion() {
 	*/
 
 	// >SEPARATOR searchSources default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1270,8 +1270,8 @@ func SnippetForSearchTasksOfIngestion() {
 	*/
 
 	// >SEPARATOR searchTasks default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1301,8 +1301,8 @@ func SnippetForSearchTasksV1OfIngestion() {
 	*/
 
 	// >SEPARATOR searchTasksV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1332,8 +1332,8 @@ func SnippetForSearchTransformationsOfIngestion() {
 	*/
 
 	// >SEPARATOR searchTransformations default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1363,8 +1363,8 @@ func SnippetForSetClientApiKeyOfIngestion() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1390,8 +1390,8 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	*/
 
 	// >SEPARATOR triggerDockerSourceDiscover default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1419,8 +1419,8 @@ func SnippetForTryTransformationOfIngestion() {
 	*/
 
 	// >SEPARATOR tryTransformation default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1449,8 +1449,8 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	*/
 
 	// >SEPARATOR tryTransformationBeforeUpdate default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1479,8 +1479,8 @@ func SnippetForUpdateAuthenticationOfIngestion() {
 	*/
 
 	// >SEPARATOR updateAuthentication default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1509,8 +1509,8 @@ func SnippetForUpdateDestinationOfIngestion() {
 	*/
 
 	// >SEPARATOR updateDestination default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1539,8 +1539,8 @@ func SnippetForUpdateSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR updateSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1569,8 +1569,8 @@ func SnippetForUpdateTaskOfIngestion() {
 	*/
 
 	// >SEPARATOR updateTask default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1599,8 +1599,8 @@ func SnippetForUpdateTaskV1OfIngestion() {
 	*/
 
 	// >SEPARATOR updateTaskV1 default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1629,8 +1629,8 @@ func SnippetForUpdateTransformationOfIngestion() {
 	*/
 
 	// >SEPARATOR updateTransformation default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1659,8 +1659,8 @@ func SnippetForValidateSourceOfIngestion() {
 	*/
 
 	// >SEPARATOR validateSource default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -1690,8 +1690,8 @@ func SnippetForValidateSourceBeforeUpdateOfIngestion() {
 	*/
 
 	// >SEPARATOR validateSourceBeforeUpdate default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

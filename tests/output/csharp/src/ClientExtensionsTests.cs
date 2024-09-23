@@ -44,7 +44,7 @@ public class ClientExtensionsTests
               Encoding.UTF8.GetBytes(
                 serializer.Serialize(new GetTaskResponse { Status = TaskStatus.NotPublished })
               )
-            )
+            ),
           }
         )
       )
@@ -58,7 +58,7 @@ public class ClientExtensionsTests
               Encoding.UTF8.GetBytes(
                 serializer.Serialize(new GetTaskResponse { Status = TaskStatus.Published })
               )
-            )
+            ),
           }
         )
       );
@@ -113,11 +113,11 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    Params = ""
+                    Params = "",
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -140,11 +140,11 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    Params = ""
+                    Params = "",
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -167,11 +167,11 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    Params = ""
+                    Params = "",
                   }
                 )
               )
-            )
+            ),
           }
         )
       );
@@ -227,13 +227,13 @@ public class ClientExtensionsTests
                     Hits = new List<SynonymHit>()
                     {
                       new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 }
+                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 1000,
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -251,13 +251,13 @@ public class ClientExtensionsTests
                     Hits = new List<SynonymHit>()
                     {
                       new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 }
+                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 1000,
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -275,13 +275,13 @@ public class ClientExtensionsTests
                     Hits = new List<SynonymHit>
                     {
                       new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
-                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 }
+                      new() { ObjectID = "XXX", Type = SynonymType.Altcorrection1 },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 999,
                   }
                 )
               )
-            )
+            ),
           }
         )
       );
@@ -339,13 +339,13 @@ public class ClientExtensionsTests
                     Hits = new List<Rule>
                     {
                       new() { ObjectID = "XXX" },
-                      new() { ObjectID = "XXX" }
+                      new() { ObjectID = "XXX" },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 1000,
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -365,13 +365,13 @@ public class ClientExtensionsTests
                     Hits = new List<Rule>
                     {
                       new() { ObjectID = "XXX" },
-                      new() { ObjectID = "XXX" }
+                      new() { ObjectID = "XXX" },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 1000,
                   }
                 )
               )
-            )
+            ),
           }
         )
       )
@@ -391,13 +391,13 @@ public class ClientExtensionsTests
                     Hits = new List<Rule>
                     {
                       new() { ObjectID = "XXX" },
-                      new() { ObjectID = "XXX" }
+                      new() { ObjectID = "XXX" },
                     }, // Not 1000 but it doesn't matter
                     NbHits = 999,
                   }
                 )
               )
-            )
+            ),
           }
         )
       );
@@ -447,12 +447,12 @@ public class ClientExtensionsTests
                     [
                       new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
                     ]
                   )
                 )
               )
-            )
+            ),
           }
         )
       );
@@ -462,7 +462,7 @@ public class ClientExtensionsTests
     var hits = await client.SearchForHitsAsync<Hit>(
       new List<SearchForHits>
       {
-        new() { IndexName = "my-test-index", Query = " " }
+        new() { IndexName = "my-test-index", Query = " " },
       },
       SearchStrategy.None
     );
@@ -495,12 +495,12 @@ public class ClientExtensionsTests
                     [
                       new(new SearchForFacetValuesResponse { FacetHits = [] }),
                       new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] })
+                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
                     ]
                   )
                 )
               )
-            )
+            ),
           }
         )
       );
@@ -510,7 +510,7 @@ public class ClientExtensionsTests
     var hits = await client.SearchForFacetsAsync(
       new List<SearchForFacets>
       {
-        new() { IndexName = "my-test-index", Query = " " }
+        new() { IndexName = "my-test-index", Query = " " },
       },
       SearchStrategy.None
     );

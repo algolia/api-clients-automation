@@ -14,22 +14,6 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
-func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
-  echo := &tests.EchoRequester{}
-  cfg := {{clientPrefix}}.{{clientName}}Configuration{
-    Configuration: transport.Configuration{
-      AppID:     "appID",
-      ApiKey:    "apiKey",
-      Requester: echo,
-    },{{#hasRegionalHost}}
-    Region:    {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}},{{/hasRegionalHost}}
-  }
-  client, err := {{clientPrefix}}.NewClientWithConfig(cfg)
-  require.NoError(t, err)
-
-  return client, echo
-}
-
 {{#blocksBenchmark}}
 {{> tests/client/tests}}
 {{/blocksBenchmark}}

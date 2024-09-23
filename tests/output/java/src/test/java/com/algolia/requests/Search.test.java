@@ -881,7 +881,7 @@ class SearchClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -903,7 +903,7 @@ class SearchClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -932,7 +932,7 @@ class SearchClientRequestsTests {
             put("facet", "filters");
           }
         },
-        new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
+        new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -954,7 +954,7 @@ class SearchClientRequestsTests {
 
     try {
       Map<String, String> expectedHeaders = json.readValue(
-        "{\"x-algolia-api-key\":\"myApiKey\"}",
+        "{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, String> actualHeaders = req.headers;
@@ -1905,10 +1905,10 @@ class SearchClientRequestsTests {
   @DisplayName("restoreApiKey")
   void restoreApiKeyTest() {
     assertDoesNotThrow(() -> {
-      client.restoreApiKey("myApiKey");
+      client.restoreApiKey("ALGOLIA_API_KEY");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/keys/myApiKey/restore", req.path);
+    assertEquals("/1/keys/ALGOLIA_API_KEY/restore", req.path);
     assertEquals("POST", req.method);
     assertEquals("{}", req.body);
   }
@@ -3509,7 +3509,7 @@ class SearchClientRequestsTests {
   void updateApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.updateApiKey(
-        "myApiKey",
+        "ALGOLIA_API_KEY",
         new ApiKey()
           .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
           .setValidity(300)
@@ -3518,7 +3518,7 @@ class SearchClientRequestsTests {
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/keys/myApiKey", req.path);
+    assertEquals("/1/keys/ALGOLIA_API_KEY", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(

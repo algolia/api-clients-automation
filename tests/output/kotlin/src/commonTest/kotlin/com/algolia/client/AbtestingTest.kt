@@ -42,7 +42,7 @@ class AbtestingTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.3.2\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.3.3\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -115,12 +115,12 @@ class AbtestingTest {
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
       val client = AbtestingClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-    }.let { error -> assertError(error, "`region` must be one of the following: de, us") }
+    }.let { error -> assertError(error, "`region` must be one of the following: de, us".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `switch API key`() = runTest {
-    val client = AbtestingClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = AbtestingClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(

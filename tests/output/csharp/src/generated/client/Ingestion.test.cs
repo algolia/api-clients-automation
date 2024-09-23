@@ -47,7 +47,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.4.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.4.1\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -111,7 +111,10 @@ public class IngestionClientTests
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6683,
           Up = true,
           LastUse = DateTime.UtcNow,

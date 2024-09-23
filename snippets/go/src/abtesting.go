@@ -14,8 +14,8 @@ func SnippetForAddABTestsOfAbtesting() {
 	*/
 
 	// >SEPARATOR addABTests default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -47,8 +47,8 @@ func SnippetForCustomDeleteOfAbtesting() {
 	*/
 
 	// >SEPARATOR customDelete default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -76,8 +76,8 @@ func SnippetForCustomGetOfAbtesting() {
 	*/
 
 	// >SEPARATOR customGet default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -105,8 +105,8 @@ func SnippetForCustomPostOfAbtesting() {
 	*/
 
 	// >SEPARATOR customPost default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -134,8 +134,8 @@ func SnippetForCustomPutOfAbtesting() {
 	*/
 
 	// >SEPARATOR customPut default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -163,8 +163,8 @@ func SnippetForDeleteABTestOfAbtesting() {
 	*/
 
 	// >SEPARATOR deleteABTest default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -192,8 +192,8 @@ func SnippetForGetABTestOfAbtesting() {
 	*/
 
 	// >SEPARATOR getABTest default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -221,8 +221,8 @@ func SnippetForListABTestsOfAbtesting() {
 	*/
 
 	// >SEPARATOR listABTests default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -248,8 +248,8 @@ func SnippetForScheduleABTestOfAbtesting() {
 	*/
 
 	// >SEPARATOR scheduleABTest default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -281,8 +281,8 @@ func SnippetForSetClientApiKeyOfAbtesting() {
 	*/
 
 	// >SEPARATOR setClientApiKey default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
@@ -308,8 +308,8 @@ func SnippetForStopABTestOfAbtesting() {
 	*/
 
 	// >SEPARATOR stopABTest default
-	// Initialize the client with your application region, eg. abtesting.YOUR_APP_ID_REGION
-	client, err := abtesting.NewClient("YOUR_APP_ID", "YOUR_API_KEY", abtesting.US)
+	// Initialize the client with your application region, eg. abtesting.ALGOLIA_APPLICATION_REGION
+	client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtesting.US)
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)

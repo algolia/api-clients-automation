@@ -1,7 +1,7 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Abtesting;"
     },
     "addABTests": {
       "default": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
@@ -37,7 +37,7 @@
       "default": "var response = await client.StopABTestAsync(42);"
     },
     "init": {
-      "default": "var client = new AbtestingClient("
+      "default": "var client = new AbtestingClient(\n  new AbtestingConfig(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")\n);"
     }
   },
   "dart": {},
@@ -79,7 +79,7 @@
       "default": "response, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42,\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
-      "default": "client, err := abtesting.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", abtesting.US)"
+      "default": "client, err := abtesting.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
     }
   },
   "java": {
@@ -120,7 +120,7 @@
       "default": "client.stopABTest(42);"
     },
     "init": {
-      "default": "AbtestingClient client = new AbtestingClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
+      "default": "AbtestingClient client = new AbtestingClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
     }
   },
   "javascript": {
@@ -161,7 +161,7 @@
       "default": "const response = await client.stopABTest({ id: 42 });"
     },
     "init": {
-      "default": "const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION');"
+      "default": "const client = abtestingClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "kotlin": {
@@ -202,7 +202,7 @@
       "default": "var response = client.stopABTest(\n  id = 42,\n)"
     },
     "init": {
-      "default": "val client = AbtestingClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+      "default": "val client = AbtestingClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "php": {
@@ -243,7 +243,7 @@
       "default": "$response = $client->stopABTest(\n    42,\n);"
     },
     "init": {
-      "default": "$client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
+      "default": "$client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
     }
   },
   "python": {
@@ -251,40 +251,40 @@
       "default": "from algoliasearch.abtesting.client import AbtestingClient"
     },
     "addABTests": {
-      "default": "response = await _client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+      "default": "response = await client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.add_ab_tests_with_http_info(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "customDelete": {
-      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)"
+      "default": "response = await client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "deleteABTest": {
-      "default": "response = await _client.delete_ab_test(\n    id=42,\n)"
+      "default": "response = await client.delete_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.delete_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
     },
     "getABTest": {
-      "default": "response = await _client.get_ab_test(\n    id=42,\n)"
+      "default": "response = await client.get_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
     },
     "listABTests": {
-      "default": "response = await _client.list_ab_tests()"
+      "default": "response = await client.list_ab_tests()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.list_ab_tests_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "scheduleABTest": {
-      "default": "response = await _client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+      "default": "response = await client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.schedule_ab_test_with_http_info(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
-      "default": "_client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "stopABTest": {
-      "default": "response = await _client.stop_ab_test(\n    id=42,\n)"
+      "default": "response = await client.stop_ab_test(\n    id=42,\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.stop_ab_test_with_http_info(\n    id=42,\n)\n\nprint(raw_response.raw_data)"
     },
     "init": {
-      "default": "_client = AbtestingClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "client = AbtestingClient(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
     }
   },
   "ruby": {
@@ -325,7 +325,7 @@
       "default": "response = client.stop_ab_test(42)"
     },
     "init": {
-      "default": "client = Algolia::AbtestingClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+      "default": "client = Algolia::AbtestingClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
     }
   },
   "scala": {
@@ -363,7 +363,7 @@
       "default": "val response = client.stopABTest(\n  id = 42\n)"
     },
     "init": {
-      "default": "val client = AbtestingClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = Option(\"YOUR_APP_ID_REGION\"))"
+      "default": "val client = AbtestingClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = Option(\"ALGOLIA_APPLICATION_REGION\")\n)"
     }
   },
   "swift": {
@@ -404,7 +404,7 @@
       "default": "let response = try await client.stopABTest(id: 42)"
     },
     "init": {
-      "default": "let client = try AbtestingClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
+      "default": "let client = try AbtestingClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
     }
   }
 }

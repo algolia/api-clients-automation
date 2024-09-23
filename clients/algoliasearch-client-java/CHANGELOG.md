@@ -1,3 +1,16 @@
+## [4.3.5](https://github.com/algolia/algoliasearch-client-java/compare/4.3.4...4.3.5)
+
+- [1ee5ce88e](https://github.com/algolia/api-clients-automation/commit/1ee5ce88e) fix(clients): use the correct host for search ([#3787](https://github.com/algolia/api-clients-automation/pull/3787)) by [@millotp](https://github.com/millotp/)
+
+## [4.3.4](https://github.com/algolia/algoliasearch-client-java/compare/4.3.3...4.3.4)
+
+- [4f64d5fdd](https://github.com/algolia/api-clients-automation/commit/4f64d5fdd) fix(clients): use the dsn with the read transporter ([#3781](https://github.com/algolia/api-clients-automation/pull/3781)) by [@millotp](https://github.com/millotp/)
+
+## [4.3.3](https://github.com/algolia/algoliasearch-client-java/compare/4.3.2...4.3.3)
+
+- [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)
+- [92438873c](https://github.com/algolia/api-clients-automation/commit/92438873c) fix(specs): remove models from ingestion specs [skip-bc] ([#3774](https://github.com/algolia/api-clients-automation/pull/3774)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.3.2](https://github.com/algolia/algoliasearch-client-java/compare/4.3.1...4.3.2)
 
 - [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)

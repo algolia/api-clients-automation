@@ -12,12 +12,23 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -36,12 +47,23 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -60,12 +82,23 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -84,12 +117,23 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -108,10 +152,17 @@ async def snippet_for_delete_user_token():
     """
     # >SEPARATOR deleteUserToken default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    await _client.delete_user_token(
+    await client.delete_user_token(
+        user_token="test-user-1",
+    )
+
+    # Skip deserialization
+    await client.delete_user_token_with_http_info(
         user_token="test-user-1",
     )
 
@@ -127,10 +178,12 @@ async def snippet_for_push_events():
     """
     # >SEPARATOR pushEvents default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    response = await _client.push_events(
+    response = await client.push_events(
         insights_events={
             "events": [
                 {
@@ -154,6 +207,35 @@ async def snippet_for_push_events():
         },
     )
 
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.push_events_with_http_info(
+        insights_events={
+            "events": [
+                {
+                    "eventType": "click",
+                    "eventName": "Product Clicked",
+                    "index": "products",
+                    "userToken": "user-123456",
+                    "authenticatedUserToken": "user-123456",
+                    "timestamp": 1641290601962,
+                    "objectIDs": [
+                        "9780545139700",
+                        "9780439784542",
+                    ],
+                    "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                    "positions": [
+                        7,
+                        6,
+                    ],
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
+
     # >LOG
     # use the class directly
     print(response)
@@ -171,10 +253,17 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    client = InsightsClient(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 

@@ -31,7 +31,7 @@ describe('createAuthentication', () => {
     const req = (await client.createAuthentication({
       type: 'algolia',
       name: 'authName',
-      input: { appID: 'myappID', apiKey: 'randomApiKey' },
+      input: { appID: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/authentications');
@@ -39,7 +39,7 @@ describe('createAuthentication', () => {
     expect(req.data).toEqual({
       type: 'algolia',
       name: 'authName',
-      input: { appID: 'myappID', apiKey: 'randomApiKey' },
+      input: { appID: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY' },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -385,7 +385,7 @@ describe('customPost', () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -393,14 +393,14 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions merges headers with default ones', async () => {
     const req = (await client.customPost(
       { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
       {
-        headers: { 'x-algolia-api-key': 'myApiKey' },
+        headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
       },
     )) as unknown as EchoResponse;
 
@@ -408,7 +408,7 @@ describe('customPost', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
-    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'myApiKey' }));
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-api-key': 'ALGOLIA_API_KEY' }));
   });
 
   test('requestOptions queryParameters accepts booleans', async () => {

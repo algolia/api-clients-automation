@@ -13,7 +13,7 @@ final class RecommendClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
@@ -27,7 +27,7 @@ final class RecommendClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
@@ -41,7 +41,7 @@ final class RecommendClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
@@ -55,7 +55,7 @@ final class RecommendClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
@@ -69,7 +69,7 @@ final class RecommendClientSnippet {
     func snippetForDeleteRecommendRule() async throws {
         // >SEPARATOR deleteRecommendRule default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.deleteRecommendRule(
@@ -87,7 +87,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendRule() async throws {
         // >SEPARATOR getRecommendRule default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getRecommendRule(
@@ -105,7 +105,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendStatus() async throws {
         // >SEPARATOR getRecommendStatus default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.getRecommendStatus(
@@ -123,7 +123,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendations() async throws {
         // >SEPARATOR getRecommendations default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client
@@ -146,7 +146,7 @@ final class RecommendClientSnippet {
     func snippetForSearchRecommendRules() async throws {
         // >SEPARATOR searchRecommendRules default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client.searchRecommendRules(
@@ -163,7 +163,7 @@ final class RecommendClientSnippet {
     func snippetForSetClientApiKey() async throws {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")

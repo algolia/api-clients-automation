@@ -58,8 +58,17 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("calls api with correct write host")
+  @DisplayName("read transporter with POST method")
   void apiTest1() {
+    SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
+    client.searchSingleIndex("indexName", Hit.class);
+    EchoResponse result = echo.getLastResponse();
+    assertEquals("test-app-id-dsn.algolia.net", result.host);
+  }
+
+  @Test
+  @DisplayName("calls api with correct write host")
+  void apiTest2() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
@@ -68,15 +77,30 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("tests the retry strategy")
-  void apiTest2() {
+  void apiTest3() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
       withCustomHosts(
         Arrays.asList(
-          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6676),
-          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6677),
-          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6676
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6677
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6678
+          )
         ),
         false
       )
@@ -90,11 +114,21 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("tests the retry strategy error")
-  void apiTest3() {
+  void apiTest4() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6676)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6676
+          )
+        ),
+        false
+      )
     );
     {
       Exception exception = assertThrows(Exception.class, () -> {
@@ -109,11 +143,21 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("test the compression strategy")
-  void apiTest4() {
+  void apiTest5() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)), true)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6678
+          )
+        ),
+        true
+      )
     );
     Object res = client.customPost(
       "1/test/gzip",
@@ -164,7 +208,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.3.2\\).*";
+      String regexp = "^Algolia for Java \\(4.3.5\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -200,7 +244,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6680
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       List res = client.deleteObjects("cts_e2e_deleteObjects_java", Arrays.asList("1", "2"));
@@ -267,7 +321,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       Boolean res = client.indexExists("indexExistsYES");
@@ -282,7 +346,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       Boolean res = client.indexExists("indexExistsNO");
@@ -297,7 +371,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     {
       Exception exception = assertThrows(Exception.class, () -> {
@@ -390,7 +474,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6680
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjects(
@@ -424,7 +518,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6680
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjects(
@@ -458,7 +562,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6679
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       ReplaceAllObjectsResponse res = client.replaceAllObjects(
@@ -544,7 +658,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6680
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       List res = client.saveObjects(
@@ -577,7 +701,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "wrong-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6680
+          )
+        ),
+        false
+      )
     );
     {
       Exception exception = assertThrows(Exception.class, () -> {
@@ -609,7 +743,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6683
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
@@ -636,7 +780,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
@@ -658,7 +812,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey(
@@ -692,7 +856,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
@@ -707,7 +881,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       GetTaskResponse res = client.waitForAppTask(123L);
@@ -722,7 +906,17 @@ class SearchClientClientTests {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6681)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6681
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       GetTaskResponse res = client.waitForTask("wait-task-java", 123L);

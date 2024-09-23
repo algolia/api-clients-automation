@@ -20,7 +20,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR addABTests default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->addABTests(
@@ -53,7 +53,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR customDelete default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -75,7 +75,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR customGet default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -97,7 +97,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR customPost default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -119,7 +119,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR customPut default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -141,7 +141,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR deleteABTest default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->deleteABTest(
@@ -163,7 +163,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR getABTest default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getABTest(
@@ -185,7 +185,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR listABTests default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listABTests();
@@ -205,7 +205,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR scheduleABTest default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->scheduleABTest(
@@ -239,7 +239,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR setClientApiKey default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $client->setClientApiKey(
@@ -259,7 +259,7 @@ class SnippetAbtestingClient
     {
         // >SEPARATOR stopABTest default
         // Initialize the client
-        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->stopABTest(

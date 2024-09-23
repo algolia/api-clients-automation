@@ -331,7 +331,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -356,7 +356,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -380,7 +380,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: RequestOptions(
-                headers: ["x-algolia-api-key": "myApiKey"]
+                headers: ["x-algolia-api-key": "ALGOLIA_API_KEY"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -405,7 +405,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"myApiKey\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)

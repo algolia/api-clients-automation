@@ -57,10 +57,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'go':
-      await run(`go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`, {
-        cwd,
-        language,
-      });
+      await run(
+        `go test ${suites.benchmark ? '' : '-race'} -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'java':
       await run(`./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
@@ -70,6 +73,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     case 'javascript':
       await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
         cwd,
+        language,
       });
       break;
     case 'kotlin':

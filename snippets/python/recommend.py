@@ -12,12 +12,21 @@ async def snippet_for_custom_delete():
     """
     # >SEPARATOR customDelete default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_delete(
+    response = await client.custom_delete(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_delete_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -36,12 +45,21 @@ async def snippet_for_custom_get():
     """
     # >SEPARATOR customGet default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_get(
+    response = await client.custom_get(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_get_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -60,12 +78,21 @@ async def snippet_for_custom_post():
     """
     # >SEPARATOR customPost default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_post(
+    response = await client.custom_post(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_post_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -84,12 +111,21 @@ async def snippet_for_custom_put():
     """
     # >SEPARATOR customPut default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.custom_put(
+    response = await client.custom_put(
         path="test/minimal",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.custom_put_with_http_info(
+        path="test/minimal",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -108,14 +144,25 @@ async def snippet_for_delete_recommend_rule():
     """
     # >SEPARATOR deleteRecommendRule default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.delete_recommend_rule(
+    response = await client.delete_recommend_rule(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.delete_recommend_rule_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+        object_id="objectID",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -134,14 +181,25 @@ async def snippet_for_get_recommend_rule():
     """
     # >SEPARATOR getRecommendRule default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_recommend_rule(
+    response = await client.get_recommend_rule(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         object_id="objectID",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_recommend_rule_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+        object_id="objectID",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -160,14 +218,25 @@ async def snippet_for_get_recommend_status():
     """
     # >SEPARATOR getRecommendStatus default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_recommend_status(
+    response = await client.get_recommend_status(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
         task_id=12345,
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_recommend_status_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+        task_id=12345,
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -186,10 +255,10 @@ async def snippet_for_get_recommendations():
     """
     # >SEPARATOR getRecommendations default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.get_recommendations(
+    response = await client.get_recommendations(
         get_recommendations_params={
             "requests": [
                 {
@@ -201,6 +270,24 @@ async def snippet_for_get_recommendations():
             ],
         },
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.get_recommendations_with_http_info(
+        get_recommendations_params={
+            "requests": [
+                {
+                    "indexName": "<YOUR_INDEX_NAME>",
+                    "objectID": "objectID",
+                    "model": "related-products",
+                    "threshold": 42.1,
+                },
+            ],
+        },
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -219,13 +306,23 @@ async def snippet_for_search_recommend_rules():
     """
     # >SEPARATOR searchRecommendRules default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    response = await _client.search_recommend_rules(
+    response = await client.search_recommend_rules(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
     )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = await client.search_recommend_rules_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+    )
+
+    print(raw_response.raw_data)
 
     # >LOG
     # use the class directly
@@ -244,10 +341,15 @@ async def snippet_for_set_client_api_key():
     """
     # >SEPARATOR setClientApiKey default
     # Initialize the client
-    _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+    client = RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
     # Call the API
-    _client.set_client_api_key(
+    client.set_client_api_key(
+        api_key="updated-api-key",
+    )
+
+    # Skip deserialization
+    client.set_client_api_key_with_http_info(
         api_key="updated-api-key",
     )
 

@@ -14,7 +14,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForCreateConfig() {
     // >SEPARATOR createConfig default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.createConfig(
@@ -41,7 +41,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customDelete("test/minimal");
@@ -55,7 +55,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForCustomGet() {
     // >SEPARATOR customGet default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customGet("test/minimal");
@@ -69,7 +69,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForCustomPost() {
     // >SEPARATOR customPost default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPost("test/minimal");
@@ -83,7 +83,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForCustomPut() {
     // >SEPARATOR customPut default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.customPut("test/minimal");
@@ -97,7 +97,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForDeleteConfig() {
     // >SEPARATOR deleteConfig default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.deleteConfig("<YOUR_INDEX_NAME>");
@@ -111,7 +111,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForGetAllConfigs() {
     // >SEPARATOR getAllConfigs default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getAllConfigs();
@@ -125,7 +125,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForGetConfig() {
     // >SEPARATOR getConfig default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getConfig("<YOUR_INDEX_NAME>");
@@ -139,7 +139,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForGetConfigStatus() {
     // >SEPARATOR getConfigStatus default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getConfigStatus("<YOUR_INDEX_NAME>");
@@ -153,7 +153,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForGetLogFile() {
     // >SEPARATOR getLogFile default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.getLogFile("<YOUR_INDEX_NAME>");
@@ -167,7 +167,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForSetClientApiKey() {
     // >SEPARATOR setClientApiKey default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.setClientApiKey("updated-api-key");
@@ -181,7 +181,7 @@ class SnippetQuerySuggestionsClient {
   void snippetForUpdateConfig() {
     // >SEPARATOR updateConfig default
     // Initialize the client
-    QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+    QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.updateConfig(
