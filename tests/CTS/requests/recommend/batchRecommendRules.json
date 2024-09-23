@@ -8,9 +8,7 @@
         "request": {
             "path": "/1/indexes/indexName/related-products/recommend/rules/batch",
             "method": "POST",
-            "body": {
-                "rules": []
-            }
+            "body": {}
         }
     }
 ]
