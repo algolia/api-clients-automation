@@ -139,6 +139,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/logger-console@npm:5.5.3, @algolia/logger-console@workspace:packages/logger-console":
+  version: 0.0.0-use.local
+  resolution: "@algolia/logger-console@workspace:packages/logger-console"
+  dependencies:
+    "@algolia/client-common": "npm:5.5.3"
+    "@arethetypeswrong/cli": "npm:0.16.4"
+    "@types/node": "npm:22.5.5"
+    jsdom: "npm:25.0.0"
+    publint: "npm:0.2.11"
+    ts-node: "npm:10.9.2"
+    tsup: "npm:8.3.0"
+    typescript: "npm:5.6.2"
+    vitest: "npm:2.1.1"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/monitoring@workspace:packages/monitoring":
   version: 0.0.0-use.local
   resolution: "@algolia/monitoring@workspace:packages/monitoring"
@@ -2082,6 +2098,7 @@ __metadata:
     "@algolia/client-common": "npm:5.5.3"
     "@algolia/client-personalization": "npm:5.5.3"
     "@algolia/client-search": "npm:5.5.3"
+    "@algolia/logger-console": "npm:5.5.3"
     "@algolia/recommend": "npm:5.5.3"
     "@algolia/requester-browser-xhr": "npm:5.5.3"
     "@algolia/requester-fetch": "npm:5.5.3"
