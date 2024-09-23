@@ -1,7 +1,7 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
 import { createFetchRequester } from '@algolia/requester-fetch';
-import { createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
+import { createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '@algolia/client-common';
 
 import { create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{apiName}}';
 

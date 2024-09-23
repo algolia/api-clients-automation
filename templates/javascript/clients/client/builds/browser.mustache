@@ -11,6 +11,7 @@ export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<t
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
+    logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',

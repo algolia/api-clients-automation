@@ -77,11 +77,9 @@ export const patterns = [
     : 'clients/algoliasearch-client-javascript/packages/**/package.json',
   '!clients/algoliasearch-client-javascript/packages/requester-*/**',
   '!clients/algoliasearch-client-javascript/packages/client-common/**',
+  '!clients/algoliasearch-client-javascript/packages/logger-console/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/__tests__/**',
   '!clients/algoliasearch-client-javascript/packages/algoliasearch/vitest.workspace.ts',
-  'clients/algoliasearch-client-javascript/packages/*/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/client-common/tsup.config.ts',
-  '!clients/algoliasearch-client-javascript/packages/requester-*/tsup.config.ts',
 
   'tests/output/javascript/package.json',
 
