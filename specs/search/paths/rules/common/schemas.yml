@@ -30,7 +30,7 @@ rule:
       type: array
       description: Time periods when the rule is active.
       items:
-        $ref: '../../../../common/schemas/Rule.yml#/timeRange'
+        $ref: '#/timeRange'
   required:
     - objectID
 
@@ -288,6 +288,20 @@ automaticFacetFilter:
         If false, multiple occurences are combined with the logical `AND` operation.
   required:
     - facet
+
+timeRange:
+  type: object
+  additionalProperties: false
+  properties:
+    from:
+      type: integer
+      description: When the rule should start to be active, in Unix epoch time.
+    until:
+      type: integer
+      description: When the rule should stop to be active, in Unix epoch time.
+  required:
+    - from
+    - until
 
 updatedRuleResponse:
   type: object

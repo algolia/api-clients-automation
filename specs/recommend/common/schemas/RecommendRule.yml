@@ -28,7 +28,7 @@ RecommendRule:
       type: array
       description: Time periods when the rule is active.
       items:
-        $ref: '../../../common/schemas/Rule.yml#/timeRange'
+        $ref: '#/timeRange'
 
 Condition:
   type: object
@@ -123,3 +123,17 @@ AutoFacetFilter:
         Whether the filter is negative.
         If true, recommendations must not have the same value for the `facet` attribute.
         If false, recommendations must have the same value for the `facet` attribute.
+
+timeRange:
+  type: object
+  additionalProperties: false
+  properties:
+    from:
+      type: integer
+      description: When the rule should start to be active, in Unix epoch time.
+    until:
+      type: integer
+      description: When the rule should stop to be active, in Unix epoch time.
+  required:
+    - from
+    - until
