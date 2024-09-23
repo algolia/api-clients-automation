@@ -2,9 +2,10 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{> model_description}}
 
 {{#vars}}
-    {{name}}: {{{vendorExtensions.x-py-typing}}}
-    {{#description}}""" {{{.}}} """{{/description}}
-
+    {{name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}} = Field({{^required}}default=None, {{/required}}alias="{{{baseName}}}")
+    {{#description}}
+    """ {{{.}}} """
+    {{/description}}
 {{/vars}}
 {{#vars}}
     {{#vendorExtensions.x-regex}}
@@ -77,12 +78,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
+        """Return the dictionary representation of the model using alias. """
         return self.model_dump(
             by_alias=True,
             exclude_none=True,

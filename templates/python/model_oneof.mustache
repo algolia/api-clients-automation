@@ -2,7 +2,8 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{> model_description}}
 
 {{#composedSchemas.oneOf}}
-    {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}
+    {{vendorExtensions.x-py-name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}} = Field({{^required}}default=None{{/required}})
+    {{#description}}""" {{{.}}} """{{/description}}
 {{/composedSchemas.oneOf}}
     actual_instance: Optional[Union[{{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]] = None
     one_of_schemas: Set[str] = { {{#oneOf}}"{{.}}"{{^-last}}, {{/-last}}{{/oneOf}} }
