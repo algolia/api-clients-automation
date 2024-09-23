@@ -32,7 +32,10 @@ public class SearchClientBenchmark
         new()
         {
           Scheme = HttpScheme.Http,
-          Url = "localhost",
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
           Port = 6682,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -42,7 +45,7 @@ public class SearchClientBenchmark
     };
     var client = new SearchClient(_config);
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 2000; i++)
     {
       var res = await client.SearchAsync<Hit>(
         new SearchMethodParams

@@ -129,12 +129,12 @@ class InsightsTest {
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
       val client = InsightsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-    }.let { error -> assertError(error, "`region` must be one of the following: de, us") }
+    }.let { error -> assertError(error, "`region` must be one of the following: de, us".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `switch API key`() = runTest {
-    val client = InsightsClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = InsightsClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(

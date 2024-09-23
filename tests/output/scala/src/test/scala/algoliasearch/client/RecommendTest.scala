@@ -122,7 +122,16 @@ class RecommendTest extends AnyFunSuite {
       apiKey = "test-api-key",
       clientOptions = ClientOptions
         .builder()
-        .withHosts(List(Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6683))))
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6683)
+            )
+          )
+        )
         .build()
     )
 

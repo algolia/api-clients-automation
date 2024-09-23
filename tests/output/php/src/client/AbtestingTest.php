@@ -159,7 +159,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = AbtestingClient::createWithConfig(AbtestingConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://localhost:6683']));
+        $client = AbtestingClient::createWithConfig(AbtestingConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
 
         $res = $client->customGet(
             'check-api-key/1',

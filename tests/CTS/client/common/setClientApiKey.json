@@ -11,7 +11,6 @@
           "region": "us",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6683
             }
           ]

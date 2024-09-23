@@ -10,7 +10,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6680
             }
           ]
@@ -58,7 +57,6 @@
           "apiKey": "wrong-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6680
             }
           ]
@@ -86,7 +84,7 @@
             "go": "API error [403] {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
             "java": "Status Code: 403 - {\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
             "javascript": "Invalid Application-ID or API key",
-            "kotlin": "Client request(POST http://${{localhost}}:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}\\\"",
+            "kotlin": "Client request(POST http://%localhost%:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \\\"{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}\\\"",
             "php": "Invalid Application-ID or API key",
             "python": "Invalid Application-ID or API key",
             "ruby": "Invalid Application-ID or API key",

@@ -10,7 +10,6 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "host": "${{localhost}}",
               "port": 6682
             }
           ]
@@ -19,7 +18,7 @@
       {
         "type": "method",
         "method": "search",
-        "times": 1000,
+        "times": 2000,
         "parameters": {
           "requests": [
             {

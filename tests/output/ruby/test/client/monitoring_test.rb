@@ -79,7 +79,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6683,
             accept: CallType::READ | CallType::WRITE

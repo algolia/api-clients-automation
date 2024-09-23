@@ -21,9 +21,9 @@ class SearchTest extends TestCase
     #[TestDox('benchmark the search method')]
     public function test0benchmark(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6682']));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6682']));
 
-        for ($i = 1; $i <= 1000; ++$i) {
+        for ($i = 1; $i <= 2000; ++$i) {
             $res = $client->search(
                 ['requests' => [
                     ['indexName' => 'cts_e2e_benchmark_search_php',

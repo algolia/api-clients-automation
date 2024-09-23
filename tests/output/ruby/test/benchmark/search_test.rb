@@ -12,7 +12,7 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6682,
             accept: CallType::READ | CallType::WRITE
@@ -21,7 +21,7 @@ class BenchmarkClientSearchClient < Test::Unit::TestCase
         "searchClient"
       )
     )
-    for i in 1..1000
+    for i in 1..2000
       req = client.search(
         SearchMethodParams.new(
           requests: [
