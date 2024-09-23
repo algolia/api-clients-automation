@@ -41,6 +41,8 @@ recommendHit:
       $ref: '../../../common/schemas/Hit.yml#/distinctSeqID'
     _score:
       $ref: '#/recommendScore'
+  x-discriminator-fields:
+    - objectID
 
 trendingFacetHit:
   type: object
@@ -56,6 +58,9 @@ trendingFacetHit:
       $ref: '../parameters.yml#/facetName'
     facetValue:
       $ref: '../parameters.yml#/facetValue'
+  x-discriminator-fields:
+    - facetName
+    - facetValue
 
 recommendScore:
   type: number
