@@ -64,7 +64,7 @@ class SearchTest {
 
   @Test
   fun `tests the retry strategy`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676), Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6677), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6678))))
     client.runTest(
       call = {
         customGet(
@@ -81,17 +81,17 @@ class SearchTest {
 
   @Test
   fun `tests the retry strategy error`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
     assertFails {
       client.customGet(
         path = "1/test/hang/kotlin",
       )
-    }.let { error -> assertError(error, "Error(s) while processing the retry strategy") }
+    }.let { error -> assertError(error, "Error(s) while processing the retry strategy".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `test the compression strategy`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6678)), compressionType = CompressionType.GZIP))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6678)), compressionType = CompressionType.GZIP))
     client.runTest(
       call = {
         customPost(
@@ -181,7 +181,7 @@ class SearchTest {
 
   @Test
   fun `call deleteObjects without error`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
       call = {
         deleteObjects(
@@ -253,7 +253,7 @@ class SearchTest {
 
   @Test
   fun `indexExists`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         indexExists(
@@ -270,7 +270,7 @@ class SearchTest {
 
   @Test
   fun `indexNotExists`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         indexExists(
@@ -287,25 +287,25 @@ class SearchTest {
 
   @Test
   fun `indexExistsWithError`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     assertFails {
       client.indexExists(
         indexName = "indexExistsERROR",
       )
-    }.let { error -> assertError(error, "Client request(GET http://localhost:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid API key\"}\"") }
+    }.let { error -> assertError(error, "Client request(GET http://%localhost%:6681/1/indexes/indexExistsERROR/settings) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid API key\"}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `client throws with invalid parameters`() = runTest {
     assertFails {
       val client = SearchClient(appId = "", apiKey = "")
-    }.let { error -> assertError(error, "`appId` is missing.") }
+    }.let { error -> assertError(error, "`appId` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
     assertFails {
       val client = SearchClient(appId = "", apiKey = "my-api-key")
-    }.let { error -> assertError(error, "`appId` is missing.") }
+    }.let { error -> assertError(error, "`appId` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
     assertFails {
       val client = SearchClient(appId = "my-app-id", apiKey = "")
-    }.let { error -> assertError(error, "`apiKey` is missing.") }
+    }.let { error -> assertError(error, "`apiKey` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -315,7 +315,7 @@ class SearchTest {
       client.addApiKey(
         apiKey = empty(),
       )
-    }.let { error -> assertError(error, "Parameter `apiKey` is required when calling `addApiKey`.") }
+    }.let { error -> assertError(error, "Parameter `apiKey` is required when calling `addApiKey`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
@@ -328,7 +328,7 @@ class SearchTest {
         body = buildJsonObject {
         },
       )
-    }.let { error -> assertError(error, "Parameter `indexName` is required when calling `addOrUpdateObject`.") }
+    }.let { error -> assertError(error, "Parameter `indexName` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
     assertFails {
       client.addOrUpdateObject(
         indexName = "my-index-name",
@@ -336,19 +336,19 @@ class SearchTest {
         body = buildJsonObject {
         },
       )
-    }.let { error -> assertError(error, "Parameter `objectID` is required when calling `addOrUpdateObject`.") }
+    }.let { error -> assertError(error, "Parameter `objectID` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
     assertFails {
       client.addOrUpdateObject(
         indexName = "my-index-name",
         objectID = "my-object-id",
         body = empty(),
       )
-    }.let { error -> assertError(error, "Parameter `body` is required when calling `addOrUpdateObject`.") }
+    }.let { error -> assertError(error, "Parameter `body` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `call partialUpdateObjects with createIfNotExists=true`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
       call = {
         partialUpdateObjects(
@@ -389,7 +389,7 @@ class SearchTest {
 
   @Test
   fun `call partialUpdateObjects with createIfNotExists=false`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
       call = {
         partialUpdateObjects(
@@ -430,7 +430,7 @@ class SearchTest {
 
   @Test
   fun `call replaceAllObjects without error`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6679))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6679))))
     client.runTest(
       call = {
         replaceAllObjects(
@@ -551,7 +551,7 @@ class SearchTest {
 
   @Test
   fun `call saveObjects without error`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
       call = {
         saveObjects(
@@ -591,7 +591,7 @@ class SearchTest {
 
   @Test
   fun `saveObjects should report errors`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "wrong-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6680))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "wrong-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     assertFails {
       client.saveObjects(
         indexName = "cts_e2e_saveObjects_kotlin",
@@ -618,12 +618,12 @@ class SearchTest {
           },
         ),
       )
-    }.let { error -> assertError(error, "Client request(POST http://localhost:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"") }
+    }.let { error -> assertError(error, "Client request(POST http://%localhost%:6680/1/indexes/cts_e2e_saveObjects_kotlin/batch) invalid: 403 Forbidden. Text: \"{\"message\":\"Invalid Application-ID or API key\",\"status\":403}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `switch API key`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(
@@ -661,7 +661,7 @@ class SearchTest {
 
   @Test
   fun `wait for api key helper - add`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         waitForApiKey(
@@ -680,7 +680,7 @@ class SearchTest {
 
   @Test
   fun `wait for api key - update`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         waitForApiKey(
@@ -708,7 +708,7 @@ class SearchTest {
 
   @Test
   fun `wait for api key - delete`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         waitForApiKey(
@@ -726,7 +726,7 @@ class SearchTest {
 
   @Test
   fun `wait for an application-level task`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         waitForAppTask(
@@ -744,7 +744,7 @@ class SearchTest {
 
   @Test
   fun `wait for task`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6681))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
         waitForTask(

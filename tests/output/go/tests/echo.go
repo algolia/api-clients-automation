@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -82,4 +83,12 @@ func Union(t *testing.T, expected any, received any) any {
 	default:
 		return received
 	}
+}
+
+func GetLocalhost() string {
+	if os.Getenv("CI") != "true" {
+		return "host.docker.internal"
+	}
+
+	return "localhost"
 }

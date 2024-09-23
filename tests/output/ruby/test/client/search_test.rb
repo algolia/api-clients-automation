@@ -51,19 +51,19 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6676,
             accept: CallType::READ | CallType::WRITE
           ),
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6677,
             accept: CallType::READ | CallType::WRITE
           ),
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6678,
             accept: CallType::READ | CallType::WRITE
@@ -84,7 +84,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6676,
             accept: CallType::READ | CallType::WRITE
@@ -98,7 +98,10 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Unreachable hosts. Last error for localhost: Net::ReadTimeout with #<TCPSocket:(closed)>",
+        "Unreachable hosts. Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
         e.message
       )
     end
@@ -112,7 +115,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6678,
             accept: CallType::READ | CallType::WRITE
@@ -191,7 +194,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6680,
             accept: CallType::READ | CallType::WRITE
@@ -262,7 +265,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -283,7 +286,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -304,7 +307,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -317,7 +320,10 @@ class TestClientSearchClient < Test::Unit::TestCase
       client.index_exists?("indexExistsERROR")
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Invalid API key", e.message)
+      assert_equal(
+        "Invalid API key".sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
+        e.message
+      )
     end
   end
 
@@ -333,7 +339,10 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`app_id` is missing.", e.message)
+      assert_equal(
+        "`app_id` is missing.".sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
+        e.message
+      )
     end
 
     begin
@@ -346,7 +355,10 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`app_id` is missing.", e.message)
+      assert_equal(
+        "`app_id` is missing.".sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
+        e.message
+      )
     end
 
     begin
@@ -359,7 +371,13 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("`api_key` is missing.", e.message)
+      assert_equal(
+        "`api_key` is missing.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -375,7 +393,13 @@ class TestClientSearchClient < Test::Unit::TestCase
       client.add_api_key_with_http_info(nil)
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Parameter `api_key` is required when calling `add_api_key`.", e.message)
+      assert_equal(
+        "Parameter `api_key` is required when calling `add_api_key`.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -391,21 +415,39 @@ class TestClientSearchClient < Test::Unit::TestCase
       client.add_or_update_object_with_http_info(nil, "my-object-id", {})
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Parameter `index_name` is required when calling `add_or_update_object`.", e.message)
+      assert_equal(
+        "Parameter `index_name` is required when calling `add_or_update_object`.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
 
     begin
       client.add_or_update_object_with_http_info("my-index-name", nil, {})
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Parameter `object_id` is required when calling `add_or_update_object`.", e.message)
+      assert_equal(
+        "Parameter `object_id` is required when calling `add_or_update_object`.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
 
     begin
       client.add_or_update_object_with_http_info("my-index-name", "my-object-id", nil)
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Parameter `body` is required when calling `add_or_update_object`.", e.message)
+      assert_equal(
+        "Parameter `body` is required when calling `add_or_update_object`.".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -417,7 +459,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6680,
             accept: CallType::READ | CallType::WRITE
@@ -442,7 +484,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6680,
             accept: CallType::READ | CallType::WRITE
@@ -467,7 +509,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6679,
             accept: CallType::READ | CallType::WRITE
@@ -515,7 +557,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6680,
             accept: CallType::READ | CallType::WRITE
@@ -539,7 +581,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "wrong-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6680,
             accept: CallType::READ | CallType::WRITE
@@ -555,7 +597,13 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
       assert(false, "An error should have been raised")
     rescue => e
-      assert_equal("Invalid Application-ID or API key", e.message)
+      assert_equal(
+        "Invalid Application-ID or API key".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
     end
   end
 
@@ -567,7 +615,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6683,
             accept: CallType::READ | CallType::WRITE
@@ -591,7 +639,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -623,7 +671,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -669,7 +717,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -690,7 +738,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE
@@ -711,7 +759,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         "test-api-key",
         [
           Algolia::Transport::StatefulHost.new(
-            "localhost",
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
             protocol: "http://",
             port: 6681,
             accept: CallType::READ | CallType::WRITE

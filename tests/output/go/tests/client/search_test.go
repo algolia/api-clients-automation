@@ -123,7 +123,7 @@ func TestSearchapi3(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6676", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6677", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6677", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6678", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -151,7 +151,7 @@ func TestSearchapi4(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6676", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -176,7 +176,7 @@ func TestSearchapi5(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:       "test-app-id",
 			ApiKey:      "test-api-key",
-			Hosts:       []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
+			Hosts:       []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6678", call.IsReadWrite)},
 			Compression: compression.GZIP,
 		},
 	}
@@ -263,7 +263,7 @@ func TestSearchdeleteObjects0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6680", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -332,7 +332,7 @@ func TestSearchindexExists0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -360,7 +360,7 @@ func TestSearchindexExists1(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -388,7 +388,7 @@ func TestSearchindexExists2(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -486,7 +486,7 @@ func TestSearchpartialUpdateObjects0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6680", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -517,7 +517,7 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6680", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -548,7 +548,7 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6679", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6679", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -579,7 +579,7 @@ func TestSearchsaveObjects0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6680", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -610,7 +610,7 @@ func TestSearchsaveObjects1(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "wrong-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6680", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -636,7 +636,7 @@ func TestSearchsetClientApiKey0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6683", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6683", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -681,7 +681,7 @@ func TestSearchwaitForApiKey0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -711,7 +711,7 @@ func TestSearchwaitForApiKey1(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -745,7 +745,7 @@ func TestSearchwaitForApiKey2(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -773,7 +773,7 @@ func TestSearchwaitForAppTask0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -803,7 +803,7 @@ func TestSearchwaitForTask0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6681", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6681", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)

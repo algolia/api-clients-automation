@@ -54,9 +54,21 @@ final class SearchClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [
-                RetryableHost(url: URL(string: "http://localhost:6676")!),
-                RetryableHost(url: URL(string: "http://localhost:6677")!),
-                RetryableHost(url: URL(string: "http://localhost:6678")!),
+                RetryableHost(url: URL(
+                    string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6676"
+                )!),
+                RetryableHost(url: URL(
+                    string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6677"
+                )!),
+                RetryableHost(url: URL(
+                    string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6678"
+                )!),
             ]
         )
         let transporter = Transporter(configuration: configuration)
@@ -75,7 +87,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6676")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6676"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -98,7 +114,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6678")!)],
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6678"
+            )!)],
             compression: .gzip
         )
         let transporter = Transporter(configuration: configuration)
@@ -198,7 +218,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6680"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -270,7 +294,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -286,7 +314,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -302,7 +334,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -365,7 +401,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6680"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -386,7 +426,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6680"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -407,7 +451,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6679")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6679"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -443,7 +491,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6680"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -463,7 +515,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "wrong-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6680"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -487,7 +543,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6683")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -519,7 +579,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -543,7 +607,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -576,7 +644,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -595,7 +667,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -612,7 +688,11 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6681"
+            )!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)

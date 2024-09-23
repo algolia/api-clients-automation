@@ -9,7 +9,7 @@ describe('benchmark', () => {
       hosts: [{ url: 'localhost', port: 6682, accept: 'readWrite', protocol: 'http' }],
     });
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 2000; i++) {
       const result = await client.search({
         requests: [
           { indexName: 'cts_e2e_benchmark_search_javascript', query: 'iphone 15 pro max 512gb', hitsPerPage: 50 },

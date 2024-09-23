@@ -98,7 +98,7 @@ class MonitoringTest {
 
   @Test
   fun `switch API key`() = runTest {
-    val client = MonitoringClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6683))))
+    val client = MonitoringClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
         customGet(

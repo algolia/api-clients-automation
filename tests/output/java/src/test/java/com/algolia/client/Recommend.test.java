@@ -129,7 +129,17 @@ class RecommendClientClientTests {
     RecommendClient client = new RecommendClient(
       "test-app-id",
       "test-api-key",
-      withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6683)), false)
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6683
+          )
+        ),
+        false
+      )
     );
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
