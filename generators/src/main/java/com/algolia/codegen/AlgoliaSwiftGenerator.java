@@ -106,8 +106,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "supportedlanguage",
     "tagfilters",
     "taskstatus",
+    "timerange",
     "typotolerance",
     "typotoleranceenum",
+    "Updatedatresponse",
     "value"
   );
 
