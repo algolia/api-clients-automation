@@ -36,7 +36,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -49,7 +49,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -71,7 +71,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -84,7 +84,7 @@ class TestInsightsClientE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -124,7 +124,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -137,7 +137,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -159,7 +159,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -172,7 +172,7 @@ class TestInsightsClientSyncE2E:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1726790400000,
+                        "timestamp": 1727049600000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
