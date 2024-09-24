@@ -1,3 +1,7 @@
+## [4.3.6](https://github.com/algolia/algoliasearch-client-java/compare/4.3.5...4.3.6)
+
+- [4e8275165](https://github.com/algolia/api-clients-automation/commit/4e8275165) fix(clients): deserialization ([#3822](https://github.com/algolia/api-clients-automation/pull/3822)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.3.5](https://github.com/algolia/algoliasearch-client-java/compare/4.3.4...4.3.5)
 
 - [1ee5ce88e](https://github.com/algolia/api-clients-automation/commit/1ee5ce88e) fix(clients): use the correct host for search ([#3787](https://github.com/algolia/api-clients-automation/pull/3787)) by [@millotp](https://github.com/millotp/)
