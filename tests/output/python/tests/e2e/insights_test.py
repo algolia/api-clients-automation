@@ -94,7 +94,10 @@ class TestInsightsClientE2E:
             },
         )
         _expected_body = loads("""{"message":"OK","status":200}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
 
 class TestInsightsClientSyncE2E:
@@ -182,4 +185,7 @@ class TestInsightsClientSyncE2E:
             },
         )
         _expected_body = loads("""{"message":"OK","status":200}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )

@@ -38,7 +38,10 @@ class TestIngestionClientE2E:
             task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
         _expected_body = loads("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     async def test_enable_task_v1_(self):
         """
@@ -57,7 +60,10 @@ class TestIngestionClientE2E:
             task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
         _expected_body = loads("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     async def test_get_source_(self):
         """
@@ -78,7 +84,10 @@ class TestIngestionClientE2E:
         _expected_body = loads(
             """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     async def test_list_authentications_1(self):
         """
@@ -119,7 +128,10 @@ class TestIngestionClientE2E:
         _expected_body = loads(
             """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     async def test_search_tasks_(self):
         """
@@ -152,7 +164,10 @@ class TestIngestionClientE2E:
         _expected_body = loads(
             """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     async def test_search_tasks_v1_(self):
         """
@@ -185,7 +200,10 @@ class TestIngestionClientE2E:
         _expected_body = loads(
             """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
 
 class TestIngestionClientSyncE2E:
@@ -217,7 +235,10 @@ class TestIngestionClientSyncE2E:
             task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
         _expected_body = loads("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_enable_task_v1_(self):
         """
@@ -236,7 +257,10 @@ class TestIngestionClientSyncE2E:
             task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         )
         _expected_body = loads("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_get_source_(self):
         """
@@ -257,7 +281,10 @@ class TestIngestionClientSyncE2E:
         _expected_body = loads(
             """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_list_authentications_1(self):
         """
@@ -298,7 +325,10 @@ class TestIngestionClientSyncE2E:
         _expected_body = loads(
             """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_search_tasks_(self):
         """
@@ -331,7 +361,10 @@ class TestIngestionClientSyncE2E:
         _expected_body = loads(
             """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_search_tasks_v1_(self):
         """
@@ -364,4 +397,7 @@ class TestIngestionClientSyncE2E:
         _expected_body = loads(
             """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
         )
-        assert self._helpers.union(_expected_body, resp) == _expected_body
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
