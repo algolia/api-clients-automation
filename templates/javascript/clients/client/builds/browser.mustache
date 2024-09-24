@@ -1,9 +1,9 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>;
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>;
 
 {{> client/builds/definition}}
-  return create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+  return create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
     timeouts: {

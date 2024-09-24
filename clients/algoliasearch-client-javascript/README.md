@@ -67,7 +67,7 @@ import { liteClient } from 'algoliasearch/lite';
 const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/search/)**.
 
 ## ❓ Troubleshooting
 

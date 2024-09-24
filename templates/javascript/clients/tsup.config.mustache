@@ -67,7 +67,7 @@ const nodeConfigs: Options[] = [
 const browserOptions: Options = {
   ...getBaseBrowserOptions(pkg, __dirname),
   {{^isAlgoliasearchClient}}
-  globalName: '{{apiName}}',
+  globalName: '{{clientName}}',
   {{/isAlgoliasearchClient}}
   {{#isAlgoliasearchClient}}
   globalName: 'lite',
