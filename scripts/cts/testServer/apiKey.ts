@@ -5,6 +5,7 @@ import type { Express, Request, Response } from 'express';
 
 import { setupServer } from '.';
 
+// Checks that the client sends a different API key after the first request.
 function addRoutes(app: Express): void {
   app.get('/check-api-key/1', (req: Request, res: Response) => {
     const headerName = 'x-algolia-api-key';

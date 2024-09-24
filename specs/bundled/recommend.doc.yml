@@ -5644,6 +5644,8 @@ components:
           $ref: '#/components/schemas/distinctSeqID'
         _score:
           $ref: '#/components/schemas/recommendScore'
+      x-discriminator-fields:
+        - objectID
     trendingFacetHit:
       type: object
       description: Trending facet hit.
@@ -5658,6 +5660,9 @@ components:
           $ref: '#/components/schemas/facetName'
         facetValue:
           $ref: '#/components/schemas/facetValue'
+      x-discriminator-fields:
+        - facetName
+        - facetValue
     recommendationsHit:
       oneOf:
         - $ref: '#/components/schemas/recommendHit'

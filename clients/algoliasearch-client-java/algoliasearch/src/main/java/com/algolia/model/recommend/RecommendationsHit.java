@@ -49,6 +49,15 @@ public interface RecommendationsHit {
     @Override
     public RecommendationsHit deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize TrendingFacetHit
+      if (tree.isObject() && tree.has("facetName") && tree.has("facetValue")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(TrendingFacetHit.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf TrendingFacetHit (error: " + e.getMessage() + ") (type: TrendingFacetHit)");
+        }
+      }
       // deserialize RecommendHit
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -57,15 +66,6 @@ public interface RecommendationsHit {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf RecommendHit (error: " + e.getMessage() + ") (type: RecommendHit)");
-        }
-      }
-      // deserialize TrendingFacetHit
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(TrendingFacetHit.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf TrendingFacetHit (error: " + e.getMessage() + ") (type: TrendingFacetHit)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
