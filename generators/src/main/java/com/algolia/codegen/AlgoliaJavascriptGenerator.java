@@ -157,6 +157,14 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
     additionalProperties.put("isIngestionClient", CLIENT.equals("ingestion"));
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
+    additionalProperties.put(
+      "isAvailableInAlgoliasearch",
+      CLIENT.equals("search") ||
+      CLIENT.equals("recommend") ||
+      CLIENT.equals("personalization") ||
+      CLIENT.equals("analytics") ||
+      CLIENT.equals("abtesting")
+    );
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
     additionalProperties.put("npmPackageName", isAlgoliasearchClient ? packageName : "@algolia/" + packageName);
