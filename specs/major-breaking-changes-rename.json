@@ -83,6 +83,5 @@
     "index.setSettings": "client.setSettings",
     "index.{operation}.wait": "client.waitForTask"
   },
-  "usage": {},
   "crawler": {}
 }
