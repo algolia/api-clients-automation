@@ -1,3 +1,8 @@
+## [2.3.6](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.5...2.3.6)
+
+- [1939114e1](https://github.com/algolia/api-clients-automation/commit/1939114e1) chore(deps): dependencies 2024-09-23 ([#3790](https://github.com/algolia/api-clients-automation/pull/3790)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [4e8275165](https://github.com/algolia/api-clients-automation/commit/4e8275165) fix(clients): deserialization ([#3822](https://github.com/algolia/api-clients-automation/pull/3822)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.3.5](https://github.com/algolia/algoliasearch-client-scala/compare/2.3.4...2.3.5)
 
 - [1ee5ce88e](https://github.com/algolia/api-clients-automation/commit/1ee5ce88e) fix(clients): use the correct host for search ([#3787](https://github.com/algolia/api-clients-automation/pull/3787)) by [@millotp](https://github.com/millotp/)
