@@ -28,8 +28,8 @@ internal data class DisjunctiveFaceting(
   }
 
   /*
-  * Build search queries to fetch the necessary facets information for disjunctive faceting
-  * If the disjunctive facets set is empty, makes a single request with applied conjunctive filters
+   * Build search queries to fetch the necessary facets information for disjunctive faceting
+   * If the disjunctive facets set is empty, makes a single request with applied conjunctive filters
    */
   fun buildQueries(): List<SearchForHits> {
     val queries = mutableListOf<SearchForHits>()
@@ -56,7 +56,7 @@ internal data class DisjunctiveFaceting(
         attributesToRetrieve = emptyList(),
         attributesToHighlight = emptyList(),
         attributesToSnippet = emptyList(),
-        analytics = false
+        analytics = false,
       )
 
       queries.add(disjunctiveQuery)
@@ -109,8 +109,8 @@ internal data class DisjunctiveFaceting(
       response = mainResponse.copy(
         facetsStats = mergedFacetStats,
         exhaustive = mainResponse.exhaustive?.copy(
-          facetsCount = mergedExhaustiveFacetsCount
-        ) ?: Exhaustive(facetsCount = mergedExhaustiveFacetsCount)
+          facetsCount = mergedExhaustiveFacetsCount,
+        ) ?: Exhaustive(facetsCount = mergedExhaustiveFacetsCount),
       ),
       disjunctiveFacets = mergedDisjunctiveFacets,
     )

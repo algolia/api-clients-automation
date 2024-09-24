@@ -108,7 +108,7 @@ public suspend fun SearchClient.waitForTask(
 
 @Deprecated(
   "Please use waitForTask instead",
-  ReplaceWith("waitForTask(indexName, taskID, maxRetries, timeout, initialDelay, maxDelay, requestOptions)")
+  ReplaceWith("waitForTask(indexName, taskID, maxRetries, timeout, initialDelay, maxDelay, requestOptions)"),
 )
 public suspend fun SearchClient.waitTask(
   indexName: String,
@@ -160,7 +160,7 @@ public suspend fun SearchClient.waitForAppTask(
 
 @Deprecated(
   "Please use waitForAppTask instead",
-  ReplaceWith("waitForAppTask(taskID, maxRetries, timeout, initialDelay, maxDelay, requestOptions)")
+  ReplaceWith("waitForAppTask(taskID, maxRetries, timeout, initialDelay, maxDelay, requestOptions)"),
 )
 public suspend fun SearchClient.waitAppTask(
   taskID: Long,

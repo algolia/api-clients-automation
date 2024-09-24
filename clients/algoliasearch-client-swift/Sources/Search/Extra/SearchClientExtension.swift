@@ -644,7 +644,8 @@ public extension SearchClient {
     /// - Parameter searchParamsObject: The search query params.
     /// - Parameter refinements: Refinements to apply to the search in form of dictionary with
     ///  facet attribute as a key and a list of facet values for the designated attribute.
-    ///  Any facet in this list not present in the `disjunctiveFacets` set will be filtered conjunctively (with AND operator).
+    ///  Any facet in this list not present in the `disjunctiveFacets` set will be filtered conjunctively (with AND
+    /// operator).
     /// - Parameter disjunctiveFacets: Set of facets attributes applied disjunctively (with OR operator)
     /// - Parameter keepSelectedEmptyFacets: Whether the selected facet values might be preserved even
     ///  in case of their absence in the search response
