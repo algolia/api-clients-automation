@@ -67,7 +67,7 @@ class TestDisjunctiveFaceting {
   }
 
   @Test
-  fun testMakeQueriesNoDisjunctive() {
+  fun testBuildQueriesNoDisjunctive() {
     val refinements = mapOf(
       "size" to listOf("m", "s"),
       "color" to listOf("blue", "green", "red"),
@@ -79,7 +79,7 @@ class TestDisjunctiveFaceting {
       refinements = refinements,
       disjunctiveFacets = emptySet()
     )
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(1, queries.size)
 
     val searchForHits = queries.first()
@@ -90,7 +90,7 @@ class TestDisjunctiveFaceting {
   }
 
   @Test
-  fun testMakeQueriesDisjunctiveSingle() {
+  fun testBuildQueriesDisjunctiveSingle() {
     val refinements = mapOf(
       "size" to listOf("m", "s"),
       "color" to listOf("blue", "green", "red"),
@@ -102,7 +102,7 @@ class TestDisjunctiveFaceting {
       refinements = refinements,
       disjunctiveFacets = setOf("color")
     )
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(2, queries.size)
     val searchForHits = queries.first()
     assertEquals(
@@ -118,7 +118,7 @@ class TestDisjunctiveFaceting {
   }
 
   @Test
-  fun testMakeQueriesDisjunctiveDouble() {
+  fun testBuildQueriesDisjunctiveDouble() {
     val refinements = mapOf(
       "size" to listOf("m", "s"),
       "color" to listOf("blue", "green", "red"),
@@ -130,7 +130,7 @@ class TestDisjunctiveFaceting {
       refinements = refinements,
       disjunctiveFacets = disjunctiveFacets
     )
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(3, queries.size)
     val searchForHits = queries.first()
     assertEquals(
@@ -429,7 +429,7 @@ class TestDisjunctiveFaceting {
       disjunctiveFacets = disjunctiveFacets
     )
 
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(3, queries.size)
 
     val firstQuery = queries[0]
@@ -468,7 +468,7 @@ class TestDisjunctiveFaceting {
       disjunctiveFacets = disjunctiveFacets
     )
 
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(3, queries.size)
 
     val firstQuery = queries[0]
@@ -503,7 +503,7 @@ class TestDisjunctiveFaceting {
       disjunctiveFacets = disjunctiveFacets
     )
 
-    val queries = helper.makeQueries()
+    val queries = helper.buildQueries()
     assertEquals(3, queries.size)
 
     val firstQuery = queries[0]

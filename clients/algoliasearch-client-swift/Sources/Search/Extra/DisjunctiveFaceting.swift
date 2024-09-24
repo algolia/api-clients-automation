@@ -42,7 +42,7 @@ struct DisjunctiveFacetingHelper {
 
     /// Build search queries to fetch the necessary facets information for disjunctive faceting
     /// If the disjunctive facets set is empty, makes a single request with applied conjunctive filters
-    func makeQueries() -> [SearchQuery] {
+    func buildQueries() -> [SearchQuery] {
         var queries = [SearchQuery]()
 
         var mainQuery = self.query

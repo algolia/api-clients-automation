@@ -573,7 +573,7 @@ public suspend fun SearchClient.searchDisjunctiveFaceting(
     refinements = refinements,
     disjunctiveFacets = disjunctiveFacets,
   )
-  val queries = helper.makeQueries()
+  val queries = helper.buildQueries()
   val responses = searchForHits(queries, requestOptions = requestOptions)
   return helper.mergeResponses(responses)
 }

@@ -71,7 +71,7 @@ final class SearchClientManualTests: XCTestCase {
         XCTAssertEqual(helper.appliedDisjunctiveFacetValues(for: "brand"), ["samsung", "sony", "apple"])
     }
 
-    func testMakeQueriesNoDisjunctive() {
+    func testBuildQueriesNoDisjunctive() {
         let refinements: [String: [String]] = [
             "size": ["m", "s"],
             "color": ["blue", "green", "red"],
@@ -83,7 +83,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: refinements,
             disjunctiveFacets: []
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 1)
 
         if case let .searchForHits(searchForHits) = queries.first {
@@ -95,7 +95,7 @@ final class SearchClientManualTests: XCTestCase {
         }
     }
 
-    func testMakeQueriesDisjunctiveSingle() {
+    func testBuildQueriesDisjunctiveSingle() {
         let refinements: [String: [String]] = [
             "size": ["m", "s"],
             "color": ["blue", "green", "red"],
@@ -107,7 +107,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: refinements,
             disjunctiveFacets: ["color"]
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 2)
         if case let .searchForHits(searchForHits) = queries.first {
             XCTAssertEqual(searchForHits.filters, """
@@ -126,7 +126,7 @@ final class SearchClientManualTests: XCTestCase {
         }
     }
 
-    func testMakeQueriesDisjunctiveDouble() {
+    func testBuildQueriesDisjunctiveDouble() {
         let refinements: [String: [String]] = [
             "size": ["m", "s"],
             "color": ["blue", "green", "red"],
@@ -141,7 +141,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: refinements,
             disjunctiveFacets: disjunctiveFacets
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 3)
         if case let .searchForHits(searchForHits) = queries.first {
             XCTAssertEqual(searchForHits.filters, """
@@ -509,7 +509,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: refinements,
             disjunctiveFacets: disjunctiveFacets
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 3)
         if case let .searchForHits(searchForHits) = queries.first {
             XCTAssertEqual(searchForHits.filters, """
@@ -554,7 +554,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: refinements,
             disjunctiveFacets: disjunctiveFacets
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 3)
         if case let .searchForHits(searchForHits) = queries.first {
             XCTAssertEqual(searchForHits.filters, """
@@ -594,7 +594,7 @@ final class SearchClientManualTests: XCTestCase {
             refinements: [:],
             disjunctiveFacets: disjunctiveFacets
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         XCTAssertEqual(queries.count, 3)
         if case let .searchForHits(searchForHits) = queries.first {
             XCTAssertEqual(searchForHits.filters, """

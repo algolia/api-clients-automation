@@ -664,7 +664,7 @@ public extension SearchClient {
             refinements: refinements,
             disjunctiveFacets: disjunctiveFacets
         )
-        let queries = helper.makeQueries()
+        let queries = helper.buildQueries()
         let responses: [SearchResponse<T>] = try await self.searchForHitsWithResponse(
             searchMethodParams: SearchMethodParams(requests: queries),
             requestOptions: requestOptions

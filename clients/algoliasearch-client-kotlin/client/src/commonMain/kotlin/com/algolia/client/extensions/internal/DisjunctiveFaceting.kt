@@ -31,7 +31,7 @@ internal data class DisjunctiveFaceting(
   * Build search queries to fetch the necessary facets information for disjunctive faceting
   * If the disjunctive facets set is empty, makes a single request with applied conjunctive filters
    */
-  fun makeQueries(): List<SearchForHits> {
+  fun buildQueries(): List<SearchForHits> {
     val queries = mutableListOf<SearchForHits>()
 
     val mainQueryFilters = listOf(
