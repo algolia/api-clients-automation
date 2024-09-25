@@ -13,7 +13,8 @@ def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}
     {{{description}}}
     """
     # >SEPARATOR {{method}} {{testName}}
-    # Initialize the client, in an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
+    # Initialize the client
+    # In an asynchronous context, you can use {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} instead, which exposes the exact same methods.
     client = {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, "ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}})
 
     # Call the API 
