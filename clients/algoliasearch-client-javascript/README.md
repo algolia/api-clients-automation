@@ -47,7 +47,11 @@ Without a package manager
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch.umd.min.js"></script>
+// for the full client
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch.umd.js"></script>
+
+// for the lite client
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.js"></script>
 ```
 
 You can now import the Algolia API client in your project and play with it.
@@ -63,7 +67,7 @@ import { liteClient } from 'algoliasearch/lite';
 const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/search/)**.
 
 ## ❓ Troubleshooting
 

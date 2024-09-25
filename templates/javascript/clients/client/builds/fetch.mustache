@@ -1,10 +1,10 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
 
 {{> client/builds/definition}}
   return {
-    ...create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+    ...create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       appId,
       apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
       timeouts: {
