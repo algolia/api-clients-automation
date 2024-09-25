@@ -28,7 +28,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
     .map((coAuthor) => coAuthor.trim())
     .filter(Boolean);
 
-  if (!process.env.DRY_RUN && !lastCommitMessage.startsWith(commitStartRelease)) {
+  if (!process.env.FORCE && !lastCommitMessage.startsWith(commitStartRelease)) {
     return;
   }
 
