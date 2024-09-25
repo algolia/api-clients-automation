@@ -302,52 +302,52 @@
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.monitoring.client import MonitoringClient"
+      "default": "from algoliasearch.monitoring.client import MonitoringClientSync"
     },
     "customDelete": {
-      "default": "response = await client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClusterIncidents": {
-      "default": "response = await client.get_cluster_incidents(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_cluster_incidents_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_cluster_incidents(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_cluster_incidents_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClusterStatus": {
-      "default": "response = await client.get_cluster_status(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_cluster_status_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_cluster_status(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_cluster_status_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getIncidents": {
-      "default": "response = await client.get_incidents()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_incidents_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_incidents()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_incidents_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getIndexingTime": {
-      "default": "response = await client.get_indexing_time(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_indexing_time_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_indexing_time(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_indexing_time_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getLatency": {
-      "default": "response = await client.get_latency(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_latency_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_latency(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_latency_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getMetrics": {
-      "default": "response = await client.get_metrics(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_metrics_with_http_info(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_metrics(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_metrics_with_http_info(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getReachability": {
-      "default": "response = await client.get_reachability(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_reachability_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_reachability(\n    clusters=\"c1-de\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_reachability_with_http_info(\n    clusters=\"c1-de\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getServers": {
-      "default": "response = await client.get_servers()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_servers_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_servers()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_servers_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "getStatus": {
-      "default": "response = await client.get_status()\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_status_with_http_info()\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_status()\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_status_with_http_info()\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
-      "default": "client = MonitoringClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
+      "default": "# In an asynchronous context, you can use MonitoringClient instead, which exposes the exact same methods.\nclient = MonitoringClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
     }
   },
   "ruby": {

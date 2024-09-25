@@ -500,85 +500,85 @@
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.analytics.client import AnalyticsClient"
+      "default": "from algoliasearch.analytics.client import AnalyticsClientSync"
     },
     "customDelete": {
-      "default": "response = await client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customGet": {
-      "default": "response = await client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_get_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPost": {
-      "default": "response = await client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_post_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customPut": {
-      "default": "response = await client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_put_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAddToCartRate": {
-      "default": "response = await client.get_add_to_cart_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_add_to_cart_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_add_to_cart_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_add_to_cart_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getAverageClickPosition": {
-      "default": "response = await client.get_average_click_position(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_average_click_position_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_average_click_position(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_average_click_position_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClickPositions": {
-      "default": "response = await client.get_click_positions(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_click_positions_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_click_positions(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_click_positions_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getClickThroughRate": {
-      "default": "response = await client.get_click_through_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_click_through_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_click_through_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_click_through_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getConversionRate": {
-      "default": "response = await client.get_conversion_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_conversion_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_conversion_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_conversion_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getNoClickRate": {
-      "default": "response = await client.get_no_click_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_no_click_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_no_click_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_no_click_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getNoResultsRate": {
-      "default": "response = await client.get_no_results_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_no_results_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_no_results_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_no_results_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getPurchaseRate": {
-      "default": "response = await client.get_purchase_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_purchase_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_purchase_rate(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_purchase_rate_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getRevenue": {
-      "default": "response = await client.get_revenue(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_revenue_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_revenue(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_revenue_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesCount": {
-      "default": "response = await client.get_searches_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesNoClicks": {
-      "default": "response = await client.get_searches_no_clicks(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_no_clicks_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_no_clicks(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_no_clicks_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getSearchesNoResults": {
-      "default": "response = await client.get_searches_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_searches_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_searches_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_searches_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getStatus": {
-      "default": "response = await client.get_status(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_status_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_status(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_status_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopCountries": {
-      "default": "response = await client.get_top_countries(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_countries_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_countries(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_countries_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFilterAttributes": {
-      "default": "response = await client.get_top_filter_attributes(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filter_attributes_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filter_attributes(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filter_attributes_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFilterForAttribute": {
-      "default": "response = await client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filter_for_attribute_with_http_info(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filter_for_attribute_with_http_info(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopFiltersNoResults": {
-      "default": "response = await client.get_top_filters_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_filters_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_filters_no_results(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_filters_no_results_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopHits": {
-      "default": "response = await client.get_top_hits(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_hits_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_hits(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_hits_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getTopSearches": {
-      "default": "response = await client.get_top_searches(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_top_searches_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_top_searches(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_top_searches_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "getUsersCount": {
-      "default": "response = await client.get_users_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = await client.get_users_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
+      "default": "response = client.get_users_count(\n    index=\"index\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.get_users_count_with_http_info(\n    index=\"index\",\n)\n\nprint(raw_response.raw_data)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)\n\n# Skip deserialization\nclient.set_client_api_key_with_http_info(\n    api_key=\"updated-api-key\",\n)"
     },
     "init": {
-      "default": "client = AnalyticsClient(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+      "default": "# In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.\nclient = AnalyticsClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
     }
   },
   "ruby": {
