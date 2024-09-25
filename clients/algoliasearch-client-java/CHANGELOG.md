@@ -1,3 +1,7 @@
+## [4.3.7](https://github.com/algolia/algoliasearch-client-java/compare/4.3.6...4.3.7)
+
+- [022131871](https://github.com/algolia/api-clients-automation/commit/022131871) fix(specs): correct query params for ingestion [skip-bc] ([#3830](https://github.com/algolia/api-clients-automation/pull/3830)) by [@millotp](https://github.com/millotp/)
+
 ## [4.3.6](https://github.com/algolia/algoliasearch-client-java/compare/4.3.5...4.3.6)
 
 - [4e8275165](https://github.com/algolia/api-clients-automation/commit/4e8275165) fix(clients): deserialization ([#3822](https://github.com/algolia/api-clients-automation/pull/3822)) by [@Fluf22](https://github.com/Fluf22/)
