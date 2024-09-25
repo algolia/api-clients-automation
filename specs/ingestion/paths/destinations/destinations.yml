@@ -13,6 +13,7 @@ get:
     - $ref: '../../common/parameters.yml#/page'
     - $ref: '../../common/destinationParameters.yml#/type'
     - $ref: '../../common/destinationParameters.yml#/authenticationID'
+    - $ref: '../../common/destinationParameters.yml#/transformationID'
     - $ref: '../../common/destinationParameters.yml#/sort'
     - $ref: '../../common/parameters.yml#/order'
   responses:

@@ -14,7 +14,7 @@ type:
 platform:
   name: platform
   in: query
-  description: Ecommerce platform for which to retrieve authentication resources.
+  description: Ecommerce platform for which to retrieve authentications.
   required: false
   style: form
   explode: false
@@ -37,13 +37,13 @@ platformWithNone:
 sort:
   name: sort
   in: query
-  description: Property by which to sort the list of authentication resources.
+  description: Property by which to sort the list of authentications.
   required: false
   schema:
     $ref: '#/authenticationSortKeys'
 
 authenticationSortKeys:
   type: string
-  description: Property by which to sort the list of authentication resources.
+  description: Property by which to sort the list of authentications.
   default: createdAt
-  enum: [name, auth_type, platform, updatedAt, createdAt]
+  enum: [name, type, platform, updatedAt, createdAt]
