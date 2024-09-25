@@ -259,31 +259,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_get(
+
+            response = client.custom_get(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_get_with_http_info(
+
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -491,31 +506,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_post(
+
+            response = client.custom_post(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_post_with_http_info(
+
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -723,31 +753,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_put(
+
+            response = client.custom_put(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_put_with_http_info(
+
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -951,31 +996,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_delete(
+
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_delete_with_http_info(
+
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1266,14 +1326,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.add_ab_tests(
+
+            response = client.add_ab_tests(
                 add_ab_tests_request={
                     "endAt": "2022-12-31T00:00:00.000Z",
                     "name": "myABTest",
@@ -1289,11 +1355,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.add_ab_tests_with_http_info(
+
+            raw_response = client.add_ab_tests_with_http_info(
                 add_ab_tests_request={
                     "endAt": "2022-12-31T00:00:00.000Z",
                     "name": "myABTest",
@@ -1309,14 +1378,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1587,27 +1662,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_ab_tests()
+
+            response = client.list_ab_tests()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_ab_tests_with_http_info()
+
+            raw_response = client.list_ab_tests_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1819,31 +1909,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_ab_test(
+
+            response = client.get_ab_test(
                 id=42,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_ab_test_with_http_info(
+
+            raw_response = client.get_ab_test_with_http_info(
                 id=42,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2056,31 +2161,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_ab_test(
+
+            response = client.delete_ab_test(
                 id=42,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_ab_test_with_http_info(
+
+            raw_response = client.delete_ab_test_with_http_info(
                 id=42,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2296,31 +2416,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.stop_ab_test(
+
+            response = client.stop_ab_test(
                 id=42,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.stop_ab_test_with_http_info(
+
+            raw_response = client.stop_ab_test_with_http_info(
                 id=42,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2621,14 +2756,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AbtestingClient(
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.schedule_ab_test(
+
+            response = client.schedule_ab_test(
                 schedule_ab_tests_request={
                     "endAt": "2022-12-31T00:00:00.000Z",
                     "scheduledAt": "2022-11-31T00:00:00.000Z",
@@ -2645,11 +2786,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.schedule_ab_test_with_http_info(
+
+            raw_response = client.schedule_ab_test_with_http_info(
                 schedule_ab_tests_request={
                     "endAt": "2022-12-31T00:00:00.000Z",
                     "scheduledAt": "2022-11-31T00:00:00.000Z",
@@ -2666,14 +2810,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
