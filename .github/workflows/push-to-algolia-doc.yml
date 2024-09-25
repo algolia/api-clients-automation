@@ -1,11 +1,6 @@
 name: Push specs and snippets to Algolia doc
 
-on:
-  workflow_dispatch:
-    inputs:
-      fake_input:
-        description: input needed to satisfy the yaml linter
-        required: false
+on: workflow_dispatch
 
 jobs:
   release:
@@ -23,6 +18,7 @@ jobs:
         with:
           type: minimal
 
-      - run: FORCE=true yarn workspace scripts pushToAlgoliaDoc
+      - run: yarn workspace scripts pushToAlgoliaDoc
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          FORCE: true

@@ -72,6 +72,14 @@ module.exports = {
       ],
     },
     {
+      // actions yml linter
+      files: ['.github/**/*.yml'],
+
+      rules: {
+        'yml/no-empty-mapping-value': 0,
+      },
+    },
+    {
       // es linter
       files: ['*.ts', '*.js'],
 
