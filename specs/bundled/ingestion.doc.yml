@@ -2617,6 +2617,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/destinationParameters_type'
         - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/transformationID'
         - $ref: '#/components/parameters/destinationParameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
@@ -11853,7 +11854,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/parameters_sort'
+        - $ref: '#/components/parameters/transformationParameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -14999,7 +15000,7 @@ components:
     platform:
       name: platform
       in: query
-      description: Ecommerce platform for which to retrieve authentication resources.
+      description: Ecommerce platform for which to retrieve authentications.
       required: false
       style: form
       explode: false
@@ -15011,7 +15012,7 @@ components:
     sort:
       name: sort
       in: query
-      description: Property by which to sort the list of authentication resources.
+      description: Property by which to sort the list of authentications.
       required: false
       schema:
         $ref: '#/components/schemas/authenticationSortKeys'
@@ -15052,6 +15053,15 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/authenticationID'
+    transformationID:
+      name: transformationID
+      in: query
+      description: Get the list of destinations used by a transformation.
+      required: false
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/transformationID'
     destinationParameters_sort:
       name: sort
       in: query
@@ -15084,7 +15094,7 @@ components:
       in: query
       description: |
         Authentication IDs of the sources to retrieve.
-        'none' returns sources that doesn't have an authentication resource.
+        'none' returns sources that doesn't have an authentication.
       required: false
       style: form
       explode: false
@@ -15177,13 +15187,13 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
-    parameters_sort:
+    transformationParameters_sort:
       name: sort
       in: query
-      description: Property by which to sort the list.
+      description: Property by which to sort the list of transformations.
       required: false
       schema:
-        $ref: '#/components/schemas/sortKeys'
+        $ref: '#/components/schemas/transformationSortKeys'
     pathTransformationID:
       name: transformationID
       in: path
@@ -15314,11 +15324,11 @@ components:
         - $ref: '#/components/schemas/platformNone'
     authenticationSortKeys:
       type: string
-      description: Property by which to sort the list of authentication resources.
+      description: Property by which to sort the list of authentications.
       default: createdAt
       enum:
         - name
-        - auth_type
+        - type
         - platform
         - updatedAt
         - createdAt
@@ -15699,6 +15709,10 @@ components:
       enum:
         - search
         - insights
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     destinationSortKeys:
       type: string
       description: Property by which to sort the destinations.
@@ -15756,10 +15770,6 @@ components:
     DestinationInput:
       oneOf:
         - $ref: '#/components/schemas/DestinationIndexName'
-    transformationID:
-      type: string
-      description: Universally unique identifier (UUID) of a transformation.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     transformationIDs:
       type: array
       items:
@@ -17046,13 +17056,12 @@ components:
       type: string
       description: Unique record identifier.
       example: test-record-123
-    sortKeys:
+    transformationSortKeys:
       type: string
-      description: Property by which to sort the list.
-      default: desc
+      description: Property by which to sort the list of transformations.
+      default: createdAt
       enum:
         - name
-        - type
         - updatedAt
         - createdAt
     AuthenticationIDs:

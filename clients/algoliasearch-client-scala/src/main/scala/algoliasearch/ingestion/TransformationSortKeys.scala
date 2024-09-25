@@ -25,38 +25,35 @@ package algoliasearch.ingestion
 
 import org.json4s._
 
-sealed trait SortKeys
+sealed trait TransformationSortKeys
 
-/** Property by which to sort the list.
+/** Property by which to sort the list of transformations.
   */
-object SortKeys {
-  case object Name extends SortKeys {
+object TransformationSortKeys {
+  case object Name extends TransformationSortKeys {
     override def toString = "name"
   }
-  case object `Type` extends SortKeys {
-    override def toString = "type"
-  }
-  case object UpdatedAt extends SortKeys {
+  case object UpdatedAt extends TransformationSortKeys {
     override def toString = "updatedAt"
   }
-  case object CreatedAt extends SortKeys {
+  case object CreatedAt extends TransformationSortKeys {
     override def toString = "createdAt"
   }
-  val values: Seq[SortKeys] = Seq(Name, `Type`, UpdatedAt, CreatedAt)
+  val values: Seq[TransformationSortKeys] = Seq(Name, UpdatedAt, CreatedAt)
 
-  def withName(name: String): SortKeys = SortKeys.values
+  def withName(name: String): TransformationSortKeys = TransformationSortKeys.values
     .find(_.toString == name)
-    .getOrElse(throw new MappingException(s"Unknown SortKeys value: $name"))
+    .getOrElse(throw new MappingException(s"Unknown TransformationSortKeys value: $name"))
 }
 
-class SortKeysSerializer
-    extends CustomSerializer[SortKeys](_ =>
+class TransformationSortKeysSerializer
+    extends CustomSerializer[TransformationSortKeys](_ =>
       (
         {
-          case JString(value) => SortKeys.withName(value)
+          case JString(value) => TransformationSortKeys.withName(value)
           case JNull          => null
         },
-        { case value: SortKeys =>
+        { case value: TransformationSortKeys =>
           JString(value.toString)
         }
       )

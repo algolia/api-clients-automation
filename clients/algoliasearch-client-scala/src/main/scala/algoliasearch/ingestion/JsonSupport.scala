@@ -55,12 +55,12 @@ object JsonSupport {
     new RunStatusSerializer() :+
     new RunTypeSerializer() :+
     new ScheduleTriggerTypeSerializer() :+
-    new SortKeysSerializer() :+
     new SourceSortKeysSerializer() :+
     new SourceTypeSerializer() :+
     new StreamingTriggerTypeSerializer() :+
     new SubscriptionTriggerTypeSerializer() :+
     new TaskSortKeysSerializer() :+
+    new TransformationSortKeysSerializer() :+
     new TriggerTypeSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+

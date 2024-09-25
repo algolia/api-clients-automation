@@ -44,7 +44,6 @@ import algoliasearch.ingestion.RunSourcePayload
 import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
 import algoliasearch.ingestion.RunType._
-import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
 import algoliasearch.ingestion.SourceCreateResponse
@@ -68,6 +67,7 @@ import algoliasearch.ingestion.Transformation
 import algoliasearch.ingestion.TransformationCreate
 import algoliasearch.ingestion.TransformationCreateResponse
 import algoliasearch.ingestion.TransformationSearch
+import algoliasearch.ingestion.TransformationSortKeys._
 import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
 import algoliasearch.ingestion.TransformationUpdateResponse
@@ -780,9 +780,9 @@ class IngestionClient(
     * @param `type`
     *   Type of authentication resource to retrieve.
     * @param platform
-    *   Ecommerce platform for which to retrieve authentication resources.
+    *   Ecommerce platform for which to retrieve authentications.
     * @param sort
-    *   Property by which to sort the list of authentication resources.
+    *   Property by which to sort the list of authentications.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
@@ -825,6 +825,8 @@ class IngestionClient(
     *   Destination type.
     * @param authenticationID
     *   Authentication ID used by destinations.
+    * @param transformationID
+    *   Get the list of destinations used by a transformation.
     * @param sort
     *   Property by which to sort the destinations.
     * @param order
@@ -835,6 +837,7 @@ class IngestionClient(
       page: Option[Int] = None,
       `type`: Option[Seq[DestinationType]] = None,
       authenticationID: Option[Seq[String]] = None,
+      transformationID: Option[String] = None,
       sort: Option[DestinationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
@@ -848,6 +851,7 @@ class IngestionClient(
       .withQueryParameter("page", page)
       .withQueryParameter("type", `type`)
       .withQueryParameter("authenticationID", authenticationID)
+      .withQueryParameter("transformationID", transformationID)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
       .build()
@@ -981,8 +985,7 @@ class IngestionClient(
     * @param `type`
     *   Source type. Some sources require authentication.
     * @param authenticationID
-    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication
-    *   resource.
+    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
     * @param sort
     *   Property by which to sort the list of sources.
     * @param order
@@ -1136,14 +1139,14 @@ class IngestionClient(
     * @param page
     *   Page number of the paginated API response.
     * @param sort
-    *   Property by which to sort the list.
+    *   Property by which to sort the list of transformations.
     * @param order
     *   Sort order of the response, ascending or descending.
     */
   def listTransformations(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
-      sort: Option[SortKeys] = None,
+      sort: Option[TransformationSortKeys] = None,
       order: Option[OrderKeys] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTransformationsResponse] = Future {
