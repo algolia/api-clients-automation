@@ -1,0 +1,13 @@
+sort:
+  name: sort
+  in: query
+  description: Property by which to sort the list of transformations.
+  required: false
+  schema:
+    $ref: '#/transformationSortKeys'
+
+transformationSortKeys:
+  type: string
+  description: Property by which to sort the list of transformations.
+  default: createdAt
+  enum: [name, updatedAt, createdAt]
