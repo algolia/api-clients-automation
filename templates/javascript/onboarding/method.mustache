@@ -1,0 +1,15 @@
+import { algoliasearch } from 'algoliasearch';
+
+// Connect and authenticate with your Algolia app
+const client = algoliasearch('YourApplicationID', 'YourWriteAPIKey');
+
+// Fetch and index objects in Algolia
+const processRecords = async () => {
+  const datasetRequest = await fetch('https://dashboard.algolia.com/sample_datasets/movie.json');
+  const objects = await datasetRequest.json();
+  // return client.saveObjects({ indexName: 'movies_index', objects });
+};
+
+processRecords()
+  .then(() => console.log('Successfully indexed objects!'))
+  .catch((err) => console.error(err));
