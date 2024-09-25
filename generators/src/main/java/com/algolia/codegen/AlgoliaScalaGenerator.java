@@ -78,7 +78,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
     supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
-    supportingFiles.add(new SupportingFile("do-not-edit-this-repository.yml", ".github/workflows/", "do-not-edit-this-repository.yml"));
+    supportingFiles.add(new SupportingFile("do-not-edit-this-repository.yml", ".github/workflows", "do-not-edit-this-repository.yml"));
 
     additionalProperties.put("isSearchClient", client.equals("search"));
     typeMapping.put("AnyType", "Any");

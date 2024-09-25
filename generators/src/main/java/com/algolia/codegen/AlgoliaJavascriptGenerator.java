@@ -65,7 +65,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     supportingFiles.add(new SupportingFile("issue.yml", "../../.github/workflows", "issue.yml"));
     supportingFiles.add(new SupportingFile("Bug_report.yml", "../../.github/ISSUE_TEMPLATE", "Bug_report.yml"));
     supportingFiles.add(
-      new SupportingFile("do-not-edit-this-repository.yml", "../../.github/workflows/", "do-not-edit-this-repository.yml")
+      new SupportingFile("do-not-edit-this-repository.yml", "../../.github/workflows", "do-not-edit-this-repository.yml")
     );
 
     supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
