@@ -37,10 +37,10 @@ public class JavascriptCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("snippets/package.mustache", "snippets/javascript", "package.json"));
-    supportingFiles.add(new SupportingFile("snippets/tsconfig.mustache", "snippets/javascript", "tsconfig.json"));
-    supportingFiles.add(new SupportingFile("snippets/.yarnrc.mustache", "snippets/javascript", ".yarnrc.yml"));
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/package.mustache", output + "/javascript", "package.json"));
+    supportingFiles.add(new SupportingFile("snippets/tsconfig.mustache", output + "/javascript", "tsconfig.json"));
+    supportingFiles.add(new SupportingFile("snippets/.yarnrc.mustache", output + "/javascript", ".yarnrc.yml"));
   }
 
   @Override

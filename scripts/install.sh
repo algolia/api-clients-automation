@@ -78,7 +78,7 @@ _apic_build_specs_complete() {
 
 _apic_build_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
-    COMPREPLY=($(compgen -W "clients playground snippets specs" -- "$cur"))
+    COMPREPLY=($(compgen -W "clients playground snippets guides specs" -- "$cur"))
   else
     second="${COMP_WORDS[2]}"
     if [[ $second == "clients" ]]; then

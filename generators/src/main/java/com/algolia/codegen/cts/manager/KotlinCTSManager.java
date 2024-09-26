@@ -23,11 +23,11 @@ public class KotlinCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("snippets/build.gradle.mustache", "snippets/kotlin", "build.gradle.kts"));
-    supportingFiles.add(new SupportingFile("snippets/gradle.mustache", "snippets/kotlin", "gradle.properties"));
-    supportingFiles.add(new SupportingFile("snippets/libs.versions.mustache", "snippets/kotlin", "gradle/libs.versions.toml"));
-    supportingFiles.add(new SupportingFile("snippets/settings.gradle.mustache", "snippets/kotlin", "settings.gradle.kts"));
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/build.gradle.mustache", output + "/kotlin", "build.gradle.kts"));
+    supportingFiles.add(new SupportingFile("snippets/gradle.mustache", output + "/kotlin", "gradle.properties"));
+    supportingFiles.add(new SupportingFile("snippets/libs.versions.mustache", output + "/kotlin", "gradle/libs.versions.toml"));
+    supportingFiles.add(new SupportingFile("snippets/settings.gradle.mustache", output + "/kotlin", "settings.gradle.kts"));
   }
 
   @Override

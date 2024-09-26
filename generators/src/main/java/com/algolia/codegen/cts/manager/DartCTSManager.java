@@ -38,10 +38,10 @@ public class DartCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", "snippets/dart/.gitignore"));
-    supportingFiles.add(new SupportingFile("snippets/analysis_options.mustache", "snippets/dart/analysis_options.yaml"));
-    supportingFiles.add(new SupportingFile("snippets/pubspec.mustache", "snippets/dart/pubspec.yaml"));
-    supportingFiles.add(new SupportingFile("snippets/pubspec_overrides.mustache", "snippets/dart/pubspec_overrides.yaml"));
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", output + "/dart/.gitignore"));
+    supportingFiles.add(new SupportingFile("snippets/analysis_options.mustache", output + "/dart/analysis_options.yaml"));
+    supportingFiles.add(new SupportingFile("snippets/pubspec.mustache", output + "/dart/pubspec.yaml"));
+    supportingFiles.add(new SupportingFile("snippets/pubspec_overrides.mustache", output + "/dart/pubspec_overrides.yaml"));
   }
 }

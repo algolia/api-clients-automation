@@ -28,7 +28,7 @@ public class RubyCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("snippets/Gemfile.mustache", "snippets/ruby", "Gemfile"));
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/Gemfile.mustache", output + "/ruby", "Gemfile"));
   }
 }

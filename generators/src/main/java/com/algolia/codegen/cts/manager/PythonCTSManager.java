@@ -31,8 +31,8 @@ public class PythonCTSManager implements CTSManager {
   }
 
   @Override
-  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("snippets/pyproject.mustache", "snippets/python", "pyproject.toml"));
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
+    supportingFiles.add(new SupportingFile("snippets/pyproject.mustache", output + "/python", "pyproject.toml"));
   }
 
   @Override
