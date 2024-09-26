@@ -1,0 +1,16 @@
+{{> tests/snippets/import}}
+
+{{> tests/snippets/init}}
+
+// Fetch and index objects in Algolia
+const processRecords = async () => {
+  const datasetRequest = await fetch('https://dashboard.algolia.com/sample_datasets/movie.json');
+  const objects = await datasetRequest.json();
+  return {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+
+   {{#dynamicSnippet}}prout{{/dynamicSnippet}}
+};
+
+processRecords()
+  .then(() => console.log('Successfully indexed objects!'))
+  .catch((err) => console.error(err));

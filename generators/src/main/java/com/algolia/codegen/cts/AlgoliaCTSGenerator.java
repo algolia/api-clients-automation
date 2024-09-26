@@ -3,6 +3,7 @@ package com.algolia.codegen.cts;
 import com.algolia.codegen.cts.lambda.*;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.cts.manager.CTSManagerFactory;
+import com.algolia.codegen.cts.guides.GuidesGenerator;
 import com.algolia.codegen.cts.tests.*;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -66,6 +67,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       ctsManager.addSnippetsSupportingFiles(supportingFiles);
 
       testsGenerators.add(new SnippetsGenerator(ctsManager));
+    } else if (mode.equals("guides")) {
+      testsGenerators.add(new GuidesGenerator(ctsManager));
     } else {
       throw new RuntimeException("Unknown mode: " + mode);
     }
@@ -151,6 +154,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       bundle.put("isSyncClient", false);
       // special lambda for dynamic templates
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
+      bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
       bundle.put("lambda", lambda);
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));

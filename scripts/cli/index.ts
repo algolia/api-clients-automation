@@ -9,6 +9,7 @@ import { runCts } from '../cts/runCts.js';
 import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
+import { guidesGenerateMany } from '../guides/generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
 import { generateSLA } from '../release/sla.js';
@@ -237,6 +238,17 @@ program
     setVerbose(Boolean(verbose));
 
     await snippetsGenerateMany(generatorList({ language, client, clientList }));
+  });
+
+program
+  .command('guides')
+  .description('Generate the guides')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await guidesGenerateMany(generatorList({ language: 'javascript', client: ['search'], clientList: ['search'] }));
   });
 
 program
