@@ -55,10 +55,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     additionalProperties.put("isSearchClient", client.equals("search"));
 
-    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
-    supportingFiles.add(new SupportingFile("issue.yml", ".github/workflows", "issue.yml"));
-    supportingFiles.add(new SupportingFile("Bug_report.yml", ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
-    supportingFiles.add(new SupportingFile("do-not-edit-this-repository.yml", ".github/workflows", "do-not-edit-this-repository.yml"));
+    Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     reservedWords.removeIf(word -> word.equals("configuration"));
 
