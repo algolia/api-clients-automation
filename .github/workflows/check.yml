@@ -275,11 +275,14 @@ jobs:
       - name: Run benchmarks
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --benchmark --no-client --no-requests --no-e2e
 
-      - name: Generate code snippets for documentation
+      - name: Generate code snippets
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
 
+      - name: Generate code guides
+        run: yarn cli guides javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
       - name: Zip artifact before storing
-        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).snippetsToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
 
       - name: Store javascript clients
         uses: actions/upload-artifact@v4
@@ -381,15 +384,21 @@ jobs:
         if: ${{ matrix.client.isMainVersion }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --benchmark --no-client --no-requests --no-e2e
 
-      - name: Generate code snippets for documentation
+      - name: Generate code snippets
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Build the snippets to check validity
         run: yarn cli build snippets ${{ matrix.client.language }}
 
+      - name: Generate code guides
+        run: yarn cli guides ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+
+      - name: Build the guides to check validity
+        run: yarn cli build guides ${{ matrix.client.language }}
+
       - name: Zip artifact before storing
         if: ${{ matrix.client.isMainVersion }}
-        run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.snippetsToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/.build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
+        run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.guidesToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/.build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
 
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
