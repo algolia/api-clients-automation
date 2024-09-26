@@ -1,9 +1,6 @@
-name: Scheduled Release
+name: Push specs and snippets to Algolia doc
 
-on:
-  schedule:
-    - cron: '30 6 * * 2'
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   release:
@@ -20,8 +17,8 @@ jobs:
         uses: ./.github/actions/setup
         with:
           type: minimal
-          language: dart # we need the dart deps because we use melos to bump dependencies for its client
 
-      - run: yarn cli release
+      - run: yarn workspace scripts pushToAlgoliaDoc
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          FORCE: true
