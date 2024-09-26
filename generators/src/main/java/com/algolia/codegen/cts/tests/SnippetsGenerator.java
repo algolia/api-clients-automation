@@ -46,6 +46,11 @@ public class SnippetsGenerator extends TestsGenerator {
 
   private Map<String, Snippet[]> loadSnippets(Map<String, CodegenOperation> operations) throws Exception {
     Map<String, Snippet[]> snippets = loadFullCTS(Snippet[].class);
+    for (Map.Entry<String, Snippet[]> blockEntry : snippets.entrySet()) {
+      for (Snippet test : blockEntry.getValue()) {
+        test.method = blockEntry.getKey();
+      }
+    }
 
     String clientName = client;
     if (client.equals("algoliasearch")) {
