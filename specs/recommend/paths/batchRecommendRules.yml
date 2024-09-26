@@ -35,6 +35,6 @@ post:
 
   responses:
     '200':
-      $ref: '../../common/responses/UpdatedAt.yml'
+      $ref: '../common/responses/RecommendUpdatedAt.yml'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
