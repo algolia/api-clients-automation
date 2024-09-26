@@ -22,8 +22,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
   // cache the models
   private final Map<String, CodegenModel> models = new HashMap<>();
-  private String language;
-  private String client;
+  private String language, client, mode;
   private CTSManager ctsManager;
   private List<TestsGenerator> testsGenerators = new ArrayList<>();
 
@@ -43,7 +42,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
-    String mode = (String) additionalProperties.get("mode");
+    mode = (String) additionalProperties.get("mode");
     ctsManager = CTSManagerFactory.getManager(language, client);
 
     if (ctsManager == null) {
@@ -147,6 +146,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       }
 
       // We can put whatever we want in the bundle, and it will be accessible in the template
+      bundle.put("mode", mode);
       bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
       bundle.put("hasRegionalHost", hasRegionalHost);
