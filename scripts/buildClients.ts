@@ -3,7 +3,7 @@ import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
 
-type BuildType = 'client' | 'playground' | 'snippets';
+type BuildType = 'client' | 'guides' | 'playground' | 'snippets';
 
 /**
  * Build code for a specific language.
@@ -89,4 +89,8 @@ export async function buildPlaygrounds(languages: Language[]): Promise<void> {
 
 export async function buildSnippets(languages: Language[]): Promise<void> {
   await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'snippets')));
+}
+
+export async function buildGuides(languages: Language[]): Promise<void> {
+  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'guides')));
 }

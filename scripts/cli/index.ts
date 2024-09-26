@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets } from '../buildClients.js';
+import { buildClients, buildPlaygrounds, buildSnippets, buildGuides } from '../buildClients.js';
 import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';
@@ -105,6 +105,17 @@ buildCommand
     setVerbose(Boolean(verbose));
 
     await buildSnippets(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
+  });
+
+buildCommand
+  .command('guides')
+  .description('Build a specified guides')
+  .addArgument(args.language)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .action(async (langArg: LangArg, { verbose }) => {
+    setVerbose(Boolean(verbose));
+
+    await buildGuides(langArg === ALL || langArg === undefined ? LANGUAGES : [langArg]);
   });
 
 buildCommand
