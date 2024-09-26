@@ -1,4 +1,6 @@
-import { run } from './common.js';
+import { existsSync } from 'node:fs';
+
+import { run, toAbsolutePath } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
@@ -94,5 +96,13 @@ export async function buildSnippets(languages: Language[]): Promise<void> {
 }
 
 export async function buildGuides(languages: Language[]): Promise<void> {
-  await Promise.all(languages.map((lang) => buildLanguage(lang, [], 'guides')));
+  await Promise.all(
+    languages.map((lang) => {
+      if (!existsSync(toAbsolutePath(`guides/${lang}`))) {
+        return Promise.resolve();
+      }
+
+      return buildLanguage(lang, [], 'guides');
+    }),
+  );
 }
