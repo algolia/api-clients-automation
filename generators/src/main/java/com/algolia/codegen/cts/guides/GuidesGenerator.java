@@ -50,10 +50,6 @@ public class GuidesGenerator extends TestsGenerator {
 
   @Override
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    if (this.client.equals("search")) {
-      bundle.put("isSearchClient", true);
-    }
-
-    List<Object> blocks = new ArrayList<>();
+    // nothing to do here, the mustache uses dynamicSnippets lambda
   }
 }
