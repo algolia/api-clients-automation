@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
 import semver from 'semver';
 
-import { buildClients, buildPlaygrounds, buildSnippets, buildGuides } from '../buildClients.js';
+import { buildClients, buildPlaygrounds, buildSnippets, buildGuides } from '../buildLanguages.js';
 import { CI, CLIENTS, LANGUAGES, run, setVerbose } from '../common.js';
 import { getLanguageFolder } from '../config.js';
 import { ctsGenerateMany } from '../cts/generate.js';

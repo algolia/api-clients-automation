@@ -33,7 +33,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
           packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
         );
         await run(`yarn build:many '{${packageNames.join(',')},}'`, { cwd, language });
-      } else {
+      } else if (buildType !== 'playground') {
         await run('yarn tsc --noEmit', { cwd, language });
       }
 
