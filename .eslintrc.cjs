@@ -215,7 +215,7 @@ module.exports = {
       rules: {
         'no-console': 0,
 
-        // TODO: remove this
+        // TODO: remove this after https://algolia.atlassian.net/browse/DI-2984
         '@typescript-eslint/no-unused-vars': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
       },
