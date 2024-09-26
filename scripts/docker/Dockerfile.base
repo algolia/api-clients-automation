@@ -22,7 +22,7 @@ RUN apt-get update \
 COPY .nvmrc .nvmrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && source ~/.profile \
     && nvm install \
-    && npm install -g yarn
+    && npm install -g yarn pyright
 
 # SDKMAN
 ARG JAVA_VERSION
