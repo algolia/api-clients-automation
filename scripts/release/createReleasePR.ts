@@ -343,10 +343,7 @@ export async function createReleasePR({
 
   const versions = decideReleaseStrategy({ commits: validCommits, releaseType });
 
-  // skip anything versionsHistory related for now
-  if (process.env.VersionsHistory) {
-    await generateVersionsHistory(versions);
-  }
+  await generateVersionsHistory(versions);
 
   const versionChanges = getVersionChangesText(versions);
   const languages = Object.keys(versions).join(', ');
