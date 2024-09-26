@@ -1,9 +1,7 @@
 package com.algolia.methods.snippets;
 
 // >IMPORT
-import com.algolia.api.{{client}};
-import com.algolia.model.{{import}}.*;
-
+{{> snippets/import}}
 // IMPORT<
 
 class Snippet{{client}} {
@@ -15,7 +13,7 @@ class Snippet{{client}} {
   void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
     // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
-    {{client}} client = new {{client}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"{{#hasRegionalHost}}, "ALGOLIA_APPLICATION_REGION"{{/hasRegionalHost}});
+    {{> snippets/init}}
 
     // Call the API
     {{> tests/method}};

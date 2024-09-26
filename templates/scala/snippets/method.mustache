@@ -4,10 +4,7 @@ package algoliasearch.methods.snippets
 import scala.concurrent.duration.Duration
 
 // >IMPORT
-import algoliasearch.api.{{client}}
-{{#isSearchClient}}
-import algoliasearch.extension.SearchClientExtensions
-{{/isSearchClient}}
+{{> snippets/import}}
 // IMPORT<
 import algoliasearch.{{import}}.*
 
@@ -29,7 +26,7 @@ class Snippet{{client}} {
   def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Unit = {
     // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
-    val client = {{client}}(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY"{{#hasRegionalHost}}, region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"ALGOLIA_APPLICATION_REGION"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}}{{/hasRegionalHost}})
+    {{> snippets/init}}
 
     // Call the API
     {{#hasResponse}}val response = {{/hasResponse}}{{> tests/method}}
