@@ -86,15 +86,6 @@ async function pushToAlgoliaDoc(): Promise<void> {
     head: targetBranch,
   });
 
-  await octokit.issues.createComment({
-    owner: OWNER,
-    repo: repository,
-    issue_number: data.number,
-    body: [
-      `[**Preview SLA changes&rarr;**](https://deploy-preview-${data.number}--algolia-docs.netlify.app/doc/libraries/supported-versions/)`,
-    ].join('\n\n'),
-  });
-
   console.log(`Pull request created on ${OWNER}/${repository}`);
   console.log(`  > ${data.url}`);
 }
