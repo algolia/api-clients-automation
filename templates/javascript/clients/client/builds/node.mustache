@@ -1,10 +1,10 @@
 // {{{generationBanner}}}
 
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
+export type {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}>{{#nodeSearchHelpers}} & SearchClientNodeHelpers{{/nodeSearchHelpers}};
 
 {{> client/builds/definition}}
   return {
-    ...create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+    ...create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       appId,
       apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
       timeouts: {
@@ -12,6 +12,7 @@ export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<t
         read: DEFAULT_READ_TIMEOUT_NODE,
         write: DEFAULT_WRITE_TIMEOUT_NODE,
       },
+      logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
       responsesCache: createNullCache(),

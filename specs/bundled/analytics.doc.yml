@@ -272,31 +272,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_get(
+
+            response = client.custom_get(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_get_with_http_info(
+
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -504,31 +519,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_post(
+
+            response = client.custom_post(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_post_with_http_info(
+
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -736,31 +766,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_put(
+
+            response = client.custom_put(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_put_with_http_info(
+
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -964,31 +1009,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_delete(
+
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_delete_with_http_info(
+
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1211,31 +1271,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_top_searches(
+
+            response = client.get_top_searches(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_top_searches_with_http_info(
+
+            raw_response = client.get_top_searches_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1481,31 +1556,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_searches_count(
+
+            response = client.get_searches_count(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_searches_count_with_http_info(
+
+            raw_response = client.get_searches_count_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1748,31 +1838,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_searches_no_results(
+
+            response = client.get_searches_no_results(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_searches_no_results_with_http_info(
+
+            raw_response = client.get_searches_no_results_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2020,31 +2125,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_searches_no_clicks(
+
+            response = client.get_searches_no_clicks(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_searches_no_clicks_with_http_info(
+
+            raw_response = client.get_searches_no_clicks_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2302,31 +2422,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_no_results_rate(
+
+            response = client.get_no_results_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_no_results_rate_with_http_info(
+
+            raw_response = client.get_no_results_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2584,31 +2719,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_no_click_rate(
+
+            response = client.get_no_click_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_no_click_rate_with_http_info(
+
+            raw_response = client.get_no_click_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2829,31 +2979,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_top_hits(
+
+            response = client.get_top_hits(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_top_hits_with_http_info(
+
+            raw_response = client.get_top_hits_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3114,31 +3279,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_users_count(
+
+            response = client.get_users_count(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_users_count_with_http_info(
+
+            raw_response = client.get_users_count_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3367,14 +3547,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = AnalyticsClient(
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.get_top_filter_attributes(
+            response = client.get_top_filter_attributes(
                 index="index",
             )
 
@@ -3384,8 +3567,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_top_filter_attributes_with_http_info(
+            raw_response = client.get_top_filter_attributes_with_http_info(
                 index="index",
             )
 
@@ -3640,14 +3822,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = AnalyticsClient(
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.get_top_filter_for_attribute(
+            response = client.get_top_filter_for_attribute(
                 attribute="myAttribute",
                 index="index",
             )
@@ -3658,8 +3843,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_top_filter_for_attribute_with_http_info(
+            raw_response = client.get_top_filter_for_attribute_with_http_info(
                 attribute="myAttribute",
                 index="index",
             )
@@ -3910,14 +4094,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = AnalyticsClient(
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.get_top_filters_no_results(
+            response = client.get_top_filters_no_results(
                 index="index",
             )
 
@@ -3927,8 +4114,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_top_filters_no_results_with_http_info(
+            raw_response = client.get_top_filters_no_results_with_http_info(
                 index="index",
             )
 
@@ -4186,31 +4372,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_top_countries(
+
+            response = client.get_top_countries(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_top_countries_with_http_info(
+
+            raw_response = client.get_top_countries_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4472,14 +4673,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = AnalyticsClient(
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.get_average_click_position(
+            response = client.get_average_click_position(
                 index="index",
             )
 
@@ -4489,8 +4693,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_average_click_position_with_http_info(
+            raw_response = client.get_average_click_position_with_http_info(
                 index="index",
             )
 
@@ -4737,31 +4940,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_click_positions(
+
+            response = client.get_click_positions(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_click_positions_with_http_info(
+
+            raw_response = client.get_click_positions_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5020,31 +5238,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_click_through_rate(
+
+            response = client.get_click_through_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_click_through_rate_with_http_info(
+
+            raw_response = client.get_click_through_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5302,31 +5535,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_conversion_rate(
+
+            response = client.get_conversion_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_conversion_rate_with_http_info(
+
+            raw_response = client.get_conversion_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5584,31 +5832,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_add_to_cart_rate(
+
+            response = client.get_add_to_cart_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_add_to_cart_rate_with_http_info(
+
+            raw_response = client.get_add_to_cart_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5866,31 +6129,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_purchase_rate(
+
+            response = client.get_purchase_rate(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_purchase_rate_with_http_info(
+
+            raw_response = client.get_purchase_rate_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6130,31 +6408,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_revenue(
+
+            response = client.get_revenue(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_revenue_with_http_info(
+
+            raw_response = client.get_revenue_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6372,31 +6665,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = AnalyticsClient(
+
+            # In an asynchronous context, you can use AnalyticsClient instead,
+            which exposes the exact same methods.
+
+            client = AnalyticsClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_status(
+
+            response = client.get_status(
                 index="index",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_status_with_http_info(
+
+            raw_response = client.get_status_with_http_info(
                 index="index",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby

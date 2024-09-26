@@ -13,11 +13,12 @@ from urllib.parse import quote
 from warnings import warn
 
 from pydantic import Field, StrictBool, StrictStr
+from typing_extensions import Annotated
 
 if version_info >= (3, 11):
-    from typing import Annotated, Self
+    from typing import Self
 else:
-    from typing_extensions import Annotated, Self
+    from typing_extensions import Self
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.request_options import RequestOptions
@@ -82,7 +83,6 @@ from algoliasearch.ingestion.models.run_source_payload import RunSourcePayload
 from algoliasearch.ingestion.models.run_source_response import RunSourceResponse
 from algoliasearch.ingestion.models.run_status import RunStatus
 from algoliasearch.ingestion.models.run_type import RunType
-from algoliasearch.ingestion.models.sort_keys import SortKeys
 from algoliasearch.ingestion.models.source import Source
 from algoliasearch.ingestion.models.source_create import SourceCreate
 from algoliasearch.ingestion.models.source_create_response import SourceCreateResponse
@@ -108,6 +108,9 @@ from algoliasearch.ingestion.models.transformation_create_response import (
     TransformationCreateResponse,
 )
 from algoliasearch.ingestion.models.transformation_search import TransformationSearch
+from algoliasearch.ingestion.models.transformation_sort_keys import (
+    TransformationSortKeys,
+)
 from algoliasearch.ingestion.models.transformation_try import TransformationTry
 from algoliasearch.ingestion.models.transformation_try_response import (
     TransformationTryResponse,
@@ -1979,14 +1982,12 @@ class IngestionClient:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -2008,9 +2009,9 @@ class IngestionClient:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -2060,14 +2061,12 @@ class IngestionClient:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -2089,9 +2088,9 @@ class IngestionClient:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -2120,6 +2119,10 @@ class IngestionClient:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -2146,6 +2149,8 @@ class IngestionClient:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -2164,6 +2169,8 @@ class IngestionClient:
             _query_parameters.append(("type", type))
         if authentication_id is not None:
             _query_parameters.append(("authenticationID", authentication_id))
+        if transformation_id is not None:
+            _query_parameters.append(("transformationID", transformation_id))
         if sort is not None:
             _query_parameters.append(("sort", sort))
         if order is not None:
@@ -2196,6 +2203,10 @@ class IngestionClient:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -2222,6 +2233,8 @@ class IngestionClient:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -2230,7 +2243,14 @@ class IngestionClient:
         :return: Returns the deserialized response in a 'ListDestinationsResponse' result object.
         """
         resp = await self.list_destinations_with_http_info(
-            items_per_page, page, type, authentication_id, sort, order, request_options
+            items_per_page,
+            page,
+            type,
+            authentication_id,
+            transformation_id,
+            sort,
+            order,
+            request_options,
         )
         return resp.deserialize(ListDestinationsResponse, resp.raw_data)
 
@@ -2638,7 +2658,7 @@ class IngestionClient:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -2665,7 +2685,7 @@ class IngestionClient:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -2717,7 +2737,7 @@ class IngestionClient:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -2744,7 +2764,7 @@ class IngestionClient:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -3145,7 +3165,8 @@ class IngestionClient:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -3165,8 +3186,8 @@ class IngestionClient:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3205,7 +3226,8 @@ class IngestionClient:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -3225,8 +3247,8 @@ class IngestionClient:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -6502,14 +6524,12 @@ class IngestionClientSync:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -6531,9 +6551,9 @@ class IngestionClientSync:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -6583,14 +6603,12 @@ class IngestionClientSync:
         platform: Annotated[
             Optional[List[PlatformWithNone]],
             Field(
-                description="Ecommerce platform for which to retrieve authentication resources."
+                description="Ecommerce platform for which to retrieve authentications."
             ),
         ] = None,
         sort: Annotated[
             Optional[AuthenticationSortKeys],
-            Field(
-                description="Property by which to sort the list of authentication resources."
-            ),
+            Field(description="Property by which to sort the list of authentications."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -6612,9 +6630,9 @@ class IngestionClientSync:
         :type page: int
         :param type: Type of authentication resource to retrieve.
         :type type: List[AuthenticationType]
-        :param platform: Ecommerce platform for which to retrieve authentication resources.
+        :param platform: Ecommerce platform for which to retrieve authentications.
         :type platform: List[PlatformWithNone]
-        :param sort: Property by which to sort the list of authentication resources.
+        :param sort: Property by which to sort the list of authentications.
         :type sort: AuthenticationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
@@ -6643,6 +6661,10 @@ class IngestionClientSync:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -6669,6 +6691,8 @@ class IngestionClientSync:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -6687,6 +6711,8 @@ class IngestionClientSync:
             _query_parameters.append(("type", type))
         if authentication_id is not None:
             _query_parameters.append(("authenticationID", authentication_id))
+        if transformation_id is not None:
+            _query_parameters.append(("transformationID", transformation_id))
         if sort is not None:
             _query_parameters.append(("sort", sort))
         if order is not None:
@@ -6719,6 +6745,10 @@ class IngestionClientSync:
             Optional[List[StrictStr]],
             Field(description="Authentication ID used by destinations."),
         ] = None,
+        transformation_id: Annotated[
+            Optional[StrictStr],
+            Field(description="Get the list of destinations used by a transformation."),
+        ] = None,
         sort: Annotated[
             Optional[DestinationSortKeys],
             Field(description="Property by which to sort the destinations."),
@@ -6745,6 +6775,8 @@ class IngestionClientSync:
         :type type: List[DestinationType]
         :param authentication_id: Authentication ID used by destinations.
         :type authentication_id: List[str]
+        :param transformation_id: Get the list of destinations used by a transformation.
+        :type transformation_id: str
         :param sort: Property by which to sort the destinations.
         :type sort: DestinationSortKeys
         :param order: Sort order of the response, ascending or descending.
@@ -6753,7 +6785,14 @@ class IngestionClientSync:
         :return: Returns the deserialized response in a 'ListDestinationsResponse' result object.
         """
         resp = self.list_destinations_with_http_info(
-            items_per_page, page, type, authentication_id, sort, order, request_options
+            items_per_page,
+            page,
+            type,
+            authentication_id,
+            transformation_id,
+            sort,
+            order,
+            request_options,
         )
         return resp.deserialize(ListDestinationsResponse, resp.raw_data)
 
@@ -7161,7 +7200,7 @@ class IngestionClientSync:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -7188,7 +7227,7 @@ class IngestionClientSync:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -7240,7 +7279,7 @@ class IngestionClientSync:
         authentication_id: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource. "
+                description="Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication. "
             ),
         ] = None,
         sort: Annotated[
@@ -7267,7 +7306,7 @@ class IngestionClientSync:
         :type page: int
         :param type: Source type. Some sources require authentication.
         :type type: List[SourceType]
-        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication resource.
+        :param authentication_id: Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
         :type authentication_id: List[str]
         :param sort: Property by which to sort the list of sources.
         :type sort: SourceSortKeys
@@ -7668,7 +7707,8 @@ class IngestionClientSync:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -7688,8 +7728,8 @@ class IngestionClientSync:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -7728,7 +7768,8 @@ class IngestionClientSync:
             Field(description="Page number of the paginated API response."),
         ] = None,
         sort: Annotated[
-            Optional[SortKeys], Field(description="Property by which to sort the list.")
+            Optional[TransformationSortKeys],
+            Field(description="Property by which to sort the list of transformations."),
         ] = None,
         order: Annotated[
             Optional[OrderKeys],
@@ -7748,8 +7789,8 @@ class IngestionClientSync:
         :type items_per_page: int
         :param page: Page number of the paginated API response.
         :type page: int
-        :param sort: Property by which to sort the list.
-        :type sort: SortKeys
+        :param sort: Property by which to sort the list of transformations.
+        :type sort: TransformationSortKeys
         :param order: Sort order of the response, ascending or descending.
         :type order: OrderKeys
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

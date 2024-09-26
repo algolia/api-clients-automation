@@ -88,11 +88,7 @@ info:
   version: 1.0.0
 servers:
   - url: https://crawler.algolia.com/api
-    description: The main URL of the Crawler API.
-  - url: https://crawler-dev.algolia.com/api
-    description: >-
-      The URL of the development version of the Crawler API (Algolia employees
-      only).
+    description: The URL of the Crawler API.
 security:
   - BasicAuth: []
 tags:

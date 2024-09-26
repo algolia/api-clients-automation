@@ -104,7 +104,7 @@ import type { TransformationTryResponse } from '../model/transformationTryRespon
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.5.3';
+export const apiClientVersion = '1.6.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -1173,8 +1173,8 @@ export function createIngestionClient({
      * @param listAuthentications.itemsPerPage - Number of items per page.
      * @param listAuthentications.page - Page number of the paginated API response.
      * @param listAuthentications.type - Type of authentication resource to retrieve.
-     * @param listAuthentications.platform - Ecommerce platform for which to retrieve authentication resources.
-     * @param listAuthentications.sort - Property by which to sort the list of authentication resources.
+     * @param listAuthentications.platform - Ecommerce platform for which to retrieve authentications.
+     * @param listAuthentications.sort - Property by which to sort the list of authentications.
      * @param listAuthentications.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1198,6 +1198,7 @@ export function createIngestionClient({
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1228,12 +1229,13 @@ export function createIngestionClient({
      * @param listDestinations.page - Page number of the paginated API response.
      * @param listDestinations.type - Destination type.
      * @param listDestinations.authenticationID - Authentication ID used by destinations.
+     * @param listDestinations.transformationID - Get the list of destinations used by a transformation.
      * @param listDestinations.sort - Property by which to sort the destinations.
      * @param listDestinations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listDestinations(
-      { itemsPerPage, page, type, authenticationID, sort, order }: ListDestinationsProps = {},
+      { itemsPerPage, page, type, authenticationID, transformationID, sort, order }: ListDestinationsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListDestinationsResponse> {
       const requestPath = '/1/destinations';
@@ -1248,13 +1250,16 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
+      }
+      if (transformationID !== undefined) {
+        queryParameters.transformationID = transformationID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1300,7 +1305,6 @@ export function createIngestionClient({
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1313,6 +1317,7 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1322,7 +1327,6 @@ export function createIngestionClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1370,7 +1374,6 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
@@ -1380,14 +1383,12 @@ export function createIngestionClient({
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -1417,7 +1418,7 @@ export function createIngestionClient({
      * @param listSources.itemsPerPage - Number of items per page.
      * @param listSources.page - Page number of the paginated API response.
      * @param listSources.type - Source type. Some sources require authentication.
-     * @param listSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
+     * @param listSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
      * @param listSources.sort - Property by which to sort the list of sources.
      * @param listSources.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1432,20 +1433,19 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
-
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1493,26 +1493,27 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
-
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
+
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
+
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1560,10 +1561,10 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
@@ -1576,7 +1577,6 @@ export function createIngestionClient({
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1605,7 +1605,7 @@ export function createIngestionClient({
      * @param listTransformations - The listTransformations object.
      * @param listTransformations.itemsPerPage - Number of items per page.
      * @param listTransformations.page - Page number of the paginated API response.
-     * @param listTransformations.sort - Property by which to sort the list.
+     * @param listTransformations.sort - Property by which to sort the list of transformations.
      * @param listTransformations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1616,7 +1616,6 @@ export function createIngestionClient({
       const requestPath = '/1/transformations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }

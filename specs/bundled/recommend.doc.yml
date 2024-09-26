@@ -305,13 +305,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_get(
+            response = client.custom_get(
                 path="test/minimal",
             )
 
@@ -321,7 +324,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_get_with_http_info(
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
 
@@ -561,13 +564,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_post(
+            response = client.custom_post(
                 path="test/minimal",
             )
 
@@ -577,7 +583,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_post_with_http_info(
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
 
@@ -817,13 +823,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_put(
+            response = client.custom_put(
                 path="test/minimal",
             )
 
@@ -833,7 +842,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_put_with_http_info(
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
 
@@ -1069,13 +1078,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_delete(
+            response = client.custom_delete(
                 path="test/minimal",
             )
 
@@ -1085,7 +1097,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_delete_with_http_info(
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
 
@@ -1411,13 +1423,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_recommendations(
+            response = client.get_recommendations(
                 get_recommendations_params={
                     "requests": [
                         {
@@ -1436,7 +1451,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_recommendations_with_http_info(
+            raw_response = client.get_recommendations_with_http_info(
                 get_recommendations_params={
                     "requests": [
                         {
@@ -1731,13 +1746,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_recommend_rule(
+            response = client.get_recommend_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
@@ -1749,7 +1767,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_recommend_rule_with_http_info(
+            raw_response = client.get_recommend_rule_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
@@ -2009,13 +2027,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.delete_recommend_rule(
+            response = client.delete_recommend_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
@@ -2027,7 +2048,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.delete_recommend_rule_with_http_info(
+            raw_response = client.delete_recommend_rule_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 object_id="objectID",
@@ -2314,13 +2335,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_recommend_status(
+            response = client.get_recommend_status(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 task_id=12345,
@@ -2332,7 +2356,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_recommend_status_with_http_info(
+            raw_response = client.get_recommend_status_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
                 task_id=12345,
@@ -2662,13 +2686,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = RecommendClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.search_recommend_rules(
+            response = client.search_recommend_rules(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
             )
@@ -2679,7 +2706,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.search_recommend_rules_with_http_info(
+            raw_response = client.search_recommend_rules_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 model="related-products",
             )
@@ -5644,6 +5671,8 @@ components:
           $ref: '#/components/schemas/distinctSeqID'
         _score:
           $ref: '#/components/schemas/recommendScore'
+      x-discriminator-fields:
+        - objectID
     trendingFacetHit:
       type: object
       description: Trending facet hit.
@@ -5658,6 +5687,9 @@ components:
           $ref: '#/components/schemas/facetName'
         facetValue:
           $ref: '#/components/schemas/facetValue'
+      x-discriminator-fields:
+        - facetName
+        - facetValue
     recommendationsHit:
       oneOf:
         - $ref: '#/components/schemas/recommendHit'

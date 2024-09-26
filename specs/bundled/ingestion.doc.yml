@@ -280,31 +280,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_get(
+
+            response = client.custom_get(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_get_with_http_info(
+
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -512,31 +527,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_post(
+
+            response = client.custom_post(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_post_with_http_info(
+
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -744,31 +774,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_put(
+
+            response = client.custom_put(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_put_with_http_info(
+
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -972,31 +1017,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_delete(
+
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_delete_with_http_info(
+
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1210,27 +1270,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_authentications()
+
+            response = client.list_authentications()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_authentications_with_http_info()
+
+            raw_response = client.list_authentications_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1475,14 +1550,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_authentication(
+
+            response = client.create_authentication(
                 authentication_create={
                     "type": "oauth",
                     "name": "authName",
@@ -1493,11 +1574,14 @@ paths:
                     },
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_authentication_with_http_info(
+
+            raw_response = client.create_authentication_with_http_info(
                 authentication_create={
                     "type": "oauth",
                     "name": "authName",
@@ -1508,14 +1592,20 @@ paths:
                     },
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1768,14 +1858,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_authentications(
+
+            response = client.search_authentications(
                 authentication_search={
                     "authenticationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1783,11 +1879,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_authentications_with_http_info(
+
+            raw_response = client.search_authentications_with_http_info(
                 authentication_search={
                     "authenticationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1795,14 +1894,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2020,31 +2125,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_authentication(
+
+            response = client.get_authentication(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_authentication_with_http_info(
+
+            raw_response = client.get_authentication_with_http_info(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2267,37 +2387,52 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_authentication(
+
+            response = client.update_authentication(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 authentication_update={
                     "name": "newName",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_authentication_with_http_info(
+
+            raw_response = client.update_authentication_with_http_info(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 authentication_update={
                     "name": "newName",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2516,31 +2651,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_authentication(
+
+            response = client.delete_authentication(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_authentication_with_http_info(
+
+            raw_response = client.delete_authentication_with_http_info(
                 authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2617,6 +2767,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/destinationParameters_type'
         - $ref: '#/components/parameters/authenticationID'
+        - $ref: '#/components/parameters/transformationID'
         - $ref: '#/components/parameters/destinationParameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
@@ -2757,27 +2908,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_destinations()
+
+            response = client.list_destinations()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_destinations_with_http_info()
+
+            raw_response = client.list_destinations_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3016,14 +3182,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_destination(
+
+            response = client.create_destination(
                 destination_create={
                     "type": "search",
                     "name": "destinationName",
@@ -3033,11 +3205,14 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_destination_with_http_info(
+
+            raw_response = client.create_destination_with_http_info(
                 destination_create={
                     "type": "search",
                     "name": "destinationName",
@@ -3047,14 +3222,20 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3307,14 +3488,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_destinations(
+
+            response = client.search_destinations(
                 destination_search={
                     "destinationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -3322,11 +3509,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_destinations_with_http_info(
+
+            raw_response = client.search_destinations_with_http_info(
                 destination_search={
                     "destinationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -3334,14 +3524,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3561,31 +3757,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_destination(
+
+            response = client.get_destination(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_destination_with_http_info(
+
+            raw_response = client.get_destination_with_http_info(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3808,37 +4019,52 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_destination(
+
+            response = client.update_destination(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 destination_update={
                     "name": "newName",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_destination_with_http_info(
+
+            raw_response = client.update_destination_with_http_info(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 destination_update={
                     "name": "newName",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4056,31 +4282,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_destination(
+
+            response = client.delete_destination(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_destination_with_http_info(
+
+            raw_response = client.delete_destination_with_http_info(
                 destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4296,27 +4537,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_sources()
+
+            response = client.list_sources()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_sources_with_http_info()
+
+            raw_response = client.list_sources_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4581,14 +4837,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_source(
+
+            response = client.create_source(
                 source_create={
                     "type": "commercetools",
                     "name": "sourceName",
@@ -4605,11 +4867,14 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_source_with_http_info(
+
+            raw_response = client.create_source_with_http_info(
                 source_create={
                     "type": "commercetools",
                     "name": "sourceName",
@@ -4626,14 +4891,20 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4933,14 +5204,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.validate_source(
+
+            response = client.validate_source(
                 source_create={
                     "type": "commercetools",
                     "name": "sourceName",
@@ -4957,11 +5234,14 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.validate_source_with_http_info(
+
+            raw_response = client.validate_source_with_http_info(
                 source_create={
                     "type": "commercetools",
                     "name": "sourceName",
@@ -4978,14 +5258,20 @@ paths:
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5254,14 +5540,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_sources(
+
+            response = client.search_sources(
                 source_search={
                     "sourceIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -5269,11 +5561,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_sources_with_http_info(
+
+            raw_response = client.search_sources_with_http_info(
                 source_search={
                     "sourceIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -5281,14 +5576,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5504,31 +5805,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_source(
+
+            response = client.get_source(
                 source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_source_with_http_info(
+
+            raw_response = client.get_source_with_http_info(
                 source_id="75eeb306-51d3-4e5e-a279-3c92bd8893ac",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5750,37 +6066,52 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_source(
+
+            response = client.update_source(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 source_update={
                     "name": "newName",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_source_with_http_info(
+
+            raw_response = client.update_source_with_http_info(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 source_update={
                     "name": "newName",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5998,31 +6329,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_source(
+
+            response = client.delete_source(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_source_with_http_info(
+
+            raw_response = client.delete_source_with_http_info(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6251,14 +6597,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = IngestionClient(
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.validate_source_before_update(
+            response = client.validate_source_before_update(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 source_update={
                     "name": "newName",
@@ -6271,8 +6620,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.validate_source_before_update_with_http_info(
+            raw_response = client.validate_source_before_update_with_http_info(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 source_update={
                     "name": "newName",
@@ -6513,14 +6861,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = IngestionClient(
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.trigger_docker_source_discover(
+            response = client.trigger_docker_source_discover(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
@@ -6530,8 +6881,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.trigger_docker_source_discover_with_http_info(
+            raw_response = client.trigger_docker_source_discover_with_http_info(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
 
@@ -6814,14 +7164,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.run_source(
+
+            response = client.run_source(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 run_source_payload={
                     "indexToInclude": [
@@ -6835,11 +7191,14 @@ paths:
                     "entityType": "product",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.run_source_with_http_info(
+
+            raw_response = client.run_source_with_http_info(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 run_source_payload={
                     "indexToInclude": [
@@ -6853,14 +7212,20 @@ paths:
                     "entityType": "product",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7101,27 +7466,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_tasks_v1()
+
+            response = client.list_tasks_v1()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_tasks_v1_with_http_info()
+
+            raw_response = client.list_tasks_v1_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7361,14 +7741,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_task_v1(
+
+            response = client.create_task_v1(
                 task_create={
                     "sourceID": "search",
                     "destinationID": "destinationName",
@@ -7378,11 +7764,14 @@ paths:
                     "action": "replace",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_task_v1_with_http_info(
+
+            raw_response = client.create_task_v1_with_http_info(
                 task_create={
                     "sourceID": "search",
                     "destinationID": "destinationName",
@@ -7392,14 +7781,20 @@ paths:
                     "action": "replace",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7667,14 +8062,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_tasks_v1(
+
+            response = client.search_tasks_v1(
                 task_search={
                     "taskIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -7683,11 +8084,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_tasks_v1_with_http_info(
+
+            raw_response = client.search_tasks_v1_with_http_info(
                 task_search={
                     "taskIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -7696,14 +8100,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7932,31 +8342,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_task_v1(
+
+            response = client.get_task_v1(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_task_v1_with_http_info(
+
+            raw_response = client.get_task_v1_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8178,37 +8603,52 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_task_v1(
+
+            response = client.update_task_v1(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 task_update={
                     "enabled": False,
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_task_v1_with_http_info(
+
+            raw_response = client.update_task_v1_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 task_update={
                     "enabled": False,
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8422,31 +8862,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_task_v1(
+
+            response = client.delete_task_v1(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_task_v1_with_http_info(
+
+            raw_response = client.delete_task_v1_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8658,31 +9113,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.run_task_v1(
+
+            response = client.run_task_v1(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.run_task_v1_with_http_info(
+
+            raw_response = client.run_task_v1_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8893,31 +9363,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.enable_task_v1(
+
+            response = client.enable_task_v1(
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.enable_task_v1_with_http_info(
+
+            raw_response = client.enable_task_v1_with_http_info(
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9129,31 +9614,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.disable_task_v1(
+
+            response = client.disable_task_v1(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.disable_task_v1_with_http_info(
+
+            raw_response = client.disable_task_v1_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9372,27 +9872,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_tasks()
+
+            response = client.list_tasks()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_tasks_with_http_info()
+
+            raw_response = client.list_tasks_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9610,39 +10125,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_task(
+
+            response = client.create_task(
                 task_create={
                     "sourceID": "search",
                     "destinationID": "destinationName",
                     "action": "replace",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_task_with_http_info(
+
+            raw_response = client.create_task_with_http_info(
                 task_create={
                     "sourceID": "search",
                     "destinationID": "destinationName",
                     "action": "replace",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9897,14 +10427,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_tasks(
+
+            response = client.search_tasks(
                 task_search={
                     "taskIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -9913,11 +10449,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_tasks_with_http_info(
+
+            raw_response = client.search_tasks_with_http_info(
                 task_search={
                     "taskIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -9926,14 +10465,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10160,31 +10705,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_task(
+
+            response = client.get_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_task_with_http_info(
+
+            raw_response = client.get_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10403,39 +10963,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_task(
+
+            response = client.update_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 task_update={
                     "enabled": False,
                     "cron": "* * * * *",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_task_with_http_info(
+
+            raw_response = client.update_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 task_update={
                     "enabled": False,
                     "cron": "* * * * *",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10648,31 +11223,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_task(
+
+            response = client.delete_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_task_with_http_info(
+
+            raw_response = client.delete_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10884,31 +11474,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.run_task(
+
+            response = client.run_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.run_task_with_http_info(
+
+            raw_response = client.run_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11220,14 +11825,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.push_task(
+
+            response = client.push_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 push_task_payload={
                     "action": "addObject",
@@ -11245,11 +11856,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.push_task_with_http_info(
+
+            raw_response = client.push_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 push_task_payload={
                     "action": "addObject",
@@ -11267,14 +11881,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11521,31 +12141,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.enable_task(
+
+            response = client.enable_task(
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.enable_task_with_http_info(
+
+            raw_response = client.enable_task_with_http_info(
                 task_id="76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11755,31 +12390,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.disable_task(
+
+            response = client.disable_task(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.disable_task_with_http_info(
+
+            raw_response = client.disable_task_with_http_info(
                 task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11853,7 +12503,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/itemsPerPage'
         - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/parameters_sort'
+        - $ref: '#/components/parameters/transformationParameters_sort'
         - $ref: '#/components/parameters/order'
       responses:
         '200':
@@ -11994,27 +12644,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_transformations()
+
+            response = client.list_transformations()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_transformations_with_http_info()
+
+            raw_response = client.list_transformations_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -12233,39 +12898,54 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.create_transformation(
+
+            response = client.create_transformation(
                 transformation_create={
                     "code": "foo",
                     "name": "bar",
                     "description": "baz",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.create_transformation_with_http_info(
+
+            raw_response = client.create_transformation_with_http_info(
                 transformation_create={
                     "code": "foo",
                     "name": "bar",
                     "description": "baz",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -12513,14 +13193,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.try_transformation(
+
+            response = client.try_transformation(
                 transformation_try={
                     "code": "foo",
                     "sampleRecord": {
@@ -12528,11 +13214,14 @@ paths:
                     },
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.try_transformation_with_http_info(
+
+            raw_response = client.try_transformation_with_http_info(
                 transformation_try={
                     "code": "foo",
                     "sampleRecord": {
@@ -12540,14 +13229,20 @@ paths:
                     },
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -12801,14 +13496,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.search_transformations(
+
+            response = client.search_transformations(
                 transformation_search={
                     "transformationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -12817,11 +13518,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_transformations_with_http_info(
+
+            raw_response = client.search_transformations_with_http_info(
                 transformation_search={
                     "transformationIDs": [
                         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -12830,14 +13534,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13064,31 +13774,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_transformation(
+
+            response = client.get_transformation(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_transformation_with_http_info(
+
+            raw_response = client.get_transformation_with_http_info(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13318,14 +14043,20 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.update_transformation(
+
+            response = client.update_transformation(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_create={
                     "code": "foo",
@@ -13333,11 +14064,14 @@ paths:
                     "description": "baz",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_transformation_with_http_info(
+
+            raw_response = client.update_transformation_with_http_info(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_create={
                     "code": "foo",
@@ -13345,14 +14079,20 @@ paths:
                     "description": "baz",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13567,31 +14307,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_transformation(
+
+            response = client.delete_transformation(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_transformation_with_http_info(
+
+            raw_response = client.delete_transformation_with_http_info(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13841,14 +14596,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = IngestionClient(
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.try_transformation_before_update(
+            response = client.try_transformation_before_update(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_try={
                     "code": "foo",
@@ -13864,7 +14622,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
+            raw_response =
             client.try_transformation_before_update_with_http_info(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_try={
@@ -14113,27 +14871,42 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_runs()
+
+            response = client.list_runs()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_runs_with_http_info()
+
+            raw_response = client.list_runs_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14340,31 +15113,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_run(
+
+            response = client.get_run(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_run_with_http_info(
+
+            raw_response = client.get_run_with_http_info(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14608,31 +15396,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.list_events(
+
+            response = client.list_events(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_events_with_http_info(
+
+            raw_response = client.list_events_with_http_info(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14846,33 +15649,48 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = IngestionClient(
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_event(
+
+            response = client.get_event(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_event_with_http_info(
+
+            raw_response = client.get_event_with_http_info(
                 run_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 event_id="6c02aeb1-775e-418e-870b-1faccd4b2c0c",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14999,7 +15817,7 @@ components:
     platform:
       name: platform
       in: query
-      description: Ecommerce platform for which to retrieve authentication resources.
+      description: Ecommerce platform for which to retrieve authentications.
       required: false
       style: form
       explode: false
@@ -15011,7 +15829,7 @@ components:
     sort:
       name: sort
       in: query
-      description: Property by which to sort the list of authentication resources.
+      description: Property by which to sort the list of authentications.
       required: false
       schema:
         $ref: '#/components/schemas/authenticationSortKeys'
@@ -15052,6 +15870,15 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/authenticationID'
+    transformationID:
+      name: transformationID
+      in: query
+      description: Get the list of destinations used by a transformation.
+      required: false
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/transformationID'
     destinationParameters_sort:
       name: sort
       in: query
@@ -15084,7 +15911,7 @@ components:
       in: query
       description: |
         Authentication IDs of the sources to retrieve.
-        'none' returns sources that doesn't have an authentication resource.
+        'none' returns sources that doesn't have an authentication.
       required: false
       style: form
       explode: false
@@ -15177,13 +16004,13 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
-    parameters_sort:
+    transformationParameters_sort:
       name: sort
       in: query
-      description: Property by which to sort the list.
+      description: Property by which to sort the list of transformations.
       required: false
       schema:
-        $ref: '#/components/schemas/sortKeys'
+        $ref: '#/components/schemas/transformationSortKeys'
     pathTransformationID:
       name: transformationID
       in: path
@@ -15314,11 +16141,11 @@ components:
         - $ref: '#/components/schemas/platformNone'
     authenticationSortKeys:
       type: string
-      description: Property by which to sort the list of authentication resources.
+      description: Property by which to sort the list of authentications.
       default: createdAt
       enum:
         - name
-        - auth_type
+        - type
         - platform
         - updatedAt
         - createdAt
@@ -15699,6 +16526,10 @@ components:
       enum:
         - search
         - insights
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     destinationSortKeys:
       type: string
       description: Property by which to sort the destinations.
@@ -15756,10 +16587,6 @@ components:
     DestinationInput:
       oneOf:
         - $ref: '#/components/schemas/DestinationIndexName'
-    transformationID:
-      type: string
-      description: Universally unique identifier (UUID) of a transformation.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     transformationIDs:
       type: array
       items:
@@ -17046,13 +17873,12 @@ components:
       type: string
       description: Unique record identifier.
       example: test-record-123
-    sortKeys:
+    transformationSortKeys:
       type: string
-      description: Property by which to sort the list.
-      default: desc
+      description: Property by which to sort the list of transformations.
+      default: createdAt
       enum:
         - name
-        - type
         - updatedAt
         - createdAt
     AuthenticationIDs:

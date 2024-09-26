@@ -249,31 +249,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_get(
+
+            response = client.custom_get(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_get_with_http_info(
+
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -480,31 +495,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_post(
+
+            response = client.custom_post(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_post_with_http_info(
+
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -711,31 +741,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_put(
+
+            response = client.custom_put(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_put_with_http_info(
+
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -938,31 +983,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.custom_delete(
+
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_delete_with_http_info(
+
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1193,31 +1253,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.get_user_token_profile(
+
+            response = client.get_user_token_profile(
                 user_token="UserToken",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_user_token_profile_with_http_info(
+
+            raw_response = client.get_user_token_profile_with_http_info(
                 user_token="UserToken",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1446,31 +1521,46 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = PersonalizationClient(
+
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
+
             # Call the API
-            response = await client.delete_user_profile(
+
+            response = client.delete_user_profile(
                 user_token="UserToken",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_user_profile_with_http_info(
+
+            raw_response = client.delete_user_profile_with_http_info(
                 user_token="UserToken",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1671,14 +1761,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = PersonalizationClient(
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.get_personalization_strategy()
+            response = client.get_personalization_strategy()
 
 
             print(response)
@@ -1686,8 +1779,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_personalization_strategy_with_http_info()
+            raw_response = client.get_personalization_strategy_with_http_info()
 
 
             print(raw_response.raw_data)
@@ -1978,14 +2070,17 @@ paths:
           source: >
             # Initialize the client
 
-            client = PersonalizationClient(
+            # In an asynchronous context, you can use PersonalizationClient
+            instead, which exposes the exact same methods.
+
+            client = PersonalizationClientSync(
                 "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
             )
 
 
             # Call the API
 
-            response = await client.set_personalization_strategy(
+            response = client.set_personalization_strategy(
                 personalization_strategy_params={
                     "eventScoring": [
                         {
@@ -2010,8 +2105,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.set_personalization_strategy_with_http_info(
+            raw_response = client.set_personalization_strategy_with_http_info(
                 personalization_strategy_params={
                     "eventScoring": [
                         {

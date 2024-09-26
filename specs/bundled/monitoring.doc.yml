@@ -228,13 +228,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_get(
+            response = client.custom_get(
                 path="test/minimal",
             )
 
@@ -244,7 +247,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_get_with_http_info(
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
 
@@ -472,13 +475,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_post(
+            response = client.custom_post(
                 path="test/minimal",
             )
 
@@ -488,7 +494,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_post_with_http_info(
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
 
@@ -716,13 +722,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_put(
+            response = client.custom_put(
                 path="test/minimal",
             )
 
@@ -732,7 +741,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_put_with_http_info(
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
 
@@ -956,13 +965,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.custom_delete(
+            response = client.custom_delete(
                 path="test/minimal",
             )
 
@@ -972,7 +984,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.custom_delete_with_http_info(
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
 
@@ -1179,13 +1191,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_status()
+            response = client.get_status()
 
 
             print(response)
@@ -1193,7 +1208,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_status_with_http_info()
+            raw_response = client.get_status_with_http_info()
 
 
             print(raw_response.raw_data)
@@ -1410,13 +1425,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_cluster_status(
+            response = client.get_cluster_status(
                 clusters="c1-de",
             )
 
@@ -1426,7 +1444,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_cluster_status_with_http_info(
+            raw_response = client.get_cluster_status_with_http_info(
                 clusters="c1-de",
             )
 
@@ -1633,13 +1651,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_incidents()
+            response = client.get_incidents()
 
 
             print(response)
@@ -1647,7 +1668,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_incidents_with_http_info()
+            raw_response = client.get_incidents_with_http_info()
 
 
             print(raw_response.raw_data)
@@ -1864,13 +1885,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_cluster_incidents(
+            response = client.get_cluster_incidents(
                 clusters="c1-de",
             )
 
@@ -1880,7 +1904,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_cluster_incidents_with_http_info(
+            raw_response = client.get_cluster_incidents_with_http_info(
                 clusters="c1-de",
             )
 
@@ -2099,13 +2123,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_servers()
+            response = client.get_servers()
 
 
             print(response)
@@ -2113,7 +2140,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_servers_with_http_info()
+            raw_response = client.get_servers_with_http_info()
 
 
             print(raw_response.raw_data)
@@ -2326,13 +2353,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_latency(
+            response = client.get_latency(
                 clusters="c1-de",
             )
 
@@ -2342,7 +2372,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_latency_with_http_info(
+            raw_response = client.get_latency_with_http_info(
                 clusters="c1-de",
             )
 
@@ -2559,13 +2589,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_indexing_time(
+            response = client.get_indexing_time(
                 clusters="c1-de",
             )
 
@@ -2575,7 +2608,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_indexing_time_with_http_info(
+            raw_response = client.get_indexing_time_with_http_info(
                 clusters="c1-de",
             )
 
@@ -2792,13 +2825,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_reachability(
+            response = client.get_reachability(
                 clusters="c1-de",
             )
 
@@ -2808,7 +2844,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_reachability_with_http_info(
+            raw_response = client.get_reachability_with_http_info(
                 clusters="c1-de",
             )
 
@@ -3038,13 +3074,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = MonitoringClient("ALGOLIA_APPLICATION_ID",
+            # In an asynchronous context, you can use MonitoringClient instead,
+            which exposes the exact same methods.
+
+            client = MonitoringClientSync("ALGOLIA_APPLICATION_ID",
             "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_metrics(
+            response = client.get_metrics(
                 metric="avg_build_time",
                 period="minute",
             )
@@ -3055,7 +3094,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await client.get_metrics_with_http_info(
+            raw_response = client.get_metrics_with_http_info(
                 metric="avg_build_time",
                 period="minute",
             )

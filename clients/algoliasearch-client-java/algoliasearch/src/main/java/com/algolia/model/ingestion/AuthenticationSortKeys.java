@@ -6,11 +6,11 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Property by which to sort the list of authentication resources. */
+/** Property by which to sort the list of authentications. */
 public enum AuthenticationSortKeys {
   NAME("name"),
 
-  AUTH_TYPE("auth_type"),
+  TYPE("type"),
 
   PLATFORM("platform"),
 

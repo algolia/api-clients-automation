@@ -2,9 +2,11 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 {{> model_description}}
 
 {{#composedSchemas.oneOf}}
-    {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}
+    {{vendorExtensions.x-py-name}}: {{^required}}Optional[{{/required}}{{{dataType}}}{{^required}}]{{/required}} = Field({{^required}}default=None{{/required}})
+    {{#description}}""" {{{.}}} """{{/description}}
 {{/composedSchemas.oneOf}}
     actual_instance: Optional[Union[{{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]] = None
+    one_of_schemas: Set[str] = { {{#oneOf}}"{{.}}"{{^-last}}, {{/-last}}{{/oneOf}} }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -24,11 +26,17 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         return self.actual_instance if hasattr(self, "actual_instance") else self
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Self:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+        """Create an instance of {{{classname}}} from a JSON string"""
         return cls.from_json(dumps(obj))
 
     @classmethod
+    {{#isNullable}}
+    def from_json(cls, json_str: Optional[str]) -> Self:
+    {{/isNullable}}
+    {{^isNullable}}
     def from_json(cls, json_str: str) -> Self:
+    {{/isNullable}}
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         {{#isNullable}}
@@ -76,17 +84,17 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json"):
+        if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
             return self.actual_instance.to_json()
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], {{#oneOf}}{{{.}}}{{^-last}}, {{/-last}}{{/oneOf}}]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict"):
+        if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
             return self.actual_instance.to_dict()
         else:
             return self.actual_instance

@@ -6,11 +6,9 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Property by which to sort the list. */
-public enum SortKeys {
+/** Property by which to sort the list of transformations. */
+public enum TransformationSortKeys {
   NAME("name"),
-
-  TYPE("type"),
 
   UPDATED_AT("updatedAt"),
 
@@ -18,7 +16,7 @@ public enum SortKeys {
 
   private final String value;
 
-  SortKeys(String value) {
+  TransformationSortKeys(String value) {
     this.value = value;
   }
 
@@ -33,8 +31,8 @@ public enum SortKeys {
   }
 
   @JsonCreator
-  public static SortKeys fromValue(String value) {
-    for (SortKeys b : SortKeys.values()) {
+  public static TransformationSortKeys fromValue(String value) {
+    for (TransformationSortKeys b : TransformationSortKeys.values()) {
       if (b.value.equals(value)) {
         return b;
       }

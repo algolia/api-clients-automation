@@ -427,29 +427,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.custom_get(
+
+            response = client.custom_get(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_get_with_http_info(
+
+            raw_response = client.custom_get_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -673,29 +689,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.custom_post(
+
+            response = client.custom_post(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_post_with_http_info(
+
+            raw_response = client.custom_post_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -919,29 +951,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.custom_put(
+
+            response = client.custom_put(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_put_with_http_info(
+
+            raw_response = client.custom_put_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1161,29 +1209,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.custom_delete(
+
+            response = client.custom_delete(
                 path="test/minimal",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.custom_delete_with_http_info(
+
+            raw_response = client.custom_delete_with_http_info(
                 path="test/minimal",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1423,29 +1487,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search_single_index(
+
+            response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_single_index_with_http_info(
+
+            raw_response = client.search_single_index_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -1755,12 +1835,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search(
+
+            response = client.search(
                 search_method_params={
                     "requests": [
                         {
@@ -1771,11 +1858,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_with_http_info(
+
+            raw_response = client.search_with_http_info(
                 search_method_params={
                     "requests": [
                         {
@@ -1786,14 +1876,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2071,31 +2167,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search_for_facet_values(
+
+            response = client.search_for_facet_values(
                 index_name="<YOUR_INDEX_NAME>",
                 facet_name="facetName",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_for_facet_values_with_http_info(
+
+            raw_response = client.search_for_facet_values_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 facet_name="facetName",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2374,29 +2486,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.browse(
+
+            response = client.browse(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.browse_with_http_info(
+
+            raw_response = client.browse_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2690,37 +2818,53 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.save_object(
+
+            response = client.save_object(
                 index_name="<YOUR_INDEX_NAME>",
                 body={
                     "objectID": "id",
                     "test": "val",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.save_object_with_http_info(
+
+            raw_response = client.save_object_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 body={
                     "objectID": "id",
                     "test": "val",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -2962,29 +3106,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_index(
+
+            response = client.delete_index(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_index_with_http_info(
+
+            raw_response = client.delete_index_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3257,12 +3417,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_object(
+
+            response = client.get_object(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_retrieve=[
@@ -3270,11 +3437,14 @@ paths:
                     "attr2",
                 ],
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_object_with_http_info(
+
+            raw_response = client.get_object_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_retrieve=[
@@ -3282,14 +3452,20 @@ paths:
                     "attr2",
                 ],
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3565,37 +3741,53 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.add_or_update_object(
+
+            response = client.add_or_update_object(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 body={
                     "key": "value",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.add_or_update_object_with_http_info(
+
+            raw_response = client.add_or_update_object_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 body={
                     "key": "value",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -3834,31 +4026,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_object(
+
+            response = client.delete_object(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_object_with_http_info(
+
+            raw_response = client.delete_object_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4106,35 +4314,51 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_by(
+
+            response = client.delete_by(
                 index_name="<YOUR_INDEX_NAME>",
                 delete_by_params={
                     "filters": "brand:brandName",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_by_with_http_info(
+
+            raw_response = client.delete_by_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 delete_by_params={
                     "filters": "brand:brandName",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4363,29 +4587,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.clear_objects(
+
+            response = client.clear_objects(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.clear_objects_with_http_info(
+
+            raw_response = client.clear_objects_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -4703,37 +4943,53 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.partial_update_object(
+
+            response = client.partial_update_object(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_update={
                     "attributeId": "new value",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.partial_update_object_with_http_info(
+
+            raw_response = client.partial_update_object_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="uniqueID",
                 attributes_to_update={
                     "attributeId": "new value",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5095,12 +5351,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.batch(
+
+            response = client.batch(
                 index_name="<YOUR_INDEX_NAME>",
                 batch_write_params={
                     "requests": [
@@ -5121,11 +5384,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.batch_with_http_info(
+
+            raw_response = client.batch_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 batch_write_params={
                     "requests": [
@@ -5146,14 +5412,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5528,12 +5800,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.multiple_batch(
+
+            response = client.multiple_batch(
                 batch_params={
                     "requests": [
                         {
@@ -5546,11 +5825,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.multiple_batch_with_http_info(
+
+            raw_response = client.multiple_batch_with_http_info(
                 batch_params={
                     "requests": [
                         {
@@ -5563,14 +5845,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -5927,12 +6215,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_objects(
+
+            response = client.get_objects(
                 get_objects_params={
                     "requests": [
                         {
@@ -5946,11 +6241,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_objects_with_http_info(
+
+            raw_response = client.get_objects_with_http_info(
                 get_objects_params={
                     "requests": [
                         {
@@ -5964,14 +6262,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6216,29 +6520,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_settings(
+
+            response = client.get_settings(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_settings_with_http_info(
+
+            raw_response = client.get_settings_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6510,12 +6830,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.set_settings(
+
+            response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
                     "attributesForFaceting": [
@@ -6525,11 +6852,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.set_settings_with_http_info(
+
+            raw_response = client.set_settings_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
                     "attributesForFaceting": [
@@ -6539,14 +6869,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -6790,31 +7126,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_synonym(
+
+            response = client.get_synonym(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_synonym_with_http_info(
+
+            raw_response = client.get_synonym_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7117,12 +7469,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.save_synonym(
+
+            response = client.save_synonym(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 synonym_hit={
@@ -7136,11 +7495,14 @@ paths:
                 },
                 forward_to_replicas=True,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.save_synonym_with_http_info(
+
+            raw_response = client.save_synonym_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 synonym_hit={
@@ -7154,14 +7516,20 @@ paths:
                 },
                 forward_to_replicas=True,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7407,31 +7775,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_synonym(
+
+            response = client.delete_synonym(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_synonym_with_http_info(
+
+            raw_response = client.delete_synonym_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -7769,12 +8153,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.save_synonyms(
+
+            response = client.save_synonyms(
                 index_name="<YOUR_INDEX_NAME>",
                 synonym_hit=[
                     {
@@ -7800,11 +8191,14 @@ paths:
                 forward_to_replicas=True,
                 replace_existing_synonyms=True,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.save_synonyms_with_http_info(
+
+            raw_response = client.save_synonyms_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 synonym_hit=[
                     {
@@ -7830,14 +8224,20 @@ paths:
                 forward_to_replicas=True,
                 replace_existing_synonyms=True,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8094,29 +8494,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.clear_synonyms(
+
+            response = client.clear_synonyms(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.clear_synonyms_with_http_info(
+
+            raw_response = client.clear_synonyms_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8361,29 +8777,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search_synonyms(
+
+            response = client.search_synonyms(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_synonyms_with_http_info(
+
+            raw_response = client.search_synonyms_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8608,25 +9040,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.list_api_keys()
+
+            response = client.list_api_keys()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_api_keys_with_http_info()
+
+            raw_response = client.list_api_keys_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -8899,12 +9347,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.add_api_key(
+
+            response = client.add_api_key(
                 api_key={
                     "acl": [
                         "search",
@@ -8916,11 +9371,14 @@ paths:
                     "maxHitsPerQuery": 20,
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.add_api_key_with_http_info(
+
+            raw_response = client.add_api_key_with_http_info(
                 api_key={
                     "acl": [
                         "search",
@@ -8932,14 +9390,20 @@ paths:
                     "maxHitsPerQuery": 20,
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9187,29 +9651,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_api_key(
+
+            response = client.get_api_key(
                 key="myTestApiKey",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_api_key_with_http_info(
+
+            raw_response = client.get_api_key_with_http_info(
                 key="myTestApiKey",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9491,12 +9971,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.update_api_key(
+
+            response = client.update_api_key(
                 key="ALGOLIA_API_KEY",
                 api_key={
                     "acl": [
@@ -9508,11 +9995,14 @@ paths:
                     "maxHitsPerQuery": 20,
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.update_api_key_with_http_info(
+
+            raw_response = client.update_api_key_with_http_info(
                 key="ALGOLIA_API_KEY",
                 api_key={
                     "acl": [
@@ -9524,14 +10014,20 @@ paths:
                     "maxHitsPerQuery": 20,
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -9777,29 +10273,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_api_key(
+
+            response = client.delete_api_key(
                 key="myTestApiKey",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_api_key_with_http_info(
+
+            raw_response = client.delete_api_key_with_http_info(
                 key="myTestApiKey",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10033,29 +10545,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.restore_api_key(
+
+            response = client.restore_api_key(
                 key="ALGOLIA_API_KEY",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.restore_api_key_with_http_info(
+
+            raw_response = client.restore_api_key_with_http_info(
                 key="ALGOLIA_API_KEY",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10288,31 +10816,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_rule(
+
+            response = client.get_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="qr-1725004648916",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_rule_with_http_info(
+
+            raw_response = client.get_rule_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="qr-1725004648916",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10599,12 +11143,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.save_rule(
+
+            response = client.save_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 rule={
@@ -10617,11 +11168,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.save_rule_with_http_info(
+
+            raw_response = client.save_rule_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
                 rule={
@@ -10634,14 +11188,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -10891,31 +11451,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_rule(
+
+            response = client.delete_rule(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_rule_with_http_info(
+
+            raw_response = client.delete_rule_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 object_id="id1",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11263,12 +11839,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.save_rules(
+
+            response = client.save_rules(
                 index_name="<YOUR_INDEX_NAME>",
                 rules=[
                     {
@@ -11293,11 +11876,14 @@ paths:
                 forward_to_replicas=False,
                 clear_existing_rules=True,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.save_rules_with_http_info(
+
+            raw_response = client.save_rules_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 rules=[
                     {
@@ -11322,14 +11908,20 @@ paths:
                 forward_to_replicas=False,
                 clear_existing_rules=True,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11597,29 +12189,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.clear_rules(
+
+            response = client.clear_rules(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.clear_rules_with_http_info(
+
+            raw_response = client.clear_rules_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -11909,35 +12517,51 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search_rules(
+
+            response = client.search_rules(
                 index_name="<YOUR_INDEX_NAME>",
                 search_rules_params={
                     "query": "zorro",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_rules_with_http_info(
+
+            raw_response = client.search_rules_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 search_rules_params={
                     "query": "zorro",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -12323,12 +12947,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.batch_dictionary_entries(
+
+            response = client.batch_dictionary_entries(
                 dictionary_name="plurals",
                 batch_dictionary_entries_params={
                     "clearExistingDictionaryEntries": True,
@@ -12353,11 +12984,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.batch_dictionary_entries_with_http_info(
+
+            raw_response = client.batch_dictionary_entries_with_http_info(
                 dictionary_name="plurals",
                 batch_dictionary_entries_params={
                     "clearExistingDictionaryEntries": True,
@@ -12382,14 +13016,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -12703,12 +13343,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.search_dictionary_entries(
+            response = client.search_dictionary_entries(
                 dictionary_name="stopwords",
                 search_dictionary_entries_params={
                     "query": "about",
@@ -12721,8 +13365,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.search_dictionary_entries_with_http_info(
+            raw_response = client.search_dictionary_entries_with_http_info(
                 dictionary_name="stopwords",
                 search_dictionary_entries_params={
                     "query": "about",
@@ -12969,25 +13612,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_dictionary_settings()
+
+            response = client.get_dictionary_settings()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_dictionary_settings_with_http_info()
+
+            raw_response = client.get_dictionary_settings_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13269,12 +13928,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.set_dictionary_settings(
+
+            response = client.set_dictionary_settings(
                 dictionary_settings_params={
                     "disableStandardEntries": {
                         "plurals": {
@@ -13285,11 +13951,14 @@ paths:
                     },
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.set_dictionary_settings_with_http_info(
+
+            raw_response = client.set_dictionary_settings_with_http_info(
                 dictionary_settings_params={
                     "disableStandardEntries": {
                         "plurals": {
@@ -13300,14 +13969,20 @@ paths:
                     },
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -13546,12 +14221,16 @@ paths:
           source: >
             # Initialize the client
 
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
 
 
             # Call the API
 
-            response = await client.get_dictionary_languages()
+            response = client.get_dictionary_languages()
 
 
             print(response)
@@ -13559,8 +14238,7 @@ paths:
 
             # Skip deserialization
 
-            raw_response = await
-            client.get_dictionary_languages_with_http_info()
+            raw_response = client.get_dictionary_languages_with_http_info()
 
 
             print(raw_response.raw_data)
@@ -13828,35 +14506,51 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.assign_user_id(
+
+            response = client.assign_user_id(
                 x_algolia_user_id="userID",
                 assign_user_id_params={
                     "cluster": "theCluster",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.assign_user_id_with_http_info(
+
+            raw_response = client.assign_user_id_with_http_info(
                 x_algolia_user_id="userID",
                 assign_user_id_params={
                     "cluster": "theCluster",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14095,25 +14789,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.list_user_ids()
+
+            response = client.list_user_ids()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_user_ids_with_http_info()
+
+            raw_response = client.list_user_ids_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14391,12 +15101,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.batch_assign_user_ids(
+
+            response = client.batch_assign_user_ids(
                 x_algolia_user_id="userID",
                 batch_assign_user_ids_params={
                     "cluster": "theCluster",
@@ -14406,11 +15123,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.batch_assign_user_ids_with_http_info(
+
+            raw_response = client.batch_assign_user_ids_with_http_info(
                 x_algolia_user_id="userID",
                 batch_assign_user_ids_params={
                     "cluster": "theCluster",
@@ -14420,14 +15140,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14675,25 +15401,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_top_user_ids()
+
+            response = client.get_top_user_ids()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_top_user_ids_with_http_info()
+
+            raw_response = client.get_top_user_ids_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -14922,29 +15664,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_user_id(
+
+            response = client.get_user_id(
                 user_id="uniqueID",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_user_id_with_http_info(
+
+            raw_response = client.get_user_id_with_http_info(
                 user_id="uniqueID",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -15173,29 +15931,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.remove_user_id(
+
+            response = client.remove_user_id(
                 user_id="uniqueID",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.remove_user_id_with_http_info(
+
+            raw_response = client.remove_user_id_with_http_info(
                 user_id="uniqueID",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -15420,25 +16194,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.list_clusters()
+
+            response = client.list_clusters()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_clusters_with_http_info()
+
+            raw_response = client.list_clusters_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -15778,12 +16568,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.search_user_ids(
+
+            response = client.search_user_ids(
                 search_user_ids_params={
                     "query": "test",
                     "clusterName": "theClusterName",
@@ -15791,11 +16588,14 @@ paths:
                     "hitsPerPage": 10,
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.search_user_ids_with_http_info(
+
+            raw_response = client.search_user_ids_with_http_info(
                 search_user_ids_params={
                     "query": "test",
                     "clusterName": "theClusterName",
@@ -15803,14 +16603,20 @@ paths:
                     "hitsPerPage": 10,
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -16066,25 +16872,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.has_pending_mappings()
+
+            response = client.has_pending_mappings()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.has_pending_mappings_with_http_info()
+
+            raw_response = client.has_pending_mappings_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -16296,25 +17118,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_sources()
+
+            response = client.get_sources()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_sources_with_http_info()
+
+            raw_response = client.get_sources_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -16570,12 +17408,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.replace_sources(
+
+            response = client.replace_sources(
                 source=[
                     {
                         "source": "theSource",
@@ -16583,11 +17428,14 @@ paths:
                     },
                 ],
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.replace_sources_with_http_info(
+
+            raw_response = client.replace_sources_with_http_info(
                 source=[
                     {
                         "source": "theSource",
@@ -16595,14 +17443,20 @@ paths:
                     },
                 ],
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -16849,35 +17703,51 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.append_source(
+
+            response = client.append_source(
                 source={
                     "source": "theSource",
                     "description": "theDescription",
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.append_source_with_http_info(
+
+            raw_response = client.append_source_with_http_info(
                 source={
                     "source": "theSource",
                     "description": "theDescription",
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -17120,29 +17990,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.delete_source(
+
+            response = client.delete_source(
                 source="theSource",
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.delete_source_with_http_info(
+
+            raw_response = client.delete_source_with_http_info(
                 source="theSource",
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -17537,25 +18423,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_logs()
+
+            response = client.get_logs()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_logs_with_http_info()
+
+            raw_response = client.get_logs_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -17783,29 +18685,45 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_app_task(
+
+            response = client.get_app_task(
                 task_id=123,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_app_task_with_http_info(
+
+            raw_response = client.get_app_task_with_http_info(
                 task_id=123,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -18052,31 +18970,47 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.get_task(
+
+            response = client.get_task(
                 index_name="<YOUR_INDEX_NAME>",
                 task_id=123,
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.get_task_with_http_info(
+
+            raw_response = client.get_task_with_http_info(
                 index_name="<YOUR_INDEX_NAME>",
                 task_id=123,
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -18413,12 +19347,19 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.operation_index(
+
+            response = client.operation_index(
                 index_name="<SOURCE_INDEX_NAME>",
                 operation_index_params={
                     "operation": "move",
@@ -18429,11 +19370,14 @@ paths:
                     ],
                 },
             )
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.operation_index_with_http_info(
+
+            raw_response = client.operation_index_with_http_info(
                 index_name="<SOURCE_INDEX_NAME>",
                 operation_index_params={
                     "operation": "move",
@@ -18444,14 +19388,20 @@ paths:
                     ],
                 },
             )
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby
@@ -18687,25 +19637,41 @@ paths:
             var_dump($response);
         - lang: python
           label: Python
-          source: |
+          source: >
             # Initialize the client
-            client = SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
 
             # Call the API
-            response = await client.list_indices()
+
+            response = client.list_indices()
+
 
             print(response)
 
+
             # Skip deserialization
-            raw_response = await client.list_indices_with_http_info()
+
+            raw_response = client.list_indices_with_http_info()
+
 
             print(raw_response.raw_data)
 
+
             # >LOG
+
             # use the class directly
+
             print(response)
 
+
             # print the JSON response
+
             print(response.to_json())
         - lang: ruby
           label: Ruby

@@ -1,0 +1,24 @@
+name: Push specs and snippets to Algolia doc
+
+on: workflow_dispatch
+
+jobs:
+  release:
+    name: Scheduled Release
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - run: yarn workspace scripts pushToAlgoliaDoc
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          FORCE: true
