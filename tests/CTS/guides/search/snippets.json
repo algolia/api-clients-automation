@@ -2,33 +2,10 @@
   "saveObjectsMovies": {
     "method": "saveObjects",
     "parameters": {
-      "indexName": "cts_e2e_saveObjects_${{language}}",
-      "objects": [
-        {
-          "objectID": "1",
-          "name": "Adam"
-        },
-        {
-          "objectID": "2",
-          "name": "Benoit"
-        }
-      ]
-    }
-  },
-  "prout": {
-    "method": "prout",
-    "parameters": {
-      "indexName": "cts_e2e_saveObjects_${{language}}",
-      "objects": [
-        {
-          "objectID": "1",
-          "name": "Adam"
-        },
-        {
-          "objectID": "2",
-          "name": "Benoit"
-        }
-      ]
+      "indexName": "movies_index",
+      "objects": {
+        "$var": "objects"
+      }
     }
   }
 }
