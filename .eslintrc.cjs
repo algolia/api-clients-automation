@@ -210,6 +210,17 @@ module.exports = {
       plugins: ['@vitest/eslint-plugin'],
     },
     {
+      files: ['guides/**/*.ts'],
+
+      rules: {
+        'no-console': 0,
+
+        // TODO: remove this
+        '@typescript-eslint/no-unused-vars': 0,
+        '@typescript-eslint/explicit-function-return-type': 0,
+      },
+    },
+    {
       files: ['*.json'],
       parserOptions: {
         extraFileExtensions: ['.json'],

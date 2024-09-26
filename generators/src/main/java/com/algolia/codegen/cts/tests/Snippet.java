@@ -13,6 +13,7 @@ public class Snippet {
 
   public String testName;
   public boolean isSnippet;
+  public boolean ignoreResponse;
 
   public String method;
   public Map<String, Object> parameters;
@@ -33,6 +34,7 @@ public class Snippet {
     sb.append("class Request {\n");
     sb.append("    testName: ").append(testName).append("\n");
     sb.append("    isSnippet").append(isSnippet).append("\n");
+    sb.append("    ignoreResponse").append(ignoreResponse).append("\n");
     sb.append("    method: ").append(method).append("\n");
     sb.append("    parameters: ").append(parameters).append("\n");
     sb.append("    requestOptions: ").append(requestOptions).append("\n");
@@ -73,11 +75,13 @@ public class Snippet {
 
       // Determines whether the endpoint is expected to return a response payload deserialized
       // and therefore a variable to store it into.
-      context.put("hasResponse", true);
+      if (!ignoreResponse) {
+        context.put("hasResponse", true);
 
-      for (CodegenResponse response : ope.responses) {
-        if (response.code.equals("204")) {
-          context.put("hasResponse", false);
+        for (CodegenResponse response : ope.responses) {
+          if (response.code.equals("204")) {
+            context.put("hasResponse", false);
+          }
         }
       }
 
