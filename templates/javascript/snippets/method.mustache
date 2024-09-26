@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 // >IMPORT
-{{> tests/snippets/import}}
+{{> snippets/import}}
 // IMPORT<
 import type { RequestOptions } from '@algolia/client-common';
 
@@ -14,7 +14,7 @@ import type { RequestOptions } from '@algolia/client-common';
 export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): {{#isAsyncMethod}}Promise<void>{{/isAsyncMethod}}{{^isAsyncMethod}}void{{/isAsyncMethod}} {
   // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
-  {{> tests/snippets/init}}
+  {{> snippets/init}}
 
   // Call the API
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};

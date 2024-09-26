@@ -1,7 +1,11 @@
 package com.algolia.codegen.cts.lambda;
 
 import com.algolia.codegen.cts.tests.ParametersWithDataType;
+import com.algolia.codegen.cts.tests.Step;
 import com.algolia.codegen.exceptions.CTSException;
+import com.algolia.codegen.utils.Helpers;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.v3.core.util.Json;
@@ -27,6 +31,8 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
   private ParametersWithDataType paramsType;
   private Map<String, CodegenOperation> operations;
 
+  private Map<String, Step> snippets;
+
   public DynamicSnippetLambda(
     DefaultCodegen generator,
     Map<String, CodegenModel> models,
@@ -36,6 +42,9 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
   ) {
     this.operations = operations;
     this.paramsType = new ParametersWithDataType(models, language, client, true);
+
+    JsonNode snippetsFile = Helpers.readJsonFile("tests/CTS/guides/search/snippets.json");
+    this.snippets = Json.mapper().convertValue(snippetsFile, new TypeReference<Map<String, Step>>() {});
 
     // we can't access the default template manager, so we have to create our own
     TemplateManager templateManager = new TemplateManager(
@@ -51,8 +60,13 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException, CTSException {
     String snippet = fragment.execute();
-    String operationId = snippet.split(" ", 2)[0];
-    
+    Step step = snippets.get(snippet);
+    if (step == null) {
+      throw new CTSException("Cannot find snippet: " + snippet);
+    }
+
+    String operationId = step.method;
+
     CodegenOperation operation = operations.get(operationId);
     if (operation == null) {
       throw new CTSException("Cannot find operation for method: " + operationId);
@@ -66,9 +80,9 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
     context.put("hasParams", operation.hasParams);
 
     // set the parameters
-    Map<String, Object> parameters = Json.mapper().readValue(params, Map.class);
-    System.out.println("parameters: " + parameters);
-    context.put("parameters", params);
+    // Map<String, Object> parameters = Json.mapper().readValue(params, Map.class);
+    // System.out.println("parameters: " + parameters);
+    // context.put("parameters", params);
 
     writer.write(adaptor.compileTemplate(executor, context, "tests/client/method.mustache"));
   }

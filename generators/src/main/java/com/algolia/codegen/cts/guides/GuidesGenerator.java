@@ -17,7 +17,7 @@ public class GuidesGenerator extends TestsGenerator {
 
   @Override
   public boolean available() {
-    File templates = new File("templates/" + language + "/guides/method.mustache");
+    File templates = new File("templates/" + language + "/guides/" + client);
     return templates.exists();
   }
 
@@ -37,12 +37,15 @@ public class GuidesGenerator extends TestsGenerator {
       outputFolder = "/";
     }
 
-    supportingFiles.add(
-      new SupportingFile(
-        "guides/method.mustache",
-        "guides/" + language + outputFolder + Helpers.createClientName(client, language) + extension
-      )
-    );
+    File templates = new File("templates/" + language + "/guides/" + client);
+    for (File f : templates.listFiles()) {
+      supportingFiles.add(
+        new SupportingFile(
+          "guides/" + client + "/" + f.getName(),
+          "guides/" + language + outputFolder + f.getName().replace("\\.mustache", "") + extension
+        )
+      );
+    }
   }
 
   @Override

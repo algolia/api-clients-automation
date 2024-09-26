@@ -1,14 +1,12 @@
-{{> tests/snippets/import}}
+{{> snippets/import}}
 
-{{> tests/snippets/init}}
+{{> snippets/init}}
 
 // Fetch and index objects in Algolia
 const processRecords = async () => {
   const datasetRequest = await fetch('https://dashboard.algolia.com/sample_datasets/movie.json');
   const objects = await datasetRequest.json();
   return {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
-
-   {{#dynamicSnippet}}prout{{/dynamicSnippet}}
 };
 
 processRecords()
