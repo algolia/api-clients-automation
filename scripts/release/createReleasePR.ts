@@ -26,10 +26,10 @@ import { getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
 
 import { getFileChanges, getLastReleasedTag } from './common.js';
-import { generateSLA } from './sla.js';
 import TEXT from './text.js';
 import type { Versions, ParsedCommit, Commit, Changelog, Scope, CommitType } from './types.js';
 import { updateAPIVersions } from './updateAPIVersions.js';
+import { generateVersionsHistory } from './versionsHistory.js';
 
 dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
@@ -343,10 +343,7 @@ export async function createReleasePR({
 
   const versions = decideReleaseStrategy({ commits: validCommits, releaseType });
 
-  // skip anything sla related for now
-  if (process.env.SLA) {
-    await generateSLA(versions);
-  }
+  await generateVersionsHistory(versions);
 
   const versionChanges = getVersionChangesText(versions);
   const languages = Object.keys(versions).join(', ');
