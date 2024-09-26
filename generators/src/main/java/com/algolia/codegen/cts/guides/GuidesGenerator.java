@@ -42,7 +42,7 @@ public class GuidesGenerator extends TestsGenerator {
       supportingFiles.add(
         new SupportingFile(
           "guides/" + client + "/" + f.getName(),
-          "guides/" + language + outputFolder + f.getName().replace("\\.mustache", "") + extension
+          "guides/" + language + outputFolder + f.getName().replace(".mustache", "") + extension
         )
       );
     }

@@ -1,7 +1,7 @@
 package com.algolia.codegen.cts.lambda;
 
 import com.algolia.codegen.cts.tests.ParametersWithDataType;
-import com.algolia.codegen.cts.tests.Step;
+import com.algolia.codegen.cts.tests.Snippet;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.Helpers;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,10 +28,10 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
   private final TemplatingExecutor executor;
   private final TemplatingEngineAdapter adaptor;
 
-  private ParametersWithDataType paramsType;
-  private Map<String, CodegenOperation> operations;
+  private final ParametersWithDataType paramsType;
+  private final Map<String, CodegenOperation> operations;
 
-  private Map<String, Step> snippets;
+  private final Map<String, Snippet> snippets;
 
   public DynamicSnippetLambda(
     DefaultCodegen generator,
@@ -44,7 +44,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
     this.paramsType = new ParametersWithDataType(models, language, client, true);
 
     JsonNode snippetsFile = Helpers.readJsonFile("tests/CTS/guides/search/snippets.json");
-    this.snippets = Json.mapper().convertValue(snippetsFile, new TypeReference<Map<String, Step>>() {});
+    this.snippets = Json.mapper().convertValue(snippetsFile, new TypeReference<Map<String, Snippet>>() {});
 
     // we can't access the default template manager, so we have to create our own
     TemplateManager templateManager = new TemplateManager(
@@ -59,13 +59,13 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
 
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException, CTSException {
-    String snippet = fragment.execute();
-    Step step = snippets.get(snippet);
-    if (step == null) {
-      throw new CTSException("Cannot find snippet: " + snippet);
+    String snippetName = fragment.execute();
+    Snippet snippet = snippets.get(snippetName);
+    if (snippet == null) {
+      throw new CTSException("Cannot find snippet: " + snippetName);
     }
 
-    String operationId = step.method;
+    String operationId = snippet.method;
 
     CodegenOperation operation = operations.get(operationId);
     if (operation == null) {
@@ -74,15 +74,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
 
     // set the method attributes
     Map<String, Object> context = (Map<String, Object>) fragment.context();
-    context.put("method", operationId);
-    context.put("isAsyncMethod", (boolean) operation.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
-    context.put("isHelper", (boolean) operation.vendorExtensions.getOrDefault("x-helper", false));
-    context.put("hasParams", operation.hasParams);
-
-    // set the parameters
-    // Map<String, Object> parameters = Json.mapper().readValue(params, Map.class);
-    // System.out.println("parameters: " + parameters);
-    // context.put("parameters", params);
+    snippet.addMethodCall(context, paramsType, operation);
 
     writer.write(adaptor.compileTemplate(executor, context, "tests/client/method.mustache"));
   }

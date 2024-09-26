@@ -4,6 +4,7 @@ import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
 import java.util.List;
 import java.util.Map;
+import org.openapitools.codegen.SupportingFile;
 
 public class ScalaCTSManager implements CTSManager {
 

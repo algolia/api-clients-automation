@@ -244,11 +244,17 @@ program
   .command('guides')
   .description('Generate the guides')
   .addArgument(args.language)
+  .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, { verbose }) => {
+  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+    const { language, client, clientList } = transformSelection({
+      langArg,
+      clientArg,
+    });
+
     setVerbose(Boolean(verbose));
 
-    await guidesGenerateMany(generatorList({ language: 'javascript', client: ['search'], clientList: ['search'] }));
+    await guidesGenerateMany(generatorList({ language, client, clientList }));
   });
 
 program
