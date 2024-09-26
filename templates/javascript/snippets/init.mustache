@@ -1,1 +1,1 @@
-const client = {{client}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", {{#hasRegionalHost}}'ALGOLIA_APPLICATION_REGION', {{/hasRegionalHost}});
+const client = {{client}}("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", {{#hasRegionalHost}}'{{defaultRegion}}', {{/hasRegionalHost}});
