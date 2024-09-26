@@ -5,7 +5,7 @@ import fsp from 'fs/promises';
 import semver from 'semver';
 
 import { cloneRepository } from '../ci/utils.js';
-import { ensureGitHubToken, fullReleaseConfig, LANGUAGES, run, toAbsolutePath } from '../common.js';
+import { ensureGitHubToken, LANGUAGES, run, toAbsolutePath } from '../common.js';
 import type { Language } from '../types.js';
 
 import { preReleaseRegExp } from './createReleasePR.js';
@@ -52,15 +52,12 @@ async function getTags(lang: Language): Promise<string[]> {
  * the given `version` to release is added to the map once existing tags are computed.
  * any pre-release and non-semver tags are excluded
  */
-export function generateLanguageVersionsHistory(tags: string[], lang: Language, version: Version): void {
-  const start = new Date();
-
-  if (!('versionsHistory' in fullReleaseConfig)) {
-    fullReleaseConfig.versionsHistory = {};
-  }
-
-  // @ts-expect-error -- force reset our versionsHistory policy to remove outdated ones
-  fullReleaseConfig.versionsHistory[lang] = {};
+export function generateLanguageVersionsHistory(
+  tags: string[],
+  lang: Language,
+  version: Version,
+): Record<string, { releaseDate: string }> {
+  const versions: Record<string, { releaseDate: string }> = {};
 
   let prevTagVersion = '';
 
@@ -78,47 +75,34 @@ export function generateLanguageVersionsHistory(tags: string[], lang: Language, 
       continue;
     }
 
-    const { major: tagMajor, minor: tagMinor } = getMajorMinor(lang, tagVersion);
-
-    if (tagMajor === 0 && tagMinor === 0) {
-      continue;
-    }
-
-    const releaseDate = new Date(tagReleaseDate);
-    const deadline = new Date(releaseDate);
-    deadline.setFullYear(releaseDate.getFullYear() + 3);
-
-    if (releaseDate.getTime() > deadline.getTime()) {
-      continue;
-    }
-
-    fullReleaseConfig.versionsHistory[lang][tagVersion] = {
-      releaseDate: releaseDate.toISOString().split('T')[0],
+    versions[tagVersion] = {
+      releaseDate: new Date(tagReleaseDate).toISOString().split('T')[0],
     };
 
     prevTagVersion = tagVersion;
   }
 
   // if there's no release planned, just skip this language
-  if (!version?.next || isPreRelease(version?.next) || version?.next === prevTagVersion) {
-    return;
+  if (version?.next && !isPreRelease(version?.next) && version?.next !== prevTagVersion) {
+    versions[version.next] = {
+      releaseDate: new Date().toISOString().split('T')[0],
+    };
   }
 
-  fullReleaseConfig.versionsHistory[lang][version.next] = {
-    releaseDate: start.toISOString().split('T')[0],
-  };
+  return versions;
 }
 
 export async function generateVersionsHistory(versions: Versions): Promise<void> {
+  const versionsHistory = {};
   await Promise.all(
     LANGUAGES.map(async (lang) => {
       console.log(`> generating VersionsHistory for the ${lang} client`);
 
       const tags = await getTags(lang);
 
-      return generateLanguageVersionsHistory(tags, lang, versions[lang]);
+      versionsHistory[lang] = generateLanguageVersionsHistory(tags, lang, versions[lang]);
     }),
   );
 
-  await fsp.writeFile(toAbsolutePath('config/release.config.json'), JSON.stringify(fullReleaseConfig, null, 2));
+  await fsp.writeFile(toAbsolutePath('config/versions.history.json'), JSON.stringify(versionsHistory, null, 2));
 }
