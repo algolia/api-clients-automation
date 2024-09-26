@@ -11,7 +11,7 @@ import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
 import { createReleasePR } from '../release/createReleasePR.js';
-import { generateSLA } from '../release/sla.js';
+import { generateVersionsHistory } from '../release/versionsHistory.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
@@ -255,13 +255,13 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .option('-sla, --sla-only', 'only generates the sla policy', false)
+  .option('-vh, --versions-history', 'only generates the versions-history policy', false)
   .option('-b --breaking', 'allow breaking change on the CI', false)
-  .action(async ({ verbose, releaseType, dryRun, slaOnly, breaking }) => {
+  .action(async ({ verbose, releaseType, dryRun, versionsHistory, breaking }) => {
     setVerbose(Boolean(verbose));
 
-    if (slaOnly) {
-      await generateSLA({});
+    if (versionsHistory) {
+      await generateVersionsHistory({});
 
       return;
     }

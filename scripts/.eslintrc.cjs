@@ -1,5 +1,5 @@
 module.exports = {
-  ignorePatterns: ['**.yml', 'tsconfig.json'],
+  ignorePatterns: ['**.yml', 'tsconfig.json', 'foo'],
 
   extends: "../.eslintrc.cjs",
 
