@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "snippets"
+version = "0.0.1"
+description = "snippets for the python api client"
+authors = ["Algolia Team <https://alg.li/support>"]
+license = "MIT"
+homepage = "https://www.algolia.com"
+repository = "https://github.com/algolia/api-clients-automation"
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
+ruff = "== 0.6.4"

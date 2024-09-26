@@ -43,5 +43,7 @@ public class SwiftCTSManager implements CTSManager {
   @Override
   public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
     supportingFiles.add(new SupportingFile("snippets/Package.mustache", "snippets/swift", "Package.swift"));
+    supportingFiles.add(new SupportingFile("snippets/.swiftformat.mustache", "snippets/swift", ".siwftformat"));
+    supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", "snippets/swift", ".gitignore"));
   }
 }

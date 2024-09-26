@@ -31,6 +31,11 @@ public class PythonCTSManager implements CTSManager {
   }
 
   @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("snippets/pyproject.mustache", "snippets/python", "pyproject.toml"));
+  }
+
+  @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("import", Helpers.toSnakeCase(this.client).toLowerCase());
   }

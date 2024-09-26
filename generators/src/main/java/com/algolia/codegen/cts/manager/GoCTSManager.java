@@ -3,6 +3,7 @@ package com.algolia.codegen.cts.manager;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import java.util.*;
+import org.openapitools.codegen.SupportingFile;
 
 public class GoCTSManager implements CTSManager {
 
@@ -30,5 +31,12 @@ public class GoCTSManager implements CTSManager {
     }
 
     bundle.put("clientImport", clientPrefix);
+  }
+
+  @Override
+  public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("snippets/.golangci.mustache", "snippets/go/.golangci.yml"));
+    supportingFiles.add(new SupportingFile("snippets/go.mod.mustache", "snippets/go/go.mod"));
+    supportingFiles.add(new SupportingFile("snippets/go.sum.mustache", "snippets/go/go.sum"));
   }
 }
