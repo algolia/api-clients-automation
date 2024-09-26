@@ -277,9 +277,15 @@ jobs:
 
       - name: Generate code snippets
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+      
+      - name: Build the snippets to check validity
+        run: yarn cli build snippets javascript
 
       - name: Generate code guides
         run: yarn cli guides javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+
+      - name: Build the guides to check validity
+        run: yarn cli build guides javascript
 
       - name: Zip artifact before storing
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
