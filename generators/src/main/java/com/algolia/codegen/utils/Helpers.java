@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenServer;
 import org.openapitools.codegen.CodegenServerVariable;
+import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class Helpers {
@@ -256,6 +257,15 @@ public class Helpers {
 
   public static void prettyPrint(Object o) {
     Json.prettyPrint(o);
+  }
+
+  public static void addCommonSupportingFiles(List<SupportingFile> supportingFiles, String root) {
+    supportingFiles.add(new SupportingFile("LICENSE", "", root + "LICENSE"));
+    supportingFiles.add(new SupportingFile("issue.yml", root + ".github/workflows", "issue.yml"));
+    supportingFiles.add(new SupportingFile("Bug_report.yml", root + ".github/ISSUE_TEMPLATE", "Bug_report.yml"));
+    supportingFiles.add(
+      new SupportingFile("do-not-edit-this-repository.yml", root + ".github/workflows", "do-not-edit-this-repository.yml")
+    );
   }
 
   public static String getLanguageVersion(String language) throws IOException {
