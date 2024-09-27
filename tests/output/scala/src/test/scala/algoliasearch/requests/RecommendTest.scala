@@ -31,6 +31,23 @@ class RecommendTest extends AnyFunSuite {
     )
   }
 
+  test("batch recommend rules") {
+    val (client, echo) = testClient()
+    val future = client.batchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("related-products")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/related-products/recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](

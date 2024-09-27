@@ -5,6 +5,8 @@ package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** Recommend rule. */
@@ -27,6 +29,9 @@ public class RecommendRule {
 
   @JsonProperty("enabled")
   private Boolean enabled;
+
+  @JsonProperty("validity")
+  private List<TimeRange> validity;
 
   public RecommendRule setMetadata(RuleMetadata metadata) {
     this.metadata = metadata;
@@ -96,6 +101,25 @@ public class RecommendRule {
     return enabled;
   }
 
+  public RecommendRule setValidity(List<TimeRange> validity) {
+    this.validity = validity;
+    return this;
+  }
+
+  public RecommendRule addValidity(TimeRange validityItem) {
+    if (this.validity == null) {
+      this.validity = new ArrayList<>();
+    }
+    this.validity.add(validityItem);
+    return this;
+  }
+
+  /** Time periods when the rule is active. */
+  @javax.annotation.Nullable
+  public List<TimeRange> getValidity() {
+    return validity;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -111,13 +135,14 @@ public class RecommendRule {
       Objects.equals(this.condition, recommendRule.condition) &&
       Objects.equals(this.consequence, recommendRule.consequence) &&
       Objects.equals(this.description, recommendRule.description) &&
-      Objects.equals(this.enabled, recommendRule.enabled)
+      Objects.equals(this.enabled, recommendRule.enabled) &&
+      Objects.equals(this.validity, recommendRule.validity)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(metadata, objectID, condition, consequence, description, enabled);
+    return Objects.hash(metadata, objectID, condition, consequence, description, enabled, validity);
   }
 
   @Override
@@ -130,6 +155,7 @@ public class RecommendRule {
     sb.append("    consequence: ").append(toIndentedString(consequence)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+    sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -2789,6 +2789,307 @@ paths:
             )
 
             // >LOG
+  /1/indexes/{indexName}/{model}/recommend/rules/batch:
+    post:
+      tags:
+        - rules
+      operationId: batchRecommendRules
+      x-acl:
+        - editSettings
+      summary: Create or update a batch of Recommend Rules
+      description: >
+        Create or update a batch of Recommend Rules
+
+
+        Each Recommend Rule is created or updated, depending on whether a
+        Recommend Rule with the same `objectID` already exists.
+
+        You may also specify `true` for `clearExistingRules`, in which case the
+        batch will atomically replace all the existing Recommend Rules.
+
+
+        Recommend Rules are similar to Search Rules, except that the conditions
+        and consequences apply to a [source
+        item](/doc/guides/algolia-recommend/overview/#recommend-models) instead
+        of a query. The main differences are the following:
+
+        - Conditions `pattern` and `anchoring` are unavailable.
+
+        - Condition `filters` triggers if the source item matches the specified
+        filters.
+
+        - Condition `filters` accepts numeric filters.
+
+        - Consequence `params` only covers filtering parameters.
+
+        - Consequence `automaticFacetFilters` doesn't require a facet value
+        placeholder (it tries to match the data source item's attributes
+        instead).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: rules
+              type: array
+              description: Recommend rules.
+              additionalProperties: false
+              items:
+                $ref: '#/components/schemas/RecommendRule'
+      responses:
+        '200':
+          $ref: '#/components/responses/RecommendUpdatedAt'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
+
+            // Call the API
+            var response = await client.BatchRecommendRulesAsync(
+              "<YOUR_INDEX_NAME>",
+              Enum.Parse<RecommendModels>("RelatedProducts")
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.batchRecommendRules(
+              indexName: "<YOUR_INDEX_NAME>",
+              model: RecommendModels.fromJson("related-products"),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.batchRecommendRules("<YOUR_INDEX_NAME>",
+            RecommendModels.RELATED_PRODUCTS);
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = recommendClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.batchRecommendRules({ indexName:
+            'indexName', model: 'related-products' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.batchRecommendRules(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->batchRecommendRules(
+                '<YOUR_INDEX_NAME>',
+                'related-products',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.batch_recommend_rules(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+            )
+
+
+            print(response)
+
+
+            # Skip deserialization
+
+            raw_response = client.batch_recommend_rules_with_http_info(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+            )
+
+
+            print(raw_response.raw_data)
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.batch_recommend_rules("<YOUR_INDEX_NAME>",
+            "related-products")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = client.batchRecommendRules(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = RecommendModels.withName("related-products")
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.batchRecommendRules(
+                indexName: "<YOUR_INDEX_NAME>",
+                model: RecommendModels.relatedProducts
+            )
+
+            // >LOG
 components:
   securitySchemes:
     appId:
@@ -5839,6 +6140,19 @@ components:
           $ref: '#/components/schemas/PromoteConsequence'
         params:
           $ref: '#/components/schemas/ParamsConsequence'
+    timeRange:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: integer
+          description: When the rule should start to be active, in Unix epoch time.
+        until:
+          type: integer
+          description: When the rule should stop to be active, in Unix epoch time.
+      required:
+        - from
+        - until
     RecommendRule:
       type: object
       description: Recommend rule.
@@ -5862,13 +6176,18 @@ components:
           description: >-
             Description of the rule's purpose. This can be helpful for display
             in the Algolia dashboard.
-          example: Display a promotional banner
+          example: Boost on-sale items
         enabled:
           type: boolean
           default: true
           description: >-
             Indicates whether to enable the rule. If it isn't enabled, it isn't
             applied at query time.
+        validity:
+          type: array
+          description: Time periods when the rule is active.
+          items:
+            $ref: '#/components/schemas/timeRange'
     taskID:
       type: integer
       format: int64
@@ -5906,6 +6225,18 @@ components:
       minimum: 1
       maximum: 1000
       description: Maximum number of hits per page.
+    recommendUpdatedAtResponse:
+      type: object
+      description: Response, taskID, and update timestamp.
+      additionalProperties: false
+      required:
+        - taskID
+        - updatedAt
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -5948,6 +6279,12 @@ components:
                 $ref: '#/components/schemas/taskID'
               deletedAt:
                 $ref: '#/components/schemas/deletedAt'
+    RecommendUpdatedAt:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/recommendUpdatedAtResponse'
 x-tagGroups:
   - name: Recommend
     tags:

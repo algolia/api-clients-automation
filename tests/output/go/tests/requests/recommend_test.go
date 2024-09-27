@@ -31,6 +31,24 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 	return client, echo
 }
 
+func TestRecommend_BatchRecommendRules(t *testing.T) {
+	client, echo := createRecommendClient(t)
+	_ = echo
+
+	t.Run("batch recommend rules", func(t *testing.T) {
+		_, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+			"indexName", recommend.RecommendModels("related-products"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{}`)
+	})
+}
+
 func TestRecommend_CustomDelete(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo

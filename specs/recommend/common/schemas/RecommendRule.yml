@@ -9,7 +9,7 @@ RecommendRule:
       description: Rule metadata.
       properties:
         lastUpdate:
-          $ref: '../../../common/responses/common.yml#/updatedAt'
+          $ref: '../responses/common.yml#/updatedAt'
     objectID:
       $ref: '../../../common/parameters.yml#/ruleID'
     condition:
@@ -19,11 +19,16 @@ RecommendRule:
     description:
       type: string
       description: Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      example: 'Display a promotional banner'
+      example: 'Boost on-sale items'
     enabled:
       type: boolean
       default: true
       description: Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+    validity:
+      type: array
+      description: Time periods when the rule is active.
+      items:
+        $ref: '../../../common/schemas/Rule.yml#/timeRange'
 
 Condition:
   type: object
