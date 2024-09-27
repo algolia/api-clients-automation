@@ -1,6 +1,7 @@
 import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
+import OpenAPISnippet from 'openapi-snippet';
 
 import { Cache } from '../cache.js';
 import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
@@ -98,6 +99,21 @@ export async function transformBundle({
             source: Object.values(snippetSamples[gen.language][specMethod.operationId])[0],
           });
         }
+      }
+
+      try {
+        const results = OpenAPISnippet.getEndpointSnippets(bundledSpec, pathKey, method, ['shell_curl']);
+
+        if (results.snippets.length > 0) {
+          specMethod['x-codeSamples'].push({
+            lang: 'cURL',
+            label: 'curl',
+            source: results.snippets[0].content,
+          });
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(`unable to generate cURL snippet for path ${pathKey}.${method}: `, err);
       }
 
       if (!bundledSpec.paths[pathKey][method].tags) {
