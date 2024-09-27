@@ -174,7 +174,7 @@ jobs:
           path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
 
   client_gen_javascript:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-22.04
     needs:
       - setup
