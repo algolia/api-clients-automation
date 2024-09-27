@@ -2,8 +2,6 @@ post:
   tags:
     - rules
   operationId: batchRecommendRules
-  x-use-read-transporter: false
-  x-cacheable: false
   x-acl:
     - editSettings
   summary: Create or update a batch of Recommend Rules
