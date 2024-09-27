@@ -12,6 +12,29 @@ use Algolia\AlgoliaSearch\Api\RecommendClient;
 class SnippetRecommendClient
 {
     /**
+     * Snippet for the BatchRecommendRules method.
+     *
+     * batch recommend rules
+     */
+    public function snippetForBatchRecommendRules(): void
+    {
+        // >SEPARATOR batchRecommendRules default
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->batchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'related-products',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomDelete method.
      *
      * allow del method for a custom path with minimal parameters

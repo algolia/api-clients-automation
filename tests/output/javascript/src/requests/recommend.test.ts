@@ -9,6 +9,20 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
 const client = recommendClient(appId, apiKey, { requester: nodeEchoRequester() });
 
+describe('batchRecommendRules', () => {
+  test('batch recommend rules', async () => {
+    const req = (await client.batchRecommendRules({
+      indexName: 'indexName',
+      model: 'related-products',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/related-products/recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;

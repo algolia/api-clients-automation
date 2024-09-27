@@ -9,6 +9,25 @@ import kotlinx.serialization.json.*
 import kotlin.system.exitProcess
 
 class SnippetRecommendClient {
+  suspend fun snippetForBatchRecommendRules() {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.batchRecommendRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      model = RecommendModels.entries.first { it.value == "related-products" },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client

@@ -13,6 +13,17 @@ class TestRecommendClient < Test::Unit::TestCase
     )
   end
 
+  # batch recommend rules
+  def test_batch_recommend_rules
+    req = @client.batch_recommend_rules_with_http_info("indexName", "related-products")
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/related-products/recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
   # allow del method for a custom path with minimal parameters
   def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")

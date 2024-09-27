@@ -18,6 +18,25 @@ class RecommendTest {
     apiKey = "apiKey",
   )
 
+  // batchRecommendRules
+
+  @Test
+  fun `batch recommend rules`() = runTest {
+    client.runTest(
+      call = {
+        batchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "related-products" },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/related-products/recommend/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
   // customDelete
 
   @Test

@@ -3,6 +3,9 @@
     "import": {
       "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.Recommend;"
     },
+    "batchRecommendRules": {
+      "default": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);"
+    },
     "customDelete": {
       "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
     },
@@ -40,6 +43,9 @@
   "dart": {
     "import": {
       "default": "import 'package:algolia_client_recommend/algolia_client_recommend.dart';"
+    },
+    "batchRecommendRules": {
+      "default": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);"
     },
     "customDelete": {
       "default": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);"
@@ -79,6 +85,9 @@
     "import": {
       "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend\""
     },
+    "batchRecommendRules": {
+      "default": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
     "customDelete": {
       "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
@@ -116,6 +125,9 @@
   "java": {
     "import": {
       "default": "import com.algolia.api.RecommendClient;\nimport com.algolia.model.recommend.*;"
+    },
+    "batchRecommendRules": {
+      "default": "client.batchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);"
     },
     "customDelete": {
       "default": "client.customDelete(\"test/minimal\");"
@@ -155,6 +167,9 @@
     "import": {
       "default": "import { recommendClient } from '@algolia/recommend';"
     },
+    "batchRecommendRules": {
+      "default": "const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });"
+    },
     "customDelete": {
       "default": "const response = await client.customDelete({ path: 'test/minimal' });"
     },
@@ -192,6 +207,9 @@
   "kotlin": {
     "import": {
       "default": "import com.algolia.client.api.RecommendClient"
+    },
+    "batchRecommendRules": {
+      "default": "var response = client.batchRecommendRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  model = RecommendModels.entries.first { it.value == \"related-products\" },\n)"
     },
     "customDelete": {
       "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
@@ -231,6 +249,9 @@
     "import": {
       "default": "use Algolia\\AlgoliaSearch\\Api\\RecommendClient;"
     },
+    "batchRecommendRules": {
+      "default": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);"
+    },
     "customDelete": {
       "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
     },
@@ -268,6 +289,9 @@
   "python": {
     "import": {
       "default": "from algoliasearch.recommend.client import RecommendClientSync"
+    },
+    "batchRecommendRules": {
+      "default": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.batch_recommend_rules_with_http_info(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)\n\nprint(raw_response.raw_data)"
     },
     "customDelete": {
       "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)\n\nprint(response)\n\n# Skip deserialization\nraw_response = client.custom_delete_with_http_info(\n    path=\"test/minimal\",\n)\n\nprint(raw_response.raw_data)"
@@ -307,6 +331,9 @@
     "import": {
       "default": "require \"algolia\""
     },
+    "batchRecommendRules": {
+      "default": "response = client.batch_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")"
+    },
     "customDelete": {
       "default": "response = client.custom_delete(\"test/minimal\")"
     },
@@ -345,6 +372,9 @@
     "import": {
       "default": "import algoliasearch.api.RecommendClient"
     },
+    "batchRecommendRules": {
+      "default": "val response = client.batchRecommendRules(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  model = RecommendModels.withName(\"related-products\")\n)"
+    },
     "customDelete": {
       "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
     },
@@ -379,6 +409,9 @@
   "swift": {
     "import": {
       "default": "import Recommend"
+    },
+    "batchRecommendRules": {
+      "default": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)"
     },
     "customDelete": {
       "default": "let response = try await client.customDelete(path: \"test/minimal\")"

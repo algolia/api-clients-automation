@@ -4,6 +4,28 @@ import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 
 void main() {
+  // batchRecommendRules
+  test(
+    'batch recommend rules',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.batchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("related-products"),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/related-products/recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
   // customDelete
   test(
     'allow del method for a custom path with minimal parameters',

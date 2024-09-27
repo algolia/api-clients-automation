@@ -22,6 +22,9 @@ module Algolia
       # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
       attr_accessor :enabled
 
+      # Time periods when the rule is active.
+      attr_accessor :validity
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -30,7 +33,8 @@ module Algolia
           :condition => :condition,
           :consequence => :consequence,
           :description => :description,
-          :enabled => :enabled
+          :enabled => :enabled,
+          :validity => :validity
         }
       end
 
@@ -47,7 +51,8 @@ module Algolia
           :condition => :"Condition",
           :consequence => :"Consequence",
           :description => :"String",
-          :enabled => :"Boolean"
+          :enabled => :"Boolean",
+          :validity => :"Array<TimeRange>"
         }
       end
 
@@ -104,6 +109,12 @@ module Algolia
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
         end
+
+        if attributes.key?(:validity)
+          if (value = attributes[:validity]).is_a?(Array)
+            self.validity = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -116,7 +127,8 @@ module Algolia
           condition == other.condition &&
           consequence == other.consequence &&
           description == other.description &&
-          enabled == other.enabled
+          enabled == other.enabled &&
+          validity == other.validity
       end
 
       # @see the `==` method
@@ -128,7 +140,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [_metadata, object_id, condition, consequence, description, enabled].hash
+        [_metadata, object_id, condition, consequence, description, enabled, validity].hash
       end
 
       # Builds the object from hash

@@ -8,6 +8,28 @@ using Action = Algolia.Search.Models.Ingestion.Action;
 public class SnippetRecommendClient
 {
   /// <summary>
+  /// Snippet for the BatchRecommendRules method.
+  ///
+  /// batch recommend rules
+  /// </summary>
+  public async Task SnippetForRecommendClientBatchRecommendRules()
+  {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.BatchRecommendRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("RelatedProducts")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters

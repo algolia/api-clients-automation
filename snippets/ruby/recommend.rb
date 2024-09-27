@@ -4,6 +4,26 @@ require "algolia"
 
 # IMPORT<
 
+# Snippet for the batchRecommendRules method.
+#
+# batch recommend rules
+def snippet_for_batch_recommend_rules
+  # >SEPARATOR batchRecommendRules default
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.batch_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters

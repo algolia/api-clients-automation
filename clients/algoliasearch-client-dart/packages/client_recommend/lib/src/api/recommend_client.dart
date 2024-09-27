@@ -10,6 +10,7 @@ import 'package:algolia_client_recommend/src/model/get_recommendations_params.da
 import 'package:algolia_client_recommend/src/model/get_recommendations_response.dart';
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
 import 'package:algolia_client_recommend/src/model/recommend_rule.dart';
+import 'package:algolia_client_recommend/src/model/recommend_updated_at_response.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_params.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_response.dart';
 
@@ -47,6 +48,45 @@ final class RecommendClient implements ApiClient {
   @override
   void setClientApiKey({required String apiKey}) {
     _retryStrategy.requester.setClientApiKey(apiKey);
+  }
+
+  /// Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [indexName] Name of the index on which to perform the operation.
+  /// * [model] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  /// * [recommendRule]
+  /// * [requestOptions] additional request configuration.
+  Future<RecommendUpdatedAtResponse> batchRecommendRules({
+    required String indexName,
+    required RecommendModels model,
+    List<RecommendRule>? recommendRule,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      indexName.isNotEmpty,
+      'Parameter `indexName` is required when calling `batchRecommendRules`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/indexes/{indexName}/{model}/recommend/rules/batch'
+          .replaceAll(
+              '{' r'indexName' '}', Uri.encodeComponent(indexName.toString()))
+          .replaceAll('{' r'model' '}', Uri.encodeComponent(model.toString())),
+      body: recommendRule,
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<RecommendUpdatedAtResponse, RecommendUpdatedAtResponse>(
+      response,
+      'RecommendUpdatedAtResponse',
+      growable: true,
+    );
   }
 
   /// This method allow you to send requests to the Algolia REST API.

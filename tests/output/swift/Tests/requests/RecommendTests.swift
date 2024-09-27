@@ -11,6 +11,36 @@ final class RecommendClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
     static let API_KEY = "my_api_key"
 
+    /// batch recommend rules
+    func testBatchRecommendRulesTest() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.batchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.relatedProducts
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/related-products/recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest() async throws {
         let configuration = try RecommendClientConfiguration(

@@ -16,6 +16,27 @@ class SnippetRecommendClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = org.json4s.DefaultFormats
 
+  /** Snippet for the batchRecommendRules method.
+    *
+    * batch recommend rules
+    */
+  def snippetForRecommendClientBatchRecommendRules(): Unit = {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.batchRecommendRules(
+      indexName = "<YOUR_INDEX_NAME>",
+      model = RecommendModels.withName("related-products")
+    )
+
+    // >LOG
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the customDelete method.
     *
     * allow del method for a custom path with minimal parameters

@@ -4,6 +4,42 @@ from algoliasearch.recommend.client import RecommendClientSync
 # IMPORT<
 
 
+def snippet_for_batch_recommend_rules():
+    """
+    Snippet for the batchRecommendRules method.
+
+    batch recommend rules
+    """
+    # >SEPARATOR batchRecommendRules default
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.batch_recommend_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+    )
+
+    print(response)
+
+    # Skip deserialization
+    raw_response = client.batch_recommend_rules_with_http_info(
+        index_name="<YOUR_INDEX_NAME>",
+        model="related-products",
+    )
+
+    print(raw_response.raw_data)
+
+    # >LOG
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 def snippet_for_custom_delete():
     """
     Snippet for the customDelete method.

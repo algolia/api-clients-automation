@@ -3,6 +3,24 @@
 import 'package:algolia_client_recommend/algolia_client_recommend.dart';
 // IMPORT<
 
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules
+void snippetForbatchRecommendRules() async {
+  // >SEPARATOR batchRecommendRules default
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.batchRecommendRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("related-products"),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters

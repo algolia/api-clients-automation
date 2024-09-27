@@ -5,6 +5,23 @@
 import { recommendClient } from '@algolia/recommend';
 // IMPORT<
 
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules
+export async function snippetForBatchRecommendRules(): Promise<void> {
+  // >SEPARATOR batchRecommendRules default
+  // Initialize the client
+  const client = recommendClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters

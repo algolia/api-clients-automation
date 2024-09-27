@@ -26,6 +26,20 @@ public class RecommendClientRequestTests
   [Fact]
   public void Dispose() { }
 
+  [Fact(DisplayName = "batch recommend rules")]
+  public async Task BatchRecommendRulesTest()
+  {
+    await client.BatchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("RelatedProducts")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/related-products/recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+  }
+
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {

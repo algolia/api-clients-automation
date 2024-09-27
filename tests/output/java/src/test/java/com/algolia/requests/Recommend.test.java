@@ -41,6 +41,18 @@ class RecommendClientRequestsTests {
   }
 
   @Test
+  @DisplayName("batch recommend rules")
+  void batchRecommendRulesTest() {
+    assertDoesNotThrow(() -> {
+      client.batchRecommendRules("indexName", RecommendModels.RELATED_PRODUCTS);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/related-products/recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {

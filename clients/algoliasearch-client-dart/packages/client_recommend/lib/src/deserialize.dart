@@ -42,6 +42,7 @@ import 'package:algolia_client_recommend/src/model/recommend_index_settings.dart
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
 import 'package:algolia_client_recommend/src/model/recommend_rule.dart';
 import 'package:algolia_client_recommend/src/model/recommend_search_params.dart';
+import 'package:algolia_client_recommend/src/model/recommend_updated_at_response.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_hits.dart';
 import 'package:algolia_client_recommend/src/model/recommendations_results.dart';
 import 'package:algolia_client_recommend/src/model/recommended_for_you.dart';
@@ -65,6 +66,7 @@ import 'package:algolia_client_recommend/src/model/snippet_result_option.dart';
 import 'package:algolia_client_recommend/src/model/sort_remaining_by.dart';
 import 'package:algolia_client_recommend/src/model/supported_language.dart';
 import 'package:algolia_client_recommend/src/model/task_status.dart';
+import 'package:algolia_client_recommend/src/model/time_range.dart';
 import 'package:algolia_client_recommend/src/model/trending_facet_hit.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets_model.dart';
@@ -208,6 +210,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RecommendSearchParams':
       return RecommendSearchParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'RecommendUpdatedAtResponse':
+      return RecommendUpdatedAtResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RecommendationsHits':
       return RecommendationsHits.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -267,6 +272,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return SupportedLanguage.fromJson(value) as ReturnType;
     case 'TaskStatus':
       return TaskStatus.fromJson(value) as ReturnType;
+    case 'TimeRange':
+      return TimeRange.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TrendingFacetHit':
       return TrendingFacetHit.fromJson(value as Map<String, dynamic>)
           as ReturnType;

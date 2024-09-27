@@ -6,6 +6,35 @@ import "github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
 
 // IMPORT<
 
+func SnippetForBatchRecommendRulesOfRecommend() {
+	/*
+	   Snippet for the batchRecommendRules method.
+
+	   batch recommend rules
+	*/
+
+	// >SEPARATOR batchRecommendRules default
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForCustomDeleteOfRecommend() {
 	/*
 	   Snippet for the customDelete method.

@@ -8,6 +8,20 @@ import com.algolia.model.recommend.*;
 
 class SnippetRecommendClient {
 
+  // Snippet for the batchRecommendRules method.
+  //
+  // batch recommend rules
+  void snippetForBatchRecommendRules() {
+    // >SEPARATOR batchRecommendRules default
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.batchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters

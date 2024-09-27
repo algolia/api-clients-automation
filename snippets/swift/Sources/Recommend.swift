@@ -7,6 +7,23 @@ import Recommend
 // IMPORT<
 
 final class RecommendClientSnippet {
+    /// Snippet for the batchRecommendRules method.
+    ///
+    /// batch recommend rules
+    func snippetForBatchRecommendRules() async throws {
+        // >SEPARATOR batchRecommendRules default
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.batchRecommendRules(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.relatedProducts
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
