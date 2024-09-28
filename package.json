@@ -46,7 +46,7 @@
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-unused-imports": "3.2.0",
-    "eslint-plugin-vitest": "0.5.4",
+    "@vitest/eslint-plugin": "1.0.1",
     "eslint-plugin-yml": "1.14.0",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
