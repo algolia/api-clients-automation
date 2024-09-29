@@ -82,7 +82,7 @@ __metadata:
     "@babel/core": "npm:7.25.2"
     "@babel/eslint-parser": "npm:7.25.1"
     "@eslint-community/eslint-plugin-eslint-comments": "npm:4.4.0"
-    "@openapitools/openapi-generator-cli": "npm:2.13.9"
+    "@openapitools/openapi-generator-cli": "npm:2.13.12"
     "@redocly/cli": "npm:1.25.3"
     "@stylistic/eslint-plugin": "npm:2.8.0"
     "@typescript-eslint/eslint-plugin": "npm:8.7.0"
@@ -1529,15 +1529,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:2.13.9":
-  version: 2.13.9
-  resolution: "@openapitools/openapi-generator-cli@npm:2.13.9"
+"@openapitools/openapi-generator-cli@npm:2.13.12":
+  version: 2.13.12
+  resolution: "@openapitools/openapi-generator-cli@npm:2.13.12"
   dependencies:
     "@nestjs/axios": "npm:3.0.3"
     "@nestjs/common": "npm:10.4.3"
     "@nestjs/core": "npm:10.4.3"
     "@nuxtjs/opencollective": "npm:0.3.2"
-    axios: "npm:1.7.4"
+    axios: "npm:1.7.7"
     chalk: "npm:4.1.2"
     commander: "npm:8.3.0"
     compare-versions: "npm:4.1.4"
@@ -1545,15 +1545,15 @@ __metadata:
     console.table: "npm:0.10.0"
     fs-extra: "npm:10.1.0"
     glob: "npm:7.2.3"
-    https-proxy-agent: "npm:7.0.4"
+    https-proxy-agent: "npm:7.0.5"
     inquirer: "npm:8.2.6"
     lodash: "npm:4.17.21"
     reflect-metadata: "npm:0.1.13"
     rxjs: "npm:7.8.1"
-    tslib: "npm:2.6.2"
+    tslib: "npm:2.7.0"
   bin:
     openapi-generator-cli: main.js
-  checksum: 10/b5555cbc3a426c1508db9f52da9a6f8a5dcbf0c8fa562f90ab7536f284385d24bf33764f6b1b9af3f4b44a2d699ec85451af7d2e2dde941db3a4d5cb198804ea
+  checksum: 10/8098ae5e64f971904fe6d2e45082c2045d4ff6b899b50f968c37e3062a304b52fe8ffe5fc71f22566e9526f52372cd7808cb1745d462067533946fc5a36e7188
   languageName: node
   linkType: hard
 
@@ -2734,14 +2734,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.4":
-  version: 1.7.4
-  resolution: "axios@npm:1.7.4"
+"axios@npm:1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/7a1429be1e3d0c2e1b96d4bba4d113efbfabc7c724bed107beb535c782c7bea447ff634886b0c7c43395a264d085450d009eb1154b5f38a8bae49d469fdcbc61
+  checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
   languageName: node
   linkType: hard
 
@@ -5307,17 +5307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"https-proxy-agent@npm:7.0.4":
-  version: 7.0.4
-  resolution: "https-proxy-agent@npm:7.0.4"
-  dependencies:
-    agent-base: "npm:^7.0.2"
-    debug: "npm:4"
-  checksum: 10/405fe582bba461bfe5c7e2f8d752b384036854488b828ae6df6a587c654299cbb2c50df38c4b6ab303502c3c5e029a793fbaac965d1e86ee0be03faceb554d63
-  languageName: node
-  linkType: hard
-
-"https-proxy-agent@npm:^7.0.0, https-proxy-agent@npm:^7.0.1, https-proxy-agent@npm:^7.0.4":
+"https-proxy-agent@npm:7.0.5, https-proxy-agent@npm:^7.0.0, https-proxy-agent@npm:^7.0.1, https-proxy-agent@npm:^7.0.4":
   version: 7.0.5
   resolution: "https-proxy-agent@npm:7.0.5"
   dependencies:
