@@ -1,5 +1,5 @@
 // Dart Algolia Search API client to interact with Algolia
-library algoliasearch;
+library;
 
 export 'package:algolia_client_insights/algolia_client_insights.dart'
     hide ErrorBase;
