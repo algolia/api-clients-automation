@@ -104,5 +104,13 @@ export async function generateVersionsHistory(versions: Versions): Promise<void>
     }),
   );
 
-  await fsp.writeFile(toAbsolutePath('config/versions.history.json'), JSON.stringify(versionsHistory, null, 2));
+  // sort by language
+  const sortedVersionsHistory = Object.keys(versionsHistory)
+    .sort()
+    .reduce((acc, key) => {
+      acc[key] = versionsHistory[key];
+      return acc;
+    }, {});
+
+  await fsp.writeFile(toAbsolutePath('config/versions.history.json'), JSON.stringify(sortedVersionsHistory, null, 2));
 }
