@@ -54,6 +54,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
         'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix --unsafe-fixes && poetry run ruff format',
         { cwd, language },
       );
+      await run('poetry run pyright', { cwd, language });
       break;
     case 'ruby':
       await run('bundle install', { cwd, language });
